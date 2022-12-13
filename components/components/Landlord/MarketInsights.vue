@@ -1,0 +1,93 @@
+<template>
+    <div class="page page--market-insights">
+        <div class="container">
+            <div v-for="article in articles" :key="article.id" class="page__container">
+                <ArticleGrid :article="article" />
+            </div>
+        </div>
+    </div>
+</template>
+
+<script>
+import ArticleGrid from "./components/Article/ArticleGrid.vue"
+export default {
+    name: "MarketInsights",
+    components: {
+        ArticleGrid
+    },
+    data() {
+        return {
+            articles: [
+                {
+                    id: 1,
+                    urlImage: "/img/test-01.jpg",
+                    title: "Closers Group Real Estate",
+                    content:
+                        "Nestled in the prestigious District 11 at Novena, Soleil @ Sinaran is an award"
+                },
+                {
+                    id: 2,
+                    urlImage: "/img/test-02.jpg",
+                    title: "Stellar Property Advisors",
+                    content: "Nassim Jade is a 10-storey boutique styled freehold development."
+                },
+                {
+                    id: 3,
+                    urlImage: "/img/test-03.jpg",
+                    title: "Keller Williams Exclusive Properties",
+                    content:
+                        "Residents at Watermark @ Robertson Quay can enjoy a leisure swim in the pool"
+                },
+                {
+                    id: 4,
+                    urlImage: "/img/test-01.jpg",
+                    title: "Closers Group Real Estate",
+                    content:
+                        "Nestled in the prestigious District 11 at Novena, Soleil @ Sinaran is an award"
+                },
+                {
+                    id: 5,
+                    urlImage: "/img/test-02.jpg",
+                    title: "Stellar Property Advisors",
+                    content: "Nassim Jade is a 10-storey boutique styled freehold development."
+                },
+                {
+                    id: 6,
+                    urlImage: "/img/test-03.jpg",
+                    title: "Keller Williams Exclusive Properties",
+                    content:
+                        "Residents at Watermark @ Robertson Quay can enjoy a leisure swim in the pool"
+                },
+                {
+                    id: 7,
+                    urlImage: "/img/test-01.jpg",
+                    title: "Closers Group Real Estate",
+                    content:
+                        "Nestled in the prestigious District 11 at Novena, Soleil @ Sinaran is an award"
+                },
+                {
+                    id: 8,
+                    urlImage: "/img/test-02.jpg",
+                    title: "Stellar Property Advisors",
+                    content: "Nassim Jade is a 10-storey boutique styled freehold development."
+                },
+                {
+                    id: 9,
+                    urlImage: "/img/test-03.jpg",
+                    title: "Keller Williams Exclusive Properties",
+                    content:
+                        "Residents at Watermark @ Robertson Quay can enjoy a leisure swim in the pool"
+                }
+            ]
+        }
+    }
+}
+</script>
+
+<style lang="scss" scoped>
+.page--market-insights{
+    .page__container{
+        display: inline-block
+    }
+}
+</style>

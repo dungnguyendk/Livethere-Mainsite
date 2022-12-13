@@ -4,6 +4,6 @@
 
 <script>
 export default {
-    name: "ExampleTable.vue"
+    name: "ExampleTable"
 }
 </script>

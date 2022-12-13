@@ -1,22 +1,21 @@
 <template>
     <main>
-        <div class="jumbotron">
-            <h3>Welcome!</h3>
+        <div>
+            <MarketInsights/>
         </div>
     </main>
 </template>
 
 <script>
 import { mapState } from "vuex"
+import MarketInsights from "~/components/components/Landlord/MarketInsights.vue"
 
 export default {
-    components: {},
+    components: { MarketInsights },
     head: {
         title: "Landing page | Livethere"
     },
 
     methods: {}
-
-
 }
 </script>
