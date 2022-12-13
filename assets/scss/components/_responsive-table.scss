@@ -13,9 +13,6 @@
 			th:nth-child(n + 4) {
 				text-align: right;
 			}
-			.v-checkbox {
-				vertical-align: middle;
-			}
 		}
 
 		tbody {
@@ -40,24 +37,17 @@
 			}
 			td {
 				padding: 3.2rem 1.6rem;
-				font-style: normal;
 				font-weight: 400;
 				font-size: 1.6rem;
 				line-height: 2.4rem;
-				border-width: 0px 1px 1px 1px;
-				border-style: solid;
-				border-color: #E5E5E5;
+				border: 1px solid #E5E5E5;
+				// border-width: 0px 1px 1px 1px;
+				// border-style: solid;
+				// border-color: #E5E5E5;
 			}
 
 		}
 	}
-}
-
-.v-data-table > .v-data-table__wrapper > table > tbody > tr > td,
-.v-data-table > .v-data-table__wrapper > table > thead > tr > td,
-.v-data-table > .v-data-table__wrapper > table > tfoot > tr > td {
-	font-size: 1.3rem !important;
-	height: 48px;
 }
 
 .table--fixed-layout {
