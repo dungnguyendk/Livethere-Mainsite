@@ -1,0 +1,12 @@
+#__layout {
+    .v-application {
+        .row{
+            margin: -0.6rem;
+        }
+        .col,
+        [class*="col-"] {
+            padding: 0.6rem;
+        }
+    }
+
+}
