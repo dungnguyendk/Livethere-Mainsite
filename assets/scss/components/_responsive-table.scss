@@ -1,45 +1,3 @@
-.table--responsive {
-	@media (max-width: 768px) {
-		border: none;
-		max-width: 100vw;
-
-		thead {
-			display: none;
-		}
-
-		tbody {
-			display: block;
-
-			tr {
-				display: block;
-				margin-bottom: 10px;
-				border-bottom: 1px solid #eaeaea;
-
-				td[data-label] {
-					display: grid;
-					grid-template-columns: 1fr 1fr;
-					grid-gap: 30px;
-					border: none;
-					padding: 16px;
-					text-transform: capitalize;
-					border-top: 1px solid #eaeaea;
-
-					&:before {
-						content: attr(data-label) ":";
-						font-weight: 400;
-						color: $color-heading;
-						font-size: 14px;
-					}
-
-					&:first-child {
-						border-top: none;
-					}
-				}
-			}
-		}
-	}
-}
-
 .v-data-table {
 	.v-table {
 		color: #fff;
@@ -49,7 +7,7 @@
 			th {
 				font-weight: 500;
 				background: #00634F;
-				padding: 15px 16px;
+				padding: 1.6rem;
 				
 			}
 			th:nth-child(n + 4) {
@@ -62,17 +20,17 @@
 
 		tbody {
 			color: #0B0C0C;
-
+			.first-child {
+				font-weight: 700;
+				text-decoration: underline;
+				font-size: 1.6rem;
+				color: #26A0F6;
+			}
 			tr {
 				vertical-align: middle;
 			}
 			tr:nth-child(even) {
 				background-color: #FAFAFA;
-			}
-			td:first-child {
-				font-weight: 700;
-				text-decoration-line: underline;
-				color: #26A0F6;
 			}
 			td:last-child {
 				text-align: center;
@@ -81,11 +39,14 @@
 				text-align: right;
 			}
 			td {
-				padding: 33px 16px;
+				padding: 3.2rem 1.6rem;
 				font-style: normal;
 				font-weight: 400;
-				font-size: 16px;
-				line-height: 24px;
+				font-size: 1.6rem;
+				line-height: 2.4rem;
+				border-width: 0px 1px 1px 1px;
+				border-style: solid;
+				border-color: #E5E5E5;
 			}
 
 		}
@@ -102,4 +63,40 @@
 .table--fixed-layout {
 	table-layout: fixed !important;
 	width: 100%;
+}
+@media only screen and (max-width: 768px) {
+	.v-data-table {
+		.v-table { 
+			thead {
+				display: none;
+			}
+			tr {
+				display: block;
+				margin-bottom: 1rem;
+				border: 1px solid #ddd;
+			}
+			tbody {
+				display: block;
+				td[data-label] {
+					display: grid;
+					justify-content: space-between;
+					align-items: center;
+					text-align: right;
+					grid-template-columns: 1fr 1fr;
+					grid-gap: 3rem;
+					border: none;
+					padding: 1.6rem;
+					text-transform: capitalize;
+					border-top: none;
+					&:before {
+						content: attr(data-label);
+						font-weight: 700;
+						color: #0B0C0C;
+						font-size: 1.6rem;
+						text-align: left;
+					}
+				}
+			}
+		}
+	}
 }

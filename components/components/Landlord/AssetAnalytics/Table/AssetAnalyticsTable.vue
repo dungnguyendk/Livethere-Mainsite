@@ -15,25 +15,27 @@
             <tbody>
                 <template>
                     <tr v-for="item in items" :key="item">
-                        <td>
-                            {{ item.propertyName }}
+                        <td data-label="Property Name">
+                            <span class="first-child">
+                                {{ item.propertyName }}
+                            </span>
                         </td>
-                        <td>
+                        <td data-label="Unit No.">
                             {{ item.unitNo }}
                         </td>
-                        <td>
+                        <td data-label="Purchase Date">
                             {{ item.purchaseDate }}
                         </td>
-                        <td>
+                        <td data-label="Purchase Price">
                             {{ item.purchasePrice }}
                         </td>
-                        <td>
+                        <td data-label="Current Estimated Value">
                             {{ item.currentEstimatedValue }}
                         </td>
-                        <td>
+                        <td data-label="Estimated Capital Gain">
                             {{ item.estimatedCapitalGain }}
                         </td>
-                        <td>
+                        <td data-label="Rental Yield">
                             {{ item.rentalYield }}
                         </td>
                     </tr>
