@@ -58,6 +58,7 @@ export default {
             font-size: 1.8rem;
             line-height: 2.4rem;
             margin-bottom: 0;
+            color: var(--color-black)
         }
         .card__button{
             text-decoration: underline;
