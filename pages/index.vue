@@ -1,6 +1,8 @@
 <template>
     <main>
-
+        <div class="jumbotron">
+            <h3>Welcome!</h3>
+        </div>
     </main>
 </template>
 

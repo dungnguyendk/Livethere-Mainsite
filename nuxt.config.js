@@ -1,8 +1,8 @@
 import {appSettings} from "./app-settings"
-import {httpEndpoint} from "./services/https/endpoints"
 
 export default {
     ssr: true,
+    components: false,
     head: {
         meta: [
             {charset: "utf-8"},
@@ -27,7 +27,6 @@ export default {
     },
 
     css: [
-        "~/static/feather-font/css/iconfont.css",
         "~/static/fonts/remixIcon/remixicon.css",
         "~/assets/scss/index.scss"
     ],
@@ -36,10 +35,10 @@ export default {
         {src: "~plugins/vueliate.js", ssr: false},
         {src: "~plugins/vue-side-up-down.js", ssr: false},
         {src: "~plugins/axios.js", ssr: true},
-        {src: "~plugins/vue-smooth-scroll.js", ssr: true}
+        /*{src: "~plugins/vue-smooth-scroll.js", ssr: true}*/
     ],
 
-    components: true,
+
 
     buildModules: [
         "@nuxtjs/vuetify",
@@ -66,36 +65,7 @@ export default {
     axios: {
         baseURL: appSettings.baseURL
     },
-    auth: {
-        redirect: {
-            login: false,
-            logout: "/",
-            //callback: "/auth/signin"*/
-            home: false
-        },
-        //redirect: false,
-        rewriteRedirects: false,
-        strategies: {
-            local: {
-                token: {
-                    property: "jwt",
-                    global: true,
-                    required: true,
-                    type: "Bearer",
-                    maxAge: 36000
-                },
-                user: {
-                    property: false,
-                    autoFetch: false
-                },
-                endpoints: {
-                    login: {url: httpEndpoint.auth.login, method: "post"},
-                    logout: false,
-                    user: false
-                }
-            }
-        }
-    },
+
 
     vuetify: {
         theme: {
@@ -110,11 +80,11 @@ export default {
     router: {
         linkActiveClass: "",
         linkExactActiveClass: "active",
-        middleware: ["auth", "before-route-changed"]
+        middleware: ["before-route-changed"]
     },
 
     server: {
-        port: 3001,
+        port: 3002,
         host: "localhost"
     }
 }
