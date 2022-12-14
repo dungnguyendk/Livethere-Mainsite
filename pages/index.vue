@@ -1,19 +1,17 @@
 <template>
     <main>
-        <!-- <div class="jumbotron">
-            <h3>Welcome!</h3>
-        </div> -->
-        <MarketingInventoryTable />
+        <MarketingInventory/>
     </main>
 </template>
 
 <script>
-import { mapState } from "vuex"
-import MarketingInventoryTable from "~/components/components/Landlord/MarketingInventory/MarketingInventoryTable.vue";
+
+
+
+import MarketingInventory from "~/components/components/Landlord/MarketingInventory/MarketingInventory.vue";
+
 export default {
-    components: {
-        MarketingInventoryTable
-    },
+    components: {MarketingInventory},
     head: {
         title: "Landing page | Livethere"
     },
