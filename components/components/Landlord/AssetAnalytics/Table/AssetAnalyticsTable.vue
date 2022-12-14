@@ -1,6 +1,6 @@
 <template lang="html">
-    <div class="v-data-table">
-        <table class="v-table">
+    <div class="asset-analytic">
+        <table class="table--responsive table--asset-analytic">
             <thead>
                 <tr>
                     <th>Property Name</th>
@@ -13,52 +13,45 @@
                 </tr>
             </thead>
             <tbody>
-                <template>
-                    <tr v-for="item in items" :key="item">
-                        <td data-label="Property Name">
-                            <span class="first-child">
-                                {{ item.propertyName }}
-                            </span>
-                        </td>
-                        <td data-label="Unit No.">
-                            {{ item.unitNo }}
-                        </td>
-                        <td data-label="Purchase Date">
-                            {{ item.purchaseDate }}
-                        </td>
-                        <td data-label="Purchase Price">
-                            {{ item.purchasePrice }}
-                        </td>
-                        <td data-label="Current Estimated Value">
-                            {{ item.currentEstimatedValue }}
-                        </td>
-                        <td data-label="Estimated Capital Gain">
-                            {{ item.estimatedCapitalGain }}
-                        </td>
-                        <td data-label="Rental Yield">
-                            {{ item.rentalYield }}
+                <template v-if="items.length > 0">
+                    <AssetAnalyticsTableRecord v-for="item in items" :source="item" :selectedId="selectedId"
+                        :key="item.id" @handleClickOpenRow="handleClickOpenRow" />
+                </template>
+                <template v-else>
+                    <tr>
+                        <td colspan="7">
+                            <p class="empty">No data found!</p>
                         </td>
                     </tr>
                 </template>
             </tbody>
         </table>
+        <slide-up-down :active="showExpandedPanel" :duration="300">
+            <ExpandedPanel @onClose="onCloseExpandedPanel" />
+        </slide-up-down>
     </div>
 </template>
 <script>
+import AssetAnalyticsTableRecord from './AssetAnalyticsTableRecord.vue';
+import ExpandedPanel from "~/components/shared/Panel/ExpandedPanel.vue"
 export default {
+    name: "AssetAnalyticsTable",
+    components: { AssetAnalyticsTableRecord, ExpandedPanel },
     data() {
         return {
             items: [
                 {
+                    id: 1,
                     propertyName: "Lloyd Sixtyfive",
                     unitNo: "08-10",
                     purchaseDate: "26/11/2022",
                     purchasePrice: "SGD 1,200,000",
                     currentEstimatedValue: "SGD 1,500,000",
-                    estimatedCapitalGain: "SGD 120,000 - SGD 150,000",
+                    estimatedCapitalGain: "SGD 120,000 - SGD 150,000 SGD 120,000 - SGD 150,000 SGD 120,000 - SGD 150,000",
                     rentalYield: "1.2%"
                 },
                 {
+                    id: 2,
                     propertyName: "Skypark @ Somerset",
                     unitNo: "02-96",
                     purchaseDate: "05/02/2021",
@@ -68,6 +61,7 @@ export default {
                     rentalYield: "0.8%"
                 },
                 {
+                    id: 3,
                     propertyName: "Lloyd Sixtyfive",
                     unitNo: "08-10",
                     purchaseDate: "26/11/2022",
@@ -77,6 +71,7 @@ export default {
                     rentalYield: "1.2%"
                 },
                 {
+                    id: 4,
                     propertyName: "Lloyd Sixtyfive",
                     unitNo: "08-10",
                     purchaseDate: "26/11/2022",
@@ -86,6 +81,7 @@ export default {
                     rentalYield: "1.2%"
                 },
                 {
+                    id: 5,
                     propertyName: "Lloyd Sixtyfive",
                     unitNo: "08-10",
                     purchaseDate: "26/11/2022",
@@ -95,6 +91,7 @@ export default {
                     rentalYield: "1.2%"
                 },
                 {
+                    id: 6,
                     propertyName: "Lloyd Sixtyfive",
                     unitNo: "08-10",
                     purchaseDate: "26/11/2022",
@@ -103,11 +100,30 @@ export default {
                     estimatedCapitalGain: "SGD 120,000 - SGD 150,000",
                     rentalYield: "1.2%"
                 },
-            ]
+            ],
+            showExpandedPanel: false,
+            selectedId: -1,
         }
     },
+    methods: {
+        onCloseExpandedPanel() {
+            this.selectedId = -1
+            this.showExpandedPanel = false
+        },
+        handleClickOpenRow(item) {
+            this.$emit("handleClickOpenRow", item)
+            this.selectedId = item
+            this.showExpandedPanel = true
+        }
+    }
 }
 </script>
 <style lang="scss" scoped>
+.asset-analytic {
+    padding: (32/1920)*100% (278/1920)*100% (126/1920)*100% (278/1920)*100%;
 
+    @media only screen and (max-width: 768px) {
+        padding: 0;
+    }
+}
 </style>
