@@ -174,6 +174,7 @@ export default {
                 position: relative;
                 width: 10rem;
                 height: 6.4rem;
+                border-radius: 6px;
 
                 img {
                     border: 1px solid #e5e5e5;
@@ -195,7 +196,7 @@ export default {
                 font-weight: 700;
                 font-size: 16px;
                 line-height: 24px;
-  
+
                 max-width: 16.4rem;
                 /* 26A0F6 cyan */
                 text-overflow: ellipsis;
@@ -223,13 +224,15 @@ export default {
                 color: #0b0c0c;
             }
 
-          
             .currency {
                 display: flex;
                 p {
                     white-space: nowrap;
                 }
                 //
+            }
+            .address {
+                max-width: 20.6rem;
             }
         }
     }
