@@ -15,3 +15,8 @@ export default {
     components: {MarketingInventoryTable}
 }
 </script>
+<style lang="scss" scoped>
+// .section--marketing-inventory{
+    
+// }
+</style>
