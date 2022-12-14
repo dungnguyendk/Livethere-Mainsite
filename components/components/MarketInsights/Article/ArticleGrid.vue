@@ -1,12 +1,7 @@
 <template>
-    <div class="card--article">
+    <div class="card--article-grid">
         <div class="card__header">
-            <h3 class="card__title"
-                ><a href="">{{ article.title }}</a></h3
-            >
-<!--            <nuxt-link to="#">
-
-            </nuxt-link>-->
+            <nuxt-link to="" class="card__title"> {{ article.title }} </nuxt-link>
         </div>
         <div class="card__body">
             <div class="card__image">
@@ -36,8 +31,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.card--article {
-    box-sizing: border-box;
+.card--article-grid {
     background-color: var(--color-white);
     box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.04), 0px 4px 8px rgba(0, 0, 0, 0.06);
     border-radius: 2rem;
@@ -51,22 +45,21 @@ export default {
         display: flex;
         align-items: center;
         min-height: 8rem;
+        width: 100%;
+        justify-content: center;
         .card__title {
-            margin-bottom: 0;
-            a {
-                font-weight: 800;
-                font-size: 2rem;
-                line-height: 2.8rem;
-                text-align: center;
-                text-overflow: ellipsis;
-                display: -webkit-box;
-                -webkit-line-clamp: 2;
-                line-clamp: 2;
-                -webkit-box-orient: vertical;
-                overflow: hidden;
-                &:hover {
-                    color: var(--color-primary);
-                }
+            font-weight: 800;
+            font-size: 2rem;
+            line-height: 2.8rem;
+            text-align: center;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            &:hover {
+                color: var(--color-primary);
             }
         }
     }
@@ -117,22 +110,24 @@ export default {
             }
         }
     }
-}
-@media screen and (max-width: 767px) {
-    .card--article {
+    @media screen and (max-width: 767px) {
+        max-width: 42rem;
+        margin: 0 auto;
         .card__header {
             .card__title {
-                a {
-                    font-weight: 800;
-                    font-size: 2rem;
-                    line-height: 2.8rem;
-                    text-align: center;
-                    text-overflow: clip;
-
+                font-size: 1.8rem;
+            }
+        }
+        .card__body {
+            .card__content {
+                p {
+                    font-size: 1.4rem;
+                }
+                .card__button {
+                    font-size: 1.4rem;
                 }
             }
         }
-
     }
 }
 </style>
