@@ -4,6 +4,9 @@
             <h3 class="card__title"
                 ><a href="">{{ article.title }}</a></h3
             >
+<!--            <nuxt-link to="#">
+
+            </nuxt-link>-->
         </div>
         <div class="card__body">
             <div class="card__image">

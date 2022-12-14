@@ -1,5 +1,5 @@
 <template>
-    <div class="page page--market-insights">
+    <div class="page--market-insights">
         <div class="container">
             <div class="page__container">
                 <ArticleGrid
@@ -14,11 +14,13 @@
 </template>
 
 <script>
-import ArticleGrid from "./components/Article/ArticleGrid.vue"
+import ArticleGrid from "~/components/components/MarketInsights/Article/ArticleGrid.vue";
+
 export default {
     name: "MarketInsights",
     components: {
         ArticleGrid
+
     },
     data() {
         return {
@@ -117,22 +119,19 @@ export default {
         width: 100%;
         grid-gap: 2.4rem;
     }
-}
-@media screen and (max-width: 1023px) {
-    .page--market-insights {
+    @media screen and (max-width: 1023px) {
         .page__container {
             grid-template-columns: repeat(2, minmax(0, 1fr));
 
         }
     }
-}
-@media screen and (max-width: 767px) {
-    .page--market-insights {
+    @media screen and (max-width: 767px) {
         .page__container {
 
             grid-template-columns: repeat(1, minmax(0, 1fr));
-  
+
         }
     }
 }
+
 </style>
