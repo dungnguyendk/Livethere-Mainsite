@@ -2,6 +2,7 @@
     <div class="section--property-details">
         <div class="section__top">
             <h3 class="section__heading">Property Details</h3>
+
         </div>
         <div class="section__bottom">
             <h3 class="section__heading">

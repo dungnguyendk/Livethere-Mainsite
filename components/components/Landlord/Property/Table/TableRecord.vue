@@ -1,11 +1,22 @@
 <template lang="html">
     <tr>
-    <!-- Enter code here       -->
+        <td>
+            {{source.code}}
+        </td>
+        <td>
+            {{source.data}}
+        </td>
     </tr>
 </template>
 
 <script>
 export default {
-    name: "TableRecord"
+    name: "TableRecord",
+    props: {
+        source: {
+            type: Object,
+            default: () =>{}
+        },
+    },
 }
 </script>
