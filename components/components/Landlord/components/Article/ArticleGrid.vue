@@ -1,7 +1,9 @@
 <template>
     <div class="card--article">
         <div class="card__header">
-            <h3 class="card__title">{{ article.title }}</h3>
+            <h3 class="card__title"
+                ><a href="">{{ article.title }}</a></h3
+            >
         </div>
         <div class="card__body">
             <div class="card__image">
@@ -47,17 +49,22 @@ export default {
         align-items: center;
         min-height: 8rem;
         .card__title {
-            font-weight: 800;
-            font-size: 2rem;
-            line-height: 2.8rem;
             margin-bottom: 0;
-            text-align: center;
-            text-overflow: ellipsis;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
+            a {
+                font-weight: 800;
+                font-size: 2rem;
+                line-height: 2.8rem;
+                text-align: center;
+                text-overflow: ellipsis;
+                display: -webkit-box;
+                -webkit-line-clamp: 2;
+                line-clamp: 2;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+                &:hover {
+                    color: var(--color-primary);
+                }
+            }
         }
     }
     .card__body {
@@ -76,7 +83,6 @@ export default {
                 height: 100%;
                 max-width: 100%;
                 object-fit: cover;
-
             }
         }
         .card__content {
@@ -93,16 +99,37 @@ export default {
                 line-clamp: 2;
                 -webkit-box-orient: vertical;
                 overflow: hidden;
+                margin-bottom: 2.2rem;
+                min-height: 4.8rem;
             }
             .card__button {
                 text-decoration: underline;
-                margin-top: 2.2rem;
                 font-weight: 700;
                 font-size: 1.6rem;
                 color: var(--color-primary);
-                display: inline-block;
+                transition: all 0.25s ease-in;
+                &:hover {
+                    color: #d97706;
+                }
             }
         }
+    }
+}
+@media screen and (max-width: 767px) {
+    .card--article {
+        .card__header {
+            .card__title {
+                a {
+                    font-weight: 800;
+                    font-size: 2rem;
+                    line-height: 2.8rem;
+                    text-align: center;
+                    text-overflow: clip;
+
+                }
+            }
+        }
+
     }
 }
 </style>
