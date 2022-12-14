@@ -112,6 +112,7 @@ export default {
         grid-template-columns: repeat(3, minmax(0, 1fr));
         width: 100%;
         grid-gap: 2.4rem;
+        margin: 3.2rem auto 8rem;
     }
     @media screen and (max-width: 1023px) {
         .section__container {
