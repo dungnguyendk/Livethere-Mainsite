@@ -4,9 +4,11 @@
             <nuxt-link to="" class="card__title"> {{ article.title }} </nuxt-link>
         </div>
         <div class="card__body">
-            <div class="card__image">
-                <img :src="article.urlImage" alt="" />
-            </div>
+            <nuxt-link to="/"  target="_blank">
+                <div class="card__image">
+                    <img :src="article.urlImage" alt="" />
+                </div>
+            </nuxt-link>
             <div class="card__content">
                 <p>{{ article.content }}</p>
                 <a class="card__button">Read More</a>
