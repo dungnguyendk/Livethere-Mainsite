@@ -51,6 +51,26 @@ export default {
 </script>
 <style lang="scss" scss>
 .table--record {
+    td {
+        text-align: center;
+    }
+
+    td:nth-child(-n+4) {
+        text-align: left;
+    }
+
+    td:nth-child(6) {
+        width: 30rem;
+
+        @media only screen and (max-width: 768px) {
+            width: auto;
+        }
+
+        @media only screen and (min-width: 768px) and (max-width: 1280px) {
+            width: auto;
+        }
+    }
+
     &.unSelected {
         display: none !important;
     }

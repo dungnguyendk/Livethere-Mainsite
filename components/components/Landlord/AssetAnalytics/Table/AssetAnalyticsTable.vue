@@ -1,6 +1,6 @@
 <template lang="html">
     <div class="asset-analytic">
-        <table class="table--responsive table--asset-analytic">
+        <table class="table--responsive table--asset">
             <thead>
                 <tr>
                     <th>Property Name</th>
@@ -119,6 +119,25 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+.table--asset {
+    thead {
+        th:nth-child(-n+4) {
+            text-align: left;
+        }
+
+        th {
+            text-align: center;
+        }
+    }
+
+    tbody {
+        tr:nth-child(even) {
+            background-color: #FAFAFA;
+        }
+    }
+
+}
+
 .asset-analytic {
     padding: (32/1920)*100% (278/1920)*100% (126/1920)*100% (278/1920)*100%;
 

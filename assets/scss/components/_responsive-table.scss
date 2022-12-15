@@ -1,4 +1,4 @@
-.table--asset-analytic {
+.table--asset {
 	color: #fff;
 	width: 100%;
 
@@ -9,10 +9,9 @@
 			font-weight: 700;
 			font-size: 1.6rem;
 			line-height: 2.4rem;
-			// max-width: 30rem;
 		}
-		th:nth-child(n + 4) {
-			text-align: right;
+		th:nth-child(1) {
+			text-align: left;
 		}
 	}
 
@@ -29,26 +28,19 @@
 			vertical-align: middle;
 			border: 1px solid #E5E5E5;
 		}
-		tr:nth-child(even) {
-			background-color: #FAFAFA;
-		}
-		td:last-child {
-			text-align: left !important;
-		}
-		td:nth-child(n + 4) {
-			text-align: right;
+		td:nth-child(1) {
+			text-align: left;
 		}
 		td {
 			padding: 3.2rem 1.6rem;
 			font-weight: 400;
 			font-size: 1.6rem;
 			line-height: 2.4rem;
-			// max-width: 30rem;
 		}
 	}
 }
 @media only screen and (max-width: 768px) {
-	.table--asset-analytic { 
+	.table--asset { 
 		&.table--responsive{
 			thead {
 				display: none;
@@ -87,7 +79,7 @@
 	}
 }
 @media only screen and (min-width: 768px) and (max-width: 1280px){
-	.table--asset-analytic { 
+	.table--asset { 
 		thead {
 			th {
 				padding: 1.2rem;
@@ -108,7 +100,7 @@
 	}
 }
 @media only screen and (min-width: 1280px) and (max-width: 1440px){
-	.table--asset-analytic { 
+	.table--asset { 
 		thead {
 			th {
 				font-size: 1.4rem;
