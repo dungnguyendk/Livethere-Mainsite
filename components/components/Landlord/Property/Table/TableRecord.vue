@@ -50,19 +50,18 @@ td {
         line-height: 24px;
         text-decoration-line: underline;
         white-space: nowrap;
-        /* 26A0F6 cyan */
-
+        margin-bottom: 0;
         color: #26a0f6;
     }
-    a:hover{
+    a:hover {
         color: #26a0f6;
         //text-decoration-line: underline;
-    };
+    }
     p {
         display: flex;
         justify-content: left;
         /* Body/Nunito-R/16-24 */
-
+        margin: 0;
         font-family: "Nunito";
         font-style: normal;
         font-weight: 400;

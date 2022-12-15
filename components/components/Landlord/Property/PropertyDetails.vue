@@ -93,8 +93,9 @@ export default {
     background: #ffffff;
     /* Medium */
     box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.04), 0px 4px 8px rgba(0, 0, 0, 0.06);
+    border-radius: 20px;
     .section__top--title {
-        padding: 2.7rem 0rem 1.2rem;
+        padding-bottom: 1.2rem;
         font-family: "Nunito";
         font-style: normal;
         font-weight: 800;
