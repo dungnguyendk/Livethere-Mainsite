@@ -35,7 +35,9 @@
                             <div class="stub-heading">
                                 <p>Project Name: </p>
                             </div>
-                            <div class="stub-property"> <p>Lloyd Sixtyfive</p></div>
+                            <div class="stub-property">
+                                <p>Lloyd Sixtyfive Lloyd Sixtyfive Lloyd Sixtyfive </p></div
+                            >
                         </div>
                         <div class="item">
                             <div class="stub-heading">
@@ -122,7 +124,7 @@ export default {
         .section__items {
             display: flex;
             justify-content: space-between;
-            padding-right: 5.5rem;
+            // padding-right: 5.5rem;
         }
         .item {
             display: flex;
@@ -142,17 +144,22 @@ export default {
                 }
             }
             .stub-property {
-                max-width: 10.7rem;
+                min-width: 10.7rem;
                 p {
+                    max-width: 25rem;
+                    // white-space: nowrap;
                     margin: 0;
                     font-family: "Nunito";
                     font-style: normal;
                     font-weight: 500;
                     font-size: 16px;
                     line-height: 40px;
-                    /* or 250% */
-
-                    /* Text #171717 */
+                    text-overflow: ellipsis;
+                    display: -webkit-box;
+                    -webkit-line-clamp: 2;
+                    // line-clamp: 2;
+                    -webkit-box-orient: vertical;
+                    overflow: hidden;
 
                     color: #171717;
                 }
@@ -164,13 +171,15 @@ export default {
     }
     @media (max-width: 768px) {
         .section__items {
+            padding-right: 0;
             flex-wrap: wrap;
-
             .block__item:nth-child(1) {
                 order: 1;
+                // flex: 0 0 100%;
             }
             .block__item:nth-child(2) {
                 order: 2;
+                // flex: 0 0 100%;
             }
             .block__item:nth-child(3) {
                 order: 3;
