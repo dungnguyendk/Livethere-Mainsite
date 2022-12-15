@@ -1,8 +1,7 @@
 <template lang="html">
     <div class="asset-inventory__action">
         <div class="select-type">
-            <v-select :items="typeSelections" value="All" hide-details outlined dense class="me-2"
-                @change="onChangePageSize"></v-select>
+            <v-select :items="typeSelections" value="All" hide-details outlined dense class="me-2"></v-select>
         </div>
         <v-btn class="btn btn--outline btn--green btn--md add-new">
             <v-icon left>ri-add-box-line</v-icon>

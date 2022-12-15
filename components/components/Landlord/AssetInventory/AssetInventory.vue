@@ -11,7 +11,11 @@ import AssetInventoryAction from "~/components/components/Landlord/AssetInventor
 export default {
     name: "AssetInventory",
     components: { AssetInventoryTable, AssetInventoryAction },
-    data() { }
+    data() {
+        return {
+
+        }
+    }
 }
 </script>
 <style lang="scss" scoped>
