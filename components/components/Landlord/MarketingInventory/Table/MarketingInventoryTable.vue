@@ -17,8 +17,10 @@
                     <tr v-for="item in items" :key="item.id">
                         <td headers="property" data-title="Property">
                             <div>
-                                <img :src="item.img" class="image" alt="" />
-                                <span>{{ item.title }}</span>
+                                <a href=""><img :src="item.img" class="image" alt="" /></a>
+                                <div class="title">
+                                    <a href="/#">{{ item.title }}</a>
+                                </div>
                             </div>
                         </td>
                         <td headers="unit" data-title="Unit No.">
@@ -185,29 +187,29 @@ export default {
                     z-index: 1;
                     left: 0;
                 }
+                
             }
-
-            span {
+            .title {
                 padding-top: 1.2rem;
+                max-width: 16.7rem;
                 display: flex;
                 justify-content: left;
+            }
+            a {
+                //padding-top: 1.2rem;
+
                 font-family: "Nunito";
                 font-style: normal;
                 font-weight: 700;
                 font-size: 16px;
                 line-height: 24px;
-
-                max-width: 16.4rem;
-                /* 26A0F6 cyan */
                 text-overflow: ellipsis;
                 display: -webkit-box;
                 -webkit-line-clamp: 2;
-                // line-clamp: 2;
                 -webkit-box-orient: vertical;
                 overflow: hidden;
                 color: #26a0f6;
             }
-
             p {
                 padding-top: 9px;
                 display: flex;
@@ -218,9 +220,7 @@ export default {
                 font-size: 16px;
                 line-height: 24px;
                 /* or 150% */
-
                 /* 0B0C0C paragraph txt */
-
                 color: #0b0c0c;
             }
 
@@ -249,7 +249,7 @@ export default {
                 font-family: "Nunito";
                 font-style: normal;
                 font-weight: 500;
-                font-size: 14px;
+                font-size: 13px;
                 line-height: 24px;
                 color: #ffffff;
             }
@@ -268,14 +268,14 @@ export default {
             td {
                 padding: 1.3rem 1.7rem 2.9rem;
                 border-bottom: 1px solid #e5e5e5;
-                span {
+                a {
                     padding-top: 1.2rem;
                     display: flex;
                     justify-content: left;
                     font-family: "Nunito";
                     font-style: normal;
                     font-weight: 700;
-                    font-size: 16px;
+                    font-size: 13px;
                     line-height: 24px;
                     // text-decoration-line: underline;
                     // white-space: nowrap;
@@ -297,7 +297,7 @@ export default {
                     font-family: "Nunito";
                     font-style: normal;
                     font-weight: 400;
-                    font-size: 16px;
+                    font-size: 13px;
                     line-height: 24px;
                     color: #0b0c0c;
                 }
@@ -348,7 +348,7 @@ export default {
             padding-right: 1rem;
             font-weight: 700;
             vertical-align: top;
-            font-size: 14px;
+            font-size: 16px;
         }
         // tbody tr td::after {
         //     content: "";
