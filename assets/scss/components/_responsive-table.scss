@@ -1,0 +1,127 @@
+.table--asset-analytic {
+	color: #fff;
+	width: 100%;
+
+	thead {
+		th {
+			background: #00634F;
+			padding: 1.6rem;
+			font-weight: 700;
+			font-size: 1.6rem;
+			line-height: 2.4rem;
+			// max-width: 30rem;
+		}
+		th:nth-child(n + 4) {
+			text-align: right;
+		}
+	}
+
+	tbody {
+		color: #0B0C0C;
+		.first-child {
+			font-weight: 700;
+			text-decoration: underline;
+			font-size: 1.6rem;
+			color: #26A0F6;
+			cursor: pointer;
+		}
+		tr {
+			vertical-align: middle;
+			border: 1px solid #E5E5E5;
+		}
+		tr:nth-child(even) {
+			background-color: #FAFAFA;
+		}
+		td:last-child {
+			text-align: left !important;
+		}
+		td:nth-child(n + 4) {
+			text-align: right;
+		}
+		td {
+			padding: 3.2rem 1.6rem;
+			font-weight: 400;
+			font-size: 1.6rem;
+			line-height: 2.4rem;
+			// max-width: 30rem;
+		}
+	}
+}
+@media only screen and (max-width: 768px) {
+	.table--asset-analytic { 
+		&.table--responsive{
+			thead {
+				display: none;
+			}
+			tr {
+				display: block;
+				margin-bottom: 1rem;
+				border: 1px solid #ddd;
+			}
+			tbody {
+				display: block;
+				td:last-child {
+					text-align: right !important;
+				}
+				td[data-label] {
+					display: grid;
+					justify-content: space-between;
+					align-items: center;
+					text-align: right;
+					grid-template-columns: 1fr 1fr;
+					grid-gap: 3rem;
+					border: none;
+					padding: 1.6rem;
+					border-top: none;
+					&:before {
+						content: attr(data-label);
+						font-weight: 700;
+						color: #0B0C0C;
+						font-size: 1.6rem;
+						text-align: left;
+					}
+				}
+			}
+		}
+		
+	}
+}
+@media only screen and (min-width: 768px) and (max-width: 1280px){
+	.table--asset-analytic { 
+		thead {
+			th {
+				padding: 1.2rem;
+				font-size: 1.2rem;
+				line-height: 2rem;
+			}
+		}
+		tbody {
+			.first-child {
+				font-size: 1.4rem;
+			}
+			td {
+				padding: 1.2rem;
+				font-size: 1.2rem;
+				line-height: 2rem;
+			}
+		}
+	}
+}
+@media only screen and (min-width: 1280px) and (max-width: 1440px){
+	.table--asset-analytic { 
+		thead {
+			th {
+				font-size: 1.4rem;
+			}
+		}
+		tbody {
+			.first-child {
+				font-size: 1.4rem;
+			}
+			td {
+				font-size: 1.4rem;
+				line-height: 2rem;
+			}
+		}
+	}
+}
