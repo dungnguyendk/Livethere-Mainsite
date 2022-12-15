@@ -94,7 +94,7 @@ export default {
     /* Medium */
     box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.04), 0px 4px 8px rgba(0, 0, 0, 0.06);
     .section__top--title {
-        padding: 2.7rem 0rem 2.2rem;
+        padding: 2.7rem 0rem 1.2rem;
         font-family: "Nunito";
         font-style: normal;
         font-weight: 800;
@@ -105,7 +105,7 @@ export default {
     }
     .section__bottom--title {
         border-top: 1px solid #e5e5e5;
-        padding: 3.2rem 0rem 2.2rem;
+        padding: 3.2rem 0rem 2rem;
         font-family: "Nunito";
         font-style: normal;
         font-weight: 800;
@@ -115,13 +115,13 @@ export default {
         margin: 0;
     }
     .section__top {
-        padding: 2rem 2.4rem 3.2rem 3.2rem;
+        padding: 2.7rem 2.4rem 3.2rem 3.2rem;
         //border-radius: 20px;
 
         .section__items {
             display: flex;
             justify-content: space-between;
-            padding-right: 2.7rem;
+            padding-right: 5.5rem;
         }
         .item {
             display: flex;
@@ -159,7 +159,7 @@ export default {
         }
     }
     .section__bottom {
-        padding: 0 2.4rem 4rem 2.4rem;
+        padding: 0 2.4rem 4rem 2.2rem;
     }
     @media (max-width: 768px) {
         .section__items {
