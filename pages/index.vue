@@ -1,22 +1,18 @@
 <template>
     <main>
-        <div class="jumbotron">
-            <h3>Welcome!</h3>
-        </div>
+        <PropertyDetails />
     </main>
 </template>
 
 <script>
 import { mapState } from "vuex"
-
+import PropertyDetails from "~/components/components/Landlord/Property/PropertyDetails.vue"
 export default {
-    components: {},
+    components: { PropertyDetails },
     head: {
         title: "Landing page | Livethere"
     },
 
     methods: {}
-
-
 }
 </script>
