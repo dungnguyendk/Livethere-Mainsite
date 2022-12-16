@@ -1,14 +1,16 @@
 <template>
     <main>
-
+        <MarketInsights/>
     </main>
 </template>
 
 <script>
 import { mapState } from "vuex"
-import PropertyDetails from "~/components/components/Landlord/Property/PropertyDetails.vue"
+import MarketInsights from "~/components/components/MarketInsights/MarketInsights.vue";
+
 export default {
-    components: {},
+    components: {MarketInsights},
+
     head: {
         title: "Landing page | Livethere"
     },
