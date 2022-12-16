@@ -45,6 +45,12 @@ td {
         font-size: 16px;
         line-height: 24px;
         color: #0b0c0c;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        // line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
     }
 }
 tr:nth-child(even) {

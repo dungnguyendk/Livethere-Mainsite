@@ -41,9 +41,12 @@ td {
         font-weight: 400;
         font-size: 16px;
         line-height: 24px;
-        /* identical to box height, or 150% */
-
-        /* 0B0C0C paragraph txt */
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        // line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
 
         color: #0b0c0c;
     }
@@ -52,8 +55,8 @@ td:nth-child(2) {
     padding-left: 0;
 }
 tr:nth-child(even) {
-        background: #fafafa;
-    }
+    background: #fafafa;
+}
 @media screen and (max-width: 768px) {
     tr:nth-child(even) {
         background: #fafafa;

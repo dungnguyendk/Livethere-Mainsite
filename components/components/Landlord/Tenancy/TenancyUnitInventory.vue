@@ -49,6 +49,7 @@ export default {
         .section__add--button {
             padding: 2rem 2.4rem 3.2rem 2.4rem;
             a {
+                min-width: 8.5rem;
                 display: flex;
                 font-family: "Nunito";
                 font-style: normal;

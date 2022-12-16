@@ -120,10 +120,6 @@ export default {
                     font-weight: 500;
                     font-size: 16px;
                     line-height: 40px;
-                    /* or 250% */
-
-                    /* Grey text #737373 */
-
                     color: #737373;
                 }
             }
