@@ -1,6 +1,6 @@
 <template>
     <div class="btn-group">
-        <v-btn class="btn btn--primary btn--green btn__add-file" @click="onClose()">
+        <v-btn class="btn btn--primary btn--green btn__add-file" @click="onClose()" :disabled="checkRequire">
             Add
         </v-btn>
         <span class="cancel-form" @click="onClose()">
@@ -11,6 +11,12 @@
 <script>
 export default {
     name: "DialogActionAddNewInventory",
+    props: {
+        checkRequire: {
+            type: Boolean,
+            default: () => true
+        }
+    },  
     data() {
         return {
 

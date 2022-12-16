@@ -2,10 +2,10 @@
     <v-dialog v-model="openDialog" :width="sizeDialog" persistent>
         <DialogCardAddNewInventory @close="onClose()" :type="type">
             <template slot="formAddInventory">
-                <DialogFormAddNewInventory />
+                <DialogFormAddNewInventory @checkEmptyError="onCheckEmptyError" />
             </template>
             <template slot="actions">
-                <DialogActionAddNewInventory @close="onClose()" />
+                <DialogActionAddNewInventory @close="onClose" :checkRequire="isEmptyErrors" />
             </template>
         </DialogCardAddNewInventory>
     </v-dialog>
@@ -38,7 +38,8 @@ export default {
     },
     data() {
         return {
-            openDialog: false
+            openDialog: false,
+            isEmptyErrors: true,
         }
     },
     computed: {
@@ -53,6 +54,9 @@ export default {
             this.openDialog = false
             this.$emit("close")
         },
+        onCheckEmptyError(val) {
+            this.isEmptyErrors = !val
+        }
     },
     watch: {
         open(val) {
