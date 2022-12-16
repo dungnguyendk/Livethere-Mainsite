@@ -1,9 +1,11 @@
 <template lang="html">
-    <div></div>
+    <tr>
+
+    </tr>
 </template>
 
 <script>
 export default {
-    name: "ExampleTable.vue"
+    name: "TableRecord"
 }
 </script>
