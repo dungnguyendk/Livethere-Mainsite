@@ -39,19 +39,25 @@
                     <v-list dense>
                         <v-list-item-group>
                             <v-list-item style="height: 35px">
-                                <!-- <v-list-item-icon>
+                                <v-list-item-icon>
                                     <v-icon v-text="`ri-edit-box-line`"></v-icon>
-                                </v-list-item-icon> -->
+                                </v-list-item-icon>
                                 <v-list-item-content>
                                     <v-list-item-title>Edit</v-list-item-title>
                                 </v-list-item-content>
                             </v-list-item>
                             <v-list-item style="border-color: #E9E9E9; border: 1px solid #E9E9E9; height : 35px;">
+                                <v-list-item-icon>
+                                    <v-icon v-text="`ri-add-box-line`"></v-icon>
+                                </v-list-item-icon>
                                 <v-list-item-content>
                                     <v-list-item-title>Add Inventory</v-list-item-title>
                                 </v-list-item-content>
                             </v-list-item>
                             <v-list-item style="height: 35px">
+                                <v-list-item-icon>
+                                    <v-icon v-text="`ri-delete-bin-line`"></v-icon>
+                                </v-list-item-icon>
                                 <v-list-item-content>
                                     <v-list-item-title>Delete</v-list-item-title>
                                 </v-list-item-content>
