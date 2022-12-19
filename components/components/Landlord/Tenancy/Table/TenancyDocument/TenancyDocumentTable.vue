@@ -73,7 +73,7 @@ export default {
         }
         th {
             padding: 1.5rem 2.4rem 1.5rem;
-            background: var(--color-menu);
+            background-color: var(--color-menu);
             font-family: var(--font-primary);
             font-style: normal;
             font-weight: 700;
