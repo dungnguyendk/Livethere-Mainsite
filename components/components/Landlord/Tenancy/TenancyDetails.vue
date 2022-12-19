@@ -2,53 +2,31 @@
     <div class="container">
         <div class="section--tenancy-details">
             <div class="section__top">
-                <div class="top--title"> Tenancy Details </div>
-                <div class="top--id"> #348503 </div>
+                <h3 class="top--label"> Tenancy Details </h3>
+                <h3 class="top--id"> #348503 </h3>
             </div>
             <div class="section__content">
-                <div class="block__item">
-                    <div class="item">
-                        <div class="stub-heading">
-                            <p> Commercement Date:</p>
-                        </div>
-                        <div class="stub-property">
-                            <p>20/09/2020</p>
-                        </div>
-                    </div>
-                    <div class="item">
-                        <div class="stub-heading">
-                            <p>Lease Period (months):</p>
-                        </div>
-                        <div class="stub-property">
-                            <p>24</p>
-                        </div>
-                    </div>
-                    <div class="item">
-                        <div class="stub-heading">
-                            <p>Secure Deposit:</p>
-                        </div>
-                        <div class="stub-property">
-                            <p>SGD 9,000</p>
-                        </div>
-                    </div>
+                <div class="section__list">
+                    <ul class="section__list-label">
+                        <li> Commercement Date: </li>
+                        <li> Lease Period (months): </li>
+                        <li> Secure Deposit: </li>
+                    </ul>
+                    <ul class="section__list-property">
+                        <li> 20/09/2020 </li>
+                        <li> 24 </li>
+                        <li> SGD 9,000 </li>
+                    </ul>
                 </div>
-                <div class="block__item">
-                    <div class="item">
-                        <div class="stub-heading">
-                            <p>Expiry Day:</p>
-                        </div>
-                        <div class="stub-property">
-                            <p>20/09/2020</p>
-                        </div>
-                    </div>
-                    <div class="item">
-                        <div class="stub-heading">
-                            <p>Monthly Rent:</p>
-                        </div>
-                        <div class="stub-property">
-                            <p>SGD 3,000</p>
-                        </div>
-                    </div>
+                <div class="section__list">
+                    <ul class="section__list-label">
+                        <li> Expiry Date: </li>
+                        <li> Monthly Rent: </li>
+                    </ul>
+                    <ul class="section__list-property">
+                        <li> 20/09/2022 </li>
+                        <li> SGD 3,000 </li>
+                    </ul>
                 </div>
             </div>
         </div>
@@ -72,16 +50,15 @@ export default {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        .top--title {
+        h3 {
+            margin-bottom: 0;
+        }
+        .top--label {
             font-family: "Nunito";
             font-style: normal;
             font-weight: 800;
             font-size: 20px;
             line-height: 28px;
-            /* identical to box height, or 140% */
-
-            /* Main/Watercourse #00634F */
-
             color: #00634f;
         }
         .top--id {
@@ -105,51 +82,38 @@ export default {
         display: flex;
         justify-content: flex-start;
         gap: 23.3rem;
-    }
-
-    .block__item {
-        .item {
+        .section__list {
             display: flex;
-            .stub-heading {
+            font-family: "Nunito";
+            font-style: normal;
+            font-weight: 500;
+            font-size: 16px;
+            line-height: 40px;
+            .section__list-label {
+                list-style-type: none;
+                padding-left: 0;
+                margin-bottom: 0;
                 min-width: 16.5rem;
-                p {
-                    display: inline-block;
-                    margin: 0;
-                    font-family: "Nunito";
-                    font-style: normal;
-                    font-weight: 500;
-                    font-size: 16px;
-                    line-height: 40px;
-                    color: #737373;
-                }
+                color: #737373;
             }
-            .stub-property {
+            .section__list-property {
                 padding-left: 1.2rem;
                 min-width: 10.7rem;
-                p {
+                margin-bottom: 0;
+                color: #171717;
+                li {
                     max-width: 25rem;
-                    // white-space: nowrap;
-                    margin: 0;
-                    font-family: "Nunito";
-                    font-style: normal;
-                    font-weight: 500;
-                    font-size: 16px;
-                    line-height: 40px;
                     text-overflow: ellipsis;
                     display: -webkit-box;
                     -webkit-line-clamp: 2;
                     // line-clamp: 2;
                     -webkit-box-orient: vertical;
                     overflow: hidden;
-
-                    color: #171717;
                 }
             }
         }
-    }
-    .block__item:nth-child(2) {
-        .item {
-            .stub-heading {
+        .section__list:nth-child(2) {
+            .section__list-label {
                 min-width: 10.2rem;
             }
         }
@@ -160,16 +124,14 @@ export default {
             padding-right: 0;
             flex-wrap: wrap;
             gap: 0;
-            .block__item:nth-child(1) {
+            .section__list:nth-child(1) {
                 order: 1;
             }
-            .block__item:nth-child(2) {
+            .section__list:nth-child(2) {
                 order: 2;
                 flex: 0 0 100%;
-                .item {
-                    .stub-heading {
-                        min-width: 16.5rem;
-                    }
+                .section__list-label {
+                    min-width: 16.5rem;
                 }
             }
         }
