@@ -63,7 +63,7 @@ export default {
     top: 0;
     bottom: 0;
     box-sizing: border-box;
-    background: #ffffff;
+    background-color: var(--color-white);
     border-width: 0px 1px 1px 1px;
     border-style: solid;
     border-color: #e5e5e5;
@@ -73,13 +73,13 @@ export default {
         }
         th {
             padding: 1.5rem 2.4rem 1.5rem;
-            background: #00634f;
-            font-family: "Nunito";
+            background: var(--color-menu);
+            font-family: var(--font-primary);
             font-style: normal;
             font-weight: 700;
             font-size: 16px;
             line-height: 24px;
-            color: #ffffff;
+            color: var(--color-white);
         }
     }
 }

@@ -37,9 +37,8 @@ td {
     p {
         display: flex;
         justify-content: left;
-        /* Body/Nunito-R/16-24 */
         margin-bottom: 0;
-        font-family: "Nunito";
+        font-family: var( --font-primary);
         font-style: normal;
         font-weight: 400;
         font-size: 16px;
@@ -48,17 +47,16 @@ td {
         text-overflow: ellipsis;
         display: -webkit-box;
         -webkit-line-clamp: 2;
-        // line-clamp: 2;
         -webkit-box-orient: vertical;
         overflow: hidden;
     }
 }
 tr:nth-child(even) {
-    background: #fafafa;
+    background-color: #fafafa;
 }
 @media screen and (max-width: 768px) {
     tr:nth-child(even) {
-        background: #fafafa;
+        background-color: #fafafa;
     }
     td[data-title] {
         display: grid;

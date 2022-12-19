@@ -28,7 +28,7 @@ export default {
 }
 .box--tenacy-inventory {
     padding-bottom: 5rem;
-    background: #ffffff;
+    background-color: var(--color-white);
     box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.04), 0px 4px 8px rgba(0, 0, 0, 0.06);
     border-radius: 20px;
 
@@ -38,12 +38,12 @@ export default {
         flex-wrap: wrap;
         .section__top--title {
             padding: 2.6rem 2.4rem 3.8rem;
-            font-family: "Nunito";
+            font-family: var(--font-primary);
             font-style: normal;
             font-weight: 800;
             font-size: 20px;
             line-height: 28px;
-            color: #00634f;
+            color: var(--color-menu);
             margin: 0;
         }
         .section__add--button {
@@ -51,7 +51,7 @@ export default {
             a {
                 min-width: 8.5rem;
                 display: flex;
-                font-family: "Nunito";
+                font-family: var(--font-primary);
                 font-style: normal;
                 font-weight: 700;
                 font-size: 16px;
@@ -62,13 +62,13 @@ export default {
                 gap: 5.3px;
                 /* 26A0F6 cyan */
                 box-sizing: border-box;
-                border: 1px solid #00634f;
+                border: 1px solid var(--color-menu);
                 border-radius: 8px;
-                color: #00634f;
+                background-color: var(--color-white);
             }
             a:hover {
-                background-color: #00634f;
-                color: #ffff;
+                background-color: var(--color-menu);
+                color: var(--color-white);
                 //text-decoration-line: underline;
             }
         }

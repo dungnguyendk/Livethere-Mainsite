@@ -36,7 +36,7 @@ td {
         justify-content: left;
         /* Body/Nunito-R/16-24 */
         margin-bottom: 0;
-        font-family: "Nunito";
+        font-family: var( --font-primary);
         font-style: normal;
         font-weight: 400;
         font-size: 16px;
@@ -55,11 +55,11 @@ td:nth-child(2) {
     padding-left: 0;
 }
 tr:nth-child(even) {
-    background: #fafafa;
+    background-color: #fafafa;
 }
 @media screen and (max-width: 768px) {
     tr:nth-child(even) {
-        background: #fafafa;
+        background-color: #fafafa;
     }
     td[data-title] {
         display: grid;

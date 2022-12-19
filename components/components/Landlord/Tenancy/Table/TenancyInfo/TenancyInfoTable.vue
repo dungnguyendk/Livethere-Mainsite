@@ -73,13 +73,13 @@ export default {
         }
         th {
             padding: 1.5rem 2.4rem 1.5rem;
-            background: #00634f;
-            font-family: "Nunito";
+            background-color: var(--color-menu);
+            font-family: var( --font-primary);
             font-style: normal;
             font-weight: 700;
             font-size: 16px;
             line-height: 24px;
-            color: #ffffff;
+            color: var(--color-white);
         }
     }
 }

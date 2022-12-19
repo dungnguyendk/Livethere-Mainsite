@@ -36,7 +36,7 @@ td {
         justify-content: left;
         /* Body/Nunito-R/16-24 */
         margin-bottom: 0;
-        font-family: "Nunito";
+        font-family: var( --font-primary);
         font-style: normal;
         font-weight: 400;
         font-size: 16px;

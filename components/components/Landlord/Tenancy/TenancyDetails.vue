@@ -40,9 +40,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .section--tenancy-details {
-    background: #ffffff;
-    /* Medium */
-
+    background-color: var(--color-white);
     box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.04), 0px 4px 8px rgba(0, 0, 0, 0.06);
     border-radius: 20px;
     .section__top {
@@ -54,25 +52,20 @@ export default {
             margin-bottom: 0;
         }
         .top--label {
-            font-family: "Nunito";
+            font-family: var(--font-primary);
             font-style: normal;
             font-weight: 800;
             font-size: 20px;
             line-height: 28px;
-            color: #00634f;
+            color: var(--color-menu);
         }
         .top--id {
-            font-family: "Nunito";
+            font-family: var(--font-primary);
             font-style: normal;
             font-weight: 800;
             font-size: 20px;
             line-height: 28px;
-            /* identical to box height, or 140% */
-
             text-align: right;
-
-            /* Text #171717 */
-
             color: #171717;
         }
     }
@@ -84,7 +77,7 @@ export default {
         gap: 23.3rem;
         .section__list {
             display: flex;
-            font-family: "Nunito";
+            font-family: var(--font-primary);
             font-style: normal;
             font-weight: 500;
             font-size: 16px;
