@@ -1,7 +1,7 @@
 <template lang="html">
-    <span :class="`badge--inventory ${type.toLowerCase()}`">
-        {{ type }}
-    </span>
+    <div :class="`badge--inventory ${type.toLowerCase()}`">
+        <span>{{ type }}</span>
+    </div>
 </template>
 
 <script>
@@ -28,6 +28,16 @@ export default {
         padding: 0.5rem 1.6rem;
         border-radius: 0.8rem;
         text-align: center;
+        width: fit-content;
+        height: 3.4rem;
+
+        span {
+            font-weight: 600;
+        }
+
+        @media only screen and (max-width: 768px) {
+            margin-left: auto;
+        }
 
         &.new {
             @include typeInventory(#27A857, #27A857, rgba(39, 168, 87, 0.1));

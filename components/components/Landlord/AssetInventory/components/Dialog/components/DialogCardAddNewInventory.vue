@@ -11,9 +11,9 @@
         <div class="card__form">
             <slot name="formAddInventory"></slot>
         </div>
-        <div class="card__footer" v-if="type === 'footer' || type === 'full'">
+        <!-- <div class="card__footer" v-if="type === 'footer' || type === 'full'">
             <slot name="actions"></slot>
-        </div>
+        </div> -->
     </div>
 </template>
 

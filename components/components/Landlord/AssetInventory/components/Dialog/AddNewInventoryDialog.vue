@@ -2,10 +2,7 @@
     <v-dialog v-model="openDialog" :width="sizeDialog" persistent>
         <DialogCardAddNewInventory @close="onClose()" :type="type">
             <template slot="formAddInventory">
-                <DialogFormAddNewInventory @checkEmptyError="onCheckEmptyError" />
-            </template>
-            <template slot="actions">
-                <DialogActionAddNewInventory @close="onClose" :checkRequire="isEmptyErrors" />
+                <DialogFormAddNewInventory @checkEmptyError="onCheckEmptyError" @close="onClose()" />
             </template>
         </DialogCardAddNewInventory>
     </v-dialog>
@@ -14,10 +11,9 @@
 <script>
 import DialogCardAddNewInventory from "./components/DialogCardAddNewInventory"
 import DialogFormAddNewInventory from "./Form/DialogFormAddNewInventory"
-import DialogActionAddNewInventory from "./Form/DialogActionAddNewInventory"
 export default {
     name: "AddNewInventoryDialog",
-    components: { DialogCardAddNewInventory, DialogFormAddNewInventory, DialogActionAddNewInventory },
+    components: { DialogCardAddNewInventory, DialogFormAddNewInventory },
     props: {
         open: {
             type: Boolean,
@@ -66,6 +62,14 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+.card__footer {
+    padding: 0 5rem 5rem 5rem;
+
+    @media only screen and (max-width: 768px) {
+        padding: 0 3rem 3rem 3rem;
+    }
+}
+
 :deep(.v-dialog) {
     box-shadow: 0px 34px 100px alpha(var(--color-gray), 0.18);
     border-radius: 1.6rem;

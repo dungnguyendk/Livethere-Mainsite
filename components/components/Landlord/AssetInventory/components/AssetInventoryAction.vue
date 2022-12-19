@@ -1,7 +1,8 @@
 <template lang="html">
     <div class="asset-inventory__action">
         <div class="select-type">
-            <v-select :items="typeSelections" value="All" hide-details outlined dense class="me-2"></v-select>
+            <v-select v-model="typeSelected" :items="typeSelections" value="All" hide-details outlined dense
+                class="me-2" @change="changeType"></v-select>
         </div>
         <v-btn class="btn btn--outline btn--green btn--md add-new" @click="openAddNewInventoryDialog = true">
             <v-icon left>ri-add-box-line</v-icon>
@@ -17,11 +18,20 @@ export default {
     components: { AddNewInventoryDialog },
     data() {
         return {
-            typeSelections: [
-                "All", "New", "Vacant", "Tenanted"
-            ],
+            typeSelections: ["All", "New", "Vacant", "Tenanted"],
+            typeSelected: "All",
             openAddNewInventoryDialog: false
         }
+    },
+    methods: {
+        changeType() {
+            this.$emit("changeType", this.typeSelected)
+        }
+    },
+    watch: {
+        // typeSelected() {
+        //     this.changeType()
+        // }
     }
 }
 </script>
@@ -36,12 +46,17 @@ export default {
 }
 
 .btn {
+    height: 4rem !important;
+
     &.add-new {
         line-height: 2rem;
+        height: 4rem;
     }
 }
 
 .select-type {
+    height: 4rem;
+
     .v-select {
         width: 14rem
     }
@@ -62,6 +77,32 @@ export default {
         border-radius: 0.8rem;
     }
 }
+
+:deep(.v-list-item__title) {
+    color: #171717 !important;
+    font-weight: 500 !important;
+    font-size: 1.6rem !important;
+    line-height: 2.4rem !important;
+}
+
+:deep(.v-list-item) {
+    &.v-list-item--active {
+        .v-list-item__content {
+            border-bottom: none !important;
+        }
+    }
+
+    .v-list-item__content {
+        border-bottom: 1px solid #E5E5E5 !important;
+    }
+
+    &:last-child {
+        .v-list-item__content {
+            border-bottom: none !important;
+        }
+    }
+}
+
 
 @media only screen and (max-width: 768px) {
     .asset-inventory {

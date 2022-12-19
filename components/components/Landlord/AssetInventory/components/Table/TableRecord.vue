@@ -11,23 +11,35 @@
         <td data-label="Unit No.">
             {{ source.unitNo }}
         </td>
-        <td data-label="Property Type">
+        <td data-label="Property Type" v-if="typeSelectedChange === 'All' || typeSelectedChange === 'New'">
             {{ source.propertyType }}
         </td>
-        <td data-label="Bedroom Type">
+        <td data-label="Bedroom Type" v-if="typeSelectedChange === 'All' || typeSelectedChange === 'New'">
             {{ source.bedroomType ? source.bedroomType : "-" }}
         </td>
-        <td data-label="Floor Area (sqft)">
+        <td data-label="Floor Area (sqft)" v-if="typeSelectedChange === 'All' || typeSelectedChange === 'New'">
             {{ source.floorArea }}
         </td>
-        <td data-label="Land Area (sqft)">
+        <td data-label="Land Area (sqft)" v-if="typeSelectedChange === 'All' || typeSelectedChange === 'New'">
             {{ source.LandArea }}
         </td>
         <td data-label="Address">
             {{ source.address }}
         </td>
-        <td data-label="Status">
+        <td data-label="Status" v-if="typeSelectedChange === 'All' || typeSelectedChange === 'New'">
             <AssetInventoryBadge :type="source.status" />
+        </td>
+        <td data-label="Estimated Market Rent" v-if="typeSelectedChange === 'Vacant'">
+            {{ source.EMR }}
+        </td>
+        <td data-label="Asking Rent" v-if="typeSelectedChange === 'Vacant'">
+            {{ source.ART }}
+        </td>
+        <td data-label="Monthly Rent" v-if="typeSelectedChange === 'Tenanted'">
+            {{ source.MR }}
+        </td>
+        <td data-label="Annual Revenue" v-if="typeSelectedChange === 'Tenanted'">
+            {{ source.AR }}
         </td>
         <td data-label="Action">
             <div>
@@ -68,6 +80,7 @@
             </div>
         </td>
     </tr>
+
 </template>
 
 <script>
@@ -76,6 +89,10 @@ export default {
     name: "TableRecord",
     components: { AssetInventoryBadge },
     props: {
+        typeSelected: {
+            type: String,
+            default: () => "All"
+        },
         source: {
             type: Object,
             default: () => { }
@@ -87,17 +104,23 @@ export default {
     },
     data() {
         return {
+            typeSelectedChange: "All"
         }
     },
     methods: {
         handleClickOpenRow(item) {
             this.$emit("handleClickOpenRow", item)
         }
+    },
+    watch: {
+        typeSelected(val) {
+            this.typeSelectedChange = val
+        }
     }
 
 }
 </script>
-<style lang="scss" scss>
+<style lang="scss" scoped>
 .table--record {
     &.unSelected {
         display: none !important;
@@ -130,10 +153,11 @@ export default {
 
     background-color: rgba(236, 184, 66, 0.1);
     border: 1px solid #ECB842;
-    border-radius: 8px;
+    border-radius: 0.8rem;
 
     i {
         color: #ECB842;
+        font-size: 2.4rem;
     }
 }
 </style>
