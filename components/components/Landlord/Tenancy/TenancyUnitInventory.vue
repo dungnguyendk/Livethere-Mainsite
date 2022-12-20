@@ -51,6 +51,7 @@ export default {
                 min-width: 8.5rem;
                 display: flex;
                 font-family: var(--font-primary);
+                color: var(--color-menu);
                 font-style: normal;
                 font-weight: 700;
                 font-size: 16px;

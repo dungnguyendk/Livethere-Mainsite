@@ -38,7 +38,7 @@ export default {
         flex-wrap: wrap;
         .top--label {
             padding: 2.6rem 2.4rem 3.7rem;
-            font-family: var( --font-primary);
+            font-family: var(--font-primary);
             font-style: normal;
             font-weight: 800;
             font-size: 20px;
@@ -48,27 +48,26 @@ export default {
         }
         .top--button {
             padding: 2rem 2.4rem 3.2rem 2.4rem;
-            
+
             a {
                 display: flex;
-                min-width: 16rem;
-                font-family: var( --font-primary);
-                font-style: normal;
-                font-weight: 700;
-                font-size: 16px;
-                line-height: 20px;
                 justify-content: center;
                 align-items: center;
                 padding: 13.33px 17.33px;
                 gap: 5.3px;
-                /* 26A0F6 cyan */
+                min-width: 16rem;
+                font-family: var(--font-primary);
+                font-style: normal;
+                font-weight: 700;
+                font-size: 16px;
+                line-height: 20px;
+                color: var(--color-menu);
                 box-sizing: border-box;
                 border: 1px solid var(--color-menu);
                 border-radius: 8px;
-                color: var(--color-menu);
             }
             a:hover {
-                background-color:var(--color-menu);
+                background-color: var(--color-menu);
                 color: var(--color-white);
                 //text-decoration-line: underline;
             }

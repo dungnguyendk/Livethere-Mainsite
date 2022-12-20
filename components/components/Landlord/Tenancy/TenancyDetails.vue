@@ -64,7 +64,7 @@ export default {
             font-size: 20px;
             line-height: 28px;
             color: var(--color-menu);
-        }
+        } 
 
         .top--id {
             font-family: var(--font-primary);
