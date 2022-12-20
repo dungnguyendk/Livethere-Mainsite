@@ -37,10 +37,6 @@ export default {
             type: String,
             default: "Default Dialog"
         },
-        type: {
-            type: String,
-            default: "full"
-        },
         actions: {
             type: Boolean,
             default: true
