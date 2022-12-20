@@ -1,18 +1,9 @@
 <template lang="html">
-    <div></div>
-</template>
-
-<script>
-export default {
-    name: ""
-}
-</script>
-<template lang="html">
     <div class="container">
-        <div class="box--tenacy-expenses">
+        <div class="section--tenacy-expenses">
             <div class="section__top">
-                <h3 class="section__top--title"> Expenses </h3>
-                <div class="section__add--button">
+                <h3 class="top--label"> Expenses </h3>
+                <div class="top--button">
                     <a>
                         <i class="ri-file-download-line"></i>
                         Export to PDF
@@ -35,7 +26,7 @@ export default {
 .container {
     padding-top: 2.4rem;
 }
-.box--tenacy-expenses {
+.section--tenacy-expenses {
     padding-bottom: 5rem;
     background-color: var(--color-white);
     box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.04), 0px 4px 8px rgba(0, 0, 0, 0.06);
@@ -45,7 +36,7 @@ export default {
         display: flex;
         justify-content: space-between;
         flex-wrap: wrap;
-        .section__top--title {
+        .top--label {
             padding: 2.6rem 2.4rem 3.7rem;
             font-family: var( --font-primary);
             font-style: normal;
@@ -55,7 +46,7 @@ export default {
             color: var(--color-menu);
             margin: 0;
         }
-        .section__add--button {
+        .top--button {
             padding: 2rem 2.4rem 3.2rem 2.4rem;
             
             a {
@@ -88,11 +79,11 @@ export default {
             display: flex;
             justify-content: space-between;
             flex-wrap: wrap;
-            .section__top--title {
+            .top--label {
                 padding: 2.6rem 2.4rem 1.5rem;
                 margin: 0;
             }
-            .section__add--button {
+            .top--button {
                 padding-bottom: 1.5rem;
             }
         }

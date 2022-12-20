@@ -32,7 +32,6 @@
                         </p>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
@@ -55,11 +54,9 @@ export default {
         justify-content: space-between;
         align-items: center;
         padding-bottom: 2.4rem;
-
         h3 {
             margin-bottom: 0;
         }
-
         .top--label {
             font-family: var(--font-primary);
             font-style: normal;
@@ -79,51 +76,88 @@ export default {
             color: #171717;
         }
     }
-
-    .section__content {
-
-    }
-
-    .section__column  {
-        p {
-            display: flex;
-            justify-content: flex-start;
-            align-self: center;
-            grid-gap: 2.4rem;
-            gap: 2.4rem;
-            strong {
-                color: var(--color-heading);
-                font-weight: 500;
-            }
-            &:not(:last-child) {
-                margin-bottom: .4rem;
-            }
-        }
-    }
-
     .section__columns {
         display: grid;
         grid-template-columns: repeat(2, minmax(0, 1fr));
         grid-gap: 2.4rem;
+        .section__column {
+            p {
+                display: flex;
+                justify-content: flex-start;
+                align-self: center;
+                grid-gap: 2.4rem;
+                gap: 2.4rem;
+                font-family: var(--font-primary);
+                font-style: normal;
+                font-weight: 500;
+                font-size: 16px;
+                line-height: 40px;
+                color: #737373;
+                span {
+                    min-width: 16.5rem;
+                }
+                strong {
+                    color: var(--color-heading);
+                    font-weight: 500;
+                }
+                // &:not(:last-child) {
+                //     margin-bottom: 0.4rem;
+                // }
+                // &:last-child {
+                //     margin-bottom: 0;
+                // }
+                margin: 0;
+            }
+        }
+        .section__column:nth-child(2) {
+            p {
+                span {
+                    min-width: 10.2rem;
+                }
+            }
+        }
     }
 
-
     @media (max-width: 768px) {
-        .section__content {
+        .section__columns {
+            display: flex;
             padding-right: 0;
             flex-wrap: wrap;
             gap: 0;
 
-            .section__list:nth-child(1) {
+            .section__column:nth-child(1) {
                 order: 1;
+                p {
+                    display: flex;
+                    justify-content: flex-start;
+                    align-self: center;
+                    grid-gap: 2.4rem;
+                    gap: 2.4rem;
+                    color: #737373;
+                    span {
+                        min-width: 16.5rem;
+                    }
+                    strong {
+                        color: var(--color-heading);
+                        font-weight: 500;
+                    }
+                    // &:not(:last-child) {
+                    //     margin-bottom: 0.4rem;
+                    // }
+                    // &:last-child {
+                    //     margin-bottom: 0;
+                    // }
+                    margin: 0;
+                }
             }
 
-            .section__list:nth-child(2) {
+            .section__column:nth-child(2) {
                 order: 2;
                 flex: 0 0 100%;
-
-                .section__list-label {
-                    min-width: 16.5rem;
+                p {
+                    span {
+                        min-width: 16.5rem;
+                    }
                 }
             }
         }
