@@ -8,10 +8,8 @@
                     </div>
                     <div class="header__center">
                         <ul class="menu--top">
-                            <nuxt-link v-for="(item, index) in menus" :to="`/${item.linkURL}`"
-                                       :class="item.linkURL === path ? 'active': ''"
-                            >
-                            {{ item.defaultName }}
+                            <nuxt-link v-for="(item, index) in menus" :to="`/${item.linkURL}`">
+                                {{ item.defaultName }}
                             </nuxt-link>
                         </ul>
                     </div>
@@ -28,10 +26,10 @@
 </template>
 
 <script>
+import { mapState } from "vuex"
 import SiteLogo from "~/components/shared/Logo/SiteLogo.vue"
 import MobileHeader from "~/components/shared/Header/MobileHeader.vue"
 import { httpEndpoint } from "~/services/https/endpoints"
-import { defaultMenu } from "~/ultilities/menus"
 
 export default {
     name: "LandingHeader",
@@ -39,28 +37,18 @@ export default {
     props: {
         source: {
             type: Object,
-            default: () => {
-            }
-        }
-    },
-    computed: {
-        name() {
-            return this.data
-        },
-        path() {
-            return this.$router.path
+            default: () => {}
         }
     },
 
     data() {
         return {
-            menus: defaultMenu,
+            menus: [],
             menuID: 0
         }
     },
-    mounted() {
-        console.log({pathName: this.$router})
-        //this.getData()
+    created() {
+        this.getData()
     },
     methods: {
         // each section has different getData() method
@@ -118,14 +106,6 @@ export default {
                 transform: scale3d(1, 1, 1);
                 transform-origin: 0 100%;
             }
-        }
-        &.active {
-           /* &:before {
-                visibility: visible;
-                opacity: 1;
-                transform: scale3d(1, 1, 1);
-                transform-origin: 0 100%;
-            }*/
         }
     }
 }
