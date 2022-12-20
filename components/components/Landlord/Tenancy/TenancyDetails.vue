@@ -6,28 +6,33 @@
                 <h3 class="top--id"> #348503 </h3>
             </div>
             <div class="section__content">
-                <div class="section__list">
-                    <ul class="section__list-label">
-                        <li> Commercement Date: </li>
-                        <li> Lease Period (months): </li>
-                        <li> Secure Deposit: </li>
-                    </ul>
-                    <ul class="section__list-property">
-                        <li> 20/09/2020 </li>
-                        <li> 24 </li>
-                        <li> SGD 9,000 </li>
-                    </ul>
+                <div class="section__columns">
+                    <div class="section__column">
+                        <p>
+                            <span>Commercement Date:</span>
+                            <strong>20/09/2020</strong>
+                        </p>
+                        <p>
+                            <span>Lease Period (months):</span>
+                            <strong>24</strong>
+                        </p>
+                        <p>
+                            <span>Secure Deposit:</span>
+                            <strong>SGD 9,000</strong>
+                        </p>
+                    </div>
+                    <div class="section__column">
+                        <p>
+                            <span>Expiry Date:</span>
+                            <strong>20/09/2022</strong>
+                        </p>
+                        <p>
+                            <span>Monthly Rent:</span>
+                            <strong>SGD 3,000</strong>
+                        </p>
+                    </div>
                 </div>
-                <div class="section__list">
-                    <ul class="section__list-label">
-                        <li> Expiry Date: </li>
-                        <li> Monthly Rent: </li>
-                    </ul>
-                    <ul class="section__list-property">
-                        <li> 20/09/2022 </li>
-                        <li> SGD 3,000 </li>
-                    </ul>
-                </div>
+
             </div>
         </div>
     </div>
@@ -41,16 +46,20 @@ export default {
 <style lang="scss" scoped>
 .section--tenancy-details {
     background-color: var(--color-white);
-    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.04), 0px 4px 8px rgba(0, 0, 0, 0.06);
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.04), 0px 4px 8px rgba(0, 0, 0, 0.06);
     border-radius: 20px;
+    padding: 2.6rem 2.4rem;
+
     .section__top {
-        padding: 2.7rem 2.4rem 2.4rem 2.4rem;
         display: flex;
         justify-content: space-between;
         align-items: center;
+        padding-bottom: 2.4rem;
+
         h3 {
             margin-bottom: 0;
         }
+
         .top--label {
             font-family: var(--font-primary);
             font-style: normal;
@@ -59,6 +68,7 @@ export default {
             line-height: 28px;
             color: var(--color-menu);
         }
+
         .top--id {
             font-family: var(--font-primary);
             font-style: normal;
@@ -69,60 +79,49 @@ export default {
             color: #171717;
         }
     }
+
     .section__content {
-        padding-left: 2.4rem;
-        padding-bottom: 2.6rem;
-        display: flex;
-        justify-content: flex-start;
-        gap: 23.3rem;
-        .section__list {
+
+    }
+
+    .section__column  {
+        p {
             display: flex;
-            font-family: var(--font-primary);
-            font-style: normal;
-            font-weight: 500;
-            font-size: 16px;
-            line-height: 40px;
-            .section__list-label {
-                list-style-type: none;
-                padding-left: 0;
-                margin-bottom: 0;
-                min-width: 16.5rem;
-                color: #737373;
+            justify-content: flex-start;
+            align-self: center;
+            grid-gap: 2.4rem;
+            gap: 2.4rem;
+            strong {
+                color: var(--color-heading);
+                font-weight: 500;
             }
-            .section__list-property {
-                padding-left: 1.2rem;
-                min-width: 10.7rem;
-                margin-bottom: 0;
-                color: #171717;
-                li {
-                    max-width: 25rem;
-                    text-overflow: ellipsis;
-                    display: -webkit-box;
-                    -webkit-line-clamp: 2;
-                    // line-clamp: 2;
-                    -webkit-box-orient: vertical;
-                    overflow: hidden;
-                }
-            }
-        }
-        .section__list:nth-child(2) {
-            .section__list-label {
-                min-width: 10.2rem;
+            &:not(:last-child) {
+                margin-bottom: .4rem;
             }
         }
     }
+
+    .section__columns {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-gap: 2.4rem;
+    }
+
 
     @media (max-width: 768px) {
         .section__content {
             padding-right: 0;
             flex-wrap: wrap;
             gap: 0;
+
             .section__list:nth-child(1) {
                 order: 1;
             }
+
             .section__list:nth-child(2) {
                 order: 2;
                 flex: 0 0 100%;
+
                 .section__list-label {
                     min-width: 16.5rem;
                 }
