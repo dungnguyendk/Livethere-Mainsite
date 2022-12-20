@@ -122,9 +122,14 @@ export default {
         }
     }
 }
+@media (max-width: 768px) {
+    .form__forgot-password {
+        max-width: 33rem;
+    }
+}
 @media (max-width: 390px) {
     .form__forgot-password {
-        max-width: 330;
+        max-width: 30rem;
     }
 }
 </style>

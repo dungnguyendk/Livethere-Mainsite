@@ -4,11 +4,26 @@
         <form class="form__input">
             <div>
                 <label>Email Address</label>
-                <v-text-field required outlined dense placeholder="Type here"> </v-text-field>
+                <v-text-field
+                    placeholder="Type here"
+                    @keydown.space.prevent
+                    v-model="email"
+                    :rules="rules.email"
+                    outlined
+                    dense
+                >
+                </v-text-field>
             </div>
             <div>
                 <label>Password</label>
-                <v-text-field required outlined type="password" dense placeholder="Type here">
+                <v-text-field
+                    v-model="password"
+                    type="password"
+                    placeholder="Type here"
+                    :rules="rules.password"
+                    dense
+                    outlined
+                >
                 </v-text-field>
             </div>
             <div class="form__link">
@@ -16,7 +31,6 @@
                     >Forgot password</NuxtLink
                 >
             </div>
-
             <button>Login</button>
         </form>
         <!-- End Login form -->
@@ -25,7 +39,17 @@
 
 <script>
 export default {
-    name: "LandordSignInForm"
+    name: "LandordSignInForm",
+    data() {
+        return {
+            email: "",
+            password: "",
+            rules: {
+                email: [(val) => (val || "").length > 0 || "This field is required"],
+                password: [(val) => (val || "").length > 0 || "This field is required"]
+            }
+        }
+    }
 }
 </script>
 <style lang="scss" scoped>
@@ -67,16 +91,18 @@ export default {
             color: #737373;
         }
         button {
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
             background: var(--color-menu);
+            width: 100%;
             color: var(--color-white);
             text-align: center;
+            font-weight: 500;
+            font-size: 16px;
+            line-height: 20px;
             padding: 1rem 0;
             border-radius: 8px;
             font-weight: 700;
+            font-family: var(--font-primary);
+            font-style: normal;
         }
     }
     .form__link {
@@ -89,15 +115,23 @@ export default {
     }
     :deep(.v-input) {
         input {
-            padding: 1rem 0 1rem 0.4rem;
+            margin-bottom: 0;
+            font-style: normal;
             font-weight: 500;
+            font-size: 16px;
+            line-height: 20px;
             color: #171717;
         }
     }
 }
 @media (max-width: 768px) {
     .signin__form {
-        max-width: 350;
+        max-width: 33rem;
+    }
+}
+@media (max-width: 768px) {
+    .signin__form {
+        max-width: 30rem;
     }
 }
 </style>
