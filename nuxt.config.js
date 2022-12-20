@@ -1,12 +1,12 @@
-import {appSettings} from "./app-settings"
+import { appSettings } from "./app-settings"
 
 export default {
     ssr: true,
     components: false,
     head: {
         meta: [
-            {charset: "utf-8"},
-            {name: "viewport", content: "width=device-width, initial-scale=1"},
+            { charset: "utf-8" },
+            { name: "viewport", content: "width=device-width, initial-scale=1" },
             {
                 hid: "description",
                 name: "description",
@@ -14,7 +14,7 @@ export default {
             }
         ],
         link: [
-            {rel: "icon", type: "image/x-icon", href: "/favicon.png"},
+            { rel: "icon", type: "image/x-icon", href: "/favicon.png" },
             {
                 rel: "apple-touch-icon-precomposed",
                 href: "~/static/favicon.png"
@@ -26,19 +26,14 @@ export default {
         ]
     },
 
-    css: [
-        "~/static/fonts/remixIcon/remixicon.css",
-        "~/assets/scss/index.scss"
-    ],
+    css: ["~/static/fonts/remixIcon/remixicon.css", "~/assets/scss/index.scss"],
 
     plugins: [
-        {src: "~plugins/vueliate.js", ssr: false},
-        {src: "~plugins/vue-side-up-down.js", ssr: false},
-        {src: "~plugins/axios.js", ssr: true},
-        /*{src: "~plugins/vue-smooth-scroll.js", ssr: true}*/
+        { src: "~plugins/vueliate.js", ssr: false },
+        { src: "~plugins/vue-side-up-down.js", ssr: false },
+        { src: "~plugins/axios.js", ssr: true },
+        { src: "~plugins/phone-input.js", ssr: false }
     ],
-
-
 
     buildModules: [
         "@nuxtjs/vuetify",
@@ -52,7 +47,7 @@ export default {
         useStylesheet: true,
         families: {
             "Crimson+Text": [400, 700],
-            Nunito: [300, 400, 500, 600, 700],
+            Nunito: [300, 400, 500, 600, 700]
         }
     },
 
@@ -65,7 +60,6 @@ export default {
     axios: {
         baseURL: appSettings.baseURL
     },
-
 
     vuetify: {
         theme: {
