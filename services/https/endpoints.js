@@ -1,7 +1,7 @@
 export const httpEndpoint = {
     sites: {
         getEntries: "api/Sites/Search",
-        getEntryByID: "api/Site/get-by-id",
+        getEntryByID: "api/Site/get-by-id"
     },
 
     pages: {
@@ -13,5 +13,8 @@ export const httpEndpoint = {
 
     enquiry: {
         sendEnquiry: "/api/Enquiries"
+    },
+    auth: {
+        login: "/api/Authen"
     }
 }

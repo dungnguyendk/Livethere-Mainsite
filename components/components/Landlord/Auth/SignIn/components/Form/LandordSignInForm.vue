@@ -1,14 +1,24 @@
 <template lang="html">
     <form class="form--signin">
         <h3 class="form__title"> Login </h3>
+
         <div class="form__fields">
+            <p v-if="httpError !== ''" class="alert alert--red">
+                {{ httpError }}
+            </p>
             <div class="form__field">
-                <label>Email Address</label>
+                <label>Username</label>
                 <v-text-field v-model="email" :error-messages="emailErrors" outlined dense />
             </div>
             <div class="form__field">
                 <label>Password</label>
-                <v-text-field v-model="password" outlined dense :error-messages="passwordErrors" />
+                <v-text-field
+                    v-model="password"
+                    type="password"
+                    outlined
+                    dense
+                    :error-messages="passwordErrors"
+                />
             </div>
         </div>
         <div class="form__link">
@@ -49,14 +59,41 @@ export default {
     data() {
         return {
             email: "",
-            password: ""
+            password: "",
+            httpError: ""
         }
     },
     methods: {
-        onSubmit() {
+        async onSubmit() {
             this.$v.$touch()
             try {
+                this.httpError = ""
                 if (!this.$v.$invalid) {
+                    const params = {
+                        username: this.email, //"tester",
+                        password: this.password, //"tester@123",
+                        clientIPAddress: "11",
+                        clientUserAgent: "11",
+                        timeZone: "8"
+                    }
+                    const response = await this.$auth.loginWith("local", {
+                        data: params
+                    })
+
+                    if (response) {
+                        if (response.data) {
+                            const { jwtToken } = response.data
+                            if (jwtToken) {
+                                window.location.href = "/landlord"
+                            } else {
+                                this.httpError = "The credentials is invalid. Please try again."
+                            }
+                        } else {
+                            this.httpError = "The credentials is incorrect. Please try again."
+                        }
+                    } else {
+                        this.httpError = "The credentials is incorrect. Please try again."
+                    }
                 }
             } catch (e) {
                 console.log({ Error: e.message })
@@ -140,6 +177,7 @@ export default {
     .form__actions {
         display: flex;
         justify-content: space-between;
+
         .btn {
             width: 100%;
         }
