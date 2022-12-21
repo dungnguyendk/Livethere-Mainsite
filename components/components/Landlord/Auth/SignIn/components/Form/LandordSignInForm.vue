@@ -1,72 +1,87 @@
 <template lang="html">
-    <div class="signin__form">
+    <form class="form--signin">
         <h3 class="form__title"> Login </h3>
-        <form class="form__input">
-            <div>
+        <div class="form__fields">
+            <div class="form__field">
                 <label>Email Address</label>
-                <v-text-field
-                    placeholder="Type here"
-                    @keydown.space.prevent
-                    v-model="email"
-                    :rules="rules.email"
-                    outlined
-                    dense
-                >
-                </v-text-field>
+                <v-text-field v-model="email" :error-messages="emailErrors" outlined dense />
             </div>
-            <div>
+            <div class="form__field">
                 <label>Password</label>
-                <v-text-field
-                    v-model="password"
-                    type="password"
-                    placeholder="Type here"
-                    :rules="rules.password"
-                    dense
-                    outlined
-                >
-                </v-text-field>
+                <v-text-field v-model="password" outlined dense :error-messages="passwordErrors" />
             </div>
-            <div class="form__link">
-                <NuxtLink class="form__link--forgot-link" to="/forgot-password"
-                    >Forgot password</NuxtLink
-                >
-            </div>
-            <button>Login</button>
-        </form>
-        <!-- End Login form -->
-    </div>
+        </div>
+        <div class="form__link">
+            <NuxtLink to="/forgot-password"> Forgot password</NuxtLink>
+        </div>
+        <div class="form__actions">
+            <v-btn class="btn btn--primary btn--green" @click="onSubmit">Login</v-btn>
+        </div>
+    </form>
 </template>
 
 <script>
+import { validationMixin } from "vuelidate"
+import { required } from "vuelidate/lib/validators"
+import { setFormControlErrors } from "~/ultilities/form-validations"
+
 export default {
     name: "LandordSignInForm",
+    mixins: [validationMixin],
+    validations: {
+        email: {
+            required
+        },
+        password: {
+            required
+        }
+    },
+    computed: {
+        emailErrors() {
+            return setFormControlErrors(this.$v.email, "This field is required")
+        },
+
+        passwordErrors() {
+            return setFormControlErrors(this.$v.password, "This field is required")
+        }
+    },
+
     data() {
         return {
             email: "",
-            password: "",
-            rules: {
-                email: [(val) => (val || "").length > 0 || "This field is required"],
-                password: [(val) => (val || "").length > 0 || "This field is required"]
+            password: ""
+        }
+    },
+    methods: {
+        onSubmit() {
+            this.$v.$touch()
+            try {
+                if (!this.$v.$invalid) {
+                }
+            } catch (e) {
+                console.log({ Error: e.message })
             }
         }
     }
 }
 </script>
 <style lang="scss" scoped>
-.signin__form {
+.form--signin {
     padding-top: 8.2rem;
     font-family: var(--font-primary);
     font-style: normal;
     font-weight: 700;
     font-size: 24px;
     line-height: 28px;
-    color: #171717;
+    color: var(--color-heading);
     max-width: 375px;
     margin-left: auto;
     margin-right: auto;
+
     h3 {
         margin-bottom: 0;
     }
+
     .form__title {
         display: flex;
         justify-content: center;
@@ -78,24 +93,25 @@ export default {
         font-size: 24px;
         line-height: 28px;
         text-align: center;
-        color: #171717;
+        color: var(--color-heading);
     }
-    .form__input {
+
+    .form__field {
         font-family: var(--font-primary);
         font-style: normal;
         font-size: 16px;
         line-height: 20px;
+
         label {
             padding-bottom: 0.3rem;
             font-weight: 500;
             color: #737373;
         }
+
         button {
-            background: var(--color-menu);
             width: 100%;
             color: var(--color-white);
             text-align: center;
-            font-weight: 500;
             font-size: 16px;
             line-height: 20px;
             padding: 1rem 0;
@@ -103,16 +119,32 @@ export default {
             font-weight: 700;
             font-family: var(--font-primary);
             font-style: normal;
+            background: var(--color-menu);
         }
     }
+
+    .form__fields {
+        padding-top: 2.4rem;
+    }
+
     .form__link {
         padding-bottom: 3.4rem;
-        .form__link--forgot-link {
+
+        a {
             font-weight: 700;
             text-decoration-line: underline;
             color: var(--color-menu);
         }
     }
+
+    .form__actions {
+        display: flex;
+        justify-content: space-between;
+        .btn {
+            width: 100%;
+        }
+    }
+
     :deep(.v-input) {
         input {
             margin-bottom: 0;
@@ -120,15 +152,17 @@ export default {
             font-weight: 500;
             font-size: 16px;
             line-height: 20px;
-            color: #171717;
+            color: var(--color-heading);
         }
     }
 }
+
 @media (max-width: 768px) {
     .signin__form {
         max-width: 33rem;
     }
 }
+
 @media (max-width: 768px) {
     .signin__form {
         max-width: 30rem;
