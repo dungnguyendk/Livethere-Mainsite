@@ -42,7 +42,7 @@ export default {
     font-weight: 700;
     font-size: 24px;
     line-height: 28px;
-    color: #171717;
+    color: var(--color-title-black);
     text-align: center;
 }
 
@@ -54,7 +54,7 @@ export default {
 }
 
 .box--register {
-    border: 1px solid #34444C;
+    border: 1px solid var(--color-box-register);
     border-radius: 2rem;
     align-items: center;
 }
@@ -71,7 +71,7 @@ export default {
     }
 
     span {
-        color: #34444C;
+        color: var(--color-box-register);
         font-weight: 800;
         font-size: 20px;
         line-height: 28px;
@@ -82,8 +82,8 @@ export default {
     margin: 2.4rem;
 
     &--rule {
-        border-top: 1px solid #E5E5E5;
-        border-bottom: 1px solid #E5E5E5;
+        border-top: 1px solid var(--border-color);
+        border-bottom: 1px solid var(--border-color);
         padding: 2rem 0;
     }
 
@@ -93,7 +93,7 @@ export default {
         font-weight: 500;
         font-size: 16px;
         line-height: 24px;
-        color: #34444C;
+        color: var(--color-box-register);
         margin-bottom: 2rem;
 
         &:last-child {

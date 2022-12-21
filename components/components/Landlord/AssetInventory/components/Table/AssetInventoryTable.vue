@@ -252,18 +252,18 @@ export default {
 }
 
 .tr-total {
-    border: 1px solid #00634F;
+    border: 1px solid var(--color-menu);
     background: rgba(0, 99, 79, 0.05);
 
     td {
         padding: 1.6rem;
-        color: #171717;
+        color: var(--color-title-black);
         font-weight: 700;
         font-size: 1.8rem;
         line-height: 2.8rem;
 
         span {
-            color: #00634F;
+            color: var(--color-menu);
             font-weight: 800;
             font-size: 2rem;
             line-height: 2.8rem;

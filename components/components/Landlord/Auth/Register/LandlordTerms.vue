@@ -91,7 +91,7 @@ export default {
 .section__form--term {
     width: 78rem;
     height: 56.5rem;
-    border: 1px solid #E5E5E5;
+    border: 1px solid var(--border-color);
     padding: 1.8rem 2rem;
     overflow: auto;
 
@@ -100,28 +100,28 @@ export default {
     }
 
     &::-webkit-scrollbar-track {
-        background: #FFF;
+        background: var(--color-white);
     }
 
     &::-webkit-scrollbar-thumb {
         border: 0.4rem solid rgba(0, 0, 0, 0);
         background-clip: padding-box;
         border-radius: 100rem;
-        background-color: #E5E5E5;
+        background-color: var(--border-color);
     }
 
     -ms-overflow-style: none;
     scrollbar-width: none;
 
     p {
-        color: #171717;
+        color: var(--color-title-black);
         font-weight: 700;
         font-size: 1.8rem;
         line-height: 2.4rem;
     }
 
     span {
-        color: #171717;
+        color: var(--color-title-black);
         font-weight: 400;
         font-size: 1.6rem;
         line-height: 2.4rem;
@@ -135,13 +135,8 @@ export default {
     font-weight: 700;
     font-size: 2.4rem;
     line-height: 2.8rem;
-    color: #171717;
+    color: var(--color-title-black);
     text-align: center;
-}
-
-.cbx--custom {
-    background: #EDB842;
-    border-radius: 4px;
 }
 
 @media only screen and (max-width: 768px) {

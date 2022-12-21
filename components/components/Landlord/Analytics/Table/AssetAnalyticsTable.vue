@@ -132,7 +132,7 @@ export default {
 
     tbody {
         tr:nth-child(even) {
-            background-color: #FAFAFA;
+            background-color: var(--bg-color-white);
         }
     }
 
