@@ -4,7 +4,7 @@
     </div>
 </template>
 <script>
-import AssetAnalyticsTable from "~/components/components/Landlord/AssetAnalytics/Table/AssetAnalyticsTable.vue"
+import AssetAnalyticsTable from "~/components/components/Landlord/Analytics/Table/AssetAnalyticsTable.vue"
 export default {
     components: {
         AssetAnalyticsTable

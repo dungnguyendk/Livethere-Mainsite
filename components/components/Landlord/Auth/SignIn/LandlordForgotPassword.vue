@@ -1,9 +1,15 @@
 <template lang="html">
-    <div></div>
+    <div>
+        <LandordForgotPasswordForm />
+    </div>
 </template>
 
 <script>
+import LandordForgotPasswordForm from "./components/Form/LandordForgotPasswordForm.vue"
 export default {
-    name: "LandlordForgotPassword"
+    name: "LandlordForgotPassword",
+    components: {
+        LandordForgotPasswordForm
+    }
 }
 </script>
