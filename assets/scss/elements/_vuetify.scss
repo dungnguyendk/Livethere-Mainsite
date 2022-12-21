@@ -1,6 +1,6 @@
 #__layout {
     .v-application {
-        .row{
+        .row {
             margin: -0.6rem;
         }
         .col,
@@ -8,18 +8,43 @@
             padding: 0.6rem;
         }
     }
-
 }
-.v-menu__content{
+.v-menu__content {
     min-width: 19rem !important;
     border-radius: 0.8rem !important;
-    background: #FFFFFF;
-    border: 1px solid #E5E5E5;
+    background: #ffffff;
+    border: 1px solid #e5e5e5;
     box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.04), 0px 4px 8px rgba(0, 0, 0, 0.06);
-    &:not([role=menu]) {
+    &:not([role="menu"]) {
         margin-top: 5.2rem !important;
     }
-    &[role=menu] {
+    &[role="menu"] {
         margin-top: 1.2rem !important;
+    }
+}
+.v-otp-input {
+    .v-input {
+        display: flex;
+        justify-content: center !important;
+        align-items: center;
+       .v-input__control {
+            max-width: 4.8rem;
+            border-radius: 50%;
+            background: #fafafa;
+        }
+    }
+    .v-text-field--outlined > .v-input__control > .v-input__slot {
+        align-items: center !important;
+        max-width: 4.8rem;
+        min-height: 4.8rem;
+        margin: 0;
+        background: #fafafa !important;
+    }
+    .theme--light.v-input {
+        color: #edb842 !important;
+    }
+    .theme--light.v-input input,
+    .theme--light.v-input textarea {
+        color: #edb842 !important;
     }
 }
