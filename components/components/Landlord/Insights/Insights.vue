@@ -9,13 +9,12 @@
 </template>
 
 <script>
-import ArticleGrid from "~/components/components/MarketInsights/Article/ArticleGrid.vue"
+
+import ArticleGrid from "~/components/components/Landlord/Insights/Article/ArticleGrid.vue"
 
 export default {
-    name: "MarketInsights",
-    components: {
-        ArticleGrid
-    },
+    name: "Insights",
+    components: { ArticleGrid },
     data() {
         return {
             articles: [
@@ -114,6 +113,7 @@ export default {
         grid-gap: 2.4rem;
         margin: 3.2rem auto 8rem;
     }
+
     @media screen and (max-width: 1023px) {
         .section__container {
             grid-template-columns: repeat(2, minmax(0, 1fr));
