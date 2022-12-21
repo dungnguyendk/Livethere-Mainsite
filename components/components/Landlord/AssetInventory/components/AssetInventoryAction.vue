@@ -79,7 +79,7 @@ export default {
 }
 
 :deep(.v-list-item__title) {
-    color: #171717 !important;
+    color: var(--color-title-black) !important;
     font-weight: 500 !important;
     font-size: 1.6rem !important;
     line-height: 2.4rem !important;
@@ -93,7 +93,7 @@ export default {
     }
 
     .v-list-item__content {
-        border-bottom: 1px solid #E5E5E5 !important;
+        border-bottom: 1px solid var(--border-color) !important;
     }
 
     &:last-child {

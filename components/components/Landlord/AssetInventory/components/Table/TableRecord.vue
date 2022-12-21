@@ -152,11 +152,11 @@ export default {
     }
 
     background-color: rgba(236, 184, 66, 0.1);
-    border: 1px solid #ECB842;
+    border: 1px solid var(--color-more-options);
     border-radius: 0.8rem;
 
     i {
-        color: #ECB842;
+        color: var(--color-more-options);
         font-size: 2.4rem;
     }
 }
