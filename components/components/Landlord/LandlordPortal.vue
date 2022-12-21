@@ -2,17 +2,22 @@
     <div class="page--landlord">
         <div class="page__top">
             <nav class="nav--top">
-                <a v-for="item in navigation" href="#" :class="activePanel=== item.value ? 'active': ''"
-                   @click.prevent="onSelectPanel(item)">
-                    {{ item.label }} </a>
+                <a
+                    v-for="item in navigation"
+                    href="#"
+                    :class="activePanel === item.value ? 'active' : ''"
+                    @click.prevent="onSelectPanel(item)"
+                >
+                    {{ item.label }}
+                </a>
             </nav>
         </div>
         <div class="page__container">
             <LandlordDashboard v-if="activePanel === 'dashboard'" />
-            <AssetInventory v-if="activePanel=== 'assets'" />
-            <Analytics v-if="activePanel=== 'analytics'" />
-            <MarketingInventory v-if="activePanel=== 'marketing'" />
-            <Insights v-if="activePanel=== 'insights'" />
+            <AssetInventory v-if="activePanel === 'assets'" />
+            <Analytics v-if="activePanel === 'analytics'" />
+            <MarketingInventory v-if="activePanel === 'marketing'" />
+            <Insights v-if="activePanel === 'insights'" />
         </div>
     </div>
 </template>
@@ -73,7 +78,8 @@ export default {
         font-size: 1.6rem;
         font-weight: 500;
 
-        &:hover, &:focus {
+        &:hover,
+        &:focus {
             color: var(--color-primary);
         }
 
@@ -81,7 +87,6 @@ export default {
             font-weight: 700;
             color: var(--color-primary);
         }
-
     }
 
     @media screen and (max-width: 1366px) {
