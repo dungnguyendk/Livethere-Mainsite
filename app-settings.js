@@ -22,7 +22,7 @@ export const CURRENT_ENV = "develop"
 export const currentSettings = settings.find((item) => item.env === CURRENT_ENV)
 
 export const appSettings = {
-    baseURL: currentSettings.base_url,
+    baseURL: currentSettings.landlord,
     siteName: "Livethere"
 }
 export const appMedia = {

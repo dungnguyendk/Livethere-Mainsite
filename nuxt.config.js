@@ -1,5 +1,5 @@
 import { appSettings } from "./app-settings"
-
+import { httpEndpoint } from "./services/https/endpoints"
 export default {
     ssr: true,
     components: false,
@@ -31,8 +31,8 @@ export default {
     plugins: [
         { src: "~plugins/vueliate.js", ssr: false },
         { src: "~plugins/vue-side-up-down.js", ssr: false },
-        { src: "~plugins/axios.js", ssr: true },
-        { src: "~plugins/phone-input.js", ssr: false }
+        { src: "~plugins/axios.js", ssr: true }
+        /*{src: "~plugins/vue-smooth-scroll.js", ssr: true}*/
     ],
 
     buildModules: [
@@ -59,6 +59,36 @@ export default {
 
     axios: {
         baseURL: appSettings.baseURL
+    },
+    auth: {
+        redirect: {
+            login: false,
+            logout: "/",
+            //callback: "/auth/signin"*/
+            home: false
+        },
+        //redirect: false,
+        rewriteRedirects: false,
+        strategies: {
+            local: {
+                token: {
+                    property: "jwtToken",
+                    global: true,
+                    required: true,
+                    type: "Bearer",
+                    maxAge: 360000
+                },
+                user: {
+                    property: false,
+                    autoFetch: false
+                },
+                endpoints: {
+                    login: { url: httpEndpoint.auth.login, method: "post" },
+                    logout: false,
+                    user: false
+                }
+            }
+        }
     },
 
     vuetify: {
