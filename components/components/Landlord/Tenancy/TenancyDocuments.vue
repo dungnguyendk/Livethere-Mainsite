@@ -1,9 +1,7 @@
 <template lang="html">
-    <div class="container">
-        <div class="section--tenacy-document"> 
-                <h3 class="section__label"> Tenancy Documents </h3>     
-            <TenancyDocumentTable />
-        </div>
+    <div class="section--tenacy-document">
+        <h3 class="section__label"> Tenancy Documents </h3>
+        <TenancyDocumentTable />
     </div>
 </template>
 

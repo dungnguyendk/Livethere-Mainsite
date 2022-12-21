@@ -1,17 +1,15 @@
 <template lang="html">
-    <div class="container">
-        <div class="section--tenacy-expenses">
-            <div class="section__top">
-                <h3 class="top--label"> Expenses </h3>
-                <div class="top--button">
-                    <a>
-                        <i class="ri-file-download-line"></i>
-                        Export to PDF
-                    </a>
-                </div>
+    <div class="section--tenacy-expenses">
+        <div class="section__top">
+            <h3 class="top--label"> Expenses </h3>
+            <div class="top--button">
+                <a>
+                    <i class="ri-file-download-line"></i>
+                    Export to PDF
+                </a>
             </div>
-            <TenancyExpenseTable />
         </div>
+        <TenancyExpenseTable />
     </div>
 </template>
 

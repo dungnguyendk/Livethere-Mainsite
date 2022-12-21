@@ -1,17 +1,15 @@
 <template lang="html">
-    <div class="container">
-        <div class="section--tenacy-inventory">
-            <div class="section__top">
-                <h3 class="top--label"> Unit Inventory </h3>
-                <div class="top--button">
-                    <a>
-                        <i class="ri-add-box-line"></i>
-                        Add
-                    </a>
-                </div>
+    <div class="section--tenacy-inventory">
+        <div class="section__top">
+            <h3 class="top--label"> Unit Inventory </h3>
+            <div class="top--button">
+                <a>
+                    <i class="ri-add-box-line"></i>
+                    Add
+                </a>
             </div>
-            <TenancyInventoryTable />
         </div>
+        <TenancyInventoryTable />
     </div>
 </template>
 

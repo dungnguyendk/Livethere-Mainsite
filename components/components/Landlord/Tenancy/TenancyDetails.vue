@@ -1,36 +1,34 @@
 <template lang="html">
-    <div class="container">
-        <div class="section--tenancy-details">
-            <div class="section__top">
-                <h3 class="top--label"> Tenancy Details </h3>
-                <h3 class="top--id"> #348503 </h3>
-            </div>
-            <div class="section__content">
-                <div class="section__columns">
-                    <div class="section__column">
-                        <p>
-                            <span>Commercement Date:</span>
-                            <strong>20/09/2020</strong>
-                        </p>
-                        <p>
-                            <span>Lease Period (months):</span>
-                            <strong>24</strong>
-                        </p>
-                        <p>
-                            <span>Secure Deposit:</span>
-                            <strong>SGD 9,000</strong>
-                        </p>
-                    </div>
-                    <div class="section__column">
-                        <p>
-                            <span>Expiry Date:</span>
-                            <strong>20/09/2022</strong>
-                        </p>
-                        <p>
-                            <span>Monthly Rent:</span>
-                            <strong>SGD 3,000</strong>
-                        </p>
-                    </div>
+    <div class="section--tenancy-details">
+        <div class="section__top">
+            <h3 class="top--label"> Tenancy Details </h3>
+            <h3 class="top--id"> #348503 </h3>
+        </div>
+        <div class="section__content">
+            <div class="section__columns">
+                <div class="section__column">
+                    <p>
+                        <span>Commercement Date:</span>
+                        <strong>20/09/2020</strong>
+                    </p>
+                    <p>
+                        <span>Lease Period (months):</span>
+                        <strong>24</strong>
+                    </p>
+                    <p>
+                        <span>Secure Deposit:</span>
+                        <strong>SGD 9,000</strong>
+                    </p>
+                </div>
+                <div class="section__column">
+                    <p>
+                        <span>Expiry Date:</span>
+                        <strong>20/09/2022</strong>
+                    </p>
+                    <p>
+                        <span>Monthly Rent:</span>
+                        <strong>SGD 3,000</strong>
+                    </p>
                 </div>
             </div>
         </div>
@@ -64,7 +62,7 @@ export default {
             font-size: 20px;
             line-height: 28px;
             color: var(--color-menu);
-        } 
+        }
 
         .top--id {
             font-family: var(--font-primary);

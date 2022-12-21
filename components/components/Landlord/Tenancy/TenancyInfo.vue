@@ -1,17 +1,15 @@
 <template lang="html">
-    <div class="container">
-        <div class="section--tenacy-info">
-            <div class="section__top">
-                <h3 class="top--title"> Tenancy Info </h3>
-                <div class="top--button">
-                    <a>
-                        <i class="ri-add-box-line"></i>
-                        Add
-                    </a>
-                </div>
+    <div class="section--tenacy-info">
+        <div class="section__top">
+            <h3 class="top--title"> Tenancy Info </h3>
+            <div class="top--button">
+                <a>
+                    <i class="ri-add-box-line"></i>
+                    Add
+                </a>
             </div>
-            <TenancyInfoTable />
         </div>
+        <TenancyInfoTable />
     </div>
 </template>
 
