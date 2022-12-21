@@ -31,8 +31,8 @@ export default {
     plugins: [
         { src: "~plugins/vueliate.js", ssr: false },
         { src: "~plugins/vue-side-up-down.js", ssr: false },
-        { src: "~plugins/axios.js", ssr: true }
-        /*{src: "~plugins/vue-smooth-scroll.js", ssr: true}*/
+        { src: "~plugins/axios.js", ssr: true },
+        { src: "~plugins/phone-input.js", ssr: false }
     ],
 
     buildModules: [
