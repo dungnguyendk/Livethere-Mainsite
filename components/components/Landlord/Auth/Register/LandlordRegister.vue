@@ -8,6 +8,7 @@
 <script>
 import LandlordTerms from "~/components/components/Landlord/Auth/Register/LandlordTerms.vue"
 import LandlordRegisterForm from "~/components/components/Landlord/Auth/Register/components/Form/LandlordRegisterForm.vue"
+
 export default {
     name: "LandlordRegister",
     components: { LandlordTerms, LandlordRegisterForm }
