@@ -12,8 +12,8 @@
 .v-menu__content {
     min-width: 19rem !important;
     border-radius: 0.8rem !important;
-    background: #ffffff;
-    border: 1px solid #e5e5e5;
+    background-color: var(--color-white);
+    border: 1px solid var(--border-color);
     box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.04), 0px 4px 8px rgba(0, 0, 0, 0.06);
     &:not([role="menu"]) {
         margin-top: 5.2rem !important;
@@ -27,10 +27,10 @@
         display: flex;
         justify-content: center !important;
         align-items: center;
-       .v-input__control {
+        .v-input__control {
             max-width: 4.8rem;
             border-radius: 50%;
-            background: #fafafa;
+            background-color: var(--bg-color-white);
         }
     }
     .v-text-field--outlined > .v-input__control > .v-input__slot {
@@ -38,13 +38,13 @@
         max-width: 4.8rem;
         min-height: 4.8rem;
         margin: 0;
-        background: #fafafa !important;
+        background-color: var(--bg-color-white) !important;
     }
     .theme--light.v-input {
-        color: #edb842 !important;
+        color: var(--color-more-options) !important;
     }
     .theme--light.v-input input,
     .theme--light.v-input textarea {
-        color: #edb842 !important;
+        color: var(--color-more-options) !important;
     }
 }

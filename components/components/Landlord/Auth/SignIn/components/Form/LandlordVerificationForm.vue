@@ -52,7 +52,7 @@ export default {
                 this.snackbar = true
             }, 3500)
         }
-    },
+    }
 }
 </script>
 <style lang="scss" scoped>
@@ -63,7 +63,7 @@ export default {
     font-weight: 700;
     font-size: 24px;
     line-height: 28px;
-    color: #171717;
+    color: var(--color-title-black);
     max-width: 375px;
     margin-left: auto;
     margin-right: auto;
@@ -81,7 +81,7 @@ export default {
         font-size: 24px;
         line-height: 28px;
         text-align: center;
-        color: #171717;
+        color: var(--color-title-black);
     }
     .form__instruction {
         padding-top: 3rem;
@@ -93,7 +93,7 @@ export default {
             font-size: 16px;
             line-height: 24px;
             text-align: center;
-            color: #171717;
+            color: var(--color-title-black);
             margin-bottom: 0;
         }
     }
