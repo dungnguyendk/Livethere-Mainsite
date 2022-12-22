@@ -14,24 +14,32 @@
         </div>
         <div class="page__container">
             <LandlordDashboard v-if="activePanel === 'dashboard'" />
-            <AssetInventory v-if="activePanel === 'assets'" />
+            <PropertyDetails v-if="activePanel === 'assets'" />
+            <!--            <AssetInventory v-if="activePanel === 'assets'" />-->
             <Analytics v-if="activePanel === 'analytics'" />
             <MarketingInventory v-if="activePanel === 'marketing'" />
             <Insights v-if="activePanel === 'insights'" />
         </div>
     </div>
 </template>
-
 <script>
 import LandlordDashboard from "~/components/components/Landlord/Dashboard/LandlordDashboard.vue"
 import AssetInventory from "~/components/components/Landlord/AssetInventory/AssetInventory.vue"
 import Analytics from "~/components/components/Landlord/Analytics/Analytics.vue"
 import Insights from "~/components/components/Landlord/Insights/Insights.vue"
 import MarketingInventory from "~/components/components/Landlord/MarketingInventory/MarketingInventory.vue"
+import PropertyDetails from "~/components/components/Landlord/Property/PropertyDetails.vue"
 
 export default {
     name: "LandlordPortal",
-    components: { MarketingInventory, Insights, Analytics, AssetInventory, LandlordDashboard },
+    components: {
+        PropertyDetails,
+        MarketingInventory,
+        Insights,
+        Analytics,
+        AssetInventory,
+        LandlordDashboard
+    },
     data() {
         return {
             activePanel: "dashboard",
@@ -96,12 +104,15 @@ export default {
 }
 
 .page--landlord {
+    background-color: #fafafa;
+    min-height: 100vh;
     .page__top {
         display: flex;
         justify-content: center;
         align-items: center;
         min-height: 6rem;
         box-shadow: 0 0 6px rgba(0, 0, 0, 0.02), 0 2px 4px rgba(0, 0, 0, 0.08);
+        background-color: #ffff;
     }
 }
 </style>
