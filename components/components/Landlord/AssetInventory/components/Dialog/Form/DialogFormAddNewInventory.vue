@@ -60,6 +60,14 @@
                     hide-spin-buttons :error-messages="floorAreaErrors" @input="$v.floorArea.$touch()"
                     @blur="$v.floorArea.$touch()" />
             </div>
+            <div class="form--input">
+                <label>Purchased Price</label>
+                <v-text-field v-model.trim="purchasedPrice" outlined dense placeholder="Type here" type="number"
+                    hide-spin-buttons :error-messages="purchasedPriceErrors" @input="$v.purchasedPrice.$touch()"
+                    @blur="$v.purchasedPrice.$touch()" suffix="SGD" reverse> 
+                </v-text-field>
+
+            </div>
             <div class="form--input" v-if="propertyType.name === 'LANDED PROPERTY'">
                 <label>Land Area (sqft)</label>
                 <v-text-field v-model.trim="landArea" outlined dense placeholder="Type here" type="number"
@@ -108,6 +116,10 @@ export default {
                 return this.propertyType.name === 'LANDED PROPERTY'
             }),
             minValue: minValue(1)
+        },
+        purchasedPrice: {
+            required,
+            minValue: minValue(1)
         }
     },
     data() {
@@ -125,7 +137,8 @@ export default {
             tenure: '',
             tenureList: TENURE,
             floorArea: null,
-            landArea: null
+            landArea: null,
+            purchasedPrice: 0,
         }
     },
     computed: {
@@ -191,6 +204,13 @@ export default {
             !this.$v.landArea.minValue && errors.push("Land Area is more than 0");
             return errors;
         },
+        purchasedPriceErrors() {
+            const errors = [];
+            if (!this.$v.purchasedPrice.$dirty) return errors;
+            !this.$v.purchasedPrice.required && errors.push("Purchased Price is required");
+            !this.$v.purchasedPrice.minValue && errors.push("Purchased Price is more than 0");
+            return errors;
+        },
     },
     methods: {
         submitForm() {
@@ -213,6 +233,7 @@ export default {
                     country: "Singapore",
                     bedroomTypeFID: this.bedroom.id ? this.bedroom.id : 0,
                     bedroomTypeDisplay: this.bedroom.name ? this.bedroom.name : 0,
+                    purchasedPrice: this.purchasedPrice ? this.purchasedPrice : 0,
 
                 }
                 this.$store.dispatch("inventories/createInventories", params)
