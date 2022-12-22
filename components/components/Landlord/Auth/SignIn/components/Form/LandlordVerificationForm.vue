@@ -6,8 +6,20 @@
             <p> Email OTP had been sent. Please retrieved the One Time Password and key-in here </p>
         </div>
         <div class="form__input">
-            <v-otp-input length="4" type="number"></v-otp-input>
+            <v-otp-input
+                length="4"
+                type="number"
+                v-model="otp"
+                :disabled="loading"
+                @finish="onFinish"
+            ></v-otp-input>
+            <v-overlay absolute :value="loading">
+                <v-progress-circular indeterminate color="primary"></v-progress-circular>
+            </v-overlay>
         </div>
+        <v-snackbar v-model="snackbar" :color="snackbarColor" :timeout="2000">
+            {{ text }}
+        </v-snackbar>
         <div class="form__button">
             <v-btn>Submit</v-btn>
         </div>
@@ -18,12 +30,31 @@
         <!-- End Login form -->
     </div>
 </template>
+
 <script>
 export default {
-    name: "LandordForgotPasswordForm"
+    name: "LandordForgotPasswordForm",
+    data: () => ({
+        loading: false,
+        snackbar: false,
+        snackbarColor: "default",
+        otp: "",
+        text: "",
+        expectedOtp: "2006"
+    }),
+    methods: {
+        onFinish(rsp) {
+            this.loading = true
+            setTimeout(() => {
+                this.loading = false
+                this.snackbarColor = rsp === this.expectedOtp ? "success" : "warning"
+                this.text = `Processed OTP with "${rsp}" (${this.snackbarColor})`
+                this.snackbar = true
+            }, 3500)
+        }
+    },
 }
 </script>
-
 <style lang="scss" scoped>
 .form--otp {
     padding-top: 8.2rem;
