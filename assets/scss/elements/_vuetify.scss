@@ -14,37 +14,51 @@
     border-radius: 0.8rem !important;
     background: #ffffff;
     border: 1px solid #e5e5e5;
-    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.04), 0px 4px 8px rgba(0, 0, 0, 0.06);
-    &:not([role="menu"]) {
-        margin-top: 5.2rem !important;
-    }
-    &[role="menu"] {
-        margin-top: 1.2rem !important;
-    }
-}
-.v-otp-input {
-    .v-input {
-        display: flex;
-        justify-content: center !important;
-        align-items: center;
-       .v-input__control {
-            max-width: 4.8rem;
-            border-radius: 50%;
-            background: #fafafa;
+    .v-input--checkbox {
+        .v-label {
+            color: #000000 !important;
+            font-weight: 400;
+            font-size: 1.6rem;
+            line-height: 2.4rem !important;
         }
     }
-    .v-text-field--outlined > .v-input__control > .v-input__slot {
-        align-items: center !important;
-        max-width: 4.8rem;
-        min-height: 4.8rem;
-        margin: 0;
-        background: #fafafa !important;
+    .v-menu__content {
+        min-width: 19rem !important;
+        border-radius: 0.8rem !important;
+        background: #ffffff;
+        border: 1px solid var(--border-color);
+        box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.04), 0px 4px 8px rgba(0, 0, 0, 0.06);
+        &:not([role="menu"]) {
+            margin-top: 5.2rem !important;
+        }
+        &[role="menu"] {
+            margin-top: 1.2rem !important;
+        }
     }
-    .theme--light.v-input {
-        color: #edb842 !important;
-    }
-    .theme--light.v-input input,
-    .theme--light.v-input textarea {
-        color: #edb842 !important;
+    .v-otp-input {
+        .v-input {
+            display: flex;
+            justify-content: center !important;
+            align-items: center;
+            .v-input__control {
+                max-width: 4.8rem;
+                border-radius: 50%;
+                background: #fafafa;
+            }
+        }
+        .v-text-field--outlined > .v-input__control > .v-input__slot {
+            align-items: center !important;
+            max-width: 4.8rem;
+            min-height: 4.8rem;
+            margin: 0;
+            background: #fafafa !important;
+        }
+        .theme--light.v-input {
+            color: #edb842 !important;
+        }
+        .theme--light.v-input input,
+        .theme--light.v-input textarea {
+            color: #edb842 !important;
+        }
     }
 }

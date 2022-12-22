@@ -1,11 +1,15 @@
 <template lang="html">
     <div>
-        <LandlordSignIn />
+        <LandordSignInForm />
     </div>
 </template>
 
 <script>
+import LandordSignInForm from "./components/Form/LandordSignInForm.vue"
 export default {
-    name: "LandlordSignIn"
+    name: "LandlordSignIn",
+    components: {
+        LandordSignInForm
+    }
 }
 </script>

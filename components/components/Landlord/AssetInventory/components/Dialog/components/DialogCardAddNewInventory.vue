@@ -81,12 +81,13 @@ export default {
             font-weight: 700;
             font-size: 2.4rem;
             line-height: 2.8rem;
-            color: #171717;
+            color: var(--color-title-black);
         }
     }
 
     .card__footer {
         padding: 0 5rem 5rem 5rem;
+
         @media only screen and (max-width: 768px) {
             padding: 0 3rem 3rem 3rem;
         }

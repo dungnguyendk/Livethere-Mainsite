@@ -73,6 +73,6 @@ export default {
 :deep(.v-dialog) {
     box-shadow: 0px 34px 100px alpha(var(--color-gray), 0.18);
     border-radius: 1.6rem;
-    background-color: #fff;
+    background-color: var(--color-white);
 }
 </style>

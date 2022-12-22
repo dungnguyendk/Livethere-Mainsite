@@ -1,13 +1,13 @@
 <!-- <template lang="html">
     <div>
-        <AssetAnalyticsTable />
+        <Analytics />
     </div>
 </template>
 <script>
-import AssetAnalyticsTable from "~/components/components/Landlord/AssetAnalytics/Table/AssetAnalyticsTable.vue"
+import Analytics from "~/components/components/Landlord/Analytics/Analytics.vue"
 export default {
     components: {
-        AssetAnalyticsTable
+        Analytics
     }
 }
 </script>

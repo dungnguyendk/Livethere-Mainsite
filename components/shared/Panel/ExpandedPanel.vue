@@ -26,13 +26,13 @@ export default {
 <style lang="scss" scoped>
 .btn--close {
     align-self: center;
-    color: #00634F;
+    color: var(--color-menu);
     min-width: 6.4rem;
     min-height: 3.2rem;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #FFF;
+    background-color: var(--color-white);
 
     i {
         font-size: 3rem;
@@ -66,14 +66,14 @@ export default {
             content: "";
             width: 100%;
             height: 1px;
-            background-color: #00634F;
+            background-color: var(--color-menu);
         }
     }
 
     &__container {
         margin-top: 2.6rem;
         padding: 2.4rem;
-        background-color: #FAFAFA;
+        background-color: var(--bg-color-white);
     }
 }
 

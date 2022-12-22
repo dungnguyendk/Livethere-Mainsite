@@ -201,7 +201,7 @@ export default {
         font-weight: 500;
         font-size: 1.6rem;
         line-height: 2rem;
-        color: #737373;
+        color: var(--color-label);
         margin-bottom: 0.8rem;
     }
 }
@@ -215,7 +215,7 @@ export default {
         font-weight: 500;
         font-size: 1.6rem;
         line-height: 2rem;
-        color: #737373;
+        color: var(--color-label);
         margin-bottom: 0.8rem;
     }
 }
@@ -245,7 +245,7 @@ export default {
     }
 
     .cancel-form {
-        color: #00634F;
+        color: var(--color-menu);
         text-decoration-line: underline;
         font-weight: 700;
         font-size: 1.6rem;
