@@ -2,7 +2,7 @@
     <tr :class="`table--record ${source.id !== selectedId && selectedId !== -1 ? 'unSelected' : ''}`">
         <td data-label="Property">
             <div>
-                <img :src="`${source.propertyImg}`" alt="" class="table--record__img">
+                <img src="https://picsum.photos/600/400.jpg?random=" alt="" class="table--record__img">
                 <p class="first-child" @click="handleClickOpenRow(source.id)">
                     {{ source.propertyName }}
                 </p>
@@ -12,22 +12,22 @@
             {{ source.unitNo }}
         </td>
         <td data-label="Property Type" v-if="typeSelectedChange === 'All' || typeSelectedChange === 'New'">
-            {{ source.propertyType }}
+            {{ source.propertyTypeDisplay }}
         </td>
         <td data-label="Bedroom Type" v-if="typeSelectedChange === 'All' || typeSelectedChange === 'New'">
-            {{ source.bedroomType ? source.bedroomType : "-" }}
+            {{ source.bedroomTypeDisplay ? source.bedroomTypeDisplay : "-" }}
         </td>
         <td data-label="Floor Area (sqft)" v-if="typeSelectedChange === 'All' || typeSelectedChange === 'New'">
-            {{ source.floorArea }}
+            {{ source.floorAreaSqft }}
         </td>
         <td data-label="Land Area (sqft)" v-if="typeSelectedChange === 'All' || typeSelectedChange === 'New'">
-            {{ source.LandArea }}
+            {{ source.LandArea ? source.LandArea : '-' }}
         </td>
         <td data-label="Address">
-            {{ source.address }}
+            {{ source.streetName }}
         </td>
         <td data-label="Status" v-if="typeSelectedChange === 'All' || typeSelectedChange === 'New'">
-            <AssetInventoryBadge :type="source.status" />
+            <AssetInventoryBadge :type="source.statusDisplay" />
         </td>
         <td data-label="Estimated Market Rent" v-if="typeSelectedChange === 'Vacant'">
             {{ source.EMR }}

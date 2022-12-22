@@ -19,8 +19,8 @@
                 </tr>
             </thead>
             <tbody>
-                <template v-if="items.length > 0">
-                    <TableRecord v-for="item in items" :source="item" :selectedId="selectedId" :key="item.id"
+                <template v-if="inventories.length > 0">
+                    <TableRecord v-for="item in inventories" :source="item" :selectedId="selectedId" :key="item.id"
                         @handleClickOpenRow="handleClickOpenRow" :typeSelected="typeSelected" />
                     <template
                         v-if="(typeSelectedChange === 'Vacant' || typeSelectedChange === 'Tenanted') && selectedId === -1">
@@ -29,11 +29,7 @@
                         </tr>
                         <tr class="tr-total">
                             <td colspan="4">Grand Total Revenue:</td>
-                            <!-- <td></td>
-                            <td></td>
-                            <td></td> -->
                             <td colspan="2"><span>$ 72,000</span></td>
-                            <!-- <td></td> -->
                         </tr>
                     </template>
                 </template>
@@ -55,6 +51,7 @@
 <script>
 import TableRecord from "~/components/components/Landlord/AssetInventory/components/Table/TableRecord.vue"
 import ExpandedPanel from "~/components/shared/Panel/ExpandedPanel.vue"
+import { mapState } from "vuex"
 export default {
     name: "AssetInventoryTable",
     components: { TableRecord, ExpandedPanel },
@@ -200,6 +197,14 @@ export default {
             selectedId: -1,
             typeSelectedChange: 'All'
         }
+    },
+    computed: {
+        ...mapState({
+            inventories: (state) => state.inventories.inventories
+        }),
+    },
+    created() {
+        console.log("inventories::", this.inventories)
     },
     methods: {
         onCloseExpandedPanel() {

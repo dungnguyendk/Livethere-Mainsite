@@ -3,16 +3,20 @@
         <div class="section__form">
             <div class="form--input">
                 <label>Property Type</label>
-                <v-text-field v-model.trim="propertyType" outlined dense placeholder="Type here"
-                    :error-messages="propertyTypeErrors" @input="$v.propertyType.$touch()"
-                    @blur="$v.propertyType.$touch()" />
+                <v-select v-model.trim="propertyType" :items="propertyTypeList" item-text="text" item-value="value"
+                    outlined dense placeholder="Type here" :error-messages="propertyTypeErrors"
+                    @input="$v.propertyType.$touch()" @blur="$v.propertyType.$touch()" />
             </div>
             <div class="form--input2">
                 <div class="form--input">
                     <label>Postal Code</label>
-                    <v-text-field v-model.trim="postalCode" outlined dense placeholder="Type here"
-                        :error-messages="postalCodeErrors" @input="$v.postalCode.$touch()"
-                        @blur="$v.postalCode.$touch()" />
+                    <v-text-field v-model="postalCode" type="number" hide-spin-buttons outlined dense
+                        placeholder="Type here" :error-messages="postalCodeErrors" @input="$v.postalCode.$touch()"
+                        @blur="$v.postalCode.$touch()">
+                        <template v-slot:prepend-inner>
+                            <v-icon @click="searchPostalCode">mdi-magnify</v-icon>
+                        </template>
+                    </v-text-field>
                 </div>
                 <div class="form--input">
                     <label>House No.</label>
@@ -39,24 +43,28 @@
             <div class="form--input2">
                 <div class="form--input">
                     <label>No of Bedroom(s)</label>
-                    <v-text-field v-model.trim="bedroom" outlined dense placeholder="Type here"
-                        :error-messages="bedroomErrors" @input="$v.bedroom.$touch()" @blur="$v.bedroom.$touch()" />
+                    <v-select v-model="bedroom" outlined dense placeholder="Type here" :items="bedroomList"
+                        item-text="text" item-value="value" :error-messages="bedroomErrors" @input="$v.bedroom.$touch()"
+                        @blur="$v.bedroom.$touch()" />
                 </div>
                 <div class="form--input">
                     <label>Tenure</label>
-                    <v-text-field v-model.trim="tenure" outlined dense placeholder="Type here"
-                        :error-messages="tenureErrors" @input="$v.tenure.$touch()" @blur="$v.tenure.$touch()" />
+                    <v-select v-model="tenure" outlined dense placeholder="Type here" :items="tenureList"
+                        item-text="text" item-value="value" :error-messages="tenureErrors" @input="$v.tenure.$touch()"
+                        @blur="$v.tenure.$touch()" />
                 </div>
             </div>
             <div class="form--input">
                 <label>Floor Area (sqft)</label>
-                <v-text-field v-model.trim="floorArea" outlined dense placeholder="Type here"
-                    :error-messages="floorAreaErrors" @input="$v.floorArea.$touch()" @blur="$v.floorArea.$touch()" />
+                <v-text-field v-model.trim="floorArea" outlined dense placeholder="Type here" type="number"
+                    hide-spin-buttons :error-messages="floorAreaErrors" @input="$v.floorArea.$touch()"
+                    @blur="$v.floorArea.$touch()" />
             </div>
-            <div class="form--input">
+            <div class="form--input" v-if="propertyType.name === 'LANDED PROPERTY'">
                 <label>Land Area (sqft)</label>
-                <v-text-field v-model.trim="landArea" outlined dense placeholder="Type here"
-                    :error-messages="landAreaErrors" @input="$v.landArea.$touch()" @blur="$v.landArea.$touch()" />
+                <v-text-field v-model.trim="landArea" outlined dense placeholder="Type here" type="number"
+                    hide-spin-buttons :error-messages="landAreaErrors" @input="$v.landArea.$touch()"
+                    @blur="$v.landArea.$touch()" />
             </div>
         </div>
         <div class="card__footer">
@@ -68,12 +76,13 @@
                     Cancel
                 </span>
             </div>
-        </div>
+        </div>``
     </form>
 </template>
 <script>
 import { validationMixin } from "vuelidate";
-import { required } from "vuelidate/lib/validators";
+import { required, requiredIf, minValue } from "vuelidate/lib/validators";
+import { PROPERTY_TYPE, BEDROOM_TYPE, TENURE } from "~/ultilities/contants/asset-inventory.js"
 export default {
     name: "DialogFormAddNewInventory",
     mixins: [validationMixin],
@@ -83,25 +92,40 @@ export default {
         houseNo: { required },
         streetName: { required },
         unitNo: { required },
-        projectName: { required },
+        projectName: {
+            required: requiredIf(function () {
+                return this.propertyType.name !== 'LANDED PROPERTY'
+            })
+        },
         bedroom: { required },
         tenure: { required },
-        floorArea: { required },
-        landArea: { required }
+        floorArea: {
+            required,
+            minValue: minValue(1)
+        },
+        landArea: {
+            required: requiredIf(function () {
+                return this.propertyType.name === 'LANDED PROPERTY'
+            }),
+            minValue: minValue(1)
+        }
     },
     data() {
         return {
             valid: false,
             propertyType: '',
+            propertyTypeList: PROPERTY_TYPE,
             postalCode: '',
             houseNo: '',
             streetName: '',
             unitNo: '',
             projectName: '',
             bedroom: '',
+            bedroomList: BEDROOM_TYPE,
             tenure: '',
-            floorArea: '',
-            landArea: ''
+            tenureList: TENURE,
+            floorArea: null,
+            landArea: null
         }
     },
     computed: {
@@ -157,35 +181,78 @@ export default {
             const errors = [];
             if (!this.$v.floorArea.$dirty) return errors;
             !this.$v.floorArea.required && errors.push("Floor Area is required");
+            !this.$v.floorArea.minValue && errors.push("Floor Area is more than 0");
             return errors;
         },
         landAreaErrors() {
             const errors = [];
             if (!this.$v.landArea.$dirty) return errors;
             !this.$v.landArea.required && errors.push("Land Area is required");
+            !this.$v.landArea.minValue && errors.push("Land Area is more than 0");
             return errors;
         },
     },
     methods: {
-        checkEmptyErrors(val) {
-            this.$emit("checkEmptyError", val)
-        },
         submitForm() {
             console.log('submit!', this.$v.$invalid)
             this.$v.$touch()
             if (!this.$v.$invalid) {
+                const params = {
+                    propertyType: this.propertyType.id,
+                    propertyTypeDisplay: this.propertyType.name,
+                    postalCode: this.postalCode,
+                    hseNo: this.houseNo,
+                    streetName: this.streetName,
+                    unitNo: this.unitNo,
+                    projectName: this.projectName,
+                    tenureType: this.tenure.id,
+                    tenureDisplay: this.tenure.name,
+                    floorAreaSqft: this.floorArea ? this.floorArea : 0,
+                    landAreaSqft: this.landArea ? this.landArea : 0,
+                    city: "Singapore",
+                    country: "Singapore",
+                    bedroomTypeFID: this.bedroom.id ? this.bedroom.id : 0,
+                    bedroomTypeDisplay: this.bedroom.name ? this.bedroom.name : 0,
+
+                }
+                this.$store.dispatch("inventories/createInventories", params)
                 this.onClose()
+            }
+        },
+        async searchPostalCode() {
+            try {
+                const response = await this.$axios.$get(`https://apivo.aestechgroup.com/aespostal/api/properties/details?postalCode=${this.postalCode}`)
+                if (response) {
+                    if (response.propertyType) {
+                        this.propertyType = this.propertyTypeList.find((item) => item.value.name === response.propertyType).value
+                    }
+                    this.houseNo = response.houseNo
+                    this.streetName = response.streetName
+                    this.unitNo = response.unitNo
+                    this.projectName = response.projectName
+                    if (response.tenureType) {
+                        this.tenure = this.tenureList.find((item) => item.value.name === response.tenureType).value
+                    }
+                }
+            } catch (e) {
+                console.log(e);
             }
         },
         onClose() {
             this.$emit("close")
         }
     },
-    // watch: {
-    //     valid(val) {
-    //         this.checkEmptyErrors(val)
-    //     }
-    // }
+    watch: {
+        propertyType(val) {
+            // console.log("propertyType::", val);
+        },
+        tenure(val) {
+            // console.log("tenure::", val);
+        },
+        bedroom(val) {
+            // console.log("bedroom::", val);
+        }
+    }
 }
 </script>
 <style lang="scss" scoped>
