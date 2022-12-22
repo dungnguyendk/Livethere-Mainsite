@@ -10,8 +10,8 @@
             </div>
             <div class="section__container">
                 <PropertyInformationPanel />
-                <!--                <div class="section__divider" />
-                <TenantAgreementTable />-->
+                <div class="section__divider" />
+                <TenancyAgreementPanel />
             </div>
         </div>
     </div>
@@ -20,10 +20,11 @@
 <script>
 import TenantAgreementTable from "~/components/components/Landlord/Property/Table/TenancyAgreementTable.vue"
 import PropertyInformationPanel from "~/components/components/Landlord/Property/Panel/PropertyInformationPanel.vue"
+import TenancyAgreementPanel from "~/components/components/Landlord/Property/Panel/TenancyAgreementPanel.vue"
 
 export default {
     name: "PropertyDetails",
-    components: { PropertyInformationPanel, TenantAgreementTable }
+    components: { TenancyAgreementPanel, PropertyInformationPanel, TenantAgreementTable }
 }
 </script>
 <style lang="scss" scoped>

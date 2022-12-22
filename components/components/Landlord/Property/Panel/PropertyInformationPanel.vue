@@ -98,6 +98,14 @@ export default {
         background-color: #fff;
     }
 
+    @media screen and (min-width: 1280px) {
+        .panel__column {
+            p {
+                font-size: 1.6rem;
+            }
+        }
+    }
+
     @media screen and (max-width: 1279px) {
         .panel__top {
             h3 {
