@@ -20,8 +20,13 @@
             </thead>
             <tbody>
                 <template v-if="inventories.length > 0">
-                    <TableRecord v-for="item in inventories" :source="item" :selectedId="selectedId" :key="item.id"
-                        @handleClickOpenRow="handleClickOpenRow" />
+                    <TableRecord
+                        v-for="item in inventories"
+                        :source="item"
+                        :selectedId="selectedId"
+                        :key="item.id"
+                        @handleClickOpenRow="handleClickOpenRow"
+                    />
                     <template v-if="(statusFID === 2 || statusFID === 3) && selectedId === -1">
                         <tr class="tr-hidden">
                             <td></td>
@@ -41,9 +46,9 @@
                 </template>
             </tbody>
         </table>
-        <slide-up-down :active="showExpandedPanel" :duration="300">
+        <!--        <slide-up-down :active="showExpandedPanel" :duration="300">
             <ExpandedPanel @onClose="onCloseExpandedPanel" />
-        </slide-up-down>
+        </slide-up-down>-->
     </div>
 </template>
 
@@ -54,19 +59,18 @@ import { mapState } from "vuex"
 export default {
     name: "AssetInventoryTable",
     components: { TableRecord, ExpandedPanel },
-    props: {
-    },
+    props: {},
     data() {
         return {
             showExpandedPanel: false,
-            selectedId: -1,
+            selectedId: -1
         }
     },
     computed: {
         ...mapState({
             inventories: (state) => state.inventories.inventories,
             statusFID: (state) => state.inventories.typeSelect
-        }),
+        })
     },
     created() {
         console.log("inventories::", this.inventories)
@@ -87,7 +91,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .asset-analytic {
-    padding: (32/1920)*100% (278/1920)*100% (126/1920)*100% (278/1920)*100%;
+    padding: (32/1920) * 100% (278/1920) * 100% (126/1920) * 100% (278/1920) * 100%;
 
     @media only screen and (max-width: 768px) {
         padding: 0;
@@ -104,9 +108,7 @@ export default {
             text-align: left;
             min-width: 10rem;
         }
-
     }
-
 }
 
 .tr-hidden {
@@ -152,7 +154,6 @@ export default {
             // &:last-child {
             //     display: none;
             // }
-
         }
     }
 }
@@ -167,15 +168,12 @@ export default {
                     min-width: 10rem;
                 }
             }
-
         }
-
     }
 }
 
 @media only screen and (min-width: 1280px) and (max-width: 1440px) {
     .tr-total {
-
         td {
             font-size: 1.4rem;
 

@@ -18,12 +18,12 @@
 </template>
 
 <script>
-import TenantAgreementTable from "~/components/components/Landlord/Property/Table/TenancyAgreementTable.vue"
-import InventoryInformationPanel from "~/components/components/Landlord/Property/Panel/InventoryInformationPanel.vue"
+import TenantAgreementTable from "~/components/components/Landlord/Inventory/Table/TenancyAgreementTable.vue"
+import InventoryInformationPanel from "~/components/components/Landlord/Inventory/Panel/InventoryInformationPanel.vue"
 import TenancyUnitInventory from "~/components/components/Landlord/Tenancy/TenancyUnitInventory.vue"
 
 export default {
-    name: "UnitInventoryDetails",
+    name: "InventoryUnits",
     components: {
         TenancyUnitInventory,
         InventoryInformationPanel,

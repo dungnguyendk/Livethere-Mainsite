@@ -25,7 +25,7 @@
 </template>
 
 <script>
-import TableRecord from "~/components/components/Landlord/Property/Table/TableRecord.vue"
+import TableRecord from "~/components/components/Landlord/Inventory/Table/TableRecord.vue"
 
 export default {
     name: "TenancyAgreementTable",

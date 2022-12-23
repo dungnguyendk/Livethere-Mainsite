@@ -10,25 +10,18 @@
 </template>
 
 <script>
-import LandingHeader from "~/components/shared/Header/LandingHeader.vue"
-import LandingFooter from "~/components/shared/Footer/LandingFooter.vue"
+import { appSettings } from "~/app-settings"
 import LandlordPortal from "~/components/components/Landlord/LandlordPortal.vue"
 import LandlordHeader from "~/components/shared/Header/LandlordHeader.vue"
-import { appSettings } from "~/app-settings"
 import AssetInventory from "~/components/components/Landlord/AssetInventory/AssetInventory.vue"
-import UnitInventoryDetails from "~/components/components/Landlord/AssetInventory/UnitInventoryDetails.vue"
-import InventoryDetails from "~/components/components/Landlord/Property/InventoryDetails.vue"
+import InventoryDetails from "~/components/components/Landlord/Inventory/InventoryDetails.vue"
 
 export default {
-    name: "landlord",
     components: {
         InventoryDetails,
-        UnitInventoryDetails,
         AssetInventory,
         LandlordHeader,
-        LandlordPortal,
-        LandingFooter,
-        LandingHeader
+        LandlordPortal
     },
     head: {
         title: `Landlord | ${appSettings.siteName}`

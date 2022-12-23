@@ -20,9 +20,9 @@
 
 <script>
 import TenancyTable from "~/components/components/Landlord/Tenancy/Table/TenancyTable.vue"
-import TenancyAgreementTable from "~/components/components/Landlord/Property/Table/TenancyAgreementTable.vue"
+import TenancyAgreementTable from "~/components/components/Landlord/Inventory/Table/TenancyAgreementTable.vue"
 import Dialog from "~/components/elements/Dialog/Dialog.vue"
-import CreateTenancyAgreementForm from "~/components/components/Landlord/Property/Form/CreateTenancyAgreementForm.vue"
+import CreateTenancyAgreementForm from "~/components/components/Landlord/Inventory/Form/CreateTenancyAgreementForm.vue"
 
 export default {
     name: "TenancyAgreementPanel",

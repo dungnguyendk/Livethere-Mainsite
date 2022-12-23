@@ -10,8 +10,6 @@
 </template>
 
 <script>
-import LandingHeader from "~/components/shared/Header/LandingHeader.vue"
-import LandingFooter from "~/components/shared/Footer/LandingFooter.vue"
 import LandlordPortal from "~/components/components/Landlord/LandlordPortal.vue"
 import LandlordHeader from "~/components/shared/Header/LandlordHeader.vue"
 import { appSettings } from "~/app-settings"
@@ -19,7 +17,7 @@ import AssetInventory from "~/components/components/Landlord/AssetInventory/Asse
 import qs from "qs"
 
 export default {
-    components: { AssetInventory, LandlordHeader, LandlordPortal, LandingFooter, LandingHeader },
+    components: { AssetInventory, LandlordHeader, LandlordPortal },
     head: {
         title: `Landlord | ${appSettings.siteName}`
     },
@@ -41,8 +39,8 @@ export default {
             })
             await store.dispatch("inventories/getInventories", param)
         } catch (e) {
-            console.log({Error: e.message})
+            console.log({ Error: e.message })
         }
-    },
+    }
 }
 </script>
