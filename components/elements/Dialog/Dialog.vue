@@ -1,6 +1,7 @@
 <template>
     <v-dialog v-model="openDialog" :width="sizeDialog" persistent>
-        <DialogCard :title="title" @close="onClose()" :actions="actions">
+        <DialogCard :title="title" @close="onClose" :actions="actions">
+            <slot />
             <template slot="content">
                 <slot name="content" />
             </template>
