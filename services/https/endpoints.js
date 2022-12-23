@@ -20,6 +20,8 @@ export const httpEndpoint = {
     inventories: {
         getEntryByPostalCode: "",
         getEntries: "/api/asset-inventories",
-        createEntry: "/api/asset-inventories"
+        getEntryById: "/api/asset-inventories",
+        createEntry: "/api/asset-inventories",
+        deleteEntryByID: "/api/asset-inventories"
     }
 }

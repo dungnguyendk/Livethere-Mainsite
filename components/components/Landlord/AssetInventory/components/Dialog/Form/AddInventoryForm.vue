@@ -1,7 +1,7 @@
 <template>
     <form @submit.prevent="submitForm" class="form--add-new-inventory">
         <div class="form__top">
-            <h3>ADD NEW INVENTORY</h3>
+            <h3>{{ inventoryDetail.id ? "EDIT INVENTORY" : "ADD NEW INVENTORY" }}</h3>
         </div>
         <div class="form__fields">
             <div class="form__field">
@@ -67,7 +67,9 @@
         </div>
         <div class="card__footer">
             <div class="btn-group">
-                <v-btn class="btn btn--primary btn--green btn__add-file" type="submit"> Add</v-btn>
+                <v-btn class="btn btn--primary btn--green btn__add-file" type="submit">{{ inventoryDetail ? "Update" :
+                        "Add"
+                }}</v-btn>
                 <span class="cancel-form" @click="onClose()"> Cancel </span>
             </div>
         </div>
@@ -79,7 +81,7 @@ import { required, requiredIf, minValue } from "vuelidate/lib/validators"
 import { PROPERTY_TYPE, BEDROOM_TYPE, TENURE } from "~/ultilities/contants/asset-inventory.js"
 import { convertNumberToCommas, convertCommasToNumber } from "~/ultilities/helpers"
 import { setFormControlErrors } from "~/ultilities/form-validations"
-
+import { mapState } from "vuex"
 export default {
     name: "AddInventoryForm",
     mixins: [validationMixin],
@@ -98,13 +100,11 @@ export default {
         tenure: { required },
         floorArea: {
             required,
-            // minValue: minValue(1)
         },
         landArea: {
             required: requiredIf(function () {
                 return this.propertyType.name === "LANDED PROPERTY"
             }),
-            // minValue: minValue(1)
         },
         purchasedPrice: {
             required
@@ -130,6 +130,9 @@ export default {
         }
     },
     computed: {
+        ...mapState({
+            inventoryDetail: (state) => state.inventories.inventoryDetail
+        }),
         propertyTypeErrors() {
             return setFormControlErrors(this.$v.propertyType, "This field is required")
         },
@@ -162,6 +165,22 @@ export default {
         },
         purchasedPriceErrors() {
             return setFormControlErrors(this.$v.purchasedPrice, "Purchased Price is required")
+        }
+    },
+    created() {
+        // console.log("this.inventoryDetail", this.inventoryDetail);
+        if (this.inventoryDetail) {
+            this.propertyType = this.inventoryDetail ? this.propertyTypeList.find((i) => i.value.id === this.inventoryDetail.propertyType).value : ""
+            this.postalCode = this.inventoryDetail ? this.inventoryDetail.postalCode : ""
+            this.houseNo = this.inventoryDetail ? this.inventoryDetail.hseNo : ""
+            this.streetName = this.inventoryDetail ? this.inventoryDetail.streetName : ""
+            this.unitNo = this.inventoryDetail ? this.inventoryDetail.unitNo : ""
+            this.projectName = this.inventoryDetail ? this.inventoryDetail.projectName : ""
+            this.bedroom = this.inventoryDetail ? this.bedroomList.find((i) => i.value.id === this.inventoryDetail.bedroomTypeFID).value : ""
+            this.tenure = this.inventoryDetail ? this.tenureList.find((i) => i.value.id === this.inventoryDetail.tenureType).value : ""
+            this.floorArea = this.inventoryDetail ? this.inventoryDetail.floorAreaSqft : ""
+            this.landArea = this.inventoryDetail ? this.inventoryDetail.landAreaSqft : ""
+            this.purchasedPrice = this.inventoryDetail ? this.inventoryDetail.purchasedPrice : ""
         }
     },
     methods: {
@@ -217,6 +236,7 @@ export default {
             }
         },
         onClose() {
+            this.$store.commit("inventories/setInventoryDetail", '')
             this.$emit("close")
         }
     },
