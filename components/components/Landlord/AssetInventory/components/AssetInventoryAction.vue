@@ -10,9 +10,7 @@
         </v-btn>
         <Dialog :open="openAddNewInventoryDialog" @close="openAddNewInventoryDialog = false" :size="sizeDialog"
             :title="''" :action="false">
-            <template slot="content">
-                <AddInventoryForm @close="openAddNewInventoryDialog = false" />
-            </template>
+            <AddInventoryForm @close="openAddNewInventoryDialog = false" />
         </Dialog>
     </div>
 </template>
