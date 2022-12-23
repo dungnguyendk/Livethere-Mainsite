@@ -28,7 +28,7 @@
 import TableRecord from "~/components/components/Landlord/Property/Table/TableRecord.vue"
 
 export default {
-    name: "TenantAgreementTable",
+    name: "TenancyAgreementTable",
     components: { TableRecord },
     data() {
         return {
