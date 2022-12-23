@@ -8,7 +8,7 @@
 import EnquiryForm from '~/components/shared/Form/EnquiryForm.vue'
 export default {
   components: { EnquiryForm },
-    name: "enqiry-form",
+    name: "enquiry-form",
     component:{
 
     }

@@ -109,6 +109,7 @@ export default {
         font-size: 1.6rem;
         line-height: 2rem;
     }
+
     .form__actions {
         display: flex;
         flex-direction: row;
@@ -117,12 +118,10 @@ export default {
         .btn {
             position: relative;
             min-width: 17.5rem;
-            z-index: 9;
-            // margin-bottom: 2.1rem;
+            z-index: 1;
             bottom: -2.1rem;
         }
     }
-
     :deep(.v-input) {
         input {
             margin-bottom: 0;
