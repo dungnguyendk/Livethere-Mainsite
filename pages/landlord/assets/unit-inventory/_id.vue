@@ -2,7 +2,9 @@
     <main>
         <LandlordHeader />
         <template v-if="loggedIn">
-            <LandlordPortal> <UnitInventoryDetails /></LandlordPortal>
+            <LandlordPortal>
+                <UnitInventoryDetails />
+            </LandlordPortal>
         </template>
     </main>
 </template>
