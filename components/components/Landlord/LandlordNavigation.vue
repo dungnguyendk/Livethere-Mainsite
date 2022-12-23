@@ -1,12 +1,14 @@
 <template lang="html">
-    <div class="page--landlord">
-        <div class="page__top">
-            <LandlordNavigation />
-        </div>
-        <div class="page__container">
-            <slot />
-        </div>
-    </div>
+    <nav class="nav--landlord">
+        <nuxt-link
+            v-for="item in navigation"
+            :to="item.value"
+            :class="path === item.path ? 'active' : ''"
+            @click.prevent="onSelectPanel(item)"
+        >
+            {{ item.label }}
+        </nuxt-link>
+    </nav>
 </template>
 <script>
 import LandlordDashboard from "~/components/components/Landlord/Dashboard/LandlordDashboard.vue"
@@ -15,12 +17,10 @@ import Analytics from "~/components/components/Landlord/Analytics/Analytics.vue"
 import Insights from "~/components/components/Landlord/Insights/Insights.vue"
 import MarketingInventory from "~/components/components/Landlord/MarketingInventory/MarketingInventory.vue"
 import PropertyDetails from "~/components/components/Landlord/Property/PropertyDetails.vue"
-import LandlordNavigation from "~/components/components/Landlord/LandlordNavigation.vue"
 
 export default {
-    name: "LandlordPortal",
+    name: "LandlordNavigation",
     components: {
-        LandlordNavigation,
         PropertyDetails,
         MarketingInventory,
         Insights,
@@ -28,29 +28,40 @@ export default {
         AssetInventory,
         LandlordDashboard
     },
+    computed: {
+        path() {
+            return this.$route.path
+        }
+    },
+
     data() {
         return {
             activePanel: "dashboard",
             navigation: [
                 {
                     label: "Dashboard",
-                    value: "dashboard"
+                    path: "/landlord",
+                    value: ""
                 },
                 {
                     label: "Assets",
-                    value: "assets"
+                    path: "/landlord/assets",
+                    value: "/landlord/assets"
                 },
                 {
                     label: "Analytics",
-                    value: "analytics"
+                    path: "/landlord/analytics",
+                    value: "/landlord/analytics"
                 },
                 {
                     label: "Marketing",
-                    value: "marketing"
+                    path: "/landlord/marketing",
+                    value: "/landlord/marketing"
                 },
                 {
                     label: "Insights",
-                    value: "insights"
+                    path: "/landlord/insights",
+                    value: "/landlord/insights"
                 }
             ]
         }
@@ -63,7 +74,7 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.nav--top {
+.nav--landlord {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -88,20 +99,6 @@ export default {
     @media screen and (max-width: 1366px) {
         gap: 2.4rem;
         grid-gap: 2.4rem;
-    }
-}
-
-.page--landlord {
-    background-color: #fafafa;
-    min-height: 100vh;
-
-    .page__top {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        min-height: 6rem;
-        box-shadow: 0 0 6px rgba(0, 0, 0, 0.02), 0 2px 4px rgba(0, 0, 0, 0.08);
-        background-color: #ffff;
     }
 }
 </style>

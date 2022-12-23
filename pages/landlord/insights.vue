@@ -3,7 +3,7 @@
         <LandlordHeader />
         <template v-if="loggedIn">
             <LandlordPortal>
-                <LandlordDashboard />
+                <Insights />
             </LandlordPortal>
         </template>
     </main>
@@ -15,11 +15,11 @@ import LandingFooter from "~/components/shared/Footer/LandingFooter.vue"
 import LandlordPortal from "~/components/components/Landlord/LandlordPortal.vue"
 import LandlordHeader from "~/components/shared/Header/LandlordHeader.vue"
 import { appSettings } from "~/app-settings"
-import LandlordDashboard from "~/components/components/Landlord/Dashboard/LandlordDashboard.vue"
+import Insights from "~/components/components/Landlord/Insights/Insights.vue"
 
 export default {
     name: "landlord",
-    components: { LandlordDashboard, LandlordHeader, LandlordPortal, LandingFooter, LandingHeader },
+    components: { Insights, LandlordHeader, LandlordPortal, LandingFooter, LandingHeader },
     head: {
         title: `Landlord | ${appSettings.siteName}`
     },
