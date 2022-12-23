@@ -9,9 +9,9 @@
                 <h3> Lloyd Sixtyfive </h3>
             </div>
             <div class="section__container">
-                <PropertyInformationPanel />
-                <div class="section__divider" />
-                <TenancyAgreementPanel />
+                <PropertyInformationPanel/>
+                <div class="section__divider"/>
+                <TenancyAgreementPanel/>
             </div>
         </div>
     </div>
@@ -24,12 +24,17 @@ import TenancyAgreementPanel from "~/components/components/Landlord/Property/Pan
 
 export default {
     name: "PropertyDetails",
-    components: { TenancyAgreementPanel, PropertyInformationPanel, TenantAgreementTable }
+    components: {TenancyAgreementPanel, PropertyInformationPanel, TenantAgreementTable}
 }
 </script>
 <style lang="scss" scoped>
 .section--property-details {
     padding: 3.2rem 0;
+
+    .section__divider {
+        margin: 3.2rem -2.4rem;
+        border-bottom: 1px solid var(--border-color);
+    }
 
     .section__top {
         display: flex;
