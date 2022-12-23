@@ -5,16 +5,16 @@
                 <tr>
                     <th>Property</th>
                     <th>Unit No.</th>
-                    <th v-if="typeSelectedChange === 'All' || typeSelectedChange === 'New'">Property Type</th>
-                    <th v-if="typeSelectedChange === 'All' || typeSelectedChange === 'New'">Bedroom Type</th>
-                    <th v-if="typeSelectedChange === 'All' || typeSelectedChange === 'New'">Floor Area (sqft)</th>
-                    <th v-if="typeSelectedChange === 'All' || typeSelectedChange === 'New'">Land Area (sqft)</th>
+                    <th v-if="typeSelectedChange === 0 || typeSelectedChange === 1">Property Type</th>
+                    <th v-if="typeSelectedChange === 0 || typeSelectedChange === 1">Bedroom Type</th>
+                    <th v-if="typeSelectedChange === 0 || typeSelectedChange === 1">Floor Area (sqft)</th>
+                    <th v-if="typeSelectedChange === 0 || typeSelectedChange === 1">Land Area (sqft)</th>
                     <th>Address</th>
-                    <th v-if="typeSelectedChange === 'All' || typeSelectedChange === 'New'">Status</th>
-                    <th v-if="typeSelectedChange === 'Vacant'">Estimated Market Rent</th>
-                    <th v-if="typeSelectedChange === 'Vacant'">Asking Rent</th>
-                    <th v-if="typeSelectedChange === 'Tenanted'">Monthly Rent</th>
-                    <th v-if="typeSelectedChange === 'Tenanted'">Annual Revenue</th>
+                    <th v-if="typeSelectedChange === 0 || typeSelectedChange === 1">Status</th>
+                    <th v-if="typeSelectedChange === 2">Estimated Market Rent</th>
+                    <th v-if="typeSelectedChange === 2">Asking Rent</th>
+                    <th v-if="typeSelectedChange === 3">Monthly Rent</th>
+                    <th v-if="typeSelectedChange === 3">Annual Revenue</th>
                     <th></th>
                 </tr>
             </thead>
@@ -22,8 +22,7 @@
                 <template v-if="inventories.length > 0">
                     <TableRecord v-for="item in inventories" :source="item" :selectedId="selectedId" :key="item.id"
                         @handleClickOpenRow="handleClickOpenRow" :typeSelected="typeSelected" />
-                    <template
-                        v-if="(typeSelectedChange === 'Vacant' || typeSelectedChange === 'Tenanted') && selectedId === -1">
+                    <template v-if="(typeSelectedChange === 2 || typeSelectedChange === 3) && selectedId === -1">
                         <tr class="tr-hidden">
                             <td></td>
                         </tr>
@@ -57,8 +56,8 @@ export default {
     components: { TableRecord, ExpandedPanel },
     props: {
         typeSelected: {
-            type: String,
-            default: () => "All"
+            type: Number,
+            default: () => 0
         }
     },
     data() {
@@ -195,7 +194,7 @@ export default {
             ],
             showExpandedPanel: false,
             selectedId: -1,
-            typeSelectedChange: 'All'
+            typeSelectedChange: 0
         }
     },
     computed: {

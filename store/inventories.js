@@ -12,20 +12,19 @@ export const mutations = {
 }
 
 export const actions = {
-    // async createInventories({ commit }, payload) {
-    //     // console.log("createInventories::", payload)
-    //     try {
-    //         await this.$axios.$post(`${httpEndpoint.inventories.createEntry}`, payload)
-    //     } catch (e) {
-    //         console.log(e)
-    //     }
-    // },
+    async createInventories({ commit }, payload) {
+        // console.log("createInventories::", payload)
+        try {
+            await this.$axios.$post(`${httpEndpoint.inventories.createEntry}`, payload)
+        } catch (e) {
+            console.log(e)
+        }
+    },
     async getInventories({ commit }, payload) {
-        // console.log("getInventories", payload)
+        console.log("getInventories::", payload)
         try {
             const response = await this.$axios.$get(
-                `${httpEndpoint.inventories.getEntries}`,
-                payload
+                `${httpEndpoint.inventories.getEntries}?${payload}`
             )
             console.log(response)
             if (response) {

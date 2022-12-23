@@ -1,7 +1,7 @@
 <template lang="html">
     <div class="asset-inventory__action">
         <div class="select-type">
-            <v-select v-model="typeSelected" :items="typeSelections" item-text="value" item-value="value" hide-details
+            <v-select v-model="typeSelected" :items="typeSelections" item-text="value" item-value="id" hide-details
                 outlined dense class="me-2" @change="changeType"></v-select>
         </div>
         <v-btn class="btn btn--outline btn--green btn--md add-new" @click="openAddNewInventoryDialog = true">
@@ -14,24 +14,32 @@
 <script>
 import AddNewInventoryDialog from "~/components/components/Landlord/AssetInventory/components/Dialog/AddNewInventoryDialog.vue"
 import { STATUS_DROPDOWN } from "~/ultilities/contants/asset-inventory.js"
+import qs from "qs"
 export default {
     name: "AssetInventoryAction",
     components: { AddNewInventoryDialog },
     data() {
         return {
             typeSelections: STATUS_DROPDOWN,
-            typeSelected: "All",
+            typeSelected: {
+                id: 0,
+                value: "All"
+            },
             openAddNewInventoryDialog: false
         }
     },
     methods: {
         changeType() {
+            const params = qs.stringify({
+                StatusFID: this.typeSelected
+            })
+            this.$store.dispatch("inventories/getInventories", params)
             this.$emit("changeType", this.typeSelected)
         }
     },
     watch: {
         typeSelected(val) {
-            console.log(val);
+            console.log("typeSelected", val);
         }
     }
 }

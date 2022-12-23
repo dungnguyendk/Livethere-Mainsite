@@ -62,9 +62,9 @@
             </div>
             <div class="form--input">
                 <label>Purchased Price</label>
-                <v-text-field v-model.trim="purchasedPrice" outlined dense placeholder="Type here" type="number"
-                    hide-spin-buttons :error-messages="purchasedPriceErrors" @input="$v.purchasedPrice.$touch()"
-                    @blur="$v.purchasedPrice.$touch()" suffix="SGD" reverse> 
+                <v-text-field v-model.trim="purchasedPrice" outlined dense placeholder="Type here" hide-spin-buttons
+                    :error-messages="purchasedPriceErrors" @input="$v.purchasedPrice.$touch()"
+                    @blur="$v.purchasedPrice.$touch()" suffix="SGD" reverse>
                 </v-text-field>
 
             </div>
@@ -91,6 +91,7 @@
 import { validationMixin } from "vuelidate";
 import { required, requiredIf, minValue } from "vuelidate/lib/validators";
 import { PROPERTY_TYPE, BEDROOM_TYPE, TENURE } from "~/ultilities/contants/asset-inventory.js"
+import { convertNumberToCommas, convertCommasToNumber } from "~/ultilities/helpers"
 export default {
     name: "DialogFormAddNewInventory",
     mixins: [validationMixin],
@@ -118,8 +119,7 @@ export default {
             minValue: minValue(1)
         },
         purchasedPrice: {
-            required,
-            minValue: minValue(1)
+            required
         }
     },
     data() {
@@ -138,7 +138,7 @@ export default {
             tenureList: TENURE,
             floorArea: null,
             landArea: null,
-            purchasedPrice: 0,
+            purchasedPrice: '',
         }
     },
     computed: {
@@ -208,7 +208,7 @@ export default {
             const errors = [];
             if (!this.$v.purchasedPrice.$dirty) return errors;
             !this.$v.purchasedPrice.required && errors.push("Purchased Price is required");
-            !this.$v.purchasedPrice.minValue && errors.push("Purchased Price is more than 0");
+            // !this.$v.purchasedPrice.requiredIf && errors.push("Purchased Price is more than 0");
             return errors;
         },
     },
@@ -264,14 +264,12 @@ export default {
         }
     },
     watch: {
-        propertyType(val) {
-            // console.log("propertyType::", val);
-        },
-        tenure(val) {
-            // console.log("tenure::", val);
-        },
-        bedroom(val) {
-            // console.log("bedroom::", val);
+        purchasedPrice(val) {
+            if (!isNaN(val)) {
+                this.purchasedPrice = convertNumberToCommas(val)
+            } else {
+                this.purchasedPrice = convertNumberToCommas(convertCommasToNumber(val))
+            }
         }
     }
 }

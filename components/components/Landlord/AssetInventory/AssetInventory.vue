@@ -13,7 +13,7 @@ export default {
     components: { AssetInventoryTable, AssetInventoryAction },
     data() {
         return {
-            typeSelected: ""
+            typeSelected: 0
         }
     },
     methods: {

@@ -11,34 +11,34 @@
         <td data-label="Unit No.">
             {{ source.unitNo }}
         </td>
-        <td data-label="Property Type" v-if="typeSelectedChange === 'All' || typeSelectedChange === 'New'">
+        <td data-label="Property Type" v-if="typeSelectedChange === 0 || typeSelectedChange === 1">
             {{ source.propertyTypeDisplay }}
         </td>
-        <td data-label="Bedroom Type" v-if="typeSelectedChange === 'All' || typeSelectedChange === 'New'">
+        <td data-label="Bedroom Type" v-if="typeSelectedChange === 0 || typeSelectedChange === 1">
             {{ source.bedroomTypeDisplay ? source.bedroomTypeDisplay : "-" }}
         </td>
-        <td data-label="Floor Area (sqft)" v-if="typeSelectedChange === 'All' || typeSelectedChange === 'New'">
+        <td data-label="Floor Area (sqft)" v-if="typeSelectedChange === 0 || typeSelectedChange === 1">
             {{ source.floorAreaSqft }}
         </td>
-        <td data-label="Land Area (sqft)" v-if="typeSelectedChange === 'All' || typeSelectedChange === 'New'">
+        <td data-label="Land Area (sqft)" v-if="typeSelectedChange === 0 || typeSelectedChange === 1">
             {{ source.LandArea ? source.LandArea : '-' }}
         </td>
         <td data-label="Address">
             {{ source.streetName }}
         </td>
-        <td data-label="Status" v-if="typeSelectedChange === 'All' || typeSelectedChange === 'New'">
+        <td data-label="Status" v-if="typeSelectedChange === 0 || typeSelectedChange === 1">
             <AssetInventoryBadge :type="source.statusDisplay" />
         </td>
-        <td data-label="Estimated Market Rent" v-if="typeSelectedChange === 'Vacant'">
+        <td data-label="Estimated Market Rent" v-if="typeSelectedChange === 2">
             {{ source.EMR }}
         </td>
-        <td data-label="Asking Rent" v-if="typeSelectedChange === 'Vacant'">
+        <td data-label="Asking Rent" v-if="typeSelectedChange === 2">
             {{ source.ART }}
         </td>
-        <td data-label="Monthly Rent" v-if="typeSelectedChange === 'Tenanted'">
+        <td data-label="Monthly Rent" v-if="typeSelectedChange === 3">
             {{ source.MR }}
         </td>
-        <td data-label="Annual Revenue" v-if="typeSelectedChange === 'Tenanted'">
+        <td data-label="Annual Revenue" v-if="typeSelectedChange === 3">
             {{ source.AR }}
         </td>
         <td data-label="Action">
@@ -90,8 +90,8 @@ export default {
     components: { AssetInventoryBadge },
     props: {
         typeSelected: {
-            type: String,
-            default: () => "All"
+            type: Number,
+            default: () => 0
         },
         source: {
             type: Object,
@@ -104,7 +104,7 @@ export default {
     },
     data() {
         return {
-            typeSelectedChange: "All"
+            typeSelectedChange: 0
         }
     },
     methods: {
