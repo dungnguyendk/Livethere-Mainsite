@@ -41,7 +41,7 @@ export default {
                 {
                     label: "Dashboard",
                     path: "/landlord",
-                    value: ""
+                    value: "/landlord"
                 },
                 {
                     label: "Assets",

@@ -9,88 +9,16 @@
     </div>
 </template>
 <script>
-import LandlordDashboard from "~/components/components/Landlord/Dashboard/LandlordDashboard.vue"
-import AssetInventory from "~/components/components/Landlord/AssetInventory/AssetInventory.vue"
-import Analytics from "~/components/components/Landlord/Analytics/Analytics.vue"
-import Insights from "~/components/components/Landlord/Insights/Insights.vue"
-import MarketingInventory from "~/components/components/Landlord/MarketingInventory/MarketingInventory.vue"
-import PropertyDetails from "~/components/components/Landlord/Property/PropertyDetails.vue"
 import LandlordNavigation from "~/components/components/Landlord/LandlordNavigation.vue"
 
 export default {
     name: "LandlordPortal",
     components: {
-        LandlordNavigation,
-        PropertyDetails,
-        MarketingInventory,
-        Insights,
-        Analytics,
-        AssetInventory,
-        LandlordDashboard
-    },
-    data() {
-        return {
-            activePanel: "dashboard",
-            navigation: [
-                {
-                    label: "Dashboard",
-                    value: "dashboard"
-                },
-                {
-                    label: "Assets",
-                    value: "assets"
-                },
-                {
-                    label: "Analytics",
-                    value: "analytics"
-                },
-                {
-                    label: "Marketing",
-                    value: "marketing"
-                },
-                {
-                    label: "Insights",
-                    value: "insights"
-                }
-            ]
-        }
-    },
-    methods: {
-        onSelectPanel(panel) {
-            this.activePanel = panel.value
-        }
+        LandlordNavigation
     }
 }
 </script>
 <style lang="scss" scoped>
-.nav--top {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    grid-gap: 3.2rem;
-    gap: 3.2rem;
-
-    a {
-        font-size: 1.6rem;
-        font-weight: 500;
-
-        &:hover,
-        &:focus {
-            color: var(--color-primary);
-        }
-
-        &.active {
-            font-weight: 700;
-            color: var(--color-primary);
-        }
-    }
-
-    @media screen and (max-width: 1366px) {
-        gap: 2.4rem;
-        grid-gap: 2.4rem;
-    }
-}
-
 .page--landlord {
     background-color: #fafafa;
     min-height: 100vh;
