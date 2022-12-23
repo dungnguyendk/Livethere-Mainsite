@@ -18,7 +18,7 @@
             :actions="false"
             @close="onCloseCreateDialog"
         >
-            <AddUnitInventoryForm />
+            <AddUnitInventoryForm  @close="onCloseCreateDialog" />
         </Dialog>
     </div>
 </template>

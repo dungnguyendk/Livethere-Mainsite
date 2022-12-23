@@ -4,17 +4,18 @@
             <v-row>
                 <v-col cols="12" sm="12" md="6">
                     <div class="form__field">
-                        <label>Name </label>
-                        <v-text-field v-model="name" dense outlined />
+                        <label class="required">Name </label>
+                        <v-text-field v-model="name" :error-messages="nameErrors" dense outlined />
                     </div>
                 </v-col>
                 <v-col cols="12" sm="12" md="6">
                     <div class="form__field">
-                        <label>Conditions </label>
+                        <label class="required">Conditions </label>
                         <v-select
                             v-model="condition"
                             :items="conditions"
                             placeholder="Please select"
+                            :error-messages="conditionErrors"
                             dense
                             outlined
                         />
@@ -22,14 +23,24 @@
                 </v-col>
                 <v-col cols="12" sm="12" md="6">
                     <div class="form__field">
-                        <label>Quantity </label>
-                        <v-text-field v-model="quantity" dense outlined />
+                        <label class="required">Quantity </label>
+                        <v-text-field
+                            v-model="quantity"
+                            :error-messages="quantityErrors"
+                            dense
+                            outlined
+                        />
                     </div>
                 </v-col>
                 <v-col cols="12" sm="12" md="6">
                     <div class="form__field">
-                        <label>Value </label>
-                        <v-text-field v-model="value" dense outlined />
+                        <label class="required">Value </label>
+                        <v-text-field
+                            v-model="value"
+                            :error-messages="valueErrors"
+                            dense
+                            outlined
+                        />
                     </div>
                 </v-col>
                 <v-col cols="12" sm="12" md="12">
@@ -42,19 +53,54 @@
         </div>
         <div class="form__actions">
             <v-btn class="btn btn--ghost btn--gray btn--sm" @click="onClose"> Cancel</v-btn>
-            <v-btn class="btn btn--primary btn--green btn--sm"> Create</v-btn>
+            <v-btn class="btn btn--primary btn--green btn--sm" @click="onSubmit"> Create</v-btn>
         </div>
     </form>
 </template>
 
 <script>
+import { validationMixin } from "vuelidate"
+import { required } from "vuelidate/lib/validators"
+import { setFormControlErrors } from "~/ultilities/form-validations"
+import { convertNumberToCommas, convertCommasToNumber } from "~/ultilities/helpers"
+
 export default {
     name: "AddUnitInventoryForm",
+    mixins: [validationMixin],
+    validations: {
+        name: {
+            required
+        },
+        condition: {
+            required
+        },
+        quantity: {
+            required
+        },
+        value: {
+            required
+        }
+    },
+    computed: {
+        nameErrors() {
+            return setFormControlErrors(this.$v.name, "This field is required")
+        },
+
+        conditionErrors() {
+            return setFormControlErrors(this.$v.condition, "This field is required")
+        },
+        quantityErrors() {
+            return setFormControlErrors(this.$v.quantity, "This field is required")
+        },
+        valueErrors() {
+            return setFormControlErrors(this.$v.value, "This field is required")
+        }
+    },
     data() {
         return {
             name: "",
             condition: "",
-            quantity: 0,
+            quantity: "",
             value: "",
             remark: "",
             conditions: [
@@ -73,6 +119,35 @@ export default {
     methods: {
         onClose() {
             this.$emit("close")
+        },
+        // async onSubmit() {
+        //     this.$v.$touch()
+        //     console.log("kekeke1")
+        //     try {
+        //     } catch (e) {}
+        // }
+        onSubmit() {
+            console.log("submit!", this.$v.$invalid)
+            this.$v.$touch()
+            if (!this.$v.$invalid) {
+                this.onClose()
+            }
+        }
+    },
+    watch: {
+        value(val) {
+            if (!isNaN(val)) {
+                this.value = convertNumberToCommas(val)
+            } else {
+                this.value = convertNumberToCommas(convertCommasToNumber(val))
+            }
+        },
+        quantity(val) {
+            if (!isNaN(val)) {
+                this.quantity = convertNumberToCommas(val)
+            } else {
+                this.quantity = convertNumberToCommas(convertCommasToNumber(val))
+            }
         }
     }
 }
