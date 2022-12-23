@@ -50,8 +50,8 @@
             </div>
             <div class="form__field">
                 <label>Floor Area (sqft)</label>
-                <v-text-field v-model.trim="floorArea" outlined dense type="number" hide-spin-buttons
-                    :error-messages="floorAreaErrors" @input="$v.floorArea.$touch()" @blur="$v.floorArea.$touch()" />
+                <v-text-field v-model.trim="floorArea" outlined dense hide-spin-buttons
+                    :error-messages="floorAreaErrors" />
             </div>
             <div class="form__field">
                 <label>Purchased Price</label>
@@ -61,7 +61,7 @@
             </div>
             <div class="form__field" v-if="propertyType.name === 'LANDED PROPERTY'">
                 <label>Land Area (sqft)</label>
-                <v-text-field v-model.trim="landArea" outlined dense type="number" hide-spin-buttons
+                <v-text-field v-model.trim="landArea" outlined dense hide-spin-buttons
                     :error-messages="landAreaErrors" />
             </div>
         </div>
@@ -98,13 +98,13 @@ export default {
         tenure: { required },
         floorArea: {
             required,
-            minValue: minValue(1)
+            // minValue: minValue(1)
         },
         landArea: {
             required: requiredIf(function () {
                 return this.propertyType.name === "LANDED PROPERTY"
             }),
-            minValue: minValue(1)
+            // minValue: minValue(1)
         },
         purchasedPrice: {
             required
@@ -155,25 +155,13 @@ export default {
             return setFormControlErrors(this.$v.tenure, "Tenure is required")
         },
         floorAreaErrors() {
-            const errors = []
-            if (!this.$v.floorArea.$dirty) return errors
-            !this.$v.floorArea.required && errors.push("Floor Area is required")
-            !this.$v.floorArea.minValue && errors.push("Floor Area is more than 0")
-            return errors
+            return setFormControlErrors(this.$v.floorArea, "Floor Area is required")
         },
         landAreaErrors() {
-            const errors = []
-            if (!this.$v.landArea.$dirty) return errors
-            !this.$v.landArea.required && errors.push("Land Area is required")
-            !this.$v.landArea.minValue && errors.push("Land Area is more than 0")
-            return errors
+            return setFormControlErrors(this.$v.landArea, "Land Area is required")
         },
         purchasedPriceErrors() {
-            const errors = []
-            if (!this.$v.purchasedPrice.$dirty) return errors
-            !this.$v.purchasedPrice.required && errors.push("Purchased Price is required")
-            // !this.$v.purchasedPrice.requiredIf && errors.push("Purchased Price is more than 0");
-            return errors
+            return setFormControlErrors(this.$v.purchasedPrice, "Purchased Price is required")
         }
     },
     methods: {
@@ -191,8 +179,8 @@ export default {
                     projectName: this.projectName,
                     tenureType: this.tenure.id,
                     tenureDisplay: this.tenure.name,
-                    floorAreaSqft: this.floorArea ? this.floorArea : 0,
-                    landAreaSqft: this.landArea ? this.landArea : 0,
+                    floorAreaSqft: this.floorArea ? convertCommasToNumber(this.floorArea) : 0,
+                    landAreaSqft: this.landArea ? convertCommasToNumber(this.landArea) : 0,
                     city: "Singapore",
                     country: "Singapore",
                     bedroomTypeFID: this.bedroom.id ? this.bedroom.id : 0,
@@ -239,7 +227,21 @@ export default {
             } else {
                 this.purchasedPrice = convertNumberToCommas(convertCommasToNumber(val))
             }
-        }
+        },
+        floorArea(val) {
+            if (!isNaN(val)) {
+                this.floorArea = convertNumberToCommas(val)
+            } else {
+                this.floorArea = convertNumberToCommas(convertCommasToNumber(val))
+            }
+        },
+        landArea(val) {
+            if (!isNaN(val)) {
+                this.landArea = convertNumberToCommas(val)
+            } else {
+                this.landArea = convertNumberToCommas(convertCommasToNumber(val))
+            }
+        },
     }
 }
 </script>

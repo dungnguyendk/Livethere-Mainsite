@@ -73,7 +73,7 @@ export default {
         })
     },
     created() {
-        console.log("inventories::", this.inventories)
+        // console.log("inventories::", this.inventories)
     },
     methods: {
         onCloseExpandedPanel() {
