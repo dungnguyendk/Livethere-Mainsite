@@ -1,23 +1,46 @@
 <template lang="html">
     <div class="asset-inventory__action">
         <div class="select-type">
-            <v-select v-model="typeSelected" :items="typeSelections" item-text="value" item-value="id" hide-details
-                outlined dense class="me-2" @change="changeType"></v-select>
+            <v-select
+                v-model="typeSelected"
+                :items="typeSelections"
+                item-text="value"
+                item-value="id"
+                hide-details
+                outlined
+                dense
+                class="me-2"
+                @change="changeType"
+            ></v-select>
         </div>
-        <v-btn class="btn btn--outline btn--green btn--md add-new" @click="openAddNewInventoryDialog = true">
+        <v-btn
+            class="btn btn--outline btn--green btn--md add-new"
+            @click="openAddNewInventoryDialog = true"
+        >
             <v-icon left>ri-add-box-line</v-icon>
             Add New Inventory
         </v-btn>
-        <AddNewInventoryDialog :open="openAddNewInventoryDialog" @close="openAddNewInventoryDialog = false" />
+        <Dialog :open="openAddNewInventoryDialog" @close="openAddNewInventoryDialog = false">
+            <template slot="content">
+                <AddInventoryForm />
+            </template>
+        </Dialog>
+        <!--        <AddNewInventoryDialog
+            :open="openAddNewInventoryDialog"
+            @close="openAddNewInventoryDialog = false"
+        />-->
     </div>
 </template>
 <script>
 import AddNewInventoryDialog from "~/components/components/Landlord/AssetInventory/components/Dialog/AddNewInventoryDialog.vue"
 import { STATUS_DROPDOWN } from "~/ultilities/contants/asset-inventory.js"
 import qs from "qs"
+import Dialog from "~/components/elements/Dialog/Dialog.vue"
+import AddInventoryForm from "~/components/components/Landlord/AssetInventory/components/Dialog/Form/AddInventoryForm.vue"
+
 export default {
     name: "AssetInventoryAction",
-    components: { AddNewInventoryDialog },
+    components: { AddInventoryForm, Dialog, AddNewInventoryDialog },
     data() {
         return {
             typeSelections: STATUS_DROPDOWN,
@@ -39,7 +62,7 @@ export default {
     },
     watch: {
         typeSelected(val) {
-            console.log("typeSelected", val);
+            console.log("typeSelected", val)
         }
     }
 }
@@ -47,7 +70,7 @@ export default {
 <style lang="scss" scoped>
 .asset-inventory {
     &__action {
-        padding: 4.6rem (278/1920)*100% 0 (278/1920)*100%;
+        padding: 4.6rem (278/1920) * 100% 0 (278/1920) * 100%;
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -67,7 +90,7 @@ export default {
     height: 4rem;
 
     .v-select {
-        width: 14rem
+        width: 14rem;
     }
 
     :deep(.v-select__selection--comma) {
@@ -112,7 +135,6 @@ export default {
     }
 }
 
-
 @media only screen and (max-width: 768px) {
     .asset-inventory {
         &__action {
@@ -123,7 +145,6 @@ export default {
     .select-type {
         .v-select {
             width: auto;
-
         }
     }
 }
