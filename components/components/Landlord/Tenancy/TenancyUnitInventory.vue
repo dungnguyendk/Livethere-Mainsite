@@ -3,27 +3,50 @@
         <div class="section__top">
             <h3 class="section__heading"> Unit Inventory </h3>
             <div class="section__actions">
-                <v-btn class="btn btn--green btn--outline btn--withIcon">
+                <v-btn
+                    class="btn btn--green btn--outline btn--withIcon"
+                    @click="createDialog = true"
+                >
                     <i class="ri-add-box-line"></i> Add
                 </v-btn>
             </div>
         </div>
         <TenancyInventoryTable />
+        <Dialog
+            title="Create unit inventory"
+            :open="createDialog"
+            :actions="false"
+            @close="onCloseCreateDialog"
+        >
+            <AddUnitInventoryForm />
+        </Dialog>
     </div>
 </template>
 
 <script>
 import TenancyInventoryTable from "./Table/TenancyUnitInventory/TenancyUnitInventoryTable.vue"
+import Dialog from "~/components/elements/Dialog/Dialog.vue"
+import AddUnitInventoryForm from "~/components/components/Landlord/AssetInventory/components/Form/AddUnitInventoryForm.vue"
 
 export default {
     name: "TenancyUnitInventory",
+    components: { AddUnitInventoryForm, Dialog, TenancyInventoryTable },
     props: {
         inside: {
             type: Boolean,
             default: false
         }
     },
-    components: { TenancyInventoryTable }
+    data() {
+        return {
+            createDialog: false
+        }
+    },
+    methods: {
+        onCloseCreateDialog() {
+            this.createDialog = false
+        }
+    }
 }
 </script>
 <style lang="scss" scoped>

@@ -1,12 +1,12 @@
 <template lang="html">
-    <div class="section--property-details">
+    <div class="section--unit-inventory-details">
         <div class="container">
             <div class="section__top">
                 <v-btn class="btn btn--outline btn--green btn--sm">
                     <i class="ri-arrow-left-line"></i>
                     Back
                 </v-btn>
-                <h3> Lloyd Sixtyfive </h3>
+                <h3>Lloyd Sixtyfive </h3>
             </div>
             <div class="section__container">
                 <PropertyInformationPanel />
@@ -34,7 +34,7 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.section--property-details {
+.section--unit-inventory-details {
     padding: 3.2rem 0;
 
     .section__divider {
