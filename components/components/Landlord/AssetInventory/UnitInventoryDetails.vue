@@ -2,7 +2,7 @@
     <div class="section--unit-inventory-details">
         <div class="container">
             <div class="section__top">
-                <v-btn class="btn btn--outline btn--green btn--sm">
+                <v-btn class="btn btn--outline btn--green btn--sm" @click="onBack">
                     <i class="ri-arrow-left-line"></i>
                     Back
                 </v-btn>
@@ -30,6 +30,11 @@ export default {
         TenancyAgreementPanel,
         PropertyInformationPanel,
         TenantAgreementTable
+    },
+    methods: {
+        onBack() {
+            this.$router.push("/landlord/assets")
+        }
     }
 }
 </script>
