@@ -10,7 +10,6 @@ import LandlordSignIn from "~/components/components/Landlord/Auth/SignIn/Landlor
 import LandlordHeader from "~/components/shared/Header/LandlordHeader.vue"
 
 export default {
-    name: "",
     components: {
         LandlordHeader,
         LandlordSignIn

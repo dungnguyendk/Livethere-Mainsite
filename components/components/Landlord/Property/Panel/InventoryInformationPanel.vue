@@ -54,7 +54,7 @@
 
 <script>
 export default {
-    name: "PropertyInformationPanel"
+    name: "InventoryInformationPanel"
 }
 </script>
 

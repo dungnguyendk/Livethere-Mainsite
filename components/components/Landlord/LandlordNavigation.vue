@@ -11,23 +11,9 @@
     </nav>
 </template>
 <script>
-import LandlordDashboard from "~/components/components/Landlord/Dashboard/LandlordDashboard.vue"
-import AssetInventory from "~/components/components/Landlord/AssetInventory/AssetInventory.vue"
-import Analytics from "~/components/components/Landlord/Analytics/Analytics.vue"
-import Insights from "~/components/components/Landlord/Insights/Insights.vue"
-import MarketingInventory from "~/components/components/Landlord/MarketingInventory/MarketingInventory.vue"
-import PropertyDetails from "~/components/components/Landlord/Property/PropertyDetails.vue"
-
 export default {
     name: "LandlordNavigation",
-    components: {
-        PropertyDetails,
-        MarketingInventory,
-        Insights,
-        Analytics,
-        AssetInventory,
-        LandlordDashboard
-    },
+
     computed: {
         path() {
             return this.$route.path

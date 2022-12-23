@@ -18,7 +18,6 @@ import { appSettings } from "~/app-settings"
 import Insights from "~/components/components/Landlord/Insights/Insights.vue"
 
 export default {
-    name: "landlord",
     components: { Insights, LandlordHeader, LandlordPortal, LandingFooter, LandingHeader },
     head: {
         title: `Landlord | ${appSettings.siteName}`

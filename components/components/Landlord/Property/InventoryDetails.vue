@@ -9,9 +9,9 @@
                 <h3> Lloyd Sixtyfive </h3>
             </div>
             <div class="section__container">
-                <PropertyInformationPanel/>
-                <div class="section__divider"/>
-                <TenancyAgreementPanel/>
+                <InventoryInformationPanel />
+                <div class="section__divider" />
+                <TenancyAgreementPanel />
             </div>
         </div>
     </div>
@@ -19,12 +19,12 @@
 
 <script>
 import TenantAgreementTable from "~/components/components/Landlord/Property/Table/TenancyAgreementTable.vue"
-import PropertyInformationPanel from "~/components/components/Landlord/Property/Panel/PropertyInformationPanel.vue"
-import TenancyAgreementPanel from "~/components/components/Landlord/Property/Panel/TenancyAgreementPanel.vue"
+import InventoryInformationPanel from "~/components/components/Landlord/Property/Panel/InventoryInformationPanel.vue"
+import TenancyAgreementPanel from "~/components/components/Landlord/Tenancy/Panel/TenancyAgreementPanel.vue"
 
 export default {
-    name: "PropertyDetails",
-    components: {TenancyAgreementPanel, PropertyInformationPanel, TenantAgreementTable}
+    name: "InventoryDetails",
+    components: { TenancyAgreementPanel, InventoryInformationPanel, TenantAgreementTable }
 }
 </script>
 <style lang="scss" scoped>

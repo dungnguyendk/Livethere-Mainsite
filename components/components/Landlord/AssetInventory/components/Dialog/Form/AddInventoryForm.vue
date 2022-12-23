@@ -13,7 +13,7 @@
                     item-value="value"
                     outlined
                     dense
-                    placeholder="Type here"
+                    placeholder="Please select"
                     :error-messages="propertyTypeErrors"
                     @input="$v.propertyType.$touch()"
                     @blur="$v.propertyType.$touch()"

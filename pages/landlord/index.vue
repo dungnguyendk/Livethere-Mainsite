@@ -15,9 +15,7 @@ import LandlordHeader from "~/components/shared/Header/LandlordHeader.vue"
 import { appSettings } from "~/app-settings"
 import qs from "qs"
 
-
 export default {
-    name: "landlord",
     components: { LandlordHeader, LandlordPortal, LandingFooter, LandingHeader },
     head: {
         title: `Landlord | ${appSettings.siteName}`
@@ -42,6 +40,6 @@ export default {
         } catch (e) {
             console.log(e)
         }
-    },
+    }
 }
 </script>
