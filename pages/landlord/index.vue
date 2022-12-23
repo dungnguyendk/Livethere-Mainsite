@@ -2,9 +2,7 @@
     <main>
         <LandlordHeader />
         <template v-if="loggedIn">
-            <LandlordPortal>
-                <LandlordDashboard />
-            </LandlordPortal>
+            <LandlordPortal />
         </template>
     </main>
 </template>
@@ -15,11 +13,12 @@ import LandingFooter from "~/components/shared/Footer/LandingFooter.vue"
 import LandlordPortal from "~/components/components/Landlord/LandlordPortal.vue"
 import LandlordHeader from "~/components/shared/Header/LandlordHeader.vue"
 import { appSettings } from "~/app-settings"
-import LandlordDashboard from "~/components/components/Landlord/Dashboard/LandlordDashboard.vue"
+import qs from "qs"
+
 
 export default {
     name: "landlord",
-    components: { LandlordDashboard, LandlordHeader, LandlordPortal, LandingFooter, LandingHeader },
+    components: { LandlordHeader, LandlordPortal, LandingFooter, LandingHeader },
     head: {
         title: `Landlord | ${appSettings.siteName}`
     },
@@ -33,6 +32,16 @@ export default {
         if (!this.loggedIn) {
             this.$router.push("/landlord/signin")
         }
-    }
+    },
+    async asyncData({ app, store }) {
+        try {
+            const param = qs.stringify({
+                StatusFID: 0
+            })
+            await store.dispatch("inventories/getInventories", param)
+        } catch (e) {
+            console.log(e)
+        }
+    },
 }
 </script>

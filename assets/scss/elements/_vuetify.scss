@@ -19,7 +19,8 @@
     }
 }
 .v-menu__content{
-    min-width: 19rem !important;
+    max-width: 100% !important;
+    // min-width: 19rem !important;
     border-radius: 0.8rem !important;
     background: #FFFFFF;
     border: 1px solid var(--border-color);
