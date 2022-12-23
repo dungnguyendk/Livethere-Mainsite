@@ -41,8 +41,8 @@ export default {
             })
             await store.dispatch("inventories/getInventories", param)
         } catch (e) {
-            console.log(e)
+            console.log({Error: e.message})
         }
-    }
+    },
 }
 </script>

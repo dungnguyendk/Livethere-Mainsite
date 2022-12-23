@@ -9,8 +9,8 @@
             Add New Inventory
         </v-btn>
         <Dialog :open="openAddNewInventoryDialog" @close="openAddNewInventoryDialog = false" :size="sizeDialog"
-            :title="''" :action="false">
-            <AddInventoryForm @close="openAddNewInventoryDialog = false" />
+            :title="''" :actions="false">
+            <AddInventoryForm @close="openAddNewInventoryDialog = false" v-if="openAddNewInventoryDialog" />
         </Dialog>
     </div>
 </template>
