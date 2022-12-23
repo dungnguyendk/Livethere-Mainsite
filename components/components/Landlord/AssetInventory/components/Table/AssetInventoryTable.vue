@@ -5,24 +5,24 @@
                 <tr>
                     <th>Property</th>
                     <th>Unit No.</th>
-                    <th v-if="typeSelectedChange === 0 || typeSelectedChange === 1">Property Type</th>
-                    <th v-if="typeSelectedChange === 0 || typeSelectedChange === 1">Bedroom Type</th>
-                    <th v-if="typeSelectedChange === 0 || typeSelectedChange === 1">Floor Area (sqft)</th>
-                    <th v-if="typeSelectedChange === 0 || typeSelectedChange === 1">Land Area (sqft)</th>
+                    <th v-if="statusFID === 0 || statusFID === 1">Property Type</th>
+                    <th v-if="statusFID === 0 || statusFID === 1">Bedroom Type</th>
+                    <th v-if="statusFID === 0 || statusFID === 1">Floor Area (sqft)</th>
+                    <th v-if="statusFID === 0 || statusFID === 1">Land Area (sqft)</th>
                     <th>Address</th>
-                    <th v-if="typeSelectedChange === 0 || typeSelectedChange === 1">Status</th>
-                    <th v-if="typeSelectedChange === 2">Estimated Market Rent</th>
-                    <th v-if="typeSelectedChange === 2">Asking Rent</th>
-                    <th v-if="typeSelectedChange === 3">Monthly Rent</th>
-                    <th v-if="typeSelectedChange === 3">Annual Revenue</th>
+                    <th v-if="statusFID === 0 || statusFID === 1">Status</th>
+                    <th v-if="statusFID === 2">Estimated Market Rent</th>
+                    <th v-if="statusFID === 2">Asking Rent</th>
+                    <th v-if="statusFID === 3">Monthly Rent</th>
+                    <th v-if="statusFID === 3">Annual Revenue</th>
                     <th></th>
                 </tr>
             </thead>
             <tbody>
                 <template v-if="inventories.length > 0">
                     <TableRecord v-for="item in inventories" :source="item" :selectedId="selectedId" :key="item.id"
-                        @handleClickOpenRow="handleClickOpenRow" :typeSelected="typeSelected" />
-                    <template v-if="(typeSelectedChange === 2 || typeSelectedChange === 3) && selectedId === -1">
+                        @handleClickOpenRow="handleClickOpenRow" />
+                    <template v-if="(statusFID === 2 || statusFID === 3) && selectedId === -1">
                         <tr class="tr-hidden">
                             <td></td>
                         </tr>
@@ -55,151 +55,17 @@ export default {
     name: "AssetInventoryTable",
     components: { TableRecord, ExpandedPanel },
     props: {
-        typeSelected: {
-            type: Number,
-            default: () => 0
-        }
     },
     data() {
         return {
-            items: [
-                {
-                    id: 1,
-                    propertyImg: "https://picsum.photos/600/400.jpg?random=",
-                    propertyName: "Lloyd Sixtyfive",
-                    unitNo: "10-24",
-                    propertyType: "propertyType",
-                    bedroomType: "",
-                    floorArea: "1,690",
-                    LandArea: "",
-                    address: "65 Lloyd Road, Singapore 239114",
-                    status: "New",
-                    EMR: "SGD 2,000 - SGD 3,500",
-                    ART: "SGD 12,000",
-                    MR: "SGD 8,000",
-                    AR: "SGD 12,000"
-                },
-                {
-                    id: 2,
-                    propertyImg: "https://picsum.photos/600/400.jpg?random=",
-                    propertyName: "Skypark @ Somerset",
-                    unitNo: "06-44",
-                    propertyType: "propertyType",
-                    bedroomType: "",
-                    floorArea: "1,690",
-                    LandArea: "",
-                    address: "22 Saint Thomas Walk, Singapore 238107",
-                    status: "New",
-                    EMR: "SGD 2,000 - SGD 3,500",
-                    ART: "SGD 12,000",
-                    MR: "SGD 8,000",
-                    AR: "SGD 12,000"
-                },
-                {
-                    id: 3,
-                    propertyImg: "https://picsum.photos/600/400.jpg?random=",
-                    propertyName: "Parkview Eclat",
-                    unitNo: "10-24",
-                    propertyType: "propertyType",
-                    bedroomType: "",
-                    floorArea: "1,690",
-                    LandArea: "",
-                    address: "138 Grange Road, Singapore 249617",
-                    status: "Vacant",
-                    EMR: "SGD 2,000 - SGD 3,500",
-                    ART: "SGD 12,000",
-                    MR: "SGD 8,000",
-                    AR: "SGD 12,000"
-                },
-                {
-                    id: 4,
-                    propertyImg: "https://picsum.photos/600/400.jpg?random=",
-                    propertyName: "Lloyd Sixtyfive",
-                    unitNo: "10-24",
-                    propertyType: "propertyType",
-                    bedroomType: "",
-                    floorArea: "1,690",
-                    LandArea: "",
-                    address: "65 Lloyd Road, Singapore 239114",
-                    status: "Vacant",
-                    EMR: "SGD 2,000 - SGD 3,500",
-                    ART: "SGD 12,000",
-                    MR: "SGD 8,000",
-                    AR: "SGD 12,000"
-                },
-                {
-                    id: 5,
-                    propertyImg: "https://picsum.photos/600/400.jpg?random=",
-                    propertyName: "Lloyd Sixtyfive",
-                    unitNo: "10-24",
-                    propertyType: "propertyType",
-                    bedroomType: "",
-                    floorArea: "1,690",
-                    LandArea: "",
-                    address: "65 Lloyd Road, Singapore 239114",
-                    status: "Tenanted",
-                    EMR: "SGD 2,000 - SGD 3,500",
-                    ART: "SGD 12,000",
-                    MR: "SGD 8,000",
-                    AR: "SGD 12,000"
-                },
-                {
-                    id: 6,
-                    propertyImg: "https://picsum.photos/600/400.jpg?random=",
-                    propertyName: "Lloyd Sixtyfive",
-                    unitNo: "10-24",
-                    propertyType: "propertyType",
-                    bedroomType: "",
-                    floorArea: "1,690",
-                    LandArea: "",
-                    address: "65 Lloyd Road, Singapore 239114",
-                    status: "Tenanted",
-                    EMR: "SGD 2,000 - SGD 3,500",
-                    ART: "SGD 12,000",
-                    MR: "SGD 8,000",
-                    AR: "SGD 12,000"
-                },
-                {
-                    id: 7,
-                    propertyImg: "https://picsum.photos/600/400.jpg?random=",
-                    propertyName: "Lloyd Sixtyfive",
-                    unitNo: "10-24",
-                    propertyType: "propertyType",
-                    bedroomType: "",
-                    floorArea: "1,690",
-                    LandArea: "",
-                    address: "65 Lloyd Road, Singapore 239114",
-                    status: "Tenanted",
-                    EMR: "SGD 2,000 - SGD 3,500",
-                    ART: "SGD 12,000",
-                    MR: "SGD 8,000",
-                    AR: "SGD 12,000"
-                },
-                {
-                    id: 8,
-                    propertyImg: "https://picsum.photos/600/400.jpg?random=",
-                    propertyName: "Waterfront Bungalow at Ocean Drive",
-                    unitNo: "10-24",
-                    propertyType: "propertyType",
-                    bedroomType: "",
-                    floorArea: "1,690",
-                    LandArea: "2,172",
-                    address: "65 Lloyd Road, Singapore 239114",
-                    status: "New",
-                    EMR: "SGD 2,000 - SGD 3,500",
-                    ART: "SGD 12,000",
-                    MR: "SGD 8,000",
-                    AR: "SGD 12,000"
-                },
-            ],
             showExpandedPanel: false,
             selectedId: -1,
-            typeSelectedChange: 0
         }
     },
     computed: {
         ...mapState({
-            inventories: (state) => state.inventories.inventories
+            inventories: (state) => state.inventories.inventories,
+            statusFID: (state) => state.inventories.typeSelect
         }),
     },
     created() {
@@ -216,11 +82,7 @@ export default {
             this.showExpandedPanel = true
         }
     },
-    watch: {
-        typeSelected(val) {
-            this.typeSelectedChange = val
-        }
-    }
+    watch: {}
 }
 </script>
 <style lang="scss" scoped>

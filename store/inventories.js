@@ -1,13 +1,18 @@
 import { httpEndpoint } from "~/services/https/endpoints"
 
 export const state = () => ({
-    inventories: []
+    inventories: [],
+    typeSelect: 0
 })
 
 export const mutations = {
     setInventories(state, payload) {
         state.inventories = payload
         // console.log("state.inventories::", state.inventories)
+    },
+    setTypeSelected(state, payload) {
+        state.typeSelect = payload
+        console.log("state.typeSelect::", state.typeSelect)
     }
 }
 
@@ -21,12 +26,12 @@ export const actions = {
         }
     },
     async getInventories({ commit }, payload) {
-        console.log("getInventories::", payload)
+        // console.log("getInventories::", payload)
         try {
             const response = await this.$axios.$get(
                 `${httpEndpoint.inventories.getEntries}?${payload}`
             )
-            console.log(response)
+            // console.log(response)
             if (response) {
                 commit("setInventories", response)
             }

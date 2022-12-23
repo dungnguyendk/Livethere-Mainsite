@@ -1,7 +1,7 @@
 <template>
     <form @submit.prevent="submitForm" class="form--add-new-inventory">
         <div class="form__top">
-            <h3>add new inventory</h3>
+            <h3>ADD NEW INVENTORY</h3>
         </div>
         <div class="form__fields">
             <div class="form__field">
@@ -365,7 +365,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .form__fields {
-    padding: 3.2rem 5rem 1rem 5rem;
+    padding: 3.2rem 0 1rem 0;
     display: grid;
     column-gap: 2.4rem;
     grid-template-columns: repeat(2, 1fr);
@@ -397,7 +397,7 @@ export default {
 
 @media only screen and (max-width: 768px) {
     .form__fields {
-        padding: 3.2rem 3rem 1rem 3rem;
+        padding: 3.2rem 0 1rem 0;
         display: grid;
         column-gap: 2.4rem;
         grid-template-columns: repeat(1, 1fr);
@@ -432,6 +432,17 @@ export default {
         &.v-btn--has-bg.v-btn--disabled {
             cursor: not-allowed;
         }
+    }
+}
+.form__top {
+    text-align: center;
+
+    h3 {
+        margin-bottom: 0;
+        font-weight: 700;
+        font-size: 2.4rem;
+        line-height: 2.8rem;
+        color: var(--color-title-black);
     }
 }
 

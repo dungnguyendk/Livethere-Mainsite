@@ -1,7 +1,7 @@
 <template lang="html">
     <div>
-        <AssetInventoryAction @changeType="changeType" />
-        <AssetInventoryTable :typeSelected="typeSelected" />
+        <AssetInventoryAction />
+        <AssetInventoryTable />
     </div>
 </template>
 
@@ -11,15 +11,5 @@ import AssetInventoryAction from "~/components/components/Landlord/AssetInventor
 export default {
     name: "AssetInventory",
     components: { AssetInventoryTable, AssetInventoryAction },
-    data() {
-        return {
-            typeSelected: 0
-        }
-    },
-    methods: {
-        changeType(val) {
-            this.typeSelected = val
-        }
-    }
 }
 </script>

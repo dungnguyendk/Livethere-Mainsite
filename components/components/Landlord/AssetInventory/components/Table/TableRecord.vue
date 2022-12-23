@@ -11,34 +11,34 @@
         <td data-label="Unit No.">
             {{ source.unitNo }}
         </td>
-        <td data-label="Property Type" v-if="typeSelectedChange === 0 || typeSelectedChange === 1">
+        <td data-label="Property Type" v-if="statusFID === 0 || statusFID === 1">
             {{ source.propertyTypeDisplay }}
         </td>
-        <td data-label="Bedroom Type" v-if="typeSelectedChange === 0 || typeSelectedChange === 1">
+        <td data-label="Bedroom Type" v-if="statusFID === 0 || statusFID === 1">
             {{ source.bedroomTypeDisplay ? source.bedroomTypeDisplay : "-" }}
         </td>
-        <td data-label="Floor Area (sqft)" v-if="typeSelectedChange === 0 || typeSelectedChange === 1">
+        <td data-label="Floor Area (sqft)" v-if="statusFID === 0 || statusFID === 1">
             {{ source.floorAreaSqft }}
         </td>
-        <td data-label="Land Area (sqft)" v-if="typeSelectedChange === 0 || typeSelectedChange === 1">
+        <td data-label="Land Area (sqft)" v-if="statusFID === 0 || statusFID === 1">
             {{ source.LandArea ? source.LandArea : '-' }}
         </td>
         <td data-label="Address">
             {{ source.streetName }}
         </td>
-        <td data-label="Status" v-if="typeSelectedChange === 0 || typeSelectedChange === 1">
+        <td data-label="Status" v-if="statusFID === 0 || statusFID === 1">
             <AssetInventoryBadge :type="source.statusDisplay" />
         </td>
-        <td data-label="Estimated Market Rent" v-if="typeSelectedChange === 2">
+        <td data-label="Estimated Market Rent" v-if="statusFID === 2">
             {{ source.EMR }}
         </td>
-        <td data-label="Asking Rent" v-if="typeSelectedChange === 2">
+        <td data-label="Asking Rent" v-if="statusFID === 2">
             {{ source.ART }}
         </td>
-        <td data-label="Monthly Rent" v-if="typeSelectedChange === 3">
+        <td data-label="Monthly Rent" v-if="statusFID === 3">
             {{ source.MR }}
         </td>
-        <td data-label="Annual Revenue" v-if="typeSelectedChange === 3">
+        <td data-label="Annual Revenue" v-if="statusFID === 3">
             {{ source.AR }}
         </td>
         <td data-label="Action">
@@ -85,14 +85,11 @@
 
 <script>
 import AssetInventoryBadge from "~/components/components/Landlord/AssetInventory/components/AssetInventoryBadge.vue"
+import { mapState } from "vuex"
 export default {
     name: "TableRecord",
     components: { AssetInventoryBadge },
     props: {
-        typeSelected: {
-            type: Number,
-            default: () => 0
-        },
         source: {
             type: Object,
             default: () => { }
@@ -104,19 +101,19 @@ export default {
     },
     data() {
         return {
-            typeSelectedChange: 0
         }
+    },
+    computed: {
+        ...mapState({
+            statusFID: (state) => state.inventories.typeSelect
+        }),
     },
     methods: {
         handleClickOpenRow(item) {
             this.$emit("handleClickOpenRow", item)
         }
     },
-    watch: {
-        typeSelected(val) {
-            this.typeSelectedChange = val
-        }
-    }
+    watch: {}
 
 }
 </script>
