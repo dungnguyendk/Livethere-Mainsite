@@ -6,33 +6,14 @@
         <div class="form__fields">
             <div class="form__field">
                 <label>Property Type</label>
-                <v-select
-                    v-model.trim="propertyType"
-                    :items="propertyTypeList"
-                    item-text="text"
-                    item-value="value"
-                    outlined
-                    dense
-                    placeholder="Type here"
-                    :error-messages="propertyTypeErrors"
-                    @input="$v.propertyType.$touch()"
-                    @blur="$v.propertyType.$touch()"
-                />
+                <v-select v-model.trim="propertyType" :items="propertyTypeList" item-text="text" item-value="value"
+                    outlined dense placeholder="Please select" :error-messages="propertyTypeErrors" />
             </div>
             <div class="form__field2">
                 <div class="form__field">
                     <label>Postal Code</label>
-                    <v-text-field
-                        v-model="postalCode"
-                        type="number"
-                        hide-spin-buttons
-                        outlined
-                        dense
-                        placeholder="Type here"
-                        :error-messages="postalCodeErrors"
-                        @input="$v.postalCode.$touch()"
-                        @blur="$v.postalCode.$touch()"
-                    >
+                    <v-text-field v-model="postalCode" type="number" hide-spin-buttons outlined dense
+                        :error-messages="postalCodeErrors">
                         <template v-slot:prepend-inner>
                             <v-icon @click="searchPostalCode">mdi-magnify</v-icon>
                         </template>
@@ -40,128 +21,48 @@
                 </div>
                 <div class="form__field">
                     <label>House No.</label>
-                    <v-text-field
-                        v-model.trim="houseNo"
-                        outlined
-                        dense
-                        placeholder="Type here"
-                        :error-messages="houseNoErrors"
-                        @input="$v.houseNo.$touch()"
-                        @blur="$v.houseNo.$touch()"
-                    />
+                    <v-text-field v-model.trim="houseNo" outlined dense :error-messages="houseNoErrors" />
                 </div>
             </div>
             <div class="form__field">
                 <label>Street Name</label>
-                <v-text-field
-                    v-model.trim="streetName"
-                    outlined
-                    dense
-                    placeholder="Type here"
-                    :error-messages="streetNameErrors"
-                    @input="$v.streetName.$touch()"
-                    @blur="$v.streetName.$touch()"
-                />
+                <v-text-field v-model.trim="streetName" outlined dense :error-messages="streetNameErrors" />
             </div>
             <div class="form__field">
                 <label>Unit No.</label>
-                <v-text-field
-                    v-model.trim="unitNo"
-                    outlined
-                    dense
-                    placeholder="Type here"
-                    :error-messages="unitNoErrors"
-                    @input="$v.unitNo.$touch()"
-                    @blur="$v.unitNo.$touch()"
-                />
+                <v-text-field v-model.trim="unitNo" outlined dense :error-messages="unitNoErrors" />
             </div>
             <div class="form__field">
                 <label>Project Name</label>
-                <v-text-field
-                    v-model.trim="projectName"
-                    outlined
-                    dense
-                    placeholder="Type here"
-                    :error-messages="projectNameErrors"
-                    @input="$v.projectName.$touch()"
-                    @blur="$v.projectName.$touch()"
-                />
+                <v-text-field v-model.trim="projectName" outlined dense :error-messages="projectNameErrors" />
             </div>
             <div class="form__field2">
                 <div class="form__field">
                     <label>No of Bedroom(s)</label>
-                    <v-select
-                        v-model="bedroom"
-                        outlined
-                        dense
-                        placeholder="Type here"
-                        :items="bedroomList"
-                        item-text="text"
-                        item-value="value"
-                        :error-messages="bedroomErrors"
-                        @input="$v.bedroom.$touch()"
-                        @blur="$v.bedroom.$touch()"
-                    />
+                    <v-select v-model="bedroom" outlined dense placeholder="Please select" :items="bedroomList"
+                        item-text="text" item-value="value" :error-messages="bedroomErrors" />
                 </div>
                 <div class="form__field">
                     <label>Tenure</label>
-                    <v-select
-                        v-model="tenure"
-                        outlined
-                        dense
-                        placeholder="Type here"
-                        :items="tenureList"
-                        item-text="text"
-                        item-value="value"
-                        :error-messages="tenureErrors"
-                        @input="$v.tenure.$touch()"
-                        @blur="$v.tenure.$touch()"
-                    />
+                    <v-select v-model="tenure" outlined dense placeholder="Please select" :items="tenureList"
+                        item-text="text" item-value="value" :error-messages="tenureErrors" />
                 </div>
             </div>
             <div class="form__field">
                 <label>Floor Area (sqft)</label>
-                <v-text-field
-                    v-model.trim="floorArea"
-                    outlined
-                    dense
-                    placeholder="Type here"
-                    type="number"
-                    hide-spin-buttons
-                    :error-messages="floorAreaErrors"
-                    @input="$v.floorArea.$touch()"
-                    @blur="$v.floorArea.$touch()"
-                />
+                <v-text-field v-model.trim="floorArea" outlined dense type="number" hide-spin-buttons
+                    :error-messages="floorAreaErrors" @input="$v.floorArea.$touch()" @blur="$v.floorArea.$touch()" />
             </div>
             <div class="form__field">
                 <label>Purchased Price</label>
-                <v-text-field
-                    v-model.trim="purchasedPrice"
-                    outlined
-                    dense
-                    placeholder="Type here"
-                    hide-spin-buttons
-                    :error-messages="purchasedPriceErrors"
-                    @input="$v.purchasedPrice.$touch()"
-                    @blur="$v.purchasedPrice.$touch()"
-                    suffix="SGD"
-                    reverse
-                >
+                <v-text-field v-model.trim="purchasedPrice" outlined dense hide-spin-buttons
+                    :error-messages="purchasedPriceErrors" suffix="SGD" reverse>
                 </v-text-field>
             </div>
             <div class="form__field" v-if="propertyType.name === 'LANDED PROPERTY'">
                 <label>Land Area (sqft)</label>
-                <v-text-field
-                    v-model.trim="landArea"
-                    outlined
-                    dense
-                    placeholder="Type here"
-                    type="number"
-                    hide-spin-buttons
-                    :error-messages="landAreaErrors"
-                    @input="$v.landArea.$touch()"
-                    @blur="$v.landArea.$touch()"
-                />
+                <v-text-field v-model.trim="landArea" outlined dense type="number" hide-spin-buttons
+                    :error-messages="landAreaErrors" />
             </div>
         </div>
         <div class="card__footer">
@@ -233,46 +134,25 @@ export default {
             return setFormControlErrors(this.$v.propertyType, "This field is required")
         },
         postalCodeErrors() {
-            const errors = []
-            if (!this.$v.postalCode.$dirty) return errors
-            !this.$v.postalCode.required && errors.push("Postal Code is required")
-            return errors
+            return setFormControlErrors(this.$v.postalCode, "Postal Code is required")
         },
         houseNoErrors() {
-            const errors = []
-            if (!this.$v.houseNo.$dirty) return errors
-            !this.$v.houseNo.required && errors.push("House No is required")
-            return errors
+            return setFormControlErrors(this.$v.houseNo, "House No is required")
         },
         streetNameErrors() {
-            const errors = []
-            if (!this.$v.streetName.$dirty) return errors
-            !this.$v.streetName.required && errors.push("Street Name is required")
-            return errors
+            return setFormControlErrors(this.$v.streetName, "Street Name is required")
         },
         unitNoErrors() {
-            const errors = []
-            if (!this.$v.unitNo.$dirty) return errors
-            !this.$v.unitNo.required && errors.push("Unit No is required")
-            return errors
+            return setFormControlErrors(this.$v.unitNo, "Unit no is required")
         },
         projectNameErrors() {
-            const errors = []
-            if (!this.$v.projectName.$dirty) return errors
-            !this.$v.projectName.required && errors.push("Project Name is required")
-            return errors
+            return setFormControlErrors(this.$v.projectName, "Project Name is required")
         },
         bedroomErrors() {
-            const errors = []
-            if (!this.$v.bedroom.$dirty) return errors
-            !this.$v.bedroom.required && errors.push("No of Bedroom(s) is required")
-            return errors
+            return setFormControlErrors(this.$v.bedroom, "No of Bedroom(s) is required")
         },
         tenureErrors() {
-            const errors = []
-            if (!this.$v.tenure.$dirty) return errors
-            !this.$v.tenure.required && errors.push("Tenure is required")
-            return errors
+            return setFormControlErrors(this.$v.tenure, "Tenure is required")
         },
         floorAreaErrors() {
             const errors = []
@@ -317,7 +197,7 @@ export default {
                     country: "Singapore",
                     bedroomTypeFID: this.bedroom.id ? this.bedroom.id : 0,
                     bedroomTypeDisplay: this.bedroom.name ? this.bedroom.name : 0,
-                    purchasedPrice: this.purchasedPrice ? this.purchasedPrice : 0
+                    purchasedPrice: this.purchasedPrice ? convertCommasToNumber(this.purchasedPrice) : 0
                 }
                 this.$store.dispatch("inventories/createInventories", params)
                 this.onClose()
@@ -365,7 +245,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .form__fields {
-    padding: 3.2rem 0 1rem 0;
+    padding: 3.2rem 2rem 1rem 2rem;
     display: grid;
     column-gap: 2.4rem;
     grid-template-columns: repeat(2, 1fr);
@@ -397,7 +277,7 @@ export default {
 
 @media only screen and (max-width: 768px) {
     .form__fields {
-        padding: 3.2rem 0 1rem 0;
+        padding: 3.2rem 2rem 1rem 2rem;
         display: grid;
         column-gap: 2.4rem;
         grid-template-columns: repeat(1, 1fr);
@@ -434,6 +314,7 @@ export default {
         }
     }
 }
+
 .form__top {
     text-align: center;
 

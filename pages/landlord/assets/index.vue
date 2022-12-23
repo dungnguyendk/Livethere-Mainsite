@@ -16,6 +16,7 @@ import LandlordPortal from "~/components/components/Landlord/LandlordPortal.vue"
 import LandlordHeader from "~/components/shared/Header/LandlordHeader.vue"
 import { appSettings } from "~/app-settings"
 import AssetInventory from "~/components/components/Landlord/AssetInventory/AssetInventory.vue"
+import qs from "qs"
 
 export default {
     name: "landlord",
@@ -33,6 +34,16 @@ export default {
         if (!this.loggedIn) {
             this.$router.push("/landlord/signin")
         }
-    }
+    },
+    async asyncData({ app, store }) {
+        try {
+            const param = qs.stringify({
+                StatusFID: 0
+            })
+            await store.dispatch("inventories/getInventories", param)
+        } catch (e) {
+            console.log({Error: e.message})
+        }
+    },
 }
 </script>

@@ -8,17 +8,14 @@ export const state = () => ({
 export const mutations = {
     setInventories(state, payload) {
         state.inventories = payload
-        // console.log("state.inventories::", state.inventories)
     },
     setTypeSelected(state, payload) {
         state.typeSelect = payload
-        console.log("state.typeSelect::", state.typeSelect)
     }
 }
 
 export const actions = {
     async createInventories({ commit }, payload) {
-        // console.log("createInventories::", payload)
         try {
             await this.$axios.$post(`${httpEndpoint.inventories.createEntry}`, payload)
         } catch (e) {
@@ -26,17 +23,18 @@ export const actions = {
         }
     },
     async getInventories({ commit }, payload) {
-        // console.log("getInventories::", payload)
         try {
             const response = await this.$axios.$get(
                 `${httpEndpoint.inventories.getEntries}?${payload}`
             )
-            // console.log(response)
             if (response) {
-                commit("setInventories", response)
+                commit("setInventories", response.length ? response : [])
+            } else {
+                commit("setInventories", [])
             }
         } catch (e) {
-            console.log(e)
+            console.log({ Error: e.message })
+            commit("setInventories", [])
         }
     }
 }
