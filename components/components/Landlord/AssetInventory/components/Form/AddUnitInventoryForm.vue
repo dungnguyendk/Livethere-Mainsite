@@ -4,32 +4,32 @@
             <v-row>
                 <v-col cols="12" sm="12" md="6">
                     <div class="form__field">
-                        <label>Agreement Date </label>
-                        <v-text-field v-model="agreementDate" dense outlined />
+                        <label>Name </label>
+                        <v-text-field v-model="name" dense outlined />
                     </div>
                 </v-col>
                 <v-col cols="12" sm="12" md="6">
                     <div class="form__field">
-                        <label>Start Date </label>
-                        <v-text-field v-model="startDate" dense outlined />
+                        <label>Conditions </label>
+                        <v-select
+                            v-model="condition"
+                            :items="conditions"
+                            placeholder="Please select"
+                            dense
+                            outlined
+                        />
                     </div>
                 </v-col>
                 <v-col cols="12" sm="12" md="6">
                     <div class="form__field">
-                        <label>End Date </label>
-                        <v-text-field v-model="endDate" dense outlined />
+                        <label>Quantity </label>
+                        <v-text-field v-model="quantity" dense outlined />
                     </div>
                 </v-col>
                 <v-col cols="12" sm="12" md="6">
                     <div class="form__field">
-                        <label>Monthly Rental </label>
-                        <v-text-field v-model="monthlyRental" dense outlined />
-                    </div>
-                </v-col>
-                <v-col cols="12" sm="12" md="12">
-                    <div class="form__field">
-                        <label>Secure Deposit </label>
-                        <v-text-field v-model="secureDeposit" dense outlined />
+                        <label>Value </label>
+                        <v-text-field v-model="value" dense outlined />
                     </div>
                 </v-col>
                 <v-col cols="12" sm="12" md="12">
@@ -52,14 +52,24 @@ export default {
     name: "AddUnitInventoryForm",
     data() {
         return {
-            agreementDate: "",
-            startDate: "",
-            endDate: "",
-            monthlyRental: "",
-            secureDeposit: "",
-            remark: ""
+            name: "",
+            condition: "",
+            quantity: 0,
+            value: "",
+            remark: "",
+            conditions: [
+                {
+                    text: "New",
+                    value: "new"
+                },
+                {
+                    text: "Used",
+                    value: "used"
+                }
+            ]
         }
     },
+
     methods: {
         onClose() {
             this.$emit("close")
