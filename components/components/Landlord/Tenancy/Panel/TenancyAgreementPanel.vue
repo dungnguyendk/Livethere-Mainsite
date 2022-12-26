@@ -10,7 +10,12 @@
         <div class="panel__container">
             <TenancyAgreementTable />
         </div>
-        <Dialog title="Create Tenancy Agreement" :open="addNewDialog" @close="addNewDialog = false">
+        <Dialog
+            title="Create Tenancy Agreement"
+            :open="addNewDialog"
+            @close="addNewDialog = false"
+            :actions="false"
+        >
             <template v-slot:content>
                 <CreateTenancyAgreementForm />
             </template>
