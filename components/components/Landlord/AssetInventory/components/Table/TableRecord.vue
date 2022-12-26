@@ -11,7 +11,7 @@
                     alt=""
                     class="table--record__img"
                 />
-                <p class="first-child" @click="handleClickOpenRow(source.id)">
+                <p class="first-child" @click="handleClickOpenRow(source.internalID)">
                     {{ source.propertyName }}
                 </p>
             </div>
@@ -128,7 +128,7 @@ export default {
             this.$emit("handleClickOpenRow", item)
         },
         onVisitInventoryUnits() {
-            this.$router.push(`/landlord/assets/units/${this.source.id}`)
+            this.$router.push(`/landlord/assets/units/${this.source.internalID}`)
         }
     },
     watch: {}

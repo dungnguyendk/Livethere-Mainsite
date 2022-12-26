@@ -25,7 +25,7 @@
                         :source="item"
                         :selectedId="selectedId"
                         :key="item.id"
-                        @handleClickOpenRow="handleClickOpenRow"
+                        @handleClickOpenRow="handleClickOpenRow(item)"
                     />
                     <template v-if="(statusFID === 2 || statusFID === 3) && selectedId === -1">
                         <tr class="tr-hidden">
@@ -56,6 +56,7 @@
 import TableRecord from "~/components/components/Landlord/AssetInventory/components/Table/TableRecord.vue"
 import ExpandedPanel from "~/components/shared/Panel/ExpandedPanel.vue"
 import { mapState } from "vuex"
+
 export default {
     name: "AssetInventoryTable",
     components: { TableRecord, ExpandedPanel },
@@ -81,9 +82,10 @@ export default {
             this.showExpandedPanel = false
         },
         handleClickOpenRow(item) {
-            this.$emit("handleClickOpenRow", item)
-            this.selectedId = item
-            this.showExpandedPanel = true
+            this.$router.push(`/landlord/tenancy/${item.internalID}`)
+            /* this.$emit("handleClickOpenRow", item)
+             this.selectedId = item
+             this.showExpandedPanel = true*/
         }
     },
     watch: {}

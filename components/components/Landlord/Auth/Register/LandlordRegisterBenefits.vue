@@ -1,23 +1,26 @@
 <template lang="html">
-    <div>
-        <h4 class="title__benefits">benefits of registered users</h4>
-        <div class="register-benefits">
-            <div class="box--register" v-for="item in items" :key="item.id">
-                <div class="box__top">
-                    <img :src="require(`~/static/img/${item.icon}.svg`)" alt="">
-                    <span>{{ item.title }}</span>
-                </div>
-                <div class="box__content">
-                    <div class="box__content--rule">
-                        <p v-for="(content, index) in item.contents" :key="index"><i
-                                class="ri-checkbox-circle-fill"></i>{{ content.rule }}</p>
+    <div class="section--register-benifit">
+        <div class="container">
+            <h4 class="title__benefits">benefits of registered users</h4>
+            <div class="register-benefits">
+                <div class="box--register" v-for="item in items" :key="item.id">
+                    <div class="box__top">
+                        <img :src="require(`~/static/img/${item.icon}.svg`)" alt="" />
+                        <span>{{ item.title }}</span>
                     </div>
-                </div>
-                <div class="box__bottom">
-                    <v-btn class="btn btn--primary btn--gray v-btn" to="/register/new-registration">
-                        Proceed
-                        <i class="ri-arrow-right-line"></i>
-                    </v-btn>
+                    <div class="box__content">
+                        <div class="box__content--rule">
+                            <p v-for="(content, index) in item.contents" :key="index">
+                                <i class="ri-checkbox-circle-fill"></i>{{ content.rule }}</p
+                            >
+                        </div>
+                    </div>
+                    <div class="box__bottom">
+                        <nuxt-link class="btn btn--primary btn--gray v-btn" :to="item.url">
+                            Proceed
+                            <i class="ri-arrow-right-line"></i>
+                        </nuxt-link>
+                    </div>
                 </div>
             </div>
         </div>
@@ -26,6 +29,7 @@
 
 <script>
 import { REGISTER_BENEFITS } from "~/ultilities/contants/register-benefits.js"
+
 export default {
     name: "LandlordRegisterBenefits",
     data() {

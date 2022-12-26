@@ -1,7 +1,6 @@
 <template lang="html">
     <div class="section--register">
         <LandlordTerms />
-        <!-- <LandlordRegisterForm /> -->
     </div>
 </template>
 
