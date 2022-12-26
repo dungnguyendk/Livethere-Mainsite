@@ -1,7 +1,7 @@
 <template>
     <div class="card--dialog">
         <div class="card__header">
-            <h4 v-if="type === 'header' || type === 'full' || type === 'default'">{{ title }}</h4>
+            <h4 v-if="title && title !== ''">{{ title }}</h4>
             <div v-else />
             <button class="btn--close" @click="onClose()">
                 <i class="ri-close-fill" />
@@ -9,6 +9,7 @@
         </div>
         <div class="card__content">
             <slot name="content"></slot>
+            <slot />
         </div>
         <div v-if="actions" class="card__actions">
             <slot name="actions"></slot>
@@ -58,7 +59,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.align-elements--between {}
+.align-elements--between {
+}
 
 .align-elements--center {
     display: flex;
@@ -103,7 +105,7 @@ export default {
         padding: 2.4rem;
         background-color: unset;
 
-        >* {
+        > * {
             width: 12rem;
         }
     }

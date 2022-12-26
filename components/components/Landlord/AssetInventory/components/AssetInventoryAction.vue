@@ -1,44 +1,56 @@
 <template lang="html">
     <div class="asset-inventory__action">
         <div class="select-type">
-            <v-select v-model="typeSelected" :items="typeSelections" value="All" hide-details outlined dense
-                class="me-2" @change="changeType"></v-select>
+            <v-select v-model="typeSelected" :items="typeSelections" item-text="value" item-value="id" hide-details
+                outlined dense class="me-2" @change="changeType"></v-select>
         </div>
         <v-btn class="btn btn--outline btn--green btn--md add-new" @click="openAddNewInventoryDialog = true">
             <v-icon left>ri-add-box-line</v-icon>
             Add New Inventory
         </v-btn>
-        <AddNewInventoryDialog :open="openAddNewInventoryDialog" @close="openAddNewInventoryDialog = false" />
+        <Dialog :open="openAddNewInventoryDialog" @close="openAddNewInventoryDialog = false" :size="sizeDialog"
+            :title="''" :actions="false">
+            <AddInventoryForm @close="openAddNewInventoryDialog = false" v-if="openAddNewInventoryDialog" />
+        </Dialog>
     </div>
 </template>
 <script>
-import AddNewInventoryDialog from "~/components/components/Landlord/AssetInventory/components/Dialog/AddNewInventoryDialog.vue"
+import { STATUS_DROPDOWN } from "~/ultilities/contants/asset-inventory.js"
+import qs from "qs"
+import Dialog from "~/components/elements/Dialog/Dialog.vue"
+import AddInventoryForm from "~/components/components/Landlord/AssetInventory/components/Dialog/Form/AddInventoryForm.vue"
+
 export default {
     name: "AssetInventoryAction",
-    components: { AddNewInventoryDialog },
+    components: { AddInventoryForm, Dialog },
     data() {
         return {
-            typeSelections: ["All", "New", "Vacant", "Tenanted"],
-            typeSelected: "All",
-            openAddNewInventoryDialog: false
+            typeSelections: STATUS_DROPDOWN,
+            typeSelected: {
+                id: 0,
+                value: "All"
+            },
+            openAddNewInventoryDialog: false,
+            sizeDialog: "large"
         }
     },
     methods: {
         changeType() {
-            this.$emit("changeType", this.typeSelected)
+            const params = qs.stringify({
+                StatusFID: this.typeSelected
+            })
+            this.$store.commit("inventories/setTypeSelected", this.typeSelected)
+            this.$store.dispatch("inventories/getInventories", params)
         }
     },
     watch: {
-        // typeSelected() {
-        //     this.changeType()
-        // }
     }
 }
 </script>
 <style lang="scss" scoped>
 .asset-inventory {
     &__action {
-        padding: 4.6rem (278/1920)*100% 0 (278/1920)*100%;
+        padding: 4.6rem (278/1920) * 100% 0 (278/1920) * 100%;
         display: flex;
         justify-content: space-between;
         align-items: center;
@@ -58,7 +70,7 @@ export default {
     height: 4rem;
 
     .v-select {
-        width: 14rem
+        width: 14rem;
     }
 
     :deep(.v-select__selection--comma) {
@@ -103,7 +115,6 @@ export default {
     }
 }
 
-
 @media only screen and (max-width: 768px) {
     .asset-inventory {
         &__action {
@@ -114,7 +125,6 @@ export default {
     .select-type {
         .v-select {
             width: auto;
-
         }
     }
 }

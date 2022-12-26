@@ -21,6 +21,9 @@
                         <nuxt-link v-if="!loggedIn" to="/landlord/signin" class="header__link">
                             Login
                         </nuxt-link>
+                        <nuxt-link v-if="!loggedIn" to="/register" class="header__link">
+                            Register
+                        </nuxt-link>
                         <v-btn v-else class="btn--logout" @click="onLogout"> Logout</v-btn>
                     </div>
                 </div>
@@ -66,17 +69,14 @@ export default {
             menuID: 0
         }
     },
-    mounted() {
-        console.log({ pathName: this.$router })
-        //this.getData()
-    },
+
     methods: {
-        // each section has different getData() method
         async onLogout() {
             await this.$auth.logout().then(() => {
                 window.location.href = "/landlord/signin"
             })
         },
+
         async getData() {
             const menuData = this.source.details.find((item) => item.fieldName === "menu")
             const rawMenuID = menuData !== "" ? JSON.parse(menuData.fieldValue)[0] : 0
@@ -169,6 +169,8 @@ export default {
         display: flex;
         justify-content: flex-end;
         align-items: center;
+        grid-gap: 1.2rem;
+        gap: 1.2rem;
 
         a {
             font-family: var(--font-second);
