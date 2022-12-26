@@ -2,7 +2,9 @@
     <main>
         <LandlordHeader />
         <template v-if="loggedIn">
-            <LandlordPortal />
+            <LandlordPortal>
+                <Analytics />
+            </LandlordPortal>
         </template>
     </main>
 </template>
@@ -11,9 +13,11 @@
 import LandlordPortal from "~/components/components/Landlord/LandlordPortal.vue"
 import LandlordHeader from "~/components/shared/Header/LandlordHeader.vue"
 import { appSettings } from "~/app-settings"
+import Analytics from "~/components/components/Landlord/Analytics/Analytics.vue"
 
 export default {
-    components: { LandlordHeader, LandlordPortal },
+    name: "landlord",
+    components: { Analytics, LandlordHeader, LandlordPortal },
     head: {
         title: `Landlord | ${appSettings.siteName}`
     },

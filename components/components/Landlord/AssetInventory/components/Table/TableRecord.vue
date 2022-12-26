@@ -1,8 +1,16 @@
 <template>
-    <tr :class="`table--record ${source.id !== selectedId && selectedId !== -1 ? 'unSelected' : ''}`">
+    <tr
+        :class="`table--record ${
+            source.id !== selectedId && selectedId !== -1 ? 'unSelected' : ''
+        }`"
+    >
         <td data-label="Property">
             <div>
-                <img :src="`${source.propertyImg}`" alt="" class="table--record__img">
+                <img
+                    src="https://picsum.photos/600/400.jpg?random="
+                    alt=""
+                    class="table--record__img"
+                />
                 <p class="first-child" @click="handleClickOpenRow(source.id)">
                     {{ source.propertyName }}
                 </p>
@@ -11,42 +19,43 @@
         <td data-label="Unit No.">
             {{ source.unitNo }}
         </td>
-        <td data-label="Property Type" v-if="typeSelectedChange === 'All' || typeSelectedChange === 'New'">
-            {{ source.propertyType }}
+        <td data-label="Property Type" v-if="statusFID === 0 || statusFID === 1">
+            {{ source.propertyTypeDisplay }}
         </td>
-        <td data-label="Bedroom Type" v-if="typeSelectedChange === 'All' || typeSelectedChange === 'New'">
-            {{ source.bedroomType ? source.bedroomType : "-" }}
+        <td data-label="Bedroom Type" v-if="statusFID === 0 || statusFID === 1">
+            {{ source.bedroomTypeDisplay ? source.bedroomTypeDisplay : "-" }}
         </td>
-        <td data-label="Floor Area (sqft)" v-if="typeSelectedChange === 'All' || typeSelectedChange === 'New'">
-            {{ source.floorArea }}
+        <td data-label="Floor Area (sqft)" v-if="statusFID === 0 || statusFID === 1">
+            {{ source.floorAreaSqft }}
         </td>
-        <td data-label="Land Area (sqft)" v-if="typeSelectedChange === 'All' || typeSelectedChange === 'New'">
-            {{ source.LandArea }}
+        <td data-label="Land Area (sqft)" v-if="statusFID === 0 || statusFID === 1">
+            {{ source.LandArea ? source.LandArea : "-" }}
         </td>
         <td data-label="Address">
-            {{ source.address }}
+            {{ source.streetName }}
         </td>
-        <td data-label="Status" v-if="typeSelectedChange === 'All' || typeSelectedChange === 'New'">
-            <AssetInventoryBadge :type="source.status" />
+        <td data-label="Status" v-if="statusFID === 0 || statusFID === 1">
+            <AssetInventoryBadge :type="source.statusDisplay" />
         </td>
-        <td data-label="Estimated Market Rent" v-if="typeSelectedChange === 'Vacant'">
+        <td data-label="Estimated Market Rent" v-if="statusFID === 2">
             {{ source.EMR }}
         </td>
-        <td data-label="Asking Rent" v-if="typeSelectedChange === 'Vacant'">
+        <td data-label="Asking Rent" v-if="statusFID === 2">
             {{ source.ART }}
         </td>
-        <td data-label="Monthly Rent" v-if="typeSelectedChange === 'Tenanted'">
+        <td data-label="Monthly Rent" v-if="statusFID === 3">
             {{ source.MR }}
         </td>
-        <td data-label="Annual Revenue" v-if="typeSelectedChange === 'Tenanted'">
+        <td data-label="Annual Revenue" v-if="statusFID === 3">
             {{ source.AR }}
         </td>
         <td data-label="Action">
             <div>
                 <v-menu offset-y>
                     <template v-slot:activator="{ on, attrs }">
-                        <v-btn x-small fab outlined class="more-option" v-bind="attrs" v-on="on"><i
-                                class="ri-more-fill"></i></v-btn>
+                        <v-btn x-small fab outlined class="more-option" v-bind="attrs" v-on="on"
+                            ><i class="ri-more-fill"></i
+                        ></v-btn>
                     </template>
                     <v-list dense>
                         <v-list-item-group>
@@ -58,12 +67,19 @@
                                     <v-list-item-title>Edit</v-list-item-title>
                                 </v-list-item-content>
                             </v-list-item>
-                            <v-list-item style="border-color: #E9E9E9; border: 1px solid #E9E9E9; height : 35px;">
+                            <v-list-item
+                                @click="onVisitInventoryUnits"
+                                style="
+                                    border-color: #e9e9e9;
+                                    border: 1px solid #e9e9e9;
+                                    height: 35px;
+                                "
+                            >
                                 <v-list-item-icon>
                                     <v-icon v-text="`ri-add-box-line`"></v-icon>
                                 </v-list-item-icon>
                                 <v-list-item-content>
-                                    <v-list-item-title>Add Inventory</v-list-item-title>
+                                    <v-list-item-title>Unit Inventory</v-list-item-title>
                                 </v-list-item-content>
                             </v-list-item>
                             <v-list-item style="height: 35px">
@@ -80,22 +96,19 @@
             </div>
         </td>
     </tr>
-
 </template>
 
 <script>
 import AssetInventoryBadge from "~/components/components/Landlord/AssetInventory/components/AssetInventoryBadge.vue"
+import { mapState } from "vuex"
+
 export default {
     name: "TableRecord",
     components: { AssetInventoryBadge },
     props: {
-        typeSelected: {
-            type: String,
-            default: () => "All"
-        },
         source: {
             type: Object,
-            default: () => { }
+            default: () => {}
         },
         selectedId: {
             type: Number,
@@ -103,21 +116,22 @@ export default {
         }
     },
     data() {
-        return {
-            typeSelectedChange: "All"
-        }
+        return {}
+    },
+    computed: {
+        ...mapState({
+            statusFID: (state) => state.inventories.typeSelect
+        })
     },
     methods: {
         handleClickOpenRow(item) {
             this.$emit("handleClickOpenRow", item)
+        },
+        onVisitInventoryUnits() {
+            this.$router.push(`/landlord/assets/units/${this.source.id}`)
         }
     },
-    watch: {
-        typeSelected(val) {
-            this.typeSelectedChange = val
-        }
-    }
-
+    watch: {}
 }
 </script>
 <style lang="scss" scoped>
@@ -143,7 +157,6 @@ export default {
         text-align: left;
         vertical-align: top;
     }
-
 }
 
 .more-option {

@@ -16,5 +16,10 @@ export const httpEndpoint = {
     },
     auth: {
         login: "/api/Authen"
+    },
+    inventories: {
+        getEntryByPostalCode: "",
+        getEntries: "/api/asset-inventories",
+        createEntry: "/api/asset-inventories"
     }
 }

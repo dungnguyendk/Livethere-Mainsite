@@ -2,18 +2,25 @@
     <main>
         <LandlordHeader />
         <template v-if="loggedIn">
-            <LandlordPortal />
+            <LandlordPortal>
+                <Marketing />
+            </LandlordPortal>
         </template>
     </main>
 </template>
 
 <script>
-import LandlordPortal from "~/components/components/Landlord/LandlordPortal.vue"
 import LandlordHeader from "~/components/shared/Header/LandlordHeader.vue"
 import { appSettings } from "~/app-settings"
+import Marketing from "~/components/components/Landlord/Marketing/Marketing.vue"
+import LandlordPortal from "~/components/components/Landlord/LandlordPortal.vue"
 
 export default {
-    components: { LandlordHeader, LandlordPortal },
+    components: {
+        LandlordPortal,
+        Marketing,
+        LandlordHeader
+    },
     head: {
         title: `Landlord | ${appSettings.siteName}`
     },

@@ -59,17 +59,17 @@ export default {
         text-align: left;
     }
 
-    td:nth-child(6) {
-        width: 30rem;
+    // td:nth-child(6) {
+    //     width: 30rem;
 
-        @media only screen and (max-width: 768px) {
-            width: auto;
-        }
+    //     @media only screen and (max-width: 768px) {
+    //         width: auto;
+    //     }
 
-        @media only screen and (min-width: 768px) and (max-width: 1280px) {
-            width: auto;
-        }
-    }
+    //     @media only screen and (min-width: 768px) and (max-width: 1280px) {
+    //         width: auto;
+    //     }
+    // }
 
     &.unSelected {
         display: none !important;

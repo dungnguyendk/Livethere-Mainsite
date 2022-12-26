@@ -9,7 +9,7 @@
                 <h3> Lloyd Sixtyfive </h3>
             </div>
             <div class="section__container">
-                <PropertyInformationPanel />
+                <InventoryInformationPanel />
                 <div class="section__divider" />
                 <TenancyAgreementPanel />
             </div>
@@ -18,18 +18,23 @@
 </template>
 
 <script>
-import TenantAgreementTable from "~/components/components/Landlord/Property/Table/TenancyAgreementTable.vue"
-import PropertyInformationPanel from "~/components/components/Landlord/Property/Panel/PropertyInformationPanel.vue"
-import TenancyAgreementPanel from "~/components/components/Landlord/Property/Panel/TenancyAgreementPanel.vue"
+import TenantAgreementTable from "~/components/components/Landlord/Inventory/Table/TenancyAgreementTable.vue"
+import InventoryInformationPanel from "~/components/components/Landlord/Inventory/Panel/InventoryInformationPanel.vue"
+import TenancyAgreementPanel from "~/components/components/Landlord/Tenancy/Panel/TenancyAgreementPanel.vue"
 
 export default {
-    name: "PropertyDetails",
-    components: { TenancyAgreementPanel, PropertyInformationPanel, TenantAgreementTable }
+    name: "InventoryDetails",
+    components: { TenancyAgreementPanel, InventoryInformationPanel, TenantAgreementTable }
 }
 </script>
 <style lang="scss" scoped>
 .section--property-details {
     padding: 3.2rem 0;
+
+    .section__divider {
+        margin: 3.2rem -2.4rem;
+        border-bottom: 1px solid var(--border-color);
+    }
 
     .section__top {
         display: flex;

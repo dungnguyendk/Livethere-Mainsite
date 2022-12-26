@@ -27,9 +27,8 @@
                     Kingdom for the following companies: SPF Private Clients Limited, Savills
                     Capital Advisors Limited and Savills Investment Management Limited. Accordingly
                     the information contained about them does not constitute a solicitation to
-                    person outside the United Kingdom and must not be acted upon by such
-                    persons.</span
-                >
+                    person outside the United Kingdom and must not be acted upon by such persons.
+                </span>
             </div>
             <div class="agree-term">
                 <v-checkbox
