@@ -9,7 +9,7 @@
                 <h3> {{ inventoryDetails ? inventoryDetails.propertyName : "Untitled" }} </h3>
             </div>
             <div class="section__container">
-                <InventoryInformationPanel />
+                <InventoryInformationPanel :assetInventoryDetails="assetInventoryDetails"/>
                 <div class="section__divider" />
                 <TenancyAgreementPanel />
             </div>
@@ -22,6 +22,9 @@ import TenantAgreementTable from "~/components/components/Landlord/Inventory/Tab
 import InventoryInformationPanel from "~/components/components/Landlord/Inventory/Panel/InventoryInformationPanel.vue"
 import TenancyAgreementPanel from "~/components/components/Landlord/Tenancy/Panel/TenancyAgreementPanel.vue"
 import { mapState } from "vuex"
+import { httpEndpoint } from "~/services/https/endpoints"
+import qs from "qs"
+import _ from "lodash"
 
 export default {
     name: "InventoryDetails",
@@ -31,10 +34,21 @@ export default {
             inventoryDetails: (state) => state.inventory.inventoryDetails
         })
     },
+    created(){
+        this.assetInventoryDetails = this.inventoryDetails
+        // const id = this.inventoryDetails.id 
+        // const responseTenancyAgreement = this.$axios.$get(`${httpEndpoint.tenancyAgreements.getEntries}?AssestInventoryFID=${id}`)
+        
+    },
+    data(){
+        return {
+            assetInventoryDetails: {}
+        }
+    },
     methods: {
         onBack() {
             this.$router.push("/landlord/assets")
-        }
+        }, 
     }
 }
 </script>

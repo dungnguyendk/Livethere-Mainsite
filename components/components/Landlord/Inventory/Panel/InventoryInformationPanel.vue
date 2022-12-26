@@ -5,47 +5,47 @@
             <div class="panel__column">
                 <p>
                     <span>House No:</span>
-                    <strong>98</strong>
+                    <strong>{{ assetInventoryDetails ? assetInventoryDetails.hseNo : "N/A" }}</strong>
                 </p>
                 <p>
                     <span>Unit No:</span>
-                    <strong>98</strong>
+                    <strong>{{ assetInventoryDetails ? assetInventoryDetails.unitNo : "N/A" }}</strong>
                 </p>
                 <p>
                     <span>No of Bedroom(s): </span>
-                    <strong>2</strong>
+                    <strong>{{ assetInventoryDetails ? assetInventoryDetails.bedroomTypeDisplay : "N/A" }}</strong>
                 </p>
             </div>
             <div class="panel__column">
                 <p>
                     <span>Street name:</span>
-                    <strong>98</strong>
+                    <strong>{{ assetInventoryDetails ? assetInventoryDetails.streetName : "N/A" }}</strong>
                 </p>
                 <p>
                     <span>Project Name:</span>
-                    <strong>Loyd Sixtyfive Lloyd Sixtyfive Lloyd Sixtyfive</strong>
+                    <strong>{{ assetInventoryDetails ? assetInventoryDetails.projectName : "N/A" }}</strong>
                 </p>
                 <p>
-                    <span>Postal Code:</span>
-                    <strong>239114</strong>
+                    <span>Property Type:</span>
+                    <strong>{{ assetInventoryDetails ? assetInventoryDetails.propertyType : "N/A" }}</strong>
                 </p>
             </div>
             <div class="panel__column">
                 <p>
                     <span>Postal Code:</span>
-                    <strong>239114</strong>
+                    <strong>{{ assetInventoryDetails ? assetInventoryDetails.postalCode : "N/A" }}</strong>
                 </p>
                 <p>
                     <span>Tenure:</span>
-                    <strong>FreeHold</strong>
+                    <strong>{{ assetInventoryDetails ? assetInventoryDetails.tenureDisplay : "N/A" }}</strong>
                 </p>
                 <p>
-                    <span>Floor Area (sqrt):</span>
-                    <strong>1,690 sqrt</strong>
+                    <span>Floor Area (sqft):</span>
+                    <strong>{{ assetInventoryDetails ? assetInventoryDetails.floorAreaSqft + " sqft" : "N/A" }}</strong>
                 </p>
                 <p>
-                    <span>Land Area (sprt):</span>
-                    <strong>2,172 sqrt</strong>
+                    <span>Land Area (sqft):</span>
+                    <strong>{{ assetInventoryDetails ? assetInventoryDetails.landAreaSqft + " sqft" : "N/A" }}</strong>
                 </p>
             </div>
         </div>
@@ -54,7 +54,13 @@
 
 <script>
 export default {
-    name: "InventoryInformationPanel"
+    name: "InventoryInformationPanel", 
+    props: {
+        assetInventoryDetails: {
+            type: Object, 
+            default: ()=>{}
+        }
+    }, 
 }
 </script>
 
