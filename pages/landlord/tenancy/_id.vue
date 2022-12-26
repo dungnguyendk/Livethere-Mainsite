@@ -15,6 +15,7 @@ import LandlordPortal from "~/components/components/Landlord/LandlordPortal.vue"
 import LandlordHeader from "~/components/shared/Header/LandlordHeader.vue"
 import AssetInventory from "~/components/components/Landlord/AssetInventory/AssetInventory.vue"
 import InventoryDetails from "~/components/components/Landlord/Inventory/InventoryDetails.vue"
+import { httpEndpoint } from "~/services/https/endpoints"
 
 export default {
     components: {
@@ -35,6 +36,14 @@ export default {
     created() {
         if (!this.loggedIn) {
             this.$router.push("/landlord/signin")
+        }
+    },
+    async asyncData({ app, route, store }) {
+        try {
+            const id = route.params.id
+            await store.dispatch("inventory/getInventoryDetails", id)
+        } catch (e) {
+            console.log({ Error: e.message })
         }
     }
 }

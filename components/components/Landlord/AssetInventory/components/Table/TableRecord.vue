@@ -11,7 +11,7 @@
                     alt=""
                     class="table--record__img"
                 />
-                <p class="first-child" @click="handleClickOpenRow(source.id)">
+                <p class="first-child" @click="handleClickOpenRow(source.internalID)">
                     {{ source.propertyName }}
                 </p>
             </div>

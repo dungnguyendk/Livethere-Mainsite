@@ -82,7 +82,7 @@ export default {
             this.showExpandedPanel = false
         },
         handleClickOpenRow(item) {
-            this.$router.push(`/landlord/tenancy/${item.id}`)
+            this.$router.push(`/landlord/tenancy/${item.internalID}`)
             /* this.$emit("handleClickOpenRow", item)
              this.selectedId = item
              this.showExpandedPanel = true*/

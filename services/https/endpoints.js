@@ -20,6 +20,7 @@ export const httpEndpoint = {
     inventories: {
         getEntryByPostalCode: "",
         getEntries: "/api/asset-inventories",
-        createEntry: "/api/asset-inventories"
+        createEntry: "/api/asset-inventories",
+        getByInternalID: "/api/asset-inventories/by-internalID"
     }
 }
