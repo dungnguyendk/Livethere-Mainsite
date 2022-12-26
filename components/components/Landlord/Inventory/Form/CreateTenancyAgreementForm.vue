@@ -98,7 +98,11 @@
                 <v-col cols="12" sm="12" md="6">
                     <div class="form__field">
                         <label>Monthly Rental </label>
-                        <v-text-field v-model.trim="monthlyRental" dense outlined hide-details 
+                        <v-text-field
+                            v-model.trim="monthlyRental"
+                            dense
+                            outlined
+                            hide-details
                             :error-messages="monthlyRentalErrors"
                         />
                     </div>
@@ -106,8 +110,12 @@
                 <v-col cols="12" sm="12" md="6">
                     <div class="form__field">
                         <label>Secure Deposit </label>
-                        <v-text-field v-model.trim="secureDeposit" dense outlined hide-details 
-                        :error-messages="secureDepositErrors"
+                        <v-text-field
+                            v-model.trim="secureDeposit"
+                            dense
+                            outlined
+                            hide-details
+                            :error-messages="secureDepositErrors"
                         />
                     </div>
                 </v-col>
@@ -138,38 +146,36 @@ export default {
     validations: {
         agreementDate: {
             required
-        }, 
+        },
         startDate: {
             required
-        }, 
+        },
         endDate: {
             required
-        }, 
+        },
         monthlyRental: {
             required
-        }, 
+        },
         secureDeposit: {
             required
         }
-        
     },
     computed: {
         agreementDateErrors() {
             return setFormControlErrors(this.$v.agreementDate, "This field is required")
-        }, 
-        startDateErrors(){
+        },
+        startDateErrors() {
             return setFormControlErrors(this.$v.startDate, "This field is required")
-        }, 
-        endDateErrors(){
+        },
+        endDateErrors() {
             return setFormControlErrors(this.$v.endDate, "This field is required")
-        }, 
-        monthlyRentalErrors(){
+        },
+        monthlyRentalErrors() {
             return setFormControlErrors(this.$v.monthlyRental, "This field is required")
-        }, 
-        secureDepositErrors(){
+        },
+        secureDepositErrors() {
             return setFormControlErrors(this.$v.secureDeposit, "This field is required")
         }
-        
     },
     data() {
         return {
@@ -177,11 +183,11 @@ export default {
             agreementDateMenu: "",
             agreementDateRaw: "",
             startDate: "",
-            startDateMenu: "", 
-            startDateRaw: "", 
+            startDateMenu: "",
+            startDateRaw: "",
             endDate: "",
-            endDateMenu: "", 
-            endDateRaw: "", 
+            endDateMenu: "",
+            endDateRaw: "",
             monthlyRental: "",
             secureDeposit: "",
             remark: ""
@@ -190,24 +196,24 @@ export default {
     watch: {
         agreementDateRaw() {
             this.agreementDate = this.formatDate(this.agreementDateRaw)
-        }, 
-        startDateRaw(){
+        },
+        startDateRaw() {
             this.startDate = this.formatDate(this.startDateRaw)
-        }, 
-        endDateRaw(){
+        },
+        endDateRaw() {
             this.endDate = this.formatDate(this.endDateRaw)
-        }, 
-        monthlyRental(val){
-            if(!isNaN(val)){
+        },
+        monthlyRental(val) {
+            if (!isNaN(val)) {
                 this.monthlyRental = convertNumberToCommas(val)
-            }else{
+            } else {
                 this.monthlyRental = convertNumberToCommas(convertCommasToNumber(val))
             }
-        }, 
-        secureDeposit(val){
-            if(!isNaN(val)){
+        },
+        secureDeposit(val) {
+            if (!isNaN(val)) {
                 this.secureDeposit = convertNumberToCommas(val)
-            }else{ 
+            } else {
                 this.secureDeposit = convertNumberToCommas(convertCommasToNumber(val))
             }
         }
@@ -222,16 +228,15 @@ export default {
             this.$emit("close")
         },
         submitForm() {
-        console.log("submit!", this.$v.$invalid)
-        this.$v.$touch()
-        if (this.$v.$invalid) {
-            console.log({ Error: "Form validation failed" })
-        } else {
-            // continue actions
+            console.log("submit!", this.$v.$invalid)
+            this.$v.$touch()
+            if (this.$v.$invalid) {
+                console.log({ Error: "Form validation failed" })
+            } else {
+                // continue actions
+            }
         }
     }
-    },
-    
 }
 </script>
 <style lang="scss" scoped>
@@ -243,6 +248,7 @@ export default {
         grid-gap: 1.2rem;
         gap: 1.2rem;
         padding-top: 2.4rem;
+        padding-bottom: 1.2rem;
 
         .btn {
             min-width: 12rem;
