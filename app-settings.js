@@ -3,6 +3,7 @@ const settings = [
         env: "develop",
         base_url: "http://vnapi.asiaesolutions.com/cmspublicapi",
         media_url: "http://vnapi.asiaesolutions.com/",
+        postal_url: "http://apivo.aestechgroup.com/aespostal",
         mediaURL: "http://vnapi.asiaesolutions.com/content",
         landlord: "http://vnapi.asiaesolutions.com/erppublicapi"
     },
@@ -10,6 +11,7 @@ const settings = [
         env: "beta",
         base_url: "https://livethereapi.asiaesolutions.com/cmspublic",
         media_url: "https://livethereapi.asiaesolutions.com/mediaapi",
+        postal_url: "https://apivo.aestechgroup.com/aespostal",
         mediaURL: "https://livethereapi.asiaesolutions.com/content",
         landlord: ""
     },
@@ -27,6 +29,10 @@ export const appSettings = {
 }
 export const appMedia = {
     baseURL: currentSettings.media_url,
+    siteName: "Livethere "
+}
+export const appVo = {
+    baseURL: currentSettings.postal_url,
     siteName: "Livethere "
 }
 export const mediaSettings = {

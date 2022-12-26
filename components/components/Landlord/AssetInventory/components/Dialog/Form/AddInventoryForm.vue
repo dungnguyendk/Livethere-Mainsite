@@ -1,5 +1,5 @@
 <template>
-    <form @submit.prevent="submitForm" class="form--add-new-inventory">
+    <form @submit.prevent="onFormSubmit" class="form--add-new-inventory">
         <div class="form__top">
             <h3>{{ inventoryDetail.id ? "EDIT INVENTORY" : "ADD NEW INVENTORY" }}</h3>
         </div>
@@ -12,7 +12,7 @@
             <div class="form__field2">
                 <div class="form__field">
                     <label>Postal Code</label>
-                    <v-text-field v-model="postalCode" type="number" hide-spin-buttons outlined dense
+                    <v-text-field v-model="postalCode" hide-spin-buttons outlined dense
                         :error-messages="postalCodeErrors">
                         <template v-slot:prepend-inner>
                             <v-icon @click="searchPostalCode">mdi-magnify</v-icon>
@@ -30,7 +30,8 @@
             </div>
             <div class="form__field">
                 <label>Unit No.</label>
-                <v-text-field v-model.trim="unitNo" outlined dense :error-messages="unitNoErrors" />
+                <v-text-field v-model.trim="unitNo" outlined dense :error-messages="unitNoErrors"
+                    @change="searchPostalCode" />
             </div>
             <div class="form__field">
                 <label>Project Name</label>
@@ -53,11 +54,26 @@
                 <v-text-field v-model.trim="floorArea" outlined dense hide-spin-buttons
                     :error-messages="floorAreaErrors" />
             </div>
-            <div class="form__field">
-                <label>Purchased Price</label>
-                <v-text-field v-model.trim="purchasedPrice" outlined dense hide-spin-buttons
-                    :error-messages="purchasedPriceErrors" suffix="SGD" reverse>
-                </v-text-field>
+            <div class="form__field2">
+                <div class="form__field">
+                    <label>Purchased Price</label>
+                    <v-text-field v-model.trim="purchasedPrice" outlined dense hide-spin-buttons
+                        :error-messages="purchasedPriceErrors" suffix="SGD" reverse>
+                    </v-text-field>
+                </div>
+                <div class="form__field">
+                    <label>Purchased Date</label>
+                    <v-menu ref="menu1" v-model="menu1" :close-on-content-click="false" transition="scale-transition"
+                        offset-y min-width="auto">
+                        <template v-slot:activator="{ on, attrs }">
+                            <v-text-field v-model="purchasedDateFormatted" outlined dense
+                                :error-messages="purchasedDateFormattedErrors" persistent-hint
+                                prepend-inner-icon="mdi-calendar" v-bind="attrs"
+                                @blur="purchasedDate = parseDate(purchasedDate)" v-on="on"></v-text-field>
+                        </template>
+                        <v-date-picker v-model="purchasedDate" no-title @input="menu1 = false"></v-date-picker>
+                    </v-menu>
+                </div>
             </div>
             <div class="form__field" v-if="propertyType.name === 'LANDED PROPERTY'">
                 <label>Land Area (sqft)</label>
@@ -67,9 +83,10 @@
         </div>
         <div class="card__footer">
             <div class="btn-group">
-                <v-btn class="btn btn--primary btn--green btn__add-file" type="submit">{{ inventoryDetail ? "Update" :
-                        "Add"
-                }}</v-btn>
+                <v-btn class="btn btn--primary btn--green btn__add-file"
+                    @click="inventoryDetail ? updateInventories() : createInventories()">{{ inventoryDetail ? "Update" :
+        "Add"
+}}</v-btn>
                 <span class="cancel-form" @click="onClose()"> Cancel </span>
             </div>
         </div>
@@ -77,11 +94,12 @@
 </template>
 <script>
 import { validationMixin } from "vuelidate"
-import { required, requiredIf, minValue } from "vuelidate/lib/validators"
+import { required, requiredIf } from "vuelidate/lib/validators"
 import { PROPERTY_TYPE, BEDROOM_TYPE, TENURE } from "~/ultilities/contants/asset-inventory.js"
 import { convertNumberToCommas, convertCommasToNumber } from "~/ultilities/helpers"
 import { setFormControlErrors } from "~/ultilities/form-validations"
 import { mapState } from "vuex"
+import qs from "qs"
 export default {
     name: "AddInventoryForm",
     mixins: [validationMixin],
@@ -108,6 +126,15 @@ export default {
         },
         purchasedPrice: {
             required
+        },
+        purchasedDateFormatted: {
+            required
+        }
+    },
+    props: {
+        sourceDetail: {
+            type: Number,
+            default: () => null
         }
     },
     data() {
@@ -126,7 +153,10 @@ export default {
             tenureList: TENURE,
             floorArea: null,
             landArea: null,
-            purchasedPrice: ""
+            purchasedPrice: "",
+            purchasedDate: "",
+            purchasedDateFormatted: "",
+            menu1: false,
         }
     },
     computed: {
@@ -165,26 +195,46 @@ export default {
         },
         purchasedPriceErrors() {
             return setFormControlErrors(this.$v.purchasedPrice, "Purchased Price is required")
+        },
+        purchasedDateFormattedErrors() {
+            return setFormControlErrors(this.$v.purchasedDateFormatted, "Purchased Date is required")
         }
     },
     created() {
-        // console.log("this.inventoryDetail", this.inventoryDetail);
+        console.log("this.inventoryDetail", this.inventoryDetail.propertyType);
         if (this.inventoryDetail) {
-            this.propertyType = this.inventoryDetail ? this.propertyTypeList.find((i) => i.value.id === this.inventoryDetail.propertyType).value : ""
-            this.postalCode = this.inventoryDetail ? this.inventoryDetail.postalCode : ""
-            this.houseNo = this.inventoryDetail ? this.inventoryDetail.hseNo : ""
-            this.streetName = this.inventoryDetail ? this.inventoryDetail.streetName : ""
-            this.unitNo = this.inventoryDetail ? this.inventoryDetail.unitNo : ""
-            this.projectName = this.inventoryDetail ? this.inventoryDetail.projectName : ""
-            this.bedroom = this.inventoryDetail ? this.bedroomList.find((i) => i.value.id === this.inventoryDetail.bedroomTypeFID).value : ""
-            this.tenure = this.inventoryDetail ? this.tenureList.find((i) => i.value.id === this.inventoryDetail.tenureType).value : ""
-            this.floorArea = this.inventoryDetail ? this.inventoryDetail.floorAreaSqft : ""
-            this.landArea = this.inventoryDetail ? this.inventoryDetail.landAreaSqft : ""
-            this.purchasedPrice = this.inventoryDetail ? this.inventoryDetail.purchasedPrice : ""
+            this.propertyType = this.inventoryDetail.propertyType ? this.propertyTypeList.find((i) => i.value.id === this.inventoryDetail.propertyType).value : ""
+            this.postalCode = this.inventoryDetail.postalCode ? this.inventoryDetail.postalCode : ""
+            this.houseNo = this.inventoryDetail.hseNo ? this.inventoryDetail.hseNo : ""
+            this.streetName = this.inventoryDetail.streetName ? this.inventoryDetail.streetName : ""
+            this.unitNo = this.inventoryDetail.unitNo ? this.inventoryDetail.unitNo : ""
+            this.projectName = this.inventoryDetail.projectName ? this.inventoryDetail.projectName : ""
+            this.bedroom = this.inventoryDetail.bedroomTypeFID ? this.bedroomList.find((i) => i.value.id === this.inventoryDetail.bedroomTypeFID).value : ""
+            this.tenure = this.inventoryDetail.tenureType ? this.tenureList.find((i) => i.value.id === this.inventoryDetail.tenureType).value : ""
+            this.floorArea = this.inventoryDetail.floorAreaSqft ? this.inventoryDetail.floorAreaSqft : ""
+            this.landArea = this.inventoryDetail.landAreaSqft ? this.inventoryDetail.landAreaSqft : ""
+            this.purchasedPrice = this.inventoryDetail.purchasedPrice ? this.inventoryDetail.purchasedPrice : ""
+            this.purchasedDate = this.inventoryDetail.purchasedDate ? this.inventoryDetail.purchasedDate : ""
+        } else {
+            this.propertyType = ""
+            this.postalCode = ""
+            this.houseNo = ""
+            this.streetName = ""
+            this.unitNo = ""
+            this.projectName = ""
+            this.bedroom = ""
+            this.tenure = ""
+            this.floorArea = ""
+            this.landArea = ""
+            this.purchasedPrice = ""
+            this.purchasedDate = ""
         }
+        console.log("this.sourceDetail::", this.sourceDetail);
     },
     methods: {
-        submitForm() {
+        onFormSubmit() { },
+        createInventories() {
+            this.onFormSubmit()
             console.log("submit!", this.$v.$invalid)
             this.$v.$touch()
             if (!this.$v.$invalid) {
@@ -204,43 +254,105 @@ export default {
                     country: "Singapore",
                     bedroomTypeFID: this.bedroom.id ? this.bedroom.id : 0,
                     bedroomTypeDisplay: this.bedroom.name ? this.bedroom.name : 0,
-                    purchasedPrice: this.purchasedPrice ? convertCommasToNumber(this.purchasedPrice) : 0
+                    purchasedPrice: this.purchasedPrice ? convertCommasToNumber(this.purchasedPrice) : 0,
+                    purchasedDate: this.purchasedDate ? this.purchasedDate : ''
                 }
                 this.$store.dispatch("inventories/createInventories", params)
                 this.onClose()
             }
         },
-        async searchPostalCode() {
-            try {
-                const response = await this.$axios.$get(
-                    `https://apivo.aestechgroup.com/aespostal/api/properties/details?postalCode=${this.postalCode}`
-                )
-                if (response) {
-                    if (response.propertyType) {
-                        this.propertyType = this.propertyTypeList.find(
-                            (item) => item.value.name === response.propertyType
-                        ).value
-                    }
-                    this.houseNo = response.houseNo
-                    this.streetName = response.streetName
-                    this.unitNo = response.unitNo
-                    this.projectName = response.projectName
-                    if (response.tenureType) {
-                        this.tenure = this.tenureList.find(
-                            (item) => item.value.name === response.tenureType
-                        ).value
-                    }
+        updateInventories() {
+            this.onFormSubmit()
+            console.log("Update!", this.$v.$invalid)
+            this.$v.$touch()
+            if (!this.$v.$invalid) {
+                const params = {
+                    id: this.sourceDetail,
+                    propertyType: this.propertyType.id,
+                    propertyTypeDisplay: this.propertyType.name,
+                    postalCode: this.postalCode,
+                    hseNo: this.houseNo,
+                    streetName: this.streetName,
+                    unitNo: this.unitNo,
+                    projectName: this.projectName,
+                    tenureType: this.tenure.id,
+                    tenureDisplay: this.tenure.name,
+                    floorAreaSqft: this.floorArea ? convertCommasToNumber(this.floorArea) : 0,
+                    landAreaSqft: this.landArea ? convertCommasToNumber(this.landArea) : 0,
+                    city: "Singapore",
+                    country: "Singapore",
+                    bedroomTypeFID: this.bedroom.id ? this.bedroom.id : 0,
+                    bedroomTypeDisplay: this.bedroom.name ? this.bedroom.name : 0,
+                    purchasedPrice: this.purchasedPrice ? convertCommasToNumber(this.purchasedPrice) : 0,
+                    purchasedDate: this.purchasedDate ? this.purchasedDate : ''
                 }
-            } catch (e) {
-                console.log(e)
+                this.$store.dispatch("inventories/updateInventory", params)
+                this.onClose()
             }
+        },
+        async searchPostalCode() {
+            const param = qs.stringify({
+                postalCode: this.postalCode,
+                unitNo: this.unitNo
+            })
+            if (this.postalCode) {
+                try {
+                    const response = await this.$axios.$get(
+                        `https://apivo.aestechgroup.com/aespostal/api/properties/details?${param}`
+                    )
+                    if (response) {
+                        response.propertyType && response.propertyType !== null ? this.propertyType = this.propertyTypeList.find(
+                            (item) => item.value.name === response.propertyType
+                        ).value : this.propertyType = ''
+                        this.houseNo = response.houseNo
+                        this.streetName = response.streetName
+                        this.unitNo = this.unitNo ? this.unitNo : response.unitNo
+                        this.projectName = response.projectName
+                        response.tenureType && response.tenureType !== null ? this.tenure = this.tenureList.find(
+                            (item) => item.value.name === response.tenureType
+                        ).value : this.tenure = ''
+                        this.floorArea = this.unitNo && response.floorAreaSqft !== 0 ? response.floorAreaSqft : ''
+                        this.landArea = this.unitNo && response.landAreaSqft !== 0 ? response.landAreaSqft : ''
+                        this.purchasedPrice = this.unitNo && response.consider !== 0 ? response.consider : ''
+                        this.purchasedDate = this.unitNo && response.contractDate !== 0 ? response.contractDate : ''
+                    }
+                } catch (e) {
+                    console.log(e)
+                }
+            }
+        },
+        onChangePostalCode() {
+            this.propertyType = ""
+            this.houseNo = ""
+            this.streetName = ""
+            this.unitNo = ""
+            this.projectName = ""
+            this.bedroom = ""
+            this.tenure = ""
+            this.floorArea = ""
+            this.landArea = ""
+            this.purchasedPrice = ""
+            this.purchasedDate = ""
         },
         onClose() {
             this.$store.commit("inventories/setInventoryDetail", '')
             this.$emit("close")
-        }
+        },
+        formatDate(date) {
+            if (!date) return null
+
+            return this.$moment(date).format("DD-MMM-YYYY")
+        },
+        parseDate(date) {
+            if (!date) return null
+
+            return this.$moment(date).format("YYYY-MM-DD")
+        },
     },
     watch: {
+        postalCode() {
+            this.onChangePostalCode()
+        },
         purchasedPrice(val) {
             if (!isNaN(val)) {
                 this.purchasedPrice = convertNumberToCommas(val)
@@ -262,6 +374,9 @@ export default {
                 this.landArea = convertNumberToCommas(convertCommasToNumber(val))
             }
         },
+        purchasedDate() {
+            this.purchasedDateFormatted = this.formatDate(this.purchasedDate)
+        },
     }
 }
 </script>
@@ -274,6 +389,8 @@ export default {
 }
 
 .form__field {
+    width: 100%;
+
     label {
         font-weight: 500;
         font-size: 1.6rem;

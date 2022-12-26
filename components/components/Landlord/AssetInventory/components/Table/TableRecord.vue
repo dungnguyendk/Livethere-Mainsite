@@ -81,7 +81,8 @@
             </div>
             <Dialog :open="openAddNewInventoryDialog" @close="closeDialog" :size="sizeDialog" :title="''"
                 :actions="false">
-                <AddInventoryForm @close="openAddNewInventoryDialog = false" v-if="openAddNewInventoryDialog" />
+                <AddInventoryForm @close="openAddNewInventoryDialog = false" v-if="openAddNewInventoryDialog"
+                    :sourceDetail="source.id" />
             </Dialog>
         </td>
     </tr>
@@ -92,6 +93,7 @@ import AssetInventoryBadge from "~/components/components/Landlord/AssetInventory
 import Dialog from "~/components/elements/Dialog/Dialog.vue"
 import AddInventoryForm from "~/components/components/Landlord/AssetInventory/components/Dialog/Form/AddInventoryForm.vue"
 import { mapState } from "vuex"
+import qs from "qs"
 
 export default {
     name: "TableRecord",
@@ -131,6 +133,12 @@ export default {
             console.log("OnEdit", item)
         },
         onDeleteInventory(item) {
+            const param = {
+                data: {
+                    id: item
+                }
+            }
+            this.$store.dispatch("inventories/deleteInventory", param)
             console.log("OnDelete", item)
         },
         closeDialog() {

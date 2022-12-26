@@ -57,7 +57,19 @@ export const actions = {
             commit("setInventoryDetail", "")
         }
     },
+    async updateInventory({ commit }, payload) {
+        try {
+            const response = await this.$axios.$put(
+                `${httpEndpoint.inventories.updateEntry}`,
+                payload
+            )
+            console.log("response Update::", response)
+        } catch (e) {
+            console.log({ Error: e.message })
+        }
+    },
     async deleteInventory({ commit }, payload) {
+        console.log("delete::", payload)
         try {
             await this.$axios.$delete(`${httpEndpoint.inventories.deleteEntryByID}`, payload)
         } catch (e) {

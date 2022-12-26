@@ -1,6 +1,8 @@
 <template lang="html">
     <div :class="`badge--inventory ${type.toLowerCase()}`">
-        <span>{{ (type.toLowerCase() === "new" || type.toLowerCase() === "vacant" || type.toLowerCase() === "tenanted") ? type : "N/A"}}</span>
+        <span>{{ (type.toLowerCase() === "new" || type.toLowerCase() === "vacant" || type.toLowerCase() === "tenanted")
+                ? type : "n/a"
+        }}</span>
     </div>
 </template>
 
