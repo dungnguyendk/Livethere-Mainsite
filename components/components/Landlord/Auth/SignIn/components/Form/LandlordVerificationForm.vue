@@ -1,4 +1,3 @@
-<template> </template>
 <template lang="html">
     <div class="form--otp">
         <h3 class="form__title"> SMS VERIFICATION </h3>
@@ -25,7 +24,7 @@
         </div>
 
         <div class="form__link">
-            <p>Didn't receive code? <NuxtLink to="/sign-in"> Back to login</NuxtLink></p>
+            <p>Didn't receive code? <NuxtLink to="/landlord/signin"> Back to login</NuxtLink></p>
         </div>
         <!-- End Login form -->
     </div>
@@ -44,13 +43,13 @@ export default {
     }),
     methods: {
         onFinish(rsp) {
-            this.loading = true
+            /* this.loading = true
             setTimeout(() => {
                 this.loading = false
                 this.snackbarColor = rsp === this.expectedOtp ? "success" : "warning"
                 this.text = `Processed OTP with "${rsp}" (${this.snackbarColor})`
                 this.snackbar = true
-            }, 3500)
+            }, 3500)*/
         }
     }
 }
@@ -115,7 +114,6 @@ export default {
             width: 100%;
             color: var(--color-white);
             text-align: center;
-            font-weight: 500;
             font-size: 16px;
             line-height: 20px;
             padding: 1rem 0;
