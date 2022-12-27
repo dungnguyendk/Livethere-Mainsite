@@ -9,7 +9,6 @@
 </template>
 
 <script>
-
 import ArticleGrid from "~/components/components/Landlord/Insights/Article/ArticleGrid.vue"
 
 export default {

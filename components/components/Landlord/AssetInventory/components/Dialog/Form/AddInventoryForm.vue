@@ -6,14 +6,28 @@
         <div class="form__fields">
             <div class="form__field">
                 <label>Property Type</label>
-                <v-select v-model.trim="propertyType" :items="propertyTypeList" item-text="text" item-value="value"
-                    outlined dense placeholder="Please select" :error-messages="propertyTypeErrors" />
+                <v-select
+                    v-model.trim="propertyType"
+                    :items="propertyTypeList"
+                    item-text="text"
+                    item-value="value"
+                    outlined
+                    dense
+                    placeholder="Please select"
+                    :error-messages="propertyTypeErrors"
+                />
             </div>
             <div class="form__field2">
                 <div class="form__field">
                     <label>Postal Code</label>
-                    <v-text-field v-model="postalCode" type="number" hide-spin-buttons outlined dense
-                        :error-messages="postalCodeErrors">
+                    <v-text-field
+                        v-model="postalCode"
+                        type="number"
+                        hide-spin-buttons
+                        outlined
+                        dense
+                        :error-messages="postalCodeErrors"
+                    >
                         <template v-slot:prepend-inner>
                             <v-icon @click="searchPostalCode">mdi-magnify</v-icon>
                         </template>
@@ -21,12 +35,22 @@
                 </div>
                 <div class="form__field">
                     <label>House No.</label>
-                    <v-text-field v-model.trim="houseNo" outlined dense :error-messages="houseNoErrors" />
+                    <v-text-field
+                        v-model.trim="houseNo"
+                        outlined
+                        dense
+                        :error-messages="houseNoErrors"
+                    />
                 </div>
             </div>
             <div class="form__field">
                 <label>Street Name</label>
-                <v-text-field v-model.trim="streetName" outlined dense :error-messages="streetNameErrors" />
+                <v-text-field
+                    v-model.trim="streetName"
+                    outlined
+                    dense
+                    :error-messages="streetNameErrors"
+                />
             </div>
             <div class="form__field">
                 <label>Unit No.</label>
@@ -34,35 +58,73 @@
             </div>
             <div class="form__field">
                 <label>Project Name</label>
-                <v-text-field v-model.trim="projectName" outlined dense :error-messages="projectNameErrors" />
+                <v-text-field
+                    v-model.trim="projectName"
+                    outlined
+                    dense
+                    :error-messages="projectNameErrors"
+                />
             </div>
             <div class="form__field2">
                 <div class="form__field">
                     <label>No of Bedroom(s)</label>
-                    <v-select v-model="bedroom" outlined dense placeholder="Please select" :items="bedroomList"
-                        item-text="text" item-value="value" :error-messages="bedroomErrors" />
+                    <v-select
+                        v-model="bedroom"
+                        outlined
+                        dense
+                        placeholder="Please select"
+                        :items="bedroomList"
+                        item-text="text"
+                        item-value="value"
+                        :error-messages="bedroomErrors"
+                    />
                 </div>
                 <div class="form__field">
                     <label>Tenure</label>
-                    <v-select v-model="tenure" outlined dense placeholder="Please select" :items="tenureList"
-                        item-text="text" item-value="value" :error-messages="tenureErrors" />
+                    <v-select
+                        v-model="tenure"
+                        outlined
+                        dense
+                        placeholder="Please select"
+                        :items="tenureList"
+                        item-text="text"
+                        item-value="value"
+                        :error-messages="tenureErrors"
+                    />
                 </div>
             </div>
             <div class="form__field">
                 <label>Floor Area (sqft)</label>
-                <v-text-field v-model.trim="floorArea" outlined dense hide-spin-buttons
-                    :error-messages="floorAreaErrors" />
+                <v-text-field
+                    v-model.trim="floorArea"
+                    outlined
+                    dense
+                    hide-spin-buttons
+                    :error-messages="floorAreaErrors"
+                />
             </div>
             <div class="form__field">
                 <label>Purchased Price</label>
-                <v-text-field v-model.trim="purchasedPrice" outlined dense hide-spin-buttons
-                    :error-messages="purchasedPriceErrors" suffix="SGD" reverse>
+                <v-text-field
+                    v-model.trim="purchasedPrice"
+                    outlined
+                    dense
+                    hide-spin-buttons
+                    :error-messages="purchasedPriceErrors"
+                    suffix="SGD"
+                    reverse
+                >
                 </v-text-field>
             </div>
             <div class="form__field" v-if="propertyType.name === 'LANDED PROPERTY'">
                 <label>Land Area (sqft)</label>
-                <v-text-field v-model.trim="landArea" outlined dense hide-spin-buttons
-                    :error-messages="landAreaErrors" />
+                <v-text-field
+                    v-model.trim="landArea"
+                    outlined
+                    dense
+                    hide-spin-buttons
+                    :error-messages="landAreaErrors"
+                />
             </div>
         </div>
         <div class="card__footer">
@@ -97,13 +159,13 @@ export default {
         bedroom: { required },
         tenure: { required },
         floorArea: {
-            required,
+            required
             // minValue: minValue(1)
         },
         landArea: {
             required: requiredIf(function () {
                 return this.propertyType.name === "LANDED PROPERTY"
-            }),
+            })
             // minValue: minValue(1)
         },
         purchasedPrice: {
@@ -185,7 +247,9 @@ export default {
                     country: "Singapore",
                     bedroomTypeFID: this.bedroom.id ? this.bedroom.id : 0,
                     bedroomTypeDisplay: this.bedroom.name ? this.bedroom.name : 0,
-                    purchasedPrice: this.purchasedPrice ? convertCommasToNumber(this.purchasedPrice) : 0
+                    purchasedPrice: this.purchasedPrice
+                        ? convertCommasToNumber(this.purchasedPrice)
+                        : 0
                 }
                 this.$store.dispatch("inventories/createInventories", params)
                 this.onClose()
@@ -241,7 +305,7 @@ export default {
             } else {
                 this.landArea = convertNumberToCommas(convertCommasToNumber(val))
             }
-        },
+        }
     }
 }
 </script>

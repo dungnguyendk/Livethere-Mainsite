@@ -128,7 +128,7 @@ export default {
             this.$emit("handleClickOpenRow", item)
         },
         onVisitInventoryUnits() {
-            this.$router.push(`/landlord/assets/units/${this.source.id}`)
+            this.$router.push(`/landlord/assets/units/${this.source.internalID}`)
         }
     },
     watch: {}

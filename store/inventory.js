@@ -1,17 +1,18 @@
+import CreateTenancyAgreementForm from "~/components/components/Landlord/Inventory/Form/CreateTenancyAgreementForm.vue"
 import { httpEndpoint } from "~/services/https/endpoints"
 
 export const state = () => ({
     inventoryDetails: null, 
-    // tenancyAgreements: null
+    listTenancyAgreements: null
 })
 
 export const mutations = {
     setInventoryDetails(state, payload) {
         state.inventoryDetails = payload
     }, 
-    // setTenancyAgreements(state, payload){
-    //     state.tenancyAgreements = payload
-    // }
+    setListTenancyAgreements(state, payload){
+        state.listTenancyAgreements = payload
+    }
 }
 
 export const actions = {
@@ -30,18 +31,27 @@ export const actions = {
             commit("setInventoryDetails", null)
         }
     }, 
-    // async getTenancyAgreements({commit, payload}){
-    //     try{
-    //         const response = await this.$axios.$get(`${httpEndpoint.tenancyAgreements.getEntries}?AssestInventoryFID=${id}`)
-    //         if(response){
-    //             commit("setTenancyAgreements", response)
-    //         }else{
-    //             commit("setTenancyAgreements", null)
-    //         }
+    async getListTenancyAgreements({commit}, payload){
+        try{
+            const response = await this.$axios.$get(`${httpEndpoint.tenancyAgreements.getEntries}?AssestInventoryFID=${payload}`)
+            if(response){
+           
+                commit("setListTenancyAgreements", response)
+            }else{
+                commit("setListTenancyAgreements", null)
+            }
 
-    //     }catch(e){
-    //         console.log({Error: e.message})
-    //         commit("setTenancyAgreements", null)
-    //     }
-    // }
+        }catch(e){
+            console.log({Error: e.message})
+            commit("setListTenancyAgreements", null)
+        }
+    }, 
+    async createTenancyAgreement({ commit }, payload){
+        try {
+            await this.$axios.$post(`${httpEndpoint.tenancyAgreements.createEntry}`, payload)
+        } catch (e) {
+            console.log(e)
+        }
+    }
+
 }

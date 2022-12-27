@@ -6,9 +6,10 @@
 </template>
 
 <script>
-import TenancyDocumentTable from "./Table/TenancyDocument/TenancyDocumentTable.vue"
+import TenancyDocumentTable from "~/components/components/Landlord/Tenancy/Table/TenancyDocument/TenancyDocumentTable.vue"
+
 export default {
-    name: "TenancyDocuments",
+    name: "TenancyDocumentsPanel",
     components: { TenancyDocumentTable }
 }
 </script>
@@ -16,11 +17,13 @@ export default {
 .container {
     padding-top: 2.4rem;
 }
+
 .section--tenacy-document {
     padding-bottom: 5rem;
     background-color: var(--color-white);
     box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.04), 0px 4px 8px rgba(0, 0, 0, 0.06);
     border-radius: 20px;
+
     .section__label {
         padding: 2.6rem 2.4rem 3.8rem;
         font-family: var(--font-primary);
@@ -31,6 +34,7 @@ export default {
         color: var(--color-menu);
         margin: 0;
     }
+
     @media (max-width: 768px) {
         .section__label {
             padding: 2.6rem 2.4rem 1.5rem;

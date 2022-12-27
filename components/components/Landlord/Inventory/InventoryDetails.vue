@@ -9,9 +9,9 @@
                 <h3> {{ inventoryDetails ? inventoryDetails.propertyName : "Untitled" }} </h3>
             </div>
             <div class="section__container">
-                <InventoryInformationPanel :assetInventoryDetails="assetInventoryDetails"/>
+                <InventoryInformationPanel/>
                 <div class="section__divider" />
-                <TenancyAgreementPanel />
+                <TenancyAgreementPanel/>
             </div>
         </div>
     </div>
@@ -33,17 +33,6 @@ export default {
         ...mapState({
             inventoryDetails: (state) => state.inventory.inventoryDetails
         })
-    },
-    created(){
-        this.assetInventoryDetails = this.inventoryDetails
-        // const id = this.inventoryDetails.id 
-        // const responseTenancyAgreement = this.$axios.$get(`${httpEndpoint.tenancyAgreements.getEntries}?AssestInventoryFID=${id}`)
-        
-    },
-    data(){
-        return {
-            assetInventoryDetails: {}
-        }
     },
     methods: {
         onBack() {
