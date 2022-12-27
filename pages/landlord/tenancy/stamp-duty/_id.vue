@@ -3,7 +3,7 @@
         <LandlordHeader />
         <template v-if="loggedIn">
             <LandlordPortal>
-                <TenancyDetails />
+                <TenancyStampDuty />
             </LandlordPortal>
         </template>
     </main>
@@ -16,9 +16,11 @@ import LandlordHeader from "~/components/shared/Header/LandlordHeader.vue"
 import AssetInventory from "~/components/components/Landlord/AssetInventory/AssetInventory.vue"
 import InventoryDetails from "~/components/components/Landlord/Inventory/InventoryDetails.vue"
 import TenancyDetails from "~/components/components/Landlord/Tenancy/TenancyDetails"
+import TenancyStampDuty from "~/components/components/Landlord/Tenancy/TenancyStampDuty"
 
 export default {
     components: {
+        TenancyStampDuty,
         TenancyDetails,
         InventoryDetails,
         AssetInventory,
@@ -26,7 +28,7 @@ export default {
         LandlordPortal
     },
     head: {
-        title: `Landlord | ${appSettings.siteName}`
+        title: `Tenancy Stamp Duty | ${appSettings.siteName}`
     },
 
     computed: {

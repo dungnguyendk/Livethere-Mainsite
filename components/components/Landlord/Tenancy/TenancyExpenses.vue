@@ -9,7 +9,7 @@ import TenancyWrapper from "~/components/components/Landlord/Tenancy/TenancyWrap
 import TenancyDocumentsPanel from "~/components/components/Landlord/Tenancy/Panel/TenancyDocumentsPanel"
 
 export default {
-    name: "TenancyStampDuty",
+    name: "TenancyExpenses",
     components: { TenancyDocumentsPanel, TenancyWrapper },
     methods: {
         onBack() {

@@ -1,6 +1,8 @@
 <template lang="html">
     <TenancyWrapper @onBack="onBack">
-        <template slot="content"> </template>
+        <template slot="content">
+            <TenancyDocumentsPanel />
+        </template>
     </TenancyWrapper>
 </template>
 
@@ -9,7 +11,7 @@ import TenancyWrapper from "~/components/components/Landlord/Tenancy/TenancyWrap
 import TenancyDocumentsPanel from "~/components/components/Landlord/Tenancy/Panel/TenancyDocumentsPanel"
 
 export default {
-    name: "TenancyStampDuty",
+    name: "TenancyAgreements",
     components: { TenancyDocumentsPanel, TenancyWrapper },
     methods: {
         onBack() {

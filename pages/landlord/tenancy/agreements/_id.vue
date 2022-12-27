@@ -3,7 +3,7 @@
         <LandlordHeader />
         <template v-if="loggedIn">
             <LandlordPortal>
-                <TenancyDetails />
+                <TenancyAgreements />
             </LandlordPortal>
         </template>
     </main>
@@ -16,9 +16,11 @@ import LandlordHeader from "~/components/shared/Header/LandlordHeader.vue"
 import AssetInventory from "~/components/components/Landlord/AssetInventory/AssetInventory.vue"
 import InventoryDetails from "~/components/components/Landlord/Inventory/InventoryDetails.vue"
 import TenancyDetails from "~/components/components/Landlord/Tenancy/TenancyDetails"
+import TenancyAgreements from "~/components/components/Landlord/Tenancy/TenancyAgreements"
 
 export default {
     components: {
+        TenancyAgreements,
         TenancyDetails,
         InventoryDetails,
         AssetInventory,
