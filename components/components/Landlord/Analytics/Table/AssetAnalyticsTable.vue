@@ -14,8 +14,13 @@
             </thead>
             <tbody>
                 <template v-if="items.length > 0">
-                    <AssetAnalyticsTableRecord v-for="item in items" :source="item" :selectedId="selectedId"
-                        :key="item.id" @handleClickOpenRow="handleClickOpenRow" />
+                    <AssetAnalyticsTableRecord
+                        v-for="item in items"
+                        :source="item"
+                        :selectedId="selectedId"
+                        :key="item.id"
+                        @handleClickOpenRow="handleClickOpenRow"
+                    />
                 </template>
                 <template v-else>
                     <tr>
@@ -32,7 +37,7 @@
     </div>
 </template>
 <script>
-import AssetAnalyticsTableRecord from './AssetAnalyticsTableRecord.vue';
+import AssetAnalyticsTableRecord from "./AssetAnalyticsTableRecord.vue"
 import ExpandedPanel from "~/components/shared/Panel/ExpandedPanel.vue"
 export default {
     name: "AssetAnalyticsTable",
@@ -47,7 +52,8 @@ export default {
                     purchaseDate: "26/11/2022",
                     purchasePrice: "SGD 1,200,000",
                     currentEstimatedValue: "SGD 1,500,000",
-                    estimatedCapitalGain: "SGD 120,000 - SGD 150,000 SGD 120,000 - SGD 150,000 SGD 120,000 - SGD 150,000",
+                    estimatedCapitalGain:
+                        "SGD 120,000 - SGD 150,000 SGD 120,000 - SGD 150,000 SGD 120,000 - SGD 150,000",
                     rentalYield: "1.2%"
                 },
                 {
@@ -99,10 +105,10 @@ export default {
                     currentEstimatedValue: "SGD 1,500,000",
                     estimatedCapitalGain: "SGD 120,000 - SGD 150,000",
                     rentalYield: "1.2%"
-                },
+                }
             ],
             showExpandedPanel: false,
-            selectedId: -1,
+            selectedId: -1
         }
     },
     methods: {
@@ -121,7 +127,7 @@ export default {
 <style lang="scss" scoped>
 .table--asset {
     thead {
-        th:nth-child(-n+4) {
+        th:nth-child(-n + 4) {
             text-align: left;
         }
 
@@ -135,11 +141,10 @@ export default {
             background-color: var(--bg-color-white);
         }
     }
-
 }
 
 .asset-analytic {
-    padding: (32/1920)*100% (278/1920)*100% (126/1920)*100% (278/1920)*100%;
+    padding: (32/1920) * 100% (278/1920) * 100% (126/1920) * 100% (278/1920) * 100%;
 
     @media only screen and (max-width: 768px) {
         padding: 0;

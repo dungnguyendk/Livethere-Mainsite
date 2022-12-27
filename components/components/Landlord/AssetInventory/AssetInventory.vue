@@ -10,6 +10,6 @@ import AssetInventoryTable from "~/components/components/Landlord/AssetInventory
 import AssetInventoryAction from "~/components/components/Landlord/AssetInventory/components/AssetInventoryAction.vue"
 export default {
     name: "AssetInventory",
-    components: { AssetInventoryTable, AssetInventoryAction },
+    components: { AssetInventoryTable, AssetInventoryAction }
 }
 </script>

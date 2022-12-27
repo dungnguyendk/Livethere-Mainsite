@@ -38,7 +38,7 @@ td {
         display: flex;
         justify-content: left;
         margin-bottom: 0;
-        font-family: var( --font-primary);
+        font-family: var(--font-primary);
         font-style: normal;
         font-weight: 400;
         font-size: 16px;

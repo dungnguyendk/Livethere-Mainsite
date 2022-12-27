@@ -1,16 +1,36 @@
 <template lang="html">
     <div class="asset-inventory__action">
         <div class="select-type">
-            <v-select v-model="typeSelected" :items="typeSelections" item-text="value" item-value="id" hide-details
-                outlined dense class="me-2" @change="changeType"></v-select>
+            <v-select
+                v-model="typeSelected"
+                :items="typeSelections"
+                item-text="value"
+                item-value="id"
+                hide-details
+                outlined
+                dense
+                class="me-2"
+                @change="changeType"
+            ></v-select>
         </div>
-        <v-btn class="btn btn--outline btn--green btn--md add-new" @click="openAddNewInventoryDialog = true">
+        <v-btn
+            class="btn btn--outline btn--green btn--md add-new"
+            @click="openAddNewInventoryDialog = true"
+        >
             <v-icon left>ri-add-box-line</v-icon>
             Add New Inventory
         </v-btn>
-        <Dialog :open="openAddNewInventoryDialog" @close="openAddNewInventoryDialog = false" :size="sizeDialog"
-            :title="''" :actions="false">
-            <AddInventoryForm @close="openAddNewInventoryDialog = false" v-if="openAddNewInventoryDialog" />
+        <Dialog
+            :open="openAddNewInventoryDialog"
+            @close="openAddNewInventoryDialog = false"
+            :size="sizeDialog"
+            :title="''"
+            :actions="false"
+        >
+            <AddInventoryForm
+                @close="openAddNewInventoryDialog = false"
+                v-if="openAddNewInventoryDialog"
+            />
         </Dialog>
     </div>
 </template>
@@ -43,8 +63,7 @@ export default {
             this.$store.dispatch("inventories/getInventories", params)
         }
     },
-    watch: {
-    }
+    watch: {}
 }
 </script>
 <style lang="scss" scoped>

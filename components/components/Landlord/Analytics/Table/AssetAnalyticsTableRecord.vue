@@ -1,5 +1,9 @@
 <template lang="html">
-    <tr :class="`table--record ${source.id !== selectedId && selectedId !== -1 ? 'unSelected' : ''}`">
+    <tr
+        :class="`table--record ${
+            source.id !== selectedId && selectedId !== -1 ? 'unSelected' : ''
+        }`"
+    >
         <td data-label="Property Name">
             <span class="first-child" @click="handleClickOpenRow(source.id)">
                 {{ source.propertyName }}
@@ -31,7 +35,7 @@ export default {
     props: {
         source: {
             type: Object,
-            default: () => { }
+            default: () => {}
         },
         selectedId: {
             type: Number,
@@ -39,8 +43,7 @@ export default {
         }
     },
     data() {
-        return {
-        }
+        return {}
     },
     methods: {
         handleClickOpenRow(item) {
@@ -55,7 +58,7 @@ export default {
         text-align: center;
     }
 
-    td:nth-child(-n+4) {
+    td:nth-child(-n + 4) {
         text-align: left;
     }
 

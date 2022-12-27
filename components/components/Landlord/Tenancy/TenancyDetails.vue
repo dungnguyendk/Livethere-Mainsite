@@ -1,34 +1,18 @@
 <template lang="html">
-    <div class="section--tenancy-details">
-        <div class="section__top">
-            <h3 class="top--label"> Tenancy Details </h3>
-            <h3 class="top--id"> #348503 </h3>
-        </div>
-        <div class="section__content">
-            <div class="section__columns">
-                <div class="section__column">
-                    <p>
-                        <span>Commercement Date:</span>
-                        <strong>20/09/2020</strong>
-                    </p>
-                    <p>
-                        <span>Lease Period (months):</span>
-                        <strong>24</strong>
-                    </p>
-                    <p>
-                        <span>Secure Deposit:</span>
-                        <strong>SGD 9,000</strong>
-                    </p>
+    <div class="section--tenancy">
+        <div class="container">
+            <div class="section__top">
+                <v-btn class="btn btn--outline btn--green btn--sm" @click="onBack">
+                    <i class="ri-arrow-left-line"></i>
+                    Back
+                </v-btn>
+            </div>
+            <div class="section__wrapper">
+                <div class="section__left">
+                    <TenancyNav />
                 </div>
-                <div class="section__column">
-                    <p>
-                        <span>Expiry Date:</span>
-                        <strong>20/09/2022</strong>
-                    </p>
-                    <p>
-                        <span>Monthly Rent:</span>
-                        <strong>SGD 3,000</strong>
-                    </p>
+                <div class="section__right">
+                    <TenancyDetailsPanel />
                 </div>
             </div>
         </div>
@@ -36,129 +20,20 @@
 </template>
 
 <script>
+import TenancyDetailsPanel from "~/components/components/Landlord/Tenancy/Panel/TenancyDetailsPanel.vue"
+import TenancyNav from "~/components/components/Landlord/Tenancy/TenancyNav"
+
 export default {
-    name: "TenancyDetails"
+    name: "TenancyDetails",
+    components: { TenancyNav, TenancyDetailsPanel }
 }
 </script>
 <style lang="scss" scoped>
-.section--tenancy-details {
-    background-color: var(--color-white);
-    box-shadow: 0 0 4px rgba(0, 0, 0, 0.04), 0px 4px 8px rgba(0, 0, 0, 0.06);
-    border-radius: 20px;
-    padding: 2.6rem 2.4rem;
-
-    .section__top {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding-bottom: 2.4rem;
-        h3 {
-            margin-bottom: 0;
-        }
-        .top--label {
-            font-family: var(--font-primary);
-            font-style: normal;
-            font-weight: 800;
-            font-size: 20px;
-            line-height: 28px;
-            color: var(--color-menu);
-        }
-
-        .top--id {
-            font-family: var(--font-primary);
-            font-style: normal;
-            font-weight: 800;
-            font-size: 20px;
-            line-height: 28px;
-            text-align: right;
-            color: #171717;
-        }
-    }
-    .section__columns {
+.section--tenancy {
+    .section__wrapper {
         display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        grid-gap: 2.4rem;
-        .section__column {
-            p {
-                display: flex;
-                justify-content: flex-start;
-                align-self: center;
-                grid-gap: 2.4rem;
-                gap: 2.4rem;
-                font-family: var(--font-primary);
-                font-style: normal;
-                font-weight: 500;
-                font-size: 16px;
-                line-height: 40px;
-                color: #737373;
-                span {
-                    min-width: 16.5rem;
-                }
-                strong {
-                    color: var(--color-heading);
-                    font-weight: 500;
-                }
-                // &:not(:last-child) {
-                //     margin-bottom: 0.4rem;
-                // }
-                // &:last-child {
-                //     margin-bottom: 0;
-                // }
-                margin: 0;
-            }
-        }
-        .section__column:nth-child(2) {
-            p {
-                span {
-                    min-width: 10.2rem;
-                }
-            }
-        }
-    }
-
-    @media (max-width: 768px) {
-        .section__columns {
-            display: flex;
-            padding-right: 0;
-            flex-wrap: wrap;
-            gap: 0;
-
-            .section__column:nth-child(1) {
-                order: 1;
-                p {
-                    display: flex;
-                    justify-content: flex-start;
-                    align-self: center;
-                    grid-gap: 2.4rem;
-                    gap: 2.4rem;
-                    color: #737373;
-                    span {
-                        min-width: 16.5rem;
-                    }
-                    strong {
-                        color: var(--color-heading);
-                        font-weight: 500;
-                    }
-                    // &:not(:last-child) {
-                    //     margin-bottom: 0.4rem;
-                    // }
-                    // &:last-child {
-                    //     margin-bottom: 0;
-                    // }
-                    margin: 0;
-                }
-            }
-
-            .section__column:nth-child(2) {
-                order: 2;
-                flex: 0 0 100%;
-                p {
-                    span {
-                        min-width: 16.5rem;
-                    }
-                }
-            }
-        }
+        grid-template-columns: 34rem minmax(0, 1fr);
+        grid-gap: 5.2rem;
     }
 }
 </style>
