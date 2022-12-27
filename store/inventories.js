@@ -3,7 +3,9 @@ import { httpEndpoint } from "~/services/https/endpoints"
 export const state = () => ({
     inventories: [],
     inventoryDetail: "",
-    typeSelect: 0
+    typeSelect: 0,
+    snackbar: false,
+    snackbarMessage: "Your message has been sent."
 })
 
 export const mutations = {
@@ -12,19 +14,39 @@ export const mutations = {
     },
     setInventoryDetail(state, payload) {
         state.inventoryDetail = payload
-        console.log("state.inventoryDetail::", state.inventoryDetail)
     },
     setTypeSelected(state, payload) {
         state.typeSelect = payload
+    },
+    setSnackbar(state, payload) {
+        state.snackbar = payload
+        // console.log("state.snackbar::", state.snackbar)
+    },
+    setSnackbarMessage(state, payload) {
+        state.snackbarMessage = payload
+        // console.log("state.snackbarMessage::", state.snackbarMessage)
     }
 }
 
 export const actions = {
     async createInventories({ commit }, payload) {
         try {
-            await this.$axios.$post(`${httpEndpoint.inventories.createEntry}`, payload)
+            const response = await this.$axios.$post(
+                `${httpEndpoint.inventories.createEntry}`,
+                payload
+            )
+            if (response && response !== 0) {
+                commit("setSnackbar", true)
+                commit("setSnackbarMessage", "Create new inventory success")
+                // console.log("response Create::", response)
+            } else {
+                commit("setSnackbar", false)
+                commit("setSnackbarMessage", "Your message has been sent.")
+            }
         } catch (e) {
-            console.log(e)
+            commit("setSnackbar", false)
+            commit("setSnackbarMessage", "Your message has been sent.")
+            console.log({ Error: e.message })
         }
     },
     async getInventories({ commit }, payload) {
@@ -63,17 +85,40 @@ export const actions = {
                 `${httpEndpoint.inventories.updateEntry}`,
                 payload
             )
-            console.log("response Update::", response)
+            if (response) {
+                commit("setSnackbar", true)
+                commit("setSnackbarMessage", "Update inventory success")
+                // console.log("response Create::", response)
+            } else {
+                commit("setSnackbar", false)
+                commit("setSnackbarMessage", "Your message has been sent.")
+            }
+            // console.log("response Update::", response)
         } catch (e) {
             console.log({ Error: e.message })
+            commit("setSnackbar", false)
+            commit("setSnackbarMessage", "Your message has been sent.")
         }
     },
     async deleteInventory({ commit }, payload) {
-        console.log("delete::", payload)
         try {
-            await this.$axios.$delete(`${httpEndpoint.inventories.deleteEntryByID}`, payload)
+            const response = await this.$axios.$delete(
+                `${httpEndpoint.inventories.deleteEntryByID}`,
+                payload
+            )
+            if (response) {
+                commit("setSnackbar", true)
+                commit("setSnackbarMessage", "Delete inventory success")
+                // console.log("response Create::", response)
+            } else {
+                commit("setSnackbar", false)
+                commit("setSnackbarMessage", "Your message has been sent.")
+            }
+            // console.log("response Delete::", response)
         } catch (e) {
             console.log({ Error: e.message })
+            commit("setSnackbar", false)
+            commit("setSnackbarMessage", "Your message has been sent.")
         }
     }
 }

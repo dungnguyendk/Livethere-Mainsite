@@ -20,13 +20,8 @@
             </thead>
             <tbody>
                 <template v-if="inventories.length > 0">
-                    <TableRecord
-                        v-for="item in inventories"
-                        :source="item"
-                        :selectedId="selectedId"
-                        :key="item.id"
-                        @handleClickOpenRow="handleClickOpenRow"
-                    />
+                    <TableRecord v-for="item in inventories" :source="item" :selectedId="selectedId" :key="item.id"
+                        @handleClickOpenRow="handleClickOpenRow" />
                     <template v-if="(statusFID === 2 || statusFID === 3) && selectedId === -1">
                         <tr class="tr-hidden">
                             <td></td>
@@ -49,6 +44,11 @@
         <!--        <slide-up-down :active="showExpandedPanel" :duration="300">
             <ExpandedPanel @onClose="onCloseExpandedPanel" />
         </slide-up-down>-->
+        <!-- <v-snackbar v-model="snackbar" :timeout="2000" top right text color="green darken-4">
+            <span class="message--snackBar">
+                <i class="ri-information-line" /> {{ snackbarMessage }}
+            </span>
+        </v-snackbar> -->
     </div>
 </template>
 

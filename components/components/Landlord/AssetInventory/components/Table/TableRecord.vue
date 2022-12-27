@@ -138,8 +138,12 @@ export default {
                     id: item
                 }
             }
-            this.$store.dispatch("inventories/deleteInventory", param)
-            console.log("OnDelete", item)
+            this.$store.dispatch("inventories/deleteInventory", param).then(() => {
+                const paramStatusFID = qs.stringify({
+                    StatusFID: this.typeSelected
+                })
+                this.$store.dispatch("inventories/getInventories", paramStatusFID)
+            })
         },
         closeDialog() {
             this.$store.commit("inventories/setInventoryDetail", '')

@@ -84,9 +84,8 @@
         <div class="card__footer">
             <div class="btn-group">
                 <v-btn class="btn btn--primary btn--green btn__add-file"
-                    @click="inventoryDetail ? updateInventories() : createInventories()">{{ inventoryDetail ? "Update" :
-        "Add"
-}}</v-btn>
+                    @click="inventoryDetail ? updateInventories() : createInventories()">
+                    {{ inventoryDetail ? "Update" : "Add" }}</v-btn>
                 <span class="cancel-form" @click="onClose()"> Cancel </span>
             </div>
         </div>
@@ -161,7 +160,8 @@ export default {
     },
     computed: {
         ...mapState({
-            inventoryDetail: (state) => state.inventories.inventoryDetail
+            inventoryDetail: (state) => state.inventories.inventoryDetail,
+            statusFID: (state) => state.inventories.typeSelect,
         }),
         propertyTypeErrors() {
             return setFormControlErrors(this.$v.propertyType, "This field is required")
@@ -188,20 +188,20 @@ export default {
             return setFormControlErrors(this.$v.tenure, "Tenure is required")
         },
         floorAreaErrors() {
-            return setFormControlErrors(this.$v.floorArea, "Floor Area is required")
+            return setFormControlErrors(this.$v.floorArea, "Floor Area is required and input number")
         },
         landAreaErrors() {
-            return setFormControlErrors(this.$v.landArea, "Land Area is required")
+            return setFormControlErrors(this.$v.landArea, "Land Area is required and input number")
         },
         purchasedPriceErrors() {
-            return setFormControlErrors(this.$v.purchasedPrice, "Purchased Price is required")
+            return setFormControlErrors(this.$v.purchasedPrice, "Purchased Price is required and input number")
         },
         purchasedDateFormattedErrors() {
             return setFormControlErrors(this.$v.purchasedDateFormatted, "Purchased Date is required")
-        }
+        },
     },
     created() {
-        console.log("this.inventoryDetail", this.inventoryDetail.propertyType);
+        // console.log("this.inventoryDetail", this.inventoryDetail.propertyType);
         if (this.inventoryDetail) {
             this.propertyType = this.inventoryDetail.propertyType ? this.propertyTypeList.find((i) => i.value.id === this.inventoryDetail.propertyType).value : ""
             this.postalCode = this.inventoryDetail.postalCode ? this.inventoryDetail.postalCode : ""
@@ -229,13 +229,13 @@ export default {
             this.purchasedPrice = ""
             this.purchasedDate = ""
         }
-        console.log("this.sourceDetail::", this.sourceDetail);
+        // console.log("this.sourceDetail::", this.sourceDetail);
     },
     methods: {
         onFormSubmit() { },
-        createInventories() {
+        async createInventories() {
             this.onFormSubmit()
-            console.log("submit!", this.$v.$invalid)
+            // console.log("submit!", this.$v.$invalid)
             this.$v.$touch()
             if (!this.$v.$invalid) {
                 const params = {
@@ -257,13 +257,18 @@ export default {
                     purchasedPrice: this.purchasedPrice ? convertCommasToNumber(this.purchasedPrice) : 0,
                     purchasedDate: this.purchasedDate ? this.purchasedDate : ''
                 }
-                this.$store.dispatch("inventories/createInventories", params)
+                this.$store.dispatch("inventories/createInventories", params).then(() => {
+                    const paramStatusFID = qs.stringify({
+                        StatusFID: this.typeSelected
+                    })
+                    this.$store.dispatch("inventories/getInventories", paramStatusFID)
+                })
                 this.onClose()
             }
         },
         updateInventories() {
             this.onFormSubmit()
-            console.log("Update!", this.$v.$invalid)
+            // console.log("Update!", this.$v.$invalid)
             this.$v.$touch()
             if (!this.$v.$invalid) {
                 const params = {
@@ -286,7 +291,12 @@ export default {
                     purchasedPrice: this.purchasedPrice ? convertCommasToNumber(this.purchasedPrice) : 0,
                     purchasedDate: this.purchasedDate ? this.purchasedDate : ''
                 }
-                this.$store.dispatch("inventories/updateInventory", params)
+                this.$store.dispatch("inventories/updateInventory", params).then(() => {
+                    const paramStatusFID = qs.stringify({
+                        StatusFID: this.typeSelected
+                    })
+                    this.$store.dispatch("inventories/getInventories", paramStatusFID)
+                })
                 this.onClose()
             }
         },
@@ -322,7 +332,7 @@ export default {
             }
         },
         onChangePostalCode() {
-            this.propertyType = ""
+            // this.propertyType = ""
             this.houseNo = ""
             this.streetName = ""
             this.unitNo = ""
@@ -350,8 +360,10 @@ export default {
         },
     },
     watch: {
-        postalCode() {
-            this.onChangePostalCode()
+        postalCode(val) {
+            if (this.inventoryDetail.postalCode === null || this.inventoryDetail.postalCode !== this.postalCode) {
+                this.onChangePostalCode()
+            }
         },
         purchasedPrice(val) {
             if (!isNaN(val)) {
