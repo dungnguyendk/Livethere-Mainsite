@@ -25,6 +25,8 @@ export const httpEndpoint = {
         deleteEntryByID: "/api/asset-inventories"
     },
     postal: {
-        getEntryByPostalCode: "/api/properties/details"
+        getEntryByPostalCode: "/api/properties/details",
+        createEntry: "/api/asset-inventories",
+        getByInternalID: "/api/asset-inventories/by-internalID"
     }
 }

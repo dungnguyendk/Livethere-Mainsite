@@ -3,8 +3,12 @@
     }`">
         <td data-label="Property">
             <div>
-                <img src="https://picsum.photos/600/400.jpg?random=" alt="" class="table--record__img" />
-                <p class="first-child" @click="handleClickOpenRow(source.id)">
+                <img
+                    src="https://picsum.photos/600/400.jpg?random="
+                    alt=""
+                    class="table--record__img"
+                />
+                <p class="first-child" @click="handleClickOpenRow(source.internalID)">
                     {{ source.propertyName }}
                 </p>
             </div>
@@ -148,6 +152,7 @@ export default {
         closeDialog() {
             this.$store.commit("inventories/setInventoryDetail", '')
             this.openAddNewInventoryDialog = false
+            this.$router.push(`/landlord/assets/units/${this.source.internalID}`)
         }
     },
     watch: {}

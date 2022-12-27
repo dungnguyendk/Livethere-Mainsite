@@ -2,11 +2,11 @@
     <div class="section--property-details">
         <div class="container">
             <div class="section__top">
-                <v-btn class="btn btn--outline btn--green btn--sm">
+                <v-btn class="btn btn--outline btn--green btn--sm" @click="onBack">
                     <i class="ri-arrow-left-line"></i>
                     Back
                 </v-btn>
-                <h3> Lloyd Sixtyfive </h3>
+                <h3> {{ inventoryDetails ? inventoryDetails.propertyName : "Untitled" }} </h3>
             </div>
             <div class="section__container">
                 <InventoryInformationPanel />
@@ -21,10 +21,21 @@
 import TenantAgreementTable from "~/components/components/Landlord/Inventory/Table/TenancyAgreementTable.vue"
 import InventoryInformationPanel from "~/components/components/Landlord/Inventory/Panel/InventoryInformationPanel.vue"
 import TenancyAgreementPanel from "~/components/components/Landlord/Tenancy/Panel/TenancyAgreementPanel.vue"
+import { mapState } from "vuex"
 
 export default {
     name: "InventoryDetails",
-    components: { TenancyAgreementPanel, InventoryInformationPanel, TenantAgreementTable }
+    components: { TenancyAgreementPanel, InventoryInformationPanel, TenantAgreementTable },
+    computed: {
+        ...mapState({
+            inventoryDetails: (state) => state.inventory.inventoryDetails
+        })
+    },
+    methods: {
+        onBack() {
+            this.$router.push("/landlord/assets")
+        }
+    }
 }
 </script>
 <style lang="scss" scoped>

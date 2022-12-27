@@ -3,6 +3,7 @@ export const REGISTER_BENEFITS = [
         id: 1,
         icon: "people",
         title: "Public Register Users",
+        url: "/register/public",
         contents: [
             {
                 id: 1,
@@ -30,6 +31,7 @@ export const REGISTER_BENEFITS = [
         id: 2,
         icon: "vector",
         title: "Landlord Register Users",
+        url: "/landlord/register",
         contents: [
             {
                 id: 1,
@@ -65,6 +67,7 @@ export const REGISTER_BENEFITS = [
         id: 3,
         icon: "tenant",
         title: "Tenant Register Users",
+        url: "/tenant/register",
         contents: [
             {
                 id: 1,
