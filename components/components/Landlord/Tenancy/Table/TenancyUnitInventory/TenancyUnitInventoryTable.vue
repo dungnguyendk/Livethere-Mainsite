@@ -39,9 +39,7 @@ export default {
                     description: "Peter Tan",
                     quantity: "Dxxx4567",
                     conditionRemarks: "Corporate"
-                },
-                
-
+                }
             ]
         }
     }
@@ -68,7 +66,7 @@ export default {
         th {
             padding: 1.5rem 2.4rem 1.5rem;
             background-color: var(--color-menu);
-            font-family: var( --font-primary);
+            font-family: var(--font-primary);
             font-style: normal;
             font-weight: 700;
             font-size: 16px;

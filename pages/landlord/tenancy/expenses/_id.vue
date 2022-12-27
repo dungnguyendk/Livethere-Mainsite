@@ -3,23 +3,26 @@
         <LandlordHeader />
         <template v-if="loggedIn">
             <LandlordPortal>
-                <InventoryUnits />
+                <TenancyExpenses />
             </LandlordPortal>
         </template>
     </main>
 </template>
 
 <script>
+import { appSettings } from "~/app-settings"
 import LandlordPortal from "~/components/components/Landlord/LandlordPortal.vue"
 import LandlordHeader from "~/components/shared/Header/LandlordHeader.vue"
-import { appSettings } from "~/app-settings"
 import AssetInventory from "~/components/components/Landlord/AssetInventory/AssetInventory.vue"
-import InventoryUnits from "~/components/components/Landlord/Inventory/InventoryUnits.vue"
+import InventoryDetails from "~/components/components/Landlord/Inventory/InventoryDetails.vue"
+import TenancyDetails from "~/components/components/Landlord/Tenancy/TenancyDetails"
+import TenancyExpenses from "~/components/components/Landlord/Tenancy/TenancyExpenses"
 
 export default {
-    name: "landlord",
     components: {
-        InventoryUnits,
+        TenancyExpenses,
+        TenancyDetails,
+        InventoryDetails,
         AssetInventory,
         LandlordHeader,
         LandlordPortal

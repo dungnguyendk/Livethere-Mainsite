@@ -14,8 +14,8 @@ export default {
         type: {
             type: String,
             default: "new" // 'new' || 'vacant' || 'Tenanted'
-        },
-    },
+        }
+    }
 }
 </script>
 <style lang="scss" scoped>
@@ -42,15 +42,27 @@ export default {
         }
 
         &.new {
-            @include typeInventory(var(--color-type-new), var(--color-type-new), rgba(39, 168, 87, 0.1));
+            @include typeInventory(
+                var(--color-type-new),
+                var(--color-type-new),
+                rgba(39, 168, 87, 0.1)
+            );
         }
 
         &.vacant {
-            @include typeInventory(var(--color-type-vacant), var(--color-type-vacant), rgba(15, 170, 222, 0.1));
+            @include typeInventory(
+                var(--color-type-vacant),
+                var(--color-type-vacant),
+                rgba(15, 170, 222, 0.1)
+            );
         }
 
         &.tenanted {
-            @include typeInventory(var(--color-type-tenanted), var(--color-type-tenanted), rgba(93, 95, 239, 0.1));
+            @include typeInventory(
+                var(--color-type-tenanted),
+                var(--color-type-tenanted),
+                rgba(93, 95, 239, 0.1)
+            );
         }
     }
 }

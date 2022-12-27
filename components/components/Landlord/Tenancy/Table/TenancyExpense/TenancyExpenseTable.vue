@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import TenancyExpenseRecord from './TenancyExpenseRecord.vue';
+import TenancyExpenseRecord from "./TenancyExpenseRecord.vue"
 export default {
     name: "TenancyExpenseTable",
     components: { TenancyExpenseRecord },
@@ -39,10 +39,7 @@ export default {
                     description: "Peter Tan",
                     price: "SGD 2,000",
                     date: "20/06/2001"
-                },
-               
-        
-
+                }
             ]
         }
     }
@@ -69,7 +66,7 @@ export default {
         th {
             padding: 1.5rem 2.4rem 1.5rem;
             background-color: var(--color-menu);
-            font-family: var( --font-primary);
+            font-family: var(--font-primary);
             font-style: normal;
             font-weight: 700;
             font-size: 16px;
@@ -83,7 +80,6 @@ export default {
     th:nth-child(2) {
         min-width: 21.2rem;
     }
-
 }
 @media (max-width: 768px) {
     .table--responsive tbody tr {
