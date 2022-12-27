@@ -14,7 +14,8 @@
 </template>
 
 <script>
-import TenancyExpenseTable from "./Table/TenancyExpense/TenancyExpenseTable.vue"
+import TenancyExpenseTable from "~/components/components/Landlord/Tenancy/Table/TenancyExpense/TenancyExpenseTable"
+
 export default {
     name: "TenancyExpenses",
     components: { TenancyExpenseTable }

@@ -30,6 +30,10 @@ export default {
 </script>
 <style lang="scss" scoped>
 .section--tenancy {
+    padding: 3.2rem 0;
+    .section__top {
+        padding-bottom: 3.2rem;
+    }
     .section__wrapper {
         display: grid;
         grid-template-columns: 34rem minmax(0, 1fr);

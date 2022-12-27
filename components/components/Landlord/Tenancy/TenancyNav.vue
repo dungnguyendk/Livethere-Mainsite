@@ -1,10 +1,10 @@
 <template lang="html">
-    <nav>
+    <nav class="nav--tenancy">
         <div v-for="(item, index) in items" class="link" :key="item">
             <div class="link__indicator">
                 {{ index + 1 }}
             </div>
-            <nuxt-link :to="item.link">
+            <nuxt-link :to="`/landlord/tenancy/${item.link}/${id}`">
                 {{ item.title }}
             </nuxt-link>
         </div>
@@ -17,6 +17,14 @@ import TenancyDetails from "~/components/components/Landlord/Tenancy/TenancyDeta
 export default {
     name: "TenancyNav",
     components: { TenancyDetails },
+    computed: {
+        id() {
+            return this.$route.params.id
+        },
+        path() {
+            return this.$route.path
+        }
+    },
     data() {
         return {
             items: [
@@ -26,7 +34,7 @@ export default {
                 },
                 {
                     title: "Tenancy Agreement",
-                    link: "tenancy-agreement"
+                    link: "agreements"
                 },
                 {
                     title: "Stamp Duty",
@@ -48,7 +56,9 @@ export default {
 <style lang="scss" scoped>
 .link {
     display: flex;
-    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    grid-gap: 1.6rem;
 
     .link__indicator {
         display: flex;
@@ -59,9 +69,16 @@ export default {
         border-radius: 50%;
         background-color: alpha(var(--color-gray), 0.06);
     }
+
     &.active {
         .link__indicator {
+            background-color: var(--color-primary);
         }
     }
+}
+
+.nav--tenancy {
+    display: grid;
+    grid-gap: 4.4rem;
 }
 </style>
