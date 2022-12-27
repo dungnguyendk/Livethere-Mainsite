@@ -3,11 +3,11 @@
     }`">
         <td data-label="Property">
             <div>
-                <img
+                <!-- <img
                     src="https://picsum.photos/600/400.jpg?random="
                     alt=""
                     class="table--record__img"
-                />
+                /> -->
                 <p class="first-child" @click="handleClickOpenRow(source.internalID)">
                     {{ source.propertyName }}
                 </p>
