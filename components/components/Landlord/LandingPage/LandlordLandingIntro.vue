@@ -4,22 +4,23 @@
             <div class="section__container">
                 <div class="section__left">
                     <div class="image-first">
-                        <img :src="imgURLFirst" alt=""/>
+                        <img :src="imgURLFirst" alt="" />
                     </div>
                     <div class="image-second">
-                        <img :src="imgURLSecond" alt=""/>
-                    </div> 
+                        <img :src="imgURLSecond" alt="" />
+                    </div>
                 </div>
                 <div class="section__right">
-                        <p>Every property, every detail, every lifestyle need.
-                            Just tell us what you value most in your future
-                            home, and our Relationship Managers will connect you
-                            with quality picks that best match your needs.
-                        </p>
-                        <p>Our listings are not just long. Each home is
-                            carefully picked! So rest assured we serve you the
-                            most ideal living space that matches your lifestyle.
-                        </p>
+                    <p
+                        >Every property, every detail, every lifestyle need. Just tell us what you
+                        value most in your future home, and our Relationship Managers will connect
+                        you with quality picks that best match your needs.
+                    </p>
+                    <p
+                        >Our listings are not just long. Each home is carefully picked! So rest
+                        assured we serve you the most ideal living space that matches your
+                        lifestyle.
+                    </p>
                 </div>
             </div>
         </div>
@@ -102,7 +103,6 @@ export default {
         padding-bottom: 0;
         .section__container {
             display: block;
-
 
             .section__left {
                 width: 100%;

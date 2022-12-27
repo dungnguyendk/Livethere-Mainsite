@@ -4,13 +4,20 @@
             <div class="section__container">
                 <div class="section__left">
                     <div class="section__image">
-                        <img :src="imgURL" alt="">
+                        <img :src="imgURL" alt="" />
                     </div>
                 </div>
                 <div class="section__right">
                     <div class="section__right-content">
-                        <h3 class="section__content-title">Start your journey in finding your perfect home in Singapore’s desirable locales</h3>
-                        <p class="section__content-text">We take out the hassle and put in the ease to your home renting process. We manage your journey from beginning to end, as well as aftercare. In other words – we make living easy!</p>
+                        <h3 class="section__content-title"
+                            >Start your journey in finding your perfect home in Singapore’s
+                            desirable locales</h3
+                        >
+                        <p class="section__content-text"
+                            >We take out the hassle and put in the ease to your home renting
+                            process. We manage your journey from beginning to end, as well as
+                            aftercare. In other words – we make living easy!</p
+                        >
                         <v-btn class="btn btn--primary btn--green">Find Out More</v-btn>
                     </div>
                 </div>
@@ -103,4 +110,3 @@ export default {
     }
 }
 </style>
-

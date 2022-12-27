@@ -153,6 +153,7 @@ export default {
                     itemValue: this.value
                 }
                 await this.$store.dispatch("inventory/createUnitInventory", params)
+                this.$emit("close")
                 // this.$router.push("/landlord/assets/units/")
             } catch (e) {
                 console.log(e)
@@ -161,9 +162,8 @@ export default {
         async onCreate() {
             const updateStatus = await this.createUnitInventory()
             if (updateStatus) {
-                this.$emit("onSubmit")
                 this.onResetForm()
-                // this.getData()
+                // console.log("step222");
             }
         }
     },

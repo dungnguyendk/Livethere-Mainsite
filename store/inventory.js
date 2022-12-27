@@ -67,7 +67,6 @@ export const actions = {
             const response = await this.$axios.$post(`${httpEndpoint.unit.getEntries}`, payload)
             if (response) {
                 commit("setCreateUnitInventory", response.length ? response : [])
-                // this.getUnitsByInventoryFID(payload)
             } else {
                 commit("setCreateUnitInventory", [])
             }

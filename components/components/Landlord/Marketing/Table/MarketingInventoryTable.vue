@@ -187,7 +187,6 @@ export default {
                     z-index: 1;
                     left: 0;
                 }
-                
             }
             .title {
                 padding-top: 1.2rem;

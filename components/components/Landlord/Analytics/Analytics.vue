@@ -1,5 +1,5 @@
 <template lang="html">
-    <AssetAnalyticsTable/>
+    <AssetAnalyticsTable />
 </template>
 
 <script>

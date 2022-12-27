@@ -2,38 +2,77 @@
     <form class="form--register" @submit.prevent="submitForm">
         <div class="form--register__input">
             <label>Preferred Username</label>
-            <v-text-field v-model.trim="preferredUsername" outlined dense placeholder="Type here"
-                :error-messages="preferredUsernameErrors" @input="$v.preferredUsername.$touch()"
-                @blur="$v.preferredUsername.$touch()" />
+            <v-text-field
+                v-model.trim="preferredUsername"
+                outlined
+                dense
+                placeholder="Type here"
+                :error-messages="preferredUsernameErrors"
+                @input="$v.preferredUsername.$touch()"
+                @blur="$v.preferredUsername.$touch()"
+            />
         </div>
         <div class="form--register__input2">
             <div class="form--register__input">
                 <label>Password</label>
-                <v-text-field v-model.trim="password" outlined dense placeholder="Type here" type="password"
-                    :error-messages="passwordErrors" @input="$v.password.$touch()" @blur="$v.password.$touch()" />
+                <v-text-field
+                    v-model.trim="password"
+                    outlined
+                    dense
+                    placeholder="Type here"
+                    type="password"
+                    :error-messages="passwordErrors"
+                    @input="$v.password.$touch()"
+                    @blur="$v.password.$touch()"
+                />
             </div>
             <div class="form--register__input">
                 <label>Verified Password</label>
-                <v-text-field v-model.trim="verifiedPassword" outlined dense placeholder="Type here" type="password"
-                    :error-messages="verifiedPasswordErrors" @input="$v.verifiedPassword.$touch()"
-                    @blur="$v.verifiedPassword.$touch()" />
+                <v-text-field
+                    v-model.trim="verifiedPassword"
+                    outlined
+                    dense
+                    placeholder="Type here"
+                    type="password"
+                    :error-messages="verifiedPasswordErrors"
+                    @input="$v.verifiedPassword.$touch()"
+                    @blur="$v.verifiedPassword.$touch()"
+                />
             </div>
         </div>
         <div class="form--register__input2">
             <div class="form--register__input">
                 <label>Email Address</label>
-                <v-text-field v-model.trim="emailAddress" outlined dense placeholder="Type here"
-                    :error-messages="emailAddressErrors" @input="$v.emailAddress.$touch()"
-                    @blur="$v.emailAddress.$touch()" />
+                <v-text-field
+                    v-model.trim="emailAddress"
+                    outlined
+                    dense
+                    placeholder="Type here"
+                    :error-messages="emailAddressErrors"
+                    @input="$v.emailAddress.$touch()"
+                    @blur="$v.emailAddress.$touch()"
+                />
             </div>
             <div class="form--register__input">
                 <label>Mobile No.</label>
-                <vue-tel-input-vuetify outlined dense v-bind="bindProps" v-model.trim="phone" label=""
-                    v-on:country-changed="countryChanged" :error-messages="phoneErrors" @input="$v.phone.$touch()"
-                    @blur="$v.phone.$touch()"></vue-tel-input-vuetify>
+                <vue-tel-input-vuetify
+                    outlined
+                    dense
+                    v-bind="bindProps"
+                    v-model.trim="phone"
+                    label=""
+                    v-on:country-changed="countryChanged"
+                    :error-messages="phoneErrors"
+                    @input="$v.phone.$touch()"
+                    @blur="$v.phone.$touch()"
+                ></vue-tel-input-vuetify>
             </div>
         </div>
-        <v-checkbox label="I agree with the Landlord Portal Terms of Use" color="#EDB842" hide-details />
+        <v-checkbox
+            label="I agree with the Landlord Portal Terms of Use"
+            color="#EDB842"
+            hide-details
+        />
         <div class="form--action">
             <div class="btn-group">
                 <v-btn class="btn btn--primary btn--green btn__add-file" type="submit">
@@ -44,8 +83,8 @@
     </form>
 </template>
 <script>
-import { validationMixin } from "vuelidate";
-import { required, email, sameAs } from "vuelidate/lib/validators";
+import { validationMixin } from "vuelidate"
+import { required, email, sameAs } from "vuelidate/lib/validators"
 export default {
     name: "LandlordRegisterForm",
     mixins: [validationMixin],
@@ -54,7 +93,7 @@ export default {
         password: { required },
         verifiedPassword: {
             required,
-            sameAsPassword: sameAs('password')
+            sameAsPassword: sameAs("password")
         },
         emailAddress: { required, email },
         phone: { required }
@@ -69,7 +108,7 @@ export default {
             countryCode: null,
             country: null,
             bindProps: {
-                mode: 'international',
+                mode: "international",
                 required: false,
                 enabledCountryCode: true,
                 enabledFlags: true,
@@ -79,47 +118,46 @@ export default {
                 inputOptions: {
                     showDialCode: true
                 }
-            },
-
+            }
         }
     },
     computed: {
         preferredUsernameErrors() {
-            const errors = [];
-            if (!this.$v.preferredUsername.$dirty) return errors;
-            !this.$v.preferredUsername.required && errors.push("Preferred Username is required");
-            return errors;
+            const errors = []
+            if (!this.$v.preferredUsername.$dirty) return errors
+            !this.$v.preferredUsername.required && errors.push("Preferred Username is required")
+            return errors
         },
         passwordErrors() {
-            const errors = [];
-            if (!this.$v.password.$dirty) return errors;
-            !this.$v.password.required && errors.push("Password is required");
-            return errors;
+            const errors = []
+            if (!this.$v.password.$dirty) return errors
+            !this.$v.password.required && errors.push("Password is required")
+            return errors
         },
         verifiedPasswordErrors() {
-            const errors = [];
-            if (!this.$v.verifiedPassword.$dirty) return errors;
-            !this.$v.verifiedPassword.required && errors.push("Verified Password is required");
-            !this.$v.verifiedPassword.sameAsPassword && errors.push("Passwords must be identical.");
-            return errors;
+            const errors = []
+            if (!this.$v.verifiedPassword.$dirty) return errors
+            !this.$v.verifiedPassword.required && errors.push("Verified Password is required")
+            !this.$v.verifiedPassword.sameAsPassword && errors.push("Passwords must be identical.")
+            return errors
         },
         emailAddressErrors() {
-            const errors = [];
-            if (!this.$v.emailAddress.$dirty) return errors;
-            !this.$v.emailAddress.required && errors.push("Email Address is required");
-            !this.$v.emailAddress.email && errors.push("Email Address is valid");
-            return errors;
+            const errors = []
+            if (!this.$v.emailAddress.$dirty) return errors
+            !this.$v.emailAddress.required && errors.push("Email Address is required")
+            !this.$v.emailAddress.email && errors.push("Email Address is valid")
+            return errors
         },
         phoneErrors() {
-            const errors = [];
-            if (!this.$v.phone.$dirty) return errors;
-            !this.$v.phone.required && errors.push("Phone No is required");
-            return errors;
+            const errors = []
+            if (!this.$v.phone.$dirty) return errors
+            !this.$v.phone.required && errors.push("Phone No is required")
+            return errors
         }
     },
     methods: {
         countryChanged(country) {
-            this.country = '+' + country.dialCode
+            this.country = "+" + country.dialCode
         },
         submitForm() {
             // console.log('submit!', this.$v.$invalid)
@@ -127,13 +165,12 @@ export default {
             if (!this.$v.$invalid) {
                 this.onClose()
             }
-        },
+        }
     }
 }
 </script>
 <style lang="scss" scoped>
 .form--register {
-
     &__input {
         label {
             font-weight: 500;

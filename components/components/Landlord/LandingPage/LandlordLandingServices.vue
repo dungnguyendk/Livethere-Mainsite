@@ -3,21 +3,21 @@
         <div class="container">
             <div class="section__container">
                 <div class="section__header">
-                    <h3 class="section__header-title">Your Personal Property Concierge Managing All your property needs</h3>
+                    <h3 class="section__header-title"
+                        >Your Personal Property Concierge Managing All your property needs</h3
+                    >
                     <p class="section__header-text">
-                        We also help you find the right tenant with ease through our expansive database as well as gain high visibility for your property with our marketing services.
+                        We also help you find the right tenant with ease through our expansive
+                        database as well as gain high visibility for your property with our
+                        marketing services.
                     </p>
                 </div>
-                <div class="section__content" 
-                >
-                    <div class="section__box"
-                        v-for="box in listBoxes"
-                        :key="box.id"
-                    >
+                <div class="section__content">
+                    <div class="section__box" v-for="box in listBoxes" :key="box.id">
                         <div class="section__box-icon">
-                            <img :src="box.imgURL" alt="">
+                            <img :src="box.imgURL" alt="" />
                         </div>
-                        <p class="section__box-text">{{box.text}}</p>
+                        <p class="section__box-text">{{ box.text }}</p>
                     </div>
                 </div>
             </div>
