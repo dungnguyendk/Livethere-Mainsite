@@ -37,7 +37,7 @@ export const PROPERTY_TYPE = [
     },
     {
         value: {
-            id: 2,
+            id: 3,
             name: "LANDED PROPERTY"
         },
         text: "Landed Property"

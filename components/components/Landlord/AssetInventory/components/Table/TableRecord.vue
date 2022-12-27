@@ -152,7 +152,7 @@ export default {
         closeDialog() {
             this.$store.commit("inventories/setInventoryDetail", '')
             this.openAddNewInventoryDialog = false
-            this.$router.push(`/landlord/assets/units/${this.source.internalID}`)
+            // this.$router.push(`/landlord/assets/units/${this.source.internalID}`)
         }
     },
     watch: {}

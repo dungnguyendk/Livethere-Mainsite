@@ -188,13 +188,13 @@ export default {
             return setFormControlErrors(this.$v.tenure, "Tenure is required")
         },
         floorAreaErrors() {
-            return setFormControlErrors(this.$v.floorArea, "Floor Area is required and input number")
+            return setFormControlErrors(this.$v.floorArea, "Floor Area is required")
         },
         landAreaErrors() {
-            return setFormControlErrors(this.$v.landArea, "Land Area is required and input number")
+            return setFormControlErrors(this.$v.landArea, "Land Area is required")
         },
         purchasedPriceErrors() {
-            return setFormControlErrors(this.$v.purchasedPrice, "Purchased Price is required and input number")
+            return setFormControlErrors(this.$v.purchasedPrice, "Purchased Price is required")
         },
         purchasedDateFormattedErrors() {
             return setFormControlErrors(this.$v.purchasedDateFormatted, "Purchased Date is required")
@@ -367,23 +367,23 @@ export default {
         },
         purchasedPrice(val) {
             if (!isNaN(val)) {
-                this.purchasedPrice = convertNumberToCommas(val)
+                this.$nextTick(() => this.purchasedPrice = convertNumberToCommas(val))
             } else {
-                this.purchasedPrice = convertNumberToCommas(convertCommasToNumber(val))
+                this.$nextTick(() => this.purchasedPrice = convertNumberToCommas(convertCommasToNumber(val)))
             }
         },
         floorArea(val) {
             if (!isNaN(val)) {
-                this.floorArea = convertNumberToCommas(val)
+                this.$nextTick(() => this.floorArea = convertNumberToCommas(val))
             } else {
-                this.floorArea = convertNumberToCommas(convertCommasToNumber(val))
+                this.$nextTick(() => this.floorArea = convertNumberToCommas(convertCommasToNumber(val)))
             }
         },
         landArea(val) {
             if (!isNaN(val)) {
-                this.landArea = convertNumberToCommas(val)
+                this.$nextTick(() => this.landArea = convertNumberToCommas(val))
             } else {
-                this.landArea = convertNumberToCommas(convertCommasToNumber(val))
+                this.$nextTick(() => this.landArea = convertNumberToCommas(convertCommasToNumber(val)))
             }
         },
         purchasedDate() {
