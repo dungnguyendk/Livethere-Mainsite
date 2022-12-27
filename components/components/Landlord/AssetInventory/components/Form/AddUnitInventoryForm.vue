@@ -53,7 +53,7 @@
         </div>
         <div class="form__actions">
             <v-btn class="btn btn--ghost btn--gray btn--sm" @click="onClose"> Cancel</v-btn>
-            <v-btn class="btn btn--primary btn--green btn--sm" @click="onSubmit"> Create</v-btn>
+            <v-btn class="btn btn--primary btn--green btn--sm" @click="onCreate()"> Create</v-btn>
         </div>
     </form>
 </template>
@@ -63,7 +63,9 @@ import { validationMixin } from "vuelidate"
 import { required } from "vuelidate/lib/validators"
 import { setFormControlErrors } from "~/ultilities/form-validations"
 import { convertNumberToCommas, convertCommasToNumber } from "~/ultilities/helpers"
-
+import { CONDITIONS } from "~/ultilities/contants/asset-inventory.js"
+import { mapState } from "vuex"
+import { httpEndpoint } from "~/services/https/endpoints"
 export default {
     name: "AddUnitInventoryForm",
     mixins: [validationMixin],
@@ -82,6 +84,10 @@ export default {
         }
     },
     computed: {
+        ...mapState({
+            entriesID: (state) => state.inventory.entriesID
+        }),
+
         nameErrors() {
             return setFormControlErrors(this.$v.name, "This field is required")
         },
@@ -99,20 +105,11 @@ export default {
     data() {
         return {
             name: "",
+            quantity: null,
+            value: null,
             condition: "",
-            quantity: "",
-            value: "",
-            remark: "",
-            conditions: [
-                {
-                    text: "New",
-                    value: "new"
-                },
-                {
-                    text: "Used",
-                    value: "used"
-                }
-            ]
+            conditions: CONDITIONS,
+            remark:""
         }
     },
 
@@ -120,17 +117,53 @@ export default {
         onClose() {
             this.$emit("close")
         },
-        // async onSubmit() {
+        onResetForm() {
+            this.$v.$reset()
+        },
+        // onSubmit() {
+        //     console.log("submit!", this.$v.$invalid)
         //     this.$v.$touch()
-        //     console.log("kekeke1")
-        //     try {
-        //     } catch (e) {}
-        // }
-        onSubmit() {
-            console.log("submit!", this.$v.$invalid)
-            this.$v.$touch()
-            if (!this.$v.$invalid) {
-                this.onClose()
+        //     if (!this.$v.$invalid) {
+        //         this.onClose()
+        //     }
+        // },
+        async getData() {
+            try {
+                const id = this.$route.params.id
+                console.log("id: " + id)
+                const response = await this.$axios.$get(
+                    `${httpEndpoint.unit.getEntries}?AssestInventoryFID=${id}`
+                )
+                if (response?.data) {
+                    this.$store.commit("inventory/setUnits", response.data)
+                    this.$router.push(`/units/${id}`)
+                } else return false
+            } catch (e) {
+                console.log(e)
+            }
+        },
+        async createUnitInventory() {
+            try {
+                const params = {
+                    assestInventoryFID: this.entriesID,
+                    conditionTypeFID: this.condition.id,
+                    itemName: this.name,
+                    conditionDisplay: this.condition.name,
+                    quantity: this.quantity,
+                    itemValue: this.value
+                }
+                await this.$store.dispatch("inventory/createUnitInventory", params)
+                // this.$router.push("/landlord/assets/units/")
+            } catch (e) {
+                console.log(e)
+            }
+        },
+        async onCreate() {
+            const updateStatus = await this.createUnitInventory()
+            if (updateStatus) {
+                this.$emit("onSubmit")
+                this.onResetForm()
+                // this.getData()
             }
         }
     },

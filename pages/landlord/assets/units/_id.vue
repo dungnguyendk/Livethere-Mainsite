@@ -37,6 +37,15 @@ export default {
         if (!this.loggedIn) {
             this.$router.push("/landlord/signin")
         }
+    },
+
+    async asyncData({ route, store }) {
+        try {
+            const id  = route.params.id 
+            await store.dispatch("inventory/getUnitsByInventoryFID", id )
+        } catch (e) {
+            console.log({ Error: e.message })
+        }
     }
 }
 </script>

@@ -21,6 +21,11 @@ export const httpEndpoint = {
         getEntryByPostalCode: "",
         getEntries: "/api/asset-inventories",
         createEntry: "/api/asset-inventories",
-        getByInternalID: "/api/asset-inventories/by-internalID"
+        getByInternalID: "/api/asset-inventories/by-internalID",
+    },
+    unit: {
+        getEntryByID: "/api/asset-unit-inventories",
+        getEntries:"/api/asset-unit-inventories",
+        createEntry:"/api/asset-unit-inventories"
     }
 }

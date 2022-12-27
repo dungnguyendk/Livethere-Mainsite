@@ -2,18 +2,24 @@
     <table class="table--responsive table--tenancy-info">
         <thead>
             <tr>
-                <th id="description">Description </th>
+                <th id="description">Name </th>
                 <th id="quantity">Quantity</th>
-                <th id="conditionRemarks">Condition Remarks</th>
+                <th id="totalValue">Total Value</th>
+                <!-- <th id="conditionRemarks">Condition Remarks</th> -->
+                <th></th>
             </tr>
         </thead>
         <tbody>
-            <template v-if="items.length > 0">
-                <TenacyInventoryRecord v-for="(item, index) in items" :source="item" :key="index" />
+            <template v-if="inventory.length > 0">
+                <TenacyInventoryRecord
+                    v-for="(item, index) in inventory"
+                    :source="item"
+                    :key="index"
+                />
             </template>
             <template v-else>
                 <tr>
-                    <td colspan="2">
+                    <td colspan="3">
                         <p class="empty">No record found.</p>
                     </td>
                 </tr>
@@ -24,26 +30,14 @@
 
 <script>
 import TenacyInventoryRecord from "./TenancyUnitInventoryRecord.vue"
+import { mapState } from "vuex"
 export default {
     name: "TenancyInventoryTable",
     components: { TenacyInventoryRecord },
-    data() {
-        return {
-            items: [
-                {
-                    description: "Peter Tan",
-                    quantity: "Dxxx4567",
-                    conditionRemarks: "Corporate"
-                },
-                {
-                    description: "Peter Tan",
-                    quantity: "Dxxx4567",
-                    conditionRemarks: "Corporate"
-                },
-                
-
-            ]
-        }
+    computed: {
+        ...mapState({
+            inventory: (state) => state.inventory.units
+        })
     }
 }
 </script>
@@ -68,7 +62,7 @@ export default {
         th {
             padding: 1.5rem 2.4rem 1.5rem;
             background-color: var(--color-menu);
-            font-family: var( --font-primary);
+            font-family: var(--font-primary);
             font-style: normal;
             font-weight: 700;
             font-size: 16px;
@@ -77,7 +71,7 @@ export default {
         }
     }
     th:nth-child(1) {
-        min-width: 35.2rem;
+        min-width: 27.2rem;
     }
     th:nth-child(2) {
         min-width: 21.2rem;

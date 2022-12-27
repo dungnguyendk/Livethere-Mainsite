@@ -1,13 +1,47 @@
 <template lang="html">
     <tr>
         <td data-title="Description">
-            <p>{{ source.description }}</p>
+            <p>{{ source.itemName }}</p>
         </td>
         <td data-title="Quantity">
             <p>{{ source.quantity }}</p>
         </td>
-        <td data-title="Condition Remarks">
-            <p>{{ source.conditionRemarks }} </p>
+        <td data-title="Total Value">
+            <p>{{ source.totalValue }} </p>
+        </td>
+        <!-- <td data-title="Condition Remarks">
+            <p>{{ source.remark }} </p>
+        </td> -->
+        <td data-title="Action">
+            <div>
+                <v-menu offset-y>
+                    <template v-slot:activator="{ on, attrs }">
+                        <v-btn x-small fab outlined class="more-option" v-bind="attrs" v-on="on"
+                            ><i class="ri-more-fill"></i
+                        ></v-btn>
+                    </template>
+                    <v-list dense>
+                        <v-list-item-group>
+                            <v-list-item style="height: 35px">
+                                <v-list-item-icon>
+                                    <v-icon v-text="`ri-edit-box-line`"></v-icon>
+                                </v-list-item-icon>
+                                <v-list-item-content>
+                                    <v-list-item-title>Edit</v-list-item-title>
+                                </v-list-item-content>
+                            </v-list-item>
+                            <v-list-item style="height: 35px">
+                                <v-list-item-icon>
+                                    <v-icon v-text="`ri-delete-bin-line`"></v-icon>
+                                </v-list-item-icon>
+                                <v-list-item-content>
+                                    <v-list-item-title>Delete</v-list-item-title>
+                                </v-list-item-content>
+                            </v-list-item>
+                        </v-list-item-group>
+                    </v-list>
+                </v-menu>
+            </div>
         </td>
     </tr>
 </template>
@@ -36,7 +70,7 @@ td {
         justify-content: left;
         /* Body/Nunito-R/16-24 */
         margin-bottom: 0;
-        font-family: var( --font-primary);
+        font-family: var(--font-primary);
         font-style: normal;
         font-weight: 400;
         font-size: 16px;
@@ -54,7 +88,20 @@ td {
 tr:nth-child(even) {
     background: #fafafa;
 }
+.more-option {
+    &:before {
+        background-color: rgba(236, 184, 66, 0.6);
+    }
 
+    background-color: rgba(236, 184, 66, 0.1);
+    border: 1px solid var(--color-more-options);
+    border-radius: 0.8rem;
+
+    i {
+        color: var(--color-more-options);
+        font-size: 2.4rem;
+    }
+}
 @media screen and (max-width: 768px) {
     tr:nth-child(even) {
         background: #fafafa;

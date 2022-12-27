@@ -18,7 +18,10 @@
             :actions="false"
             @close="onCloseCreateDialog"
         >
-            <AddUnitInventoryForm  @close="onCloseCreateDialog" />
+            <AddUnitInventoryForm
+                @close="onCloseCreateDialog"
+                @onSubmit="onSubmitNewUnitInventory"
+            />
         </Dialog>
     </div>
 </template>
@@ -43,6 +46,9 @@ export default {
         }
     },
     methods: {
+        onSubmitNewUnitInventory() {
+            this.createDialog = false
+        },
         onCloseCreateDialog() {
             this.createDialog = false
         }

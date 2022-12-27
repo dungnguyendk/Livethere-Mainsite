@@ -104,3 +104,19 @@ export const TENURE = [
         text: "FH (Free Hold)"
     }
 ]
+export const CONDITIONS = [
+    {
+        value: {
+            id: 1,
+            name: "new"
+        },
+        text: "New"
+    },
+    {
+        value: {
+            id: 2,
+            name: "used"
+        },
+        text: "Used"
+    }
+]
