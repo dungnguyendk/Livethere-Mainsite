@@ -20,17 +20,9 @@
             <v-icon left>ri-add-box-line</v-icon>
             Add New Inventory
         </v-btn>
-        <Dialog
-            :open="openAddNewInventoryDialog"
-            @close="openAddNewInventoryDialog = false"
-            :size="sizeDialog"
-            :title="''"
-            :actions="false"
-        >
-            <AddInventoryForm
-                @close="openAddNewInventoryDialog = false"
-                v-if="openAddNewInventoryDialog"
-            />
+        <Dialog :open="openAddNewInventoryDialog" @close="closeDialog" :size="sizeDialog"
+            :title="''" :actions="false">
+            <AddInventoryForm @close="openAddNewInventoryDialog = false" v-if="openAddNewInventoryDialog" />
         </Dialog>
     </div>
 </template>
@@ -61,6 +53,10 @@ export default {
             })
             this.$store.commit("inventories/setTypeSelected", this.typeSelected)
             this.$store.dispatch("inventories/getInventories", params)
+        },
+        closeDialog() {
+            this.$store.commit("inventories/setInventoryDetail", '')
+            this.openAddNewInventoryDialog = false
         }
     },
     watch: {}
