@@ -1,16 +1,13 @@
 <template>
-    <tr
-        :class="`table--record ${
-            source.id !== selectedId && selectedId !== -1 ? 'unSelected' : ''
-        }`"
-    >
+    <tr :class="`table--record ${source.id !== selectedId && selectedId !== -1 ? 'unSelected' : ''
+    }`">
         <td data-label="Property">
             <div>
-                <img
+                <!-- <img
                     src="https://picsum.photos/600/400.jpg?random="
                     alt=""
                     class="table--record__img"
-                />
+                /> -->
                 <p class="first-child" @click="handleClickOpenRow(source.internalID)">
                     {{ source.propertyName }}
                 </p>
@@ -26,10 +23,10 @@
             {{ source.bedroomTypeDisplay ? source.bedroomTypeDisplay : "-" }}
         </td>
         <td data-label="Floor Area (sqft)" v-if="statusFID === 0 || statusFID === 1">
-            {{ source.floorAreaSqft }}
+            {{ source.floorAreaSqft ? floorAreaSqftFormatter : "-" }}
         </td>
         <td data-label="Land Area (sqft)" v-if="statusFID === 0 || statusFID === 1">
-            {{ source.LandArea ? source.LandArea : "-" }}
+            {{ source.landArea ? landAreaFormatter : "-" }}
         </td>
         <td data-label="Address">
             {{ source.streetName }}
@@ -53,13 +50,12 @@
             <div>
                 <v-menu offset-y>
                     <template v-slot:activator="{ on, attrs }">
-                        <v-btn x-small fab outlined class="more-option" v-bind="attrs" v-on="on"
-                            ><i class="ri-more-fill"></i
-                        ></v-btn>
+                        <v-btn x-small fab outlined class="more-option" v-bind="attrs" v-on="on"><i
+                                class="ri-more-fill"></i></v-btn>
                     </template>
                     <v-list dense>
                         <v-list-item-group>
-                            <v-list-item style="height: 35px">
+                            <v-list-item @click="onEditInventory(source.id)" class="list-item--custom">
                                 <v-list-item-icon>
                                     <v-icon v-text="`ri-edit-box-line`"></v-icon>
                                 </v-list-item-icon>
@@ -67,14 +63,7 @@
                                     <v-list-item-title>Edit</v-list-item-title>
                                 </v-list-item-content>
                             </v-list-item>
-                            <v-list-item
-                                @click="onVisitInventoryUnits"
-                                style="
-                                    border-color: #e9e9e9;
-                                    border: 1px solid #e9e9e9;
-                                    height: 35px;
-                                "
-                            >
+                            <v-list-item @click="onVisitInventoryUnits" class="list-item--custom--middle">
                                 <v-list-item-icon>
                                     <v-icon v-text="`ri-add-box-line`"></v-icon>
                                 </v-list-item-icon>
@@ -82,7 +71,7 @@
                                     <v-list-item-title>Unit Inventory</v-list-item-title>
                                 </v-list-item-content>
                             </v-list-item>
-                            <v-list-item style="height: 35px">
+                            <v-list-item @click="onDeleteInventory(source.id)" class="list-item--custom">
                                 <v-list-item-icon>
                                     <v-icon v-text="`ri-delete-bin-line`"></v-icon>
                                 </v-list-item-icon>
@@ -94,21 +83,30 @@
                     </v-list>
                 </v-menu>
             </div>
+            <Dialog :open="openAddNewInventoryDialog" @close="closeDialog" :size="sizeDialog" :title="''"
+                :actions="false">
+                <AddInventoryForm @close="openAddNewInventoryDialog = false" v-if="openAddNewInventoryDialog"
+                    :sourceDetail="source.id" />
+            </Dialog>
         </td>
     </tr>
 </template>
 
 <script>
 import AssetInventoryBadge from "~/components/components/Landlord/AssetInventory/components/AssetInventoryBadge.vue"
+import Dialog from "~/components/elements/Dialog/Dialog.vue"
+import AddInventoryForm from "~/components/components/Landlord/AssetInventory/components/Dialog/Form/AddInventoryForm.vue"
+import { convertNumberToCommas } from "~/ultilities/helpers"
 import { mapState } from "vuex"
+import qs from "qs"
 
 export default {
     name: "TableRecord",
-    components: { AssetInventoryBadge },
+    components: { AssetInventoryBadge, Dialog, AddInventoryForm },
     props: {
         source: {
             type: Object,
-            default: () => {}
+            default: () => { }
         },
         selectedId: {
             type: Number,
@@ -116,19 +114,52 @@ export default {
         }
     },
     data() {
-        return {}
+        return {
+            openAddNewInventoryDialog: false,
+            sizeDialog: "large",
+            floorAreaSqftFormatter: '',
+            landAreaFormatter: ''
+        }
     },
     computed: {
         ...mapState({
             statusFID: (state) => state.inventories.typeSelect
         })
     },
+    created() {
+        this.floorAreaSqftFormatter = convertNumberToCommas(this.source.floorAreaSqft)
+        this.landAreaFormatter = convertNumberToCommas(this.source.landArea)
+    },
     methods: {
         handleClickOpenRow(item) {
             this.$emit("handleClickOpenRow", item)
         },
         onVisitInventoryUnits() {
-            this.$router.push(`/landlord/assets/units/${this.source.internalID}`)
+            this.$router.push(`/landlord/assets/units/${this.source.id}`)
+        },
+        onEditInventory(item) {
+            this.$store.dispatch("inventories/getDetailInventory", item).then(() => {
+                this.openAddNewInventoryDialog = true
+            })
+            console.log("OnEdit", item)
+        },
+        onDeleteInventory(item) {
+            const param = {
+                data: {
+                    id: item
+                }
+            }
+            this.$store.dispatch("inventories/deleteInventory", param).then(() => {
+                const paramStatusFID = qs.stringify({
+                    StatusFID: this.typeSelected
+                })
+                this.$store.dispatch("inventories/getInventories", paramStatusFID)
+            })
+        },
+        closeDialog() {
+            this.$store.commit("inventories/setInventoryDetail", '')
+            this.openAddNewInventoryDialog = false
+            // this.$router.push(`/landlord/assets/units/${this.source.internalID}`)
         }
     },
     watch: {}
@@ -171,6 +202,17 @@ export default {
     i {
         color: var(--color-more-options);
         font-size: 2.4rem;
+    }
+}
+
+
+.list-item--custom {
+    height: 3.5rem;
+
+    &--middle {
+        border-color: #e9e9e9;
+        border-top: 1px solid #e9e9e9;
+        border-bottom: 1px solid #e9e9e9;
     }
 }
 </style>
