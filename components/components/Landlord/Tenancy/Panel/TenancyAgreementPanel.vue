@@ -17,7 +17,11 @@
             :actions="false"
         >
             <template v-slot:content>
-                <CreateTenancyAgreementForm />
+                <CreateTenancyAgreementForm 
+                @close="addNewDialog = false"
+                @openSnackbar="openSnackbar($event)"
+                v-if="addNewDialog"
+                />
             </template>
         </Dialog>
     </div>
@@ -34,11 +38,15 @@ export default {
     components: { CreateTenancyAgreementForm, Dialog, TenancyAgreementTable, TenancyTable },
     data() {
         return {
-            addNewDialog: false
+            addNewDialog: false, 
+            isOpenSnackbar: false
         }
     },
     methods: {
-        onCreateNewDialog() {}
+        onCreateNewDialog() {}, 
+        openSnackbar(e){ 
+            this.$emit("openSnackbar", this.isOpenSnackbar = e)
+        }
     }
 }
 </script>

@@ -2,7 +2,7 @@
     <form class="form form--create-tenancy-agreement" @submit.prevent="submitForm">
         <div class="form__fields">
             <v-row>
-                <v-col cols="12" sm="12" md="6">
+                <v-col cols="12" sm="12" md="4">
                     <div class="form__field">
                         <label class="required">Agreement Date </label>
                         <v-menu
@@ -22,7 +22,6 @@
                                     v-on="on"
                                     outlined
                                     dense
-                                    hide-details
                                 />
                             </template>
                             <v-date-picker
@@ -33,7 +32,7 @@
                         </v-menu>
                     </div>
                 </v-col>
-                <v-col cols="12" sm="12" md="6">
+                <v-col cols="12" sm="12" md="4">
                     <div class="form__field">
                         <label>Start Date </label>
                         <v-menu
@@ -53,7 +52,6 @@
                                     v-on="on"
                                     outlined
                                     dense
-                                    hide-details
                                 />
                             </template>
                             <v-date-picker
@@ -64,7 +62,7 @@
                         </v-menu>
                     </div>
                 </v-col>
-                <v-col cols="12" sm="12" md="12">
+                <v-col cols="12" sm="12" md="4">
                     <div class="form__field">
                         <label>End Date </label>
                         <v-menu
@@ -84,7 +82,6 @@
                                     v-on="on"
                                     outlined
                                     dense
-                                    hide-details
                                 />
                             </template>
                             <v-date-picker
@@ -95,6 +92,17 @@
                         </v-menu>
                     </div>
                 </v-col>
+                <v-col cols="12" sm="12" md="12">
+                    <div class="form__field">
+                        <label>Tenancy Ref Code</label>
+                        <v-text-field
+                            v-model="tenancyRefCode"
+                            dense
+                            outlined
+                            :error-messages="tenancyRefCodeErrors"
+                        />
+                    </div>
+                </v-col>
                 <v-col cols="12" sm="12" md="6">
                     <div class="form__field">
                         <label>Monthly Rental </label>
@@ -102,8 +110,9 @@
                             v-model.trim="monthlyRental"
                             dense
                             outlined
-                            hide-details
                             :error-messages="monthlyRentalErrors"
+                            suffix="SGD"
+                            reverse
                         />
                     </div>
                 </v-col>
@@ -114,15 +123,17 @@
                             v-model.trim="secureDeposit"
                             dense
                             outlined
-                            hide-details
                             :error-messages="secureDepositErrors"
+                            suffix="SGD"
+                            reverse
                         />
                     </div>
                 </v-col>
+                
                 <v-col cols="12" sm="12" md="12">
                     <div class="form__field">
                         <label>Remark </label>
-                        <v-textarea v-model="remark" dense outlined hide-details />
+                        <v-textarea v-model="remark" dense outlined />
                     </div>
                 </v-col>
             </v-row>
@@ -136,10 +147,10 @@
 
 <script>
 import { validationMixin } from "vuelidate"
-import { required } from "vuelidate/lib/validators"
+import { required, numeric } from "vuelidate/lib/validators"
 import { setFormControlErrors } from "~/ultilities/form-validations"
 import { convertCommasToNumber, convertNumberToCommas } from "~/ultilities/helpers"
-
+import { mapState } from "vuex"
 export default {
     name: "CreateTenancyAgreementForm",
     mixins: [validationMixin],
@@ -153,14 +164,23 @@ export default {
         endDate: {
             required
         },
+        tenancyRefCode: {
+            required, 
+            numeric
+        },
         monthlyRental: {
-            required
+            required,
+            numeric
         },
         secureDeposit: {
-            required
+            required,
+            numeric
         }
     },
     computed: {
+        ...mapState({
+            inventoryDetails: (state) => state.inventory.inventoryDetails
+        }),
         agreementDateErrors() {
             return setFormControlErrors(this.$v.agreementDate, "This field is required")
         },
@@ -175,7 +195,15 @@ export default {
         },
         secureDepositErrors() {
             return setFormControlErrors(this.$v.secureDeposit, "This field is required")
+        }, 
+        tenancyRefCodeErrors(){ 
+            const errors = []
+            if(!this.$v.tenancyRefCode.$dirty) return errors 
+            !this.$v.tenancyRefCode.required && errors.push("This field is required")
+            !this.$v.tenancyRefCode.numeric && errors .push("This field can only contain numeric values")
+            return errors
         }
+
     },
     data() {
         return {
@@ -190,7 +218,10 @@ export default {
             endDateRaw: "",
             monthlyRental: "",
             secureDeposit: "",
-            remark: ""
+            remark: "",
+            tenancyRefCode: "", 
+            submitted: false, 
+            isOpenSnackbar: false, 
         }
     },
     watch: {
@@ -228,13 +259,31 @@ export default {
             this.$emit("close")
         },
         submitForm() {
-            console.log("submit!", this.$v.$invalid)
+            this.submitted = true
             this.$v.$touch()
-            if (this.$v.$invalid) {
-                console.log({ Error: "Form validation failed" })
+            if (!this.$v.$invalid) {
+                   const params = {
+                        tenancyRefCode: this.tenancyRefCode,
+                        assestInventoryFID: this.inventoryDetails.id,
+                        agreementDate: this.agreementDateRaw,
+                        startDate: this.startDateRaw,
+                        endDate: this.endDateRaw,
+                        currencyType: "SGD",
+                        currentyName: "Singapore Dollar",
+                        cultureCode: "en-SG",
+                        monthlyRental: this.monthlyRental ? convertCommasToNumber(this.monthlyRental) : 0,
+                        secureDeposit: this.secureDeposit ? convertCommasToNumber(this.secureDeposit) : 0,
+                        remark: this.remark
+                }
+                this.$store.dispatch("inventory/createTenancyAgreement", params)
+                this.$emit("openSnackbar", this.isOpenSnackbar = true)
+               this.onClose()
             } else {
-                // continue actions
+                console.error("error!")
             }
+        }, 
+        onClose(){
+            this.$emit("close")
         }
     }
 }
@@ -249,7 +298,6 @@ export default {
         gap: 1.2rem;
         padding-top: 2.4rem;
         padding-bottom: 1.2rem;
-
         .btn {
             min-width: 12rem;
         }

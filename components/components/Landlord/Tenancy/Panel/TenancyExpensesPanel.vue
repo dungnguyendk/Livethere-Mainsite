@@ -17,7 +17,7 @@
 import TenancyExpenseTable from "~/components/components/Landlord/Tenancy/Table/TenancyExpense/TenancyExpenseTable"
 
 export default {
-    name: "TenancyExpenses",
+    name: "TenancyExpensesPanel",
     components: { TenancyExpenseTable }
 }
 </script>
