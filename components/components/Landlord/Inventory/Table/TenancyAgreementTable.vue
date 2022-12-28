@@ -15,7 +15,7 @@
             </template>
             <template v-else>
                 <tr>
-                    <td colspan="2">
+                    <td colspan="4">
                         <p class="empty">No record found.</p>
                     </td>
                 </tr>
