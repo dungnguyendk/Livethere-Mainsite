@@ -22,20 +22,20 @@ export const httpEndpoint = {
         getEntryById: "/api/asset-inventories",
         createEntry: "/api/asset-inventories",
         updateEntry: "/api/asset-inventories",
-        deleteEntryByID: "/api/asset-inventories"
+        deleteEntryByID: "/api/asset-inventories",
+        getByInternalID: "/api/asset-inventories/by-internalID"
     },
     postal: {
         getEntryByPostalCode: "/api/properties/details",
         createEntry: "/api/asset-inventories",
         getByInternalID: "/api/asset-inventories/by-internalID"
-    }, 
+    },
     tenancyAgreements: {
         getByID: "/api/tenancy-contract-agreements",
         getByInternalID: "/api/tenancy-contract-agreements/by-internalID",
-        getEntries: "/api/tenancy-contract-agreements", 
-        createEntry: "/api/tenancy-contract-agreements", 
-        updateEntry: "/api/tenancy-contract-agreements", 
-        deleteEntry: "/api/tenancy-documents", 
-
+        getEntries: "/api/tenancy-contract-agreements",
+        createEntry: "/api/tenancy-contract-agreements",
+        updateEntry: "/api/tenancy-contract-agreements",
+        deleteEntry: "/api/tenancy-documents"
     }
 }
