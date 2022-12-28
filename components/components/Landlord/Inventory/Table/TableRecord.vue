@@ -1,12 +1,14 @@
 <template lang="html">
     <tr>
-        <td data-title="Tenancy Agreement Code"
-            ><div>
-                <a href="/#">{{ source.tenancyRefCode }}</a>
-            </div></td
-        >
-        <td data-title="Agreement Date"
-            ><p>{{ formatAgreementDate  }}</p></td
+        <td data-title="Tenancy Agreement Code">
+            <div>
+                <nuxt-link :to="`/landlord/tenancy/details/${source.internalID}`">
+                    {{ source.tenancyRefCode }}
+                </nuxt-link>
+            </div>
+        </td>
+        <td data-title="Agreement Date">
+            <p>{{ formatAgreementDate }}</p></td
         >
         <td data-title="Start date"
             ><p>{{ formatStartDate }} </p></td
@@ -29,15 +31,15 @@ export default {
             type: Object,
             default: () => {}
         }
-    }, 
+    },
     computed: {
-        formatStartDate(){
+        formatStartDate() {
             return this.$dayjs(this.source.startDate).format("DD MMM, YYYY")
-        }, 
-        formatAgreementDate(){
+        },
+        formatAgreementDate() {
             return this.$dayjs(this.source.agreementDate).format("DD MMM, YYYY")
-        }, 
-        formatEndDate(){
+        },
+        formatEndDate() {
             return this.$dayjs(this.source.endDate).format("DD MMM, YYYY")
         }
     }
@@ -48,9 +50,11 @@ tr {
     position: relative;
     vertical-align: top;
 }
+
 td {
     padding: 3.3rem 1.8rem;
     border-bottom: 1px solid #e5e5e5;
+
     a {
         display: flex;
         justify-content: left;
@@ -64,10 +68,12 @@ td {
         margin-bottom: 0;
         color: #26a0f6;
     }
+
     a:hover {
         color: #26a0f6;
         //text-decoration-line: underline;
     }
+
     p {
         display: flex;
         justify-content: left;
@@ -85,6 +91,7 @@ td {
         color: #0b0c0c;
     }
 }
+
 @media screen and (max-width: 768px) {
     tr:nth-child(even) {
         background: #fafafa;
@@ -99,6 +106,7 @@ td {
         border: none;
         padding: 1.6rem;
         border-top: none;
+
         &:before {
             content: attr(data-title);
             font-weight: 700;
