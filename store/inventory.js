@@ -2,15 +2,15 @@ import CreateTenancyAgreementForm from "~/components/components/Landlord/Invento
 import { httpEndpoint } from "~/services/https/endpoints"
 
 export const state = () => ({
-    inventoryDetails: null, 
+    inventoryDetails: null,
     listTenancyAgreements: null
 })
 
 export const mutations = {
     setInventoryDetails(state, payload) {
         state.inventoryDetails = payload
-    }, 
-    setListTenancyAgreements(state, payload){
+    },
+    setListTenancyAgreements(state, payload) {
         state.listTenancyAgreements = payload
     }
 }
@@ -30,28 +30,38 @@ export const actions = {
             console.log({ Error: e.message })
             commit("setInventoryDetails", null)
         }
-    }, 
-    async getListTenancyAgreements({commit}, payload){
-        try{
-            const response = await this.$axios.$get(`${httpEndpoint.tenancyAgreements.getEntries}?AssestInventoryFID=${payload}`)
-            if(response){
-           
+    },
+    async getListTenancyAgreements({ commit }, payload) {
+        try {
+            const response = await this.$axios.$get(
+                `${httpEndpoint.tenancyAgreements.getEntries}?AssestInventoryFID=${payload}`
+            )
+            if (response) {
                 commit("setListTenancyAgreements", response)
-            }else{
+            } else {
                 commit("setListTenancyAgreements", null)
             }
-
-        }catch(e){
-            console.log({Error: e.message})
+        } catch (e) {
+            console.log({ Error: e.message })
             commit("setListTenancyAgreements", null)
         }
-    }, 
-    async createTenancyAgreement({ commit }, payload){
+    },
+    async createTenancyAgreement({ commit }, payload) {
         try {
-            await this.$axios.$post(`${httpEndpoint.tenancyAgreements.createEntry}`, payload)
+            const responseMain = await this.$axios.$post(
+                `${httpEndpoint.tenancyAgreements.createEntry}`,
+                payload
+            )
+            if (responseMain) {
+                const responseSub = await this.$axios.$get(
+                    `${httpEndpoint.tenancyAgreements.getEntries}?AssestInventoryFID=${payload.assestInventoryFID}`
+                )
+                if (responseSub) {
+                    commit("setListTenancyAgreements", responseSub)
+                }
+            }
         } catch (e) {
             console.log(e)
         }
     }
-
 }

@@ -37,13 +37,7 @@ export default {
             listTenancyAgreements: (state) => state.inventory.listTenancyAgreements
         }),
     },
-    mounted(){
-        console.log("listTenancyAgreementdeddededededededededeedeee: ",this.listTenancyAgreements)
-    },
-    data() {
-        return {
-        }
-    }
+
 }
 </script>
 <style lang="scss" scoped>

@@ -5,47 +5,47 @@
             <div class="panel__column">
                 <p>
                     <span>House No:</span>
-                    <strong>{{ inventoryDetails ? inventoryDetails.hseNo : "N/A" }}</strong>
+                    <strong>{{ inventoryDetails ? inventoryDetails.hseNo : "n/a" }}</strong>
                 </p>
                 <p>
                     <span>Unit No:</span>
-                    <strong>{{ inventoryDetails ? inventoryDetails.unitNo : "N/A" }}</strong>
+                    <strong>{{ inventoryDetails ? inventoryDetails.unitNo : "n/a" }}</strong>
                 </p>
                 <p>
                     <span>No of Bedroom(s): </span>
-                    <strong>{{ inventoryDetails ? inventoryDetails.bedroomTypeDisplay : "N/A" }}</strong>
+                    <strong>{{ inventoryDetails ? inventoryDetails.bedroomTypeDisplay : "n/a" }}</strong>
                 </p>
             </div>
             <div class="panel__column">
                 <p>
                     <span>Street name:</span>
-                    <strong>{{ inventoryDetails ? inventoryDetails.streetName : "N/A" }}</strong>
+                    <strong>{{ inventoryDetails ? inventoryDetails.streetName : "n/a" }}</strong>
                 </p>
                 <p>
                     <span>Project Name:</span>
-                    <strong>{{ inventoryDetails ? inventoryDetails.projectName : "N/A" }}</strong>
+                    <strong>{{ inventoryDetails ? inventoryDetails.projectName : "n/a" }}</strong>
                 </p>
                 <p>
                     <span>Property Type:</span>
-                    <strong>{{ inventoryDetails ? inventoryDetails.propertyType : "N/A" }}</strong>
+                    <strong>{{ inventoryDetails ? inventoryDetails.propertyType : "n/a" }}</strong>
                 </p>
             </div>
             <div class="panel__column">
                 <p>
                     <span>Postal Code:</span>
-                    <strong>{{ inventoryDetails ? inventoryDetails.postalCode : "N/A" }}</strong>
+                    <strong>{{ inventoryDetails ? inventoryDetails.postalCode : "n/a" }}</strong>
                 </p>
                 <p>
                     <span>Tenure:</span>
-                    <strong>{{ inventoryDetails ? inventoryDetails.tenureDisplay : "N/A" }}</strong>
+                    <strong>{{ inventoryDetails ? inventoryDetails.tenureDisplay : "n/a" }}</strong>
                 </p>
                 <p>
                     <span>Floor Area (sqft):</span>
-                    <strong>{{ inventoryDetails ? inventoryDetails.floorAreaSqft + " sqft" : "N/A" }}</strong>
+                    <strong>{{ inventoryDetails ? formatFloorArea + " sqft" : "n/a" }}</strong>
                 </p>
                 <p>
                     <span>Land Area (sqft):</span>
-                    <strong>{{ inventoryDetails ? inventoryDetails.landAreaSqft + " sqft" : "N/A" }}</strong>
+                    <strong>{{ inventoryDetails ? formatLandArea + " sqft" : "n/a" }}</strong>
                 </p>
             </div>
         </div>
@@ -54,12 +54,19 @@
 
 <script>
 import { mapState } from "vuex"
+import { convertNumberToCommas } from "~/ultilities/helpers"
 export default {
     name: "InventoryInformationPanel", 
     computed: {
         ...mapState({
             inventoryDetails: (state) => state.inventory.inventoryDetails
-        })
+        }), 
+        formatFloorArea(){
+            return convertNumberToCommas(this.inventoryDetails.floorAreaSqft)
+        }, 
+        formatLandArea(){
+            return convertNumberToCommas(this.inventoryDetails.landAreaSqft)
+        }
     },
 }
 </script>

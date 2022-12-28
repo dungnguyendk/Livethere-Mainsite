@@ -99,6 +99,7 @@
                             v-model="tenancyRefCode"
                             dense
                             outlined
+                            :error-messages="tenancyRefCodeErrors"
                         />
                     </div>
                 </v-col>
@@ -146,10 +147,10 @@
 
 <script>
 import { validationMixin } from "vuelidate"
-import { required } from "vuelidate/lib/validators"
+import { required, numeric } from "vuelidate/lib/validators"
 import { setFormControlErrors } from "~/ultilities/form-validations"
 import { convertCommasToNumber, convertNumberToCommas } from "~/ultilities/helpers"
-
+import { mapState } from "vuex"
 export default {
     name: "CreateTenancyAgreementForm",
     mixins: [validationMixin],
@@ -163,18 +164,23 @@ export default {
         endDate: {
             required
         },
-        // tenancyRefCode: {
-        //     required
-        // },
+        tenancyRefCode: {
+            required, 
+            numeric
+        },
         monthlyRental: {
             required,
-
+            numeric
         },
         secureDeposit: {
             required,
+            numeric
         }
     },
     computed: {
+        ...mapState({
+            inventoryDetails: (state) => state.inventory.inventoryDetails
+        }),
         agreementDateErrors() {
             return setFormControlErrors(this.$v.agreementDate, "This field is required")
         },
@@ -190,6 +196,13 @@ export default {
         secureDepositErrors() {
             return setFormControlErrors(this.$v.secureDeposit, "This field is required")
         }, 
+        tenancyRefCodeErrors(){ 
+            const errors = []
+            if(!this.$v.tenancyRefCode.$dirty) return errors 
+            !this.$v.tenancyRefCode.required && errors.push("This field is required")
+            !this.$v.tenancyRefCode.numeric && errors .push("This field can only contain numeric values")
+            return errors
+        }
 
     },
     data() {
@@ -207,7 +220,8 @@ export default {
             secureDeposit: "",
             remark: "",
             tenancyRefCode: "", 
-            submitted: false
+            submitted: false, 
+            isOpenSnackbar: false, 
         }
     },
     watch: {
@@ -245,14 +259,15 @@ export default {
             this.$emit("close")
         },
         submitForm() {
+            this.submitted = true
             this.$v.$touch()
             if (!this.$v.$invalid) {
                    const params = {
                         tenancyRefCode: this.tenancyRefCode,
-                        assestInventoryFID: 56,
-                        agreementDate: this.$dayjs(this.agreementDateRaw).toISOString(),
-                        startDate: this.$dayjs(this.startDateRaw).toISOString(),
-                        endDate: this.$dayjs(this.endDate).toISOString(),
+                        assestInventoryFID: this.inventoryDetails.id,
+                        agreementDate: this.agreementDateRaw,
+                        startDate: this.startDateRaw,
+                        endDate: this.endDateRaw,
                         currencyType: "SGD",
                         currentyName: "Singapore Dollar",
                         cultureCode: "en-SG",
@@ -261,11 +276,14 @@ export default {
                         remark: this.remark
                 }
                 this.$store.dispatch("inventory/createTenancyAgreement", params)
+                this.$emit("openSnackbar", this.isOpenSnackbar = true)
                this.onClose()
             } else {
-                // continue actions
-                console.log("error!!!!")
+                console.error("error!")
             }
+        }, 
+        onClose(){
+            this.$emit("close")
         }
     }
 }
@@ -280,7 +298,6 @@ export default {
         gap: 1.2rem;
         padding-top: 2.4rem;
         padding-bottom: 1.2rem;
-
         .btn {
             min-width: 12rem;
         }
