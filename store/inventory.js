@@ -1,4 +1,3 @@
-import CreateTenancyAgreementForm from "~/components/components/Landlord/Inventory/Form/CreateTenancyAgreementForm.vue"
 import { httpEndpoint } from "~/services/https/endpoints"
 
 export const state = () => ({

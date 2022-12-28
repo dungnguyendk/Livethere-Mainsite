@@ -11,7 +11,7 @@
                 dense
                 class="me-2"
                 @change="changeType"
-            ></v-select>
+            />
         </div>
         <v-btn
             class="btn btn--outline btn--green btn--md add-new"
@@ -20,9 +20,17 @@
             <v-icon left>ri-add-box-line</v-icon>
             Add New Inventory
         </v-btn>
-        <Dialog :open="openAddNewInventoryDialog" @close="closeDialog" :size="sizeDialog"
-            :title="''" :actions="false">
-            <AddInventoryForm @close="openAddNewInventoryDialog = false" v-if="openAddNewInventoryDialog" />
+        <Dialog
+            :open="openAddNewInventoryDialog"
+            @close="closeDialog"
+            :size="sizeDialog"
+            title=""
+            :actions="false"
+        >
+            <AddInventoryForm
+                @close="openAddNewInventoryDialog = false"
+                v-if="openAddNewInventoryDialog"
+            />
         </Dialog>
     </div>
 </template>
@@ -55,7 +63,7 @@ export default {
             this.$store.dispatch("inventories/getInventories", params)
         },
         closeDialog() {
-            this.$store.commit("inventories/setInventoryDetail", '')
+            this.$store.commit("inventories/setInventoryDetail", "")
             this.openAddNewInventoryDialog = false
         }
     },
