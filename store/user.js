@@ -109,6 +109,5 @@ export const actions = {
         } catch (e) {
             console.log({ error: e.message })
         }
-
     }
 }

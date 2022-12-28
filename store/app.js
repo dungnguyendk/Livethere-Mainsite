@@ -3,8 +3,8 @@ export const state = () => ({
     token: null,
     appLoading: false,
     appLoadingMessage: "Loading...",
-    sidebarCollapse: false, 
-    createNewUserEditForm: false,
+    sidebarCollapse: false,
+    createNewUserEditForm: false
 })
 
 export const mutations = {
@@ -26,9 +26,9 @@ export const mutations = {
 
     setApploadingMessage(state, payload) {
         state.appLoadingMessage = payload
-    }, 
-    
-    setCreateNewUserEditForm(state, payload){
+    },
+
+    setCreateNewUserEditForm(state, payload) {
         state.createNewUserEditForm = payload
     }
 }
