@@ -12,7 +12,7 @@ export default {
     props: {
         open: {
             type: Boolean,
-            default: 0
+            default: false
         },
         message: {
             type: String,

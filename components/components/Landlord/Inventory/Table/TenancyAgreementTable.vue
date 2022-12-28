@@ -6,12 +6,12 @@
                 <th id="agreementdate">Agreement Date </th>
                 <th id="startdate">Start date</th>
                 <th id="enddate">End date</th>
-                <th id="ternantname">Ternant Name</th>
+                <!-- <th id="remark">Remark</th> -->
             </tr>
         </thead>
         <tbody>
-            <template v-if="items.length > 0">
-                <TableRecord v-for="(item, index) in items" :source="item" :key="index" />
+            <template v-if="listTenancyAgreements.length > 0">
+                <TableRecord v-for="(item, index) in listTenancyAgreements" :source="item" :key="index" />
             </template>
             <template v-else>
                 <tr>
@@ -26,37 +26,18 @@
 
 <script>
 import TableRecord from "~/components/components/Landlord/Inventory/Table/TableRecord.vue"
+import { mapState } from "vuex";
+import { state } from '~/store/app';
 
 export default {
     name: "TenancyAgreementTable",
     components: { TableRecord },
-    data() {
-        return {
-            items: [
-                {
-                    tenancyAgreementCode: "1234",
-                    agreementDate: "12345",
-                    startDate: "Nov 26, 2012",
-                    endDate: "Nov 26, 2012",
-                    tenantName: "Hung Vuong"
-                },
-                {
-                    tenancyAgreementCode: "1234",
-                    agreementDate: "12345",
-                    startDate: "Nov 26, 2012",
-                    endDate: "Nov 26, 2012",
-                    tenantName: "Hung Vuong"
-                },
-                {
-                    tenancyAgreementCode: "1234",
-                    agreementDate: "12345",
-                    startDate: "Nov 26, 2012",
-                    endDate: "Nov 26, 2012",
-                    tenantName: "Hung Vuong"
-                }
-            ]
-        }
-    }
+    computed: {
+        ...mapState({
+            listTenancyAgreements: (state) => state.inventory.listTenancyAgreements
+        }),
+    },
+
 }
 </script>
 <style lang="scss" scoped>
