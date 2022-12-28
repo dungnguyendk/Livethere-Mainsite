@@ -34,6 +34,7 @@ export const actions = {
             const response = await this.$axios.$get(
                 `${httpEndpoint.inventories.getByInternalID}/${payload}`
             )
+
             if (response) {
                 commit("setInventoryDetails", response)
             } else {
@@ -49,20 +50,26 @@ export const actions = {
             const detail = await this.$axios.$get(
                 `${httpEndpoint.inventories.getByInternalID}/${payload}`
             );
-            const response = await this.$axios.$get(`${httpEndpoint.unit.getEntries}?AssestInventoryFID=${detail.id}`)
-            commit("setEntriesID", detail.id)
-            if (response) {
-                commit("setUnits", response.length ? response : {})
-            } else {
-                commit("setUnits", {})
+
+            if (detail) {
+                const response = await this.$axios.$get(`${httpEndpoint.unit.getEntries}?AssestInventoryFID=${detail.id}`)
+                commit("setInternalID", detail.internalID)
+                commit("setEntriesID", detail.id)
+                if (response) {
+                    commit("setUnits", response.length ? response : {})
+                    return true
+                } else {
+                    commit("setUnits", {})
+                }
             }
+
         } catch (e) {
             console.log({ Error: e.message })
             commit("setUnits", [])
         }
     },
     async createUnitInventory({ commit }, payload) {
-        
+
         try {
             const response = await this.$axios.$post(`${httpEndpoint.unit.getEntries}`, payload)
             if (response) {

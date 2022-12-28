@@ -3,10 +3,7 @@
         <div class="section__top">
             <h3 class="section__heading"> Unit Inventory </h3>
             <div class="section__actions">
-                <v-btn
-                    class="btn btn--green btn--outline btn--withIcon"
-                    @click="createDialog = true"
-                >
+                <v-btn class="btn btn--green btn--outline btn--withIcon" @click="onSourceAddNew">
                     <i class="ri-add-box-line"></i> Add
                 </v-btn>
             </div>
@@ -30,6 +27,8 @@
 import TenancyInventoryTable from "./Table/TenancyUnitInventory/TenancyUnitInventoryTable.vue"
 import Dialog from "~/components/elements/Dialog/Dialog.vue"
 import AddUnitInventoryForm from "~/components/components/Landlord/AssetInventory/components/Form/AddUnitInventoryForm.vue"
+import { mapState } from "vuex"
+import { httpEndpoint } from "~/services/https/endpoints"
 
 export default {
     name: "TenancyUnitInventory",
@@ -45,13 +44,42 @@ export default {
             createDialog: false
         }
     },
+    computed: {
+        ...mapState({
+            entriesID: (state) => state.inventory.entriesID,
+            internalID: (state) => state.inventory.internalID,
+            units: (state) => state.inventory.units
+        })
+    },
     methods: {
         onSubmitNewUnitInventory() {
+            console.log("33233");
+            this.getData()
             this.createDialog = false
+        },
+        onSourceAddNew() {
+            this.createDialog = true
         },
         onCloseCreateDialog() {
             this.createDialog = false
-        }
+        },
+        async getData() {
+            try {
+                const id = this.entriesID
+                const internalID = this.internalID
+                const response = await this.$axios.$get(
+                    `${httpEndpoint.unit.getEntries}?AssestInventoryFID=${id}`
+                )
+                if (response) {
+                    this.$store.dispatch("inventory/getUnitsByInventoryFID",internalID)
+                } else {
+                    return false
+                }
+            } catch (e) {
+                console.log(e)
+            }
+        },
+        
     }
 }
 </script>

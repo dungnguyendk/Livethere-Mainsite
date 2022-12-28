@@ -52,8 +52,14 @@
             </v-row>
         </div>
         <div class="form__actions">
-            <v-btn class="btn btn--ghost btn--gray btn--sm" @click="onClose"> Cancel</v-btn>
-            <v-btn class="btn btn--primary btn--green btn--sm" @click="onCreate()"> Create</v-btn>
+            <v-btn class="btn btn--ghost btn--gray btn--sm" @click="onClose()"> Cancel</v-btn>
+            <v-btn
+                class="btn btn--primary btn--green btn--sm"
+                :disabled="$v.$invalid"
+                @click="createUnitInventory()"
+            >
+                Create</v-btn
+            >
         </div>
     </form>
 </template>
@@ -65,7 +71,6 @@ import { setFormControlErrors } from "~/ultilities/form-validations"
 import { convertNumberToCommas, convertCommasToNumber } from "~/ultilities/helpers"
 import { CONDITIONS } from "~/ultilities/contants/asset-inventory.js"
 import { mapState } from "vuex"
-import { httpEndpoint } from "~/services/https/endpoints"
 export default {
     name: "AddUnitInventoryForm",
     mixins: [validationMixin],
@@ -85,7 +90,9 @@ export default {
     },
     computed: {
         ...mapState({
-            entriesID: (state) => state.inventory.entriesID
+            entriesID: (state) => state.inventory.entriesID,
+            internalID: (state) => state.inventory.internalID,
+            units: (state) => state.inventory.units
         }),
 
         nameErrors() {
@@ -105,20 +112,26 @@ export default {
     data() {
         return {
             name: "",
-            quantity: null,
-            value: null,
+            quantity: 1,
+            value: 1,
             condition: "",
             conditions: CONDITIONS,
-            remark:""
+            remark: ""
         }
     },
 
     methods: {
         onClose() {
+            this.onResetForm()
             this.$emit("close")
         },
         onResetForm() {
-            this.$v.$reset()
+            this.$v.$reset(),
+            this.name = "",
+            this.quantity= 0,
+            this.value = 0,
+            this.condition="",
+            this.remark = ""
         },
         // onSubmit() {
         //     console.log("submit!", this.$v.$invalid)
@@ -127,21 +140,7 @@ export default {
         //         this.onClose()
         //     }
         // },
-        async getData() {
-            try {
-                const id = this.$route.params.id
-                console.log("id: " + id)
-                const response = await this.$axios.$get(
-                    `${httpEndpoint.unit.getEntries}?AssestInventoryFID=${id}`
-                )
-                if (response?.data) {
-                    this.$store.commit("inventory/setUnits", response.data)
-                    this.$router.push(`/units/${id}`)
-                } else return false
-            } catch (e) {
-                console.log(e)
-            }
-        },
+
         async createUnitInventory() {
             try {
                 const params = {
@@ -153,33 +152,30 @@ export default {
                     itemValue: this.value
                 }
                 await this.$store.dispatch("inventory/createUnitInventory", params)
-                this.$emit("close")
-                // this.$router.push("/landlord/assets/units/")
+                this.onResetForm()
+                this.$emit("onSubmit")
             } catch (e) {
                 console.log(e)
-            }
-        },
-        async onCreate() {
-            const updateStatus = await this.createUnitInventory()
-            if (updateStatus) {
-                this.onResetForm()
-                // console.log("step222");
             }
         }
     },
     watch: {
         value(val) {
             if (!isNaN(val)) {
-                this.value = convertNumberToCommas(val)
+                this.$nextTick(() => (this.value = convertNumberToCommas(val)))
             } else {
-                this.value = convertNumberToCommas(convertCommasToNumber(val))
+                this.$nextTick(
+                    () => (this.value = convertNumberToCommas(convertCommasToNumber(val)))
+                )
             }
         },
         quantity(val) {
             if (!isNaN(val)) {
-                this.quantity = convertNumberToCommas(val)
+                this.$nextTick(() => (this.quantity = convertNumberToCommas(val)))
             } else {
-                this.quantity = convertNumberToCommas(convertCommasToNumber(val))
+                this.$nextTick(
+                    () => (this.quantity = convertNumberToCommas(convertCommasToNumber(val)))
+                )
             }
         }
     }
