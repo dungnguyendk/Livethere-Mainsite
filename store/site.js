@@ -1,4 +1,4 @@
-import {httpEndpoint} from "~/services/https/endpoints"
+import { httpEndpoint } from "~/services/https/endpoints"
 
 export const state = () => ({
     siteDetails: null,
@@ -11,13 +11,15 @@ export const state = () => ({
 export const mutations = {
     setSiteDetails(state, payload) {
         state.siteDetails = payload
-    },
+    }
 }
 
 export const actions = {
-    async getDetails({commit}, payload) {
+    async getDetails({ commit }, payload) {
         try {
-            const response = await this.$axios.$get(`${httpEndpoint.sites.getEntryByID}?SiteId=${payload}`)
+            const response = await this.$axios.$get(
+                `${httpEndpoint.sites.getEntryByID}?SiteId=${payload}`
+            )
 
             if (response) {
                 commit("setSiteDetails", response)
@@ -25,5 +27,5 @@ export const actions = {
         } catch (e) {
             console.log(e)
         }
-    },
+    }
 }
