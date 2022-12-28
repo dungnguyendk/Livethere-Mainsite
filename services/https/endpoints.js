@@ -32,6 +32,7 @@ export const httpEndpoint = {
     },
     tenancies: {
         getTenancyById: "/api/tenancy-contract-agreements",
+        getTenancyByInternalID: "/api/tenancy-contract-agreements/by-internalID",
         getTenancyInfosById: "/api/tenancy-tenant-infos"
     },
     tenancyAgreements: {

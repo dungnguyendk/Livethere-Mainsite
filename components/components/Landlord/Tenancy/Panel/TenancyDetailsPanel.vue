@@ -2,7 +2,7 @@
     <div class="section--tenancy-details">
         <div class="section__top">
             <h3 class="top--label"> Tenancy Details </h3>
-            <h3 class="top--id"> #{{ tenancyDetails.tenancyRefCode }} </h3>
+            <h3 class="top--id"> #{{ tenancyDetailByInternalID ? tenancyDetailByInternalID.tenancyRefCode : "-" }} </h3>
         </div>
         <div class="section__content">
             <div class="section__columns">
@@ -13,7 +13,7 @@
                     </p>
                     <p>
                         <span>Lease Period (months):</span>
-                        <strong>{{ tenancyDetails.leasePeriod }}</strong>
+                        <strong>{{ tenancyDetailByInternalID ? tenancyDetailByInternalID.leasePeriod : "-" }}</strong>
                     </p>
                     <p>
                         <span>Secure Deposit:</span>
@@ -50,15 +50,15 @@ export default {
     },
     computed: {
         ...mapState({
-            tenancyDetails: (state) => state.tenancy.tenancyDetails
+            tenancyDetailByInternalID: (state) => state.tenancy.tenancyDetailByInternalID
         })
     },
     created() {
-        // console.log("this.tenancyDetails", this.tenancyDetails)
-        this.startDateFormatter = this.formatDate(this.tenancyDetails.startDate)
-        this.endDateFormatter = this.formatDate(this.tenancyDetails.endDate)
-        this.monthlyRentalFormatter = convertNumberToCommas(this.tenancyDetails.monthlyRental)
-        this.secureDepositFormatter = convertNumberToCommas(this.tenancyDetails.secureDeposit)
+        // console.log("this.tenancyDetailByInternalID", this.tenancyDetailByInternalID)
+        this.startDateFormatter = this.tenancyDetailByInternalID ? this.formatDate(this.tenancyDetailByInternalID.startDate) : ""
+        this.endDateFormatter = this.tenancyDetailByInternalID ? this.formatDate(this.tenancyDetailByInternalID.endDate) : ""
+        this.monthlyRentalFormatter = this.tenancyDetailByInternalID ? convertNumberToCommas(this.tenancyDetailByInternalID.monthlyRental) : ""
+        this.secureDepositFormatter = this.tenancyDetailByInternalID ? convertNumberToCommas(this.tenancyDetailByInternalID.secureDeposit) : ""
     },
     methods: {
         formatDate(date) {

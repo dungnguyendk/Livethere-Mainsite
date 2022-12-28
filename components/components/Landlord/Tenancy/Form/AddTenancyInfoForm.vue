@@ -4,45 +4,41 @@
             <v-row>
                 <v-col cols="12" sm="12" md="6">
                     <div class="form__field">
-                        <label>Name </label>
-                        <v-text-field v-model="name" dense outlined />
+                        <label>Tenancy Name</label>
+                        <v-text-field v-model="tenancyName" dense outlined />
                     </div>
                 </v-col>
                 <v-col cols="12" sm="12" md="6">
                     <div class="form__field">
-                        <label>Conditions </label>
-                        <v-select
-                            v-model="condition"
-                            :items="conditions"
-                            placeholder="Please select"
-                            dense
-                            outlined
-                        />
+                        <label>Leasing Type</label>
+                        <v-select v-model="leasingType" :items="leasingTypes" item-text="text" item-value="value"
+                            placeholder="Please select" dense outlined />
+                            {{ leasingType }}
                     </div>
                 </v-col>
                 <v-col cols="12" sm="12" md="6">
                     <div class="form__field">
-                        <label>Quantity </label>
-                        <v-text-field v-model="quantity" dense outlined />
+                        <label>ID / Passport No.</label>
+                        <v-text-field v-model="passportNo" dense outlined />
                     </div>
                 </v-col>
                 <v-col cols="12" sm="12" md="6">
                     <div class="form__field">
-                        <label>Value </label>
-                        <v-text-field v-model="value" dense outlined />
+                        <label>Company Name</label>
+                        <v-text-field v-model="companyName" dense outlined />
                     </div>
                 </v-col>
                 <v-col cols="12" sm="12" md="12">
                     <div class="form__field">
-                        <label>Remark </label>
+                        <label>Remark</label>
                         <v-textarea v-model="remark" dense outlined />
                     </div>
                 </v-col>
             </v-row>
         </div>
         <div class="form__actions">
-            <v-btn class="btn btn--ghost btn--gray btn--sm" @click="onClose"> Cancel</v-btn>
-            <v-btn class="btn btn--primary btn--green btn--sm"> Create</v-btn>
+            <v-btn class="btn btn--ghost btn--gray btn--sm" @click="onClose">Cancel</v-btn>
+            <v-btn class="btn btn--primary btn--green btn--sm">Create</v-btn>
         </div>
     </form>
 </template>
@@ -52,19 +48,25 @@ export default {
     name: "AddTenancyInfoForm",
     data() {
         return {
-            name: "",
-            condition: "",
-            quantity: 0,
-            value: "",
+            tenancyName: "",
+            leasingType: "",
+            passportNo: "",
+            companyName: "",
             remark: "",
-            conditions: [
+            leasingTypes: [
                 {
-                    text: "New",
-                    value: "new"
+                    value: {
+                        id: 1,
+                        name: "Personal"
+                    },
+                    text: "Personal"
                 },
                 {
-                    text: "Used",
-                    value: "used"
+                    value: {
+                        id: 2,
+                        name: "Corporate"
+                    },
+                    text: "Corporate"
                 }
             ]
         }

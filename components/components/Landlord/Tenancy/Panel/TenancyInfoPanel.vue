@@ -3,22 +3,35 @@
         <div class="section__top">
             <h3 class="top--title"> Tenancy Info </h3>
             <div class="top--button">
-                <a>
-                    <i class="ri-add-box-line"></i>
-                    Add
-                </a>
+                <v-btn class="btn btn--green btn--outline btn--withIcon" @click="createDialog = true">
+                    <i class="ri-add-box-line"></i> Add
+                </v-btn>
             </div>
         </div>
         <TenancyInfoTable />
+        <Dialog title="Create tenancy Info" :open="createDialog" :actions="false" @close="onCloseCreateDialog">
+            <AddTenancyInfoForm @close="onCloseCreateDialog"/>
+        </Dialog>
     </div>
 </template>
 
 <script>
 import TenancyInfoTable from "~/components/components/Landlord/Tenancy/Table/TenancyInfo/TenancyInfoTable.vue"
-
+import Dialog from "~/components/elements/Dialog/Dialog.vue"
+import AddTenancyInfoForm from "~/components/components/Landlord/Tenancy/Form/AddTenancyInfoForm.vue"
 export default {
     name: "TenancyInfoPanel",
-    components: { TenancyInfoTable }
+    components: { TenancyInfoTable, AddTenancyInfoForm, Dialog },
+    data() {
+        return {
+            createDialog: false
+        }
+    },
+    methods: {
+        onCloseCreateDialog() {
+            this.createDialog = false
+        }
+    }
 }
 </script>
 

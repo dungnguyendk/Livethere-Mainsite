@@ -42,10 +42,12 @@ export default {
     async asyncData({ app, route, store }) {
         try {
             const id = route.params.id
+            // console.log("store.state::", store.state.tenancy.tenancyDetailByInternalID.id);
+            // await store.dispatch("tenancy/getTenancyDetails", id)
+            await store.dispatch("tenancy/getTenancyDetailsByInternalID", id)
             const paramId = qs.stringify({
-                TenancyContractAgreementFID: route.params.id
+                TenancyContractAgreementFID: store.state.tenancy.tenancyDetailByInternalID.id
             })
-            await store.dispatch("tenancy/getTenancyDetails", id)
             await store.dispatch("tenancy/getTenancyInfosById", paramId)
         } catch (e) {
             console.log({ Error: e.message })
