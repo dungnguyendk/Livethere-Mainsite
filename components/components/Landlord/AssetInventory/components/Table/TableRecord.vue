@@ -23,10 +23,10 @@
             {{ source.bedroomTypeDisplay ? source.bedroomTypeDisplay : "-" }}
         </td>
         <td data-label="Floor Area (sqft)" v-if="statusFID === 0 || statusFID === 1">
-            {{ source.floorAreaSqft }}
+            {{ source.floorAreaSqft ? floorAreaSqftFormatter : "-" }}
         </td>
         <td data-label="Land Area (sqft)" v-if="statusFID === 0 || statusFID === 1">
-            {{ source.LandArea ? source.LandArea : "-" }}
+            {{ source.landArea ? landAreaFormatter : "-" }}
         </td>
         <td data-label="Address">
             {{ source.streetName }}
@@ -96,6 +96,7 @@
 import AssetInventoryBadge from "~/components/components/Landlord/AssetInventory/components/AssetInventoryBadge.vue"
 import Dialog from "~/components/elements/Dialog/Dialog.vue"
 import AddInventoryForm from "~/components/components/Landlord/AssetInventory/components/Dialog/Form/AddInventoryForm.vue"
+import { convertNumberToCommas } from "~/ultilities/helpers"
 import { mapState } from "vuex"
 import qs from "qs"
 
@@ -115,13 +116,19 @@ export default {
     data() {
         return {
             openAddNewInventoryDialog: false,
-            sizeDialog: "large"
+            sizeDialog: "large",
+            floorAreaSqftFormatter: '',
+            landAreaFormatter: ''
         }
     },
     computed: {
         ...mapState({
             statusFID: (state) => state.inventories.typeSelect
         })
+    },
+    created() {
+        this.floorAreaSqftFormatter = convertNumberToCommas(this.source.floorAreaSqft)
+        this.landAreaFormatter = convertNumberToCommas(this.source.landArea)
     },
     methods: {
         handleClickOpenRow(item) {
