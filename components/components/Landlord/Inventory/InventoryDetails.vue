@@ -9,9 +9,10 @@
                 <h3> {{ inventoryDetails ? inventoryDetails.propertyName : "Untitled" }} </h3>
             </div>
             <div class="section__container">
-                <InventoryInformationPanel />
+                <SuccessSnackBar :open="isOpenSnackbar" class="snackbar-custom"/>
+                <InventoryInformationPanel/>
                 <div class="section__divider" />
-                <TenancyAgreementPanel />
+                <TenancyAgreementPanel @openSnackbar="openSnackbar($event)"/>
             </div>
         </div>
     </div>
@@ -21,19 +22,29 @@
 import TenantAgreementTable from "~/components/components/Landlord/Inventory/Table/TenancyAgreementTable.vue"
 import InventoryInformationPanel from "~/components/components/Landlord/Inventory/Panel/InventoryInformationPanel.vue"
 import TenancyAgreementPanel from "~/components/components/Landlord/Tenancy/Panel/TenancyAgreementPanel.vue"
+import SuccessSnackBar from "~/components/shared/Snackbar/SuccessSnackBar.vue"
 import { mapState } from "vuex"
+
 
 export default {
     name: "InventoryDetails",
-    components: { TenancyAgreementPanel, InventoryInformationPanel, TenantAgreementTable },
+    components: { TenancyAgreementPanel, InventoryInformationPanel, TenantAgreementTable, SuccessSnackBar },
     computed: {
         ...mapState({
             inventoryDetails: (state) => state.inventory.inventoryDetails
         })
     },
+    data(){
+        return {
+            isOpenSnackbar: false
+        }
+    },
     methods: {
         onBack() {
             this.$router.push("/landlord/assets")
+        }, 
+        openSnackbar(e){
+            this.isOpenSnackbar = e
         }
     }
 }
@@ -68,5 +79,8 @@ export default {
         background-color: #fff;
         box-shadow: 0 0 4px rgba(0, 0, 0, 0.04), 0px 4px 8px rgba(0, 0, 0, 0.06);
     }
+}
+.snackbar-custom{
+    top: 14rem
 }
 </style>

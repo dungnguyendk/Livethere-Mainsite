@@ -2,22 +2,22 @@
     <tr>
         <td data-title="Tenancy Agreement Code"
             ><div>
-                <a href="/#">{{ source.tenancyAgreementCode }}</a>
+                <a href="/#">{{ source.tenancyRefCode }}</a>
             </div></td
         >
         <td data-title="Agreement Date"
-            ><p>{{ source.agreementDate }}</p></td
+            ><p>{{ formatAgreementDate  }}</p></td
         >
-        <td data-title="Address"
-            ><p class="address">{{ source.startDate }} </p></td
+        <td data-title="Start date"
+            ><p>{{ formatStartDate }} </p></td
         >
-        <td data-title="Start Date"
-            ><p>{{ source.endDate }}</p>
+        <td data-title="End Date"
+            ><p>{{ formatEndDate }}</p>
+            <p>{{ source.statusDisplay }}</p>
         </td>
-
-        <td data-title="Ternant Name"
-            ><p>{{ source.tenantName }}</p></td
-        >
+        <!-- <td data-title="Remark">
+            <p></p>
+        </td> -->
     </tr>
 </template>
 
@@ -28,6 +28,17 @@ export default {
         source: {
             type: Object,
             default: () => {}
+        }
+    }, 
+    computed: {
+        formatStartDate(){
+            return this.$dayjs(this.source.startDate).format("DD MMM, YYYY")
+        }, 
+        formatAgreementDate(){
+            return this.$dayjs(this.source.agreementDate).format("DD MMM, YYYY")
+        }, 
+        formatEndDate(){
+            return this.$dayjs(this.source.endDate).format("DD MMM, YYYY")
         }
     }
 }

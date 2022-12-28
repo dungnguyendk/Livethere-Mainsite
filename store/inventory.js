@@ -6,6 +6,7 @@ export const state = () => ({
     createEntries: {},
     internalID: {},
     entriesID: {},
+    listTenancyAgreements: null
 })
 
 export const mutations = {
@@ -24,6 +25,9 @@ export const mutations = {
     },
     setEntriesID(state, payload) {
         state.entriesID = payload
+    },
+    setListTenancyAgreements(state, payload) {
+        state.listTenancyAgreements = payload
     }
 
 }
@@ -34,7 +38,6 @@ export const actions = {
             const response = await this.$axios.$get(
                 `${httpEndpoint.inventories.getByInternalID}/${payload}`
             )
-
             if (response) {
                 commit("setInventoryDetails", response)
             } else {
@@ -81,5 +84,6 @@ export const actions = {
             console.log({ Error: e.message })
             commit("setCreateUnitInventory", [])
         }
-    }
+    },
+
 }

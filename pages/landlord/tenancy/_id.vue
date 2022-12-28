@@ -3,7 +3,7 @@
         <LandlordHeader />
         <template v-if="loggedIn">
             <LandlordPortal>
-                <InventoryDetails />
+                <InventoryDetails/>
             </LandlordPortal>
         </template>
     </main>
@@ -40,10 +40,14 @@ export default {
     },
     async asyncData({ app, route, store }) {
         try {
-            const id = route.params.id
-            await store.dispatch("inventory/getInventoryDetails", id)
+            const internalID = route.params.id
+            await store.dispatch("inventory/getInventoryDetails", internalID)
+            // const id = store.state.inventory.inventoryDetails.id
+            // console.log("id: ", id)
+            // await store.dispatch("inventory/getListTenancyAgreements", id)
         } catch (e) {
             console.log({ Error: e.message })
+            // return {listTenancyAgreements: null}
         }
     }
 }
