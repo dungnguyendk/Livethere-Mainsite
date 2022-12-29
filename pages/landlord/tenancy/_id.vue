@@ -3,7 +3,7 @@
         <LandlordHeader />
         <template v-if="loggedIn">
             <LandlordPortal>
-                <InventoryDetails/>
+                <InventoryDetails />
             </LandlordPortal>
         </template>
     </main>
@@ -46,7 +46,7 @@ export default {
             await store.dispatch("inventory/getListTenancyAgreements", id)
         } catch (e) {
             console.log({ Error: e.message })
-            return {listTenancyAgreements: null}
+            return { listTenancyAgreements: null }
         }
     }
 }
