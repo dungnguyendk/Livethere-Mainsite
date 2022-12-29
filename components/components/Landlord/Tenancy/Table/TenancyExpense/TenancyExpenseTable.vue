@@ -1,39 +1,46 @@
 <template lang="html">
-    <table class="table--responsive table--tenancy-info">
-        <thead>
-            <tr>
-                <th id="description">Description</th>
-                <th id="price">Price</th>
-                <th id="date">Date</th>
-            </tr>
-        </thead>
-        <tbody>
-            <!--            <tr>
-                <td colspan="3">
-                    <pre><code>{{ expenses }}</code></pre>
-                </td>
-            </tr>-->
-            <template v-if="expenses && expenses.length > 0">
-                <TenancyExpenseRecord v-for="(item, index) in items" :source="item" :key="index" />
-            </template>
-            <template v-else>
+    <div>
+        <table class="table--responsive table--tenancy-info">
+            <thead>
                 <tr>
-                    <td colspan="2">
-                        <p class="empty">No record found.</p>
-                    </td>
+                    <th id="description">Description</th>
+                    <th id="price">Price</th>
+                    <th id="date">Date</th>
+                    <th id="actions">Actions</th>
                 </tr>
-            </template>
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                <template v-if="expenses.length > 0">
+                    <TenancyExpenseRecord
+                        v-for="(item, index) in expenses"
+                        :source="item"
+                        :key="index"
+                        @onDeleleteSuccess="showDeleteSuccess"
+                    />
+                </template>
+                <template v-else>
+                    <tr>
+                        <td colspan="4">
+                            <p class="empty">No record found.</p>
+                        </td>
+                    </tr>
+                </template>
+            </tbody>
+        </table>
+        <SuccessSnackBar />
+    </div>
 </template>
 
 <script>
 import { mapState } from "vuex"
 import TenancyExpenseRecord from "./TenancyExpenseRecord.vue"
+import Dialog from "~/components/elements/Dialog/Dialog"
+import CreateTenancyExpenseForm from "~/components/components/Landlord/Tenancy/Form/CreateTenancyExpenseForm"
+import SuccessSnackBar from "~/components/shared/Snackbar/SuccessSnackBar"
 
 export default {
     name: "TenancyExpenseTable",
-    components: { TenancyExpenseRecord },
+    components: { SuccessSnackBar, CreateTenancyExpenseForm, Dialog, TenancyExpenseRecord },
     computed: {
         ...mapState({
             expenses: (state) => state.tenancy.expenses
@@ -41,18 +48,24 @@ export default {
     },
     data() {
         return {
-            items: [
-                {
-                    description: "Peter Tan",
-                    price: "SGD 2,000",
-                    date: "20/06/2001"
-                },
-                {
-                    description: "Peter Tan",
-                    price: "SGD 2,000",
-                    date: "20/06/2001"
-                }
-            ]
+            snackBar: false,
+            snackBarMessage: ""
+        }
+    },
+    methods: {
+        showDeleteSuccess() {
+            this.snackBar = true
+            this.snackBarMessage = "Delete tenancy expense successfully!"
+            setTimeout(() => {
+                this.snackBar = false
+            }, 2000)
+        },
+        showCreateSuccess() {
+            this.snackBar = true
+            this.snackBarMessage = "Create tenancy expense successfully!"
+            setTimeout(() => {
+                this.snackBar = false
+            }, 2000)
         }
     }
 }

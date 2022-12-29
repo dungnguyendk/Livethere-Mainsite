@@ -36,7 +36,9 @@ export const httpEndpoint = {
         getTenancyInfosById: "/api/tenancy-tenant-infos",
         createTenancyInfosEntry: "api/tenancy-tenant-infos",
         expenses: {
-            getEntryByID: "api/tenancy-inventory-expenses"
+            getEntryByID: "api/tenancy-inventory-expenses",
+            createEntry: "api/tenancy-inventory-expenses",
+            getEntries: "api/tenancy-inventory-expenses"
         }
     },
     tenancyAgreements: {
