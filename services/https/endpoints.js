@@ -28,7 +28,15 @@ export const httpEndpoint = {
     postal: {
         getEntryByPostalCode: "/api/properties/details",
         createEntry: "/api/asset-inventories",
-        getByInternalID: "/api/asset-inventories/by-internalID"
+        getByInternalID: "/api/asset-inventories/by-internalID",
+    },
+    unit: {
+        getEntryByID: "/api/asset-unit-inventories",
+        updateEntry:"/api/asset-unit-inventories",
+        getEntries:"/api/asset-unit-inventories",
+        createEntry:"/api/asset-unit-inventories",
+        getByInternalID: "/api/asset-inventories/by-internalID",
+        deleteEntryByID:"/api/asset-unit-inventories"
     },
     tenancies: {
         getTenancyById: "/api/tenancy-contract-agreements",
