@@ -9,13 +9,13 @@
 
 <script>
 import TenancyDetailsPanel from "~/components/components/Landlord/Tenancy/Panel/TenancyDetailsPanel.vue"
-import TenancyNav from "~/components/components/Landlord/Tenancy/TenancyNav"
-import TenancyInfoPanel from "~/components/components/Landlord/Tenancy/Panel/TenancyInfoPanel"
+// import TenancyNav from "~/components/components/Landlord/Tenancy/TenancyNav"
+import TenancyInfoPanel from "~/components/components/Landlord/Tenancy/Panel/TenancyInfoPanel.vue"
 import TenancyWrapper from "~/components/components/Landlord/Tenancy/TenancyWrapper"
 
 export default {
     name: "TenancyDetails",
-    components: { TenancyWrapper, TenancyInfoPanel, TenancyNav, TenancyDetailsPanel },
+    components: { TenancyWrapper, TenancyInfoPanel, TenancyDetailsPanel },
     methods: {
         onBack() {
             this.$router.go(-1)
