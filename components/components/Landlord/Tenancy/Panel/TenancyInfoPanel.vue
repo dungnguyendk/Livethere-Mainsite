@@ -10,8 +10,13 @@
         </div>
         <TenancyInfoTable />
         <Dialog title="Create tenancy Info" :open="createDialog" :actions="false" @close="onCloseCreateDialog">
-            <AddTenancyInfoForm @close="onCloseCreateDialog"/>
+            <AddTenancyInfoForm @close="onCloseCreateDialog" />
         </Dialog>
+        <v-snackbar v-model="snackbarActive" :timeout="2000" top right text color="green darken-4">
+            <span class="message--snackBar">
+                <i class="ri-information-line" /> {{ snackbarMessageActive }}
+            </span>
+        </v-snackbar>
     </div>
 </template>
 
@@ -19,18 +24,42 @@
 import TenancyInfoTable from "~/components/components/Landlord/Tenancy/Table/TenancyInfo/TenancyInfoTable.vue"
 import Dialog from "~/components/elements/Dialog/Dialog.vue"
 import AddTenancyInfoForm from "~/components/components/Landlord/Tenancy/Form/AddTenancyInfoForm.vue"
+import { mapState } from "vuex"
 export default {
     name: "TenancyInfoPanel",
     components: { TenancyInfoTable, AddTenancyInfoForm, Dialog },
     data() {
         return {
-            createDialog: false
+            createDialog: false,
+            snackbarActive: false,
+            snackbarMessageActive: "Your message has been sent.",
         }
+    },
+    computed: {
+        ...mapState({
+            snackbar: (state) => state.tenancy.snackbar,
+            snackbarMessage: (state) => state.tenancy.snackbarMessage
+        }),
     },
     methods: {
         onCloseCreateDialog() {
             this.createDialog = false
+        },
+        setSnackBar() {
+            this.snackbarActive = false
+            if (this.snackbar) {
+                this.snackbarActive = this.snackbar
+                this.snackbarMessageActive = this.snackbarMessage
+                setTimeout(() => {
+                    this.$store.commit("inventories/setSnackbar", false)
+                }, 2000)
+            }
         }
+    },
+    watch: {
+        snackbar() {
+            this.setSnackBar()
+        },
     }
 }
 </script>

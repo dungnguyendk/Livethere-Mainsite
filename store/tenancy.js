@@ -3,21 +3,26 @@ import { httpEndpoint } from "~/services/https/endpoints"
 export const state = () => ({
     tenancyDetails: null,
     tenancyDetailByInternalID: null,
-    tenancyInfosById: []
+    tenancyInfosById: [],
+    snackbar: false,
+    snackbarMessage: "Your message has been sent."
 })
 
 export const mutations = {
     setTenancyDetails(state, payload) {
         state.tenancyDetails = payload
-        // console.log("state.tenancyDetails::", state.tenancyDetails)
     },
     setTenancyDetailByInternalID(state, payload) {
         state.tenancyDetailByInternalID = payload
-        // console.log("state.setTenancyDetailByInternalID::", state.tenancyDetailByInternalID)
     },
     setTenancyInfosById(state, payload) {
         state.tenancyInfosById = payload
-        // console.log("state.tenancyInfosById::", state.tenancyInfosById)
+    },
+    setSnackbar(state, payload) {
+        state.snackbar = payload
+    },
+    setSnackbarMessage(state, payload) {
+        state.snackbarMessage = payload
     }
 }
 
@@ -59,7 +64,6 @@ export const actions = {
             const response = await this.$axios.$get(
                 `${httpEndpoint.tenancies.getTenancyInfosById}?${payload}`
             )
-            // console.log("response::", response)
             if (response) {
                 commit("setTenancyInfosById", response)
             } else {
@@ -72,9 +76,21 @@ export const actions = {
     },
     async createTenancyTenantInfos({ commit }, payload) {
         try {
-            await this.$axios.$post(`${httpEndpoint.tenancies.createTenancyInfosEntry}`, payload)
+            const response = await this.$axios.$post(
+                `${httpEndpoint.tenancies.createTenancyInfosEntry}`,
+                payload
+            )
+            if (response && response !== 0) {
+                commit("setSnackbar", true)
+                commit("setSnackbarMessage", "Create new tenancy info success")
+            } else {
+                commit("setSnackbar", false)
+                commit("setSnackbarMessage", "Your message has been sent.")
+            }
         } catch (e) {
             console.log({ Error: e.message })
+            commit("setSnackbar", false)
+            commit("setSnackbarMessage", "Your message has been sent.")
         }
     }
 }
