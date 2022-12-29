@@ -2,32 +2,32 @@
     <div class="section--tenancy-details">
         <div class="section__top">
             <h3 class="top--label"> Tenancy Details </h3>
-            <h3 class="top--id"> #348503 </h3>
+            <h3 class="top--id"> #{{ tenancyDetailByInternalID ? tenancyDetailByInternalID.tenancyRefCode : "-" }} </h3>
         </div>
         <div class="section__content">
             <div class="section__columns">
                 <div class="section__column">
                     <p>
                         <span>Commercement Date:</span>
-                        <strong>20/09/2020</strong>
+                        <strong>{{ startDateFormatter }}</strong>
                     </p>
                     <p>
                         <span>Lease Period (months):</span>
-                        <strong>24</strong>
+                        <strong>{{ tenancyDetailByInternalID ? tenancyDetailByInternalID.leasePeriod : "-" }}</strong>
                     </p>
                     <p>
                         <span>Secure Deposit:</span>
-                        <strong>SGD 9,000</strong>
+                        <strong>SGD {{ secureDepositFormatter }}</strong>
                     </p>
                 </div>
                 <div class="section__column">
                     <p>
                         <span>Expiry Date:</span>
-                        <strong>20/09/2022</strong>
+                        <strong>{{ endDateFormatter }}</strong>
                     </p>
                     <p>
                         <span>Monthly Rent:</span>
-                        <strong>SGD 3,000</strong>
+                        <strong>SGD {{ monthlyRentalFormatter }}</strong>
                     </p>
                 </div>
             </div>
@@ -36,8 +36,37 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
+import { convertNumberToCommas } from "~/ultilities/helpers"
 export default {
-    name: "TenancyDetailsPanel"
+    name: "TenancyDetailsPanel",
+    data() {
+        return {
+            startDateFormatter: "",
+            endDateFormatter: "",
+            monthlyRentalFormatter: "",
+            secureDepositFormatter: ""
+        }
+    },
+    computed: {
+        ...mapState({
+            tenancyDetailByInternalID: (state) => state.tenancy.tenancyDetailByInternalID
+        })
+    },
+    created() {
+        // console.log("this.tenancyDetailByInternalID", this.tenancyDetailByInternalID)
+        this.startDateFormatter = this.tenancyDetailByInternalID ? this.formatDate(this.tenancyDetailByInternalID.startDate) : ""
+        this.endDateFormatter = this.tenancyDetailByInternalID ? this.formatDate(this.tenancyDetailByInternalID.endDate) : ""
+        this.monthlyRentalFormatter = this.tenancyDetailByInternalID ? convertNumberToCommas(this.tenancyDetailByInternalID.monthlyRental) : ""
+        this.secureDepositFormatter = this.tenancyDetailByInternalID ? convertNumberToCommas(this.tenancyDetailByInternalID.secureDeposit) : ""
+    },
+    methods: {
+        formatDate(date) {
+            if (!date) return null
+
+            return this.$moment(date).format("DD-MMM-YYYY")
+        },
+    },
 }
 </script>
 <style lang="scss" scoped>
@@ -52,9 +81,11 @@ export default {
         justify-content: space-between;
         align-items: center;
         padding-bottom: 2.4rem;
+
         h3 {
             margin-bottom: 0;
         }
+
         .top--label {
             font-family: var(--font-primary);
             font-style: normal;
@@ -74,10 +105,12 @@ export default {
             color: #171717;
         }
     }
+
     .section__columns {
         display: grid;
         grid-template-columns: repeat(2, minmax(0, 1fr));
         grid-gap: 2.4rem;
+
         .section__column {
             p {
                 display: flex;
@@ -91,13 +124,16 @@ export default {
                 font-size: 16px;
                 line-height: 40px;
                 color: #737373;
+
                 span {
                     min-width: 16.5rem;
                 }
+
                 strong {
                     color: var(--color-heading);
                     font-weight: 500;
                 }
+
                 // &:not(:last-child) {
                 //     margin-bottom: 0.4rem;
                 // }
@@ -107,6 +143,7 @@ export default {
                 margin: 0;
             }
         }
+
         .section__column:nth-child(2) {
             p {
                 span {
@@ -125,6 +162,7 @@ export default {
 
             .section__column:nth-child(1) {
                 order: 1;
+
                 p {
                     display: flex;
                     justify-content: flex-start;
@@ -132,13 +170,16 @@ export default {
                     grid-gap: 2.4rem;
                     gap: 2.4rem;
                     color: #737373;
+
                     span {
                         min-width: 16.5rem;
                     }
+
                     strong {
                         color: var(--color-heading);
                         font-weight: 500;
                     }
+
                     // &:not(:last-child) {
                     //     margin-bottom: 0.4rem;
                     // }
@@ -152,6 +193,7 @@ export default {
             .section__column:nth-child(2) {
                 order: 2;
                 flex: 0 0 100%;
+
                 p {
                     span {
                         min-width: 16.5rem;

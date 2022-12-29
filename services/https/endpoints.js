@@ -30,6 +30,12 @@ export const httpEndpoint = {
         createEntry: "/api/asset-inventories",
         getByInternalID: "/api/asset-inventories/by-internalID"
     },
+    tenancies: {
+        getTenancyById: "/api/tenancy-contract-agreements",
+        getTenancyByInternalID: "/api/tenancy-contract-agreements/by-internalID",
+        getTenancyInfosById: "/api/tenancy-tenant-infos",
+        createTenancyInfosEntry: "api/tenancy-tenant-infos"
+    },
     tenancyAgreements: {
         getByID: "/api/tenancy-contract-agreements",
         getByInternalID: "/api/tenancy-contract-agreements/by-internalID",
