@@ -42,12 +42,11 @@ export default {
         try {
             const internalID = route.params.id
             await store.dispatch("inventory/getInventoryDetails", internalID)
-            // const id = store.state.inventory.inventoryDetails.id
-            // console.log("id: ", id)
-            // await store.dispatch("inventory/getListTenancyAgreements", id)
+            const id = store.state.inventory.inventoryDetails.id
+            await store.dispatch("inventory/getListTenancyAgreements", id)
         } catch (e) {
             console.log({ Error: e.message })
-            // return {listTenancyAgreements: null}
+            return {listTenancyAgreements: null}
         }
     }
 }

@@ -9,17 +9,14 @@
             </div>
         </div>
         <TenancyInventoryTable />
-        <Dialog
-            title="Create unit inventory"
-            :open="createDialog"
-            :actions="false"
-            @close="onCloseCreateDialog"
-        >
-            <AddUnitInventoryForm
-                @close="onCloseCreateDialog"
-                @onSubmit="onSubmitNewUnitInventory"
-            />
+        <Dialog title="" :open="createDialog" :actions="false" @close="onCloseDialog">
+            <AddUnitInventoryForm @close="createDialog = false" v-if="createDialog" />
         </Dialog>
+        <v-snackbar v-model="snackbarActive" :timeout="2000" top right text color="green darken-4">
+            <span class="message--snackBar">
+                <i class="ri-information-line" /> {{ snackbarMessageActive }}
+            </span>
+        </v-snackbar>
     </div>
 </template>
 
@@ -28,7 +25,6 @@ import TenancyInventoryTable from "./Table/TenancyUnitInventory/TenancyUnitInven
 import Dialog from "~/components/elements/Dialog/Dialog.vue"
 import AddUnitInventoryForm from "~/components/components/Landlord/AssetInventory/components/Form/AddUnitInventoryForm.vue"
 import { mapState } from "vuex"
-import { httpEndpoint } from "~/services/https/endpoints"
 
 export default {
     name: "TenancyUnitInventory",
@@ -39,47 +35,50 @@ export default {
             default: false
         }
     },
-    data() {
-        return {
-            createDialog: false
-        }
-    },
     computed: {
         ...mapState({
-            entriesID: (state) => state.inventory.entriesID,
-            internalID: (state) => state.inventory.internalID,
-            units: (state) => state.inventory.units
-        })
+            snackbar: (state) => state.inventory.snackbar,
+            snackbarMessage: (state) => state.inventory.snackbarMessage
+        }),
+    },
+    data() {
+        return {
+            createDialog: false,
+            snackbarActive: false,
+            snackbarMessageActive: "Your message has been sent."
+        }
     },
     methods: {
-        onSubmitNewUnitInventory() {
-            console.log("33233");
-            this.getData()
-            this.createDialog = false
-        },
+        // onSubmitNewUnitInventory() {
+        //     this.getData()
+        //     this.createDialog = false
+        // },
         onSourceAddNew() {
             this.createDialog = true
         },
-        onCloseCreateDialog() {
+        onCloseDialog() {
+            this.$store.commit("inventory/setInventoryUnitDetail", "")
             this.createDialog = false
         },
-        async getData() {
-            try {
-                const id = this.entriesID
-                const internalID = this.internalID
-                const response = await this.$axios.$get(
-                    `${httpEndpoint.unit.getEntries}?AssestInventoryFID=${id}`
-                )
-                if (response) {
-                    this.$store.dispatch("inventory/getUnitsByInventoryFID",internalID)
-                } else {
-                    return false
-                }
-            } catch (e) {
-                console.log(e)
+        setSnackBar() {
+            this.snackbarActive = false
+            if (this.snackbar) {
+                this.snackbarActive = this.snackbar
+                this.snackbarMessageActive = this.snackbarMessage
+                setTimeout(() => {
+                    this.$store.commit("inventory/setSnackbar", false)
+                }, 2000)
             }
-        },
-        
+        }
+    },
+    watch: {
+        snackbar() {
+            // console.log("snackbar:::", this.snackbar);
+            this.setSnackBar()
+        }
+        // snackbarMessage() {
+        //     this.snackbarMessageActive = this.snackbarMessage
+        // }
     }
 }
 </script>

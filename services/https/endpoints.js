@@ -32,9 +32,11 @@ export const httpEndpoint = {
     },
     unit: {
         getEntryByID: "/api/asset-unit-inventories",
+        updateEntry:"/api/asset-unit-inventories",
         getEntries:"/api/asset-unit-inventories",
         createEntry:"/api/asset-unit-inventories",
-        getByInternalID: "/api/asset-inventories/by-internalID"
+        getByInternalID: "/api/asset-inventories/by-internalID",
+        deleteEntryByID:"/api/asset-unit-inventories"
     },
     tenancyAgreements: {
         getByID: "/api/tenancy-contract-agreements",

@@ -22,7 +22,10 @@
                     </template>
                     <v-list dense>
                         <v-list-item-group>
-                            <v-list-item style="height: 35px">
+                            <v-list-item
+                                @click="onEditUnitInventory(source.id)"
+                                style="height: 35px"
+                            >
                                 <v-list-item-icon>
                                     <v-icon v-text="`ri-edit-box-line`"></v-icon>
                                 </v-list-item-icon>
@@ -30,7 +33,10 @@
                                     <v-list-item-title>Edit</v-list-item-title>
                                 </v-list-item-content>
                             </v-list-item>
-                            <v-list-item style="height: 35px">
+                            <v-list-item
+                                @click="onDeleteUnitInventory(source.id)"
+                                style="height: 35px"
+                            >
                                 <v-list-item-icon>
                                     <v-icon v-text="`ri-delete-bin-line`"></v-icon>
                                 </v-list-item-icon>
@@ -43,16 +49,66 @@
                 </v-menu>
             </div>
         </td>
+        <Dialog :title="''" :open="createDialog" :actions="false" @close="closeDialog">
+            <AddUnitInventoryForm
+                @close="createDialog = false"
+                v-if="createDialog"
+                :sourceDetail="source.id"
+            />
+        </Dialog>
     </tr>
 </template>
 
 <script>
+import { mapState } from "vuex"
+import { httpEndpoint } from "~/services/https/endpoints"
+import Dialog from "~/components/elements/Dialog/Dialog.vue"
+import AddUnitInventoryForm from "../../../AssetInventory/components/Form/AddUnitInventoryForm.vue"
 export default {
     name: "TenacyInventoryRecord",
+    components: { Dialog, AddUnitInventoryForm },
     props: {
         source: {
             type: Object,
             default: () => {}
+        }
+    },
+    computed: {
+        ...mapState({
+            internalID: (state) => state.inventory.internalID,
+            units: (state) => state.inventory.units
+        })
+    },
+    data() {
+        return {
+            createDialog: false
+            // sizeDialog: "large",
+        }
+    },
+    methods: {
+        handleClickOpenRow(item) {
+            this.$emit("handleClickOpenRow", item)
+        },
+        onEditUnitInventory(item) {
+            console.log("onEditInventory")
+            this.$store.dispatch("inventory/getDetailUnitInventory", item).then(() => {
+                this.createDialog = true
+            })
+        },
+        onDeleteUnitInventory(item) {
+            const param = {
+                data: {
+                    id: item
+                }
+            }
+            this.$store.dispatch("inventory/deleteUnitInventory", param).then(() => {
+                const internalID = this.internalID
+                this.$store.dispatch("inventory/getUnitsByInventoryFID", internalID)
+            })
+        },
+        closeDialog() {
+            this.$store.commit("inventory/setInventoryUnitDetail", "")
+            this.createDialog = false
         }
     }
 }

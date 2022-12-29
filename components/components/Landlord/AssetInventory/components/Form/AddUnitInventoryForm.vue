@@ -1,11 +1,19 @@
 <template lang="html">
     <form class="form--landlord form--add-unit-inventory">
+        <div class="form__top">
+            <h3>{{ unitInventoryDetail ? "EDIT INVENTORY" : "ADD NEW INVENTORY" }}</h3>
+        </div>
         <div class="form__fields">
             <v-row>
                 <v-col cols="12" sm="12" md="6">
                     <div class="form__field">
                         <label class="required">Name </label>
-                        <v-text-field v-model="name" :error-messages="nameErrors" dense outlined />
+                        <v-text-field
+                            v-model="itemName"
+                            :error-messages="nameErrors"
+                            dense
+                            outlined
+                        />
                     </div>
                 </v-col>
                 <v-col cols="12" sm="12" md="6">
@@ -56,9 +64,9 @@
             <v-btn
                 class="btn btn--primary btn--green btn--sm"
                 :disabled="$v.$invalid"
-                @click="createUnitInventory()"
+                @click="unitInventoryDetail ? updateUnitInventory() : createUnitInventory()"
             >
-                Create</v-btn
+                {{ unitInventoryDetail ? "Update" : "Add" }}</v-btn
             >
         </div>
     </form>
@@ -71,11 +79,12 @@ import { setFormControlErrors } from "~/ultilities/form-validations"
 import { convertNumberToCommas, convertCommasToNumber } from "~/ultilities/helpers"
 import { CONDITIONS } from "~/ultilities/contants/asset-inventory.js"
 import { mapState } from "vuex"
+import { httpEndpoint } from "~/services/https/endpoints"
 export default {
     name: "AddUnitInventoryForm",
     mixins: [validationMixin],
     validations: {
-        name: {
+        itemName: {
             required
         },
         condition: {
@@ -88,17 +97,22 @@ export default {
             required
         }
     },
+    props: {
+        sourceDetail: {
+            type: Number,
+            default: () => null
+        }
+    },
     computed: {
         ...mapState({
             entriesID: (state) => state.inventory.entriesID,
             internalID: (state) => state.inventory.internalID,
-            units: (state) => state.inventory.units
+            units: (state) => state.inventory.units,
+            unitInventoryDetail: (state) => state.inventory.unitInventoryDetail
         }),
-
         nameErrors() {
-            return setFormControlErrors(this.$v.name, "This field is required")
+            return setFormControlErrors(this.$v.itemName, "This field is required")
         },
-
         conditionErrors() {
             return setFormControlErrors(this.$v.condition, "This field is required")
         },
@@ -109,9 +123,34 @@ export default {
             return setFormControlErrors(this.$v.value, "This field is required")
         }
     },
+    created() {
+        // console.log("this.inventoryDetail", this.inventoryDetail.propertyType);
+        if (this.unitInventoryDetail) {
+            this.quantity = this.unitInventoryDetail.quantity
+                ? this.unitInventoryDetail.quantity
+                : 1
+            this.itemName = this.unitInventoryDetail.itemName
+                ? this.unitInventoryDetail.itemName
+                : ""
+            this.value = this.unitInventoryDetail.value ? this.unitInventoryDetail.value : 1
+            this.remark = this.unitInventoryDetail.remark ? this.unitInventoryDetail.remark : ""
+            this.condition = this.unitInventoryDetail.conditionTypeFID
+                ? this.conditions.find(
+                      (i) => i.value.id === this.unitInventoryDetail.conditionTypeFID
+                  ).value
+                : ""
+        } else {
+            this.itemName = ""
+            this.value = 1
+            this.quantity = 1
+            this.condtion = ""
+            this.remark = ""
+        }
+        // console.log("this.sourceDetail::", this.sourceDetail);
+    },
     data() {
         return {
-            name: "",
+            itemName: "",
             quantity: 1,
             value: 1,
             condition: "",
@@ -122,38 +161,50 @@ export default {
 
     methods: {
         onClose() {
-            this.onResetForm()
+            this.$store.commit("inventory/setInventoryUnitDetail", "")
             this.$emit("close")
         },
-        onResetForm() {
-            this.$v.$reset(),
-            this.name = "",
-            this.quantity= 0,
-            this.value = 0,
-            this.condition="",
-            this.remark = ""
-        },
-        // onSubmit() {
-        //     console.log("submit!", this.$v.$invalid)
-        //     this.$v.$touch()
-        //     if (!this.$v.$invalid) {
-        //         this.onClose()
-        //     }
-        // },
-
         async createUnitInventory() {
             try {
                 const params = {
                     assestInventoryFID: this.entriesID,
                     conditionTypeFID: this.condition.id,
-                    itemName: this.name,
+                    itemName: this.itemName,
                     conditionDisplay: this.condition.name,
                     quantity: this.quantity,
-                    itemValue: this.value
+                    itemValue: this.value,
+                    remark: this.remark
                 }
-                await this.$store.dispatch("inventory/createUnitInventory", params)
-                this.onResetForm()
-                this.$emit("onSubmit")
+                this.$store.dispatch("inventory/createUnitInventory", params).then(() => {
+                    const internalID = this.internalID
+                    this.$store.dispatch("inventory/getUnitsByInventoryFID", internalID)
+                })
+                this.onClose()
+            } catch (e) {
+                console.log(e)
+            }
+        },
+        updateUnitInventory() {
+            try {
+                const params = {
+                    id: this.sourceDetail,
+                    assestInventoryFID: this.entriesID,
+                    conditionTypeFID: this.condition.id,
+                    cultureCode: "",
+                    currencyType: "",
+                    currentyName: "",
+                    itemName: this.itemName,
+                    conditionDisplay: this.condition.name,
+                    quantity: this.quantity,
+                    itemValue: this.value,
+                    remark: this.remark
+                }
+                // console.log("params", params)
+                this.$store.dispatch("inventory/updateUnitInventory", params).then(() => {
+                    const internalID = this.internalID
+                    this.$store.dispatch("inventory/getUnitsByInventoryFID", internalID)
+                })
+                this.onClose()
             } catch (e) {
                 console.log(e)
             }
@@ -183,6 +234,17 @@ export default {
 </script>
 <style lang="scss" scoped>
 .form--add-unit-inventory {
+    .form__top {
+        text-align: center;
+        padding-bottom: 2.4rem;
+        h3 {
+            margin-bottom: 0;
+            font-weight: 700;
+            font-size: 2.4rem;
+            line-height: 2.8rem;
+            color: var(--color-title-black);
+        }
+    }
     .form__actions {
         display: flex;
         justify-content: center;

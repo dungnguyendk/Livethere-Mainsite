@@ -135,7 +135,6 @@ export default {
             this.$emit("handleClickOpenRow", item)
         },
         onVisitInventoryUnits() {
-            console.log("sources created", this.source);
             this.$router.push(`/landlord/assets/units/${this.source.internalID}`)
         },
         onEditInventory(item) {
