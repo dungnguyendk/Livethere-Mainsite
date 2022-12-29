@@ -1,16 +1,16 @@
 <template lang="html">
     <tr>
         <td data-title="Tenancy Name">
-            <p>{{ source.name }}</p>
+            <p>{{ source.tenancyName ? source.tenancyName : "-" }}</p>
         </td>
         <td data-title="ID / Passport No.">
-            <p>{{ source.passportNo }}</p>
+            <p>{{ source.tenancyIdentityDocNo ? source.tenancyIdentityDocNo : "-" }}</p>
         </td>
         <td data-title="Leasing Type">
-            <p>{{ source.leasingType }} </p>
+            <p>{{ source.leasingTypeDisplay ? source.leasingTypeDisplay : "-" }} </p>
         </td>
         <td data-title="Company Name">
-            <p>{{ source.companyName }}</p>
+            <p>{{ source.companyName ? source.companyName : "-" }}</p>
         </td>
     </tr>
 </template>
@@ -21,7 +21,7 @@ export default {
     props: {
         source: {
             type: Object,
-            default: () => {}
+            default: () => { }
         }
     }
 }
@@ -31,9 +31,11 @@ tr {
     position: relative;
     vertical-align: top;
 }
+
 td {
     padding: 3.3rem 2.4rem;
     border-bottom: 1px solid #e5e5e5;
+
     p {
         display: flex;
         justify-content: left;
@@ -53,13 +55,16 @@ td {
         color: #0b0c0c;
     }
 }
+
 tr:nth-child(even) {
     background: #fafafa;
 }
+
 @media screen and (max-width: 768px) {
     tr:nth-child(even) {
         background: #fafafa;
     }
+
     td[data-title] {
         display: grid;
         justify-content: space-between;
@@ -70,6 +75,7 @@ tr:nth-child(even) {
         border: none;
         padding: 1.6rem;
         border-top: none;
+
         &:before {
             content: attr(data-title);
             font-weight: 700;

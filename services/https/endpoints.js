@@ -38,6 +38,17 @@ export const httpEndpoint = {
         getByInternalID: "/api/asset-inventories/by-internalID",
         deleteEntryByID:"/api/asset-unit-inventories"
     },
+    tenancies: {
+        getTenancyById: "/api/tenancy-contract-agreements",
+        getTenancyByInternalID: "/api/tenancy-contract-agreements/by-internalID",
+        getTenancyInfosById: "/api/tenancy-tenant-infos",
+        createTenancyInfosEntry: "api/tenancy-tenant-infos",
+        expenses: {
+            getEntryByID: "api/tenancy-inventory-expenses",
+            createEntry: "api/tenancy-inventory-expenses",
+            getEntries: "api/tenancy-inventory-expenses"
+        }
+    },
     tenancyAgreements: {
         getByID: "/api/tenancy-contract-agreements",
         getByInternalID: "/api/tenancy-contract-agreements/by-internalID",
