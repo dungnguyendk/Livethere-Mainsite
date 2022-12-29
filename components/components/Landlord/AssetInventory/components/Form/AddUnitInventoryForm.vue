@@ -1,7 +1,7 @@
 <template lang="html">
     <form class="form--landlord form--add-unit-inventory">
         <div class="form__top">
-            <h3>{{ unitInventoryDetail ? "EDIT INVENTORY" : "ADD NEW INVENTORY" }}</h3>
+            <h3>{{ unitInventoryDetail ? "EDIT UNIT INVENTORY" : "ADD NEW UNIT INVENTORY" }}</h3>
         </div>
         <div class="form__fields">
             <v-row>
@@ -124,7 +124,6 @@ export default {
         }
     },
     created() {
-        // console.log("this.inventoryDetail", this.inventoryDetail.propertyType);
         if (this.unitInventoryDetail) {
             this.quantity = this.unitInventoryDetail.quantity
                 ? this.unitInventoryDetail.quantity

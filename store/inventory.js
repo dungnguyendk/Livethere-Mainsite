@@ -70,7 +70,7 @@ export const actions = {
             const response = await this.$axios.$post(`${httpEndpoint.unit.getEntries}`, payload)
             if (response && response !== 0) {
                 commit("setSnackbar", true)
-                commit("setSnackbarMessage", "Create new inventory success")
+                commit("setSnackbarMessage", "Create new unit inventory success")
             } else {
                 commit("setSnackbar", false)
                 commit("setSnackbarMessage", "Your message has been sent.")
@@ -104,7 +104,7 @@ export const actions = {
             )
             if (response) {
                 commit("setSnackbar", true)
-                commit("setSnackbarMessage", "Update inventory success")
+                commit("setSnackbarMessage", "Update unit inventory success")
             } else {
                 commit("setSnackbar", false)
                 commit("setSnackbarMessage", "Your message has been sent.")
@@ -123,7 +123,7 @@ export const actions = {
             )
             if (response) {
                 commit("setSnackbar", true)
-                commit("setSnackbarMessage", "Delete inventory success")
+                commit("setSnackbarMessage", "Delete unit inventory success")
             } else {
                 commit("setSnackbar", false)
                 commit("setSnackbarMessage", "Your message has been sent.")
