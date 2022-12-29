@@ -8,7 +8,12 @@
             </tr>
         </thead>
         <tbody>
-            <template v-if="items.length > 0">
+            <!--            <tr>
+                <td colspan="3">
+                    <pre><code>{{ expenses }}</code></pre>
+                </td>
+            </tr>-->
+            <template v-if="expenses && expenses.length > 0">
                 <TenancyExpenseRecord v-for="(item, index) in items" :source="item" :key="index" />
             </template>
             <template v-else>
@@ -23,12 +28,17 @@
 </template>
 
 <script>
+import { mapState } from "vuex"
 import TenancyExpenseRecord from "./TenancyExpenseRecord.vue"
 
 export default {
     name: "TenancyExpenseTable",
     components: { TenancyExpenseRecord },
-
+    computed: {
+        ...mapState({
+            expenses: (state) => state.tenancy.expenses
+        })
+    },
     data() {
         return {
             items: [

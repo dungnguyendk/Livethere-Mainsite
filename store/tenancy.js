@@ -5,10 +5,14 @@ export const state = () => ({
     tenancyDetailByInternalID: null,
     tenancyInfosById: [],
     snackbar: false,
-    snackbarMessage: "Your message has been sent."
+    snackbarMessage: "Your message has been sent.",
+    expenses: null
 })
 
 export const mutations = {
+    setExpanses(state, payload) {
+        state.expenses = payload
+    },
     setTenancyDetails(state, payload) {
         state.tenancyDetails = payload
     },
@@ -27,14 +31,32 @@ export const mutations = {
 }
 
 export const actions = {
-    async getTenancyDetails({ commit }, payload) {
+    async getExpanses({ commit }, payload) {
         try {
             const response = await this.$axios.$get(
-                `${httpEndpoint.tenancies.getTenancyById}/${payload}`
+                `${httpEndpoint.tenancies.expenses.getEntryByID}/${payload}`
+            )
+
+            if (response) {
+                commit("setExpanses", response)
+            } else {
+                commit("setExpanses", null)
+            }
+        } catch (e) {
+            console.log({ Error: e.message })
+            commit("setExpanses", null)
+        }
+    },
+
+    async getTenancyDetails({ commit, dispatch }, payload) {
+        try {
+            const response = await this.$axios.$get(
+                `${httpEndpoint.tenancies.getTenancyByInternalID}/${payload}`
             )
 
             if (response) {
                 commit("setTenancyDetails", response)
+                await dispatch("getExpanses", response.id)
             } else {
                 commit("setTenancyDetails", null)
             }

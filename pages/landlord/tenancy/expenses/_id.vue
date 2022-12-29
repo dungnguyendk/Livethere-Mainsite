@@ -3,7 +3,11 @@
         <LandlordHeader />
         <template v-if="loggedIn">
             <LandlordPortal>
-                <TenancyExpenses />
+                <TenancyWrapper @onBack="onBack">
+                    <template slot="content">
+                        <TenancyExpensesPanel />
+                    </template>
+                </TenancyWrapper>
             </LandlordPortal>
         </template>
     </main>
@@ -14,15 +18,13 @@ import { appSettings } from "~/app-settings"
 import LandlordPortal from "~/components/components/Landlord/LandlordPortal.vue"
 import LandlordHeader from "~/components/shared/Header/LandlordHeader.vue"
 import AssetInventory from "~/components/components/Landlord/AssetInventory/AssetInventory.vue"
-import InventoryDetails from "~/components/components/Landlord/Inventory/InventoryDetails.vue"
-import TenancyDetails from "~/components/components/Landlord/Tenancy/TenancyDetails"
-import TenancyExpenses from "~/components/components/Landlord/Tenancy/TenancyExpenses"
+import TenancyWrapper from "~/components/components/Landlord/Tenancy/TenancyWrapper"
+import TenancyExpensesPanel from "~/components/components/Landlord/Tenancy/Panel/TenancyExpensesPanel"
 
 export default {
     components: {
-        TenancyExpenses,
-        TenancyDetails,
-        InventoryDetails,
+        TenancyExpensesPanel,
+        TenancyWrapper,
         AssetInventory,
         LandlordHeader,
         LandlordPortal
@@ -36,15 +38,22 @@ export default {
             return this.$auth.loggedIn
         }
     },
+
+    methods: {
+        onBack() {
+            this.$router.go(-1)
+        }
+    },
+
     created() {
         if (!this.loggedIn) {
             this.$router.push("/landlord/signin")
         }
     },
-    async asyncData({ app, route, store }) {
+
+    async asyncData({ route, store }) {
         try {
-            const id = route.params.id
-            await store.dispatch("tenancy/getTenancyAgreementDetails", id)
+            await store.dispatch("tenancy/getTenancyDetails", route.params.id)
         } catch (e) {
             console.log({ Error: e.message })
         }
