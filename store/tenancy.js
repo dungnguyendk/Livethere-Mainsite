@@ -69,5 +69,12 @@ export const actions = {
             console.log({ Error: e.message })
             commit("setTenancyInfosById", [])
         }
+    },
+    async createTenancyTenantInfos({ commit }, payload) {
+        try {
+            await this.$axios.$post(`${httpEndpoint.tenancies.createTenancyInfosEntry}`, payload)
+        } catch (e) {
+            console.log({ Error: e.message })
+        }
     }
 }
