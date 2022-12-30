@@ -149,5 +149,24 @@ export const actions = {
             console.log({ Error: e.message })
             commit("setInventoryDetails", null)
         }
+    },
+
+    async createTenancyAgreement({ commit }, payload) {
+        try {
+            const responseMain = await this.$axios.$post(
+                `${httpEndpoint.tenancyAgreements.createEntry}`,
+                payload
+            )
+            if (responseMain) {
+                const responseSub = await this.$axios.$get(
+                    `${httpEndpoint.tenancyAgreements.getEntries}?AssestInventoryFID=${payload.assestInventoryFID}`
+                )
+                if (responseSub) {
+                    commit("setListTenancyAgreements", responseSub)
+                }
+            }
+        } catch (e) {
+            console.log(e)
+        }
     }
 }

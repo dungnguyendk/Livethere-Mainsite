@@ -10,7 +10,7 @@
             </tr>
         </thead>
         <tbody>
-            <template v-if="listTenancyAgreements.length > 0">
+            <template v-if="listTenancyAgreements && listTenancyAgreements.length > 0">
                 <TableRecord
                     v-for="(item, index) in listTenancyAgreements"
                     :source="item"

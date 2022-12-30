@@ -169,12 +169,10 @@ export default {
             numeric
         },
         monthlyRental: {
-            required,
-            numeric
+            required
         },
         secureDeposit: {
-            required,
-            numeric
+            required
         }
     },
     computed: {
@@ -259,6 +257,7 @@ export default {
         submitForm() {
             this.submitted = true
             this.$v.$touch()
+            console.log({ validate: this.$v, monthlyRental: this.monthlyRental })
             if (!this.$v.$invalid) {
                 const params = {
                     tenancyRefCode: this.tenancyRefCode,
