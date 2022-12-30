@@ -7,9 +7,9 @@
             <p>{{ source.fileTypeName ? source.fileTypeName : "n/a" }}</p>
         </td>
         <td data-title="Leasing Type">
-            <!--            <v-btn class="btn btn&#45;&#45;ghost btn&#45;&#45;green btn&#45;&#45;sm btn&#45;&#45;withIcon" @click="onDownload">
+            <v-btn class="btn btn--ghost btn--green btn--sm btn--withIcon" @click="onDownload">
                 <i class="ri-download-cloud-2-line" /> download
-            </v-btn>-->
+            </v-btn>
             <v-btn class="btn btn--ghost btn--red btn--sm btn--withIcon" @click="onDelete">
                 <i class="ri-delete-bin-6-line"></i> Remove
             </v-btn>
@@ -34,18 +34,24 @@ export default {
             this.$store.dispatch("tenancy/deleteTenancyDocument", this.source.id)
         },
         async onDownload() {
-            /*const response = await this.$api.$get(`/api/documents/${this.source.id}/datas`)
+            const response = await this.$api.$get(`/api/documents/${this.source.id}/datas`)
             if (response) {
-                const file = new Blob([response])
+                /*  const file = new Blob([response])
                 const fileURL = URL.createObjectURL(file)
+              */
+
+                console.log({ response })
                 const link = document.createElement("a")
-                link.href = fileURL
+                link.href = "abc"
                 link.setAttribute("download", this.source.originalFileName)
                 document.body.appendChild(link)
                 console.log({ link })
-                link.click()
-                /!*window.open(fileURL)*!/
-            }*/
+                window.open(
+                    `http://vnapi.asiaesolutions.com/publiccontentapi/api/documents/${this.source.fileID}/datas`
+                )
+                //link.click()
+                /*window.open(fileURL)*/
+            }
         }
     }
 }
