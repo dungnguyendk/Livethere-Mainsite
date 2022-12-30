@@ -168,5 +168,20 @@ export const actions = {
         } catch (e) {
             console.log(e)
         }
+    },
+    async getListTenancyAgreements({ commit }, payload) {
+        try {
+            const response = await this.$axios.$get(
+                `${httpEndpoint.tenancyAgreements.getEntries}?AssestInventoryFID=${payload}`
+            )
+            if (response) {
+                commit("setListTenancyAgreements", response)
+            } else {
+                commit("setListTenancyAgreements", null)
+            }
+        } catch (e) {
+            console.log({ Error: e.message })
+            commit("setListTenancyAgreements", null)
+        }
     }
 }
