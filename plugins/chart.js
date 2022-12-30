@@ -1,6 +1,7 @@
 import Vue from "vue"
-// import { Pie, Bar, Line as LineChartGenerator } from "vue-chartjs"
+import { Pie, Doughnut, Bar, Line as LineChartGenerator } from "vue-chartjs"
 
-// Vue.component("Pie", Pie)
-// Vue.component("Bar", Bar)
-// Vue.component("LineChartGenerator", LineChartGenerator)
+Vue.component("Pie", Pie)
+Vue.component("Doughnut", Doughnut)
+Vue.component("Bar", Bar)
+Vue.component("LineChartGenerator", LineChartGenerator)

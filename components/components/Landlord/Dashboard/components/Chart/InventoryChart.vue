@@ -65,6 +65,7 @@ export default {
     background: var(--color-white);
     box-shadow: 0px 9px 50px rgba(56, 56, 56, 0.1);
     border-radius: 2rem;
+    min-height: 20rem;
 }
 
 .chart-title {
