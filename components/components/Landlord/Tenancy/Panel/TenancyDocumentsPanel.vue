@@ -1,16 +1,38 @@
 <template lang="html">
     <div class="section--tenacy-document">
-        <h3 class="section__label"> Tenancy Documents </h3>
+        <h3 class="section__label">Document</h3>
         <TenancyDocumentTable />
+        <v-snackbar v-model="openSnackBar" :timeout="2000" top right text color="green darken-4">
+            <span class="message--snackBar">
+                <i class="ri-information-line" /> {{ snackbarMessage }}
+            </span>
+        </v-snackbar>
     </div>
 </template>
 
 <script>
 import TenancyDocumentTable from "~/components/components/Landlord/Tenancy/Table/TenancyDocument/TenancyDocumentTable.vue"
+import { mapState } from "vuex"
 
 export default {
     name: "TenancyDocumentsPanel",
-    components: { TenancyDocumentTable }
+    components: { TenancyDocumentTable },
+    computed: {
+        ...mapState({
+            snackbar: (state) => state.tenancy.snackbar,
+            snackbarMessage: (state) => state.tenancy.snackbarMessage
+        })
+    },
+    data() {
+        return {
+            openSnackBar: false
+        }
+    },
+    watch: {
+        snackbar(val) {
+            this.openSnackBar = val
+        }
+    }
 }
 </script>
 <style lang="scss" scoped>

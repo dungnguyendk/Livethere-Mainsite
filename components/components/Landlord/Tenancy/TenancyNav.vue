@@ -3,7 +3,7 @@
         <div
             v-for="(item, index) in items"
             :class="`link ${checkActivePath(item.link) ? 'active' : ''}`"
-            :key="item"
+            :key="index"
         >
             <div class="link__indicator">
                 {{ index + 1 }}
