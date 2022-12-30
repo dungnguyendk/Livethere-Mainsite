@@ -39,7 +39,7 @@ export default {
         ...mapState({
             snackbar: (state) => state.inventory.snackbar,
             snackbarMessage: (state) => state.inventory.snackbarMessage
-        }),
+        })
     },
     data() {
         return {
@@ -49,10 +49,6 @@ export default {
         }
     },
     methods: {
-        // onSubmitNewUnitInventory() {
-        //     this.getData()
-        //     this.createDialog = false
-        // },
         onSourceAddNew() {
             this.createDialog = true
         },
@@ -73,12 +69,8 @@ export default {
     },
     watch: {
         snackbar() {
-            // console.log("snackbar:::", this.snackbar);
             this.setSnackBar()
         }
-        // snackbarMessage() {
-        //     this.snackbarMessageActive = this.snackbarMessage
-        // }
     }
 }
 </script>

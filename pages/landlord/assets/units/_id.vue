@@ -41,8 +41,10 @@ export default {
 
     async asyncData({ route, store }) {
         try {
-            const id  = route.params.id 
-            await store.dispatch("inventory/getUnitsByInventoryFID", id )
+            const id = route.params.id
+            const internalID = route.params.id
+            await store.dispatch("inventory/getInventoryDetails", id)
+            await store.dispatch("inventory/getUnitsByInventoryFID", id)
         } catch (e) {
             console.log({ Error: e.message })
         }
