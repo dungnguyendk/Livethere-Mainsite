@@ -3,7 +3,7 @@ const settings = [
         env: "develop",
         base_url: "http://vnapi.asiaesolutions.com/cmspublicapi",
         media_url: "http://vnapi.asiaesolutions.com/publiccontentapi",
-        postal_url: "http://apivo.aestechgroup.com/aespostal",
+        postal_url: "https://apivo.aestechgroup.com/aespostal",
         mediaURLPath: "http://vnapi.asiaesolutions.com/content",
         landlord: "http://vnapi.asiaesolutions.com/erppublicapi"
     },
