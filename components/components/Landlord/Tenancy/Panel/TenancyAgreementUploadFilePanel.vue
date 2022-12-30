@@ -58,7 +58,6 @@ export default {
                 disablePreviews: true,
                 withCredentials: false,
                 headers: {
-                    //Authorization: `Bearer YWljb2tleW5heW1vaWR1b2N0cnV5Y2FwdmFvZGF5`,
                     common: {
                         Accept: "text/plain, */*"
                     },
@@ -79,8 +78,8 @@ export default {
                 </div>
                 <div class="dz-progress"><span class="dz-upload" data-dz-uploadprogress></span></div>
                 <div class="dz-error-message"><span data-dz-errormessage></span></div>
-                <div class="dz-success-mark"><i class="fa fa-check"/></div>
-                <div class="dz-error-mark"><i class="fa fa-close"/></div>
+                <div class="dz-success-mark"></div>
+                <div class="dz-error-mark"></div>
                 <button class="dz-remove"><span data-dz-remove></span></button>
             </div>
         `
