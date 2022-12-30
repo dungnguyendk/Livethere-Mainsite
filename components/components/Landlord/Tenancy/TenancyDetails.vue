@@ -12,13 +12,21 @@ import TenancyDetailsPanel from "~/components/components/Landlord/Tenancy/Panel/
 // import TenancyNav from "~/components/components/Landlord/Tenancy/TenancyNav"
 import TenancyInfoPanel from "~/components/components/Landlord/Tenancy/Panel/TenancyInfoPanel.vue"
 import TenancyWrapper from "~/components/components/Landlord/Tenancy/TenancyWrapper"
+import { mapState } from "vuex"
 
 export default {
     name: "TenancyDetails",
     components: { TenancyWrapper, TenancyInfoPanel, TenancyDetailsPanel },
+    computed: {
+        ...mapState({
+            internalID: (state) => state.inventory.internalID,
+        })
+    },
     methods: {
         onBack() {
-            this.$router.go(-1)
+           // this.$router.go(-1)
+            const id = this.internalID
+            this.$router.push(`/landlord/tenancy/${id}`)
         }
     }
 }

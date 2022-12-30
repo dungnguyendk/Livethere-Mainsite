@@ -20,7 +20,7 @@ import LandlordHeader from "~/components/shared/Header/LandlordHeader.vue"
 import AssetInventory from "~/components/components/Landlord/AssetInventory/AssetInventory.vue"
 import TenancyWrapper from "~/components/components/Landlord/Tenancy/TenancyWrapper"
 import TenancyExpensesPanel from "~/components/components/Landlord/Tenancy/Panel/TenancyExpensesPanel"
-
+import { mapState } from "vuex"
 export default {
     components: {
         TenancyExpensesPanel,
@@ -30,10 +30,13 @@ export default {
         LandlordPortal
     },
     head: {
-        title: `Landlord | ${appSettings.siteName}`
+        title: `Expense | ${appSettings.siteName}`
     },
 
     computed: {
+        ...mapState({
+            internalID: (state) => state.inventory.internalID
+        }),
         loggedIn() {
             return this.$auth.loggedIn
         }
@@ -41,7 +44,9 @@ export default {
 
     methods: {
         onBack() {
-            this.$router.go(-1)
+            const id = this.internalID
+            this.$router.push(`/landlord/tenancy/${id}`)
+            //this.$router.go(-1)
         }
     },
 
