@@ -162,12 +162,14 @@ export const actions = {
             const response = await this.$axios.$get(`${httpEndpoint.tenancies.document}?${payload}`)
             if (response) {
                 commit("setDocuments", response)
+                return response
             } else {
                 commit("setDocuments", [])
+                return []
             }
         } catch (e) {
             console.log({ Error: e.message })
-            commit("setExpanses", [])
+            return []
         }
     },
 

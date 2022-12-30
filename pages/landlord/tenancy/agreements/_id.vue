@@ -42,11 +42,11 @@ export default {
             this.$router.push("/landlord/signin")
         }
     },
-    async asyncData({ app, route, store }) {
+    async asyncData({ route, store }) {
         try {
             await store.dispatch("tenancy/getTenancyDetails", route.params.id)
             const documentQueries = qs.stringify({
-                TenancyContractAgreementFID: store.state.tenancies.tenancyDetails.id,
+                TenancyContractAgreementFID: store.state.tenancy.tenancyDetails.id,
                 FileTypeFID: 1
             })
             console.log({ documentQueries })

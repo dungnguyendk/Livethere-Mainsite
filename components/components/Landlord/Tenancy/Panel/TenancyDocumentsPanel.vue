@@ -2,11 +2,6 @@
     <div class="section--tenacy-document">
         <h3 class="section__label">Document</h3>
         <TenancyDocumentTable />
-        <v-snackbar v-model="openSnackBar" :timeout="2000" top right text color="green darken-4">
-            <span class="message--snackBar">
-                <i class="ri-information-line" /> {{ snackbarMessage }}
-            </span>
-        </v-snackbar>
     </div>
 </template>
 
@@ -16,23 +11,7 @@ import { mapState } from "vuex"
 
 export default {
     name: "TenancyDocumentsPanel",
-    components: { TenancyDocumentTable },
-    computed: {
-        ...mapState({
-            snackbar: (state) => state.tenancy.snackbar,
-            snackbarMessage: (state) => state.tenancy.snackbarMessage
-        })
-    },
-    data() {
-        return {
-            openSnackBar: false
-        }
-    },
-    watch: {
-        snackbar(val) {
-            this.openSnackBar = val
-        }
-    }
+    components: { TenancyDocumentTable }
 }
 </script>
 <style lang="scss" scoped>

@@ -122,7 +122,7 @@ export default {
                     fileTypeName: "Tenancy Agreement",
                     originalFileName: fileInfo.data.fileName,
                     systemFileName: fileInfo.data.fileName,
-                    contentType: fileInfo.data.extentsion // pdf
+                    contentType: "application/pdf" // pdf
                     //hashPasscode: "string"
                 }
                 await this.$store.dispatch("tenancy/createTenancyDocument", params)

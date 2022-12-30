@@ -7,8 +7,8 @@
             <p>{{ source.fileTypeName ? source.fileTypeName : "n/a" }}</p>
         </td>
         <td data-title="Leasing Type">
-            <v-btn class="btn btn--ghost btn--green btn--sm btn--withIcon" @click="onDelete">
-                <i class="ri-download-cloud-2-line"></i> download
+            <v-btn class="btn btn--ghost btn--green btn--sm btn--withIcon" @click="onDownload">
+                <i class="ri-download-cloud-2-line" /> download
             </v-btn>
             <v-btn class="btn btn--ghost btn--red btn--sm btn--withIcon" @click="onDelete">
                 <i class="ri-delete-bin-6-line"></i> Remove
@@ -32,6 +32,21 @@ export default {
     methods: {
         onDelete() {
             this.$store.dispatch("tenancy/deleteTenancyDocument", this.source.id)
+        },
+        async onDownload() {
+            const response = await this.$api.$get(`/api/documents/${this.source.id}/datas`)
+            if (response) {
+                console.log({ response })
+                const file = new Blob([response])
+                const fileURL = URL.createObjectURL(file)
+                const link = document.createElement("a")
+                link.href = fileURL
+                link.setAttribute("download", this.source.originalFileName)
+                document.body.appendChild(link)
+                console.log({ link })
+                link.click()
+                /*window.open(fileURL)*/
+            }
         }
     }
 }
