@@ -1,11 +1,8 @@
 <template lang="html">
     <div class="section-chart">
         <label class="chart-title">Expiring Leases</label>
-        <Doughnut :chart-options="chartOptions" :chart-data="chartData" :chart-id="chartId"
-            :dataset-id-key="datasetIdKey" />
-        <!-- <div class="donut-chart">
-            <img src="~/static/img/donut-chart.png" alt="">
-        </div> -->
+        <Doughnut :chart-options="chartOptionsDoughnut" :chart-data="chartDataDoughnut" :plugins="pluginsDoughnut"
+            :chart-id="chartId" :dataset-id-key="datasetIdKey" />
         <div class="block__leases">
             <div class="leases-day">
                 <div class="expiring">
@@ -70,42 +67,54 @@ export default {
     },
     data() {
         return {
-            chartData: {
-                labels: [],
-                datasets: [
-                    {
-                        backgroundColor: ['#FF9A3E', '#5D5FEF', '#27A857'],
-                        data: [2, 2, 4]
-                    }
-                ],
-                afterDraw: function (chart, args, pluginOptions) {
-                    const { ctx, chartArea: { top, right, bottom, left, width, height } } = chart;
-                    ctx.save();
-                    ctx.textAlign = 'center';
-                    ctx.textBaseline = 'middle';
-                    ctx.font = "16px normal 'Helvetica Nueue'";
-                    ctx.fillText('No data to display', width / 2, height / 2);
-                }
+            chartDataDoughnut: {
+                labels: ['Score', 'Gray Area'],
+                datasets: [{
+                    label: [],
+                    data: [2, 2, 4],
+                    backgroundColor: [
+                        '#FF9A3E', '#5D5FEF', '#27A857'
+                    ],
+                    borderWidth: 1,
+                    cutout: "80%",
+                    circumference: 180,
+                    rotation: -90,
+                }],
+
             },
-            chartOptions: {
-                responsive: true,
+            chartOptionsDoughnut: {
                 maintainAspectRatio: false,
                 aspectRatio: 3.5,
-                cutout: "80%",
-                circumference: 180,
-                rotation: -90,
-                // plugins: [this.gaugeChartText]
-                // title: {
-                //     display: true,
-                //     text: 'Based on submission data - YTD',
-                //     align: 'center',
-                //     position: 'bottom'
-                // },
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        enabled: false
+                    }
+                },
+            },
+            pluginsDoughnut: [{
+                afterDraw: function (chart, option) {
+                    const { ctx, data, chartArea: { top, bottom, left, right, width, height }, scales: { r } } = chart
+                    ctx.save()
+                    const xCoor = chart.getDatasetMeta(0).data[0].x;
+                    const yCoor = chart.getDatasetMeta(0).data[0].y;
+                    const score = data.datasets[0].data[0] + data.datasets[0].data[1] + data.datasets[0].data[2]
+                    // ctx.fillRect(xCoor, yCoor, 400, 1)
+                    ctx.font = '20px sans-serif'
+                    ctx.textBaseLine = "bottom"
+                    ctx.textAlign = "center"
+                    ctx.fillText(score, xCoor, yCoor - 20)
 
-                // },
-            }
+                    ctx.font = '15px sans-serif'
+                    ctx.textBaseLine = "bottom"
+                    ctx.textAlign = "center"
+                    ctx.fillText("Properties", xCoor, yCoor - 4)
+                }
+            }]
         }
-    },
+    }
 }
 </script>
 <style lang="scss" scoped>
