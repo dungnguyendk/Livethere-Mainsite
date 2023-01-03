@@ -31,7 +31,7 @@
 
 <script>
 import { Chart as ChartJS, Title, Tooltip, Legend, ArcElement, CategoryScale, LinearScale, BarElement } from "chart.js";
-
+import { mapState } from "vuex"
 ChartJS.register(Title, Tooltip, Legend, ArcElement, CategoryScale, LinearScale, BarElement);
 export default {
     name: "ExpiringLeasesChart",
@@ -114,6 +114,11 @@ export default {
                 }
             }]
         }
+    },
+    computed: {
+        ...mapState({
+            dashboard: (state) => state.dashboard.dashBoards
+        })
     }
 }
 </script>

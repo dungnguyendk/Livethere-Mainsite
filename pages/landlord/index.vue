@@ -30,6 +30,14 @@ export default {
         if (!this.loggedIn) {
             this.$router.push("/landlord/signin")
         }
-    }
+    },
+    async asyncData({ app, route, store }) {
+        try {
+            await store.dispatch("dashboard/getDashBoards")
+        } catch (e) {
+            console.log({ Error: e.message })
+            return false
+        }
+    },
 }
 </script>

@@ -19,6 +19,7 @@ import InventoryChart from './components/Chart/InventoryChart.vue';
 import ExpiringLeasesChart from './components/Chart/ExpiringLeasesChart.vue'
 import IncomeChart from './components/Chart/IncomeChart.vue';
 import StatisticsChart from "./components/Widget/StatisticsChart.vue"
+import { mapState } from 'vuex';
 export default {
     name: "LandlordDashboard",
     components: { InventoryChart, ExpiringLeasesChart, IncomeChart, StatisticsChart },
@@ -59,6 +60,11 @@ export default {
                 widgetSVG: "img-widget2"
             }
         }
+    }, 
+    computed: {
+        ...mapState({
+            dashboard: (state) => state.dashboard.dashBoards
+        })
     }
 }
 </script>
