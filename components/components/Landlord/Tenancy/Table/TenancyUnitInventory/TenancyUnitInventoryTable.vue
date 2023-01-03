@@ -70,15 +70,34 @@ export default {
             color: var(--color-white);
         }
     }
-    th:nth-child(1) {
-        min-width: 27.2rem;
-    }
-    th:nth-child(2) {
-        min-width: 21.2rem;
-    }
+    // th:nth-child(1) {
+    //     min-width: 27.2rem;
+    // }
+    // th:nth-child(2) {
+    //     min-width: 21.2rem;
+    // }
     th:nth-child(3) {
         display: flex;
         flex-wrap: nowrap;
+    }
+}
+@media (max-width: 846px) {
+    .table--responsive tbody tr {
+        margin-bottom: 0;
+        border: 1px solid #e5e5e5;
+    }
+    table {
+        width: 100%;
+    }
+    tr td {
+        display: block;
+    }
+    th,
+    tbody {
+        display: block;
+    }
+    thead {
+        display: none;
     }
 }
 @media (max-width: 768px) {

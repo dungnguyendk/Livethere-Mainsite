@@ -4,6 +4,7 @@ export const state = () => ({
     inventoryDetails: null,
     unitInventoryDetail: "",
     units: [],
+    tenancyLinks: "details",
     createEntries: {},
     internalID: {},
     entriesID: {},
@@ -40,7 +41,11 @@ export const mutations = {
     },
     setSnackbarMessage(state, payload) {
         state.snackbarMessage = payload
-    }
+    },
+    setTenancyLink(state, payload) {
+        state.tenancyLinks = payload
+    },
+    
 }
 
 export const actions = {
