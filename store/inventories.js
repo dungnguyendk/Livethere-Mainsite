@@ -20,11 +20,9 @@ export const mutations = {
     },
     setSnackbar(state, payload) {
         state.snackbar = payload
-        // console.log("state.snackbar::", state.snackbar)
     },
     setSnackbarMessage(state, payload) {
         state.snackbarMessage = payload
-        // console.log("state.snackbarMessage::", state.snackbarMessage)
     }
 }
 
@@ -88,12 +86,10 @@ export const actions = {
             if (response) {
                 commit("setSnackbar", true)
                 commit("setSnackbarMessage", "Update inventory success")
-                // console.log("response Create::", response)
             } else {
                 commit("setSnackbar", false)
                 commit("setSnackbarMessage", "Your message has been sent.")
             }
-            // console.log("response Update::", response)
         } catch (e) {
             console.log({ Error: e.message })
             commit("setSnackbar", false)
@@ -109,12 +105,10 @@ export const actions = {
             if (response) {
                 commit("setSnackbar", true)
                 commit("setSnackbarMessage", "Delete inventory success")
-                // console.log("response Create::", response)
             } else {
                 commit("setSnackbar", false)
                 commit("setSnackbarMessage", "Your message has been sent.")
             }
-            // console.log("response Delete::", response)
         } catch (e) {
             console.log({ Error: e.message })
             commit("setSnackbar", false)

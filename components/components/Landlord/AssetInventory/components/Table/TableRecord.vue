@@ -1,6 +1,9 @@
 <template>
-    <tr :class="`table--record ${source.id !== selectedId && selectedId !== -1 ? 'unSelected' : ''
-    }`">
+    <tr
+        :class="`table--record ${
+            source.id !== selectedId && selectedId !== -1 ? 'unSelected' : ''
+        }`"
+    >
         <td data-label="Property">
             <div>
                 <!-- <img
@@ -50,12 +53,16 @@
             <div>
                 <v-menu offset-y>
                     <template v-slot:activator="{ on, attrs }">
-                        <v-btn x-small fab outlined class="more-option" v-bind="attrs" v-on="on"><i
-                                class="ri-more-fill"></i></v-btn>
+                        <v-btn x-small fab outlined class="more-option" v-bind="attrs" v-on="on"
+                            ><i class="ri-more-fill"></i
+                        ></v-btn>
                     </template>
                     <v-list dense>
                         <v-list-item-group>
-                            <v-list-item @click="onEditInventory(source.id)" class="list-item--custom">
+                            <v-list-item
+                                @click="onEditInventory(source.id)"
+                                class="list-item--custom"
+                            >
                                 <v-list-item-icon>
                                     <v-icon v-text="`ri-edit-box-line`"></v-icon>
                                 </v-list-item-icon>
@@ -63,7 +70,10 @@
                                     <v-list-item-title>Edit</v-list-item-title>
                                 </v-list-item-content>
                             </v-list-item>
-                            <v-list-item @click="onVisitInventoryUnits" class="list-item--custom--middle">
+                            <v-list-item
+                                @click="onVisitInventoryUnits"
+                                class="list-item--custom--middle"
+                            >
                                 <v-list-item-icon>
                                     <v-icon v-text="`ri-add-box-line`"></v-icon>
                                 </v-list-item-icon>
@@ -71,7 +81,10 @@
                                     <v-list-item-title>Unit Inventory</v-list-item-title>
                                 </v-list-item-content>
                             </v-list-item>
-                            <v-list-item @click="onDeleteInventory(source.id)" class="list-item--custom">
+                            <v-list-item
+                                @click="onDeleteInventory(source.id)"
+                                class="list-item--custom"
+                            >
                                 <v-list-item-icon>
                                     <v-icon v-text="`ri-delete-bin-line`"></v-icon>
                                 </v-list-item-icon>
@@ -83,10 +96,18 @@
                     </v-list>
                 </v-menu>
             </div>
-            <Dialog :open="openAddNewInventoryDialog" @close="closeDialog" :size="sizeDialog" :title="''"
-                :actions="false">
-                <AddInventoryForm @close="openAddNewInventoryDialog = false" v-if="openAddNewInventoryDialog"
-                    :sourceDetail="source.id" />
+            <Dialog
+                :open="openAddNewInventoryDialog"
+                @close="closeDialog"
+                :size="sizeDialog"
+                :title="''"
+                :actions="false"
+            >
+                <AddInventoryForm
+                    @close="openAddNewInventoryDialog = false"
+                    v-if="openAddNewInventoryDialog"
+                    :sourceDetail="source.id"
+                />
             </Dialog>
         </td>
     </tr>
@@ -106,7 +127,7 @@ export default {
     props: {
         source: {
             type: Object,
-            default: () => { }
+            default: () => {}
         },
         selectedId: {
             type: Number,
@@ -117,8 +138,8 @@ export default {
         return {
             openAddNewInventoryDialog: false,
             sizeDialog: "large",
-            floorAreaSqftFormatter: '',
-            landAreaFormatter: ''
+            floorAreaSqftFormatter: "",
+            landAreaFormatter: ""
         }
     },
     computed: {
@@ -135,7 +156,7 @@ export default {
             this.$emit("handleClickOpenRow", item)
         },
         onVisitInventoryUnits() {
-            this.$router.push(`/landlord/assets/units/${this.source.id}`)
+            this.$router.push(`/landlord/assets/units/${this.source.internalID}`)
         },
         onEditInventory(item) {
             this.$store.dispatch("inventories/getDetailInventory", item).then(() => {
@@ -157,7 +178,7 @@ export default {
             })
         },
         closeDialog() {
-            this.$store.commit("inventories/setInventoryDetail", '')
+            this.$store.commit("inventories/setInventoryDetail", "")
             this.openAddNewInventoryDialog = false
             // this.$router.push(`/landlord/assets/units/${this.source.internalID}`)
         }
@@ -196,15 +217,14 @@ export default {
     }
 
     background-color: rgba(236, 184, 66, 0.1);
-    border: 1px solid var(--color-more-options);
+    border: 1px solid var(--color-yellow);
     border-radius: 0.8rem;
 
     i {
-        color: var(--color-more-options);
+        color: var(--color-yellow);
         font-size: 2.4rem;
     }
 }
-
 
 .list-item--custom {
     height: 3.5rem;

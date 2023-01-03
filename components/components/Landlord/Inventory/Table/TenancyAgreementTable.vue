@@ -10,8 +10,12 @@
             </tr>
         </thead>
         <tbody>
-            <template v-if="listTenancyAgreements.length > 0">
-                <TableRecord v-for="(item, index) in listTenancyAgreements" :source="item" :key="index" />
+            <template v-if="listTenancyAgreements && listTenancyAgreements.length > 0">
+                <TableRecord
+                    v-for="(item, index) in listTenancyAgreements"
+                    :source="item"
+                    :key="index"
+                />
             </template>
             <template v-else>
                 <tr>
@@ -26,8 +30,8 @@
 
 <script>
 import TableRecord from "~/components/components/Landlord/Inventory/Table/TableRecord.vue"
-import { mapState } from "vuex";
-import { state } from '~/store/app';
+import { mapState } from "vuex"
+import { state } from "~/store/app"
 
 export default {
     name: "TenancyAgreementTable",
@@ -35,9 +39,8 @@ export default {
     computed: {
         ...mapState({
             listTenancyAgreements: (state) => state.inventory.listTenancyAgreements
-        }),
-    },
-
+        })
+    }
 }
 </script>
 <style lang="scss" scoped>
@@ -60,7 +63,6 @@ export default {
         th {
             padding: 1.5rem 1.8rem 1.5rem;
             background: #d97706;
-            font-family: "Nunito";
             font-style: normal;
             font-weight: 700;
             font-size: 16px;

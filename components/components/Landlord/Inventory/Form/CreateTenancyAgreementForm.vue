@@ -129,7 +129,7 @@
                         />
                     </div>
                 </v-col>
-                
+
                 <v-col cols="12" sm="12" md="12">
                     <div class="form__field">
                         <label>Remark </label>
@@ -165,16 +165,14 @@ export default {
             required
         },
         tenancyRefCode: {
-            required, 
+            required,
             numeric
         },
         monthlyRental: {
-            required,
-            numeric
+            required
         },
         secureDeposit: {
-            required,
-            numeric
+            required
         }
     },
     computed: {
@@ -195,15 +193,15 @@ export default {
         },
         secureDepositErrors() {
             return setFormControlErrors(this.$v.secureDeposit, "This field is required")
-        }, 
-        tenancyRefCodeErrors(){ 
+        },
+        tenancyRefCodeErrors() {
             const errors = []
-            if(!this.$v.tenancyRefCode.$dirty) return errors 
+            if (!this.$v.tenancyRefCode.$dirty) return errors
             !this.$v.tenancyRefCode.required && errors.push("This field is required")
-            !this.$v.tenancyRefCode.numeric && errors .push("This field can only contain numeric values")
+            !this.$v.tenancyRefCode.numeric &&
+                errors.push("This field can only contain numeric values")
             return errors
         }
-
     },
     data() {
         return {
@@ -219,9 +217,9 @@ export default {
             monthlyRental: "",
             secureDeposit: "",
             remark: "",
-            tenancyRefCode: "", 
-            submitted: false, 
-            isOpenSnackbar: false, 
+            tenancyRefCode: "",
+            submitted: false,
+            isOpenSnackbar: false
         }
     },
     watch: {
@@ -255,34 +253,37 @@ export default {
             if (!date) return null
             return this.$moment(date).format("DD-MMM-YYYY")
         },
-        onClose() {
-            this.$emit("close")
-        },
+
         submitForm() {
             this.submitted = true
             this.$v.$touch()
+            console.log({ validate: this.$v, monthlyRental: this.monthlyRental })
             if (!this.$v.$invalid) {
-                   const params = {
-                        tenancyRefCode: this.tenancyRefCode,
-                        assestInventoryFID: this.inventoryDetails.id,
-                        agreementDate: this.agreementDateRaw,
-                        startDate: this.startDateRaw,
-                        endDate: this.endDateRaw,
-                        currencyType: "SGD",
-                        currentyName: "Singapore Dollar",
-                        cultureCode: "en-SG",
-                        monthlyRental: this.monthlyRental ? convertCommasToNumber(this.monthlyRental) : 0,
-                        secureDeposit: this.secureDeposit ? convertCommasToNumber(this.secureDeposit) : 0,
-                        remark: this.remark
+                const params = {
+                    tenancyRefCode: this.tenancyRefCode,
+                    assestInventoryFID: this.inventoryDetails.id,
+                    agreementDate: this.agreementDateRaw,
+                    startDate: this.startDateRaw,
+                    endDate: this.endDateRaw,
+                    currencyType: "SGD",
+                    currentyName: "Singapore Dollar",
+                    cultureCode: "en-SG",
+                    monthlyRental: this.monthlyRental
+                        ? convertCommasToNumber(this.monthlyRental)
+                        : 0,
+                    secureDeposit: this.secureDeposit
+                        ? convertCommasToNumber(this.secureDeposit)
+                        : 0,
+                    remark: this.remark
                 }
                 this.$store.dispatch("inventory/createTenancyAgreement", params)
-                this.$emit("openSnackbar", this.isOpenSnackbar = true)
-               this.onClose()
+                this.$emit("openSnackbar", (this.isOpenSnackbar = true))
+                this.onClose()
             } else {
                 console.error("error!")
             }
-        }, 
-        onClose(){
+        },
+        onClose() {
             this.$emit("close")
         }
     }

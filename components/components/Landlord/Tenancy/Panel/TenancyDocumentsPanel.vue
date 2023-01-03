@@ -1,12 +1,13 @@
 <template lang="html">
     <div class="section--tenacy-document">
-        <h3 class="section__label"> Tenancy Documents </h3>
+        <h3 class="section__label">Document</h3>
         <TenancyDocumentTable />
     </div>
 </template>
 
 <script>
 import TenancyDocumentTable from "~/components/components/Landlord/Tenancy/Table/TenancyDocument/TenancyDocumentTable.vue"
+import { mapState } from "vuex"
 
 export default {
     name: "TenancyDocumentsPanel",

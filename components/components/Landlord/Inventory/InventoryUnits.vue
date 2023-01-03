@@ -6,7 +6,7 @@
                     <i class="ri-arrow-left-line"></i>
                     Back
                 </v-btn>
-                <h3>Lloyd Sixtyfive </h3>
+                <h3> {{ inventoryDetails ? inventoryDetails.propertyName : "Untitled" }} </h3>
             </div>
             <div class="section__container">
                 <InventoryInformationPanel />

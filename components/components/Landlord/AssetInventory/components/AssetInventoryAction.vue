@@ -20,13 +20,7 @@
             <v-icon left>ri-add-box-line</v-icon>
             Add New Inventory
         </v-btn>
-        <Dialog
-            :open="openAddNewInventoryDialog"
-            @close="closeDialog"
-            :size="sizeDialog"
-            title=""
-            :actions="false"
-        >
+        <Dialog :open="openAddNewInventoryDialog" @close="closeDialog" :actions="false">
             <AddInventoryForm
                 @close="openAddNewInventoryDialog = false"
                 v-if="openAddNewInventoryDialog"

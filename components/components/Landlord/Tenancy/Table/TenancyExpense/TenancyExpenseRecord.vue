@@ -1,24 +1,56 @@
 <template lang="html">
     <tr>
         <td data-title="Description">
-            <p>{{ source.description }}</p>
+            <p>{{ source.itemName }}</p>
         </td>
-        <td data-title="Price"
-            ><p>{{ source.price }}</p></td
-        >
-        <td data-title="Date"
-            ><p>{{ source.date }} </p></td
-        >
+        <td data-title="Price">
+            <p>{{ source.currencyType }} {{ price }}</p>
+        </td>
+        <td data-title="Date">
+            <p>{{ source.purchaseDate }} </p>
+        </td>
+        <td data-title="Actions">
+            <v-btn class="btn btn--ghost btn--sm btn--red" @click="onDelete"> Delete</v-btn>
+        </td>
     </tr>
 </template>
 
 <script>
+import { convertNumberToCommas } from "~/ultilities/helpers"
+import SuccessSnackBar from "~/components/shared/Snackbar/SuccessSnackBar"
+
 export default {
     name: "TenacyExpenseRecord",
+    components: { SuccessSnackBar },
+    computed: {
+        price() {
+            return convertNumberToCommas(this.source.itemPrice)
+        },
+        purchaseDate() {
+            return this.$moment(this.source.purchaseDate).format("DD-MMM-YYYY")
+        }
+    },
     props: {
         source: {
             type: Object,
             default: () => {}
+        }
+    },
+    data() {
+        return {
+            snackBar: false,
+            snackBarMessage: "Delete tenancy expense successfully!"
+        }
+    },
+    methods: {
+        async onDelete() {
+            await this.$store
+                .dispatch("tenancy/deleteTenancyExpense", this.source.id)
+                .then((response) => {
+                    if (response) {
+                        this.$emit("onDeleleteSuccess")
+                    }
+                })
         }
     }
 }
@@ -28,13 +60,14 @@ tr {
     position: relative;
     vertical-align: top;
 }
+
 td {
     padding: 3.3rem 2.4rem;
     border-bottom: 1px solid #e5e5e5;
+
     p {
         display: flex;
         justify-content: left;
-        /* Body/Nunito-R/16-24 */
         margin-bottom: 0;
         font-family: var(--font-primary);
         font-style: normal;
@@ -44,19 +77,21 @@ td {
         text-overflow: ellipsis;
         display: -webkit-box;
         -webkit-line-clamp: 2;
-        // line-clamp: 2;
         -webkit-box-orient: vertical;
         overflow: hidden;
 
         color: #0b0c0c;
     }
 }
+
 td:nth-child(2) {
     padding-left: 0;
 }
+
 tr:nth-child(even) {
     background-color: #fafafa;
 }
+
 @media screen and (max-width: 768px) {
     tr:nth-child(even) {
         background-color: #fafafa;
@@ -68,9 +103,9 @@ tr:nth-child(even) {
         text-align: right;
         grid-template-columns: 1fr 1fr;
         grid-gap: 3rem;
-        border: none;
         padding: 1.6rem;
         border-top: none;
+
         &:before {
             content: attr(data-title);
             font-weight: 700;

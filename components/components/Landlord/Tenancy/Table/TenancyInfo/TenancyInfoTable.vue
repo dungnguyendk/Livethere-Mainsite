@@ -9,12 +9,12 @@
             </tr>
         </thead>
         <tbody>
-            <template v-if="items.length > 0">
-                <TenancyInfoRecord v-for="(item, index) in items" :source="item" :key="index" />
+            <template v-if="tenancyInfosById.length > 0">
+                <TenancyInfoRecord v-for="item in tenancyInfosById" :source="item" :key="item.id" />
             </template>
             <template v-else>
                 <tr>
-                    <td colspan="2">
+                    <td colspan="4">
                         <p class="empty">No record found.</p>
                     </td>
                 </tr>
@@ -25,32 +25,18 @@
 
 <script>
 import TenancyInfoRecord from "./TenancyInfoRecord.vue"
+import { mapState } from "vuex";
 export default {
     name: "TenancyInfoTable",
     components: { TenancyInfoRecord },
     data() {
         return {
-            items: [
-                {
-                    name: "Peter Tan",
-                    passportNo: "Dxxx4567",
-                    leasingType: "Corporate",
-                    companyName: "Michael Rollin"
-                },
-                {
-                    name: "Hung Vuong",
-                    passportNo: "Dxxx4567",
-                    leasingType: "Corporate",
-                    companyName: "Michael Rollin"
-                },
-                {
-                    name: "Hung Vuong",
-                    passportNo: "Dxxx4567",
-                    leasingType: "Corporate",
-                    companyName: "Michael Rollin"
-                }
-            ]
         }
+    },
+    computed: {
+        ...mapState({
+            tenancyInfosById: (state) => state.tenancy.tenancyInfosById
+        })
     }
 }
 </script>
