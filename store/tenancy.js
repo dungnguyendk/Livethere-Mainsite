@@ -6,7 +6,9 @@ export const state = () => ({
     tenancyInfosById: [],
     snackbar: false,
     snackbarMessage: "Your message has been sent.",
-    expenses: []
+    expenses: [],
+    tenancyLinks: "details",
+
 })
 
 export const mutations = {
@@ -27,7 +29,10 @@ export const mutations = {
     },
     setSnackbarMessage(state, payload) {
         state.snackbarMessage = payload
-    }
+    },
+    setTenancyLink(state, payload) {
+        state.tenancyLinks = payload
+    },
 }
 
 export const actions = {
