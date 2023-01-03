@@ -1,10 +1,11 @@
 <template lang="html">
     <div class="section-chart">
         <label class="chart-title">Expiring Leases</label>
-        <!-- <Doughnut /> -->
-        <div class="donut-chart">
+        <Doughnut :chart-options="chartOptions" :chart-data="chartData" :chart-id="chartId"
+            :dataset-id-key="datasetIdKey" />
+        <!-- <div class="donut-chart">
             <img src="~/static/img/donut-chart.png" alt="">
-        </div>
+        </div> -->
         <div class="block__leases">
             <div class="leases-day">
                 <div class="expiring">
@@ -37,8 +38,72 @@ import { Chart as ChartJS, Title, Tooltip, Legend, ArcElement, CategoryScale, Li
 ChartJS.register(Title, Tooltip, Legend, ArcElement, CategoryScale, LinearScale, BarElement);
 export default {
     name: "ExpiringLeasesChart",
+    props: {
+        chartId: {
+            type: String,
+            default: 'doughnut-chart'
+        },
+        datasetIdKey: {
+            type: String,
+            default: 'label'
+        },
+        width: {
+            type: Number,
+            default: 400
+        },
+        height: {
+            type: Number,
+            default: 400
+        },
+        cssClasses: {
+            default: '',
+            type: String
+        },
+        styles: {
+            type: Object,
+            default: () => { }
+        },
+        plugins: {
+            type: Array,
+            default: () => []
+        }
+    },
     data() {
         return {
+            chartData: {
+                labels: [],
+                datasets: [
+                    {
+                        backgroundColor: ['#FF9A3E', '#5D5FEF', '#27A857'],
+                        data: [2, 2, 4]
+                    }
+                ],
+                afterDraw: function (chart, args, pluginOptions) {
+                    const { ctx, chartArea: { top, right, bottom, left, width, height } } = chart;
+                    ctx.save();
+                    ctx.textAlign = 'center';
+                    ctx.textBaseline = 'middle';
+                    ctx.font = "16px normal 'Helvetica Nueue'";
+                    ctx.fillText('No data to display', width / 2, height / 2);
+                }
+            },
+            chartOptions: {
+                responsive: true,
+                maintainAspectRatio: false,
+                aspectRatio: 3.5,
+                cutout: "80%",
+                circumference: 180,
+                rotation: -90,
+                // plugins: [this.gaugeChartText]
+                // title: {
+                //     display: true,
+                //     text: 'Based on submission data - YTD',
+                //     align: 'center',
+                //     position: 'bottom'
+                // },
+
+                // },
+            }
         }
     },
 }
