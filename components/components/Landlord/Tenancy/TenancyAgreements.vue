@@ -1,7 +1,10 @@
 <template lang="html">
     <TenancyWrapper @onBack="onBack">
         <template slot="content">
-            <TenancyAgreementUploadFilePanel />
+            <TenancyAgreementUploadFilePanel
+                title="Tenancy Agreement"
+                @onUpdateDocuments="onUpdateDocuments"
+            />
             <TenancyDocumentsPanel />
             <v-snackbar
                 v-model="openSnackBar"
@@ -47,6 +50,19 @@ export default {
     methods: {
         onBack() {
             this.$router.go(-1)
+        },
+
+        async onUpdateDocuments(fileInfo, fileID) {
+            const params = {
+                tenancyContractAgreementFID: this.tenancyDetails.id,
+                fileTypeFID: 1, // 1: document, 2: stamp duty
+                fileID: fileID,
+                fileTypeName: "Tenancy Agreement",
+                originalFileName: fileInfo.data.fileName,
+                systemFileName: fileInfo.data.fileName,
+                contentType: "application/pdf" // pdf
+            }
+            await this.$store.dispatch("tenancy/createTenancyDocument", params)
         }
     }
 }
