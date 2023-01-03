@@ -32,6 +32,7 @@ export default {
         { src: "~plugins/vueliate.js", ssr: false },
         { src: "~plugins/vue-side-up-down.js", ssr: false },
         { src: "~plugins/axios.js", ssr: true },
+        { src: "~plugins/chart.js", ssr: true },
         { src: "~plugins/phone-input.js", ssr: false }
     ],
 
