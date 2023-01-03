@@ -20,6 +20,7 @@ export default function ({ $axios, redirect }, inject) {
             LMApiKey: "YWljb2tleW5heW1vaWR1b2N0cnV5Y2FwdmFvZGF5"
         }
     })
+
     const apivo = $axios.create({
         // headers: {
         //     common: {

@@ -87,6 +87,10 @@ td {
 td:nth-child(2) {
     padding-left: 0;
 }
+td:nth-child(4) {
+    display: flex;
+    justify-content: flex-end;
+}
 
 tr:nth-child(even) {
     background-color: #fafafa;
