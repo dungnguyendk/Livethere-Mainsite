@@ -16,14 +16,14 @@
                     <div class="leases leases--color-blue"></div>
                     <span>{{ dashboard ? dashboard.expiringLeaseStage2 : 0 }}</span>
                 </div>
-                <label>31 - 60 days</label>
+                <label>31 - 90 days</label>
             </div>
             <div class="leases-day">
                 <div class="expiring">
                     <div class="leases leases--color-green"></div>
                     <span>{{ dashboard ? dashboard.expiringLeaseStage3 : 0 }}</span>
                 </div>
-                <label>61 - 90 days</label>
+                <label>&gt 90 days</label>
             </div>
         </div>
     </div>
