@@ -1,6 +1,5 @@
 <template>
     <div>
-        <LandlordHeader />
         <LandlordTerms />
     </div>
 </template>
@@ -19,8 +18,9 @@ export default {
         LandlordHeader,
         LandlordSignIn
     },
+    layout: "landlord",
     head: {
-        title: `Register Landlord | ${appSettings.siteName}`
+        title: `Landlord Register | ${appSettings.siteName}`
     }
 }
 </script>

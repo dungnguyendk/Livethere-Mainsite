@@ -19,6 +19,7 @@ import Insights from "~/components/components/Landlord/Insights/Insights.vue"
 
 export default {
     components: { Insights, LandlordHeader, LandlordPortal, LandingFooter, LandingHeader },
+    layout:'landlord',
     head: {
         title: `Landlord | ${appSettings.siteName}`
     },

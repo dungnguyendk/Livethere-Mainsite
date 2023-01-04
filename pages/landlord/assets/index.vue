@@ -1,6 +1,5 @@
 <template lang="html">
     <main>
-        <LandlordHeader />
         <template v-if="loggedIn">
             <LandlordPortal>
                 <AssetInventory />
@@ -19,7 +18,7 @@ import qs from "qs"
 export default {
     components: { AssetInventory, LandlordHeader, LandlordPortal },
     head: {
-        title: `Landlord | ${appSettings.siteName}`
+        title: `Assets | ${appSettings.siteName}`
     },
 
     computed: {

@@ -21,6 +21,7 @@ export default {
         Marketing,
         LandlordHeader
     },
+    layout:'landlord',
     head: {
         title: `Landlord | ${appSettings.siteName}`
     },

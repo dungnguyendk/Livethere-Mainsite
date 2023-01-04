@@ -1,6 +1,5 @@
 <template>
     <div>
-        <LandlordHeader />
         <LandlordRegisterBenefits />
     </div>
 </template>
@@ -15,6 +14,7 @@ export default {
         LandlordRegisterBenefits,
         LandlordHeader,
         LandlordSignIn
-    }
+    },
+    layout: "landlord"
 }
 </script>

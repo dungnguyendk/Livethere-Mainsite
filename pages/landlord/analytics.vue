@@ -1,6 +1,5 @@
 <template lang="html">
     <main>
-        <LandlordHeader />
         <template v-if="loggedIn">
             <LandlordPortal>
                 <Analytics />
@@ -16,7 +15,7 @@ import { appSettings } from "~/app-settings"
 import Analytics from "~/components/components/Landlord/Analytics/Analytics.vue"
 
 export default {
-    name: "landlord",
+    layout: "landlord",
     components: { Analytics, LandlordHeader, LandlordPortal },
     head: {
         title: `Landlord | ${appSettings.siteName}`
