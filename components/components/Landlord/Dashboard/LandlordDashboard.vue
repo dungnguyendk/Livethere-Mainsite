@@ -109,8 +109,8 @@ export default {
                 icon: "icon-income-violet",
                 // img: "line-chart-blue",
                 incomeYear: "2022",
-                labels: this.dashboard.currentyYearIncomeData.map((val) => val.name),
-                data: this.dashboard.currentyYearIncomeData.map((val) => val.value),
+                labels: this.dashboard.currentYearIncomeData.map((val) => val.name),
+                data: this.dashboard.currentYearIncomeData.map((val) => val.value),
                 price: this.dashboard.incomeCurrentYear,
                 incomeRate: this.dashboard.incomeCurrentYearRate,
                 lineColor: "hsla(240, 64%, 62%, 1)"
