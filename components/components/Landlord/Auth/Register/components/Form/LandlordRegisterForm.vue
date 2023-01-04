@@ -254,7 +254,7 @@ export default {
                         this.snackBarMessage = "Submit registration successfully!"
                         setTimeout(() => {
                             this.snackBarMessage = ""
-                            this.$router.push("/register/verify")
+                            this.$router.push("/landlord/register/verify")
                         }, 2000)
                     }
                 }
