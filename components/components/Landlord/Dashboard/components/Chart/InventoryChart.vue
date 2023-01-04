@@ -66,7 +66,6 @@ export default {
             return this.dashboard ? (this.dashboard.totalInventories / this.dashboard.totalInventories) * 100 : 0
         },
         tenant() {
-            console.log("tenant", ((this.dashboard.tenantInventories / this.dashboard.totalInventories) * 100).toFixed())
             return this.dashboard ? ((this.dashboard.tenantInventories / this.dashboard.totalInventories) * 100).toFixed() : 0
         },
         vacant() {
