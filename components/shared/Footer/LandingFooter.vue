@@ -6,7 +6,7 @@
                     <InformationFooterWidget />
                 </div>
                 <div class="footer__right">
-                    <LinksFooterWidget :source="menus" />
+                    <LinksFooterWidget  />
                     <SharingFooterWidget />
                 </div>
             </div>

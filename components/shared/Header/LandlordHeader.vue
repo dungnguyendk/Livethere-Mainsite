@@ -141,12 +141,13 @@ export default {
     align-items: center;
     grid-gap: 2.4rem;
     gap: 2.4rem;
+    margin-bottom: 0;
 
     a {
         font-family: var(--font-second);
-        font-size: 2rem;
+        font-size: 1.8rem;
         color: #fff;
-        font-weight: 700;
+        font-weight: 600;
 
         &:before {
             content: "";

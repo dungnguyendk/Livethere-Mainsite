@@ -17,6 +17,7 @@ import qs from "qs"
 
 export default {
     components: { AssetInventory, LandlordHeader, LandlordPortal },
+    layout: "landlord",
     head: {
         title: `Assets | ${appSettings.siteName}`
     },
