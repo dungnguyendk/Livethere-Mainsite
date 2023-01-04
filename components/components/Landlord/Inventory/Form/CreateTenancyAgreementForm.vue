@@ -132,7 +132,7 @@
                         />
                     </div>
                 </v-col>
-                
+
                 <v-col cols="12" sm="12" md="12">
                     <div class="form__field">
                         <label>Remark </label>
@@ -143,14 +143,20 @@
         </div>
         <div class="form__actions">
             <v-btn class="btn btn--ghost btn--gray btn--sm" @click="onClose"> Cancel</v-btn>
-            <v-btn class="btn btn--primary btn--green btn--sm" type="submit" :disabled="$v.$invalid"> Create</v-btn>
+            <v-btn
+                class="btn btn--primary btn--green btn--sm"
+                type="submit"
+                :disabled="$v.$invalid"
+            >
+                Create
+            </v-btn>
         </div>
     </form>
 </template>
 
 <script>
 import { validationMixin } from "vuelidate"
-import { required, numeric} from "vuelidate/lib/validators"
+import { required, numeric } from "vuelidate/lib/validators"
 import { setFormControlErrors } from "~/ultilities/form-validations"
 import { convertCommasToNumber, convertNumberToCommas } from "~/ultilities/helpers"
 import { mapState } from "vuex"
@@ -169,16 +175,14 @@ export default {
             required
         },
         tenancyRefCode: {
-            required, 
+            required,
             numeric
         },
         monthlyRental: {
-            required,
-   
+            required
         },
         secureDeposit: {
-            required,
-            
+            required
         }
     },
     computed: {
@@ -199,15 +203,15 @@ export default {
         },
         secureDepositErrors() {
             return setFormControlErrors(this.$v.secureDeposit, "This field is required")
-        }, 
-        tenancyRefCodeErrors(){ 
+        },
+        tenancyRefCodeErrors() {
             const errors = []
-            if(!this.$v.tenancyRefCode.$dirty) return errors 
+            if (!this.$v.tenancyRefCode.$dirty) return errors
             !this.$v.tenancyRefCode.required && errors.push("This field is required")
-            !this.$v.tenancyRefCode.numeric && errors.push("This field can only contain numeric values")
+            !this.$v.tenancyRefCode.numeric &&
+                errors.push("This field can only contain numeric values")
             return errors
         }
-
     },
     data() {
         return {
@@ -223,9 +227,9 @@ export default {
             monthlyRental: "",
             secureDeposit: "",
             remark: "",
-            tenancyRefCode: "", 
-            submitted: false, 
-            isOpenSnackbar: false, 
+            tenancyRefCode: "",
+            submitted: false,
+            isOpenSnackbar: false,
             isShowErrorMessage: false
         }
     },
@@ -267,33 +271,36 @@ export default {
             this.submitted = true
             this.$v.$touch()
             if (!this.$v.$invalid) {
-                   const params = {
-                        tenancyRefCode: this.tenancyRefCode,
-                        assestInventoryFID: this.inventoryDetails.id,
-                        agreementDate: this.agreementDateRaw,
-                        startDate: this.startDateRaw,
-                        endDate: this.endDateRaw,
-                        currencyType: "SGD",
-                        currentyName: "Singapore Dollar",
-                        cultureCode: "en-SG",
-                        monthlyRental: this.monthlyRental ? convertCommasToNumber(this.monthlyRental) : 0,
-                        secureDeposit: this.secureDeposit ? convertCommasToNumber(this.secureDeposit) : 0,
-                        remark: this.remark
+                const params = {
+                    tenancyRefCode: this.tenancyRefCode,
+                    assestInventoryFID: this.inventoryDetails.id,
+                    agreementDate: this.agreementDateRaw,
+                    startDate: this.startDateRaw,
+                    endDate: this.endDateRaw,
+                    currencyType: "SGD",
+                    currentyName: "Singapore Dollar",
+                    cultureCode: "en-SG",
+                    monthlyRental: this.monthlyRental
+                        ? convertCommasToNumber(this.monthlyRental)
+                        : 0,
+                    secureDeposit: this.secureDeposit
+                        ? convertCommasToNumber(this.secureDeposit)
+                        : 0,
+                    remark: this.remark
                 }
                 const response = this.$store.dispatch("inventory/createTenancyAgreement", params)
-                response.then((value)=>{
-                    if(!value) return this.isShowErrorMessage = true
+                response.then((value) => {
+                    if (!value) return (this.isShowErrorMessage = true)
                     else {
-                        this.$emit("openSnackbar", this.isOpenSnackbar = true)
+                        this.$emit("openSnackbar", (this.isOpenSnackbar = true))
                         this.onClose()
                     }
                 })
-                
             } else {
                 console.error("error!")
             }
-        }, 
-        onClose(){
+        },
+        onClose() {
             this.$emit("close")
         }
     }
@@ -309,6 +316,7 @@ export default {
         gap: 1.2rem;
         padding-top: 2.4rem;
         padding-bottom: 1.2rem;
+
         .btn {
             min-width: 12rem;
         }
