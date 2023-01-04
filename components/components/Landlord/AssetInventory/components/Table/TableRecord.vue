@@ -3,11 +3,8 @@
     }`">
         <td data-label="Property">
             <div>
-                <!-- <img
-                    src="https://picsum.photos/600/400.jpg?random="
-                    alt=""
-                    class="table--record__img"
-                /> -->
+                <img :src="require(`~/static/img/${source.propertyType === 1 ? 'condo' : source.propertyType === 2 ? 'apt' : 'landed'}.png`)"
+                    alt="" class="table--record__img" />
                 <p class="first-child" @click="handleClickOpenRow(source.internalID)">
                     {{ source.propertyName }}
                 </p>
@@ -35,16 +32,16 @@
             <AssetInventoryBadge :type="source.statusDisplay.toUpperCase()" />
         </td>
         <td data-label="Estimated Market Rent" v-if="statusFID === 2">
-            {{ source.EMR }}
+            {{ source.EMR ? source.EMR : '-' }}
         </td>
         <td data-label="Asking Rent" v-if="statusFID === 2">
-            {{ source.ART }}
+            {{ source.ART ? source.ART : '-' }}
         </td>
         <td data-label="Monthly Rent" v-if="statusFID === 3">
-            {{ source.MR }}
+            {{ source.MR ? source.MR : '-' }}
         </td>
         <td data-label="Annual Revenue" v-if="statusFID === 3">
-            {{ source.AR }}
+            {{ source.AR ? source.AR : '-' }}
         </td>
         <td data-label="Action">
             <div>

@@ -15,7 +15,11 @@ export const httpEndpoint = {
         sendEnquiry: "/api/Enquiries"
     },
     auth: {
-        login: "/api/Authen"
+        login: "/api/Authen",
+        register: "/api/Registration",
+        checkEmail: "/api/Registration/check-email",
+        checkPhoneNumber: "/api/Registration/check-contactno",
+        checkUsername: "/api/Registration/check-username"
     },
     inventories: {
         getEntries: "/api/asset-inventories",

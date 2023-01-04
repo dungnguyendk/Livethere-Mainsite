@@ -10,6 +10,7 @@ import LandlordSignIn from "~/components/components/Landlord/Auth/SignIn/Landlor
 import LandlordHeader from "~/components/shared/Header/LandlordHeader.vue"
 import LandlordRegisterBenefits from "~/components/components/Landlord/Auth/Register/LandlordRegisterBenefits.vue"
 import LandlordTerms from "~/components/components/Landlord/Auth/Register/LandlordTerms.vue"
+import { appSettings } from "~/app-settings"
 
 export default {
     components: {
@@ -17,6 +18,9 @@ export default {
         LandlordRegisterBenefits,
         LandlordHeader,
         LandlordSignIn
+    },
+    head: {
+        title: `Register Landlord | ${appSettings.siteName}`
     }
 }
 </script>
