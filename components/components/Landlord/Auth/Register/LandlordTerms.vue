@@ -38,7 +38,7 @@
                     hide-details
                 />
             </div>
-            <LandlordRegisterForm v-if="agreeTerm" ref="registerFormRef" />
+            <LandlordRegisterForm v-if="agreeTerm" />
         </div>
     </div>
 </template>
