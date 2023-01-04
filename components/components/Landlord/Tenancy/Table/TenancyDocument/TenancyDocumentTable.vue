@@ -14,6 +14,7 @@
                         v-for="(item, index) in documents"
                         :source="item"
                         :key="index"
+                        :documentType="documentType"
                     />
                 </template>
                 <template v-else>
@@ -29,8 +30,8 @@
 </template>
 
 <script>
-import TenancyDocumentRecord from "./TenancyDocumentRecord.vue"
 import { mapState } from "vuex"
+import TenancyDocumentRecord from "./TenancyDocumentRecord.vue"
 
 export default {
     name: "TenancyDocumentTable",
@@ -39,6 +40,12 @@ export default {
         ...mapState({
             documents: (state) => state.tenancy.documents
         })
+    },
+    props: {
+        documentType: {
+            type: Object,
+            default: () => {}
+        }
     },
     data() {
         return {

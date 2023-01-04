@@ -35,7 +35,7 @@ import { mapState } from "vuex"
 import { httpEndpoint } from "~/services/https/endpoints"
 
 export default {
-    name: "TenancyAgreementUploadFilePanel",
+    name: "TenancyUploadFilePanel",
     components: { TenancyDocumentTable, Dropzone },
     computed: {
         ...mapState({
