@@ -41,7 +41,8 @@ export default {
         ...mapState({
             snackbar: (state) => state.tenancy.snackbar,
             tenancyDetails: (state) => state.tenancy.tenancyDetails,
-            snackbarMessage: (state) => state.tenancy.snackbarMessage
+            snackbarMessage: (state) => state.tenancy.snackbarMessage,
+            tenancyID: (state) => state.inventory.tenancyID
         }),
         documentType() {
             return tenancyDocumentTypes.agreement
@@ -59,9 +60,9 @@ export default {
     },
     methods: {
         onBack() {
-            this.$router.go(-1)
+            const id = this.tenancyID
+            this.$router.push(`/landlord/tenancy/${id}`)
         },
-
         async onUpdateDocuments(fileInfo, fileID) {
             const params = {
                 tenancyContractAgreementFID: this.tenancyDetails.id,
