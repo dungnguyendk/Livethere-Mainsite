@@ -1,8 +1,8 @@
 <template lang="html">
     <div class="section-chart">
         <label class="chart-title">Inventory</label>
-        <div class="row justify-content-between d-flex mt-5">
-            <div class="col-auto text-center">
+        <div class="section__columns">
+            <div class="section__column">
                 <div class="progress" :data-percentage="total">
                     <span class="progress-left">
                         <span class="progress-bar"></span>
@@ -20,7 +20,7 @@
                 </div>
                 <label class="name-progress">Total</label>
             </div>
-            <div class="col-auto text-center">
+            <div class="section__column">
                 <div class="progress progress--blue" :data-percentage="tenant">
                     <span class="progress-left">
                         <span class="progress-bar progress-bar--blue"></span>
@@ -31,16 +31,14 @@
                     <div class="progress-value progress-value--blue">
                         <div>
                             <span>
-                                {{
-                                    dashboard.tenantInventories ? dashboard.tenantInventories : 0
-                                }}</span
-                            >
+                                {{ dashboard.tenantInventories ? dashboard.tenantInventories : 0 }}
+                            </span>
                         </div>
                     </div>
                 </div>
                 <label class="name-progress">Tenanted</label>
             </div>
-            <div class="col-auto text-center">
+            <div class="section__column">
                 <div class="progress progress--orange" :data-percentage="vacant">
                     <span class="progress-left">
                         <span class="progress-bar progress-bar--orange"></span>
@@ -62,6 +60,7 @@
 
 <script>
 import { mapState } from "vuex"
+
 export default {
     name: "InventoryChart",
     computed: {
@@ -99,6 +98,19 @@ export default {
     box-shadow: 0px 9px 50px rgba(56, 56, 56, 0.1);
     border-radius: 2rem;
     min-height: 20rem;
+
+    .section__column {
+        label {
+            text-align: center;
+            width: 100%;
+        }
+    }
+
+    .section__columns {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        grid-gap: 2.4rem;
+    }
 }
 
 .chart-title {
@@ -121,11 +133,11 @@ export default {
 $borderWidth: 0.7rem;
 $animationTime: 1.5s;
 $border-color-default-green: hsla(142, 62%, 90%, 1);
-$border-color-fill-green: #27a857;
+$border-color-fill-green: #27A857;
 $border-color-default-blue: hsla(240, 83%, 93%, 1);
-$border-color-fill-blue: #5d5fef;
+$border-color-fill-blue: #5D5FEF;
 $border-color-default-orange: hsla(29, 100%, 92%, 1);
-$border-color-fill-orange: #ff9a3e;
+$border-color-fill-orange: #FF9A3E;
 $size: 7rem;
 
 //Create how many steps
@@ -156,7 +168,7 @@ $howManySteps: 200; //this needs to be even.
 
         .progress-value--blue {
             span {
-                color: #5d5fef !important;
+                color: #5D5FEF !important;
             }
         }
     }
@@ -172,7 +184,7 @@ $howManySteps: 200; //this needs to be even.
 
         .progress-value--orange {
             span {
-                color: #ff9a3e !important;
+                color: #FF9A3E !important;
             }
         }
     }
@@ -188,7 +200,7 @@ $howManySteps: 200; //this needs to be even.
         left: 0;
     }
 
-    > span {
+    >span {
         width: 50%;
         height: 100%;
         overflow: hidden;
@@ -215,7 +227,9 @@ $howManySteps: 200; //this needs to be even.
     .progress-left .progress-bar {
         left: 100%;
         border-top-right-radius: ($size/2);
+    ;
         border-bottom-right-radius: ($size/2);
+    ;
         border-left: 0;
         -webkit-transform-origin: center left;
         transform-origin: center left;
@@ -228,7 +242,9 @@ $howManySteps: 200; //this needs to be even.
         .progress-bar {
             left: -100%;
             border-top-left-radius: ($size/2);
+        ;
             border-bottom-left-radius: ($size/2);
+        ;
             border-right: 0;
             -webkit-transform-origin: center right;
             transform-origin: center right;
@@ -252,7 +268,7 @@ $howManySteps: 200; //this needs to be even.
         }
 
         span {
-            color: #27a857;
+            color: #27A857;
             font-weight: 700;
             font-size: 2rem;
             line-height: 2.7rem;
@@ -265,7 +281,7 @@ $howManySteps: 200; //this needs to be even.
 Due to the split circle of progress-left and progress right, we must use the animations on each side.
 */
 @for $i from 1 through $howManySteps {
-    $stepName: ($i * (100 / $howManySteps));
+    $stepName: ($i*(100 / $howManySteps));
 
     //animation only the left side if below 50%
     @if $i <=($howManySteps/2) {
