@@ -29,26 +29,25 @@
                 <label>Street Name</label>
                 <v-text-field v-model.trim="streetName" outlined dense :error-messages="streetNameErrors" />
             </div>
-            <div class="form__field">
-                <label>Unit No.</label>
-                <v-text-field v-model.trim="unitNo" outlined dense :error-messages="unitNoErrors"
-                    @change="searchPostalCode" />
+            <div class="form__field2">
+                <div class="form__field">
+                    <label>Unit No.</label>
+                    <v-text-field v-model.trim="unitNo" outlined dense :error-messages="unitNoErrors" @change="searchPostalCode" />
+                </div>
+                <div class="form__field">
+                    <label>No of Bedroom(s)</label>
+                    <v-select v-model="bedroom" outlined dense placeholder="Please select" :items="bedroomList" item-text="text"
+                        item-value="value" :error-messages="bedroomErrors" />
+                </div>
             </div>
             <div class="form__field">
                 <label>Project Name</label>
                 <v-text-field v-model.trim="projectName" outlined dense :error-messages="projectNameErrors" />
             </div>
-            <div class="form__field2">
-                <div class="form__field">
-                    <label>No of Bedroom(s)</label>
-                    <v-select v-model="bedroom" outlined dense placeholder="Please select" :items="bedroomList"
-                        item-text="text" item-value="value" :error-messages="bedroomErrors" />
-                </div>
-                <div class="form__field">
-                    <label>Tenure</label>
-                    <v-select v-model="tenure" outlined dense placeholder="Please select" :items="tenureList"
-                        item-text="text" item-value="value" :error-messages="tenureErrors" />
-                </div>
+            <div class="form__field">
+                <label>Tenure</label>
+                <v-select v-model="tenure" outlined dense placeholder="Please select" :items="tenureList" item-text="text"
+                    item-value="value" :error-messages="tenureErrors" />
             </div>
             <div class="form__field">
                 <label>Floor Area (sqft)</label>
@@ -108,7 +107,11 @@ export default {
         postalCode: { required },
         houseNo: { required },
         streetName: { required },
-        unitNo: { required },
+        unitNo: {
+            required: requiredIf(function () {
+                return this.propertyType.name !== "LANDED PROPERTY"
+            })
+        },
         projectName: {
             required: requiredIf(function () {
                 return this.propertyType.name !== "LANDED PROPERTY"

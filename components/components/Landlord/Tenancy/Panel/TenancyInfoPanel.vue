@@ -44,6 +44,7 @@ export default {
     methods: {
         onCloseCreateDialog() {
             this.createDialog = false
+            this.$store.commit("tenancy/setStatusResponse", true)
         },
         setSnackBar() {
             this.snackbarActive = false
