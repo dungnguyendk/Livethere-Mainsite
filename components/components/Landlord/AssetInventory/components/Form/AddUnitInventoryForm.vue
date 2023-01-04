@@ -2,8 +2,12 @@
     <form class="form--landlord form--add-unit-inventory">
         <div class="form__top">
             <h3>{{ unitInventoryDetail ? "EDIT UNIT INVENTORY" : "ADD NEW UNIT INVENTORY" }}</h3>
+          
         </div>
         <div class="form__fields">
+            <v-col cols="12" sm="12" md="12">
+                    <p v-if="errorMessages" class="alert alert--red">Something when wrong</p>
+                </v-col>
             <v-row>
                 <v-col cols="12" sm="12" md="6">
                     <div class="form__field">
@@ -81,7 +85,6 @@ import { setFormControlErrors } from "~/ultilities/form-validations"
 import { convertNumberToCommas, convertCommasToNumber } from "~/ultilities/helpers"
 import { CONDITIONS } from "~/ultilities/contants/asset-inventory.js"
 import { mapState } from "vuex"
-
 export default {
     name: "AddUnitInventoryForm",
     mixins: [validationMixin],
@@ -133,7 +136,7 @@ export default {
             this.itemName = this.unitInventoryDetail.itemName
                 ? this.unitInventoryDetail.itemName
                 : ""
-            this.value = this.unitInventoryDetail.value ? this.unitInventoryDetail.value : 0
+            this.value = this.unitInventoryDetail.itemValue ? this.unitInventoryDetail.itemValue : 0
             this.remark = this.unitInventoryDetail.remark ? this.unitInventoryDetail.remark : ""
             this.condition = this.unitInventoryDetail.conditionTypeFID
                 ? this.conditions.find(
@@ -149,7 +152,8 @@ export default {
             value: 0,
             condition: "",
             conditions: CONDITIONS,
-            remark: ""
+            remark: "",
+            errorMessages: false
         }
     },
 
@@ -164,16 +168,23 @@ export default {
                     assestInventoryFID: this.entriesID,
                     conditionTypeFID: this.condition.id,
                     itemName: this.itemName,
+                    currencyType: "",
+                    currentyName: "",
+                    cultureCode: "",
                     conditionDisplay: this.condition.name,
                     quantity: this.quantity,
-                    itemValue: this.value,
+                    itemValue: this.value ? convertCommasToNumber(this.value) : 0,
                     remark: this.remark
                 }
+                console.log("params", params)
                 this.$store.dispatch("inventory/createUnitInventory", params).then((response) => {
                     if (response) {
                         const internalID = this.internalID
                         this.$store.dispatch("inventory/getUnitsByInventoryFID", internalID)
+                        this.errorMessages = false
                         this.onClose()
+                    } else {
+                        this.errorMessages = true
                     }
                 })
             } catch (e) {
@@ -192,15 +203,19 @@ export default {
                     itemName: this.itemName,
                     conditionDisplay: this.condition.name,
                     quantity: this.quantity,
-                    itemValue: this.value,
+                    itemValue: this.value ? convertCommasToNumber(this.value) : 0,
                     remark: this.remark
                 }
-                // console.log("params", params)
-                this.$store.dispatch("inventory/updateUnitInventory", params).then(() => {
-                    const internalID = this.internalID
-                    this.$store.dispatch("inventory/getUnitsByInventoryFID", internalID)
+                console.log("params", params)
+                this.$store.dispatch("inventory/updateUnitInventory", params).then((response) => {
+                    if (response) {
+                        const internalID = this.internalID
+                        this.$store.dispatch("inventory/getUnitsByInventoryFID", internalID)
+                        this.onClose()
+                    } else {
+                        this.errorMessages = true
+                    }
                 })
-                this.onClose()
             } catch (e) {
                 console.log(e)
             }
@@ -215,8 +230,8 @@ export default {
                     () => (this.value = convertNumberToCommas(convertCommasToNumber(val)))
                 )
             }
-        }
-        /*quantity(val) {
+        },
+        quantity(val) {
             if (!isNaN(val)) {
                 this.$nextTick(() => (this.quantity = convertNumberToCommas(val)))
             } else {
@@ -224,7 +239,7 @@ export default {
                     () => (this.quantity = convertNumberToCommas(convertCommasToNumber(val)))
                 )
             }
-        }*/
+        }
     }
 }
 </script>
@@ -240,6 +255,13 @@ export default {
             font-size: 2.4rem;
             line-height: 2.8rem;
             color: var(--color-title-black);
+        }
+
+    }
+    .form__fields{
+        p{
+            display: flex;
+            justify-content: center;
         }
     }
 

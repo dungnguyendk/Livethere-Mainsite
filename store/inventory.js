@@ -1,7 +1,6 @@
 import { httpEndpoint } from "~/services/https/endpoints"
 
 export const state = () => ({
-    inventoryDetails: null,
     unitInventoryDetail: "",
     units: [],
     createEntries: {},
@@ -44,21 +43,6 @@ export const mutations = {
 }
 
 export const actions = {
-    async getInventoryDetails({ commit }, payload) {
-        try {
-            const response = await this.$axios.$get(
-                `${httpEndpoint.inventories.getByInternalID}/${payload}`
-            )
-            if (response) {
-                commit("setInventoryDetails", response)
-            } else {
-                commit("setInventoryDetails", null)
-            }
-        } catch (e) {
-            console.log({ Error: e.message })
-            commit("setInventoryDetails", null)
-        }
-    },
     async getUnitsByInventoryFID({ commit }, payload) {
         try {
             const detail = await this.$axios.$get(
@@ -86,7 +70,7 @@ export const actions = {
     async createUnitInventory({ commit }, payload) {
         try {
             const response = await this.$axios.$post(`${httpEndpoint.unit.getEntries}`, payload)
-            if (response && response !== 0) {
+            if (response) {
                 commit("setSnackbar", true)
                 commit("setSnackbarMessage", "Create new unit inventory success")
                 return true
@@ -139,7 +123,7 @@ export const actions = {
             )
             if (response) {
                 commit("setSnackbar", true)
-                commit("setSnackbarMessage", "Delete inventory success")
+                commit("setSnackbarMessage", "Delete unit inventory success")
             } else {
                 commit("setSnackbar", false)
                 commit("setSnackbarMessage", "Your message has been sent.")
@@ -164,40 +148,6 @@ export const actions = {
         } catch (e) {
             console.log({ Error: e.message })
             commit("setInventoryDetails", null)
-        }
-    },
-
-    async createTenancyAgreement({ commit }, payload) {
-        try {
-            const responseMain = await this.$axios.$post(
-                `${httpEndpoint.tenancyAgreements.createEntry}`,
-                payload
-            )
-            if (responseMain) {
-                const responseSub = await this.$axios.$get(
-                    `${httpEndpoint.tenancyAgreements.getEntries}?AssestInventoryFID=${payload.assestInventoryFID}`
-                )
-                if (responseSub) {
-                    commit("setListTenancyAgreements", responseSub)
-                }
-            }
-        } catch (e) {
-            console.log(e)
-        }
-    },
-    async getListTenancyAgreements({ commit }, payload) {
-        try {
-            const response = await this.$axios.$get(
-                `${httpEndpoint.tenancyAgreements.getEntries}?AssestInventoryFID=${payload}`
-            )
-            if (response) {
-                commit("setListTenancyAgreements", response)
-            } else {
-                commit("setListTenancyAgreements", null)
-            }
-        } catch (e) {
-            console.log({ Error: e.message })
-            commit("setListTenancyAgreements", null)
         }
     }
 }
