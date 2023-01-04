@@ -3,7 +3,7 @@
         <div class="form__fields">
             <v-row>
                 <v-col cols="12" sm="12" md="12">
-                    <ErrorMessage v-if="isShowErrorMessage" :message="'Something went wrong !'"/>
+                    <p class="alert alert--red" v-if="isShowErrorMessage">Something went wrong !</p>
                 </v-col>
                 <v-col cols="12" sm="12" md="4">
                     <div class="form__field">
@@ -149,7 +149,6 @@
 </template>
 
 <script>
-import ErrorMessage from "~/components/elements/Message/ErrorMessage.vue"
 import { validationMixin } from "vuelidate"
 import { required, numeric} from "vuelidate/lib/validators"
 import { setFormControlErrors } from "~/ultilities/form-validations"
@@ -158,7 +157,6 @@ import { mapState } from "vuex"
 
 export default {
     name: "CreateTenancyAgreementForm",
-    components: {ErrorMessage},
     mixins: [validationMixin],
     validations: {
         agreementDate: {
