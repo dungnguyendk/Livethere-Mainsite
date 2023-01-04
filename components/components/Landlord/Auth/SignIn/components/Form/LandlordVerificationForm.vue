@@ -20,6 +20,8 @@
             </v-overlay>
         </div>
         <v-snackbar v-model="snackbar" :color="snackbarColor" :timeout="2000">
+            [
+
             {{ text }}
         </v-snackbar>
         <div class="form__button">
