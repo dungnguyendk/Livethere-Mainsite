@@ -66,10 +66,10 @@ export default {
             return this.dashboard ? (this.dashboard.totalInventories / this.dashboard.totalInventories) * 100 : 0
         },
         tenant() {
-            return this.dashboard ? (this.dashboard.tenantInventories / this.dashboard.totalInventories) * 100 : 0
+            return this.dashboard ? ((this.dashboard.tenantInventories / this.dashboard.totalInventories) * 100).toFixed() : 0
         },
         vacant() {
-            return this.dashboard ? (this.dashboard.vacantInventories / this.dashboard.totalInventories) * 100 : 0
+            return this.dashboard ? ((this.dashboard.vacantInventories / this.dashboard.totalInventories) * 100).toFixed() : 0
         }
     },
 }
@@ -111,7 +111,7 @@ $border-color-fill-orange: #FF9A3E;
 $size: 7rem;
 
 //Create how many steps
-$howManySteps: 10; //this needs to be even. 
+$howManySteps: 200; //this needs to be even. 
 //for fun try using 20 and changine in the HTML the data-percentage to 15 or 85
 
 .progress {

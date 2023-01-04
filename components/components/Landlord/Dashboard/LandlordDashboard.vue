@@ -71,7 +71,7 @@ export default {
                 headerTitle: "Estimated Portfolio Price 2022",
                 footerTitle: "Purchase Price of Portfolio",
                 estimatedPortfolioPriceCurrentYear: this.dashboard.estimatedPortfolioPriceCurrentYear,
-                estimatedPortfolioPriceLastYear: this.dashboard.estimatedPortfolioPriceLastYear,
+                portfolioPriceYieldRate: this.dashboard.portfolioPriceYieldRate,
                 purchasePriceOfPortfolio: this.dashboard.purchasePriceOfPortfolio,
                 purchasePriceOfPortfolioRate: this.dashboard.purchasePriceOfPortfolioRate,
                 widgetSVG: "img-widget"

@@ -57,7 +57,7 @@ export default {
         // console.log("this.source::", this.source)
         if (this.source && this.source.name === 'portfolio') {
             this.currentYear = this.source.estimatedPortfolioPriceCurrentYear ? convertNumberToCommas(this.source.estimatedPortfolioPriceCurrentYear) : 0
-            this.currentYearRate = this.source.estimatedPortfolioPriceCurrentYear ? this.source.estimatedPortfolioPriceCurrentYear : 0
+            this.currentYearRate = this.source.portfolioPriceYieldRate ? this.source.portfolioPriceYieldRate : 0
             this.lastYear = this.source.purchasePriceOfPortfolio ? convertNumberToCommas(this.source.purchasePriceOfPortfolio) : 0
             this.lastYearRate = this.source.purchasePriceOfPortfolioRate ? this.source.purchasePriceOfPortfolioRate : 0
             // this.widgetSVG = this.source.widgetSVG ? this.source.widgetSVG : "img-widget"
