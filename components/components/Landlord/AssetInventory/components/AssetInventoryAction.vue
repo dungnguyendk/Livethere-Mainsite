@@ -20,7 +20,7 @@
             <v-icon left>ri-add-box-line</v-icon>
             Add New Inventory
         </v-btn>
-        <Dialog :open="openAddNewInventoryDialog" @close="closeDialog" :actions="false">
+        <Dialog :open="openAddNewInventoryDialog" @close="closeDialog" :actions="false" :size="sizeDialog" :title="''">
             <AddInventoryForm
                 @close="openAddNewInventoryDialog = false"
                 v-if="openAddNewInventoryDialog"
@@ -58,6 +58,7 @@ export default {
         },
         closeDialog() {
             this.$store.commit("inventories/setInventoryDetail", "")
+            this.$store.commit("inventories/setStatusResponse", true)
             this.openAddNewInventoryDialog = false
         }
     },
