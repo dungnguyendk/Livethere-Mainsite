@@ -16,7 +16,7 @@ import { appSettings } from "~/app-settings"
 
 export default {
     components: { LandlordHeader, LandlordPortal, LandlordDashboard },
-    layout:'landlord',
+    layout: "landlord",
     head: {
         title: `Landlord | ${appSettings.siteName}`
     },
@@ -38,6 +38,6 @@ export default {
             console.log({ Error: e.message })
             return false
         }
-    },
+    }
 }
 </script>

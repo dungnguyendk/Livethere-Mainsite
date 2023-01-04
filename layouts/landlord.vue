@@ -2,7 +2,9 @@
     <v-app>
         <v-main>
             <LandlordHeader />
-            <nuxt />
+            <div class="pageWrapper">
+                <nuxt />
+            </div>
             <LandingFooter />
         </v-main>
     </v-app>
@@ -18,3 +20,8 @@ export default {
     layout: "default"
 }
 </script>
+<style lang="scss" scoped>
+.pageWrapper {
+    min-height: calc(100vh - 20rem);
+}
+</style>
