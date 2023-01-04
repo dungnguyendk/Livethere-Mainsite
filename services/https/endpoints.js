@@ -62,5 +62,8 @@ export const httpEndpoint = {
         updateEntry: "/api/tenancy-contract-agreements",
         deleteEntry: "/api/tenancy-documents"
     },
-    documents: "api/documents"
+    documents: "api/documents",
+    dashBoard: {
+        getEntries: "api/Analytic/my-dashboard"
+    }
 }

@@ -3,36 +3,76 @@
         <div class="widget-header">
             <div class="widget--content">
                 <span class="widget-title">{{ source.headerTitle }}</span>
-                <span class="price">{{ source.headerNumber }}</span>
+                <span class="price">
+                    {{ source.name === 'portfolio' ? 'SGD' : '' }}
+                    {{ currentYear }}
+                    {{ source.name === 'average' ? '%' : '' }}
+                </span>
             </div>
             <div class="widget--percent">
                 <div class="svg-header">
                     <img :src="require(`~/static/img/${source.widgetSVG}.svg`)" alt="">
                 </div>
                 <img src="~/static/img/icon-up.png" alt="">
-                <span class="percent">{{ source.headerPercent }}</span>
+                <span class="percent">{{ currentYearRate }}%</span>
             </div>
         </div>
         <div class="widget-footer">
             <div class="widget--content">
                 <span class="widget-title">{{ source.footerTitle }}</span>
-                <span class="price">{{ source.footerNumber }}</span>
+                <span class="price">
+                    {{ source.name === 'portfolio' ? 'SGD' : '' }}
+                    {{ lastYear }}
+                    {{ source.name === 'average' ? '%' : '' }}
+                </span>
             </div>
             <div class="widget--percent">
                 <img src="~/static/img/icon-up.png" alt="">
-                <span class="percent">{{ source.footerPercent }}</span>
+                <span class="percent">{{ lastYearRate }}%</span>
             </div>
         </div>
     </div>
 </template>
 
 <script>
+import { convertNumberToCommas } from "~/ultilities/helpers"
 export default {
     name: "StatisticsChart",
     props: {
         source: {
             type: Object,
             default: () => { }
+        }
+    },
+    data() {
+        return {
+            currentYear: '',
+            currentYearRate: '',
+            lastYear: '',
+            lastYearRate: '',
+            // widgetSVG: 'img-widget'
+        }
+    },
+    created() {
+        // console.log("this.source::", this.source)
+        if (this.source && this.source.name === 'portfolio') {
+            this.currentYear = this.source.estimatedPortfolioPriceCurrentYear ? convertNumberToCommas(this.source.estimatedPortfolioPriceCurrentYear) : 0
+            this.currentYearRate = this.source.estimatedPortfolioPriceCurrentYear ? this.source.estimatedPortfolioPriceCurrentYear : 0
+            this.lastYear = this.source.purchasePriceOfPortfolio ? convertNumberToCommas(this.source.purchasePriceOfPortfolio) : 0
+            this.lastYearRate = this.source.purchasePriceOfPortfolioRate ? this.source.purchasePriceOfPortfolioRate : 0
+            // this.widgetSVG = this.source.widgetSVG ? this.source.widgetSVG : "img-widget"
+        } else if (this.source && this.source.name === 'average') {
+            this.currentYear = this.source.averageYieldThisYear ? this.source.averageYieldThisYear : 0
+            this.currentYearRate = this.source.averageYieldThisYearCompare ? this.source.averageYieldThisYearCompare : 0
+            this.lastYear = this.source.averageYieldLastYear ? this.source.averageYieldLastYear : 0
+            this.lastYearRate = this.source.averageYieldLastYearCompare ? this.source.averageYieldLastYearCompare : 0
+            // this.widgetSVG = this.source.widgetSVG ? this.source.widgetSVG : "img-widget2"
+        } else {
+            this.currentYear = ''
+            this.currentYearRate = ''
+            this.lastYear = ''
+            this.lastYearRate = ''
+            // this.widgetSVG = "img-widget"
         }
     }
 }

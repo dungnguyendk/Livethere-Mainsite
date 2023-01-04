@@ -3,7 +3,7 @@
         <label class="chart-title">Inventory</label>
         <div class="row justify-content-between d-flex mt-5">
             <div class="col-auto text-center">
-                <div class="progress" data-percentage="100">
+                <div class="progress" :data-percentage="total">
                     <span class="progress-left">
                         <span class="progress-bar"></span>
                     </span>
@@ -12,14 +12,14 @@
                     </span>
                     <div class="progress-value">
                         <div>
-                            <span>10</span>
+                            <span>{{ dashboard.totalInventories }}</span>
                         </div>
                     </div>
                 </div>
                 <label class="name-progress">Total</label>
             </div>
             <div class="col-auto text-center">
-                <div class="progress progress--blue" data-percentage="70">
+                <div class="progress progress--blue" :data-percentage="tenant">
                     <span class="progress-left">
                         <span class="progress-bar progress-bar--blue"></span>
                     </span>
@@ -28,14 +28,14 @@
                     </span>
                     <div class="progress-value progress-value--blue">
                         <div>
-                            <span>7</span>
+                            <span>{{ dashboard.tenantInventories }}</span>
                         </div>
                     </div>
                 </div>
                 <label class="name-progress">Tenanted</label>
             </div>
             <div class="col-auto text-center">
-                <div class="progress progress--orange" data-percentage="30">
+                <div class="progress progress--orange" :data-percentage="vacant">
                     <span class="progress-left">
                         <span class="progress-bar progress-bar--orange"></span>
                     </span>
@@ -44,7 +44,7 @@
                     </span>
                     <div class="progress-value progress-value--orange">
                         <div>
-                            <span>3</span>
+                            <span>{{ dashboard.vacantInventories }}</span>
                         </div>
                     </div>
                 </div>
@@ -55,8 +55,23 @@
 </template>
 
 <script>
+import { mapState } from 'vuex';
 export default {
     name: "InventoryChart",
+    computed: {
+        ...mapState({
+            dashboard: (state) => state.dashboard.dashBoards
+        }),
+        total() {
+            return this.dashboard ? (this.dashboard.totalInventories / this.dashboard.totalInventories) * 100 : 0
+        },
+        tenant() {
+            return this.dashboard ? (this.dashboard.tenantInventories / this.dashboard.totalInventories) * 100 : 0
+        },
+        vacant() {
+            return this.dashboard ? (this.dashboard.vacantInventories / this.dashboard.totalInventories) * 100 : 0
+        }
+    },
 }
 </script>
 <style lang="scss" scoped>

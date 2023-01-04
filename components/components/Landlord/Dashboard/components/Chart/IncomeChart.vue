@@ -8,23 +8,139 @@
                     <span class="price">SGD {{ source.price }}</span>
                 </div>
             </div>
-            <div :class="`growth growth--${source.colorPercent}`">
-                <i class="ri-arrow-up-s-fill"></i>
-                <span class="percent">0.5%</span>
+            <div :class="`growth growth--${source.incomeRate < 0 ? 'red' : 'green'}`">
+                <i :class="`ri-arrow-${source.incomeRate < 0 ? 'down' : 'up'}-s-fill`"></i>
+                <span class="percent">{{ source.incomeRate }}%</span>
             </div>
         </div>
-        <img :src="require(`~/static/img/${source.img}.png`)" alt="" class="chart-line">
+        <!-- <img :src="require(`~/static/img/${source.img}.png`)" alt="" class="chart-line"> -->
+        <div class="chartjs-size-monitor">
+            <div class="chartjs-size-monitor-expand">
+                <div class=""></div>
+            </div>
+            <div class="chartjs-size-monitor-shrink">
+                <div class=""></div>
+            </div>
+        </div>
+        <LineChartGenerator :chart-options="chartOptions" :chart-data="chartData" :chart-id="chartId"
+            :dataset-id-key="datasetIdKey" class="chartjs-render-monitor" />
+
     </div>
 </template>
 
 <script>
+import { Chart as ChartJS, Title, Tooltip, Legend, ArcElement, CategoryScale, LinearScale, BarElement, PointElement, LineElement } from "chart.js";
+
+ChartJS.register(Title, Tooltip, Legend, ArcElement, CategoryScale, LinearScale, BarElement, PointElement, LineElement);
 export default {
     name: "IncomeChart",
     props: {
         source: {
             type: Object,
             default: () => { }
+        },
+        chartId: {
+            type: String,
+            default: 'doughnut-chart'
+        },
+        datasetIdKey: {
+            type: String,
+            default: 'label'
+        },
+        width: {
+            type: Number,
+            default: 400
+        },
+        height: {
+            type: Number,
+            default: 400
+        },
+        cssClasses: {
+            default: '',
+            type: String
+        },
+        styles: {
+            type: Object,
+            default: () => { }
+        },
+        plugins: {
+            type: Array,
+            default: () => []
         }
+    },
+    data() {
+        return {
+            // chartData: {
+            //     labels: [],
+            //     datasets: [{
+            //         label: [],
+            //         data: [],
+            //         backgroundColor: "hsla(240, 64%, 62%, 1)",
+            //         borderColor: "hsla(240, 64%, 62%, 1)",
+            //         fill: false,
+            //         lineTension: 0.4
+            //     }],
+            // },
+            chartOptions: {
+                aspectRatio: 3.5,
+                elements: {
+                    point: {
+                        radius: 3
+                    }
+                },
+                plugins: {
+                    title: {
+                        display: false,
+                    },
+                    legend: {
+                        display: false
+                    },
+                    // tooltip: {
+                    //     enabled: false
+                    // }
+                },
+                scales: {
+                    x: {
+                        display: false,
+                        scaleLabel: {
+                            display: false,
+                        },
+                    },
+                    y: {
+                        display: false,
+                        scaleLabel: {
+                            display: true,
+                        },
+                        ticks: {
+                            min: 0,
+                            max: 100000,
+                            stepSize: 10000
+                        }
+                    }
+                }
+            },
+        }
+    },
+    computed: {
+        chartData() {
+            let chartData = {
+                labels: [],
+                datasets: [{
+                    label: [],
+                    data: [],
+                    backgroundColor: this.source ? this.source.lineColor : [],
+                    borderColor: this.source ? this.source.lineColor : [],
+                    fill: false,
+                    lineTension: 0.3
+                }],
+            }
+            chartData.datasets[0].data = this.source.data
+            chartData.labels = this.source.labels
+            return chartData
+        }
+    },
+    created() {
+        // console.log("this.source::", this.source)
     }
 }
 </script>
