@@ -36,6 +36,10 @@ export default {
     },
     data() {
         return {
+            itemSelected: {
+                title: "Item selected",
+                link: "details"
+            },
             items: [
                 {
                     title: "Tenancy Details",
@@ -120,6 +124,29 @@ export default {
     .link {
         position: relative;
         z-index: 9;
+    }
+}
+@media (max-width: 768px) {
+    .link {
+        display: flex;
+        grid-gap: 1.6rem;
+        min-width: 19rem;
+        .link__indicator {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 3.2rem;
+            height: 3.2rem;
+            border-radius: 50%;
+            font-size: 1.6rem;
+            font-weight: 500;
+            position: relative;
+            z-index: 9;
+            background-color: #e5e5e5;
+        }
+    }
+    .nav--tenancy {
+        display: none;
     }
 }
 </style>

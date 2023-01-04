@@ -5,7 +5,8 @@ export const state = () => ({
     inventoryDetail: "",
     typeSelect: 0,
     snackbar: false,
-    snackbarMessage: "Your message has been sent."
+    snackbarMessage: "Your message has been sent.",
+    statusResponse: true
 })
 
 export const mutations = {
@@ -23,6 +24,9 @@ export const mutations = {
     },
     setSnackbarMessage(state, payload) {
         state.snackbarMessage = payload
+    },
+    setStatusResponse(state, payload) {
+        state.statusResponse = payload
     }
 }
 
@@ -34,14 +38,16 @@ export const actions = {
                 payload
             )
             if (response && response !== 0) {
+                commit("setStatusResponse", true)
                 commit("setSnackbar", true)
                 commit("setSnackbarMessage", "Create new inventory success")
-                // console.log("response Create::", response)
             } else {
+                commit("setStatusResponse", false)
                 commit("setSnackbar", false)
                 commit("setSnackbarMessage", "Your message has been sent.")
             }
         } catch (e) {
+            commit("setStatusResponse", false)
             commit("setSnackbar", false)
             commit("setSnackbarMessage", "Your message has been sent.")
             console.log({ Error: e.message })
@@ -84,14 +90,17 @@ export const actions = {
                 payload
             )
             if (response) {
+                commit("setStatusResponse", true)
                 commit("setSnackbar", true)
                 commit("setSnackbarMessage", "Update inventory success")
             } else {
+                commit("setStatusResponse", false)
                 commit("setSnackbar", false)
                 commit("setSnackbarMessage", "Your message has been sent.")
             }
         } catch (e) {
             console.log({ Error: e.message })
+            commit("setStatusResponse", false)
             commit("setSnackbar", false)
             commit("setSnackbarMessage", "Your message has been sent.")
         }

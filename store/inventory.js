@@ -1,6 +1,7 @@
 import { httpEndpoint } from "~/services/https/endpoints"
 
 export const state = () => ({
+    inventoryDetails: null,
     unitInventoryDetail: "",
     units: [],
     createEntries: {},
@@ -9,7 +10,6 @@ export const state = () => ({
     listTenancyAgreements: null,
     snackbar: false,
     snackbarMessage: "Your message has been sent.",
-    inventoryDetails: null
 })
 
 export const mutations = {
@@ -39,7 +39,9 @@ export const mutations = {
     },
     setSnackbarMessage(state, payload) {
         state.snackbarMessage = payload
-    }
+    },
+
+
 }
 
 export const actions = {
@@ -70,7 +72,7 @@ export const actions = {
     async createUnitInventory({ commit }, payload) {
         try {
             const response = await this.$axios.$post(`${httpEndpoint.unit.getEntries}`, payload)
-            if (response && response !== 0) {
+            if (response) {
                 commit("setSnackbar", true)
                 commit("setSnackbarMessage", "Create new unit inventory success")
                 return true
@@ -105,9 +107,11 @@ export const actions = {
             if (response) {
                 commit("setSnackbar", true)
                 commit("setSnackbarMessage", "Update unit inventory success")
+                return true
             } else {
                 commit("setSnackbar", false)
                 commit("setSnackbarMessage", "Your message has been sent.")
+                return false
             }
         } catch (e) {
             console.log({ Error: e.message })
@@ -164,6 +168,9 @@ export const actions = {
                 if (responseSub) {
                     commit("setListTenancyAgreements", responseSub)
                 }
+                return true
+            }else{
+                return false
             }
         } catch (e) {
             console.log(e)
