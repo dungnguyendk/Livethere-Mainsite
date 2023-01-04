@@ -1,6 +1,10 @@
 <template lang="html">
     <div>
-        <img src="~/static/img/banner-dashboard.png" alt="img-banner" class="banner banner-dashboard">
+        <img
+            src="~/static/img/banner-dashboard.png"
+            alt="img-banner"
+            class="banner banner-dashboard"
+        />
         <div class="container">
             <div class="section-content">
                 <InventoryChart />
@@ -15,11 +19,12 @@
 </template>
 
 <script>
-import InventoryChart from './components/Chart/InventoryChart.vue';
-import ExpiringLeasesChart from './components/Chart/ExpiringLeasesChart.vue'
-import IncomeChart from './components/Chart/IncomeChart.vue';
+import InventoryChart from "./components/Chart/InventoryChart.vue"
+import ExpiringLeasesChart from "./components/Chart/ExpiringLeasesChart.vue"
+import IncomeChart from "./components/Chart/IncomeChart.vue"
 import StatisticsChart from "./components/Widget/StatisticsChart.vue"
-import { mapState } from 'vuex';
+import { mapState } from "vuex"
+
 export default {
     name: "LandlordDashboard",
     components: { InventoryChart, ExpiringLeasesChart, IncomeChart, StatisticsChart },
@@ -66,56 +71,61 @@ export default {
             dashboard: (state) => state.dashboard.dashBoards
         }),
         portfolio() {
-            const source = {
-                name: 'portfolio',
-                headerTitle: "Estimated Portfolio Price 2022",
-                footerTitle: "Purchase Price of Portfolio",
-                estimatedPortfolioPriceCurrentYear: this.dashboard.estimatedPortfolioPriceCurrentYear,
-                portfolioPriceYieldRate: this.dashboard.portfolioPriceYieldRate,
-                purchasePriceOfPortfolio: this.dashboard.purchasePriceOfPortfolio,
-                purchasePriceOfPortfolioRate: this.dashboard.purchasePriceOfPortfolioRate,
-                widgetSVG: "img-widget"
-            }
-            return source
+            return this.dashboard
+                ? {
+                      name: "portfolio",
+                      headerTitle: "Estimated Portfolio Price 2022",
+                      footerTitle: "Purchase Price of Portfolio",
+                      estimatedPortfolioPriceCurrentYear:
+                          this.dashboard.estimatedPortfolioPriceCurrentYear,
+                      portfolioPriceYieldRate: this.dashboard.portfolioPriceYieldRate,
+                      purchasePriceOfPortfolio: this.dashboard.purchasePriceOfPortfolio,
+                      purchasePriceOfPortfolioRate: this.dashboard.purchasePriceOfPortfolioRate,
+                      widgetSVG: "img-widget"
+                  }
+                : null
         },
         average() {
-            const source = {
-                name: 'average',
-                headerTitle: "Average Yield 2022",
-                footerTitle: "Average Yield 2021",
-                averageYieldThisYear: this.dashboard.averageYieldThisYear,
-                averageYieldThisYearCompare: this.dashboard.averageYieldThisYearCompare,
-                averageYieldLastYear: this.dashboard.averageYieldLastYear,
-                averageYieldLastYearCompare: this.dashboard.averageYieldLastYearCompare,
-                widgetSVG: "img-widget2"
-            }
-            return source
+            return this.dashboard
+                ? {
+                      name: "average",
+                      headerTitle: "Average Yield 2022",
+                      footerTitle: "Average Yield 2021",
+                      averageYieldThisYear: this.dashboard.averageYieldThisYear,
+                      averageYieldThisYearCompare: this.dashboard.averageYieldThisYearCompare,
+                      averageYieldLastYear: this.dashboard.averageYieldLastYear,
+                      averageYieldLastYearCompare: this.dashboard.averageYieldLastYearCompare,
+                      widgetSVG: "img-widget2"
+                  }
+                : null
         },
         incomeLastYear() {
-            const source = {
-                icon: "icon-income-blue",
-                incomeYear: "2021",
-                // img: "line-chart-blue",
-                labels: this.dashboard.lastYearIncomeData.map((val) => val.name),
-                data: this.dashboard.lastYearIncomeData.map((val) => val.value),
-                price: this.dashboard.incomeLastYear,
-                incomeRate: this.dashboard.incomeLastYearRate,
-                lineColor: "hsla(195, 79%, 63%, 1)"
-            }
-            return source
+            return this.dashboard
+                ? {
+                      icon: "icon-income-blue",
+                      incomeYear: "2021",
+                      // img: "line-chart-blue",
+                      labels: this.dashboard.lastYearIncomeData.map((val) => val.name),
+                      data: this.dashboard.lastYearIncomeData.map((val) => val.value),
+                      price: this.dashboard.incomeLastYear,
+                      incomeRate: this.dashboard.incomeLastYearRate,
+                      lineColor: "hsla(195, 79%, 63%, 1)"
+                  }
+                : null
         },
         incomeCurrentYear() {
-            const source = {
-                icon: "icon-income-violet",
-                // img: "line-chart-blue",
-                incomeYear: "2022",
-                labels: this.dashboard.currentYearIncomeData.map((val) => val.name),
-                data: this.dashboard.currentYearIncomeData.map((val) => val.value),
-                price: this.dashboard.incomeCurrentYear,
-                incomeRate: this.dashboard.incomeCurrentYearRate,
-                lineColor: "hsla(240, 64%, 62%, 1)"
-            }
-            return source
+            return this.dashboard
+                ? {
+                      icon: "icon-income-violet",
+                      // img: "line-chart-blue",
+                      incomeYear: "2022",
+                      labels: this.dashboard.currentYearIncomeData.map((val) => val.name),
+                      data: this.dashboard.currentYearIncomeData.map((val) => val.value),
+                      price: this.dashboard.incomeCurrentYear,
+                      incomeRate: this.dashboard.incomeCurrentYearRate,
+                      lineColor: "hsla(240, 64%, 62%, 1)"
+                  }
+                : null
         }
     },
     created() {
