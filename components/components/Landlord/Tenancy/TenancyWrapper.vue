@@ -109,9 +109,11 @@ export default {
         display: flex;
         justify-content: space-between;
     }
+
     .select-type {
         display: none;
     }
+
     .section__right {
         display: grid;
         grid-template-columns: minmax(0, 1fr);
@@ -123,14 +125,18 @@ export default {
         grid-template-columns: 34rem minmax(0, 1fr);
         grid-gap: 5.2rem;
     }
-}
-@media (max-width: 768px) {
-    .section--tenancy {
-        padding: 3.2rem 0;
 
-        // .section__left{
-        //     display: none;
-        // }
+    @media screen and (max-width: 768px) {
+        padding: 3.2rem 0;
+        .section__top {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) minmax(0, 1.5fr);
+            grid-gap: 1.2rem;
+            > * {
+                align-self: center;
+            }
+        }
+
         .section__right {
             padding-top: 1.2rem;
         }
