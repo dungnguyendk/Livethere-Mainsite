@@ -18,7 +18,7 @@
             </div>
             <div class="form--register__input">
                 <label>Contact name</label>
-                <v-text-field v-model.trim="contactName" outlined dense />
+                <v-text-field v-model="contactName" outlined dense />
             </div>
             <div class="form--register__input2">
                 <div class="form--register__input">
@@ -82,11 +82,7 @@
                 </div>
             </div>
         </div>
-        <v-checkbox
-            label="I agree with the Landlord Portal Terms of Use"
-            color="#EDB842"
-            hide-details
-        />
+        <!--        <v-checkbox label="Verify Mobile & Email Info" color="#EDB842" hide-details />-->
         <div class="form--action">
             <div class="btn-group">
                 <v-btn class="btn btn--primary btn--green btn__add-file" type="submit">
@@ -153,10 +149,10 @@ export default {
     },
     data() {
         return {
-            username: "test",
-            contactname: "test",
-            password: "1",
-            verifiedPassword: "1",
+            username: "",
+            contactName: "",
+            password: "",
+            verifiedPassword: "",
             email: "",
             phone: null,
             countryCode: null,
@@ -182,6 +178,12 @@ export default {
         countryChanged(country) {
             this.country = "+" + country.dialCode
         },
+        assignErrorMessage(message) {
+            this.errorMessages = !this.errorMessages.includes(message)
+                ? [...this.errorMessages, message]
+                : [...this.errorMessages]
+        },
+
         async checkEmail(payload) {
             const response = await this.$axios.$get(
                 `${httpEndpoint.auth.checkEmail}?email=${payload}`,
@@ -190,9 +192,9 @@ export default {
             if (response) {
                 const message = "This email is exist. Please use another email!"
                 if (!response.valid) {
-                    this.errorMessages = [...this.errorMessages, message]
+                    this.assignErrorMessage(message)
                 } else {
-                    this.errorMessages = this.errorMessages.find((item) => item !== message)
+                    this.errorMessages = this.errorMessages.filter((item) => item !== message)
                 }
             }
         },
@@ -204,25 +206,28 @@ export default {
             if (response) {
                 const message = "This phone number is exist. Please use another phone number!"
                 if (!response.valid) {
-                    this.errorMessages = [...this.errorMessages, message]
+                    this.assignErrorMessage(message)
                 } else {
-                    this.errorMessages = this.errorMessages.find((item) => item !== message)
+                    this.errorMessages = this.errorMessages.filter((item) => item !== message)
                 }
             }
         },
         async checkUsername(payload) {
             const response = await this.$axios.$get(
-                `${httpEndpoint.auth.checkPhoneNumber}?userName=${payload}`,
+                `${httpEndpoint.auth.checkUsername}?userName=${payload}`,
                 email
             )
             if (response) {
                 const message = "This username is exist. Please use another username!"
                 if (!response.valid) {
-                    this.errorMessages = [...this.errorMessages, message]
+                    this.assignErrorMessage(message)
                 } else {
-                    this.errorMessages = this.errorMessages.find((item) => item !== message)
+                    this.errorMessages = this.errorMessages.filter((item) => item !== message)
                 }
             }
+        },
+        resetForm() {
+            this.$v.$reset()
         },
 
         async onSubmit() {
@@ -240,15 +245,16 @@ export default {
                 }
                 await this.checkEmail(this.email)
                 await this.checkContactNo(actualPhone)
-                await this.username(this.username)
+                await this.checkUsername(this.username)
+                console.log({ ErorrMessages: this.errorMessages })
                 if (this.errorMessages.length === 0) {
                     const response = await this.$axios.$post(httpEndpoint.auth.register, params)
-
                     if (response) {
                         console.log({ registerResponse: response })
                         this.snackBarMessage = "Submit registration successfully!"
                         setTimeout(() => {
                             this.snackBarMessage = ""
+                            this.$router.push("/register/verify")
                         }, 2000)
                     }
                 }
