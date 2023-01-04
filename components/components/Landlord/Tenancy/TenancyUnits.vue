@@ -16,7 +16,9 @@ export default {
     components: { TenancyUnitInventory, TenancyDocumentsPanel, TenancyWrapper },
     methods: {
         onBack() {
-            this.$router.go(-1)
+            const internalID = this.$route.params.id
+            this.$router.push(`/landlord/tenancy/${internalID}`)
+            //this.$router.go(-1)
         }
     }
 }

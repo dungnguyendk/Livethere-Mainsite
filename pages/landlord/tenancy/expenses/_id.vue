@@ -30,7 +30,7 @@ export default {
         LandlordPortal
     },
     head: {
-        title: `Landlord | ${appSettings.siteName}`
+        title: `Expense | ${appSettings.siteName}`
     },
 
     computed: {
@@ -41,7 +41,9 @@ export default {
 
     methods: {
         onBack() {
-            this.$router.go(-1)
+            const internalID = this.$route.params.id
+            this.$router.push(`/landlord/tenancy/${internalID}`)
+            //this.$router.go(-1)
         }
     },
 

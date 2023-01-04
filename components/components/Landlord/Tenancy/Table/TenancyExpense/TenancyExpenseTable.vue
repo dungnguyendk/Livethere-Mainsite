@@ -1,6 +1,6 @@
 <template lang="html">
     <div>
-        <table class="table--responsive table--tenancy-info">
+        <table class="table--responsive table--tenancy-expsense">
             <thead>
                 <tr>
                     <th id="description">Description</th>
@@ -71,7 +71,7 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.table--tenancy-info {
+.table--tenancy-expsense {
     width: 100%;
     position: relative;
     left: 0;
@@ -103,12 +103,42 @@ export default {
         }
     }
 
-    th:nth-child(1) {
-        min-width: 35.2rem;
-    }
+    // th:nth-child(1) {
+    //     min-width: 35.2rem;
+    // }
 
-    th:nth-child(2) {
-        min-width: 21.2rem;
+    th:nth-child(4) {
+        display: flex;
+        justify-content: flex-end;
+    }
+}
+@media (max-width: 820) {
+    .table--tenancy-expsense{
+        th:nth-child(1) {
+            min-width: 20rem;
+        }
+
+        th:nth-child(2) {
+            min-width: 11.2rem;
+        }
+    }
+    .table--responsive tbody tr {
+        margin-bottom: 0;
+        border: 1px solid #e5e5e5;
+        
+    }
+    table {
+        width: 100%;
+    }
+    tr td {
+        display: block;
+    }
+    th,
+    tbody {
+        display: block;
+    }
+    thead {
+        display: none;
     }
 }
 

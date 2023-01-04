@@ -13,7 +13,9 @@
                 </p>
                 <p>
                     <span>No of Bedroom(s): </span>
-                    <strong>{{ inventoryDetails ? inventoryDetails.bedroomTypeDisplay : "n/a" }}</strong>
+                    <strong>{{
+                        inventoryDetails ? inventoryDetails.bedroomTypeDisplay : "n/a"
+                    }}</strong>
                 </p>
             </div>
             <div class="panel__column">
@@ -56,18 +58,18 @@
 import { mapState } from "vuex"
 import { convertNumberToCommas } from "~/ultilities/helpers"
 export default {
-    name: "InventoryInformationPanel", 
+    name: "InventoryInformationPanel",
     computed: {
         ...mapState({
             inventoryDetails: (state) => state.inventory.inventoryDetails
-        }), 
-        formatFloorArea(){
+        }),
+        formatFloorArea() {
             return convertNumberToCommas(this.inventoryDetails.floorAreaSqft)
-        }, 
-        formatLandArea(){
+        },
+        formatLandArea() {
             return convertNumberToCommas(this.inventoryDetails.landAreaSqft)
         }
-    },
+    }
 }
 </script>
 
@@ -88,6 +90,7 @@ export default {
 
             span {
                 font-weight: 500;
+                padding-right: 1.2rem;
             }
 
             strong {

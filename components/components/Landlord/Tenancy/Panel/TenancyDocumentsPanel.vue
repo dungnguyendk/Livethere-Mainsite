@@ -1,17 +1,22 @@
 <template lang="html">
     <div class="section--tenacy-document">
         <h3 class="section__label">Document</h3>
-        <TenancyDocumentTable />
+        <TenancyDocumentTable :documentType="documentType" />
     </div>
 </template>
 
 <script>
 import TenancyDocumentTable from "~/components/components/Landlord/Tenancy/Table/TenancyDocument/TenancyDocumentTable.vue"
-import { mapState } from "vuex"
 
 export default {
     name: "TenancyDocumentsPanel",
-    components: { TenancyDocumentTable }
+    components: { TenancyDocumentTable },
+    props: {
+        documentType: {
+            type: Object,
+            default: () => {}
+        }
+    }
 }
 </script>
 <style lang="scss" scoped>
