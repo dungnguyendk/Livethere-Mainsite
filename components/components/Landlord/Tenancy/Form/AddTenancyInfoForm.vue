@@ -1,5 +1,6 @@
 <template lang="html">
     <form @submit.prevent="onFormSubmit" class="form--landlord form--add-unit-inventory">
+        <p class="alert alert--red" v-if="!statusResponse">Something when wrong</p>
         <div class="form__fields">
             <v-row>
                 <v-col cols="12" sm="12" md="6">
@@ -88,7 +89,8 @@ export default {
     },
     computed: {
         ...mapState({
-            tenancyDetailByInternalID: (state) => state.tenancy.tenancyDetailByInternalID
+            tenancyDetailByInternalID: (state) => state.tenancy.tenancyDetailByInternalID,
+            statusResponse: (state) => state.tenancy.statusResponse,
         }),
         tenancyNameErrors() {
             return setFormControlErrors(this.$v.tenancyName, "This Tenancy Name is required")
@@ -104,7 +106,7 @@ export default {
         }
     },
     mounted() {
-        console.log("this.tenancyDetailByInternalID", this.tenancyDetailByInternalID)
+        // console.log("this.tenancyDetailByInternalID", this.tenancyDetailByInternalID)
     },
     methods: {
         onFormSubmit() { },
@@ -129,8 +131,11 @@ export default {
                         TenancyContractAgreementFID: this.tenancyDetailByInternalID.id
                     })
                     this.$store.dispatch("tenancy/getTenancyInfosById", paramAgreementFID)
+                }).then(() => {
+                    if (this.statusResponse) {
+                        this.onClose()
+                    }
                 })
-                this.onClose()
             }
         }
     }
