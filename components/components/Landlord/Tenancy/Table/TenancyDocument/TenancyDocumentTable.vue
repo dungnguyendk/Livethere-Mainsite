@@ -1,33 +1,52 @@
 <template lang="html">
-    <table class="table--responsive table--tenancy-document">
-        <thead>
-            <tr>
-                <th id="name">Tenancy Name </th>
-                <th id="passport">ID / Passport No. </th>
-                <th id="leasingtype">Leasing Type</th>
-                <th id="uploadeddate">Uploaded Date </th>
-            </tr>
-        </thead>
-        <tbody>
-            <template v-if="items.length > 0">
-                <TenancyDocumentRecord v-for="(item, index) in items" :source="item" :key="index" />
-            </template>
-            <template v-else>
+    <div>
+        <table class="table--responsive table--tenancy-document">
+            <thead>
                 <tr>
-                    <td colspan="2">
-                        <p class="empty">No record found.</p>
-                    </td>
+                    <th>Document Name</th>
+                    <th>Type</th>
+                    <th>Actions</th>
                 </tr>
-            </template>
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                <template v-if="documents && documents.length > 0">
+                    <TenancyDocumentRecord
+                        v-for="(item, index) in documents"
+                        :source="item"
+                        :key="index"
+                        :documentType="documentType"
+                    />
+                </template>
+                <template v-else>
+                    <tr>
+                        <td colspan="3">
+                            <p class="empty">No record found.</p>
+                        </td>
+                    </tr>
+                </template>
+            </tbody>
+        </table>
+    </div>
 </template>
 
 <script>
+import { mapState } from "vuex"
 import TenancyDocumentRecord from "./TenancyDocumentRecord.vue"
+
 export default {
     name: "TenancyDocumentTable",
     components: { TenancyDocumentRecord },
+    computed: {
+        ...mapState({
+            documents: (state) => state.tenancy.documents
+        })
+    },
+    props: {
+        documentType: {
+            type: Object,
+            default: () => {}
+        }
+    },
     data() {
         return {
             items: [
@@ -67,10 +86,12 @@ export default {
     border-width: 0px 1px 1px 1px;
     border-style: solid;
     border-color: #e5e5e5;
+
     thead {
         tr {
             position: relative;
         }
+
         th {
             padding: 1.5rem 2.4rem 1.5rem;
             background-color: var(--color-menu);
@@ -83,6 +104,7 @@ export default {
         }
     }
 }
+
 @media (max-width: 768px) {
     .table--responsive tbody tr {
         margin-bottom: 0;

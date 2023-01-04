@@ -2,18 +2,18 @@ const settings = [
     {
         env: "develop",
         base_url: "http://vnapi.asiaesolutions.com/cmspublicapi",
-        media_url: "http://vnapi.asiaesolutions.com/",
-        postal_url: "http://apivo.aestechgroup.com/aespostal",
-        mediaURL: "http://vnapi.asiaesolutions.com/content",
+        media_url: "http://vnapi.asiaesolutions.com/publiccontentapi",
+        postal_url: "https://apivo.aestechgroup.com/aespostal",
+        mediaURLPath: "http://vnapi.asiaesolutions.com/content",
         landlord: "http://vnapi.asiaesolutions.com/erppublicapi"
     },
     {
         env: "beta",
-        base_url: "https://livethereapi.asiaesolutions.com/cmspublic",
-        media_url: "https://livethereapi.asiaesolutions.com/mediaapi",
-        postal_url: "https://apivo.aestechgroup.com/aespostal",
-        mediaURL: "https://livethereapi.asiaesolutions.com/content",
-        landlord: ""
+        base_url: "http://vnapi.asiaesolutions.com/cmspublicapi",
+        media_url: "http://vnapi.asiaesolutions.com/",
+        postal_url: "http://apivo.aestechgroup.com/aespostal",
+        mediaURLPath: "http://vnapi.asiaesolutions.com/content",
+        landlord: "http://vnapi.asiaesolutions.com/erppublicapi"
     },
     {
         env: "production",
@@ -36,5 +36,5 @@ export const appVo = {
     siteName: "Livethere "
 }
 export const mediaSettings = {
-    baseURL: currentSettings.mediaURL
+    baseURL: currentSettings.mediaURLPath
 }

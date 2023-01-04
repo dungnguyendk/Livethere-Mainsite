@@ -17,6 +17,8 @@ import AssetInventory from "~/components/components/Landlord/AssetInventory/Asse
 import InventoryDetails from "~/components/components/Landlord/Inventory/InventoryDetails.vue"
 import TenancyDetails from "~/components/components/Landlord/Tenancy/TenancyDetails"
 import TenancyAgreements from "~/components/components/Landlord/Tenancy/TenancyAgreements"
+import qs from "qs"
+import { tenancyDocumentTypes } from "~/ultilities/tenancy-helpers"
 
 export default {
     components: {
@@ -28,7 +30,7 @@ export default {
         LandlordPortal
     },
     head: {
-        title: `Agreement | ${appSettings.siteName}`
+        title: `Tenancy Agreement | ${appSettings.siteName}`
     },
 
     computed: {
@@ -41,11 +43,15 @@ export default {
             this.$router.push("/landlord/signin")
         }
     },
-    async asyncData({ app, route, store }) {
+    async asyncData({ route, store }) {
         try {
-            const id = route.params.id
-            console.log("internalID: " + id);
-            await store.dispatch("inventory/getInventoryDetails", id)
+            await store.dispatch("tenancy/getTenancyDetails", route.params.id)
+            const documentType = tenancyDocumentTypes.agreement
+            const documentQueries = qs.stringify({
+                TenancyContractAgreementFID: store.state.tenancy.tenancyDetails.id,
+                FileTypeFID: documentType.id
+            })
+            await store.dispatch("tenancy/getTenancyDocuments", documentQueries)
         } catch (e) {
             console.log({ Error: e.message })
         }

@@ -1,6 +1,7 @@
 import { httpEndpoint } from "~/services/https/endpoints"
 
 export const state = () => ({
+    inventoryDetails: null,
     unitInventoryDetail: "",
     units: [],
     createEntries: {},
@@ -9,7 +10,6 @@ export const state = () => ({
     listTenancyAgreements: null,
     snackbar: false,
     snackbarMessage: "Your message has been sent.",
-    inventoryDetails: null
 })
 
 export const mutations = {
@@ -39,7 +39,9 @@ export const mutations = {
     },
     setSnackbarMessage(state, payload) {
         state.snackbarMessage = payload
-    }
+    },
+
+
 }
 
 export const actions = {
@@ -150,6 +152,43 @@ export const actions = {
         } catch (e) {
             console.log({ Error: e.message })
             commit("setInventoryDetails", null)
+        }
+    },
+
+    async createTenancyAgreement({ commit }, payload) {
+        try {
+            const responseMain = await this.$axios.$post(
+                `${httpEndpoint.tenancyAgreements.createEntry}`,
+                payload
+            )
+            if (responseMain) {
+                const responseSub = await this.$axios.$get(
+                    `${httpEndpoint.tenancyAgreements.getEntries}?AssestInventoryFID=${payload.assestInventoryFID}`
+                )
+                if (responseSub) {
+                    commit("setListTenancyAgreements", responseSub)
+                }
+                return true
+            }else{
+                return false
+            }
+        } catch (e) {
+            console.log(e)
+        }
+    },
+    async getListTenancyAgreements({ commit }, payload) {
+        try {
+            const response = await this.$axios.$get(
+                `${httpEndpoint.tenancyAgreements.getEntries}?AssestInventoryFID=${payload}`
+            )
+            if (response) {
+                commit("setListTenancyAgreements", response)
+            } else {
+                commit("setListTenancyAgreements", null)
+            }
+        } catch (e) {
+            console.log({ Error: e.message })
+            commit("setListTenancyAgreements", null)
         }
     }
 }

@@ -141,6 +141,10 @@ td {
         color: #0b0c0c;
     }
 }
+td:nth-child(4){
+    display: flex;
+    justify-content: flex-end;
+}
 tr:nth-child(even) {
     background: #fafafa;
 }
@@ -150,11 +154,11 @@ tr:nth-child(even) {
     }
 
     background-color: rgba(236, 184, 66, 0.1);
-    border: 1px solid var(--color-more-options);
+    border: 1px solid var(--color-yellow);
     border-radius: 0.8rem;
 
     i {
-        color: var(--color-more-options);
+        color: var(--color-yellow);
         font-size: 2.4rem;
     }
 }
