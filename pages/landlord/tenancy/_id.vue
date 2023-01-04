@@ -41,7 +41,9 @@ export default {
     async asyncData({ app, route, store }) {
         try {
             const internalID = route.params.id
+            store.commit("inventory/setTenancyID", internalID)
             await store.dispatch("inventory/getInventoryDetails", internalID)
+            // store.commit("inventory/setUnits", internalID)
             const id = store.state.inventory.inventoryDetails.id
             await store.dispatch("inventory/getListTenancyAgreements", id)
         } catch (e) {

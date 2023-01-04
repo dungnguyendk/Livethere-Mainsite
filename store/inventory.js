@@ -10,6 +10,7 @@ export const state = () => ({
     listTenancyAgreements: null,
     snackbar: false,
     snackbarMessage: "Your message has been sent.",
+    tenancyID: ''
 })
 
 export const mutations = {
@@ -39,6 +40,9 @@ export const mutations = {
     },
     setSnackbarMessage(state, payload) {
         state.snackbarMessage = payload
+    },
+    setTenancyID(state, payload) {
+        state.tenancyID = payload
     },
 
 
@@ -143,8 +147,8 @@ export const actions = {
             const response = await this.$axios.$get(
                 `${httpEndpoint.inventories.getByInternalID}/${payload}`
             )
-
             if (response) {
+
                 commit("setInventoryDetails", response)
             } else {
                 commit("setInventoryDetails", null)
@@ -169,7 +173,7 @@ export const actions = {
                     commit("setListTenancyAgreements", responseSub)
                 }
                 return true
-            }else{
+            } else {
                 return false
             }
         } catch (e) {
