@@ -58,6 +58,7 @@ export const actions = {
             const response = await this.$axios.$get(
                 `${httpEndpoint.tenancies.getTenancyByInternalID}/${payload}`
             )
+            console.log({ tenancyDetailsResponse: response })
 
             if (response) {
                 commit("setTenancyDetails", response)
@@ -175,13 +176,15 @@ export const actions = {
 
     async createTenancyDocument({ commit, rootState, dispatch }, payload) {
         try {
-            const response = await this.$axios.$post(httpEndpoint.tenancies.document, payload)
+            const response = await this.$axios.$post(
+                httpEndpoint.tenancies.document,
+                payload.params
+            )
             if (response && response !== 0) {
                 const documentQueries = qs.stringify({
                     TenancyContractAgreementFID: rootState.tenancy.tenancyDetails.id,
-                    FileTypeFID: 1
+                    FileTypeFID: payload.documentType.id
                 })
-                console.log({ documentQueries })
                 await dispatch("getTenancyDocuments", documentQueries)
             } else {
             }
@@ -193,19 +196,22 @@ export const actions = {
     async deleteTenancyDocument({ commit, rootState, dispatch }, payload) {
         try {
             const response = await this.$axios.$delete(httpEndpoint.tenancies.document, {
-                data: { id: payload }
+                data: { id: payload.documnentID }
             })
             if (response) {
                 const documentQueries = qs.stringify({
                     TenancyContractAgreementFID: rootState.tenancy.tenancyDetails.id,
-                    FileTypeFID: 1
+                    FileTypeFID: payload.documentType.id
                 })
+                console.log({ documentQueries })
                 await dispatch("getTenancyDocuments", documentQueries)
                 commit("setSnackbar", true)
                 commit("setSnackbarMessage", "Delete file successfully!")
                 setTimeout(() => {
                     commit("setSnackbar", false)
                 }, 2000)
+            } else {
+                console.log("Error!")
             }
         } catch (e) {
             console.log({ Error: e.message })
