@@ -8,7 +8,8 @@ export const state = () => ({
     snackbar: false,
     snackbarMessage: "Your message has been sent.",
     expenses: [],
-    documents: []
+    documents: [],
+    statusResponse: true
 })
 
 export const mutations = {
@@ -32,6 +33,10 @@ export const mutations = {
     },
     setSnackbarMessage(state, payload) {
         state.snackbarMessage = payload
+    },
+    setStatusResponse(state, payload) {
+        state.statusResponse = payload
+        console.log("state.statusResponse::", state.statusResponse)
     }
 }
 
@@ -60,15 +65,18 @@ export const actions = {
             )
 
             if (response) {
+                commit("setStatusResponse", true)
                 commit("setTenancyDetails", response)
                 await dispatch("getExpanses", response.id)
                 return response
             } else {
+                commit("setStatusResponse", false)
                 commit("setTenancyDetails", null)
                 return null
             }
         } catch (e) {
             console.log({ Error: e.message })
+            commit("setStatusResponse", false)
             commit("setTenancyDetails", null)
             return null
         }
@@ -96,7 +104,6 @@ export const actions = {
                 `${httpEndpoint.tenancies.getTenancyInfosById}?${payload}`
             )
             if (response) {
-                s
                 commit("setTenancyInfosById", response)
             } else {
                 commit("setTenancyInfosById", [])

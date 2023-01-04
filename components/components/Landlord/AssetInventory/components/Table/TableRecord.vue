@@ -1,9 +1,6 @@
 <template>
-    <tr
-        :class="`table--record ${
-            source.id !== selectedId && selectedId !== -1 ? 'unSelected' : ''
-        }`"
-    >
+    <tr :class="`table--record ${source.id !== selectedId && selectedId !== -1 ? 'unSelected' : ''
+    }`">
         <td data-label="Property">
             <div>
                 <!-- <img
@@ -35,7 +32,7 @@
             {{ source.streetName }}
         </td>
         <td data-label="Status" v-if="statusFID === 0 || statusFID === 1">
-            <AssetInventoryBadge :type="source.statusDisplay" />
+            <AssetInventoryBadge :type="source.statusDisplay.toUpperCase()" />
         </td>
         <td data-label="Estimated Market Rent" v-if="statusFID === 2">
             {{ source.EMR }}
@@ -53,16 +50,12 @@
             <div>
                 <v-menu offset-y>
                     <template v-slot:activator="{ on, attrs }">
-                        <v-btn x-small fab outlined class="more-option" v-bind="attrs" v-on="on"
-                            ><i class="ri-more-fill"></i
-                        ></v-btn>
+                        <v-btn x-small fab outlined class="more-option" v-bind="attrs" v-on="on"><i
+                                class="ri-more-fill"></i></v-btn>
                     </template>
                     <v-list dense>
                         <v-list-item-group>
-                            <v-list-item
-                                @click="onEditInventory(source.id)"
-                                class="list-item--custom"
-                            >
+                            <v-list-item @click="onEditInventory(source.id)" class="list-item--custom">
                                 <v-list-item-icon>
                                     <v-icon v-text="`ri-edit-box-line`"></v-icon>
                                 </v-list-item-icon>
@@ -70,10 +63,7 @@
                                     <v-list-item-title>Edit</v-list-item-title>
                                 </v-list-item-content>
                             </v-list-item>
-                            <v-list-item
-                                @click="onVisitInventoryUnits"
-                                class="list-item--custom--middle"
-                            >
+                            <v-list-item @click="onVisitInventoryUnits" class="list-item--custom--middle">
                                 <v-list-item-icon>
                                     <v-icon v-text="`ri-add-box-line`"></v-icon>
                                 </v-list-item-icon>
@@ -81,10 +71,7 @@
                                     <v-list-item-title>Unit Inventory</v-list-item-title>
                                 </v-list-item-content>
                             </v-list-item>
-                            <v-list-item
-                                @click="onDeleteInventory(source.id)"
-                                class="list-item--custom"
-                            >
+                            <v-list-item @click="onDeleteInventory(source.id)" class="list-item--custom">
                                 <v-list-item-icon>
                                     <v-icon v-text="`ri-delete-bin-line`"></v-icon>
                                 </v-list-item-icon>
@@ -96,18 +83,10 @@
                     </v-list>
                 </v-menu>
             </div>
-            <Dialog
-                :open="openAddNewInventoryDialog"
-                @close="closeDialog"
-                :size="sizeDialog"
-                :title="''"
-                :actions="false"
-            >
-                <AddInventoryForm
-                    @close="openAddNewInventoryDialog = false"
-                    v-if="openAddNewInventoryDialog"
-                    :sourceDetail="source.id"
-                />
+            <Dialog :open="openAddNewInventoryDialog" @close="closeDialog" :size="sizeDialog" :title="''"
+                :actions="false">
+                <AddInventoryForm @close="openAddNewInventoryDialog = false" v-if="openAddNewInventoryDialog"
+                    :sourceDetail="source.id" />
             </Dialog>
         </td>
     </tr>
@@ -127,7 +106,7 @@ export default {
     props: {
         source: {
             type: Object,
-            default: () => {}
+            default: () => { }
         },
         selectedId: {
             type: Number,
