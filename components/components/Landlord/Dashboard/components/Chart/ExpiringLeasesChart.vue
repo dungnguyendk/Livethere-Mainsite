@@ -7,21 +7,21 @@
             <div class="leases-day">
                 <div class="expiring">
                     <div class="leases leases--color-orange"></div>
-                    <span>2</span>
+                    <span>{{ dashboard ? dashboard.expiringLeaseStage1 : 0 }}</span>
                 </div>
                 <label>&lt30 days</label>
             </div>
             <div class="leases-day">
                 <div class="expiring">
                     <div class="leases leases--color-blue"></div>
-                    <span>2</span>
+                    <span>{{ dashboard ? dashboard.expiringLeaseStage2 : 0 }}</span>
                 </div>
                 <label>31 - 60 days</label>
             </div>
             <div class="leases-day">
                 <div class="expiring">
                     <div class="leases leases--color-green"></div>
-                    <span>4</span>
+                    <span>{{ dashboard ? dashboard.expiringLeaseStage3 : 0 }}</span>
                 </div>
                 <label>61 - 90 days</label>
             </div>
@@ -67,21 +67,21 @@ export default {
     },
     data() {
         return {
-            chartDataDoughnut: {
-                labels: ['Score', 'Gray Area'],
-                datasets: [{
-                    label: [],
-                    data: [2, 2, 4],
-                    backgroundColor: [
-                        '#FF9A3E', '#5D5FEF', '#27A857'
-                    ],
-                    borderWidth: 1,
-                    cutout: "80%",
-                    circumference: 180,
-                    rotation: -90,
-                }],
+            // chartDataDoughnut: {
+            //     labels: ['Score', 'Gray Area'],
+            //     datasets: [{
+            //         label: [],
+            //         data: [2, 2, 4],
+            //         backgroundColor: [
+            //             '#FF9A3E', '#5D5FEF', '#27A857'
+            //         ],
+            //         borderWidth: 1,
+            //         cutout: "80%",
+            //         circumference: 180,
+            //         rotation: -90,
+            //     }],
 
-            },
+            // },
             chartOptionsDoughnut: {
                 maintainAspectRatio: false,
                 aspectRatio: 3.5,
@@ -118,7 +118,25 @@ export default {
     computed: {
         ...mapState({
             dashboard: (state) => state.dashboard.dashBoards
-        })
+        }),
+        chartDataDoughnut() {
+            let chartDataDoughnut = {
+                labels: [],
+                datasets: [{
+                    label: [],
+                    data: [2, 2, 4],
+                    backgroundColor: [
+                        '#FF9A3E', '#5D5FEF', '#27A857'
+                    ],
+                    borderWidth: 1,
+                    cutout: "80%",
+                    circumference: 180,
+                    rotation: -90,
+                }],
+            }
+            chartDataDoughnut.datasets[0].data = [this.dashboard.expiringLeaseStage1, this.dashboard.expiringLeaseStage2, this.dashboard.expiringLeaseStage3]
+            return chartDataDoughnut
+        },
     }
 }
 </script>

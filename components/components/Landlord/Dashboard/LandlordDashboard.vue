@@ -5,10 +5,10 @@
             <div class="section-content">
                 <InventoryChart />
                 <ExpiringLeasesChart />
-                <StatisticsChart :source="dataWidgetPortfolio" />
+                <StatisticsChart :source="portfolio" />
                 <IncomeChart :source="dataLineChartBlue" />
                 <IncomeChart :source="dataLineChartViolet" />
-                <StatisticsChart :source="dataWidgetAverage" />
+                <StatisticsChart :source="average" />
             </div>
         </div>
     </div>
@@ -60,11 +60,46 @@ export default {
                 widgetSVG: "img-widget2"
             }
         }
-    }, 
+    },
     computed: {
         ...mapState({
             dashboard: (state) => state.dashboard.dashBoards
-        })
+        }),
+        portfolio() {
+            const source = {
+                name: 'portfolio',
+                headerTitle: "Estimated Portfolio Price 2022",
+                footerTitle: "Purchase Price of Portfolio",
+                estimatedPortfolioPriceCurrentYear: this.dashboard.estimatedPortfolioPriceCurrentYear,
+                estimatedPortfolioPriceLastYear: this.dashboard.estimatedPortfolioPriceLastYear,
+                purchasePriceOfPortfolio: this.dashboard.purchasePriceOfPortfolio,
+                purchasePriceOfPortfolioRate: this.dashboard.purchasePriceOfPortfolioRate,
+                widgetSVG: "img-widget"
+            }
+            return source
+        },
+        average() {
+            const source = {
+                name: 'average',
+                headerTitle: "Average Yield 2022",
+                footerTitle: "Average Yield 2021",
+                averageYieldThisYear: this.dashboard.averageYieldThisYear,
+                averageYieldThisYearCompare: this.dashboard.averageYieldThisYearCompare,
+                averageYieldLastYear: this.dashboard.averageYieldLastYear,
+                averageYieldLastYearCompare: this.dashboard.averageYieldLastYearCompare,
+                widgetSVG: "img-widget2"
+            }
+            return source
+        },
+        // incomeLastYear() {
+        //     const source = {
+        //         icon: "icon-income-blue",
+        //         img: "line-chart-blue",
+        //         label: this.dashboard.lastYearIncomeData.forEach((val) => val.name),
+        //         data: this.dashboard.lastYearIncomeData.forEach((val) => val.value)
+        //     }
+        //     return source
+        // }
     }
 }
 </script>

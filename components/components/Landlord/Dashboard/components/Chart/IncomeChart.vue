@@ -138,6 +138,9 @@ export default {
                 }
             },
         }
+    },
+    created() {
+        console.log("this.source::", this.source)
     }
 }
 </script>
