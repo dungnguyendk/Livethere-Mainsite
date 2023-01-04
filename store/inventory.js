@@ -105,9 +105,11 @@ export const actions = {
             if (response) {
                 commit("setSnackbar", true)
                 commit("setSnackbarMessage", "Update unit inventory success")
+                return true
             } else {
                 commit("setSnackbar", false)
                 commit("setSnackbarMessage", "Your message has been sent.")
+                return false
             }
         } catch (e) {
             console.log({ Error: e.message })

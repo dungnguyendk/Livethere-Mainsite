@@ -211,6 +211,7 @@ export default {
                     if (response) {
                         const internalID = this.internalID
                         this.$store.dispatch("inventory/getUnitsByInventoryFID", internalID)
+                        this.errorMessages = false
                         this.onClose()
                     } else {
                         this.errorMessages = true
