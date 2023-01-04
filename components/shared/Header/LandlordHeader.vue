@@ -18,13 +18,39 @@
                         </ul>
                     </div>
                     <div class="header__right">
-                        <nuxt-link v-if="!loggedIn" to="/landlord/signin" class="header__link">
-                            Login
-                        </nuxt-link>
-                        <nuxt-link v-if="!loggedIn" to="/register" class="header__link">
-                            Register
-                        </nuxt-link>
-                        <v-btn v-else class="btn--logout" @click="onLogout"> Logout</v-btn>
+                        <template v-if="loggedIn">
+                            <v-menu v-if="userInfo" offset-y>
+                                <template v-slot:activator="{ on, attrs }">
+                                    <v-btn
+                                        class="btn--account"
+                                        color="primary"
+                                        dark
+                                        v-bind="attrs"
+                                        v-on="on"
+                                        outlined
+                                    >
+                                        {{ userInfo.displayName }}
+                                        <i class="ri-arrow-drop-down-line"></i>
+                                    </v-btn>
+                                </template>
+                                <v-list>
+                                    <v-list-item>
+                                        <nuxt-link to="/landlord"> Dashboard</nuxt-link>
+                                    </v-list-item>
+                                    <v-list-item>
+                                        <a href="/" @click.prevent="onLogout">Logout</a>
+                                    </v-list-item>
+                                </v-list>
+                            </v-menu>
+                        </template>
+                        <template v-else>
+                            <div class="header__actions">
+                                <nuxt-link to="/landlord/signin" class="header__link">
+                                    Login
+                                </nuxt-link>
+                                <nuxt-link to="/register" class="header__link"> Register</nuxt-link>
+                            </div>
+                        </template>
                     </div>
                 </div>
             </div>
@@ -40,6 +66,7 @@ import SiteLogo from "~/components/shared/Logo/SiteLogo.vue"
 import MobileHeader from "~/components/shared/Header/MobileHeader.vue"
 import { httpEndpoint } from "~/services/https/endpoints"
 import { defaultMenu } from "~/ultilities/menus"
+import { mapState } from "vuex"
 
 export default {
     name: "LandlordHeader",
@@ -52,6 +79,9 @@ export default {
     },
 
     computed: {
+        ...mapState({
+            userInfo: (state) => state.app.userInfo
+        }),
         name() {
             return this.data
         },
@@ -67,6 +97,12 @@ export default {
         return {
             menus: defaultMenu,
             menuID: 0
+        }
+    },
+    created() {
+        console.log({ userInfo: this.userInfo })
+        if (!this.userInfo) {
+            this.$store.dispatch("app/getUserInfo")
         }
     },
 
@@ -93,8 +129,10 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.btn--logout {
-    text-transform: none;
+.btn--account {
+    border: none;
+    box-shadow: none;
+    min-width: 12rem;
 }
 
 .menu--top {
@@ -153,9 +191,30 @@ export default {
     height: 8rem;
     background-color: var(--color-primary);
 
+    .btn--account::v-deep .v-btn__content {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        grid-gap: 0.8rem;
+        gap: 0.8rem;
+        min-width: 10rem;
+        color: #fff;
+        text-transform: capitalize;
+        font-size: 1.8rem;
+        font-weight: 500;
+    }
+
     .header__container {
         display: grid;
         grid-template-columns: 12rem minmax(0, 1fr) 12rem;
+    }
+
+    .header__actions {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+        grid-gap: 1.2rem;
+        gap: 1.2rem;
     }
 
     .header__center {

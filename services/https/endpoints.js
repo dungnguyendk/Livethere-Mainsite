@@ -3,6 +3,9 @@ export const httpEndpoint = {
         getEntries: "api/Sites/Search",
         getEntryByID: "api/Site/get-by-id"
     },
+    user: {
+        getLandlordUserInfo: "api/User/LogonUser"
+    },
 
     pages: {
         getEntryBySlug: "api/Page/get-by-slug"
