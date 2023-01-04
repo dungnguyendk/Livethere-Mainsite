@@ -10,7 +10,6 @@ export const state = () => ({
     listTenancyAgreements: null,
     snackbar: false,
     snackbarMessage: "Your message has been sent.",
-    inventoryDetails: null
 })
 
 export const mutations = {
@@ -42,25 +41,10 @@ export const mutations = {
         state.snackbarMessage = payload
     },
 
-    
+
 }
 
 export const actions = {
-    async getInventoryDetails({ commit }, payload) {
-        try {
-            const response = await this.$axios.$get(
-                `${httpEndpoint.inventories.getByInternalID}/${payload}`
-            )
-            if (response) {
-                commit("setInventoryDetails", response)
-            } else {
-                commit("setInventoryDetails", null)
-            }
-        } catch (e) {
-            console.log({ Error: e.message })
-            commit("setInventoryDetails", null)
-        }
-    },
     async getUnitsByInventoryFID({ commit }, payload) {
         try {
             const detail = await this.$axios.$get(
@@ -88,7 +72,7 @@ export const actions = {
     async createUnitInventory({ commit }, payload) {
         try {
             const response = await this.$axios.$post(`${httpEndpoint.unit.getEntries}`, payload)
-            if (response && response !== 0) {
+            if (response) {
                 commit("setSnackbar", true)
                 commit("setSnackbarMessage", "Create new unit inventory success")
                 return true
@@ -123,9 +107,11 @@ export const actions = {
             if (response) {
                 commit("setSnackbar", true)
                 commit("setSnackbarMessage", "Update unit inventory success")
+                return true
             } else {
                 commit("setSnackbar", false)
                 commit("setSnackbarMessage", "Your message has been sent.")
+                return false
             }
         } catch (e) {
             console.log({ Error: e.message })
@@ -141,7 +127,7 @@ export const actions = {
             )
             if (response) {
                 commit("setSnackbar", true)
-                commit("setSnackbarMessage", "Delete inventory success")
+                commit("setSnackbarMessage", "Delete unit inventory success")
             } else {
                 commit("setSnackbar", false)
                 commit("setSnackbarMessage", "Your message has been sent.")
@@ -183,7 +169,7 @@ export const actions = {
                     commit("setListTenancyAgreements", responseSub)
                 }
                 return true
-            }else{ 
+            }else{
                 return false
             }
         } catch (e) {
