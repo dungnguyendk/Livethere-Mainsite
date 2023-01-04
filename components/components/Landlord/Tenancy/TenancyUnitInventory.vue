@@ -80,7 +80,7 @@ export default {
 }
 
 .section--tenacy-inventory {
-    padding-bottom: 5rem;
+    padding: 2.6rem 2.4rem;
     background-color: var(--color-white);
     box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.04), 0px 4px 8px rgba(0, 0, 0, 0.06);
     border-radius: 20px;

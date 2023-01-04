@@ -26,7 +26,7 @@ export default {
         LandlordPortal
     },
     head: {
-        title: `Landlord | ${appSettings.siteName}`
+        title: `Details | ${appSettings.siteName}`
     },
 
     computed: {

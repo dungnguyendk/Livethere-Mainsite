@@ -1,6 +1,7 @@
 import { httpEndpoint } from "~/services/https/endpoints"
 
 export const state = () => ({
+    inventoryDetails: null,
     unitInventoryDetail: "",
     units: [],
     createEntries: {},
@@ -39,10 +40,27 @@ export const mutations = {
     },
     setSnackbarMessage(state, payload) {
         state.snackbarMessage = payload
-    }
+    },
+
+    
 }
 
 export const actions = {
+    async getInventoryDetails({ commit }, payload) {
+        try {
+            const response = await this.$axios.$get(
+                `${httpEndpoint.inventories.getByInternalID}/${payload}`
+            )
+            if (response) {
+                commit("setInventoryDetails", response)
+            } else {
+                commit("setInventoryDetails", null)
+            }
+        } catch (e) {
+            console.log({ Error: e.message })
+            commit("setInventoryDetails", null)
+        }
+    },
     async getUnitsByInventoryFID({ commit }, payload) {
         try {
             const detail = await this.$axios.$get(
@@ -123,7 +141,7 @@ export const actions = {
             )
             if (response) {
                 commit("setSnackbar", true)
-                commit("setSnackbarMessage", "Delete unit inventory success")
+                commit("setSnackbarMessage", "Delete inventory success")
             } else {
                 commit("setSnackbar", false)
                 commit("setSnackbarMessage", "Your message has been sent.")

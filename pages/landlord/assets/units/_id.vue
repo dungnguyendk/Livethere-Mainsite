@@ -25,7 +25,7 @@ export default {
         LandlordPortal
     },
     head: {
-        title: `Landlord | ${appSettings.siteName}`
+        title: `Unit Inventory | ${appSettings.siteName}`
     },
 
     computed: {

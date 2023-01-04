@@ -8,6 +8,7 @@ export const state = () => ({
     snackbar: false,
     snackbarMessage: "Your message has been sent.",
     expenses: [],
+    tenancyLinks: "details",
     documents: []
 })
 
@@ -32,7 +33,10 @@ export const mutations = {
     },
     setSnackbarMessage(state, payload) {
         state.snackbarMessage = payload
-    }
+    },
+    setTenancyLink(state, payload) {
+        state.tenancyLinks = payload
+    },
 }
 
 export const actions = {

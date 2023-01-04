@@ -141,6 +141,10 @@ td {
         color: #0b0c0c;
     }
 }
+td:nth-child(4){
+    display: flex;
+    justify-content: flex-end;
+}
 tr:nth-child(even) {
     background: #fafafa;
 }
