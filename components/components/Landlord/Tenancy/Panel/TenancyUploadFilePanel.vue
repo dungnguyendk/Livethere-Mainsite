@@ -1,7 +1,7 @@
 <template lang="html">
     <div class="panel--landlord panel--upload-file">
         <div class="panel__top">
-            <h3>Tenancy Agreement</h3>
+            <h3>{{ title }}</h3>
         </div>
         <div class="panel__container">
             <Dropzone
@@ -35,12 +35,18 @@ import { mapState } from "vuex"
 import { httpEndpoint } from "~/services/https/endpoints"
 
 export default {
-    name: "TenancyAgreementUploadFilePanel",
+    name: "TenancyUploadFilePanel",
     components: { TenancyDocumentTable, Dropzone },
     computed: {
         ...mapState({
             tenancyDetails: (state) => state.tenancy.tenancyDetails
         })
+    },
+    props: {
+        title: {
+            type: String,
+            default: ""
+        }
     },
     data() {
         return {
@@ -109,22 +115,9 @@ export default {
 
         async onUploadSuccess(file, response) {
             this.$refs.dropRef.removeAllFiles()
-            console.log({ file, response, tenancyDetails: this.tenancyDetails })
             const fileInfo = await this.$api.$get(`${httpEndpoint.documents}/${response.data.id}`)
             if (fileInfo && fileInfo.data) {
-                console.log({ FileInfo: fileInfo })
-                const params = {
-                    tenancyContractAgreementFID: this.tenancyDetails.id,
-                    fileTypeFID: 1, // 1: document, 2: stamp duty
-                    subFID: 1,
-                    fileID: response.data.id,
-                    fileTypeName: "Tenancy Agreement",
-                    originalFileName: fileInfo.data.fileName,
-                    systemFileName: fileInfo.data.fileName,
-                    contentType: "application/pdf" // pdf
-                    //hashPasscode: "string"
-                }
-                await this.$store.dispatch("tenancy/createTenancyDocument", params)
+                this.$emit("onUpdateDocuments", fileInfo, response.data.id)
             }
         }
     }

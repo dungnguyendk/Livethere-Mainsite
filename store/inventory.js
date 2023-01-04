@@ -182,6 +182,9 @@ export const actions = {
                 if (responseSub) {
                     commit("setListTenancyAgreements", responseSub)
                 }
+                return true
+            }else{ 
+                return false
             }
         } catch (e) {
             console.log(e)
