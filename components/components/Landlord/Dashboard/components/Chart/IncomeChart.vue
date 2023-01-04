@@ -8,9 +8,9 @@
                     <span class="price">SGD {{ source.price }}</span>
                 </div>
             </div>
-            <div :class="`growth growth--${source.colorPercent}`">
-                <i class="ri-arrow-up-s-fill"></i>
-                <span class="percent">0.5%</span>
+            <div :class="`growth growth--${source.incomeRate < 0 ? 'red' : 'green'}`">
+                <i :class="`ri-arrow-${source.incomeRate < 0 ? 'down' : 'up'}-s-fill`"></i>
+                <span class="percent">{{ source.incomeRate }}%</span>
             </div>
         </div>
         <!-- <img :src="require(`~/static/img/${source.img}.png`)" alt="" class="chart-line"> -->
@@ -38,10 +38,6 @@ export default {
         source: {
             type: Object,
             default: () => { }
-        },
-        lineColor: {
-            type: String,
-            default: () => "hsla(240, 64%, 62%, 1)"
         },
         chartId: {
             type: String,
@@ -74,31 +70,17 @@ export default {
     },
     data() {
         return {
-            chartData: {
-                labels: [
-                    "January",
-                    "February",
-                    "March",
-                    "April",
-                    "May",
-                    "June",
-                    "July",
-                    "Aug",
-                    "Sep",
-                    "Oct",
-                    "Nov",
-                    "Dec"
-                ],
-                datasets: [{
-                    label: [],
-                    data: [2, 10, 5, 9, 0, 6, 20, 10, 12, 15, 22, 11],
-                    backgroundColor: "hsla(240, 64%, 62%, 1)",
-                    borderColor: "hsla(240, 64%, 62%, 1)",
-                    fill: false,
-                    lineTension: 0.4
-                }],
-
-            },
+            // chartData: {
+            //     labels: [],
+            //     datasets: [{
+            //         label: [],
+            //         data: [],
+            //         backgroundColor: "hsla(240, 64%, 62%, 1)",
+            //         borderColor: "hsla(240, 64%, 62%, 1)",
+            //         fill: false,
+            //         lineTension: 0.4
+            //     }],
+            // },
             chartOptions: {
                 aspectRatio: 3.5,
                 elements: {
@@ -131,16 +113,34 @@ export default {
                         },
                         ticks: {
                             min: 0,
-                            max: 50,
-                            stepSize: 10
+                            max: 100000,
+                            stepSize: 10000
                         }
                     }
                 }
             },
         }
     },
+    computed: {
+        chartData() {
+            let chartData = {
+                labels: [],
+                datasets: [{
+                    label: [],
+                    data: [],
+                    backgroundColor: this.source ? this.source.lineColor : [],
+                    borderColor: this.source ? this.source.lineColor : [],
+                    fill: false,
+                    lineTension: 0.3
+                }],
+            }
+            chartData.datasets[0].data = this.source.data
+            chartData.labels = this.source.labels
+            return chartData
+        }
+    },
     created() {
-        console.log("this.source::", this.source)
+        // console.log("this.source::", this.source)
     }
 }
 </script>
