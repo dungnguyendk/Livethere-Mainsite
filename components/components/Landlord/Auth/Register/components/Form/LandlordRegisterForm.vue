@@ -1,16 +1,20 @@
 <template lang="html">
-    <form class="form--register" @submit.prevent="submitForm">
+    <form class="form--register" @submit.prevent="onSubmit">
         <div class="form--register__input">
             <label>Preferred Username</label>
             <v-text-field
-                v-model.trim="preferredUsername"
+                v-model.trim="username"
                 outlined
                 dense
                 placeholder="Type here"
-                :error-messages="preferredUsernameErrors"
-                @input="$v.preferredUsername.$touch()"
-                @blur="$v.preferredUsername.$touch()"
+                :error-messages="usernameErrors"
+                @input="$v.username.$touch()"
+                @blur="$v.username.$touch()"
             />
+        </div>
+        <div class="form--register__input">
+            <label>Contact name</label>
+            <v-text-field v-model.trim="contactName" outlined dense />
         </div>
         <div class="form--register__input2">
             <div class="form--register__input">
@@ -44,16 +48,16 @@
             <div class="form--register__input">
                 <label>Email Address</label>
                 <v-text-field
-                    v-model.trim="emailAddress"
+                    v-model.trim="email"
                     outlined
                     dense
                     placeholder="Type here"
-                    :error-messages="emailAddressErrors"
-                    @input="$v.emailAddress.$touch()"
-                    @blur="$v.emailAddress.$touch()"
+                    :error-messages="emailErrors"
+                    @input="$v.email.$touch()"
+                    @blur="$v.email.$touch()"
                 />
             </div>
-            <div class="form--register__input">
+            <div class="form--register__input mobile-form-control">
                 <label>Mobile No.</label>
                 <vue-tel-input-vuetify
                     outlined
@@ -61,11 +65,12 @@
                     v-bind="bindProps"
                     v-model.trim="phone"
                     label=""
+                    clearable
                     v-on:country-changed="countryChanged"
                     :error-messages="phoneErrors"
                     @input="$v.phone.$touch()"
                     @blur="$v.phone.$touch()"
-                ></vue-tel-input-vuetify>
+                />
             </div>
         </div>
         <v-checkbox
@@ -85,25 +90,61 @@
 <script>
 import { validationMixin } from "vuelidate"
 import { required, email, sameAs } from "vuelidate/lib/validators"
+
 export default {
     name: "LandlordRegisterForm",
     mixins: [validationMixin],
     validations: {
-        preferredUsername: { required },
+        username: { required },
         password: { required },
         verifiedPassword: {
             required,
             sameAsPassword: sameAs("password")
         },
-        emailAddress: { required, email },
+        email: { required, email },
         phone: { required }
+    },
+    computed: {
+        usernameErrors() {
+            const errors = []
+            if (!this.$v.username.$dirty) return errors
+            !this.$v.username.required && errors.push("Preferred Username is required")
+            return errors
+        },
+        passwordErrors() {
+            const errors = []
+            if (!this.$v.password.$dirty) return errors
+            !this.$v.password.required && errors.push("Password is required")
+            return errors
+        },
+        verifiedPasswordErrors() {
+            const errors = []
+            if (!this.$v.verifiedPassword.$dirty) return errors
+            !this.$v.verifiedPassword.required && errors.push("Verified Password is required")
+            !this.$v.verifiedPassword.sameAsPassword && errors.push("Passwords must be identical.")
+            return errors
+        },
+        emailErrors() {
+            const errors = []
+            if (!this.$v.email.$dirty) return errors
+            !this.$v.email.required && errors.push("Email Address is required")
+            !this.$v.email.email && errors.push("Email Address is valid")
+            return errors
+        },
+        phoneErrors() {
+            const errors = []
+            if (!this.$v.phone.$dirty) return errors
+            !this.$v.phone.required && errors.push("Phone No is required")
+            return errors
+        }
     },
     data() {
         return {
-            preferredUsername: "",
+            username: "",
+            contactname: "",
             password: "",
             verifiedPassword: "",
-            emailAddress: "",
+            email: "",
             phone: null,
             countryCode: null,
             country: null,
@@ -121,49 +162,26 @@ export default {
             }
         }
     },
-    computed: {
-        preferredUsernameErrors() {
-            const errors = []
-            if (!this.$v.preferredUsername.$dirty) return errors
-            !this.$v.preferredUsername.required && errors.push("Preferred Username is required")
-            return errors
-        },
-        passwordErrors() {
-            const errors = []
-            if (!this.$v.password.$dirty) return errors
-            !this.$v.password.required && errors.push("Password is required")
-            return errors
-        },
-        verifiedPasswordErrors() {
-            const errors = []
-            if (!this.$v.verifiedPassword.$dirty) return errors
-            !this.$v.verifiedPassword.required && errors.push("Verified Password is required")
-            !this.$v.verifiedPassword.sameAsPassword && errors.push("Passwords must be identical.")
-            return errors
-        },
-        emailAddressErrors() {
-            const errors = []
-            if (!this.$v.emailAddress.$dirty) return errors
-            !this.$v.emailAddress.required && errors.push("Email Address is required")
-            !this.$v.emailAddress.email && errors.push("Email Address is valid")
-            return errors
-        },
-        phoneErrors() {
-            const errors = []
-            if (!this.$v.phone.$dirty) return errors
-            !this.$v.phone.required && errors.push("Phone No is required")
-            return errors
-        }
-    },
+
     methods: {
         countryChanged(country) {
-            this.country = "+" + country.dialCode
+            this.country = "+" + country.dialCode + " "
         },
-        submitForm() {
-            // console.log('submit!', this.$v.$invalid)
+        onSubmit() {
             this.$v.$touch()
             if (!this.$v.$invalid) {
-                this.onClose()
+                const params = {
+                    username: this.username,
+                    contactName: this.contactName,
+                    email: this.email,
+                    password: this.password,
+                    mobile: this.phone,
+                    exchangeID: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+                    createType: "LANDLORD"
+                }
+                console.log({ registerParams: params })
+            } else {
+                /*this.onClose()*/
             }
         }
     }
@@ -199,6 +217,14 @@ export default {
     .btn-group {
         width: 17.5rem;
         margin: 3.2rem 0;
+    }
+}
+</style>
+<style lang="scss">
+.form--register__input {
+    > div {
+        grid-gap: 0.4rem;
+        gap: 0.4rem;
     }
 }
 </style>

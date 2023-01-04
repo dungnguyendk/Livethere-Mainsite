@@ -11,15 +11,22 @@
                     <div class="box__content">
                         <div class="box__content--rule">
                             <p v-for="(content, index) in item.contents" :key="index">
-                                <i class="ri-checkbox-circle-fill"></i>{{ content.rule }}</p
-                            >
+                                <i class="ri-checkbox-circle-fill"></i>{{ content.rule }}
+                            </p>
                         </div>
                     </div>
                     <div class="box__bottom">
-                        <nuxt-link class="btn btn--primary btn--gray v-btn" :to="item.url">
+                        <nuxt-link
+                            v-if="item.id === 2"
+                            class="btn btn--primary btn--gray v-btn"
+                            :to="item.url"
+                        >
                             Proceed
                             <i class="ri-arrow-right-line"></i>
                         </nuxt-link>
+                        <v-btn v-else class="btn btn--ghost btn--green" disabled>
+                            Comming soon
+                        </v-btn>
                     </div>
                 </div>
             </div>
