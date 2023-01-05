@@ -5,7 +5,7 @@ export const state = () => ({
 export const mutations = {
     setDashBoards(state, payload) {
         state.dashBoards = payload
-        console.log("state.dashBoards::", state.dashBoards)
+        // console.log("state.dashBoards::", state.dashBoards)
     }
 }
 export const actions = {
