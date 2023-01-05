@@ -14,13 +14,8 @@
             </thead>
             <tbody>
                 <template v-if="items.length > 0">
-                    <AssetAnalyticsTableRecord
-                        v-for="item in items"
-                        :source="item"
-                        :selectedId="selectedId"
-                        :key="item.id"
-                        @handleClickOpenRow="handleClickOpenRow"
-                    />
+                    <AssetAnalyticsTableRecord v-for="item in items" :source="item" :selectedId="selectedId"
+                        :key="item.id" @handleClickOpenRow="handleClickOpenRow" />
                 </template>
                 <template v-else>
                     <tr>
@@ -53,7 +48,7 @@ export default {
                     purchasePrice: "SGD 1,200,000",
                     currentEstimatedValue: "SGD 1,500,000",
                     estimatedCapitalGain:
-                        "SGD 120,000 - SGD 150,000 SGD 120,000 - SGD 150,000 SGD 120,000 - SGD 150,000",
+                        "SGD 120,000 - SGD 150,000",
                     rentalYield: "1.2%"
                 },
                 {
