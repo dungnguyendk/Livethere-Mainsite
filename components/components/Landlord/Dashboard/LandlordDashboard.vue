@@ -74,9 +74,9 @@ export default {
                     footerTitle: "Purchase Price of Portfolio",
                     estimatedPortfolioPriceCurrentYear:
                         this.dashboard.estimatedPortfolioPriceCurrentYear,
-                    portfolioPriceYieldRate: this.dashboard.portfolioPriceYieldRate,
+                    portfolioPriceYieldRate: this.dashboard.portfolioPriceYieldRate.toFixed(2),
                     purchasePriceOfPortfolio: this.dashboard.purchasePriceOfPortfolio,
-                    purchasePriceOfPortfolioRate: this.dashboard.purchasePriceOfPortfolioRate,
+                    purchasePriceOfPortfolioRate: this.dashboard.purchasePriceOfPortfolioRate.toFixed(2),
                     widgetSVG: "img-widget"
                 }
                 : null
@@ -87,10 +87,10 @@ export default {
                     name: "average",
                     headerTitle: `Average Yield ${this.dashboard.lastYear}`,
                     footerTitle: `Average Yield ${this.dashboard.currentYear}`,
-                    averageYieldThisYear: this.dashboard.averageYieldThisYear,
-                    averageYieldThisYearCompare: this.dashboard.averageYieldThisYearCompare,
-                    averageYieldLastYear: this.dashboard.averageYieldLastYear,
-                    averageYieldLastYearCompare: this.dashboard.averageYieldLastYearCompare,
+                    averageYieldThisYear: this.dashboard.averageYieldThisYear.toFixed(2),
+                    averageYieldThisYearCompare: this.dashboard.averageYieldThisYearCompare.toFixed(2),
+                    averageYieldLastYear: this.dashboard.averageYieldLastYear.toFixed(2),
+                    averageYieldLastYearCompare: this.dashboard.averageYieldLastYearCompare.toFixed(2),
                     widgetSVG: "img-widget2"
                 }
                 : null
@@ -106,7 +106,7 @@ export default {
                     data: this.dashboard.lastYearIncomeData.map((val) => val.value),
                     // checkBackgroundColor: this.dashboard.lastYearIncomeData.map((val) => val.forecastValue),
                     price: this.dashboard.incomeLastYear,
-                    incomeRate: this.dashboard.incomeLastYearRate,
+                    incomeRate: this.dashboard.incomeLastYearRate.toFixed(2),
                     lineColor: "hsla(195, 79%, 63%, 1)"
                 }
                 : null
@@ -122,7 +122,7 @@ export default {
                     data: this.dashboard.currentYearIncomeData.map((val) => val.value),
                     // checkBackgroundColor: this.dashboard.currentYearIncomeData.map((val) => val.forecastValue),
                     price: this.dashboard.incomeCurrentYear,
-                    incomeRate: this.dashboard.incomeCurrentYearRate,
+                    incomeRate: this.dashboard.incomeCurrentYearRate.toFixed(2),
                     lineColor: this.dashboard.currentYearIncomeData.map((val) => val.forecastValue ? "rgba(153, 102, 255, 0.2)" : "hsla(240, 64%, 62%, 1)")
                 }
                 : null
