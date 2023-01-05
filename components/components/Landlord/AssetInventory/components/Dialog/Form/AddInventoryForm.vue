@@ -3,19 +3,12 @@
         <div class="form__top">
             <h3>{{ inventoryDetail.id ? "EDIT INVENTORY" : "ADD NEW INVENTORY" }}</h3>
         </div>
+        <p class="alert alert--red" v-if="!statusResponse">Something when wrong</p>
         <div class="form__fields">
             <div class="form__field">
                 <label>Property Type</label>
-                <v-select
-                    v-model.trim="propertyType"
-                    :items="propertyTypeList"
-                    item-text="text"
-                    item-value="value"
-                    outlined
-                    dense
-                    placeholder="Please select"
-                    :error-messages="propertyTypeErrors"
-                />
+                <v-select v-model.trim="propertyType" :items="propertyTypeList" item-text="text" item-value="value"
+                    outlined dense placeholder="Please select" :error-messages="propertyTypeErrors" />
             </div>
             <div class="form__field2">
                 <div class="form__field">
@@ -29,74 +22,37 @@
                 </div>
                 <div class="form__field">
                     <label>House No.</label>
-                    <v-text-field
-                        v-model.trim="houseNo"
-                        outlined
-                        dense
-                        :error-messages="houseNoErrors"
-                    />
+                    <v-text-field v-model.trim="houseNo" outlined dense :error-messages="houseNoErrors" />
                 </div>
             </div>
             <div class="form__field">
                 <label>Street Name</label>
-                <v-text-field
-                    v-model.trim="streetName"
-                    outlined
-                    dense
-                    :error-messages="streetNameErrors"
-                />
-            </div>
-            <div class="form__field">
-                <label>Unit No.</label>
-                <v-text-field v-model.trim="unitNo" outlined dense :error-messages="unitNoErrors"
-                    @change="searchPostalCode" />
-            </div>
-            <div class="form__field">
-                <label>Project Name</label>
-                <v-text-field
-                    v-model.trim="projectName"
-                    outlined
-                    dense
-                    :error-messages="projectNameErrors"
-                />
+                <v-text-field v-model.trim="streetName" outlined dense :error-messages="streetNameErrors" />
             </div>
             <div class="form__field2">
                 <div class="form__field">
-                    <label>No of Bedroom(s)</label>
-                    <v-select
-                        v-model="bedroom"
-                        outlined
-                        dense
-                        placeholder="Please select"
-                        :items="bedroomList"
-                        item-text="text"
-                        item-value="value"
-                        :error-messages="bedroomErrors"
-                    />
+                    <label>Unit No.</label>
+                    <v-text-field v-model.trim="unitNo" outlined dense :error-messages="unitNoErrors" @change="searchPostalCode" />
                 </div>
                 <div class="form__field">
-                    <label>Tenure</label>
-                    <v-select
-                        v-model="tenure"
-                        outlined
-                        dense
-                        placeholder="Please select"
-                        :items="tenureList"
-                        item-text="text"
-                        item-value="value"
-                        :error-messages="tenureErrors"
-                    />
+                    <label>No of Bedroom(s)</label>
+                    <v-select v-model="bedroom" outlined dense placeholder="Please select" :items="bedroomList" item-text="text"
+                        item-value="value" :error-messages="bedroomErrors" />
                 </div>
             </div>
             <div class="form__field">
+                <label>Project Name</label>
+                <v-text-field v-model.trim="projectName" outlined dense :error-messages="projectNameErrors" />
+            </div>
+            <div class="form__field">
+                <label>Tenure</label>
+                <v-select v-model="tenure" outlined dense placeholder="Please select" :items="tenureList" item-text="text"
+                    item-value="value" :error-messages="tenureErrors" />
+            </div>
+            <div class="form__field">
                 <label>Floor Area (sqft)</label>
-                <v-text-field
-                    v-model.trim="floorArea"
-                    outlined
-                    dense
-                    hide-spin-buttons
-                    :error-messages="floorAreaErrors"
-                />
+                <v-text-field v-model.trim="floorArea" outlined dense hide-spin-buttons
+                    :error-messages="floorAreaErrors" />
             </div>
             <div class="form__field2">
                 <div class="form__field">
@@ -121,13 +77,8 @@
             </div>
             <div class="form__field" v-if="propertyType.name === 'LANDED PROPERTY'">
                 <label>Land Area (sqft)</label>
-                <v-text-field
-                    v-model.trim="landArea"
-                    outlined
-                    dense
-                    hide-spin-buttons
-                    :error-messages="landAreaErrors"
-                />
+                <v-text-field v-model.trim="landArea" outlined dense hide-spin-buttons
+                    :error-messages="landAreaErrors" />
             </div>
         </div>
         <div class="card__footer">
@@ -156,7 +107,11 @@ export default {
         postalCode: { required },
         houseNo: { required },
         streetName: { required },
-        unitNo: { required },
+        unitNo: {
+            required: requiredIf(function () {
+                return this.propertyType.name !== "LANDED PROPERTY"
+            })
+        },
         projectName: {
             required: requiredIf(function () {
                 return this.propertyType.name !== "LANDED PROPERTY"
@@ -211,6 +166,7 @@ export default {
         ...mapState({
             inventoryDetail: (state) => state.inventories.inventoryDetail,
             statusFID: (state) => state.inventories.typeSelect,
+            statusResponse: (state) => state.inventories.statusResponse,
         }),
         propertyTypeErrors() {
             return setFormControlErrors(this.$v.propertyType, "This field is required")
@@ -311,8 +267,11 @@ export default {
                         StatusFID: this.typeSelected
                     })
                     this.$store.dispatch("inventories/getInventories", paramStatusFID)
+                }).then(() => {
+                    if (this.statusResponse) {
+                        this.onClose()
+                    }
                 })
-                this.onClose()
             }
         },
         updateInventories() {
@@ -345,8 +304,11 @@ export default {
                         StatusFID: this.typeSelected
                     })
                     this.$store.dispatch("inventories/getInventories", paramStatusFID)
+                }).then(() => {
+                    if (this.statusResponse) {
+                        this.onClose()
+                    }
                 })
-                this.onClose()
             }
         },
         async searchPostalCode() {

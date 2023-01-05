@@ -1,6 +1,5 @@
 <template lang="html">
     <main>
-        <LandlordHeader />
         <template v-if="loggedIn">
             <LandlordPortal>
                 <TenancyWrapper @onBack="onBack">
@@ -20,6 +19,7 @@ import LandlordHeader from "~/components/shared/Header/LandlordHeader.vue"
 import AssetInventory from "~/components/components/Landlord/AssetInventory/AssetInventory.vue"
 import TenancyWrapper from "~/components/components/Landlord/Tenancy/TenancyWrapper"
 import TenancyExpensesPanel from "~/components/components/Landlord/Tenancy/Panel/TenancyExpensesPanel"
+import { mapState } from "vuex"
 
 export default {
     components: {
@@ -29,19 +29,23 @@ export default {
         LandlordHeader,
         LandlordPortal
     },
+    layout: "landlord",
     head: {
-        title: `Expense | ${appSettings.siteName}`
+        title: `Expenses | ${appSettings.siteName}`
     },
 
     computed: {
+        ...mapState({
+            tenancyID: (state) => state.inventory.tenancyID
+        }),
         loggedIn() {
             return this.$auth.loggedIn
-        }
+        },
+      
     },
-
     methods: {
         onBack() {
-            const internalID = this.$route.params.id
+            const internalID = this.tenancyID
             this.$router.push(`/landlord/tenancy/${internalID}`)
             //this.$router.go(-1)
         }

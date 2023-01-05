@@ -151,4 +151,7 @@ export default {
         }
     }
 }
+.card--dropzone::v-deep(.dz-preview) {
+    display: none;
+}
 </style>

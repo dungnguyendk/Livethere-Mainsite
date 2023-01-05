@@ -1,6 +1,5 @@
 <template lang="html">
     <main>
-        <LandlordHeader />
         <template v-if="loggedIn">
             <LandlordPortal>
                 <TenancyAgreements />
@@ -29,6 +28,7 @@ export default {
         LandlordHeader,
         LandlordPortal
     },
+    layout: 'landlord',
     head: {
         title: `Tenancy Agreement | ${appSettings.siteName}`
     },

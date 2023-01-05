@@ -1,6 +1,5 @@
 <template lang="html">
     <main>
-        <LandlordHeader />
         <template v-if="loggedIn">
             <LandlordPortal>
                 <TenancyUnits />
@@ -27,6 +26,7 @@ export default {
         LandlordHeader,
         LandlordPortal
     },
+    layout: "landlord",
     head: {
         title: `Unit Inventory | ${appSettings.siteName}`
     },

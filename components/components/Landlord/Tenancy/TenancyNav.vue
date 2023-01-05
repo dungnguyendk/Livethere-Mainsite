@@ -8,20 +8,28 @@
             <div class="link__indicator">
                 {{ index + 1 }}
             </div>
-            <nuxt-link :to="`/landlord/tenancy/${item.link}/${id}`">
+            <nuxt-link v-if="item.link !=='unit-inventory'" :to="`/landlord/tenancy/${item.link}/${id}`">
                 {{ item.title }}
             </nuxt-link>
+            <nuxt-link v-else :to="`/landlord/tenancy/${item.link}/${internalIDTemp}`">
+                {{ item.title }}
+            </nuxt-link>
+
         </div>
     </nav>
 </template>
 
 <script>
 import TenancyDetails from "~/components/components/Landlord/Tenancy/TenancyDetails"
+import { mapState } from "vuex"
 
 export default {
     name: "TenancyNav",
     components: { TenancyDetails },
     computed: {
+        ...mapState({
+            tenancyID: (state) => state.inventory.tenancyID
+        }),
         id() {
             return this.$route.params.id
         },
@@ -29,13 +37,18 @@ export default {
             return this.$route.path
         }
     },
+    created(){
+        this.internalIDTemp = this.tenancyID 
+    },
     methods: {
         checkActivePath(path) {
             return this.$route.path.includes(path)
-        }
+        },
+        
     },
     data() {
         return {
+            internalIDTemp: "",
             itemSelected: {
                 title: "Item selected",
                 link: "details"

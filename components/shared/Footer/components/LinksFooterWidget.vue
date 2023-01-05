@@ -4,12 +4,12 @@
             <h3 class="widget__title">About livethere</h3>
         </div>
         <div class="widget__container">
-            <template v-if="source">
+<!--            <template v-if="source">
                 <nuxt-link v-for="(item, index) in source" :to="`/${item.linkURL}`">
                     {{ item.defaultName }}
                 </nuxt-link>
-            </template>
-            <template v-else>
+            </template>-->
+            <template >
                 <nuxt-link v-for="(link, index) in links" :to="link.url" :key="index">
                     {{ link.label }}
                 </nuxt-link>

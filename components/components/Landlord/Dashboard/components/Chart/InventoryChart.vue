@@ -1,9 +1,9 @@
 <template lang="html">
     <div class="section-chart">
         <label class="chart-title">Inventory</label>
-        <div class="row justify-content-between d-flex mt-5">
-            <div class="col-auto text-center">
-                <div class="progress" data-percentage="100">
+        <div class="section__columns">
+            <div class="section__column">
+                <div class="progress" :data-percentage="total">
                     <span class="progress-left">
                         <span class="progress-bar"></span>
                     </span>
@@ -12,14 +12,16 @@
                     </span>
                     <div class="progress-value">
                         <div>
-                            <span>10</span>
+                            <span>
+                                {{ dashboard.totalInventories ? dashboard.totalInventories : 0 }}
+                            </span>
                         </div>
                     </div>
                 </div>
                 <label class="name-progress">Total</label>
             </div>
-            <div class="col-auto text-center">
-                <div class="progress progress--blue" data-percentage="70">
+            <div class="section__column">
+                <div class="progress progress--blue" :data-percentage="tenant">
                     <span class="progress-left">
                         <span class="progress-bar progress-bar--blue"></span>
                     </span>
@@ -28,14 +30,16 @@
                     </span>
                     <div class="progress-value progress-value--blue">
                         <div>
-                            <span>7</span>
+                            <span>
+                                {{ dashboard.tenantInventories ? dashboard.tenantInventories : 0 }}
+                            </span>
                         </div>
                     </div>
                 </div>
                 <label class="name-progress">Tenanted</label>
             </div>
-            <div class="col-auto text-center">
-                <div class="progress progress--orange" data-percentage="30">
+            <div class="section__column">
+                <div class="progress progress--orange" :data-percentage="vacant">
                     <span class="progress-left">
                         <span class="progress-bar progress-bar--orange"></span>
                     </span>
@@ -44,7 +48,7 @@
                     </span>
                     <div class="progress-value progress-value--orange">
                         <div>
-                            <span>3</span>
+                            <span>{{ dashboard.vacantInventories }}</span>
                         </div>
                     </div>
                 </div>
@@ -55,8 +59,36 @@
 </template>
 
 <script>
+import { mapState } from "vuex"
+
 export default {
     name: "InventoryChart",
+    computed: {
+        ...mapState({
+            dashboard: (state) => state.dashboard.dashBoards
+        }),
+        total() {
+            return this.dashboard
+                ? (this.dashboard.totalInventories / this.dashboard.totalInventories) * 100
+                : 0
+        },
+        tenant() {
+            return this.dashboard
+                ? (
+                      (this.dashboard.tenantInventories / this.dashboard.totalInventories) *
+                      100
+                  ).toFixed()
+                : 0
+        },
+        vacant() {
+            return this.dashboard
+                ? (
+                      (this.dashboard.vacantInventories / this.dashboard.totalInventories) *
+                      100
+                  ).toFixed()
+                : 0
+        }
+    }
 }
 </script>
 <style lang="scss" scoped>
@@ -66,6 +98,19 @@ export default {
     box-shadow: 0px 9px 50px rgba(56, 56, 56, 0.1);
     border-radius: 2rem;
     min-height: 20rem;
+
+    .section__column {
+        label {
+            text-align: center;
+            width: 100%;
+        }
+    }
+
+    .section__columns {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        grid-gap: 2.4rem;
+    }
 }
 
 .chart-title {
@@ -96,7 +141,7 @@ $border-color-fill-orange: #FF9A3E;
 $size: 7rem;
 
 //Create how many steps
-$howManySteps: 10; //this needs to be even. 
+$howManySteps: 200; //this needs to be even.
 //for fun try using 20 and changine in the HTML the data-percentage to 15 or 85
 
 .progress {
@@ -182,9 +227,9 @@ $howManySteps: 10; //this needs to be even.
     .progress-left .progress-bar {
         left: 100%;
         border-top-right-radius: ($size/2);
-        ;
+    ;
         border-bottom-right-radius: ($size/2);
-        ;
+    ;
         border-left: 0;
         -webkit-transform-origin: center left;
         transform-origin: center left;
@@ -197,9 +242,9 @@ $howManySteps: 10; //this needs to be even.
         .progress-bar {
             left: -100%;
             border-top-left-radius: ($size/2);
-            ;
+        ;
             border-bottom-left-radius: ($size/2);
-            ;
+        ;
             border-right: 0;
             -webkit-transform-origin: center right;
             transform-origin: center right;
@@ -232,8 +277,8 @@ $howManySteps: 10; //this needs to be even.
     }
 }
 
-/* This for loop creates the 	necessary css animation names 
-Due to the split circle of progress-left and progress right, we must use the animations on each side. 
+/* This for loop creates the 	necessary css animation names
+Due to the split circle of progress-left and progress right, we must use the animations on each side.
 */
 @for $i from 1 through $howManySteps {
     $stepName: ($i*(100 / $howManySteps));
@@ -282,4 +327,4 @@ Due to the split circle of progress-left and progress right, we must use the ani
         }
     }
 }
-</style>    
+</style>

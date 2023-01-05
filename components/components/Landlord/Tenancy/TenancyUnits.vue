@@ -10,15 +10,20 @@
 import TenancyWrapper from "~/components/components/Landlord/Tenancy/TenancyWrapper"
 import TenancyDocumentsPanel from "~/components/components/Landlord/Tenancy/Panel/TenancyDocumentsPanel"
 import TenancyUnitInventory from "~/components/components/Landlord/Tenancy/TenancyUnitInventory"
+import { mapState } from "vuex"
 
 export default {
     name: "TenancyUnits",
     components: { TenancyUnitInventory, TenancyDocumentsPanel, TenancyWrapper },
+    computed: {
+        ...mapState({
+            tenancyID: (state) => state.inventory.tenancyID
+        })
+    },
     methods: {
         onBack() {
-            const internalID = this.$route.params.id
-            this.$router.push(`/landlord/tenancy/${internalID}`)
-            //this.$router.go(-1)
+            const id = this.tenancyID
+            this.$router.push(`/landlord/tenancy/${id}`)
         }
     }
 }
