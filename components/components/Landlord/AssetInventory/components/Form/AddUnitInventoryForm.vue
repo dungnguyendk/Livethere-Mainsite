@@ -172,9 +172,6 @@ export default {
                         assestInventoryFID: this.entriesID,
                         conditionTypeFID: this.condition.id,
                         itemName: this.itemName,
-                        currencyType: "",
-                        currentyName: "",
-                        cultureCode: "",
                         conditionDisplay: this.condition.name,
                         quantity: this.quantity,
                         itemValue: this.value ? convertCommasToNumber(this.value) : 0,
@@ -200,7 +197,7 @@ export default {
         },
         updateUnitInventory() {
             this.onFormSubmit()
-            this.$v.$touch()
+            this.$v.$touch()    
             if (!this.$v.$invalid) {
                 try {
                     const params = {
@@ -209,7 +206,7 @@ export default {
                         conditionTypeFID: this.condition.id,
                         cultureCode: "",
                         currencyType: "",
-                        currentyName: "",
+                        currencyName: "",
                         itemName: this.itemName,
                         conditionDisplay: this.condition.name,
                         quantity: this.quantity,
