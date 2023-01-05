@@ -4,10 +4,10 @@
             <p>{{ source.itemName }}</p>
         </td>
         <td data-title="Quantity">
-            <p>{{ source.quantity }}</p>
+            <p>{{ source ? quantityFormat : "-" }}</p>
         </td>
         <td data-title="Total Value">
-            <p>{{ source.totalValue }} </p>
+            <p> {{ source.currencyType }} {{ source ? totalValueFormat : "-" }} </p>
         </td>
         <!-- <td data-title="Condition Remarks">
             <p>{{ source.remark }} </p>
@@ -64,6 +64,8 @@ import { mapState } from "vuex"
 import { httpEndpoint } from "~/services/https/endpoints"
 import Dialog from "~/components/elements/Dialog/Dialog.vue"
 import AddUnitInventoryForm from "../../../AssetInventory/components/Form/AddUnitInventoryForm.vue"
+import { convertNumberToCommas } from "~/ultilities/helpers"
+
 export default {
     name: "TenacyInventoryRecord",
     components: { Dialog, AddUnitInventoryForm },
@@ -77,12 +79,23 @@ export default {
         ...mapState({
             internalID: (state) => state.inventory.internalID,
             units: (state) => state.inventory.units
-        })
+        }),
+        totalValueFormat(){
+            return convertNumberToCommas(this.source.totalValue)
+        },
+        quantityFormat(){
+           return convertNumberToCommas(this.source.quantity)
+        }
     },
+    // created() {
+    //     this.totalValueFormat = convertNumberToCommas(this.source.totalValue)
+    //     this.quantityFormat = convertNumberToCommas(this.source.quantity)
+    // },
     data() {
         return {
-            createDialog: false
-            // sizeDialog: "large",
+            createDialog: false,
+            quantity: "",
+            totalValue: ""
         }
     },
     methods: {
@@ -90,7 +103,7 @@ export default {
             this.$emit("handleClickOpenRow", item)
         },
         onEditUnitInventory(item) {
-            console.log("onEditInventory")
+            // console.log("onEditInventory")
             this.$store.dispatch("inventory/getDetailUnitInventory", item).then(() => {
                 this.createDialog = true
             })
@@ -141,7 +154,7 @@ td {
         color: #0b0c0c;
     }
 }
-td:nth-child(4){
+td:nth-child(4) {
     display: flex;
     justify-content: flex-end;
 }

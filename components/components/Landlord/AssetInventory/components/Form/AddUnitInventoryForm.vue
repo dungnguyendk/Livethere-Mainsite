@@ -1,13 +1,12 @@
 <template lang="html">
-    <form class="form--landlord form--add-unit-inventory">
+    <form @submit.prevent="onFormSubmit" class="form--landlord form--add-unit-inventory">
         <div class="form__top">
             <h3>{{ unitInventoryDetail ? "EDIT UNIT INVENTORY" : "ADD NEW UNIT INVENTORY" }}</h3>
-          
         </div>
         <div class="form__fields">
             <v-col cols="12" sm="12" md="12">
-                    <p v-if="errorMessages" class="alert alert--red">Something when wrong</p>
-                </v-col>
+                <p v-if="errorMessage" class="alert alert--red">Something when wrong</p>
+            </v-col>
             <v-row>
                 <v-col cols="12" sm="12" md="6">
                     <div class="form__field">
@@ -49,12 +48,14 @@
                         <label class="required">Unit Price </label>
                         <v-text-field
                             v-model="value"
-                            :error-messages="valueErrors"
-                            dense
                             outlined
-                            reversed
+                            dense
+                            hide-spin-buttons
+                            :error-messages="valueErrors"
                             suffix="SGD"
-                        />
+                            reverse
+                        >
+                        </v-text-field>
                     </div>
                 </v-col>
                 <v-col cols="12" sm="12" md="12">
@@ -69,7 +70,6 @@
             <v-btn class="btn btn--ghost btn--gray btn--sm" @click="onClose()"> Cancel</v-btn>
             <v-btn
                 class="btn btn--primary btn--green btn--sm"
-                :disabled="$v.$invalid"
                 @click="unitInventoryDetail ? updateUnitInventory() : createUnitInventory()"
             >
                 {{ unitInventoryDetail ? "Update" : "Add" }}
@@ -149,76 +149,93 @@ export default {
         return {
             itemName: "",
             quantity: null,
-            value: 0,
+            value: null,
             condition: "",
+            currencyType: "SGD",
+            currencyName: "SINGAPORE DOLLAR",
+            cultureCode: "en-SG",
             conditions: CONDITIONS,
             remark: "",
-            errorMessages: false
+            errorMessage: false
         }
     },
 
     methods: {
+        onFormSubmit() {},
         onClose() {
             this.$store.commit("inventory/setInventoryUnitDetail", "")
             this.$emit("close")
         },
         async createUnitInventory() {
-            try {
-                const params = {
-                    assestInventoryFID: this.entriesID,
-                    conditionTypeFID: this.condition.id,
-                    itemName: this.itemName,
-                    currencyType: "",
-                    currentyName: "",
-                    cultureCode: "",
-                    conditionDisplay: this.condition.name,
-                    quantity: this.quantity,
-                    itemValue: this.value ? convertCommasToNumber(this.value) : 0,
-                    remark: this.remark
-                }
-                console.log("params", params)
-                this.$store.dispatch("inventory/createUnitInventory", params).then((response) => {
-                    if (response) {
-                        const internalID = this.internalID
-                        this.$store.dispatch("inventory/getUnitsByInventoryFID", internalID)
-                        this.errorMessages = false
-                        this.onClose()
-                    } else {
-                        this.errorMessages = true
+            this.onFormSubmit()
+            this.$v.$touch()
+            if (!this.$v.$invalid) {
+                try {
+                    const params = {
+                        assestInventoryFID: this.entriesID,
+                        conditionTypeFID: this.condition.id,
+                        itemName: this.itemName,
+                        currencyType: this.currencyType,
+                        currentyName: this.currencyName,
+                        cultureCode: "en-SG",
+                        conditionDisplay: this.condition.name,
+                        quantity: this.quantity ? convertCommasToNumber(this.quantity) : 0,
+                        itemValue: this.value ? convertCommasToNumber(this.value) : 0,
+                        remark: this.remark
                     }
-                })
-            } catch (e) {
-                console.log(e)
+                    // console.log("params", params)
+                    this.$store
+                        .dispatch("inventory/createUnitInventory", params)
+                        .then((response) => {
+                            if (response) {
+                                const internalID = this.internalID
+                                this.$store.dispatch("inventory/getUnitsByInventoryFID", internalID)
+                                this.errorMessage = false
+                                this.onClose()
+                            } else {
+                                this.errorMessage = true
+                            }
+                        })
+                } catch (e) {
+                    console.log(e)
+                }
             }
         },
         updateUnitInventory() {
-            try {
-                const params = {
-                    id: this.sourceDetail,
-                    assestInventoryFID: this.entriesID,
-                    conditionTypeFID: this.condition.id,
-                    cultureCode: "",
-                    currencyType: "",
-                    currentyName: "",
-                    itemName: this.itemName,
-                    conditionDisplay: this.condition.name,
-                    quantity: this.quantity,
-                    itemValue: this.value ? convertCommasToNumber(this.value) : 0,
-                    remark: this.remark
-                }
-                console.log("params", params)
-                this.$store.dispatch("inventory/updateUnitInventory", params).then((response) => {
-                    if (response) {
-                        const internalID = this.internalID
-                        this.$store.dispatch("inventory/getUnitsByInventoryFID", internalID)
-                        this.errorMessages = false
-                        this.onClose()
-                    } else {
-                        this.errorMessages = true
+            this.onFormSubmit()
+            this.$v.$touch()
+            if (!this.$v.$invalid) {
+                try {
+                    const params = {
+                        id: this.sourceDetail,
+                        assestInventoryFID: this.entriesID,
+                        conditionTypeFID: this.condition.id,
+                        cultureCode: "en-SG",
+                        currencyType: this.currencyType,
+                        currencyName: this.currencyName,
+                        itemName: this.itemName,
+                        conditionDisplay: this.condition.name,
+                        quantity: this.quantity ? convertCommasToNumber(this.quantity) : 0,
+                        itemValue: this.value ? convertCommasToNumber(this.value) : 0,
+                        remark: this.remark
                     }
-                })
-            } catch (e) {
-                console.log(e)
+                    // console.log("params", params)
+                    this.$store
+                        .dispatch("inventory/updateUnitInventory", params)
+                        .then((response) => {
+                            if (response) {
+                                const internalID = this.internalID
+                                // console.log("internalID: " + internalID);
+                                this.$store.dispatch("inventory/getUnitsByInventoryFID", internalID)
+                                this.errorMessage = false
+                                this.onClose()
+                            } else {
+                                this.errorMessage = true
+                            }
+                        })
+                } catch (e) {
+                    console.log(e)
+                }
             }
         }
     },
@@ -257,10 +274,9 @@ export default {
             line-height: 2.8rem;
             color: var(--color-title-black);
         }
-
     }
-    .form__fields{
-        p{
+    .form__fields {
+        p {
             display: flex;
             justify-content: center;
         }
