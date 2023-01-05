@@ -4,10 +4,10 @@
             <p>{{ source.itemName }}</p>
         </td>
         <td data-title="Quantity">
-            <p>{{ source.quantity ? quantityFormat : 0 }}</p>
+            <p>{{ source ? quantityFormat : "-" }}</p>
         </td>
         <td data-title="Total Value">
-            <p>{{ source.totalValue ? totalValueFormat : 0 }} </p>
+            <p> {{ source.currencyType }} {{ source ? totalValueFormat : "-" }} </p>
         </td>
         <!-- <td data-title="Condition Remarks">
             <p>{{ source.remark }} </p>
@@ -79,18 +79,23 @@ export default {
         ...mapState({
             internalID: (state) => state.inventory.internalID,
             units: (state) => state.inventory.units
-        })
+        }),
+        totalValueFormat(){
+            return convertNumberToCommas(this.source.totalValue)
+        },
+        quantityFormat(){
+           return convertNumberToCommas(this.source.quantity)
+        }
     },
-    created() {
-        this.totalValueFormat = convertNumberToCommas(this.source.totalValue)
-        this.quantityFormat = convertNumberToCommas(this.source.quantity)
-
-    },
+    // created() {
+    //     this.totalValueFormat = convertNumberToCommas(this.source.totalValue)
+    //     this.quantityFormat = convertNumberToCommas(this.source.quantity)
+    // },
     data() {
         return {
             createDialog: false,
-            quantity: null,
-            totalValue: null
+            quantity: "",
+            totalValue: ""
         }
     },
     methods: {
@@ -98,7 +103,7 @@ export default {
             this.$emit("handleClickOpenRow", item)
         },
         onEditUnitInventory(item) {
-            console.log("onEditInventory")
+            // console.log("onEditInventory")
             this.$store.dispatch("inventory/getDetailUnitInventory", item).then(() => {
                 this.createDialog = true
             })
