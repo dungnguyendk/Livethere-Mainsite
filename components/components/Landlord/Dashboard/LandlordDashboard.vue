@@ -1,7 +1,7 @@
 <template lang="html">
     <div>
         <img src="~/static/img/banner-dashboard.png" alt="img-banner" class="banner banner-dashboard" />
-        <div class="container">
+        <div class="container" v-if="dashboard">
             <div class="section-content">
                 <InventoryChart />
                 <ExpiringLeasesChart />
@@ -10,6 +10,9 @@
                 <IncomeChart :source="incomeCurrentYear" />
                 <StatisticsChart :source="average" />
             </div>
+        </div>
+        <div class="container dashboard-no-data" v-else>
+            <strong>No data found!</strong>
         </div>
     </div>
 </template>
@@ -145,6 +148,15 @@ export default {
     grid-column-gap: 2.4rem;
     grid-row-gap: 4.8rem;
     grid-template-columns: repeat(3, 1fr);
+}
+
+.dashboard-no-data {
+    text-align: center;
+    margin-top: 1.2rem;
+
+    strong {
+        font-size: 3.2rem;
+    }
 }
 
 @media only screen and (max-width: 768px) {
