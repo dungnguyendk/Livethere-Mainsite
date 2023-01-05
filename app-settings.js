@@ -9,11 +9,11 @@ const settings = [
     },
     {
         env: "beta",
-        base_url: "http://vnapi.asiaesolutions.com/cmspublicapi",
-        media_url: "http://vnapi.asiaesolutions.com/",
-        postal_url: "http://apivo.aestechgroup.com/aespostal",
-        mediaURLPath: "http://vnapi.asiaesolutions.com/content",
-        landlord: "http://vnapi.asiaesolutions.com/erppublicapi"
+        base_url: "https://livethereapi.asiaesolutions.com/erppublic",
+        media_url: "https://livethereapi.asiaesolutions.com/assetfileapi",
+        postal_url: "https://apivo.aestechgroup.com/aespostal",
+        mediaURLPath: "https://livethereapi.asiaesolutions.com/content/asset/",
+        landlord: "https://livethereapi.asiaesolutions.com/erppublic"
     },
     {
         env: "production",

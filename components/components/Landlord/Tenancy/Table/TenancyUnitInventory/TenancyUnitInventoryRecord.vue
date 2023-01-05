@@ -4,10 +4,10 @@
             <p>{{ source.itemName }}</p>
         </td>
         <td data-title="Quantity">
-            <p>{{ source.quantity }}</p>
+            <p>{{ source.quantity ? quantityFormat : 0 }}</p>
         </td>
         <td data-title="Total Value">
-            <p>{{ source.totalValue }} </p>
+            <p>{{ source.totalValue ? totalValueFormat : 0 }} </p>
         </td>
         <!-- <td data-title="Condition Remarks">
             <p>{{ source.remark }} </p>
@@ -64,6 +64,8 @@ import { mapState } from "vuex"
 import { httpEndpoint } from "~/services/https/endpoints"
 import Dialog from "~/components/elements/Dialog/Dialog.vue"
 import AddUnitInventoryForm from "../../../AssetInventory/components/Form/AddUnitInventoryForm.vue"
+import { convertNumberToCommas } from "~/ultilities/helpers"
+
 export default {
     name: "TenacyInventoryRecord",
     components: { Dialog, AddUnitInventoryForm },
@@ -79,10 +81,16 @@ export default {
             units: (state) => state.inventory.units
         })
     },
+    created() {
+        this.totalValueFormat = convertNumberToCommas(this.source.totalValue)
+        this.quantityFormat = convertNumberToCommas(this.source.quantity)
+
+    },
     data() {
         return {
-            createDialog: false
-            // sizeDialog: "large",
+            createDialog: false,
+            quantity: null,
+            totalValue: null
         }
     },
     methods: {
@@ -141,7 +149,7 @@ td {
         color: #0b0c0c;
     }
 }
-td:nth-child(4){
+td:nth-child(4) {
     display: flex;
     justify-content: flex-end;
 }

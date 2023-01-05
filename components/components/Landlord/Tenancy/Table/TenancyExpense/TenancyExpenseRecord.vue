@@ -7,7 +7,7 @@
             <p>{{ source.currencyType }} {{ price }}</p>
         </td>
         <td data-title="Date">
-            <p>{{ source.purchaseDate }} </p>
+            <p>{{ purchaseDate }} </p>
         </td>
         <td data-title="Actions">
             <v-btn class="btn btn--ghost btn--sm btn--red" @click="onDelete"> Delete</v-btn>
