@@ -98,12 +98,13 @@ export default {
         incomeLastYear() {
             return this.dashboard
                 ? {
+                    name: "Last year",
                     icon: "icon-income-blue",
                     incomeYear: this.dashboard.lastYear,
                     // img: "line-chart-blue",
                     labels: this.dashboard.lastYearIncomeData.map((val) => val.name),
                     data: this.dashboard.lastYearIncomeData.map((val) => val.value),
-                    checkBackgroundColor: this.dashboard.lastYearIncomeData.map((val) => val.forecastValue),
+                    // checkBackgroundColor: this.dashboard.lastYearIncomeData.map((val) => val.forecastValue),
                     price: this.dashboard.incomeLastYear,
                     incomeRate: this.dashboard.incomeLastYearRate,
                     lineColor: "hsla(195, 79%, 63%, 1)"
@@ -113,12 +114,13 @@ export default {
         incomeCurrentYear() {
             return this.dashboard
                 ? {
+                    name: "Current year",
                     icon: "icon-income-violet",
                     // img: "line-chart-blue",
                     incomeYear: this.dashboard.currentYear,
                     labels: this.dashboard.currentYearIncomeData.map((val) => val.name),
                     data: this.dashboard.currentYearIncomeData.map((val) => val.value),
-                    checkBackgroundColor: this.dashboard.currentYearIncomeData.map((val) => val.forecastValue),
+                    // checkBackgroundColor: this.dashboard.currentYearIncomeData.map((val) => val.forecastValue),
                     price: this.dashboard.incomeCurrentYear,
                     incomeRate: this.dashboard.incomeCurrentYearRate,
                     lineColor: this.dashboard.currentYearIncomeData.map((val) => val.forecastValue ? "rgba(153, 102, 255, 0.2)" : "hsla(240, 64%, 62%, 1)")

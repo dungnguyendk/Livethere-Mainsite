@@ -8,7 +8,7 @@
                     <span class="price">SGD {{ priceFormat }}</span>
                 </div>
             </div>
-            <div :class="`growth growth--${source.incomeRate < 0 ? 'red' : 'green'}`">
+            <div :class="`growth growth--${source.incomeRate < 0 ? 'red' : 'green'}`" v-if="source.name === 'Current year'">
                 <i :class="`ri-arrow-${source.incomeRate < 0 ? 'down' : 'up'}-s-fill`"></i>
                 <span class="percent">{{ source.incomeRate }}%</span>
             </div>
