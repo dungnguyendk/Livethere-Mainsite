@@ -146,7 +146,6 @@
             <v-btn
                 class="btn btn--primary btn--green btn--sm"
                 type="submit"
-                :disabled="$v.$invalid"
             >
                 Create
             </v-btn>
@@ -264,9 +263,6 @@ export default {
             if (!date) return null
             return this.$moment(date).format("DD-MMM-YYYY")
         },
-        onClose() {
-            this.$emit("close")
-        },
         submitForm() {
             this.submitted = true
             this.$v.$touch()
@@ -293,6 +289,7 @@ export default {
                     if (!value) return (this.isShowErrorMessage = true)
                     else {
                         this.$emit("openSnackbar", (this.isOpenSnackbar = true))
+                        this.resetForm()
                         this.onClose()
                     }
                 })
@@ -302,7 +299,19 @@ export default {
         },
         onClose() {
             this.$emit("close")
+            this.resetForm()
+        }, 
+        resetForm(){
+            this.$v.$reset()
+            this.agreementDateRaw = "", 
+            this.startDateRaw = "", 
+            this.endDateRaw = "", 
+            this.tenancyRefCodeErrors = "", 
+            this.monthlyRental = "", 
+            this.secureDeposit = "", 
+            this.remark = ""
         }
+ 
     }
 }
 </script>
