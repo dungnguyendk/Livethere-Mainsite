@@ -1,11 +1,11 @@
 <template lang="html">
-    <form class="form--landlord form--add-unit-inventory">
+    <form @submit.prevent="onFormSubmit" class="form--landlord form--add-unit-inventory">
         <div class="form__top">
             <h3>{{ unitInventoryDetail ? "EDIT UNIT INVENTORY" : "ADD NEW UNIT INVENTORY" }}</h3>
         </div>
         <div class="form__fields">
             <v-col cols="12" sm="12" md="12">
-                <p v-if="errorMessages" class="alert alert--red">Something when wrong</p>
+                <p v-if="errorMessage" class="alert alert--red">Something when wrong</p>
             </v-col>
             <v-row>
                 <v-col cols="12" sm="12" md="6">
@@ -70,7 +70,6 @@
             <v-btn class="btn btn--ghost btn--gray btn--sm" @click="onClose()"> Cancel</v-btn>
             <v-btn
                 class="btn btn--primary btn--green btn--sm"
-                :disabled="$v.$invalid"
                 @click="unitInventoryDetail ? updateUnitInventory() : createUnitInventory()"
             >
                 {{ unitInventoryDetail ? "Update" : "Add" }}
@@ -127,7 +126,7 @@ export default {
         },
         valueErrors() {
             return setFormControlErrors(this.$v.value, "This field is required")
-        }
+        },
     },
     created() {
         if (this.unitInventoryDetail) {
@@ -150,76 +149,89 @@ export default {
         return {
             itemName: "",
             quantity: null,
-            value: 0,
+            value: null,
             condition: "",
             conditions: CONDITIONS,
             remark: "",
-            errorMessages: false
+            errorMessage: false
         }
     },
 
     methods: {
+        onFormSubmit() {},
         onClose() {
             this.$store.commit("inventory/setInventoryUnitDetail", "")
             this.$emit("close")
         },
         async createUnitInventory() {
-            try {
-                const params = {
-                    assestInventoryFID: this.entriesID,
-                    conditionTypeFID: this.condition.id,
-                    itemName: this.itemName,
-                    currencyType: "",
-                    currentyName: "",
-                    cultureCode: "",
-                    conditionDisplay: this.condition.name,
-                    quantity: this.quantity,
-                    itemValue: this.value ? convertCommasToNumber(this.value) : 0,
-                    remark: this.remark
-                }
-                console.log("params", params)
-                this.$store.dispatch("inventory/createUnitInventory", params).then((response) => {
-                    if (response) {
-                        const internalID = this.internalID
-                        this.$store.dispatch("inventory/getUnitsByInventoryFID", internalID)
-                        this.errorMessages = false
-                        this.onClose()
-                    } else {
-                        this.errorMessages = true
+            this.onFormSubmit()
+            this.$v.$touch()
+            if (!this.$v.$invalid) {
+                try {
+                    const params = {
+                        assestInventoryFID: this.entriesID,
+                        conditionTypeFID: this.condition.id,
+                        itemName: this.itemName,
+                        currencyType: "",
+                        currentyName: "",
+                        cultureCode: "",
+                        conditionDisplay: this.condition.name,
+                        quantity: this.quantity,
+                        itemValue: this.value ? convertCommasToNumber(this.value) : 0,
+                        remark: this.remark
                     }
-                })
-            } catch (e) {
-                console.log(e)
+                    console.log("params", params)
+                    this.$store
+                        .dispatch("inventory/createUnitInventory", params)
+                        .then((response) => {
+                            if (response) {
+                                const internalID = this.internalID
+                                this.$store.dispatch("inventory/getUnitsByInventoryFID", internalID)
+                                this.errorMessage = false
+                                this.onClose()
+                            } else {
+                                this.errorMessage = true
+                            }
+                        })
+                } catch (e) {
+                    console.log(e)
+                }
             }
         },
         updateUnitInventory() {
-            try {
-                const params = {
-                    id: this.sourceDetail,
-                    assestInventoryFID: this.entriesID,
-                    conditionTypeFID: this.condition.id,
-                    cultureCode: "",
-                    currencyType: "",
-                    currentyName: "",
-                    itemName: this.itemName,
-                    conditionDisplay: this.condition.name,
-                    quantity: this.quantity,
-                    itemValue: this.value ? convertCommasToNumber(this.value) : 0,
-                    remark: this.remark
-                }
-                console.log("params", params)
-                this.$store.dispatch("inventory/updateUnitInventory", params).then((response) => {
-                    if (response) {
-                        const internalID = this.internalID
-                        this.$store.dispatch("inventory/getUnitsByInventoryFID", internalID)
-                        this.errorMessages = false
-                        this.onClose()
-                    } else {
-                        this.errorMessages = true
+            this.onFormSubmit()
+            this.$v.$touch()
+            if (!this.$v.$invalid) {
+                try {
+                    const params = {
+                        id: this.sourceDetail,
+                        assestInventoryFID: this.entriesID,
+                        conditionTypeFID: this.condition.id,
+                        cultureCode: "",
+                        currencyType: "",
+                        currentyName: "",
+                        itemName: this.itemName,
+                        conditionDisplay: this.condition.name,
+                        quantity: this.quantity,
+                        itemValue: this.value ? convertCommasToNumber(this.value) : 0,
+                        remark: this.remark
                     }
-                })
-            } catch (e) {
-                console.log(e)
+                    console.log("params", params)
+                    this.$store
+                        .dispatch("inventory/updateUnitInventory", params)
+                        .then((response) => {
+                            if (response) {
+                                const internalID = this.internalID
+                                this.$store.dispatch("inventory/getUnitsByInventoryFID", internalID)
+                                this.errorMessage = false
+                                this.onClose()
+                            } else {
+                                this.errorMessage = true
+                            }
+                        })
+                } catch (e) {
+                    console.log(e)
+                }
             }
         }
     },
