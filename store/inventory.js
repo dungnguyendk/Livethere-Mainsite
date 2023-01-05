@@ -165,6 +165,7 @@ export const actions = {
                 `${httpEndpoint.tenancyAgreements.createEntry}`,
                 payload
             )
+            console.log("responseMain: ", responseMain)
             if (responseMain) {
                 const responseSub = await this.$axios.$get(
                     `${httpEndpoint.tenancyAgreements.getEntries}?AssestInventoryFID=${payload.assestInventoryFID}`
@@ -172,12 +173,14 @@ export const actions = {
                 if (responseSub) {
                     commit("setListTenancyAgreements", responseSub)
                 }
-                return true
+                commit("setSnackbar", true)
+                commit("setSnackbarMessage", responseMain.responseMessage)
             } else {
-                return false
+                // commit("setSnackbar", false)
+                console.log("errorrr: ", responseMain)
             }
         } catch (e) {
-            console.log(e)
+            console.log({ Error: e.message})
         }
     },
     async getListTenancyAgreements({ commit }, payload) {
