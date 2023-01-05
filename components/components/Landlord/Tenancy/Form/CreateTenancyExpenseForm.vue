@@ -135,9 +135,11 @@ export default {
 
         itemPrice(val) {
             if (!isNaN(val)) {
-                this.itemPrice = convertNumberToCommas(val)
+                this.$nextTick(() => (this.itemPrice = convertNumberToCommas(val)))
             } else {
-                this.itemPrice = convertNumberToCommas(convertCommasToNumber(val))
+                this.$nextTick(
+                    () => (this.itemPrice = convertNumberToCommas(convertCommasToNumber(val)))
+                )
             }
         }
     },
@@ -150,10 +152,18 @@ export default {
         onClose() {
             this.$emit("close")
         },
-
+        onResetForm() {
+            this.purchaseDate = ""
+            this.purchaseDateRaw = ""
+            this.purchaseDateMenu = ""
+            this.itemPrice = 0
+            this.itemName = ""
+            this.remark = ""
+        },
         async submitForm() {
             this.submitted = true
             this.$v.$touch()
+
             if (!this.$v.$invalid) {
                 const params = {
                     tenancyContractAgreementFID: this.tenancyDetails.id,
@@ -166,7 +176,8 @@ export default {
                     remark: this.remark
                 }
                 await this.$store.dispatch("tenancy/createTenancyExpense", params).then(() => {
-                    this.$emit("onClose")
+                    this.$emit("close")
+                    this.onResetForm()
                 })
             } else {
                 console.error("error!")
