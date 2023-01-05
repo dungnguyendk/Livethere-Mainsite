@@ -126,7 +126,7 @@ export default {
         },
         valueErrors() {
             return setFormControlErrors(this.$v.value, "This field is required")
-        },
+        }
     },
     created() {
         if (this.unitInventoryDetail) {
@@ -151,6 +151,9 @@ export default {
             quantity: null,
             value: null,
             condition: "",
+            currencyType: "SGD",
+            currencyName: "SINGAPORE DOLLAR",
+            cultureCode: "en-SG",
             conditions: CONDITIONS,
             remark: "",
             errorMessage: false
@@ -172,12 +175,15 @@ export default {
                         assestInventoryFID: this.entriesID,
                         conditionTypeFID: this.condition.id,
                         itemName: this.itemName,
+                        currencyType: this.currencyType,
+                        currentyName: this.currencyName,
+                        cultureCode: "en-SG",
                         conditionDisplay: this.condition.name,
-                        quantity: this.quantity,
+                        quantity: this.quantity ? convertCommasToNumber(this.quantity) : 0,
                         itemValue: this.value ? convertCommasToNumber(this.value) : 0,
                         remark: this.remark
                     }
-                    console.log("params", params)
+                    // console.log("params", params)
                     this.$store
                         .dispatch("inventory/createUnitInventory", params)
                         .then((response) => {
@@ -197,28 +203,29 @@ export default {
         },
         updateUnitInventory() {
             this.onFormSubmit()
-            this.$v.$touch()    
+            this.$v.$touch()
             if (!this.$v.$invalid) {
                 try {
                     const params = {
                         id: this.sourceDetail,
                         assestInventoryFID: this.entriesID,
                         conditionTypeFID: this.condition.id,
-                        cultureCode: "",
-                        currencyType: "",
-                        currencyName: "",
+                        cultureCode: "en-SG",
+                        currencyType: this.currencyType,
+                        currencyName: this.currencyName,
                         itemName: this.itemName,
                         conditionDisplay: this.condition.name,
-                        quantity: this.quantity,
+                        quantity: this.quantity ? convertCommasToNumber(this.quantity) : 0,
                         itemValue: this.value ? convertCommasToNumber(this.value) : 0,
                         remark: this.remark
                     }
-                    console.log("params", params)
+                    // console.log("params", params)
                     this.$store
                         .dispatch("inventory/updateUnitInventory", params)
                         .then((response) => {
                             if (response) {
                                 const internalID = this.internalID
+                                // console.log("internalID: " + internalID);
                                 this.$store.dispatch("inventory/getUnitsByInventoryFID", internalID)
                                 this.errorMessage = false
                                 this.onClose()
