@@ -3,7 +3,7 @@
         <div class="form__fields">
             <v-row>
                 <v-col cols="12" sm="12" md="12">
-                    <p class="alert alert--red" v-if="isShowErrorMessage">Something went wrong !</p>
+                    <p class="alert alert--red" v-if="isShowErrorMessage">{{ errorMessages }}</p>
                 </v-col>
                 <v-col cols="12" sm="12" md="4">
                     <div class="form__field">
@@ -121,7 +121,7 @@
                 </v-col>
                 <v-col cols="12" sm="12" md="6">
                     <div class="form__field">
-                        <label>Secure Deposit </label>
+                        <label>Security Deposit </label>
                         <v-text-field
                             v-model.trim="secureDeposit"
                             dense
@@ -155,7 +155,7 @@
 
 <script>
 import { validationMixin } from "vuelidate"
-import { required, numeric } from "vuelidate/lib/validators"
+import { required, numeric, helpers } from "vuelidate/lib/validators"
 import { setFormControlErrors } from "~/ultilities/form-validations"
 import { convertCommasToNumber, convertNumberToCommas } from "~/ultilities/helpers"
 import { mapState } from "vuex"
@@ -229,7 +229,8 @@ export default {
             tenancyRefCode: "",
             submitted: false,
             isOpenSnackbar: false,
-            isShowErrorMessage: false
+            isShowErrorMessage: false, 
+            errorMessages: ""
         }
     },
     watch: {
@@ -243,19 +244,24 @@ export default {
             this.endDate = this.formatDate(this.endDateRaw)
         },
         monthlyRental(val) {
-            if (!isNaN(val)) {
-                this.monthlyRental = convertNumberToCommas(val)
-            } else {
-                this.monthlyRental = convertNumberToCommas(convertCommasToNumber(val))
+            if(!isNaN(val)){
+                this.$nextTick(() => (this.monthlyRental = convertNumberToCommas(val)))
+            }else{ 
+                this.$nextTick(
+                    () => (this.monthlyRental = convertNumberToCommas(convertCommasToNumber(val)))
+                )
             }
         },
         secureDeposit(val) {
-            if (!isNaN(val)) {
-                this.secureDeposit = convertNumberToCommas(val)
-            } else {
-                this.secureDeposit = convertNumberToCommas(convertCommasToNumber(val))
+            if(!isNaN(val)){
+                this.$nextTick(() => (this.secureDeposit = convertNumberToCommas(val)))
+            }else{
+                this.$nextTick(
+                    () => (this.secureDeposit = convertNumberToCommas(convertCommasToNumber(val)))
+                )
             }
-        }
+        }, 
+
     },
 
     methods: {
@@ -274,7 +280,7 @@ export default {
                     startDate: this.startDateRaw,
                     endDate: this.endDateRaw,
                     currencyType: "SGD",
-                    currentyName: "Singapore Dollar",
+                    currencyName: "Singapore Dollar",
                     cultureCode: "en-SG",
                     monthlyRental: this.monthlyRental
                         ? convertCommasToNumber(this.monthlyRental)
@@ -284,15 +290,30 @@ export default {
                         : 0,
                     remark: this.remark
                 }
-                const response = this.$store.dispatch("inventory/createTenancyAgreement", params)
-                response.then((value) => {
-                    if (!value) return (this.isShowErrorMessage = true)
-                    else {
-                        this.$emit("openSnackbar", (this.isOpenSnackbar = true))
-                        this.resetForm()
-                        this.onClose()
-                    }
-                })
+                const validateDate = this.validateStartDateAndEndDate(params.startDate, params.endDate)
+                if(validateDate){
+                    this.isShowErrorMessage = false
+                    this.errorMessages = ""
+                    const response = this.$store.dispatch("inventory/createTenancyAgreement", params)
+                    response.then((res)=>{
+                        console.log("ress: ", res)
+                    }).catch((err)=>{
+                        console.log("err: ", err)
+
+                    })
+                    // response.then((value) => {
+                    //     if (!value) return (this.isShowErrorMessage = true)
+                    //     else {
+                    //         this.$emit("openSnackbar", (this.isOpenSnackbar = true))
+                    //         this.resetForm()
+                    //         this.onClose()
+                    //     }
+                    // })
+                }else{
+                    this.isShowErrorMessage = true
+                    this.errorMessages = "End date should be greater than start date !"
+                }
+                
             } else {
                 console.error("error!")
             }
@@ -306,10 +327,14 @@ export default {
             this.agreementDateRaw = "", 
             this.startDateRaw = "", 
             this.endDateRaw = "", 
-            this.tenancyRefCodeErrors = "", 
+            this.tenancyRefCode = "", 
             this.monthlyRental = "", 
             this.secureDeposit = "", 
             this.remark = ""
+        }, 
+        validateStartDateAndEndDate(start, end){
+            if(new Date(start) >= new Date(end)) return false
+            else return true
         }
  
     }
