@@ -13,7 +13,7 @@
                     <div class="progress-value">
                         <div>
                             <span>
-                                {{ dashboard.totalInventories ? dashboard.totalInventories : 0 }}
+                                {{ dashboard? dashboard.totalInventories : 0 }}
                             </span>
                         </div>
                     </div>
@@ -31,7 +31,7 @@
                     <div class="progress-value progress-value--blue">
                         <div>
                             <span>
-                                {{ dashboard.tenantInventories ? dashboard.tenantInventories : 0 }}
+                                {{ dashboard? dashboard.tenantInventories : 0 }}
                             </span>
                         </div>
                     </div>
@@ -48,7 +48,7 @@
                     </span>
                     <div class="progress-value progress-value--orange">
                         <div>
-                            <span>{{ dashboard.vacantInventories }}</span>
+                            <span>{{ dashboard? dashboard.vacantInventories : 0 }}</span>
                         </div>
                     </div>
                 </div>
@@ -93,6 +93,9 @@ export default {
 </script>
 <style lang="scss" scoped>
 .section-chart {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     padding: 1.6rem;
     background: var(--color-white);
     box-shadow: 0px 9px 50px rgba(56, 56, 56, 0.1);

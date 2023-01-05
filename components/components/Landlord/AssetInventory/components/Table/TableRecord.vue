@@ -159,7 +159,12 @@ export default {
             // this.$router.push(`/landlord/assets/units/${this.source.internalID}`)
         }
     },
-    watch: {}
+    watch: {
+        source() {
+            this.floorAreaSqftFormatter = convertNumberToCommas(this.source.floorAreaSqft)
+            this.landAreaFormatter = convertNumberToCommas(this.source.landArea)
+        },
+    }
 }
 </script>
 <style lang="scss" scoped>
