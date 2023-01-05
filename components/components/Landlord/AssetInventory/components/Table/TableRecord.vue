@@ -11,7 +11,7 @@
             </div>
         </td>
         <td data-label="Unit No.">
-            {{ source.unitNo }}
+            {{ source.unitNo ? source.unitNo : "-" }}
         </td>
         <td data-label="Property Type" v-if="statusFID === 0 || statusFID === 1">
             {{ source.propertyTypeDisplay }}

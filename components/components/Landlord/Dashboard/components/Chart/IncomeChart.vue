@@ -22,7 +22,7 @@
                 <div class=""></div>
             </div>
         </div>
-        <LineChartGenerator :chart-options="chartOptions" :chart-data="chartData" :chart-id="chartId"
+        <Bar :chart-options="chartOptions" :chart-data="chartData" :chart-id="chartId"
             :dataset-id-key="datasetIdKey" class="chartjs-render-monitor" />
 
     </div>
@@ -70,23 +70,12 @@ export default {
     },
     data() {
         return {
-            // chartData: {
-            //     labels: [],
-            //     datasets: [{
-            //         label: [],
-            //         data: [],
-            //         backgroundColor: "hsla(240, 64%, 62%, 1)",
-            //         borderColor: "hsla(240, 64%, 62%, 1)",
-            //         fill: false,
-            //         lineTension: 0.4
-            //     }],
-            // },
             chartOptions: {
                 aspectRatio: 3.5,
                 elements: {
-                    point: {
-                        radius: 3
-                    }
+                    // point: {
+                    //     radius: 3
+                    // }
                 },
                 plugins: {
                     title: {
@@ -95,21 +84,26 @@ export default {
                     legend: {
                         display: false
                     },
-                    // tooltip: {
-                    //     enabled: false
-                    // }
+                    tooltip: {
+                        // enabled: false
+                        callbacks: {
+                            label: (tooltipItems, data) => {
+                                return tooltipItems.label + ": $" + tooltipItems.formattedValue;
+                            },
+                        },
+                    }
                 },
                 scales: {
                     x: {
-                        display: false,
+                        display: true,
                         scaleLabel: {
                             display: false,
                         },
                     },
                     y: {
-                        display: false,
+                        display: true,
                         scaleLabel: {
-                            display: true,
+                            display: false,
                         },
                         ticks: {
                             min: 0,
@@ -124,7 +118,7 @@ export default {
     computed: {
         chartData() {
             let chartData = {
-                labels: [],
+                labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
                 datasets: [{
                     label: [],
                     data: [],
@@ -135,7 +129,7 @@ export default {
                 }],
             }
             chartData.datasets[0].data = this.source.data
-            chartData.labels = this.source.labels
+            // chartData.labels = this.source.labels
             return chartData
         }
     },

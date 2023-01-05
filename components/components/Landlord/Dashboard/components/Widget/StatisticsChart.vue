@@ -57,9 +57,9 @@ export default {
         // console.log("this.source::", this.source)
         console.log({ source: this.source })
         if (this.source && this.source.name === "portfolio") {
-            /*    this.currentYear = this.source?.estimatedPortfolioPriceCurrentYear
+               this.currentYear = this.source?.estimatedPortfolioPriceCurrentYear
                 ? convertNumberToCommas(this.source.estimatedPortfolioPriceCurrentYear)
-                : 0*/
+                : 0
             this.currentYearRate = this.source.portfolioPriceYieldRate
                 ? this.source.portfolioPriceYieldRate
                 : 0
