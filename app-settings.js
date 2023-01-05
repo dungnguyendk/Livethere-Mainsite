@@ -20,7 +20,7 @@ const settings = [
         base_url: ""
     }
 ]
-export const CURRENT_ENV = "beta"
+export const CURRENT_ENV = "develop"
 export const currentSettings = settings.find((item) => item.env === CURRENT_ENV)
 
 export const appSettings = {
