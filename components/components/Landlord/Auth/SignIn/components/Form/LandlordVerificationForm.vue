@@ -2,7 +2,10 @@
     <div class="form--otp">
         <h3 class="form__title"> SMS VERIFICATION </h3>
         <div class="form__instruction">
-            <p> Email OTP had been sent. Please retrieved the One Time Password and key-in here </p>
+            <p>
+                SMS OTP had been sent. Please retrieved from your phone SMS message to get One Time
+                Password
+            </p>
         </div>
         <div class="form__input">
             <v-otp-input
@@ -17,14 +20,16 @@
             </v-overlay>
         </div>
         <v-snackbar v-model="snackbar" :color="snackbarColor" :timeout="2000">
+            [
+
             {{ text }}
         </v-snackbar>
         <div class="form__button">
-            <v-btn>Submit</v-btn>
+            <v-btn @click="onSubmit">Submit</v-btn>
         </div>
 
         <div class="form__link">
-            <p>Didn't receive code? <NuxtLink to="/landlord/signin"> Back to login</NuxtLink></p>
+            <p>Didn't receive code? <NuxtLink to="/landlord/signin"> Resend OTP Again</NuxtLink></p>
         </div>
         <!-- End Login form -->
     </div>
@@ -50,6 +55,9 @@ export default {
                 this.text = `Processed OTP with "${rsp}" (${this.snackbarColor})`
                 this.snackbar = true
             }, 3500)*/
+        },
+        onSubmit() {
+            this.$router.push("/landlord/signin")
         }
     }
 }

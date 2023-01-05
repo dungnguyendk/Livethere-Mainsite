@@ -5,7 +5,7 @@
 <script>
 export default {
     head: {
-        title: "Landing page | Livethere"
+        title: "Livethere"
     },
 
     methods: {},

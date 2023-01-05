@@ -1,6 +1,5 @@
 <template lang="html">
     <main>
-        <LandlordHeader />
         <template v-if="loggedIn">
             <LandlordPortal>
                 <InventoryUnits />
@@ -17,7 +16,7 @@ import AssetInventory from "~/components/components/Landlord/AssetInventory/Asse
 import InventoryUnits from "~/components/components/Landlord/Inventory/InventoryUnits.vue"
 
 export default {
-    name: "landlord",
+    layout: "landlord",
     components: {
         InventoryUnits,
         AssetInventory,

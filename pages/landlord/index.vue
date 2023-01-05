@@ -1,6 +1,5 @@
 <template lang="html">
     <main>
-        <LandlordHeader />
         <template v-if="loggedIn">
             <LandlordPortal>
                 <LandlordDashboard />
@@ -17,6 +16,7 @@ import { appSettings } from "~/app-settings"
 
 export default {
     components: { LandlordHeader, LandlordPortal, LandlordDashboard },
+    layout: "landlord",
     head: {
         title: `Landlord | ${appSettings.siteName}`
     },
@@ -29,6 +29,14 @@ export default {
     created() {
         if (!this.loggedIn) {
             this.$router.push("/landlord/signin")
+        }
+    },
+    async asyncData({ app, route, store }) {
+        try {
+            await store.dispatch("dashboard/getDashBoards")
+        } catch (e) {
+            console.log({ Error: e.message })
+            return false
         }
     }
 }

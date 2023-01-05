@@ -1,6 +1,5 @@
 <template lang="html">
     <main>
-        <LandlordHeader />
         <template v-if="loggedIn">
             <LandlordPortal>
                 <TenancyWrapper @onBack="onBack">
@@ -30,9 +29,11 @@ export default {
         LandlordHeader,
         LandlordPortal
     },
+    layout: "landlord",
     head: {
-        title: `Expense | ${appSettings.siteName}`
+        title: `Expenses | ${appSettings.siteName}`
     },
+
     computed: {
         ...mapState({
             tenancyID: (state) => state.inventory.tenancyID

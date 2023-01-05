@@ -1,6 +1,5 @@
 <template lang="html">
     <main>
-        <LandlordHeader />
         <template v-if="loggedIn">
             <LandlordPortal>
                 <InventoryDetails />
@@ -15,7 +14,6 @@ import LandlordPortal from "~/components/components/Landlord/LandlordPortal.vue"
 import LandlordHeader from "~/components/shared/Header/LandlordHeader.vue"
 import AssetInventory from "~/components/components/Landlord/AssetInventory/AssetInventory.vue"
 import InventoryDetails from "~/components/components/Landlord/Inventory/InventoryDetails.vue"
-import { httpEndpoint } from "~/services/https/endpoints"
 
 export default {
     components: {
@@ -24,8 +22,9 @@ export default {
         LandlordHeader,
         LandlordPortal
     },
+    layout: "landlord",
     head: {
-        title: `Landlord | ${appSettings.siteName}`
+        title: `Units Inventory | ${appSettings.siteName}`
     },
 
     computed: {

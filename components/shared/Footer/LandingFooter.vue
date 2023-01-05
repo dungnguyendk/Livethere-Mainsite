@@ -1,12 +1,12 @@
 <template lang="html">
-    <footer v-if="source" class="footer--landing">
+    <footer class="footer--landing">
         <div class="container">
             <div class="footer__content">
                 <div class="footer__left">
                     <InformationFooterWidget />
                 </div>
                 <div class="footer__right">
-                    <LinksFooterWidget :source="menus" />
+                    <LinksFooterWidget  />
                     <SharingFooterWidget />
                 </div>
             </div>
@@ -61,7 +61,7 @@ export default {
         }
     },
     created() {
-        this.getData()
+        //this.getData()
     },
     methods: {
         // each section has different getData() method

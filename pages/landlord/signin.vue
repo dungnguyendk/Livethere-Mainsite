@@ -1,6 +1,5 @@
 <template>
     <div>
-        <LandlordHeader />
         <LandlordSignIn />
     </div>
 </template>
@@ -10,6 +9,7 @@ import LandlordSignIn from "~/components/components/Landlord/Auth/SignIn/Landlor
 import LandlordHeader from "~/components/shared/Header/LandlordHeader.vue"
 
 export default {
+    layout:'landlord',
     components: {
         LandlordHeader,
         LandlordSignIn

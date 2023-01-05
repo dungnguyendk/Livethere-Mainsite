@@ -3,7 +3,7 @@
         <nuxt-link
             v-for="item in navigation"
             :to="item.value"
-            :class="path === item.path ? 'active' : ''"
+            :class="handleActive(item) ? 'active' : ''"
             @click.prevent="onSelectPanel(item)"
         >
             {{ item.label }}
@@ -53,6 +53,16 @@ export default {
         }
     },
     methods: {
+        handleActive(menuItem) {
+            if (this.path === menuItem.path) return true
+            if (this.path.includes("/landlord/tenancy") && menuItem.path === "/landlord/assets")
+                return true
+            if (
+                this.path.includes("/landlord/assets/units") &&
+                menuItem.path === "/landlord/assets"
+            )
+                return true
+        },
         onSelectPanel(panel) {
             this.activePanel = panel.value
         }
@@ -85,6 +95,14 @@ export default {
     @media screen and (max-width: 1366px) {
         gap: 2.4rem;
         grid-gap: 2.4rem;
+    }
+
+    @media screen and (max-width: 768px) {
+        grid-gap: 1.2rem;
+        gap: 1.2rem;
+        a {
+            font-size: 1.2rem;
+        }
     }
 }
 </style>

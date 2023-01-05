@@ -3,6 +3,9 @@ export const httpEndpoint = {
         getEntries: "api/Sites/Search",
         getEntryByID: "api/Site/get-by-id"
     },
+    user: {
+        getLandlordUserInfo: "api/User/LogonUser"
+    },
 
     pages: {
         getEntryBySlug: "api/Page/get-by-slug"
@@ -15,7 +18,11 @@ export const httpEndpoint = {
         sendEnquiry: "/api/Enquiries"
     },
     auth: {
-        login: "/api/Authen"
+        login: "/api/Authen",
+        register: "/api/Registration",
+        checkEmail: "/api/Registration/check-email",
+        checkPhoneNumber: "/api/Registration/check-contactno",
+        checkUsername: "/api/Registration/check-username"
     },
     inventories: {
         getEntries: "/api/asset-inventories",
@@ -58,5 +65,8 @@ export const httpEndpoint = {
         updateEntry: "/api/tenancy-contract-agreements",
         deleteEntry: "/api/tenancy-documents"
     },
-    documents: "api/documents"
+    documents: "api/documents",
+    dashBoard: {
+        getEntries: "api/Analytic/my-dashboard"
+    }
 }
