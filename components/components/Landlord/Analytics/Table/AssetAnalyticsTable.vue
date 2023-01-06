@@ -123,9 +123,9 @@ export default {
             this.showExpandedPanel = false
         },
         handleClickOpenRow(item) {
-            this.$emit("handleClickOpenRow", item)
+           /* this.$emit("handleClickOpenRow", item)
             this.selectedId = item
-            this.showExpandedPanel = true
+            this.showExpandedPanel = true*/
         }
     }
 }
