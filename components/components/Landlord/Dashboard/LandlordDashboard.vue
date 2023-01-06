@@ -1,7 +1,7 @@
 <template lang="html">
     <div>
         <img src="~/static/img/banner-dashboard.png" alt="img-banner" class="banner banner-dashboard" />
-        <div class="container">
+        <div class="container" v-if="dashboard">
             <div class="section-content">
                 <InventoryChart />
                 <ExpiringLeasesChart />
@@ -10,6 +10,9 @@
                 <IncomeChart :source="incomeCurrentYear" />
                 <StatisticsChart :source="average" />
             </div>
+        </div>
+        <div class="container dashboard-no-data" v-else>
+            <strong>No data found!</strong>
         </div>
     </div>
 </template>
@@ -74,9 +77,9 @@ export default {
                     footerTitle: "Purchase Price of Portfolio",
                     estimatedPortfolioPriceCurrentYear:
                         this.dashboard.estimatedPortfolioPriceCurrentYear,
-                    portfolioPriceYieldRate: this.dashboard.portfolioPriceYieldRate,
+                    portfolioPriceYieldRate: this.dashboard.portfolioPriceYieldRate.toFixed(2),
                     purchasePriceOfPortfolio: this.dashboard.purchasePriceOfPortfolio,
-                    purchasePriceOfPortfolioRate: this.dashboard.purchasePriceOfPortfolioRate,
+                    purchasePriceOfPortfolioRate: this.dashboard.purchasePriceOfPortfolioRate.toFixed(2),
                     widgetSVG: "img-widget"
                 }
                 : null
@@ -87,10 +90,10 @@ export default {
                     name: "average",
                     headerTitle: `Average Yield ${this.dashboard.lastYear}`,
                     footerTitle: `Average Yield ${this.dashboard.currentYear}`,
-                    averageYieldThisYear: this.dashboard.averageYieldThisYear,
-                    averageYieldThisYearCompare: this.dashboard.averageYieldThisYearCompare,
-                    averageYieldLastYear: this.dashboard.averageYieldLastYear,
-                    averageYieldLastYearCompare: this.dashboard.averageYieldLastYearCompare,
+                    averageYieldThisYear: this.dashboard.averageYieldThisYear.toFixed(2),
+                    averageYieldThisYearCompare: this.dashboard.averageYieldThisYearCompare.toFixed(2),
+                    averageYieldLastYear: this.dashboard.averageYieldLastYear.toFixed(2),
+                    averageYieldLastYearCompare: this.dashboard.averageYieldLastYearCompare.toFixed(2),
                     widgetSVG: "img-widget2"
                 }
                 : null
@@ -98,13 +101,15 @@ export default {
         incomeLastYear() {
             return this.dashboard
                 ? {
+                    name: "Last year",
                     icon: "icon-income-blue",
                     incomeYear: this.dashboard.lastYear,
                     // img: "line-chart-blue",
                     labels: this.dashboard.lastYearIncomeData.map((val) => val.name),
                     data: this.dashboard.lastYearIncomeData.map((val) => val.value),
+                    // checkBackgroundColor: this.dashboard.lastYearIncomeData.map((val) => val.forecastValue),
                     price: this.dashboard.incomeLastYear,
-                    incomeRate: this.dashboard.incomeLastYearRate,
+                    incomeRate: this.dashboard.incomeLastYearRate.toFixed(2),
                     lineColor: "hsla(195, 79%, 63%, 1)"
                 }
                 : null
@@ -112,14 +117,16 @@ export default {
         incomeCurrentYear() {
             return this.dashboard
                 ? {
+                    name: "Current year",
                     icon: "icon-income-violet",
                     // img: "line-chart-blue",
                     incomeYear: this.dashboard.currentYear,
                     labels: this.dashboard.currentYearIncomeData.map((val) => val.name),
                     data: this.dashboard.currentYearIncomeData.map((val) => val.value),
+                    // checkBackgroundColor: this.dashboard.currentYearIncomeData.map((val) => val.forecastValue),
                     price: this.dashboard.incomeCurrentYear,
-                    incomeRate: this.dashboard.incomeCurrentYearRate,
-                    lineColor: "hsla(240, 64%, 62%, 1)"
+                    incomeRate: this.dashboard.incomeCurrentYearRate.toFixed(2),
+                    lineColor: this.dashboard.currentYearIncomeData.map((val) => val.forecastValue ? "rgba(153, 102, 255, 0.2)" : "hsla(240, 64%, 62%, 1)")
                 }
                 : null
         }
@@ -141,6 +148,15 @@ export default {
     grid-column-gap: 2.4rem;
     grid-row-gap: 4.8rem;
     grid-template-columns: repeat(3, 1fr);
+}
+
+.dashboard-no-data {
+    text-align: center;
+    margin-top: 1.2rem;
+
+    strong {
+        font-size: 3.2rem;
+    }
 }
 
 @media only screen and (max-width: 768px) {

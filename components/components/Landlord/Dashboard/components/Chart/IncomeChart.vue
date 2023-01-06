@@ -5,10 +5,10 @@
                 <img :src="require(`~/static/img/${source.icon}.png`)" alt="">
                 <div class="header-title">
                     <span class="income">Income {{ source.incomeYear }}</span>
-                    <span class="price">SGD {{ source.price }}</span>
+                    <span class="price">SGD {{ priceFormat }}</span>
                 </div>
             </div>
-            <div :class="`growth growth--${source.incomeRate < 0 ? 'red' : 'green'}`">
+            <div :class="`growth growth--${source.incomeRate < 0 ? 'red' : 'green'}`" v-if="source.name === 'Current year'">
                 <i :class="`ri-arrow-${source.incomeRate < 0 ? 'down' : 'up'}-s-fill`"></i>
                 <span class="percent">{{ source.incomeRate }}%</span>
             </div>
@@ -22,13 +22,14 @@
                 <div class=""></div>
             </div>
         </div>
-        <Bar :chart-options="chartOptions" :chart-data="chartData" :chart-id="chartId"
-            :dataset-id-key="datasetIdKey" class="chartjs-render-monitor" />
+        <Bar :chart-options="chartOptions" :chart-data="chartData" :chart-id="chartId" :dataset-id-key="datasetIdKey"
+            class="chartjs-render-monitor" />
 
     </div>
 </template>
 
 <script>
+import { convertNumberToCommas } from "~/ultilities/helpers"
 import { Chart as ChartJS, Title, Tooltip, Legend, ArcElement, CategoryScale, LinearScale, BarElement, PointElement, LineElement } from "chart.js";
 
 ChartJS.register(Title, Tooltip, Legend, ArcElement, CategoryScale, LinearScale, BarElement, PointElement, LineElement);
@@ -129,12 +130,16 @@ export default {
                 }],
             }
             chartData.datasets[0].data = this.source.data
+            // chartData.datasets[0].backgroundColor = this.source.checkBackgroundColor
             // chartData.labels = this.source.labels
             return chartData
+        },
+        priceFormat() {
+            return convertNumberToCommas(this.source.price)
         }
     },
     created() {
-        // console.log("this.source::", this.source)
+        console.log("this.source::", this.source)
     }
 }
 </script>
