@@ -1,10 +1,8 @@
 <template lang="html">
     <form class="form form--create-tenancy-agreement" @submit.prevent="submitForm">
+        <p class="alert alert--red mb-10" v-if="isShowErrorMessage">{{ errorMessages }}</p>
         <div class="form__fields">
             <v-row>
-                <v-col cols="12" sm="12" md="12">
-                    <p class="alert alert--red" v-if="isShowErrorMessage">Something went wrong !</p>
-                </v-col>
                 <v-col cols="12" sm="12" md="4">
                     <div class="form__field">
                         <label class="required">Agreement Date </label>
@@ -121,7 +119,7 @@
                 </v-col>
                 <v-col cols="12" sm="12" md="6">
                     <div class="form__field">
-                        <label>Secure Deposit </label>
+                        <label>Security Deposit </label>
                         <v-text-field
                             v-model.trim="secureDeposit"
                             dense
@@ -143,20 +141,14 @@
         </div>
         <div class="form__actions">
             <v-btn class="btn btn--ghost btn--gray btn--sm" @click="onClose"> Cancel</v-btn>
-            <v-btn
-                class="btn btn--primary btn--green btn--sm"
-                type="submit"
-                :disabled="$v.$invalid"
-            >
-                Create
-            </v-btn>
+            <v-btn class="btn btn--primary btn--green btn--sm" type="submit"> Create</v-btn>
         </div>
     </form>
 </template>
 
 <script>
 import { validationMixin } from "vuelidate"
-import { required, numeric } from "vuelidate/lib/validators"
+import { required, numeric, helpers } from "vuelidate/lib/validators"
 import { setFormControlErrors } from "~/ultilities/form-validations"
 import { convertCommasToNumber, convertNumberToCommas } from "~/ultilities/helpers"
 import { mapState } from "vuex"
@@ -230,7 +222,8 @@ export default {
             tenancyRefCode: "",
             submitted: false,
             isOpenSnackbar: false,
-            isShowErrorMessage: false
+            isShowErrorMessage: false,
+            errorMessages: ""
         }
     },
     watch: {
@@ -245,16 +238,20 @@ export default {
         },
         monthlyRental(val) {
             if (!isNaN(val)) {
-                this.monthlyRental = convertNumberToCommas(val)
+                this.$nextTick(() => (this.monthlyRental = convertNumberToCommas(val)))
             } else {
-                this.monthlyRental = convertNumberToCommas(convertCommasToNumber(val))
+                this.$nextTick(
+                    () => (this.monthlyRental = convertNumberToCommas(convertCommasToNumber(val)))
+                )
             }
         },
         secureDeposit(val) {
             if (!isNaN(val)) {
-                this.secureDeposit = convertNumberToCommas(val)
+                this.$nextTick(() => (this.secureDeposit = convertNumberToCommas(val)))
             } else {
-                this.secureDeposit = convertNumberToCommas(convertCommasToNumber(val))
+                this.$nextTick(
+                    () => (this.secureDeposit = convertNumberToCommas(convertCommasToNumber(val)))
+                )
             }
         }
     },
@@ -264,10 +261,7 @@ export default {
             if (!date) return null
             return this.$moment(date).format("DD-MMM-YYYY")
         },
-        onClose() {
-            this.$emit("close")
-        },
-        submitForm() {
+        async submitForm() {
             this.submitted = true
             this.$v.$touch()
             if (!this.$v.$invalid) {
@@ -278,7 +272,7 @@ export default {
                     startDate: this.startDateRaw,
                     endDate: this.endDateRaw,
                     currencyType: "SGD",
-                    currentyName: "Singapore Dollar",
+                    currencyName: "Singapore Dollar",
                     cultureCode: "en-SG",
                     monthlyRental: this.monthlyRental
                         ? convertCommasToNumber(this.monthlyRental)
@@ -288,20 +282,57 @@ export default {
                         : 0,
                     remark: this.remark
                 }
-                const response = this.$store.dispatch("inventory/createTenancyAgreement", params)
-                response.then((value) => {
-                    if (!value) return (this.isShowErrorMessage = true)
-                    else {
-                        this.$emit("openSnackbar", (this.isOpenSnackbar = true))
-                        this.onClose()
-                    }
-                })
+                const validateDate = this.validateStartDateAndEndDate(
+                    params.startDate,
+                    params.endDate
+                )
+
+                if (validateDate) {
+                    this.isShowErrorMessage = false
+                    this.errorMessages = ""
+                    this.$store
+                        .dispatch("inventory/createTenancyAgreement", params)
+                        .then((value) => {
+                            if (value) {
+                                if (value.id !== 0) {
+                                    this.$emit("openSnackbar", (this.isOpenSnackbar = true))
+                                    this.resetForm()
+                                    this.onClose()
+                                }
+                                else {
+                                    console.log({ valueID: value.id })
+                                    this.isShowErrorMessage = true
+                                    this.errorMessages = value.responseMessage
+                                }
+                            } else {
+                                this.isShowErrorMessage = true
+                                this.errorMessages = value.responseMessage
+                            }
+                        })
+                } else {
+                    this.isShowErrorMessage = true
+                    this.errorMessages = "End date should be greater than start date !"
+                }
             } else {
                 console.error("error!")
             }
         },
         onClose() {
             this.$emit("close")
+            this.resetForm()
+        },
+        resetForm() {
+            this.$v.$reset()
+            ;(this.agreementDateRaw = ""),
+                (this.startDateRaw = ""),
+                (this.endDateRaw = ""),
+                (this.tenancyRefCode = ""),
+                (this.monthlyRental = ""),
+                (this.secureDeposit = ""),
+                (this.remark = "")
+        },
+        validateStartDateAndEndDate(start, end) {
+            return new Date(start) < new Date(end)
         }
     }
 }

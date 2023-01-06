@@ -10,7 +10,7 @@ export const state = () => ({
     listTenancyAgreements: null,
     snackbar: false,
     snackbarMessage: "Your message has been sent.",
-    tenancyID: ''
+    tenancyID: ""
 })
 
 export const mutations = {
@@ -43,9 +43,7 @@ export const mutations = {
     },
     setTenancyID(state, payload) {
         state.tenancyID = payload
-    },
-
-
+    }
 }
 
 export const actions = {
@@ -149,7 +147,7 @@ export const actions = {
             )
             if (response) {
                 commit("setInventoryDetails", response)
-                dispatch('getUnitsByInventoryFID', response.internalID)
+                dispatch("getUnitsByInventoryFID", response.internalID)
             } else {
                 commit("setInventoryDetails", null)
             }
@@ -166,18 +164,28 @@ export const actions = {
                 payload
             )
             if (responseMain) {
-                const responseSub = await this.$axios.$get(
-                    `${httpEndpoint.tenancyAgreements.getEntries}?AssestInventoryFID=${payload.assestInventoryFID}`
-                )
-                if (responseSub) {
-                    commit("setListTenancyAgreements", responseSub)
+                if (responseMain.id !== 0) {
+                    const responseSub = await this.$axios.$get(
+                        `${httpEndpoint.tenancyAgreements.getEntries}?AssestInventoryFID=${payload.assestInventoryFID}`
+                    )
+                    if (responseSub) {
+                        commit("setListTenancyAgreements", responseSub)
+                    }
+                    commit("setSnackbar", true)
+                    commit("setSnackbarMessage", responseMain.responseMessage)
+                    return responseMain
                 }
-                return true
+                else {
+                    console.log({Error: responseMain.responseMessage})
+                    return responseMain
+
+                }
             } else {
-                return false
+                return null
             }
         } catch (e) {
-            console.log(e)
+            console.log({ Error: e.message })
+            return null
         }
     },
     async getListTenancyAgreements({ commit }, payload) {
