@@ -13,9 +13,14 @@
                 </tr>
             </thead>
             <tbody>
-                <template v-if="items.length > 0">
-                    <AssetAnalyticsTableRecord v-for="item in items" :source="item" :selectedId="selectedId"
-                        :key="item.id" @handleClickOpenRow="handleClickOpenRow" />
+                <template v-if="analytics.length > 0">
+                    <AssetAnalyticsTableRecord
+                        v-for="item in analytics"
+                        :source="item"
+                        :selectedId="selectedId"
+                        :key="item.id"
+                        @handleClickOpenRow="handleClickOpenRow"
+                    />
                 </template>
                 <template v-else>
                     <tr>
@@ -34,77 +39,83 @@
 <script>
 import AssetAnalyticsTableRecord from "./AssetAnalyticsTableRecord.vue"
 import ExpandedPanel from "~/components/shared/Panel/ExpandedPanel.vue"
+import { mapState } from "vuex"
 export default {
     name: "AssetAnalyticsTable",
     components: { AssetAnalyticsTableRecord, ExpandedPanel },
     data() {
         return {
-            items: [
-                {
-                    id: 1,
-                    propertyName: "Lloyd Sixtyfive",
-                    unitNo: "08-10",
-                    purchaseDate: "26/11/2022",
-                    purchasePrice: "SGD 1,200,000",
-                    currentEstimatedValue: "SGD 1,500,000",
-                    estimatedCapitalGain:
-                        "SGD 120,000 - SGD 150,000",
-                    rentalYield: "1.2%"
-                },
-                {
-                    id: 2,
-                    propertyName: "Skypark @ Somerset",
-                    unitNo: "02-96",
-                    purchaseDate: "05/02/2021",
-                    purchasePrice: "SGD 1,000,000",
-                    currentEstimatedValue: "SGD 1,200,000",
-                    estimatedCapitalGain: "SGD 120,000 - SGD 150,000",
-                    rentalYield: "0.8%"
-                },
-                {
-                    id: 3,
-                    propertyName: "Lloyd Sixtyfive",
-                    unitNo: "08-10",
-                    purchaseDate: "26/11/2022",
-                    purchasePrice: "SGD 1,200,000",
-                    currentEstimatedValue: "SGD 1,500,000",
-                    estimatedCapitalGain: "SGD 120,000 - SGD 150,000",
-                    rentalYield: "1.2%"
-                },
-                {
-                    id: 4,
-                    propertyName: "Lloyd Sixtyfive",
-                    unitNo: "08-10",
-                    purchaseDate: "26/11/2022",
-                    purchasePrice: "SGD 1,200,000",
-                    currentEstimatedValue: "SGD 1,500,000",
-                    estimatedCapitalGain: "SGD 120,000 - SGD 150,000",
-                    rentalYield: "1.2%"
-                },
-                {
-                    id: 5,
-                    propertyName: "Lloyd Sixtyfive",
-                    unitNo: "08-10",
-                    purchaseDate: "26/11/2022",
-                    purchasePrice: "SGD 1,200,000",
-                    currentEstimatedValue: "SGD 1,500,000",
-                    estimatedCapitalGain: "SGD 120,000 - SGD 150,000",
-                    rentalYield: "1.2%"
-                },
-                {
-                    id: 6,
-                    propertyName: "Lloyd Sixtyfive",
-                    unitNo: "08-10",
-                    purchaseDate: "26/11/2022",
-                    purchasePrice: "SGD 1,200,000",
-                    currentEstimatedValue: "SGD 1,500,000",
-                    estimatedCapitalGain: "SGD 120,000 - SGD 150,000",
-                    rentalYield: "1.2%"
-                }
-            ],
+            // items: [
+            //     {
+            //         id: 1,
+            //         propertyName: "Lloyd Sixtyfive",
+            //         unitNo: "08-10",
+            //         purchaseDate: "26/11/2022",
+            //         purchasePrice: "SGD 1,200,000",
+            //         currentEstimatedValue: "SGD 1,500,000",
+            //         estimatedCapitalGain:
+            //             "SGD 120,000 - SGD 150,000 SGD 120,000 - SGD 150,000 SGD 120,000 - SGD 150,000",
+            //         rentalYield: "1.2%"
+            //     },
+            //     {
+            //         id: 2,
+            //         propertyName: "Skypark @ Somerset",
+            //         unitNo: "02-96",
+            //         purchaseDate: "05/02/2021",
+            //         purchasePrice: "SGD 1,000,000",
+            //         currentEstimatedValue: "SGD 1,200,000",
+            //         estimatedCapitalGain: "SGD 120,000 - SGD 150,000",
+            //         rentalYield: "0.8%"
+            //     },
+            //     {
+            //         id: 3,
+            //         propertyName: "Lloyd Sixtyfive",
+            //         unitNo: "08-10",
+            //         purchaseDate: "26/11/2022",
+            //         purchasePrice: "SGD 1,200,000",
+            //         currentEstimatedValue: "SGD 1,500,000",
+            //         estimatedCapitalGain: "SGD 120,000 - SGD 150,000",
+            //         rentalYield: "1.2%"
+            //     },
+            //     {
+            //         id: 4,
+            //         propertyName: "Lloyd Sixtyfive",
+            //         unitNo: "08-10",
+            //         purchaseDate: "26/11/2022",
+            //         purchasePrice: "SGD 1,200,000",
+            //         currentEstimatedValue: "SGD 1,500,000",
+            //         estimatedCapitalGain: "SGD 120,000 - SGD 150,000",
+            //         rentalYield: "1.2%"
+            //     },
+            //     {
+            //         id: 5,
+            //         propertyName: "Lloyd Sixtyfive",
+            //         unitNo: "08-10",
+            //         purchaseDate: "26/11/2022",
+            //         purchasePrice: "SGD 1,200,000",
+            //         currentEstimatedValue: "SGD 1,500,000",
+            //         estimatedCapitalGain: "SGD 120,000 - SGD 150,000",
+            //         rentalYield: "1.2%"
+            //     },
+            //     {
+            //         id: 6,
+            //         propertyName: "Lloyd Sixtyfive",
+            //         unitNo: "08-10",
+            //         purchaseDate: "26/11/2022",
+            //         purchasePrice: "SGD 1,200,000",
+            //         currentEstimatedValue: "SGD 1,500,000",
+            //         estimatedCapitalGain: "SGD 120,000 - SGD 150,000",
+            //         rentalYield: "1.2%"
+            //     }
+            // ],
             showExpandedPanel: false,
             selectedId: -1
         }
+    },
+    computed: {
+        ...mapState({
+            analytics: (state) => state.analytics.analytics
+        })
     },
     methods: {
         onCloseExpandedPanel() {
@@ -112,9 +123,9 @@ export default {
             this.showExpandedPanel = false
         },
         handleClickOpenRow(item) {
-            this.$emit("handleClickOpenRow", item)
+           /* this.$emit("handleClickOpenRow", item)
             this.selectedId = item
-            this.showExpandedPanel = true
+            this.showExpandedPanel = true*/
         }
     }
 }
