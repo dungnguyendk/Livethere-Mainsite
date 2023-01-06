@@ -68,5 +68,8 @@ export const httpEndpoint = {
     documents: "api/documents",
     dashBoard: {
         getEntries: "api/Analytic/my-dashboard"
+    },
+    analytics: {
+        getEntries: "api/Analytic/analytic-dashboard"
     }
 }

@@ -1,41 +1,43 @@
 <template lang="html">
-    <tr
-        :class="`table--record ${
-            source.id !== selectedId && selectedId !== -1 ? 'unSelected' : ''
-        }`"
-    >
+    <tr :class="`table--record ${source.id !== selectedId && selectedId !== -1 ? 'unSelected' : ''}`">
         <td data-label="Property Name">
             <span class="first-child" @click="handleClickOpenRow(source.id)">
-                {{ source.propertyName }}
+                {{ source.propertyType === 3 ? source.propertyName : source.projectName }}
             </span>
         </td>
         <td data-label="Unit No.">
-            {{ source.unitNo }}
+            {{ source.unitNo ? source.unitNo : '-' }}
         </td>
         <td data-label="Purchase Date">
-            {{ source.purchaseDate }}
+            {{ purchasedDateFormat }}
         </td>
         <td data-label="Purchase Price">
-            {{ source.purchasePrice }}
+            {{ purchasedPriceFormat }}
         </td>
         <td data-label="Current Estimated Value">
-            {{ source.currentEstimatedValue }}
+            {{ currentEstimatedValueFormat }}
         </td>
-        <td data-label="Estimated Capital Gain">
-            {{ source.estimatedCapitalGain }}
+        <td data-label="Estimated Capital Gain" class="td-custom">
+            <div :class="`growth growth--${source.estimatedCapitalGainRate < 0 ? 'red' : 'green'}`"
+                v-if="source.estimatedCapitalGain">
+                <i :class="`ri-arrow-${source.estimatedCapitalGainRate < 0 ? 'down' : 'up'}-s-fill`"></i>
+                <span class="percent">{{ source.estimatedCapitalGainRate }}%</span>
+            </div>
+            {{ estimatedCapitalGainFormat }}
         </td>
         <td data-label="Rental Yield">
-            {{ source.rentalYield }}
+            {{ rentalYieldFormat }} %
         </td>
     </tr>
 </template>
 <script>
+import { convertNumberToCommas } from "~/ultilities/helpers"
 export default {
     name: "AssetAnalyticsTableRecord",
     props: {
         source: {
             type: Object,
-            default: () => {}
+            default: () => { }
         },
         selectedId: {
             type: Number,
@@ -45,10 +47,32 @@ export default {
     data() {
         return {}
     },
+    computed: {
+        purchasedDateFormat() {
+            return this.source.purchasedDate ? this.formatDate(this.source.purchasedDate) : '-'
+        },
+        purchasedPriceFormat() {
+            return this.source.purchasedPrice ? `SGD ${convertNumberToCommas(this.source.purchasedPrice)}` : '-'
+        },
+        currentEstimatedValueFormat() {
+            return this.source.currentEstimatedValue ? `SGD ${convertNumberToCommas(this.source.currentEstimatedValue)}` : '-'
+        },
+        estimatedCapitalGainFormat() {
+            return this.source.estimatedCapitalGain ? `SGD ${convertNumberToCommas(this.source.estimatedCapitalGain)}` : '-'
+        },
+        rentalYieldFormat() {
+            return this.source.rentalYield ? this.source.rentalYield.toFixed(2) : 0
+        }
+    },
     methods: {
         handleClickOpenRow(item) {
             this.$emit("handleClickOpenRow", item)
-        }
+        },
+        formatDate(date) {
+            if (!date) return null
+
+            return this.$moment(date).format("DD-MMM-YYYY")
+        },
     }
 }
 </script>
@@ -76,6 +100,27 @@ export default {
 
     &.unSelected {
         display: none !important;
+    }
+}
+
+.td-custom {
+    position: relative;
+}
+
+.growth {
+    position: absolute;
+    top: 0;
+    right: 2rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    &--red {
+        color: #FF4A55;
+    }
+
+    &--green {
+        color: #27A857;
     }
 }
 </style>
