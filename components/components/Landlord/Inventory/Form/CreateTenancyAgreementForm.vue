@@ -1,10 +1,8 @@
 <template lang="html">
     <form class="form form--create-tenancy-agreement" @submit.prevent="submitForm">
+        <p class="alert alert--red mb-10" v-if="isShowErrorMessage">{{ errorMessages }}</p>
         <div class="form__fields">
             <v-row>
-                <v-col cols="12" sm="12" md="12">
-                    <p class="alert alert--red" v-if="isShowErrorMessage">{{ errorMessages }}</p>
-                </v-col>
                 <v-col cols="12" sm="12" md="4">
                     <div class="form__field">
                         <label class="required">Agreement Date </label>
@@ -143,12 +141,7 @@
         </div>
         <div class="form__actions">
             <v-btn class="btn btn--ghost btn--gray btn--sm" @click="onClose"> Cancel</v-btn>
-            <v-btn
-                class="btn btn--primary btn--green btn--sm"
-                type="submit"
-            >
-                Create
-            </v-btn>
+            <v-btn class="btn btn--primary btn--green btn--sm" type="submit"> Create</v-btn>
         </div>
     </form>
 </template>
@@ -229,7 +222,7 @@ export default {
             tenancyRefCode: "",
             submitted: false,
             isOpenSnackbar: false,
-            isShowErrorMessage: false, 
+            isShowErrorMessage: false,
             errorMessages: ""
         }
     },
@@ -244,24 +237,23 @@ export default {
             this.endDate = this.formatDate(this.endDateRaw)
         },
         monthlyRental(val) {
-            if(!isNaN(val)){
+            if (!isNaN(val)) {
                 this.$nextTick(() => (this.monthlyRental = convertNumberToCommas(val)))
-            }else{ 
+            } else {
                 this.$nextTick(
                     () => (this.monthlyRental = convertNumberToCommas(convertCommasToNumber(val)))
                 )
             }
         },
         secureDeposit(val) {
-            if(!isNaN(val)){
+            if (!isNaN(val)) {
                 this.$nextTick(() => (this.secureDeposit = convertNumberToCommas(val)))
-            }else{
+            } else {
                 this.$nextTick(
                     () => (this.secureDeposit = convertNumberToCommas(convertCommasToNumber(val)))
                 )
             }
-        }, 
-
+        }
     },
 
     methods: {
@@ -269,7 +261,7 @@ export default {
             if (!date) return null
             return this.$moment(date).format("DD-MMM-YYYY")
         },
-        submitForm() {
+        async submitForm() {
             this.submitted = true
             this.$v.$touch()
             if (!this.$v.$invalid) {
@@ -290,30 +282,37 @@ export default {
                         : 0,
                     remark: this.remark
                 }
-                const validateDate = this.validateStartDateAndEndDate(params.startDate, params.endDate)
-                if(validateDate){
+                const validateDate = this.validateStartDateAndEndDate(
+                    params.startDate,
+                    params.endDate
+                )
+
+                if (validateDate) {
                     this.isShowErrorMessage = false
                     this.errorMessages = ""
-                    const response = this.$store.dispatch("inventory/createTenancyAgreement", params)
-                    response.then((res)=>{
-                        console.log("ress: ", res)
-                    }).catch((err)=>{
-                        console.log("err: ", err)
-
-                    })
-                    // response.then((value) => {
-                    //     if (!value) return (this.isShowErrorMessage = true)
-                    //     else {
-                    //         this.$emit("openSnackbar", (this.isOpenSnackbar = true))
-                    //         this.resetForm()
-                    //         this.onClose()
-                    //     }
-                    // })
-                }else{
+                    this.$store
+                        .dispatch("inventory/createTenancyAgreement", params)
+                        .then((value) => {
+                            if (value) {
+                                if (value.id !== 0) {
+                                    this.$emit("openSnackbar", (this.isOpenSnackbar = true))
+                                    this.resetForm()
+                                    this.onClose()
+                                }
+                                else {
+                                    console.log({ valueID: value.id })
+                                    this.isShowErrorMessage = true
+                                    this.errorMessages = value.responseMessage
+                                }
+                            } else {
+                                this.isShowErrorMessage = true
+                                this.errorMessages = value.responseMessage
+                            }
+                        })
+                } else {
                     this.isShowErrorMessage = true
                     this.errorMessages = "End date should be greater than start date !"
                 }
-                
             } else {
                 console.error("error!")
             }
@@ -321,22 +320,20 @@ export default {
         onClose() {
             this.$emit("close")
             this.resetForm()
-        }, 
-        resetForm(){
+        },
+        resetForm() {
             this.$v.$reset()
-            this.agreementDateRaw = "", 
-            this.startDateRaw = "", 
-            this.endDateRaw = "", 
-            this.tenancyRefCode = "", 
-            this.monthlyRental = "", 
-            this.secureDeposit = "", 
-            this.remark = ""
-        }, 
-        validateStartDateAndEndDate(start, end){
-            if(new Date(start) >= new Date(end)) return false
-            else return true
+            ;(this.agreementDateRaw = ""),
+                (this.startDateRaw = ""),
+                (this.endDateRaw = ""),
+                (this.tenancyRefCode = ""),
+                (this.monthlyRental = ""),
+                (this.secureDeposit = ""),
+                (this.remark = "")
+        },
+        validateStartDateAndEndDate(start, end) {
+            return new Date(start) < new Date(end)
         }
- 
     }
 }
 </script>
