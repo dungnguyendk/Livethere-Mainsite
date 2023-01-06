@@ -15,18 +15,29 @@
                 </div>
                 <span class="price">
                     {{ source.name === "portfolio" ? "SGD" : "" }}
-                    {{ currentYear }}
-                    {{ source.name === "average" ? "%" : "" }}
+                    {{ currentYear? currentYear: '-' }}
+                    {{ source.name === "average" ? (currentYear ? "%" : "") : "" }}
                 </span>
-
-                <!-- <i class="ri-error-warning-line icon-warning" v-if="source.name === 'portfolio'"></i> -->
             </div>
             <div class="widget--percent">
                 <div class="svg-header">
                     <img :src="require(`~/static/img/${source.widgetSVG}.svg`)" alt="" />
                 </div>
-                <img src="~/static/img/icon-up.png" alt="" />
-                <span class="percent">{{ currentYearRate }}%</span>
+                <v-tooltip bottom v-if="source.name === 'portfolio'">
+                    <template v-slot:activator="{ on, attrs }">
+                        <div v-bind="attrs" v-on="on" class="icon-warning">
+                            <img :src="require(`~/static/img/icon-${currentYearRate > 0 ? 'up' : 'down'}.svg`)" alt=""
+                                v-if="currentYearRate" />
+                            <span class="percent">{{ currentYearRate? `${currentYearRate}%`: '-' }}</span>
+                        </div>
+                    </template>
+                    <span>Compared to the previous year</span>
+                </v-tooltip>
+                <div v-else>
+                    <img :src="require(`~/static/img/icon-${currentYearRate > 0 ? 'up' : 'down'}.svg`)" alt=""
+                        v-if="currentYearRate" />
+                    <span class="percent">{{ currentYearRate? `${currentYearRate}%`: '-' }}</span>
+                </div>
             </div>
         </div>
         <div class="widget-footer">
@@ -34,13 +45,26 @@
                 <span class="widget-title">{{ source.footerTitle }}</span>
                 <span class="price">
                     {{ source.name === "portfolio" ? "SGD" : "" }}
-                    {{ lastYear }}
-                    {{ source.name === "average" ? "%" : "" }}
+                    {{ lastYear? lastYear: '-' }}
+                    {{ source.name === "average" ? (lastYear ? "%" : "") : "" }}
                 </span>
             </div>
             <div class="widget--percent">
-                <img src="~/static/img/icon-up.png" alt="" />
-                <span class="percent">{{ lastYearRate }}%</span>
+                <v-tooltip bottom v-if="source.name === 'portfolio'">
+                    <template v-slot:activator="{ on, attrs }">
+                        <div v-bind="attrs" v-on="on" class="icon-warning">
+                            <img :src="require(`~/static/img/icon-${lastYearRate > 0 ? 'up' : 'down'}.svg`)" alt=""
+                                v-if="lastYearRate" />
+                            <span class="percent">{{ lastYearRate? `${lastYearRate}%`: '-' }}</span>
+                        </div>
+                    </template>
+                    <span>Compared to the current portfolio price</span>
+                </v-tooltip>
+                <div v-else>
+                    <img :src="require(`~/static/img/icon-${lastYearRate > 0 ? 'up' : 'down'}.svg`)" alt=""
+                        v-if="lastYearRate" />
+                    <span class="percent">{{ lastYearRate? `${lastYearRate}%`: '-' }}</span>
+                </div>
             </div>
         </div>
     </div>
@@ -142,14 +166,14 @@ export default {
     }
 }
 
-.widget--percent {
-    .percent {
-        font-weight: 500;
-        font-size: 1.6rem;
-        line-height: 2.2rem;
-        text-align: right;
-        color: #171717;
-    }
+.widget--percent {}
+
+.percent {
+    font-weight: 500;
+    font-size: 1.6rem;
+    line-height: 2.2rem;
+    text-align: right;
+    color: #171717;
 }
 
 .widget-footer {
