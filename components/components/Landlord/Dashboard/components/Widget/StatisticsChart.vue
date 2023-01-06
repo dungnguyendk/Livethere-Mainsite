@@ -2,12 +2,24 @@
     <div class="section__widget">
         <div class="widget-header">
             <div class="widget--content">
-                <span class="widget-title">{{ source.headerTitle }}</span>
+                <div class="widget-form">
+                    <span class="widget-title">{{ source.headerTitle }}</span>
+                    <v-tooltip bottom v-if="source.name === 'portfolio'">
+                        <template v-slot:activator="{ on, attrs }">
+                            <v-icon color="red" v-bind="attrs" v-on="on" class="icon-warning">
+                                ri-error-warning-line
+                            </v-icon>
+                        </template>
+                        <span>Not included Landed Property!</span>
+                    </v-tooltip>
+                </div>
                 <span class="price">
                     {{ source.name === "portfolio" ? "SGD" : "" }}
                     {{ currentYear }}
                     {{ source.name === "average" ? "%" : "" }}
                 </span>
+
+                <!-- <i class="ri-error-warning-line icon-warning" v-if="source.name === 'portfolio'"></i> -->
             </div>
             <div class="widget--percent">
                 <div class="svg-header">
@@ -41,7 +53,7 @@ export default {
     props: {
         source: {
             type: Object,
-            default: () => {}
+            default: () => { }
         }
     },
     data() {
@@ -55,9 +67,9 @@ export default {
     },
     created() {
         // console.log("this.source::", this.source)
-        console.log({ source: this.source })
+        // console.log({ source: this.source })
         if (this.source && this.source.name === "portfolio") {
-               this.currentYear = this.source?.estimatedPortfolioPriceCurrentYear
+            this.currentYear = this.source?.estimatedPortfolioPriceCurrentYear
                 ? convertNumberToCommas(this.source.estimatedPortfolioPriceCurrentYear)
                 : 0
             this.currentYearRate = this.source.portfolioPriceYieldRate
@@ -150,5 +162,19 @@ export default {
     position: absolute;
     top: 0;
     right: 0;
+}
+
+.widget-form {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.icon-warning {
+    width: fit-content;
+    font-size: 2rem;
+    margin-left: 0.5rem;
+    position: relative;
+    z-index: 2;
 }
 </style>

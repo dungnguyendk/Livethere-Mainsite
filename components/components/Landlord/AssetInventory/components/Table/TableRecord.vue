@@ -6,7 +6,10 @@
                 <img :src="require(`~/static/img/${source.propertyType === 1 ? 'condo' : source.propertyType === 2 ? 'apt' : 'landed'}.png`)"
                     alt="" class="table--record__img" />
                 <p class="first-child" @click="handleClickOpenRow(source.internalID)">
-                    {{ source.propertyName }}
+                    {{
+                        source.id ? ((source.propertyType === 1 || source.propertyType === 2) ? source.projectName :
+                            source.propertyName) : "-"
+                    }}
                 </p>
             </div>
         </td>
@@ -159,7 +162,12 @@ export default {
             // this.$router.push(`/landlord/assets/units/${this.source.internalID}`)
         }
     },
-    watch: {}
+    watch: {
+        source() {
+            this.floorAreaSqftFormatter = convertNumberToCommas(this.source.floorAreaSqft)
+            this.landAreaFormatter = convertNumberToCommas(this.source.landArea)
+        },
+    }
 }
 </script>
 <style lang="scss" scoped>
