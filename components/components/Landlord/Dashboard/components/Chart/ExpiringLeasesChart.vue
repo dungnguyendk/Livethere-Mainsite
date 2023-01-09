@@ -67,21 +67,6 @@ export default {
     },
     data() {
         return {
-            // chartDataDoughnut: {
-            //     labels: ['Score', 'Gray Area'],
-            //     datasets: [{
-            //         label: [],
-            //         data: [2, 2, 4],
-            //         backgroundColor: [
-            //             '#FF9A3E', '#5D5FEF', '#27A857'
-            //         ],
-            //         borderWidth: 1,
-            //         cutout: "80%",
-            //         circumference: 180,
-            //         rotation: -90,
-            //     }],
-
-            // },
             chartOptionsDoughnut: {
                 maintainAspectRatio: false,
                 aspectRatio: 3.5,
@@ -120,13 +105,14 @@ export default {
             dashboard: (state) => state.dashboard.dashBoards
         }),
         chartDataDoughnut() {
+            const value = 100
             let chartDataDoughnut = {
                 labels: [],
                 datasets: [{
                     label: [],
                     data: [],
                     backgroundColor: [
-                        '#FF9A3E', '#5D5FEF', '#27A857'
+                        '#FF9A3E', '#5D5FEF', '#27A857', this.dashboard.expiringLeaseStage1 === 0 && this.dashboard.expiringLeaseStage2 === 0 && this.dashboard.expiringLeaseStage3 === 0 ? "hsla(142, 62%, 90%, 1)" : null
                     ],
                     borderWidth: 1,
                     cutout: "80%",
@@ -134,7 +120,7 @@ export default {
                     rotation: -90,
                 }],
             }
-            chartDataDoughnut.datasets[0].data = [this.dashboard.expiringLeaseStage1, this.dashboard.expiringLeaseStage2, this.dashboard.expiringLeaseStage3]
+            chartDataDoughnut.datasets[0].data = [this.dashboard.expiringLeaseStage1, this.dashboard.expiringLeaseStage2, this.dashboard.expiringLeaseStage3, this.dashboard.expiringLeaseStage1 === 0 && this.dashboard.expiringLeaseStage2 === 0 && this.dashboard.expiringLeaseStage3 === 0 ? value : null]
             return chartDataDoughnut
         },
     }
