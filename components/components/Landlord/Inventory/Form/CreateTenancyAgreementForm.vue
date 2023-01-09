@@ -5,7 +5,7 @@
             <v-row>
                 <v-col cols="12" sm="12" md="4">
                     <div class="form__field">
-                        <label class="required">Agreement Date </label>
+                        <label class="required">Agreement Date</label>
                         <v-menu
                             ref="agreementDateMenu"
                             v-model="agreementDateMenu"
@@ -93,6 +93,21 @@
                         </v-menu>
                     </div>
                 </v-col>
+
+                <v-col v-if="agreementDate" cols="12">
+                    <v-radio-group
+                        class="radio-group--optionDate"
+                        v-model="optionDate"
+                        row
+                        dense
+                        hide-details
+                    >
+                        <v-radio class="radio--custom" label="Selection date" value="selection" />
+                        <v-radio class="radio--custom" label="1 Year" value="1-year" />
+                        <v-radio class="radio--custom" label="2 Years" value="2-years" />
+                    </v-radio-group>
+                </v-col>
+
                 <v-col cols="12" sm="12" md="12">
                     <div class="form__field">
                         <label>Tenancy Ref Code</label>
@@ -152,6 +167,7 @@ import { required, numeric, helpers } from "vuelidate/lib/validators"
 import { setFormControlErrors } from "~/ultilities/form-validations"
 import { convertCommasToNumber, convertNumberToCommas } from "~/ultilities/helpers"
 import { mapState } from "vuex"
+import { addOneYear, addTwoYears } from "~/ultilities/landlord-helper"
 
 export default {
     name: "CreateTenancyAgreementForm",
@@ -167,8 +183,7 @@ export default {
             required
         },
         tenancyRefCode: {
-            required,
-            numeric
+            required
         },
         monthlyRental: {
             required
@@ -197,12 +212,7 @@ export default {
             return setFormControlErrors(this.$v.secureDeposit, "This field is required")
         },
         tenancyRefCodeErrors() {
-            const errors = []
-            if (!this.$v.tenancyRefCode.$dirty) return errors
-            !this.$v.tenancyRefCode.required && errors.push("This field is required")
-            !this.$v.tenancyRefCode.numeric &&
-                errors.push("This field can only contain numeric values")
-            return errors
+            return setFormControlErrors(this.$v.secureDeposit, "This field is required")
         }
     },
     data() {
@@ -223,19 +233,47 @@ export default {
             submitted: false,
             isOpenSnackbar: false,
             isShowErrorMessage: false,
-            errorMessages: ""
+            errorMessages: "",
+            optionDate: "selection" // "selection" | "1-year" | "2-years"
         }
     },
     watch: {
+        optionDate() {
+            if (this.optionDate === "1-year") {
+                if (this.startDate !== "") {
+                    this.endDate = addOneYear(this.$moment, this.startDateRaw)
+                }
+            }
+
+            if (this.optionDate === "2-years") {
+                if (this.startDate !== "") {
+                    this.endDate = addTwoYears(this.$moment, this.startDateRaw)
+                }
+            }
+            if (this.optionDate === "selection") {
+                this.endDate = ""
+                this.endDateRaw = ""
+            }
+        },
+
         agreementDateRaw() {
             this.agreementDate = this.formatDate(this.agreementDateRaw)
         },
+
         startDateRaw() {
+            if (this.optionDate === "1-year") {
+                this.endDate = addOneYear(this.$moment, this.startDateRaw)
+            }
+            if (this.optionDate === "2-years") {
+                this.endDate = addTwoYears(this.$moment, this.startDateRaw)
+            }
             this.startDate = this.formatDate(this.startDateRaw)
         },
+
         endDateRaw() {
             this.endDate = this.formatDate(this.endDateRaw)
         },
+
         monthlyRental(val) {
             if (!isNaN(val)) {
                 this.$nextTick(() => (this.monthlyRental = convertNumberToCommas(val)))
@@ -268,9 +306,9 @@ export default {
                 const params = {
                     tenancyRefCode: this.tenancyRefCode,
                     assestInventoryFID: this.inventoryDetails.id,
-                    agreementDate: this.agreementDateRaw,
-                    startDate: this.startDateRaw,
-                    endDate: this.endDateRaw,
+                    agreementDate: this.$moment(this.agreementDate).format("YYYY-MM-DD"),
+                    startDate: this.$moment(this.startDate).format("YYYY-MM-DD"),
+                    endDate: this.$moment(this.endDate).format("YYYY-MM-DD"),
                     currencyType: "SGD",
                     currencyName: "Singapore Dollar",
                     cultureCode: "en-SG",
@@ -298,8 +336,7 @@ export default {
                                     this.$emit("openSnackbar", (this.isOpenSnackbar = true))
                                     this.resetForm()
                                     this.onClose()
-                                }
-                                else {
+                                } else {
                                     console.log({ valueID: value.id })
                                     this.isShowErrorMessage = true
                                     this.errorMessages = value.responseMessage
@@ -323,16 +360,17 @@ export default {
         },
         resetForm() {
             this.$v.$reset()
-            ;(this.agreementDateRaw = ""),
-                (this.startDateRaw = ""),
-                (this.endDateRaw = ""),
-                (this.tenancyRefCode = ""),
-                (this.monthlyRental = ""),
-                (this.secureDeposit = ""),
-                (this.remark = "")
+            this.agreementDateRaw = ""
+            this.startDateRaw = ""
+            this.endDateRaw = ""
+            this.tenancyRefCode = ""
+            this.monthlyRental = ""
+            this.secureDeposit = ""
+            this.remark = ""
         },
         validateStartDateAndEndDate(start, end) {
-            return new Date(start) < new Date(end)
+            console.log({ start, end })
+            return this.$moment(start).isBefore(end)
         }
     }
 }
@@ -351,6 +389,29 @@ export default {
         .btn {
             min-width: 12rem;
         }
+    }
+
+    .form__fields {
+        &::v-deep(.row) {
+            > * {
+                padding-top: 0 !important;
+                padding-bottom: 0 !important;
+            }
+        }
+    }
+}
+
+.radio--custom {
+    &::v-deep(label) {
+        margin-bottom: 0 !important;
+        font-size: 1.4rem;
+    }
+}
+
+.radio-group--optionDate {
+    &::v-deep() {
+        margin-top: 0 !important;
+        padding-bottom: 2.4rem;
     }
 }
 </style>
