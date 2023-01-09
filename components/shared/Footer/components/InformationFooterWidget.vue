@@ -2,12 +2,12 @@
     <div class="widget widget--footer widget--about">
         <SiteLogo />
         <p v-if="address && address !== ''"> {{ address }}</p>
-        <template v-else
-            ><p>
+        <template v-else>
+            <p>
                 Savills Singapore Agency No.: L3009688B 30 Cecil Street, #20-03 Prudential Tower,
                 Singapore 049712
-            </p></template
-        >
+            </p>
+        </template>
     </div>
 </template>
 
@@ -20,7 +20,7 @@ export default {
     props: {
         address: {
             type: String,
-            default: 0
+            default: ''
         }
     }
 }
