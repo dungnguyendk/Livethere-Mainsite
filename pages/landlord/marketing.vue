@@ -1,6 +1,5 @@
 <template lang="html">
     <main>
-        <LandlordHeader />
         <template v-if="loggedIn">
             <LandlordPortal>
                 <Marketing />
@@ -10,7 +9,6 @@
 </template>
 
 <script>
-import LandlordHeader from "~/components/shared/Header/LandlordHeader.vue"
 import { appSettings } from "~/app-settings"
 import Marketing from "~/components/components/Landlord/Marketing/Marketing.vue"
 import LandlordPortal from "~/components/components/Landlord/LandlordPortal.vue"
@@ -19,7 +17,6 @@ export default {
     components: {
         LandlordPortal,
         Marketing,
-        LandlordHeader
     },
     layout:'landlord',
     head: {

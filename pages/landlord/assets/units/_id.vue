@@ -10,7 +10,7 @@
 
 <script>
 import LandlordPortal from "~/components/components/Landlord/LandlordPortal.vue"
-import LandlordHeader from "~/components/shared/Header/LandlordHeader.vue"
+
 import { appSettings } from "~/app-settings"
 import AssetInventory from "~/components/components/Landlord/AssetInventory/AssetInventory.vue"
 import InventoryUnits from "~/components/components/Landlord/Inventory/InventoryUnits.vue"
@@ -20,7 +20,7 @@ export default {
     components: {
         InventoryUnits,
         AssetInventory,
-        LandlordHeader,
+
         LandlordPortal
     },
     head: {
