@@ -70,6 +70,7 @@
             <v-btn class="btn btn--ghost btn--gray btn--sm" @click="onClose()"> Cancel</v-btn>
             <v-btn
                 class="btn btn--primary btn--green btn--sm"
+                :loading="loading"
                 @click="unitInventoryDetail ? updateUnitInventory() : createUnitInventory()"
             >
                 {{ unitInventoryDetail ? "Update" : "Add" }}
@@ -156,12 +157,17 @@ export default {
             cultureCode: "en-SG",
             conditions: CONDITIONS,
             remark: "",
-            errorMessage: false
+            errorMessage: false,
+            loading: false
         }
     },
 
     methods: {
-        onFormSubmit() {},
+        onFormSubmit() {
+            this.loading = true
+            // await new Promise((resolve) => setTimeout(resolve, 3000))
+            // this.loading = false
+        },
         onClose() {
             this.$store.commit("inventory/setInventoryUnitDetail", "")
             this.$emit("close")
@@ -187,6 +193,7 @@ export default {
                     this.$store
                         .dispatch("inventory/createUnitInventory", params)
                         .then((response) => {
+                            this.loading = false
                             if (response) {
                                 const internalID = this.internalID
                                 this.$store.dispatch("inventory/getUnitsByInventoryFID", internalID)
@@ -199,12 +206,15 @@ export default {
                 } catch (e) {
                     console.log(e)
                 }
+            }else{
+                this.loading = false
             }
         },
         updateUnitInventory() {
             this.onFormSubmit()
             this.$v.$touch()
             if (!this.$v.$invalid) {
+                this.loading = true
                 try {
                     const params = {
                         id: this.sourceDetail,
@@ -220,15 +230,14 @@ export default {
                         remark: this.remark
                     }
                     // console.log("params", params)
+                    this.onClose()
                     this.$store
                         .dispatch("inventory/updateUnitInventory", params)
                         .then((response) => {
                             if (response) {
                                 const internalID = this.internalID
-                                // console.log("internalID: " + internalID);
                                 this.$store.dispatch("inventory/getUnitsByInventoryFID", internalID)
                                 this.errorMessage = false
-                                this.onClose()
                             } else {
                                 this.errorMessage = true
                             }
@@ -236,6 +245,8 @@ export default {
                 } catch (e) {
                     console.log(e)
                 }
+            } else {
+                this.loading = false
             }
         }
     },
