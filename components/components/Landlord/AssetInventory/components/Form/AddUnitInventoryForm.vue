@@ -10,7 +10,7 @@
             <v-row>
                 <v-col cols="12" sm="12" md="6">
                     <div class="form__field">
-                        <label class="required">Name </label>
+                        <label class="required">Item </label>
                         <v-text-field
                             v-model="itemName"
                             :error-messages="nameErrors"
@@ -21,7 +21,7 @@
                 </v-col>
                 <v-col cols="12" sm="12" md="6">
                     <div class="form__field">
-                        <label class="required">Conditions </label>
+                        <label class="required">Condition </label>
                         <v-select
                             v-model="condition"
                             :items="conditions"
@@ -60,7 +60,7 @@
                 </v-col>
                 <v-col cols="12" sm="12" md="12">
                     <div class="form__field">
-                        <label>Remark </label>
+                        <label>Remarks </label>
                         <v-textarea v-model="remark" dense outlined />
                     </div>
                 </v-col>

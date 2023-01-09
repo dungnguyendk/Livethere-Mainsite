@@ -7,21 +7,21 @@
             <div class="leases-day">
                 <div class="expiring">
                     <div class="leases leases--color-orange"></div>
-                    <span>{{ dashboard ? dashboard.expiringLeaseStage1 : 0 }}</span>
+                    <span>{{ dashboard? dashboard.expiringLeaseStage1 : 0 }}</span>
                 </div>
                 <label>&lt30 days</label>
             </div>
             <div class="leases-day">
                 <div class="expiring">
                     <div class="leases leases--color-blue"></div>
-                    <span>{{ dashboard ? dashboard.expiringLeaseStage2 : 0 }}</span>
+                    <span>{{ dashboard? dashboard.expiringLeaseStage2 : 0 }}</span>
                 </div>
                 <label>31 - 90 days</label>
             </div>
             <div class="leases-day">
                 <div class="expiring">
                     <div class="leases leases--color-green"></div>
-                    <span>{{ dashboard ? dashboard.expiringLeaseStage3 : 0 }}</span>
+                    <span>{{ dashboard? dashboard.expiringLeaseStage3 : 0 }}</span>
                 </div>
                 <label>&gt 90 days</label>
             </div>

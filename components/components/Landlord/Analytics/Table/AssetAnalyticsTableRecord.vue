@@ -76,7 +76,7 @@ export default {
     }
 }
 </script>
-<style lang="scss" scss>
+<style lang="scss" scoped>
 .table--record {
     td {
         text-align: center;

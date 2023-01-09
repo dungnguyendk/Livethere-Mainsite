@@ -11,7 +11,7 @@
 <script>
 import { appSettings } from "~/app-settings"
 import LandlordPortal from "~/components/components/Landlord/LandlordPortal.vue"
-import LandlordHeader from "~/components/shared/Header/LandlordHeader.vue"
+
 import AssetInventory from "~/components/components/Landlord/AssetInventory/AssetInventory.vue"
 import InventoryDetails from "~/components/components/Landlord/Inventory/InventoryDetails.vue"
 import TenancyDetails from "~/components/components/Landlord/Tenancy/TenancyDetails"
@@ -25,7 +25,7 @@ export default {
         TenancyDetails,
         InventoryDetails,
         AssetInventory,
-        LandlordHeader,
+
         LandlordPortal
     },
     layout: 'landlord',

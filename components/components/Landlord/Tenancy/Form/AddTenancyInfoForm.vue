@@ -38,7 +38,8 @@
         </div>
         <div class="form__actions">
             <v-btn class="btn btn--ghost btn--gray btn--sm" @click="onClose">Cancel</v-btn>
-            <v-btn class="btn btn--primary btn--green btn--sm" @click="onCreateTenancyInfo">Create</v-btn>
+            <v-btn class="btn btn--primary btn--green btn--sm" @click="onCreateTenancyInfo"
+                :loading="loading">Create</v-btn>
         </div>
     </form>
 </template>
@@ -84,7 +85,8 @@ export default {
                     },
                     text: "Corporate"
                 }
-            ]
+            ],
+            loading: false,
         }
     },
     computed: {
@@ -109,7 +111,9 @@ export default {
         // console.log("this.tenancyDetailByInternalID", this.tenancyDetailByInternalID)
     },
     methods: {
-        onFormSubmit() { },
+        onFormSubmit() { 
+            this.loading = true
+        },
         onClose() {
             this.$emit("close")
         },
@@ -132,10 +136,13 @@ export default {
                     })
                     this.$store.dispatch("tenancy/getTenancyInfosById", paramAgreementFID)
                 }).then(() => {
+                    this.loading = false
                     if (this.statusResponse) {
                         this.onClose()
                     }
                 })
+            } else {
+                this.loading = false
             }
         }
     }
