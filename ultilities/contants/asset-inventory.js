@@ -86,6 +86,13 @@ export const BEDROOM_TYPE = [
             name: "5 Bedroom"
         },
         text: "5 Bedroom"
+    },
+    {
+        value: {
+            id: 7,
+            name: "6 Bedroom or More"
+        },
+        text: "6 Bedroom or More"
     }
 ]
 export const TENURE = [
