@@ -16,13 +16,14 @@
 </template>
 
 <script>
-import DialogContentCard from "./components/DialogContentCard.vue"
-import StatusIcon from "~/components/shared/Icon/StatusIcon.vue"
+import DialogContentCard from "~/components/elements/Dialog/components/DialogContentCard"
+import StatusIcon from "~/components/shared/Icon/StatusIcon"
+
 export default {
     name: "DeleteDialog",
     components: {
-        DialogContentCard,
-        StatusIcon
+        StatusIcon,
+        DialogContentCard
     },
     data() {
         return {
@@ -82,20 +83,6 @@ export default {
 
     .btn__upload-file {
         min-width: min-content !important;
-    }
-}
-
--dropzone {
-    background: alpha(var(--color-gray), var(--level-1));
-    border-radius: 0.8rem;
-    border: 0;
-    color: alpha(var(--color-gray), var(--level-3));
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    &:hover {
-        background: alpha(var(--color-gray), var(--level-1));
     }
 }
 
