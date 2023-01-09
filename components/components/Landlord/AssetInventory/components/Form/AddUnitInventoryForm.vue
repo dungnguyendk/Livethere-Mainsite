@@ -165,8 +165,6 @@ export default {
     methods: {
         onFormSubmit() {
             this.loading = true
-            // await new Promise((resolve) => setTimeout(resolve, 3000))
-            // this.loading = false
         },
         onClose() {
             this.$store.commit("inventory/setInventoryUnitDetail", "")
@@ -207,14 +205,13 @@ export default {
                     console.log(e)
                 }
             }else{
-                this.loading = false
+            this.loading = false
             }
         },
         updateUnitInventory() {
             this.onFormSubmit()
             this.$v.$touch()
             if (!this.$v.$invalid) {
-                this.loading = true
                 try {
                     const params = {
                         id: this.sourceDetail,
@@ -268,7 +265,7 @@ export default {
                     () => (this.quantity = convertNumberToCommas(convertCommasToNumber(val)))
                 )
             }
-        }
+        },
     }
 }
 </script>
