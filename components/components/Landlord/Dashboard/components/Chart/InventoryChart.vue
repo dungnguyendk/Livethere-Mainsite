@@ -18,6 +18,11 @@
                         </div>
                     </div>
                 </div>
+                <!-- <div class="chart-box">
+                    <Doughnut :chart-options="chartOptionsDoughnut" :chart-data="chartDataDoughnut"
+                        :plugins="pluginsDoughnut" />
+                </div> -->
+
                 <label class="name-progress">Total</label>
             </div>
             <!-- <Doughnut :chart-options="chartOptionsDoughnut" :chart-data="chartDataDoughnut"
@@ -103,41 +108,48 @@ export default {
                 maintainAspectRatio: false,
                 aspectRatio: 1,
                 responsive: true,
-                plugins: {
+                plugins:
+                {
                     legend: {
                         display: false
                     },
                     tooltip: {
                         enabled: false
                     },
-                },
-            },
-            pluginsDoughnut: [{
-                // beforeDraw: function (chart, option) {
-                //     const { ctx, data, chartArea: { top, bottom, left, right, width, height }, scales: { r } } = chart
-                //     ctx.save()
-                //     const xCoor = chart.getDatasetMeta(0).data[0].x;
-                //     const yCoor = chart.getDatasetMeta(0).data[0].y;
-                //     const score = data.datasets[0].data[0]
-                //     // ctx.fillRect(xCoor, yCoor, 400, 1)
-                //     ctx.font = '20px sans-serif'
-                //     ctx.textBaseLine = "middle"
-                //     ctx.textAlign = "center"
-                //     ctx.fillText(score, xCoor, yCoor)
-                // }
-                afterDatasetsDraw(chart, args, pluginOptions) {
-                    const { ctx } = chart;
-                    ctx.textAlign = "center"
-                    ctx.textBaseLine = "middle"
-                    ctx.font = '20px sans-serif'
-
-                    const text = "I'm In the Center"
-                    const x = chart.getDatasetMeta(0).data[0].x;
-                    const y = chart.getDatasetMeta(0).data[0].y;
-                    ctx.fillText(text, x, y)
-                    ctx.fillRect(x, y, 10, 10)
                 }
-            }]
+            },
+            pluginsDoughnut: [
+                {
+                    beforeDraw(chart, args, options) {
+                        const { ctx, data, chartArea: { top, bottom, left, right, width, height }, scales: { r } } = chart;
+                        ctx.save()
+                        const xCoor = chart.getDatasetMeta(0).data[0].x;
+                        const yCoor = chart.getDatasetMeta(0).data[0].y;
+                        const score = data.datasets[0].data[0]
+                        console.log(yCoor);
+                        ctx.font = '20px sans-serif'
+                        // ctx.textBaseLine = "middle"
+                        ctx.textAlign = "center"
+                        ctx.fillStyle = '#27A857'
+                        ctx.fillText(score, xCoor, yCoor)
+                        // ctx.fillRect(xCoor, yCoor, 10, 10)
+                        // ctx.font = '20px sans-serif'
+                        // ctx.textAlign = "center"
+                        // ctx.textBaseLine = "middle"
+                        // ctx.fillStyle = '#27A857'
+                        // ctx.fillText('97%', width / 2, top + (height / 2) + 5)
+                        // ctx.textAlign = "center"
+                        // ctx.textBaseLine = "middle"
+                        // ctx.font = '20px sans-serif'
+
+                        // const text = data.datasets[0].data[0]
+                        // const textWidth = ctx.measureText(text).width
+                        // const x = chart.getDatasetMeta(0).data[0].x;
+                        // const y = chart.getDatasetMeta(0).data[0].y;
+                        // ctx.fillText(text, x, y)
+                    }
+                },
+            ]
         }
     },
     computed: {
@@ -165,17 +177,6 @@ export default {
                 ).toFixed()
                 : 0
         },
-        // pluginsDoughnut: [{
-        //     afterDatasetsDraw(chart, args, pluginOptions) {
-        //         const { ctx } = chart;
-        //         ctx.font = '20px sans-serif'
-        //         const text = "I'm In the Center"
-        //         const x = chart.getDatasetMeta(0).data[0].x;
-        //         const y = chart.getDatasetMeta(0).data[0].y;
-        //         ctx.fillText(text, x, y)
-        //         ctx.fillRect(x, y, 10, 10)
-        //     }
-        // }],
         chartDataDoughnut() {
             let chartDataDoughnut = {
                 labels: [],
@@ -186,9 +187,9 @@ export default {
                     hoverBackgroundColor: ["#27A857"],
                     borderWidth: 0,
                     cutout: "80%",
+                    borderRadius: 5
                 }],
             }
-            // chartDataDoughnut.datasets[0].data = []
             return chartDataDoughnut
         },
     },
@@ -228,6 +229,17 @@ export default {
     font-size: 1.6rem;
     line-height: 2.2rem;
     color: var(--color-title-black);
+}
+
+.chart-box {
+    width: 7rem !important;
+    height: 7rem !important;
+    margin: 0 auto;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    // display: contents;
 }
 
 .name-progress {

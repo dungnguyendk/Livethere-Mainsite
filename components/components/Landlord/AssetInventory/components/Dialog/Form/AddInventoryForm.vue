@@ -32,12 +32,13 @@
             <div class="form__field2">
                 <div class="form__field">
                     <label>Unit No.</label>
-                    <v-text-field v-model.trim="unitNo" outlined dense :error-messages="unitNoErrors" @change="searchPostalCode" />
+                    <v-text-field v-model.trim="unitNo" outlined dense :error-messages="unitNoErrors"
+                        @change="searchPostalCode" />
                 </div>
                 <div class="form__field">
                     <label>No of Bedroom(s)</label>
-                    <v-select v-model="bedroom" outlined dense placeholder="Please select" :items="bedroomList" item-text="text"
-                        item-value="value" :error-messages="bedroomErrors" />
+                    <v-select v-model="bedroom" outlined dense placeholder="Please select" :items="bedroomList"
+                        item-text="text" item-value="value" :error-messages="bedroomErrors" />
                 </div>
             </div>
             <div class="form__field">
@@ -46,8 +47,8 @@
             </div>
             <div class="form__field">
                 <label>Tenure</label>
-                <v-select v-model="tenure" outlined dense placeholder="Please select" :items="tenureList" item-text="text"
-                    item-value="value" :error-messages="tenureErrors" />
+                <v-select v-model="tenure" outlined dense placeholder="Please select" :items="tenureList"
+                    item-text="text" item-value="value" :error-messages="tenureErrors" />
             </div>
             <div class="form__field">
                 <label>Floor Area (sqft)</label>
@@ -84,8 +85,8 @@
         <div class="card__footer">
             <div class="btn-group">
                 <v-btn class="btn btn--primary btn--green btn__add-file"
-                    @click="inventoryDetail ? updateInventories() : createInventories()">
-                    {{ inventoryDetail ? "Update" : "Add" }}</v-btn>
+                    @click="inventoryDetail ? updateInventories() : createInventories()" :loading="loading">
+                    {{ inventoryDetail? "Update": "Add" }}</v-btn>
                 <span class="cancel-form" @click="onClose()"> Cancel </span>
             </div>
         </div>
@@ -98,6 +99,7 @@ import { PROPERTY_TYPE, BEDROOM_TYPE, TENURE } from "~/ultilities/contants/asset
 import { convertNumberToCommas, convertCommasToNumber } from "~/ultilities/helpers"
 import { setFormControlErrors } from "~/ultilities/form-validations"
 import { mapState } from "vuex"
+import { httpEndpoint } from "~/services/https/endpoints"
 import qs from "qs"
 export default {
     name: "AddInventoryForm",
@@ -160,6 +162,7 @@ export default {
             purchasedDate: "",
             purchasedDateFormatted: "",
             menu1: false,
+            loading: false
         }
     },
     computed: {
@@ -237,7 +240,9 @@ export default {
         // console.log("this.sourceDetail::", this.sourceDetail);
     },
     methods: {
-        onFormSubmit() { },
+        onFormSubmit() {
+            this.loading = true
+        },
         async createInventories() {
             this.onFormSubmit()
             // console.log("submit!", this.$v.$invalid)
@@ -268,10 +273,13 @@ export default {
                     })
                     this.$store.dispatch("inventories/getInventories", paramStatusFID)
                 }).then(() => {
+                    this.loading = false
                     if (this.statusResponse) {
                         this.onClose()
                     }
                 })
+            } else {
+                this.loading = false
             }
         },
         updateInventories() {
@@ -305,23 +313,29 @@ export default {
                     })
                     this.$store.dispatch("inventories/getInventories", paramStatusFID)
                 }).then(() => {
+                    this.loading = false
                     if (this.statusResponse) {
                         this.onClose()
                     }
                 })
+            } else {
+                this.loading = false
             }
+
         },
         async searchPostalCode() {
+            this.loading = true
             const param = qs.stringify({
                 postalCode: this.postalCode,
                 unitNo: this.unitNo
             })
             if (this.postalCode) {
                 try {
-                    const response = await this.$axios.$get(
-                        `https://apivo.aestechgroup.com/aespostal/api/properties/details?${param}`
+                    const response = await this.$apivo.$get(
+                        `${httpEndpoint.postal.getEntryByPostalCode}?${param}`
                     )
                     if (response) {
+                        this.loading = false
                         response.propertyType && response.propertyType !== null ? this.propertyType = this.propertyTypeList.find(
                             (item) => item.value.name === response.propertyType
                         ).value : this.propertyType = ''
@@ -336,10 +350,15 @@ export default {
                         this.landArea = this.unitNo && response.landAreaSqft !== 0 ? response.landAreaSqft : ''
                         this.purchasedPrice = this.unitNo && response.consider !== 0 ? response.consider : ''
                         this.purchasedDate = this.unitNo && response.contractDate !== 0 ? response.contractDate : ''
+                    } else {
+                        this.loading = false
                     }
+
                 } catch (e) {
                     console.log(e)
                 }
+            } else {
+                this.loading = false
             }
         },
         onChangePostalCode() {
