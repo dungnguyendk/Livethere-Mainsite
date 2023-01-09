@@ -5,7 +5,7 @@ export const state = () => ({
 export const mutations = {
     setAnalytics(state, payload) {
         state.analytics = payload
-        console.log("state.analytics::", state.analytics)
+        // console.log("state.analytics::", state.analytics)
     }
 }
 export const actions = {
