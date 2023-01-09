@@ -109,18 +109,18 @@ export default {
                 aspectRatio: 1,
                 responsive: true,
                 plugins:
-                [{
+                {
                     legend: {
                         display: false
                     },
                     tooltip: {
                         enabled: false
                     },
-                }]
+                }
             },
             pluginsDoughnut: [
                 {
-                    beforeDraw(chart, args, pluginOptions) {
+                    beforeDraw(chart, args, options) {
                         const { ctx, data, chartArea: { top, bottom, left, right, width, height }, scales: { r } } = chart;
                         ctx.save()
                         const xCoor = chart.getDatasetMeta(0).data[0].x;
@@ -187,6 +187,7 @@ export default {
                     hoverBackgroundColor: ["#27A857"],
                     borderWidth: 0,
                     cutout: "80%",
+                    borderRadius: 5
                 }],
             }
             return chartDataDoughnut
