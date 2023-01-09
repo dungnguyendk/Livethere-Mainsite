@@ -9,7 +9,6 @@ export const state = () => ({
     entriesID: {},
     listTenancyAgreements: null,
     snackbar: false,
-    loading: false,
     snackbarMessage: "Your message has been sent.",
     tenancyID: ""
 })
@@ -39,9 +38,6 @@ export const mutations = {
     setSnackbar(state, payload) {
         state.snackbar = payload
     },
-    setLoading(state, payload) {
-        state.loading = payload
-    },
     setSnackbarMessage(state, payload) {
         state.snackbarMessage = payload
     },
@@ -59,7 +55,7 @@ export const actions = {
 
             if (detail) {
                 const response = await this.$axios.$get(
-                    `${httpEndpoint.unit.getEntries}?AssestInventoryFID=${detail.id}`
+                    `${httpEndpoint.unit.getEntries}?assetInventoryFID=${detail.id}`
                 )
                 commit("setInternalID", detail.internalID)
                 commit("setEntriesID", detail.id)
@@ -180,7 +176,7 @@ export const actions = {
                     return responseMain
                 }
                 else {
-                    console.log({Error: responseMain.responseMessage})
+                    console.log({ Error: responseMain.responseMessage })
                     return responseMain
 
                 }

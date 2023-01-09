@@ -33,10 +33,7 @@
                                     <v-list-item-title>Edit</v-list-item-title>
                                 </v-list-item-content>
                             </v-list-item>
-                            <v-list-item
-                                @click="onDeleteUnitInventory(source.id)"
-                                style="height: 35px"
-                            >
+                            <v-list-item @click="deleteDialog = true" style="height: 35px">
                                 <v-list-item-icon>
                                     <v-icon v-text="`ri-delete-bin-line`"></v-icon>
                                 </v-list-item-icon>
@@ -56,11 +53,19 @@
                 :sourceDetail="source.id"
             />
         </Dialog>
+        <DeleteDialog
+            :open="deleteDialog"
+            size="large"
+            type="full"
+            @onSubmit="onDeleteUnitInventory(source.id)"
+            @close="deleteDialog = false"
+        />
     </tr>
 </template>
 
 <script>
 import { mapState } from "vuex"
+import DeleteDialog from "~/components/elements/Dialog/DeleteDialog.vue"
 import { httpEndpoint } from "~/services/https/endpoints"
 import Dialog from "~/components/elements/Dialog/Dialog.vue"
 import AddUnitInventoryForm from "../../../AssetInventory/components/Form/AddUnitInventoryForm.vue"
@@ -68,7 +73,7 @@ import { convertNumberToCommas } from "~/ultilities/helpers"
 
 export default {
     name: "TenacyInventoryRecord",
-    components: { Dialog, AddUnitInventoryForm },
+    components: { Dialog, AddUnitInventoryForm, DeleteDialog },
     props: {
         source: {
             type: Object,
@@ -80,11 +85,11 @@ export default {
             internalID: (state) => state.inventory.internalID,
             units: (state) => state.inventory.units
         }),
-        totalValueFormat(){
+        totalValueFormat() {
             return convertNumberToCommas(this.source.totalValue)
         },
-        quantityFormat(){
-           return convertNumberToCommas(this.source.quantity)
+        quantityFormat() {
+            return convertNumberToCommas(this.source.quantity)
         }
     },
     // created() {
@@ -95,7 +100,9 @@ export default {
         return {
             createDialog: false,
             quantity: "",
-            totalValue: ""
+            totalValue: "",
+            deleteDialog: false,
+            itemDelete: {}
         }
     },
     methods: {
@@ -109,12 +116,14 @@ export default {
             })
         },
         onDeleteUnitInventory(item) {
+            console.log("item", item)
             const param = {
                 data: {
                     id: item
                 }
             }
             this.$store.dispatch("inventory/deleteUnitInventory", param).then(() => {
+                this.deleteDialog =false;
                 const internalID = this.internalID
                 this.$store.dispatch("inventory/getUnitsByInventoryFID", internalID)
             })
