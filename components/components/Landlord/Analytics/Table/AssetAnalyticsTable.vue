@@ -13,14 +13,9 @@
                 </tr>
             </thead>
             <tbody>
-                <template v-if="analytics.length > 0">
-                    <AssetAnalyticsTableRecord
-                        v-for="item in analytics"
-                        :source="item"
-                        :selectedId="selectedId"
-                        :key="item.id"
-                        @handleClickOpenRow="handleClickOpenRow"
-                    />
+                <template v-if="analytics && analytics.length > 0">
+                    <AssetAnalyticsTableRecord v-for="item in analytics" :source="item" :selectedId="selectedId"
+                        :key="item.id" @handleClickOpenRow="handleClickOpenRow" />
                 </template>
                 <template v-else>
                     <tr>
@@ -123,9 +118,9 @@ export default {
             this.showExpandedPanel = false
         },
         handleClickOpenRow(item) {
-           /* this.$emit("handleClickOpenRow", item)
-            this.selectedId = item
-            this.showExpandedPanel = true*/
+            /* this.$emit("handleClickOpenRow", item)
+             this.selectedId = item
+             this.showExpandedPanel = true*/
         }
     }
 }

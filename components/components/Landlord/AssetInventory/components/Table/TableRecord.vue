@@ -32,7 +32,9 @@
             {{ source.streetName }}
         </td>
         <td data-label="Status" v-if="statusFID === 0 || statusFID === 1">
-            <AssetInventoryBadge :type="source.statusDisplay.toUpperCase()" />
+            <a @click="handleClickOpenRow(source.internalID)">
+                <AssetInventoryBadge :type="source.statusDisplay.toUpperCase()" :source="source" />
+            </a>
         </td>
         <td data-label="Estimated Market Rent" v-if="statusFID === 2">
             {{ source.EMR ? source.EMR : '-' }}
@@ -71,7 +73,7 @@
                                     <v-list-item-title>Unit Inventory</v-list-item-title>
                                 </v-list-item-content>
                             </v-list-item>
-                            <v-list-item @click="onDeleteInventory(source.id)" class="list-item--custom">
+                            <v-list-item @click="deleteDialog = true" class="list-item--custom">
                                 <v-list-item-icon>
                                     <v-icon v-text="`ri-delete-bin-line`"></v-icon>
                                 </v-list-item-icon>
@@ -88,6 +90,8 @@
                 <AddInventoryForm @close="openAddNewInventoryDialog = false" v-if="openAddNewInventoryDialog"
                     :sourceDetail="source.id" />
             </Dialog>
+            <DeleteDialog :open="deleteDialog" size="large" type="full" @close="deleteDialog = false"
+                @onSubmit="onDeleteInventory(source.id)" />
         </td>
     </tr>
 </template>
@@ -95,6 +99,7 @@
 <script>
 import AssetInventoryBadge from "~/components/components/Landlord/AssetInventory/components/AssetInventoryBadge.vue"
 import Dialog from "~/components/elements/Dialog/Dialog.vue"
+import DeleteDialog from "~/components/elements/Dialog/DeleteDialog.vue"
 import AddInventoryForm from "~/components/components/Landlord/AssetInventory/components/Dialog/Form/AddInventoryForm.vue"
 import { convertNumberToCommas } from "~/ultilities/helpers"
 import { mapState } from "vuex"
@@ -102,7 +107,7 @@ import qs from "qs"
 
 export default {
     name: "TableRecord",
-    components: { AssetInventoryBadge, Dialog, AddInventoryForm },
+    components: { AssetInventoryBadge, Dialog, AddInventoryForm, DeleteDialog },
     props: {
         source: {
             type: Object,
@@ -118,7 +123,8 @@ export default {
             openAddNewInventoryDialog: false,
             sizeDialog: "large",
             floorAreaSqftFormatter: "",
-            landAreaFormatter: ""
+            landAreaFormatter: "",
+            deleteDialog: false,
         }
     },
     computed: {
