@@ -4,7 +4,7 @@
             <v-row>
                 <v-col cols="12" sm="12" md="12">
                     <div class="form__field">
-                        <label class="required">Name </label>
+                        <label class="required">Item Name </label>
                         <v-text-field
                             v-model="itemName"
                             dense
@@ -60,7 +60,7 @@
 
                 <v-col cols="12" sm="12" md="12">
                     <div class="form__field">
-                        <label>Remark </label>
+                        <label>Remarks </label>
                         <v-textarea v-model="remark" dense outlined />
                     </div>
                 </v-col>

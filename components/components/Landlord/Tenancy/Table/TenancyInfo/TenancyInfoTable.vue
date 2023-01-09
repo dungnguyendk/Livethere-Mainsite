@@ -2,7 +2,7 @@
     <table class="table--responsive table--tenancy-info">
         <thead>
             <tr>
-                <th id="name">Tenancy Name </th>
+                <th id="name">Name </th>
                 <th id="passport">ID / Passport No. </th>
                 <th id="leasingtype">Leasing Type</th>
                 <th id="companyname">Company Name</th>
