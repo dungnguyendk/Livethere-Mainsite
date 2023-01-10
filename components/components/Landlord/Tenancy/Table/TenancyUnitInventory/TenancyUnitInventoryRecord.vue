@@ -110,13 +110,11 @@ export default {
             this.$emit("handleClickOpenRow", item)
         },
         onEditUnitInventory(item) {
-            // console.log("onEditInventory")
             this.$store.dispatch("inventory/getDetailUnitInventory", item).then(() => {
                 this.createDialog = true
             })
         },
         onDeleteUnitInventory(item) {
-            console.log("item", item)
             const param = {
                 data: {
                     id: item

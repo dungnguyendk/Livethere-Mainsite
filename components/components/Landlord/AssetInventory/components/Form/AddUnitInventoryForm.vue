@@ -187,7 +187,6 @@ export default {
                         itemValue: this.value ? convertCommasToNumber(this.value) : 0,
                         remark: this.remark
                     }
-                    // console.log("params", params)
                     this.$store
                         .dispatch("inventory/createUnitInventory", params)
                         .then((response) => {
@@ -226,7 +225,6 @@ export default {
                         itemValue: this.value ? convertCommasToNumber(this.value) : 0,
                         remark: this.remark
                     }
-                    // console.log("params", params)
                     this.onClose()
                     this.$store
                         .dispatch("inventory/updateUnitInventory", params)
