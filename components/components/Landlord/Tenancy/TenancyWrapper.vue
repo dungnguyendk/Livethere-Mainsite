@@ -43,13 +43,16 @@ export default {
     components: { TenancyInfoPanel, TenancyNav, TenancyDetailsPanel },
     computed: {
         ...mapState({
-            tenancyLinks: (state) => state.tenancy.tenancyLinks
+            tenancyLinks: (state) => state.tenancy.tenancyLinks,
+            tenancyDetails: (state) => state.tenancy.tenancyDetails
         })
     },
     methods: {
         onBack() {
             this.$store.commit("tenancy/setTenancyLink", "details")
-            this.$emit("onBack")
+            if (this.tenancyDetails) {
+                this.$router.push(`/landlord/tenancy/${this.tenancyDetails.inventoryInternalID}`)
+            }
         },
         onChangeLink() {
             const id = this.$route.params.id

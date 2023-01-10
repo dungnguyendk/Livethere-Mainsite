@@ -1,5 +1,5 @@
 <template lang="html">
-    <nav class="nav--tenancy">
+    <nav v-if="tenancyDetails || inventoryDetails" class="nav--tenancy">
         <div
             v-for="(item, index) in items"
             :class="`link ${checkActivePath(item.link) ? 'active' : ''}`"
@@ -10,11 +10,18 @@
             </div>
             <nuxt-link
                 v-if="item.link !== 'unit-inventory'"
-                :to="`/landlord/tenancy/${item.link}/${idTemp}`"
+                :to="`/landlord/tenancy/${item.link}/${
+                    tenancyDetails ? tenancyDetails.internalID : ''
+                }`"
             >
                 {{ item.title }}
             </nuxt-link>
-            <nuxt-link v-else :to="`/landlord/tenancy/${item.link}/${internalIDTemp}`">
+            <nuxt-link
+                v-else
+                :to="`/landlord/tenancy/${item.link}/${
+                    inventoryDetails ? inventoryDetails.internalID : ''
+                }`"
+            >
                 {{ item.title }}
             </nuxt-link>
         </div>
@@ -30,18 +37,12 @@ export default {
     components: { TenancyDetails },
     computed: {
         ...mapState({
-            tenancyID: (state) => state.inventory.tenancyID,
-            tenancyDetailsID: (state) => state.tenancy.tenancyDetailByInternalID.internalID
+            tenancyDetails: (state) => state.tenancy.tenancyDetails,
+            inventoryDetails: (state) => state.inventory.inventoryDetails
         }),
-        // id() {
-        //     return this.$route.params.id
-        // },
         path() {
             return this.$route.path
         }
-    },
-    created() {
-        ;(this.internalIDTemp = this.tenancyID), (this.idTemp = this.tenancyDetailsID)
     },
     methods: {
         checkActivePath(path) {
@@ -50,8 +51,6 @@ export default {
     },
     data() {
         return {
-            idTemp: "",
-            internalIDTemp: "",
             itemSelected: {
                 title: "Item selected",
                 link: "details"
@@ -142,11 +141,13 @@ export default {
         z-index: 9;
     }
 }
+
 @media (max-width: 768px) {
     .link {
         display: flex;
         grid-gap: 1.6rem;
         min-width: 19rem;
+
         .link__indicator {
             display: flex;
             justify-content: center;

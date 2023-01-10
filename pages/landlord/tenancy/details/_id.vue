@@ -38,14 +38,13 @@ export default {
             this.$router.push("/landlord/signin")
         }
     },
+
     async asyncData({ app, route, store }) {
         try {
             const id = route.params.id
-            // console.log("store.state::", store.state.tenancy.tenancyDetailByInternalID.id);
-            // await store.dispatch("tenancy/getTenancyDetails", id)
-            await store.dispatch("tenancy/getTenancyDetailsByInternalID", id)
+            await store.dispatch("tenancy/getTenancyDetails", id)
             const paramId = qs.stringify({
-                TenancyContractAgreementFID: store.state.tenancy.tenancyDetailByInternalID.id
+                TenancyContractAgreementFID: store.state.tenancy.tenancyDetails.id
             })
             await store.dispatch("tenancy/getTenancyInfosById", paramId)
         } catch (e) {

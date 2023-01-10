@@ -174,11 +174,9 @@ export const actions = {
                     commit("setSnackbar", true)
                     commit("setSnackbarMessage", responseMain.responseMessage)
                     return responseMain
-                }
-                else {
-                    console.log({Error: responseMain.responseMessage})
+                } else {
+                    console.log({ Error: responseMain.responseMessage })
                     return responseMain
-
                 }
             } else {
                 return null

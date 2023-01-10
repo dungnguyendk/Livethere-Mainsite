@@ -1,5 +1,5 @@
 <template lang="html">
-    <TenancyWrapper @onBack="onBack">
+    <TenancyWrapper >
         <template slot="content">
             <TenancyUnitInventory />
         </template>
@@ -15,16 +15,5 @@ import { mapState } from "vuex"
 export default {
     name: "TenancyUnits",
     components: { TenancyUnitInventory, TenancyDocumentsPanel, TenancyWrapper },
-    computed: {
-        ...mapState({
-            tenancyID: (state) => state.inventory.tenancyID
-        })
-    },
-    methods: {
-        onBack() {
-            const id = this.tenancyID
-            this.$router.push(`/landlord/tenancy/${id}`)
-        }
-    }
 }
 </script>

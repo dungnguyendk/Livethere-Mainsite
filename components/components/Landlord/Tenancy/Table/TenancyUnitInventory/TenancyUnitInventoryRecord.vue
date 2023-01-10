@@ -61,7 +61,6 @@
 
 <script>
 import { mapState } from "vuex"
-import { httpEndpoint } from "~/services/https/endpoints"
 import Dialog from "~/components/elements/Dialog/Dialog.vue"
 import AddUnitInventoryForm from "../../../AssetInventory/components/Form/AddUnitInventoryForm.vue"
 import { convertNumberToCommas } from "~/ultilities/helpers"
@@ -80,11 +79,11 @@ export default {
             internalID: (state) => state.inventory.internalID,
             units: (state) => state.inventory.units
         }),
-        totalValueFormat(){
-            return convertNumberToCommas(this.source.totalValue)
+        totalValueFormat() {
+            return this.source.totalValue ? convertNumberToCommas(this.source.totalValue) : 0
         },
-        quantityFormat(){
-           return convertNumberToCommas(this.source.quantity)
+        quantityFormat() {
+            return this.source.quantity ? convertNumberToCommas(this.source.quantity) : 0
         }
     },
     // created() {
@@ -131,9 +130,11 @@ tr {
     position: relative;
     vertical-align: top;
 }
+
 td {
     padding: 3.3rem 2.4rem;
     border-bottom: 1px solid #e5e5e5;
+
     p {
         display: flex;
         justify-content: left;
@@ -154,13 +155,16 @@ td {
         color: #0b0c0c;
     }
 }
+
 td:nth-child(4) {
     display: flex;
     justify-content: flex-end;
 }
+
 tr:nth-child(even) {
     background: #fafafa;
 }
+
 .more-option {
     &:before {
         background-color: rgba(236, 184, 66, 0.6);
@@ -175,6 +179,7 @@ tr:nth-child(even) {
         font-size: 2.4rem;
     }
 }
+
 @media screen and (max-width: 768px) {
     tr:nth-child(even) {
         background: #fafafa;
@@ -189,6 +194,7 @@ tr:nth-child(even) {
         border: none;
         padding: 1.6rem;
         border-top: none;
+
         &:before {
             content: attr(data-title);
             font-weight: 700;
