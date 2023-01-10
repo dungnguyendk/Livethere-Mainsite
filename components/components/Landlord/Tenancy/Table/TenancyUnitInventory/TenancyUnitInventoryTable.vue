@@ -11,7 +11,7 @@
         </thead>
         <tbody>
             <template v-if="inventory.length > 0">
-                <TenacyInventoryRecord
+                <TenancyInventoryRecord
                     v-for="(item, index) in inventory"
                     :source="item"
                     :key="index"
@@ -29,11 +29,11 @@
 </template>
 
 <script>
-import TenacyInventoryRecord from "./TenancyUnitInventoryRecord.vue"
+import TenancyInventoryRecord from "./TenancyUnitInventoryRecord.vue"
 import { mapState } from "vuex"
 export default {
     name: "TenancyInventoryTable",
-    components: { TenacyInventoryRecord },
+    components: { TenancyInventoryRecord },
     computed: {
         ...mapState({
             inventory: (state) => state.inventory.units

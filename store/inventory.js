@@ -60,10 +60,10 @@ export const actions = {
                 commit("setInternalID", detail.internalID)
                 commit("setEntriesID", detail.id)
                 if (response) {
-                    commit("setUnits", response.length ? response : {})
+                    commit("setUnits", response.length ? response : [])
                     return true
                 } else {
-                    commit("setUnits", {})
+                    commit("setUnits", [])
                 }
             }
         } catch (e) {

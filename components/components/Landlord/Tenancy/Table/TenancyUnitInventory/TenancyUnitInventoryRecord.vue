@@ -4,10 +4,10 @@
             <p>{{ source.itemName }}</p>
         </td>
         <td data-title="Quantity">
-            <p>{{ source ? quantityFormat : "-" }}</p>
+            <p>{{ source.quantity ? quantityFormat : "-" }}</p>
         </td>
         <td data-title="Total Value">
-            <p> {{ source.currencyType }} {{ source ? totalValueFormat : "-" }} </p>
+            <p> {{ source.currencyType }} {{ source.totalValue ? totalValueFormat : "-" }} </p>
         </td>
         <!-- <td data-title="Condition Remarks">
             <p>{{ source.remark }} </p>
@@ -72,7 +72,7 @@ import AddUnitInventoryForm from "../../../AssetInventory/components/Form/AddUni
 import { convertNumberToCommas } from "~/ultilities/helpers"
 
 export default {
-    name: "TenacyInventoryRecord",
+    name: "TenancyInventoryRecord",
     components: { Dialog, AddUnitInventoryForm, DeleteDialog },
     props: {
         source: {
@@ -101,8 +101,7 @@ export default {
             createDialog: false,
             quantity: "",
             totalValue: "",
-            deleteDialog: false,
-            itemDelete: {}
+            deleteDialog: false
         }
     },
     methods: {
@@ -121,7 +120,7 @@ export default {
                 }
             }
             this.$store.dispatch("inventory/deleteUnitInventory", param).then(() => {
-                this.deleteDialog =false;
+                this.deleteDialog = false
                 const internalID = this.internalID
                 this.$store.dispatch("inventory/getUnitsByInventoryFID", internalID)
             })
