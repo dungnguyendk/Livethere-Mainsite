@@ -28,42 +28,7 @@ export default {
     name: "LandlordDashboard",
     components: { InventoryChart, ExpiringLeasesChart, IncomeChart, StatisticsChart },
     data() {
-        return {
-            // dataLineChartBlue: {
-            //     icon: "icon-income-blue",
-            //     img: "line-chart-blue",
-            //     colorPercent: "red",
-            //     percent: "0.5%",
-            //     incomeYear: "2021",
-            //     price: "525,000"
-            // },
-            // dataLineChartViolet: {
-            //     icon: "icon-income-violet",
-            //     img: "line-chart-violet",
-            //     colorPercent: "green",
-            //     percent: "6.2%",
-            //     incomeYear: "2022",
-            //     price: "558,000"
-            // },
-            // dataWidgetPortfolio: {
-            //     headerTitle: "Estimated Portfolio Price 2022",
-            //     headerNumber: "SGD 21,500,000",
-            //     headerPercent: "3.3%",
-            //     footerTitle: "Purchase Price of Portfolio",
-            //     footerNumber: "SGD 20,800,000",
-            //     footerPercent: "2.1%",
-            //     widgetSVG: "img-widget"
-            // },
-            // dataWidgetAverage: {
-            //     headerTitle: "Average Yield 2022",
-            //     headerNumber: "2.6%",
-            //     headerPercent: "13.5%",
-            //     footerTitle: "Average Yield 2021",
-            //     footerNumber: "2.4%",
-            //     footerPercent: "5.1%",
-            //     widgetSVG: "img-widget2"
-            // }
-        }
+        return {}
     },
     computed: {
         ...mapState({

@@ -33,20 +33,21 @@
         </td>
         <td data-label="Status" v-if="statusFID === 0 || statusFID === 1">
             <a @click="handleClickOpenRow(source.internalID)">
-                <AssetInventoryBadge :type="source.statusDisplay.toUpperCase()" :source="source" />
+                <AssetInventoryBadge :type="source.statusDisplay ? source.statusDisplay.toUpperCase() : ''"
+                    :source="source" />
             </a>
         </td>
         <td data-label="Estimated Market Rent" v-if="statusFID === 2">
-            {{ source.EMR ? source.EMR : '-' }}
+            {{ source.askingPrice ? askingPriceFormatter : '-' }}
         </td>
         <td data-label="Asking Rent" v-if="statusFID === 2">
-            {{ source.ART ? source.ART : '-' }}
+            {{ source.estimatedMarketRent ? estimatedMarketRentFormatter : '-' }}
         </td>
         <td data-label="Monthly Rent" v-if="statusFID === 3">
-            {{ source.MR ? source.MR : '-' }}
+            {{ source.tenancyDetail ? monthRentalFormatter : '-' }}
         </td>
         <td data-label="Annual Revenue" v-if="statusFID === 3">
-            {{ source.AR ? source.AR : '-' }}
+            {{ source.tenancyDetail ? estimatedAnnualRevenueFormatter : '-' }}
         </td>
         <td data-label="Action">
             <div>
@@ -57,7 +58,8 @@
                     </template>
                     <v-list dense>
                         <v-list-item-group>
-                            <v-list-item @click="onEditInventory(source.id)" class="list-item--custom">
+                            <v-list-item @click="onEditInventory(source.id)" class="list-item--custom"
+                                v-if="(statusFID === 0 || statusFID === 1) && (source.statusFID === 0 || source.statusFID === 1)">
                                 <v-list-item-icon>
                                     <v-icon v-text="`ri-edit-box-line`"></v-icon>
                                 </v-list-item-icon>
@@ -73,7 +75,8 @@
                                     <v-list-item-title>Unit Inventory</v-list-item-title>
                                 </v-list-item-content>
                             </v-list-item>
-                            <v-list-item @click="deleteDialog = true" class="list-item--custom">
+                            <v-list-item @click="deleteDialog = true" class="list-item--custom"
+                                v-if="(statusFID === 0 || statusFID === 1) && (source.statusFID === 0 || source.statusFID === 1)">
                                 <v-list-item-icon>
                                     <v-icon v-text="`ri-delete-bin-line`"></v-icon>
                                 </v-list-item-icon>
@@ -122,19 +125,38 @@ export default {
         return {
             openAddNewInventoryDialog: false,
             sizeDialog: "large",
-            floorAreaSqftFormatter: "",
-            landAreaFormatter: "",
+            // floorAreaSqftFormatter: "",
+            // landAreaFormatter: "",
             deleteDialog: false,
         }
     },
     computed: {
         ...mapState({
             statusFID: (state) => state.inventories.typeSelect
-        })
+        }),
+        floorAreaSqftFormatter() {
+            return this.source.floorAreaSqft ? convertNumberToCommas(this.source.floorAreaSqft) : ''
+        },
+        landAreaFormatter() {
+            return this.source.landArea ? convertNumberToCommas(this.source.landArea) : ''
+        },
+        askingPriceFormatter() {
+            return this.source.askingPrice ? convertNumberToCommas(this.source.askingPrice) : ''
+        },
+        estimatedMarketRentFormatter() {
+            return this.source.estimatedMarketRent ? convertNumberToCommas(this.source.estimatedMarketRent) : ''
+        },
+        monthRentalFormatter() {
+            return this.source.tenancyDetail.monthRental ? convertNumberToCommas(this.source.tenancyDetail.monthRental) : ''
+        },
+        estimatedAnnualRevenueFormatter() {
+            return this.source.tenancyDetail.estimatedAnnualRevenue ? convertNumberToCommas(this.source.tenancyDetail.estimatedAnnualRevenue) : ''
+        }
+
     },
     created() {
-        this.floorAreaSqftFormatter = convertNumberToCommas(this.source.floorAreaSqft)
-        this.landAreaFormatter = convertNumberToCommas(this.source.landArea)
+        // this.floorAreaSqftFormatter = convertNumberToCommas(this.source.floorAreaSqft)
+        // this.landAreaFormatter = convertNumberToCommas(this.source.landArea)
     },
     methods: {
         handleClickOpenRow(item) {
@@ -147,7 +169,7 @@ export default {
             this.$store.dispatch("inventories/getDetailInventory", item).then(() => {
                 this.openAddNewInventoryDialog = true
             })
-            console.log("OnEdit", item)
+            // console.log("OnEdit", item)
         },
         onDeleteInventory(item) {
             const param = {
@@ -169,10 +191,10 @@ export default {
         }
     },
     watch: {
-        source() {
-            this.floorAreaSqftFormatter = convertNumberToCommas(this.source.floorAreaSqft)
-            this.landAreaFormatter = convertNumberToCommas(this.source.landArea)
-        },
+        // source() {
+        //     this.floorAreaSqftFormatter = convertNumberToCommas(this.source.floorAreaSqft)
+        //     this.landAreaFormatter = convertNumberToCommas(this.source.landArea)
+        // },
     }
 }
 </script>
