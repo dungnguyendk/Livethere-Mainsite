@@ -54,9 +54,9 @@ export default {
         }
     },
     watch: {
-        typeSelected() {
-            console.log(this.typeSelected);
-        }
+        // typeSelected() {
+        //     console.log(this.typeSelected);
+        // }
     }
 }
 </script>

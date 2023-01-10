@@ -12,7 +12,6 @@ export const state = () => ({
 export const mutations = {
     setInventories(state, payload) {
         state.inventories = payload
-        console.log("state.inventories::", state.inventories)
     },
     setInventoryDetail(state, payload) {
         state.inventoryDetail = payload
