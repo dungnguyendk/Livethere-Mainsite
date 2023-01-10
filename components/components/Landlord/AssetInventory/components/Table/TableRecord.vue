@@ -26,7 +26,7 @@
             {{ source.floorAreaSqft ? floorAreaSqftFormatter : "-" }}
         </td>
         <td data-label="Land Area (sqft)" v-if="statusFID === 0 || statusFID === 1">
-            {{ source.landArea ? landAreaFormatter : "-" }}
+            {{ source.landAreaSqft ? landAreaSqftFormatter : "-" }}
         </td>
         <td data-label="Address">
             {{ source.streetName }}
@@ -137,8 +137,8 @@ export default {
         floorAreaSqftFormatter() {
             return this.source.floorAreaSqft ? convertNumberToCommas(this.source.floorAreaSqft) : ''
         },
-        landAreaFormatter() {
-            return this.source.landArea ? convertNumberToCommas(this.source.landArea) : ''
+        landAreaSqftFormatter() {
+            return this.source.landAreaSqft ? convertNumberToCommas(this.source.landAreaSqft) : ''
         },
         askingPriceFormatter() {
             return this.source.askingPrice ? convertNumberToCommas(this.source.askingPrice) : ''
