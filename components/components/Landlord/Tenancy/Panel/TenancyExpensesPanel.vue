@@ -8,7 +8,7 @@
             </v-btn>
         </div>
         <div class="panel__container">
-            <TenancyExpenseTable />
+            <TenancyExpenseTable @open="openDeleteDialog($event)"/>
         </div>
         <Dialog
             title="Create Tenancy Expense"
@@ -20,6 +20,7 @@
                 <CreateTenancyExpenseForm @close="createDialog = false" />
             </template>
         </Dialog>
+        <DeleteDialog :open="isOpenDeleteDialog" size="large" type="full" @close="isOpenDeleteDialog = false" @onSubmit="deleteItem"/>
     </div>
 </template>
 
@@ -27,13 +28,31 @@
 import TenancyExpenseTable from "~/components/components/Landlord/Tenancy/Table/TenancyExpense/TenancyExpenseTable"
 import Dialog from "~/components/elements/Dialog/Dialog"
 import CreateTenancyExpenseForm from "~/components/components/Landlord/Tenancy/Form/CreateTenancyExpenseForm"
-
+import DeleteDialog from "~/components/elements/Dialog/DeleteDialog.vue"
 export default {
     name: "TenancyExpensesPanel",
-    components: { CreateTenancyExpenseForm, Dialog, TenancyExpenseTable },
+    components: { CreateTenancyExpenseForm, Dialog, TenancyExpenseTable, DeleteDialog },
     data() {
         return {
-            createDialog: false
+            createDialog: false,
+            isOpenDeleteDialog: false,
+            idItem: 0
+        }
+    },
+    methods: {
+        openDeleteDialog(e) {
+            this.isOpenDeleteDialog = e.open
+            this.idItem = e.id
+        },
+        async deleteItem() {
+            await this.$store
+                .dispatch("tenancy/deleteTenancyExpense", this.idItem)
+                .then((response) => {
+                    // if (response) {
+                    //     this.$emit("onDeleleteSuccess")
+                    // }
+                    this.isOpenDeleteDialog = false
+                })
         }
     }
 }
