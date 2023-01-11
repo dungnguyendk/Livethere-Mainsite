@@ -1,14 +1,31 @@
 <template>
-    <tr :class="`table--record ${source.id !== selectedId && selectedId !== -1 ? 'unSelected' : ''
-    }`">
+    <tr
+        :class="`table--record ${
+            source.id !== selectedId && selectedId !== -1 ? 'unSelected' : ''
+        }`"
+    >
         <td data-label="Property">
             <div>
-                <img :src="require(`~/static/img/${source.propertyType === 1 ? 'condo' : source.propertyType === 2 ? 'apt' : 'landed'}.png`)"
-                    alt="" class="table--record__img" />
+                <img
+                    :src="
+                        require(`~/static/img/${
+                            source.propertyType === 1
+                                ? 'condo'
+                                : source.propertyType === 2
+                                ? 'apt'
+                                : 'landed'
+                        }.png`)
+                    "
+                    alt=""
+                    class="table--record__img"
+                />
                 <p class="first-child" @click="handleClickOpenRow(source.internalID)">
                     {{
-                        source.id ? ((source.propertyType === 1 || source.propertyType === 2) ? source.projectName :
-                            source.propertyName) : "-"
+                        source.id
+                            ? source.propertyType === 1 || source.propertyType === 2
+                                ? source.projectName
+                                : source.propertyName
+                            : "-"
                     }}
                 </p>
             </div>
@@ -26,40 +43,42 @@
             {{ source.floorAreaSqft ? floorAreaSqftFormatter : "-" }}
         </td>
         <td data-label="Land Area (sqft)" v-if="statusFID === 0 || statusFID === 1">
-            {{ source.landAreaSqft ? landAreaSqftFormatter : "-" }}
+            {{ source.landArea ? landAreaFormatter : "-" }}
         </td>
         <td data-label="Address">
             {{ source.streetName }}
         </td>
         <td data-label="Status" v-if="statusFID === 0 || statusFID === 1">
             <a @click="handleClickOpenRow(source.internalID)">
-                <AssetInventoryBadge :type="source.statusDisplay ? source.statusDisplay.toUpperCase() : ''"
-                    :source="source" />
+                <AssetInventoryBadge :type="source.statusDisplay.toUpperCase()" :source="source" />
             </a>
         </td>
         <td data-label="Estimated Market Rent" v-if="statusFID === 2">
-            {{ source.askingPrice ? askingPriceFormatter : '-' }}
+            {{ source.EMR ? source.EMR : "-" }}
         </td>
         <td data-label="Asking Rent" v-if="statusFID === 2">
-            {{ source.estimatedMarketRent ? estimatedMarketRentFormatter : '-' }}
+            {{ source.ART ? source.ART : "-" }}
         </td>
         <td data-label="Monthly Rent" v-if="statusFID === 3">
-            {{ source.tenancyDetail ? monthRentalFormatter : '-' }}
+            {{ source.MR ? source.MR : "-" }}
         </td>
         <td data-label="Annual Revenue" v-if="statusFID === 3">
-            {{ source.tenancyDetail ? estimatedAnnualRevenueFormatter : '-' }}
+            {{ source.AR ? source.AR : "-" }}
         </td>
         <td data-label="Action">
             <div>
                 <v-menu offset-y>
                     <template v-slot:activator="{ on, attrs }">
-                        <v-btn x-small fab outlined class="more-option" v-bind="attrs" v-on="on"><i
-                                class="ri-more-fill"></i></v-btn>
+                        <v-btn x-small fab outlined class="more-option" v-bind="attrs" v-on="on"
+                            ><i class="ri-more-fill"></i
+                        ></v-btn>
                     </template>
                     <v-list dense>
                         <v-list-item-group>
-                            <v-list-item @click="onEditInventory(source.id)" class="list-item--custom"
-                                v-if="(statusFID === 0 || statusFID === 1) && (source.statusFID === 0 || source.statusFID === 1)">
+                            <v-list-item
+                                @click="onEditInventory(source.id)"
+                                class="list-item--custom"
+                            >
                                 <v-list-item-icon>
                                     <v-icon v-text="`ri-edit-box-line`"></v-icon>
                                 </v-list-item-icon>
@@ -67,7 +86,10 @@
                                     <v-list-item-title>Edit</v-list-item-title>
                                 </v-list-item-content>
                             </v-list-item>
-                            <v-list-item @click="onVisitInventoryUnits" class="list-item--custom--middle">
+                            <v-list-item
+                                @click="onVisitInventoryUnits"
+                                class="list-item--custom--middle"
+                            >
                                 <v-list-item-icon>
                                     <v-icon v-text="`ri-add-box-line`"></v-icon>
                                 </v-list-item-icon>
@@ -88,13 +110,26 @@
                     </v-list>
                 </v-menu>
             </div>
-            <Dialog :open="openAddNewInventoryDialog" @close="closeDialog" :size="sizeDialog" :title="''"
-                :actions="false">
-                <AddInventoryForm @close="openAddNewInventoryDialog = false" v-if="openAddNewInventoryDialog"
-                    :sourceDetail="source.id" />
+            <Dialog
+                :open="openAddNewInventoryDialog"
+                @close="closeDialog"
+                :size="sizeDialog"
+                :title="''"
+                :actions="false"
+            >
+                <AddInventoryForm
+                    @close="openAddNewInventoryDialog = false"
+                    v-if="openAddNewInventoryDialog"
+                    :sourceDetail="source.id"
+                />
             </Dialog>
-            <DeleteDialog :open="deleteDialog" size="large" type="full" @close="deleteDialog = false"
-                @onSubmit="onDeleteInventory(source.id)" />
+            <DeleteDialog
+                :open="deleteDialog"
+                size="large"
+                type="full"
+                @close="deleteDialog = false"
+                @onSubmit="onDeleteInventory(source.id)"
+            />
         </td>
     </tr>
 </template>
@@ -114,7 +149,7 @@ export default {
     props: {
         source: {
             type: Object,
-            default: () => { }
+            default: () => {}
         },
         selectedId: {
             type: Number,
@@ -125,38 +160,19 @@ export default {
         return {
             openAddNewInventoryDialog: false,
             sizeDialog: "large",
-            // floorAreaSqftFormatter: "",
-            // landAreaFormatter: "",
-            deleteDialog: false,
+            floorAreaSqftFormatter: "",
+            landAreaFormatter: "",
+            deleteDialog: false
         }
     },
     computed: {
         ...mapState({
             statusFID: (state) => state.inventories.typeSelect
-        }),
-        floorAreaSqftFormatter() {
-            return this.source.floorAreaSqft ? convertNumberToCommas(this.source.floorAreaSqft) : ''
-        },
-        landAreaSqftFormatter() {
-            return this.source.landAreaSqft ? convertNumberToCommas(this.source.landAreaSqft) : ''
-        },
-        askingPriceFormatter() {
-            return this.source.askingPrice ? convertNumberToCommas(this.source.askingPrice) : ''
-        },
-        estimatedMarketRentFormatter() {
-            return this.source.estimatedMarketRent ? convertNumberToCommas(this.source.estimatedMarketRent) : ''
-        },
-        monthRentalFormatter() {
-            return this.source.tenancyDetail.monthRental ? convertNumberToCommas(this.source.tenancyDetail.monthRental) : ''
-        },
-        estimatedAnnualRevenueFormatter() {
-            return this.source.tenancyDetail.estimatedAnnualRevenue ? convertNumberToCommas(this.source.tenancyDetail.estimatedAnnualRevenue) : ''
-        }
-
+        })
     },
     created() {
-        // this.floorAreaSqftFormatter = convertNumberToCommas(this.source.floorAreaSqft)
-        // this.landAreaFormatter = convertNumberToCommas(this.source.landArea)
+        this.floorAreaSqftFormatter = convertNumberToCommas(this.source.floorAreaSqft)
+        this.landAreaFormatter = convertNumberToCommas(this.source.landArea)
     },
     methods: {
         handleClickOpenRow(item) {
@@ -169,7 +185,7 @@ export default {
             this.$store.dispatch("inventories/getDetailInventory", item).then(() => {
                 this.openAddNewInventoryDialog = true
             })
-            // console.log("OnEdit", item)
+            console.log("OnEdit", item)
         },
         onDeleteInventory(item) {
             const param = {
@@ -191,10 +207,10 @@ export default {
         }
     },
     watch: {
-        // source() {
-        //     this.floorAreaSqftFormatter = convertNumberToCommas(this.source.floorAreaSqft)
-        //     this.landAreaFormatter = convertNumberToCommas(this.source.landArea)
-        // },
+        source() {
+            this.floorAreaSqftFormatter = convertNumberToCommas(this.source.floorAreaSqft)
+            this.landAreaFormatter = convertNumberToCommas(this.source.landArea)
+        }
     }
 }
 </script>

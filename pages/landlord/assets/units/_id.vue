@@ -9,9 +9,8 @@
 </template>
 
 <script>
-import LandlordPortal from "~/components/components/Landlord/LandlordPortal.vue"
-
 import { appSettings } from "~/app-settings"
+import LandlordPortal from "~/components/components/Landlord/LandlordPortal.vue"
 import AssetInventory from "~/components/components/Landlord/AssetInventory/AssetInventory.vue"
 import InventoryUnits from "~/components/components/Landlord/Inventory/InventoryUnits.vue"
 
@@ -20,9 +19,9 @@ export default {
     components: {
         InventoryUnits,
         AssetInventory,
-
         LandlordPortal
     },
+
     head: {
         title: `Unit Inventory | ${appSettings.siteName}`
     },
@@ -32,6 +31,7 @@ export default {
             return this.$auth.loggedIn
         }
     },
+
     created() {
         if (!this.loggedIn) {
             this.$router.push("/landlord/signin")
@@ -41,9 +41,8 @@ export default {
     async asyncData({ route, store }) {
         try {
             const id = route.params.id
-            const internalID = route.params.id
             await store.dispatch("inventory/getInventoryDetails", id)
-            await store.dispatch("inventory/getUnitsByInventoryFID", id)
+            //await store.dispatch("inventory/getUnitsByInventoryFID", id)
         } catch (e) {
             console.log({ Error: e.message })
         }

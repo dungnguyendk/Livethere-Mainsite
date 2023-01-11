@@ -40,8 +40,7 @@ export default {
         }),
         loggedIn() {
             return this.$auth.loggedIn
-        },
-      
+        }
     },
     methods: {
         onBack() {

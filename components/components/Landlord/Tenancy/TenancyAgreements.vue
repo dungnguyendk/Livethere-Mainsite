@@ -1,5 +1,5 @@
 <template lang="html">
-    <TenancyWrapper @onBack="onBack">
+    <TenancyWrapper >
         <template slot="content">
             <!--            <pre>{{ tenancyDetails }}</pre>-->
             <TenancyUploadFilePanel
@@ -59,10 +59,7 @@ export default {
         }
     },
     methods: {
-        onBack() {
-            const id = this.tenancyID
-            this.$router.push(`/landlord/tenancy/${id}`)
-        },
+
         async onUpdateDocuments(fileInfo, fileID) {
             const params = {
                 tenancyContractAgreementFID: this.tenancyDetails.id,

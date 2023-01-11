@@ -45,7 +45,8 @@ export const httpEndpoint = {
         getEntries: "/api/asset-unit-inventories",
         createEntry: "/api/asset-unit-inventories",
         getByInternalID: "/api/asset-inventories/by-internalID",
-        deleteEntryByID: "/api/asset-unit-inventories"
+        deleteEntryByID: "/api/asset-unit-inventories",
+        getByTenancyContrastInternalID: "/api/asset-unit-inventories/by-tenancyContractInternalID"
     },
     tenancies: {
         getTenancyById: "/api/tenancy-contract-agreements",
