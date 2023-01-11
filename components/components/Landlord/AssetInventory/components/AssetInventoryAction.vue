@@ -1,30 +1,15 @@
 <template lang="html">
     <div class="asset-inventory__action">
         <div class="select-type">
-            <v-select
-                v-model="typeSelected"
-                :items="typeSelections"
-                item-text="value"
-                item-value="id"
-                hide-details
-                outlined
-                dense
-                class="me-2"
-                @change="changeType"
-            />
+            <v-select v-model="typeSelected" :items="typeSelections" item-text="value" item-value="id" hide-details
+                outlined dense class="me-2" @change="changeType" />
         </div>
-        <v-btn
-            class="btn btn--outline btn--green btn--md add-new"
-            @click="openAddNewInventoryDialog = true"
-        >
+        <v-btn class="btn btn--outline btn--green btn--md add-new" @click="openAddNewInventoryDialog = true">
             <v-icon left>ri-add-box-line</v-icon>
             Add New Inventory
         </v-btn>
         <Dialog :open="openAddNewInventoryDialog" @close="closeDialog" :actions="false" :size="sizeDialog" :title="''">
-            <AddInventoryForm
-                @close="openAddNewInventoryDialog = false"
-                v-if="openAddNewInventoryDialog"
-            />
+            <AddInventoryForm @close="openAddNewInventoryDialog = false" v-if="openAddNewInventoryDialog" />
         </Dialog>
     </div>
 </template>
@@ -54,7 +39,13 @@ export default {
                 StatusFID: this.typeSelected
             })
             this.$store.commit("inventories/setTypeSelected", this.typeSelected)
-            this.$store.dispatch("inventories/getInventories", params)
+            if (this.typeSelected === 0 || this.typeSelected === 1) {
+                this.$store.dispatch("inventories/getInventories", params)
+            } else if (this.typeSelected === 3) {
+                this.$store.dispatch("inventories/getInventoriesByTenanted", params)
+            } else if (this.typeSelected === 2) {
+                this.$store.dispatch("inventories/getInventoriesByVacant", params)
+            }
         },
         closeDialog() {
             this.$store.commit("inventories/setInventoryDetail", "")
@@ -62,7 +53,11 @@ export default {
             this.openAddNewInventoryDialog = false
         }
     },
-    watch: {}
+    watch: {
+        // typeSelected() {
+        //     console.log(this.typeSelected);
+        // }
+    }
 }
 </script>
 <style lang="scss" scoped>

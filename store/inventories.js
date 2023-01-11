@@ -12,7 +12,6 @@ export const state = () => ({
 export const mutations = {
     setInventories(state, payload) {
         state.inventories = payload
-        // console.log("state.inventories::", state.inventories)
     },
     setInventoryDetail(state, payload) {
         state.inventoryDetail = payload
@@ -58,6 +57,36 @@ export const actions = {
         try {
             const response = await this.$axios.$get(
                 `${httpEndpoint.inventories.getEntries}?${payload}`
+            )
+            if (response) {
+                commit("setInventories", response.length ? response : [])
+            } else {
+                commit("setInventories", [])
+            }
+        } catch (e) {
+            console.log({ Error: e.message })
+            commit("setInventories", [])
+        }
+    },
+    async getInventoriesByTenanted({ commit }, payload) {
+        try {
+            const response = await this.$axios.$get(
+                `${httpEndpoint.inventories.getEntriesByTenanted}`
+            )
+            if (response) {
+                commit("setInventories", response.length ? response : [])
+            } else {
+                commit("setInventories", [])
+            }
+        } catch (e) {
+            console.log({ Error: e.message })
+            commit("setInventories", [])
+        }
+    },
+    async getInventoriesByVacant({ commit }, payload) {
+        try {
+            const response = await this.$axios.$get(
+                `${httpEndpoint.inventories.getEntriesByVacant}`
             )
             if (response) {
                 commit("setInventories", response.length ? response : [])

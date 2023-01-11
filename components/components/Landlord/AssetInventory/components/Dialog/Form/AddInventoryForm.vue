@@ -269,7 +269,7 @@ export default {
                 }
                 this.$store.dispatch("inventories/createInventories", params).then(() => {
                     const paramStatusFID = qs.stringify({
-                        StatusFID: this.typeSelected
+                        StatusFID: this.statusFID
                     })
                     this.$store.dispatch("inventories/getInventories", paramStatusFID)
                 }).then(() => {
@@ -309,7 +309,7 @@ export default {
                 }
                 this.$store.dispatch("inventories/updateInventory", params).then(() => {
                     const paramStatusFID = qs.stringify({
-                        StatusFID: this.typeSelected
+                        StatusFID: this.statusFID
                     })
                     this.$store.dispatch("inventories/getInventories", paramStatusFID)
                 }).then(() => {

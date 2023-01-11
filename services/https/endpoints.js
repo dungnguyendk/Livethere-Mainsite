@@ -30,7 +30,9 @@ export const httpEndpoint = {
         createEntry: "/api/asset-inventories",
         updateEntry: "/api/asset-inventories",
         deleteEntryByID: "/api/asset-inventories",
-        getByInternalID: "/api/asset-inventories/by-internalID"
+        getByInternalID: "/api/asset-inventories/by-internalID",
+        getEntriesByTenanted: "/api/asset-inventories/tenanted",
+        getEntriesByVacant: "/api/asset-inventories/vacant"
     },
     postal: {
         getEntryByPostalCode: "/api/properties/details",
@@ -43,7 +45,8 @@ export const httpEndpoint = {
         getEntries: "/api/asset-unit-inventories",
         createEntry: "/api/asset-unit-inventories",
         getByInternalID: "/api/asset-inventories/by-internalID",
-        deleteEntryByID: "/api/asset-unit-inventories"
+        deleteEntryByID: "/api/asset-unit-inventories",
+        getByTenancyContrastInternalID: "/api/asset-unit-inventories/by-tenancyContractInternalID"
     },
     tenancies: {
         getTenancyById: "/api/tenancy-contract-agreements",

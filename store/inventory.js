@@ -55,7 +55,7 @@ export const actions = {
 
             if (detail) {
                 const response = await this.$axios.$get(
-                    `${httpEndpoint.unit.getEntries}?assetInventoryFID=${detail.id}`
+                    `${httpEndpoint.unit.getEntries}?AssetInventoryFID=${detail.id}`
                 )
                 commit("setInternalID", detail.internalID)
                 commit("setEntriesID", detail.id)
@@ -71,8 +71,43 @@ export const actions = {
             commit("setUnits", [])
         }
     },
+    async getUnitsByInventoryID({ commit }, payload) {
+        try {
+            const response = await this.$axios.$get(
+                `${httpEndpoint.unit.getEntries}?AssetInventoryFID=${payload}`
+            )
+
+            if (response) {
+                console.log({ response })
+                commit("setUnits", response.length > 0 ? response : [])
+            } else {
+                commit("setUnits", [])
+            }
+        } catch (e) {
+            console.log({ Error: e.message })
+            commit("setUnits", [])
+        }
+    },
+
+    async getUnitsByContractInternalID({ commit }, payload) {
+        try {
+            const response = await this.$axios.$get(
+                `${httpEndpoint.unit.getByTenancyContrastInternalID}/${payload}`
+            )
+            if (response) {
+                commit("setUnits", response.length ? response : [])
+                return true
+            } else {
+                commit("setUnits", [])
+            }
+        } catch (e) {
+            commit("setUnits", [])
+        }
+    },
+
     async createUnitInventory({ commit }, payload) {
         try {
+            console.log({ Called: `${httpEndpoint.unit.getEntries}` })
             const response = await this.$axios.$post(`${httpEndpoint.unit.getEntries}`, payload)
             if (response) {
                 commit("setSnackbar", true)
@@ -145,9 +180,10 @@ export const actions = {
             const response = await this.$axios.$get(
                 `${httpEndpoint.inventories.getByInternalID}/${payload}`
             )
+
             if (response) {
-                commit("setInventoryDetails", response)
-                dispatch("getUnitsByInventoryFID", response.internalID)
+                await commit("setInventoryDetails", response)
+                await dispatch("getUnitsByInventoryID", response.id)
             } else {
                 commit("setInventoryDetails", null)
             }
@@ -174,11 +210,9 @@ export const actions = {
                     commit("setSnackbar", true)
                     commit("setSnackbarMessage", responseMain.responseMessage)
                     return responseMain
-                }
-                else {
+                } else {
                     console.log({ Error: responseMain.responseMessage })
                     return responseMain
-
                 }
             } else {
                 return null
