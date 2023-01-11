@@ -2,7 +2,11 @@
     <main>
         <template v-if="loggedIn">
             <LandlordPortal>
-                <TenancyUnits />
+                <TenancyWrapper>
+                    <template slot="content">
+                        <TenancyUnitInventory />
+                    </template>
+                </TenancyWrapper>
             </LandlordPortal>
         </template>
     </main>
@@ -14,11 +18,13 @@ import LandlordPortal from "~/components/components/Landlord/LandlordPortal.vue"
 import AssetInventory from "~/components/components/Landlord/AssetInventory/AssetInventory.vue"
 import InventoryDetails from "~/components/components/Landlord/Inventory/InventoryDetails.vue"
 import TenancyDetails from "~/components/components/Landlord/Tenancy/TenancyDetails"
-import TenancyUnits from "~/components/components/Landlord/Tenancy/TenancyUnits"
+import TenancyWrapper from "~/components/components/Landlord/Tenancy/TenancyWrapper.vue"
+import TenancyUnitInventory from "~/components/components/Landlord/Tenancy/TenancyUnitInventory.vue"
 
 export default {
     components: {
-        TenancyUnits,
+        TenancyUnitInventory,
+        TenancyWrapper,
         TenancyDetails,
         InventoryDetails,
         AssetInventory,
@@ -42,8 +48,9 @@ export default {
     },
     async asyncData({ route, store }) {
         try {
-            await store.dispatch("inventory/getUnitsByInventoryFID", route.params.id)
-            await store.dispatch("inventory/getInventoryDetails", route.params.id)
+            //await store.dispatch("inventory/getInventoryDetails", route.params.id)
+            await store.dispatch("tenancy/getTenancyDetails", route.params.id)
+            await store.dispatch("inventory/getUnitsByContractInternalID", route.params.id)
         } catch (e) {
             console.log({ Error: e.message })
         }

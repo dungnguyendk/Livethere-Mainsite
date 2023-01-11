@@ -9,17 +9,8 @@
                 {{ index + 1 }}
             </div>
             <nuxt-link
-                v-if="item.link !== 'unit-inventory'"
                 :to="`/landlord/tenancy/${item.link}/${
                     tenancyDetails ? tenancyDetails.internalID : ''
-                }`"
-            >
-                {{ item.title }}
-            </nuxt-link>
-            <nuxt-link
-                v-else
-                :to="`/landlord/tenancy/${item.link}/${
-                    inventoryDetails ? inventoryDetails.internalID : ''
                 }`"
             >
                 {{ item.title }}
@@ -37,8 +28,7 @@ export default {
     components: { TenancyDetails },
     computed: {
         ...mapState({
-            tenancyDetails: (state) => state.tenancy.tenancyDetails,
-            inventoryDetails: (state) => state.inventory.inventoryDetails
+            tenancyDetails: (state) => state.tenancy.tenancyDetails
         }),
         path() {
             return this.$route.path

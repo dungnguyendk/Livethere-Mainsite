@@ -60,10 +60,10 @@ export const actions = {
                 commit("setInternalID", detail.internalID)
                 commit("setEntriesID", detail.id)
                 if (response) {
-                    commit("setUnits", response.length ? response : {})
+                    commit("setUnits", response.length ? response : [])
                     return true
                 } else {
-                    commit("setUnits", {})
+                    commit("setUnits", [])
                 }
             }
         } catch (e) {
@@ -71,8 +71,24 @@ export const actions = {
             commit("setUnits", [])
         }
     },
+    async getUnitsByContractInternalID({ commit }, payload) {
+        try {
+            const response = await this.$axios.$get(
+                `${httpEndpoint.unit.getByTenancyContrastInternalID}/${payload}`
+            )
+            if (response) {
+                commit("setUnits", response.length ? response : [])
+                return true
+            } else {
+                commit("setUnits", [])
+            }
+        } catch (e) {
+            commit("setUnits", [])
+        }
+    },
     async createUnitInventory({ commit }, payload) {
         try {
+            console.log({ Called: `${httpEndpoint.unit.getEntries}` })
             const response = await this.$axios.$post(`${httpEndpoint.unit.getEntries}`, payload)
             if (response) {
                 commit("setSnackbar", true)
