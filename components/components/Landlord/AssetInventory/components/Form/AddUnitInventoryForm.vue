@@ -85,6 +85,7 @@ import { setFormControlErrors } from "~/ultilities/form-validations"
 import { convertNumberToCommas, convertCommasToNumber } from "~/ultilities/helpers"
 import { CONDITIONS } from "~/ultilities/contants/asset-inventory.js"
 import { mapState } from "vuex"
+
 export default {
     name: "AddUnitInventoryForm",
     mixins: [validationMixin],
@@ -114,7 +115,8 @@ export default {
             internalID: (state) => state.inventory.internalID,
             units: (state) => state.inventory.units,
             unitInventoryDetail: (state) => state.inventory.unitInventoryDetail,
-            tenancyDetails: (state) => state.tenancy.tenancyDetails
+            tenancyDetails: (state) => state.tenancy.tenancyDetails,
+            inventoryDetails: (state) => state.inventory.inventoryDetails
         }),
 
         nameErrors() {
@@ -174,7 +176,11 @@ export default {
             if (!this.$v.$invalid) {
                 try {
                     const params = {
-                        assestInventoryFID: this.tenancyDetails.assestInventoryFID,
+                        assestInventoryFID: this.tenancyDetails
+                            ? this.tenancyDetails.assestInventoryFID
+                            : this.inventoryDetails
+                            ? this.inventoryDetails.id
+                            : 0,
                         conditionTypeFID: this.condition.id,
                         itemName: this.itemName,
                         currencyType: this.currencyType,
@@ -190,10 +196,18 @@ export default {
                         .dispatch("inventory/createUnitInventory", params)
                         .then((response) => {
                             if (response) {
-                                this.$store.dispatch(
-                                    "inventory/getUnitsByContractInternalID",
-                                    this.$route.params.id
-                                )
+                                if (this.tenancyDetails) {
+                                    this.$store.dispatch(
+                                        "inventory/getUnitsByContractInternalID",
+                                        this.$route.params.id
+                                    )
+                                } else if (this.inventoryDetails) {
+                                    this.$store.dispatch(
+                                        "inventory/getUnitsByInventoryID",
+                                        this.inventoryDetails.id
+                                    )
+                                }
+
                                 this.errorMessage = false
                                 this.onClose()
                             } else {
@@ -279,6 +293,7 @@ export default {
             color: var(--color-title-black);
         }
     }
+
     .form__fields {
         p {
             display: flex;
