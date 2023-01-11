@@ -70,6 +70,7 @@
             <v-btn class="btn btn--ghost btn--gray btn--sm" @click="onClose()"> Cancel</v-btn>
             <v-btn
                 class="btn btn--primary btn--green btn--sm"
+                :loading="loading"
                 @click="unitInventoryDetail ? updateUnitInventory() : createUnitInventory()"
             >
                 {{ unitInventoryDetail ? "Update" : "Add" }}
@@ -160,12 +161,15 @@ export default {
             cultureCode: "en-SG",
             conditions: CONDITIONS,
             remark: "",
-            errorMessage: false
+            errorMessage: false,
+            loading: false
         }
     },
 
     methods: {
-        onFormSubmit() {},
+        onFormSubmit() {
+            this.loading = true
+        },
         onClose() {
             this.$store.commit("inventory/setInventoryUnitDetail", "")
             this.$emit("close")
@@ -191,10 +195,10 @@ export default {
                         itemValue: this.value ? convertCommasToNumber(this.value) : 0,
                         remark: this.remark
                     }
-                    // console.log("params", params)
                     this.$store
                         .dispatch("inventory/createUnitInventory", params)
                         .then((response) => {
+                            this.loading = false
                             if (response) {
                                 if (this.tenancyDetails) {
                                     this.$store.dispatch(
@@ -217,6 +221,8 @@ export default {
                 } catch (e) {
                     console.log(e)
                 }
+            }else{
+            this.loading = false
             }
         },
         updateUnitInventory() {
@@ -237,16 +243,14 @@ export default {
                         itemValue: this.value ? convertCommasToNumber(this.value) : 0,
                         remark: this.remark
                     }
-                    // console.log("params", params)
+                    this.onClose()
                     this.$store
                         .dispatch("inventory/updateUnitInventory", params)
                         .then((response) => {
                             if (response) {
                                 const internalID = this.internalID
-                                // console.log("internalID: " + internalID);
                                 this.$store.dispatch("inventory/getUnitsByInventoryFID", internalID)
                                 this.errorMessage = false
-                                this.onClose()
                             } else {
                                 this.errorMessage = true
                             }
@@ -254,6 +258,8 @@ export default {
                 } catch (e) {
                     console.log(e)
                 }
+            } else {
+                this.loading = false
             }
         }
     },
@@ -275,7 +281,7 @@ export default {
                     () => (this.quantity = convertNumberToCommas(convertCommasToNumber(val)))
                 )
             }
-        }
+        },
     }
 }
 </script>

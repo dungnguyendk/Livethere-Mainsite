@@ -175,7 +175,6 @@ export const actions = {
             commit("setSnackbarMessage", "Your message has been sent.")
         }
     },
-
     async getInventoryDetails({ commit, dispatch }, payload) {
         try {
             const response = await this.$axios.$get(
