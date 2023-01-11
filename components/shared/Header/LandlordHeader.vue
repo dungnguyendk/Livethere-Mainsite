@@ -100,7 +100,7 @@ export default {
         }
     },
     created() {
-        console.log({ userInfo: this.userInfo })
+        //console.log({ userInfo: this.userInfo })
         if (!this.userInfo) {
             this.$store.dispatch("app/getUserInfo")
         }

@@ -20,20 +20,15 @@
             </thead>
             <tbody>
                 <template v-if="inventories.length > 0">
-                    <TableRecord
-                        v-for="item in inventories"
-                        :source="item"
-                        :selectedId="selectedId"
-                        :key="item.id"
-                        @handleClickOpenRow="handleClickOpenRow(item)"
-                    />
+                    <TableRecord v-for="item in inventories" :source="item" :selectedId="selectedId" :key="item.id"
+                        @handleClickOpenRow="handleClickOpenRow(item)" />
                     <template v-if="(statusFID === 2 || statusFID === 3) && selectedId === -1">
                         <tr class="tr-hidden">
                             <td></td>
                         </tr>
                         <tr class="tr-total">
                             <td colspan="4">Grand Total Revenue:</td>
-                            <td colspan="2"><span>$ 72,000</span></td>
+                            <td colspan="2"><span>$ {{ formatMoney(totalMoney) }}</span></td>
                         </tr>
                     </template>
                 </template>
@@ -60,6 +55,7 @@
 <script>
 import TableRecord from "~/components/components/Landlord/AssetInventory/components/Table/TableRecord.vue"
 import ExpandedPanel from "~/components/shared/Panel/ExpandedPanel.vue"
+import { convertNumberToCommas } from "~/ultilities/helpers"
 import { mapState } from "vuex"
 
 export default {
@@ -76,7 +72,16 @@ export default {
         ...mapState({
             inventories: (state) => state.inventories.inventories,
             statusFID: (state) => state.inventories.typeSelect
-        })
+        }),
+        totalMoney() {
+            if (this.statusFID === 3) {
+                return this.inventories.reduce((sum, item) => sum + item.tenancyDetail?.estimatedAnnualRevenue, 0)
+            } else if (this.statusFID === 2) {
+                return this.inventories.reduce((sum, item) => sum + item.estimatedMarketRent, 0)
+            } else {
+                return 0
+            }
+        }
     },
     created() {
         // console.log("inventories::", this.inventories)
@@ -91,7 +96,11 @@ export default {
             /* this.$emit("handleClickOpenRow", item)
              this.selectedId = item
              this.showExpandedPanel = true*/
-        }
+        },
+        formatMoney(number) {
+            if (number || number === 0) return convertNumberToCommas(number);
+            return "0";
+        },
     },
     watch: {}
 }

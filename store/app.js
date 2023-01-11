@@ -18,7 +18,6 @@ export const actions = {
     async getUserInfo({ commit }, payload) {
         try {
             const response = await this.$axios.$get(`${httpEndpoint.user.getLandlordUserInfo}`)
-            console.log({ userInfo: response })
             if (response) {
                 commit("setUserInfo", response)
             } else {
