@@ -188,7 +188,7 @@ export default {
                         conditionTypeFID: this.condition.id,
                         itemName: this.itemName,
                         currencyType: this.currencyType,
-                        currentyName: this.currencyName,
+                        currencyName: this.currencyName,
                         cultureCode: "en-SG",
                         conditionDisplay: this.condition.name,
                         quantity: this.quantity ? convertCommasToNumber(this.quantity) : 0,
