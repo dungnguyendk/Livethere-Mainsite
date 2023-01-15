@@ -34,13 +34,13 @@ export default {
     },
     computed: {
         formatStartDate() {
-            return this.$dayjs(this.source.startDate).format("DD MMM, YYYY")
+            return this.$dayjs(this.source.startDate).format("DD-MMM-YYYY")
         },
         formatAgreementDate() {
-            return this.$dayjs(this.source.agreementDate).format("DD MMM, YYYY")
+            return this.$dayjs(this.source.agreementDate).format("DD-MMM-YYYY")
         },
         formatEndDate() {
-            return this.$dayjs(this.source.endDate).format("DD MMM, YYYY")
+            return this.$dayjs(this.source.endDate).format("DD-MMM-YYYY")
         }
     }
 }
