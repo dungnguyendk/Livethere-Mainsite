@@ -78,6 +78,10 @@
                             <v-list-item
                                 @click="onEditInventory(source.id)"
                                 class="list-item--custom"
+                                v-if="
+                                    (statusFID === 0 || statusFID === 1) &&
+                                    (source.statusFID === 0 || source.statusFID === 1)
+                                "
                             >
                                 <v-list-item-icon>
                                     <v-icon v-text="`ri-edit-box-line`"></v-icon>
@@ -97,8 +101,14 @@
                                     <v-list-item-title>Unit Inventory</v-list-item-title>
                                 </v-list-item-content>
                             </v-list-item>
-                            <v-list-item @click="deleteDialog = true" class="list-item--custom"
-                                v-if="(statusFID === 0 || statusFID === 1) && (source.statusFID === 0 || source.statusFID === 1)">
+                            <v-list-item
+                                @click="deleteDialog = true"
+                                class="list-item--custom"
+                                v-if="
+                                    (statusFID === 0 || statusFID === 1) &&
+                                    (source.statusFID === 0 || source.statusFID === 1)
+                                "
+                            >
                                 <v-list-item-icon>
                                     <v-icon v-text="`ri-delete-bin-line`"></v-icon>
                                 </v-list-item-icon>
