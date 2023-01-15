@@ -61,6 +61,7 @@ export default {
                 this.snackBar = false
             }, 2000)
         },
+
         showCreateSuccess() {
             this.snackBar = true
             this.snackBarMessage = "Create tenancy expense successfully!"

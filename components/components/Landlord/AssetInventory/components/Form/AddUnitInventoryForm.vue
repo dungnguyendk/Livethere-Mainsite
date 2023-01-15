@@ -188,7 +188,7 @@ export default {
                         conditionTypeFID: this.condition.id,
                         itemName: this.itemName,
                         currencyType: this.currencyType,
-                        currentyName: this.currencyName,
+                        currencyName: this.currencyName,
                         cultureCode: "en-SG",
                         conditionDisplay: this.condition.name,
                         quantity: this.quantity ? convertCommasToNumber(this.quantity) : 0,
@@ -221,8 +221,8 @@ export default {
                 } catch (e) {
                     console.log(e)
                 }
-            }else{
-            this.loading = false
+            } else {
+                this.loading = false
             }
         },
         updateUnitInventory() {
@@ -281,7 +281,7 @@ export default {
                     () => (this.quantity = convertNumberToCommas(convertCommasToNumber(val)))
                 )
             }
-        },
+        }
     }
 }
 </script>

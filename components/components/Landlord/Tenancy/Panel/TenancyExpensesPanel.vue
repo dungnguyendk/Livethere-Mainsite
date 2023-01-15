@@ -8,7 +8,7 @@
             </v-btn>
         </div>
         <div class="panel__container">
-            <TenancyExpenseTable @open="openDeleteDialog($event)"/>
+            <TenancyExpenseTable @open="openDeleteDialog($event)" />
         </div>
         <Dialog
             title="Create Tenancy Expense"
@@ -20,7 +20,13 @@
                 <CreateTenancyExpenseForm @close="createDialog = false" />
             </template>
         </Dialog>
-        <DeleteDialog :open="isOpenDeleteDialog" size="large" type="full" @close="isOpenDeleteDialog = false" @onSubmit="deleteItem"/>
+        <DeleteDialog
+            :open="isOpenDeleteDialog"
+            size="large"
+            type="full"
+            @close="isOpenDeleteDialog = false"
+            @onSubmit="deleteItem"
+        />
     </div>
 </template>
 

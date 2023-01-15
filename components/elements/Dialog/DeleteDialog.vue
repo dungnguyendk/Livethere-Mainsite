@@ -5,11 +5,11 @@
                 <StatusIcon type="danger" />
             </template>
             <template slot="content">
-                <p><strong>Are you sure move to trash ?</strong></p>
+                <p><strong>Are you sure delete this item ?</strong></p>
             </template>
             <template slot="actions">
                 <v-btn class="btn btn--ghost btn--gray" @click="onClose()"> Cancel</v-btn>
-                <v-btn class="btn btn--primary btn--red" @click="onSubmit()"> Move to trash</v-btn>
+                <v-btn class="btn btn--primary btn--red" @click="onSubmit()">Delete</v-btn>
             </template>
         </DialogContentCard>
     </v-dialog>

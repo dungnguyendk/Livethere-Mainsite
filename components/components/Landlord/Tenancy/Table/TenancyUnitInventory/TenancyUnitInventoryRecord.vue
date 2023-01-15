@@ -83,7 +83,10 @@ export default {
     computed: {
         ...mapState({
             internalID: (state) => state.inventory.internalID,
-            units: (state) => state.inventory.units
+            units: (state) => state.inventory.units,
+            unitInventoryDetail: (state) => state.inventory.unitInventoryDetail,
+            tenancyDetails: (state) => state.tenancy.tenancyDetails,
+            inventoryDetails: (state) => state.inventory.inventoryDetails
         }),
         totalValueFormat() {
             return this.source.totalValue ? convertNumberToCommas(this.source.totalValue) : 0
@@ -121,8 +124,17 @@ export default {
             }
             this.$store.dispatch("inventory/deleteUnitInventory", param).then(() => {
                 this.deleteDialog = false
-                const internalID = this.internalID
-                this.$store.dispatch("inventory/getUnitsByInventoryFID", internalID)
+                if (this.tenancyDetails) {
+                    this.$store.dispatch(
+                        "inventory/getUnitsByContractInternalID",
+                        this.$route.params.id
+                    )
+                } else if (this.inventoryDetails) {
+                    this.$store.dispatch(
+                        "inventory/getUnitsByInventoryID",
+                        this.inventoryDetails.id
+                    )
+                }
             })
         },
         closeDialog() {

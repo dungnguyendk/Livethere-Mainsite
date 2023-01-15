@@ -11,7 +11,7 @@
         </td>
         <td data-title="Actions">
             <v-btn class="btn btn--ghost btn--sm btn--red" @click="onDelete"> Delete</v-btn>
-       
+
         </td>
     </tr>
 </template>
@@ -40,7 +40,7 @@ export default {
     data() {
         return {
             snackBar: false,
-            snackBarMessage: "Delete tenancy expense successfully!", 
+            snackBarMessage: "Delete tenancy expense successfully!",
             isOpenDeleteDialog: false
         }
     },
