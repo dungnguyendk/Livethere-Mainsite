@@ -1,7 +1,6 @@
 <template lang="html">
     <TenancyWrapper>
         <template slot="content">
-            <!--            <pre>{{ tenancyDetails }}</pre>-->
             <TenancyUploadFilePanel title="Stamp Duty" @onUpdateDocuments="onUpdateDocuments" />
             <TenancyDocumentsPanel :documentType="documentType" />
             <v-snackbar

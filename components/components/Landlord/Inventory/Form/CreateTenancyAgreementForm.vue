@@ -307,8 +307,8 @@ export default {
                     tenancyRefCode: this.tenancyRefCode,
                     assestInventoryFID: this.inventoryDetails.id,
                     agreementDate: this.$moment(this.agreementDate).format("YYYY-MM-DD"),
-                    startDate: this.$moment(this.startDate).format("YYYY-MM-DD"),
-                    endDate: this.$moment(this.endDate).format("YYYY-MM-DD"),
+                    startDate: this.$dayjs(this.startDate).format("YYYY-MM-DD"),
+                    endDate: this.$dayjs(this.endDate).format("YYYY-MM-DD"),
                     currencyType: "SGD",
                     currencyName: "Singapore Dollar",
                     cultureCode: "en-SG",
@@ -324,7 +324,6 @@ export default {
                     params.startDate,
                     params.endDate
                 )
-
                 if (validateDate) {
                     this.isShowErrorMessage = false
                     this.errorMessages = ""
@@ -369,8 +368,25 @@ export default {
             this.remark = ""
         },
         validateStartDateAndEndDate(start, end) {
-            console.log({ start, end })
-            return this.$moment(start).isBefore(end)
+            const startDateFormat = this.$dayjs(this.startDate)
+                .format("YYYY-MM-DD")
+                .toString()
+                .replace(/^-/, "")
+            const endDateFormat = this.$dayjs(this.endDate)
+                .format("YYYY-MM-DD")
+                .toString()
+                .replace(/^-/, "")
+            console.log({
+                currentDate: this.$dayjs("31-Jan-2023").format("YYYY-MM-DD").toString().re,
+                startRaw: this.agreementDateRaw,
+                startDateFormat,
+                endDateFormat,
+                comparing: this.$dayjs(endDateFormat).isAfter(startDateFormat),
+                diff: this.$dayjs(endDateFormat).diff(startDateFormat, "day")
+            })
+            return this.$dayjs(this.$dayjs(this.endDate).format("YYYY/MM/DD")).isAfter(
+                this.$dayjs(this.startDate).format("YYYY/MM/DD   ")
+            )
         }
     }
 }
@@ -409,7 +425,7 @@ export default {
 }
 
 .radio-group--optionDate {
-    &::v-deep() {
+    &::v-deep {
         margin-top: 0 !important;
         padding-bottom: 2.4rem;
     }

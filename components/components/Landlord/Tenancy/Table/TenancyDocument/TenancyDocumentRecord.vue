@@ -9,7 +9,7 @@
         <td data-title="Actions">
             <div class="actions">
                 <v-btn class="btn btn--ghost btn--green btn--sm btn--withIcon" @click="onDownload">
-                    <i class="ri-download-cloud-2-line" /> download
+                    <i class="ri-download-cloud-2-line" /> Download
                 </v-btn>
                 <v-btn class="btn btn--ghost btn--red btn--sm btn--withIcon" @click="onDelete">
                     <i class="ri-delete-bin-6-line" /> Remove
