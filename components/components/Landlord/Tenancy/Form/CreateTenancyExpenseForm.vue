@@ -120,7 +120,7 @@ export default {
             currencyType: "SGD",
             currencyName: "SINGAPORE DOLLAR",
             cultureCode: "en-SG",
-            itemPrice: 0,
+            itemPrice: null,
             purchaseDate: "",
             purchaseDateMenu: "",
             purchaseDateRaw: "",
@@ -159,6 +159,7 @@ export default {
             this.itemPrice = 0
             this.itemName = ""
             this.remark = ""
+            this.$v.$reset()
         },
         async submitForm() {
             this.submitted = true
@@ -170,7 +171,7 @@ export default {
                     itemName: this.itemName,
                     itemPrice: this.itemPrice ? convertCommasToNumber(this.itemPrice) : 0,
                     currencyType: this.currencyType,
-                    currentyName: this.currencyName,
+                    currencyName: this.currencyName,
                     cultureCode: "en-SG",
                     purchaseDate: this.purchaseDateRaw,
                     remark: this.remark

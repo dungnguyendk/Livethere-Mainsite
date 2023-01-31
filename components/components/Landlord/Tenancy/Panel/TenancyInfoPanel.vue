@@ -3,13 +3,21 @@
         <div class="section__top">
             <h3 class="top--title"> Tenancy Info </h3>
             <div class="top--button">
-                <v-btn class="btn btn--green btn--outline btn--withIcon" @click="createDialog = true">
+                <v-btn
+                    class="btn btn--green btn--outline btn--withIcon"
+                    @click="createDialog = true"
+                >
                     <i class="ri-add-box-line"></i> Add
                 </v-btn>
             </div>
         </div>
         <TenancyInfoTable />
-        <Dialog title="Create tenancy Info" :open="createDialog" :actions="false" @close="onCloseCreateDialog">
+        <Dialog
+            title="Create tenancy Info"
+            :open="createDialog"
+            :actions="false"
+            @close="onCloseCreateDialog"
+        >
             <AddTenancyInfoForm @close="onCloseCreateDialog" />
         </Dialog>
         <v-snackbar v-model="snackbarActive" :timeout="2000" top right text color="green darken-4">
@@ -32,14 +40,14 @@ export default {
         return {
             createDialog: false,
             snackbarActive: false,
-            snackbarMessageActive: "Your message has been sent.",
+            snackbarMessageActive: "Your message has been sent."
         }
     },
     computed: {
         ...mapState({
             snackbar: (state) => state.tenancy.snackbar,
             snackbarMessage: (state) => state.tenancy.snackbarMessage
-        }),
+        })
     },
     methods: {
         onCloseCreateDialog() {
@@ -60,7 +68,7 @@ export default {
     watch: {
         snackbar() {
             this.setSnackBar()
-        },
+        }
     }
 }
 </script>

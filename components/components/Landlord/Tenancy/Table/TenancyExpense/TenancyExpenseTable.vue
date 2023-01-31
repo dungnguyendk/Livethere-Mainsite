@@ -16,6 +16,7 @@
                         :source="item"
                         :key="index"
                         @onDeleleteSuccess="showDeleteSuccess"
+                        @open="openDeleteDialog($event)"
                     />
                 </template>
                 <template v-else>
@@ -60,12 +61,17 @@ export default {
                 this.snackBar = false
             }, 2000)
         },
+
         showCreateSuccess() {
             this.snackBar = true
             this.snackBarMessage = "Create tenancy expense successfully!"
             setTimeout(() => {
                 this.snackBar = false
             }, 2000)
+        }, 
+        openDeleteDialog(e){
+          this.$emit('open', {open: e.open, id: e.id});
+            console.log("target event: ", e)
         }
     }
 }

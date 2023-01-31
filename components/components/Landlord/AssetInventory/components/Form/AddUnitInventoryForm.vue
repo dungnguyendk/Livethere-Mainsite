@@ -221,8 +221,8 @@ export default {
                 } catch (e) {
                     console.log(e)
                 }
-            }else{
-            this.loading = false
+            } else {
+                this.loading = false
             }
         },
         updateUnitInventory() {
@@ -281,7 +281,7 @@ export default {
                     () => (this.quantity = convertNumberToCommas(convertCommasToNumber(val)))
                 )
             }
-        },
+        }
     }
 }
 </script>

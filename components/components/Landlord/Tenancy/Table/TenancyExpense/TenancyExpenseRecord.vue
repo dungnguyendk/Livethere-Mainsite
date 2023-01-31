@@ -11,6 +11,7 @@
         </td>
         <td data-title="Actions">
             <v-btn class="btn btn--ghost btn--sm btn--red" @click="onDelete"> Delete</v-btn>
+
         </td>
     </tr>
 </template>
@@ -39,18 +40,13 @@ export default {
     data() {
         return {
             snackBar: false,
-            snackBarMessage: "Delete tenancy expense successfully!"
+            snackBarMessage: "Delete tenancy expense successfully!",
+            isOpenDeleteDialog: false
         }
     },
     methods: {
-        async onDelete() {
-            await this.$store
-                .dispatch("tenancy/deleteTenancyExpense", this.source.id)
-                .then((response) => {
-                    if (response) {
-                        this.$emit("onDeleleteSuccess")
-                    }
-                })
+        onDelete() {
+            this.$emit("open", {open: this.isOpenDeleteDialog = true, id: this.source.id})
         }
     }
 }

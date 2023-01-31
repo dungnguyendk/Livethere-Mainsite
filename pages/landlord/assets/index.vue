@@ -10,7 +10,6 @@
 
 <script>
 import LandlordPortal from "~/components/components/Landlord/LandlordPortal.vue"
-
 import { appSettings } from "~/app-settings"
 import AssetInventory from "~/components/components/Landlord/AssetInventory/AssetInventory.vue"
 import qs from "qs"

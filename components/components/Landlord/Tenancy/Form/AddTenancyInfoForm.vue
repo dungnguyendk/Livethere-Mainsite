@@ -6,26 +6,49 @@
                 <v-col cols="12" sm="12" md="6">
                     <div class="form__field">
                         <label>Tenancy Name</label>
-                        <v-text-field v-model="tenancyName" dense outlined :error-messages="tenancyNameErrors" />
+                        <v-text-field
+                            v-model="tenancyName"
+                            dense
+                            outlined
+                            :error-messages="tenancyNameErrors"
+                        />
                     </div>
                 </v-col>
                 <v-col cols="12" sm="12" md="6">
                     <div class="form__field">
                         <label>Leasing Type</label>
-                        <v-select v-model="leasingType" :items="leasingTypes" item-text="text" item-value="value"
-                            placeholder="Please select" dense outlined :error-messages="leasingTypeErrors" />
+                        <v-select
+                            v-model="leasingType"
+                            :items="leasingTypes"
+                            item-text="text"
+                            item-value="value"
+                            placeholder="Please select"
+                            dense
+                            outlined
+                            :error-messages="leasingTypeErrors"
+                        />
                     </div>
                 </v-col>
                 <v-col cols="12" sm="12" md="6">
                     <div class="form__field">
                         <label>ID / Passport No.</label>
-                        <v-text-field v-model="passportNo" dense outlined :error-messages="passportNoErrors" />
+                        <v-text-field
+                            v-model="passportNo"
+                            dense
+                            outlined
+                            :error-messages="passportNoErrors"
+                        />
                     </div>
                 </v-col>
                 <v-col cols="12" sm="12" md="6">
                     <div class="form__field">
                         <label>Company Name</label>
-                        <v-text-field v-model="companyName" dense outlined :error-messages="companyNameErrors" />
+                        <v-text-field
+                            v-model="companyName"
+                            dense
+                            outlined
+                            :error-messages="companyNameErrors"
+                        />
                     </div>
                 </v-col>
                 <v-col cols="12" sm="12" md="12">
@@ -38,18 +61,23 @@
         </div>
         <div class="form__actions">
             <v-btn class="btn btn--ghost btn--gray btn--sm" @click="onClose">Cancel</v-btn>
-            <v-btn class="btn btn--primary btn--green btn--sm" @click="onCreateTenancyInfo"
-                :loading="loading">Create</v-btn>
+            <v-btn
+                class="btn btn--primary btn--green btn--sm"
+                @click="onCreateTenancyInfo"
+                :loading="loading"
+                >Create
+            </v-btn>
         </div>
     </form>
 </template>
 
 <script>
-import { validationMixin } from 'vuelidate'
+import { validationMixin } from "vuelidate"
 import { required, requiredIf } from "vuelidate/lib/validators"
 import { setFormControlErrors } from "~/ultilities/form-validations"
-import { mapState } from 'vuex'
+import { mapState } from "vuex"
 import qs from "qs"
+
 export default {
     name: "AddTenancyInfoForm",
     mixins: [validationMixin],
@@ -60,8 +88,8 @@ export default {
         companyName: {
             required: requiredIf(function () {
                 return this.leasingType.name === "Corporate"
-            }),
-        },
+            })
+        }
     },
     data() {
         return {
@@ -86,13 +114,13 @@ export default {
                     text: "Corporate"
                 }
             ],
-            loading: false,
+            loading: false
         }
     },
     computed: {
         ...mapState({
-            tenancyDetailByInternalID: (state) => state.tenancy.tenancyDetailByInternalID,
-            statusResponse: (state) => state.tenancy.statusResponse,
+            tenancyDetails: (state) => state.tenancy.tenancyDetails,
+            statusResponse: (state) => state.tenancy.statusResponse
         }),
         tenancyNameErrors() {
             return setFormControlErrors(this.$v.tenancyName, "This Tenancy Name is required")
@@ -107,22 +135,28 @@ export default {
             return setFormControlErrors(this.$v.companyName, "This Company Name is required")
         }
     },
-    mounted() {
-        // console.log("this.tenancyDetailByInternalID", this.tenancyDetailByInternalID)
-    },
+
     methods: {
-        onFormSubmit() { 
+        onFormSubmit() {
             this.loading = true
         },
         onClose() {
             this.$emit("close")
+        },
+        onResetForm() {
+            this.$v.$reset()
+            this.tenancyName = ""
+            this.leasingType = ""
+            this.passportNo = ""
+            this.companyName = ""
+            this.remark = ""
         },
         onCreateTenancyInfo() {
             this.onFormSubmit()
             this.$v.$touch()
             if (!this.$v.$invalid) {
                 const params = {
-                    tenancyContractAgreementFID: this.tenancyDetailByInternalID.id,
+                    tenancyContractAgreementFID: this.tenancyDetails.id,
                     tenancyName: this.tenancyName,
                     tenancyIdentityDocNo: this.passportNo,
                     leasingTypeFID: this.leasingType.id,
@@ -130,17 +164,22 @@ export default {
                     companyName: this.companyName,
                     remark: this.remark
                 }
-                this.$store.dispatch("tenancy/createTenancyTenantInfos", params).then(() => {
-                    const paramAgreementFID = qs.stringify({
-                        TenancyContractAgreementFID: this.tenancyDetailByInternalID.id
+                this.$store
+                    .dispatch("tenancy/createTenancyTenantInfos", params)
+                    .then(() => {
+                        const paramAgreementFID = qs.stringify({
+                            TenancyContractAgreementFID: this.tenancyDetails.id
+                        })
+                        this.$store.dispatch("tenancy/getTenancyInfosById", paramAgreementFID)
                     })
-                    this.$store.dispatch("tenancy/getTenancyInfosById", paramAgreementFID)
-                }).then(() => {
-                    this.loading = false
-                    if (this.statusResponse) {
-                        this.onClose()
-                    }
-                })
+                    .then(() => {
+                        this.loading = false
+                        this.onResetForm()
+
+                        if (this.statusResponse) {
+                            this.onClose()
+                        }
+                    })
             } else {
                 this.loading = false
             }
