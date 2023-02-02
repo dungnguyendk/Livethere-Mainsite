@@ -1,9 +1,101 @@
 <template lang="html">
-<section></section>
+    <section class="section--home-intro">
+        <div class="container">
+            <div class="section__container">
+                <div class="section__left">
+                    <div class="image-first">
+                        <img :src="imgURLFirst" alt="">
+                    </div>
+                    <div class="image-second">
+                        <img :src="imgURLSecond" alt="">
+                    </div>
+                </div>
+                <div class="section__right">
+                    <div class="section__right-image">
+                        <img :src="imgURLThird" alt="">
+                    </div>
+                    <h3 class="section__right-title">Cost guide to renting a room or home</h3>
+                    <div class="section__right-content">
+                        <p>Trust our agents to get you the best lease as we turn your space into extra income.</p>
+                        <p>We care to find you good and reliable ten-ants who will keep your property well-maintained. Because at Ohmyhome, we’re always by your side, always on your side.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 </template>
 
 <script>
 export default {
-    name: "HomeIntroSection"
+    name: "HomeIntroSection",
+    data() {
+        return {
+            imgURLFirst: "/img/home-intro1.png",
+            imgURLSecond: "/img/home-intro2.png",
+            imgURLThird: "/img/home-text.png"
+        }
+    }
 }
 </script>
+
+<style lang="scss" scoped>
+.section--home-intro {
+    .container {
+        .section__container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    }
+}
+.section__left {
+    width: 53.41%;
+    display: flex;
+    padding-right: 7.3rem;
+    .image-first {
+        margin-right: 1.5rem;
+        width: 100%;
+        img {
+            object-fit: cover;
+            border-radius: 2rem;
+            width: 100%;
+        }
+    }
+    .image-second {
+        margin-left: 1.5rem;
+        margin-top: 7.2rem;
+        width: 100%;
+        img {
+            object-fit: cover;
+            border-radius: 2rem;
+            width: 100%;
+        }
+    }
+}
+.section__right {
+    width: 46.59%;
+    .section__right-image {
+        margin-bottom: 6rem;
+        img {
+            object-fit: cover;
+        }
+    }
+    .section__right-title {
+        font-weight: 800;
+        font-size: 2rem;
+        line-height: 2.8rem;
+        text-transform: capitalize;
+        color: var(--color-primary);
+        margin-bottom: 1.9rem;
+    }
+    .section__right-content {
+        p {
+            color: var(--color-title-black);
+            font-weight: 400;
+            font-size: 1.6rem;
+            line-height: 2.4rem;
+            margin-bottom: 0;
+        }
+    }
+}
+</style>
