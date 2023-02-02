@@ -306,9 +306,18 @@ export default {
                 const params = {
                     tenancyRefCode: this.tenancyRefCode,
                     assestInventoryFID: this.inventoryDetails.id,
-                    agreementDate: this.$moment(this.agreementDate).format("YYYY-MM-DD"),
-                    startDate: this.$dayjs(this.startDate).format("YYYY-MM-DD"),
-                    endDate: this.$dayjs(this.endDate).format("YYYY-MM-DD"),
+                    agreementDate: this.$dayjs(this.agreementDateRaw)
+                        .format("YYYY-MM-DD")
+                        .toString()
+                        .replace(/^-/, ""),
+                    startDate: this.$dayjs(this.startDate)
+                        .format("YYYY-MM-DD")
+                        .toString()
+                        .replace(/^-/, ""),
+                    endDate: this.$dayjs(this.endDate)
+                        .format("YYYY-MM-DD")
+                        .toString()
+                        .replace(/^-/, ""),
                     currencyType: "SGD",
                     currencyName: "Singapore Dollar",
                     cultureCode: "en-SG",
@@ -376,17 +385,7 @@ export default {
                 .format("YYYY-MM-DD")
                 .toString()
                 .replace(/^-/, "")
-            console.log({
-                currentDate: this.$dayjs("31-Jan-2023").format("YYYY-MM-DD").toString().re,
-                startRaw: this.agreementDateRaw,
-                startDateFormat,
-                endDateFormat,
-                comparing: this.$dayjs(endDateFormat).isAfter(startDateFormat),
-                diff: this.$dayjs(endDateFormat).diff(startDateFormat, "day")
-            })
-            return this.$dayjs(this.$dayjs(this.endDate).format("YYYY/MM/DD")).isAfter(
-                this.$dayjs(this.startDate).format("YYYY/MM/DD   ")
-            )
+            return this.$dayjs(endDateFormat).isAfter(this.$dayjs(startDateFormat))
         }
     }
 }
