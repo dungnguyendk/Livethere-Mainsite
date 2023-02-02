@@ -15,6 +15,7 @@
                         :source="item"
                         :key="index"
                         :documentType="documentType"
+                        @onDelete="openDeleteDialog"
                     />
                 </template>
                 <template v-else>
@@ -26,16 +27,18 @@
                 </template>
             </tbody>
         </table>
+        <DeleteDialog :open="deleteDialog" @close="deleteDialog = false" @onSubmit="deleteItem" />
     </div>
 </template>
 
 <script>
 import { mapState } from "vuex"
 import TenancyDocumentRecord from "./TenancyDocumentRecord.vue"
+import DeleteDialog from "~/components/elements/Dialog/DeleteDialog.vue"
 
 export default {
     name: "TenancyDocumentTable",
-    components: { TenancyDocumentRecord },
+    components: { DeleteDialog, TenancyDocumentRecord },
     computed: {
         ...mapState({
             documents: (state) => state.tenancy.documents
@@ -49,26 +52,27 @@ export default {
     },
     data() {
         return {
-            items: [
-                {
-                    name: "Peter Tan",
-                    passportNo: "Dxxx4567",
-                    leasingType: "Corporate",
-                    uploadedDate: "20/06/2001"
-                },
-                {
-                    name: "Hung Vuong",
-                    passportNo: "Dxxx4567",
-                    leasingType: "Corporate",
-                    uploadedDate: "20/06/2001"
-                },
-                {
-                    name: "Hung Vuong",
-                    passportNo: "Dxxx4567",
-                    leasingType: "Corporate",
-                    uploadedDate: "20/06/2001"
-                }
-            ]
+            createDialog: false,
+            deleteDialog: false,
+            deletedItem: null
+        }
+    },
+    methods: {
+        openDeleteDialog(item) {
+            this.deletedItem = item
+            this.deleteDialog = true
+        },
+
+        deleteItem() {
+            this.$store
+                .dispatch("tenancy/deleteTenancyDocument", {
+                    documnentID: this.deletedItem.id,
+                    documentType: this.documentType
+                })
+                .then(() => {
+                    this.deleteDialog = null
+                    this.deleteDialog = false
+                })
         }
     }
 }
