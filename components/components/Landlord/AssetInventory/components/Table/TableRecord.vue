@@ -141,16 +141,16 @@ export default {
             return this.source.landAreaSqft ? convertNumberToCommas(this.source.landAreaSqft) : ''
         },
         askingPriceFormatter() {
-            return this.source.askingPrice ? convertNumberToCommas(this.source.askingPrice) : ''
+            return this.source.askingPrice ? "$ " + convertNumberToCommas(this.source.askingPrice) : ''
         },
         estimatedMarketRentFormatter() {
-            return this.source.estimatedMarketRent ? convertNumberToCommas(this.source.estimatedMarketRent) : ''
+            return this.source.estimatedMarketRent ? "$ " + convertNumberToCommas(this.source.estimatedMarketRent) : ''
         },
         monthRentalFormatter() {
-            return this.source.tenancyDetail.monthRental ? convertNumberToCommas(this.source.tenancyDetail.monthRental) : ''
+            return this.source.tenancyDetail.monthRental ? "$ " + convertNumberToCommas(this.source.tenancyDetail.monthRental) : ''
         },
         estimatedAnnualRevenueFormatter() {
-            return this.source.tenancyDetail.estimatedAnnualRevenue ? convertNumberToCommas(this.source.tenancyDetail.estimatedAnnualRevenue) : ''
+            return this.source.tenancyDetail.estimatedAnnualRevenue ? "$ " + convertNumberToCommas(this.source.tenancyDetail.estimatedAnnualRevenue) : ''
         }
 
     },
