@@ -9,7 +9,7 @@
         <td data-title="Actions">
             <div class="actions">
                 <v-btn class="btn btn--ghost btn--green btn--sm btn--withIcon" @click="onDownload">
-                    <i class="ri-download-cloud-2-line" /> download
+                    <i class="ri-download-cloud-2-line" /> Download
                 </v-btn>
                 <v-btn class="btn btn--ghost btn--red btn--sm btn--withIcon" @click="onDelete">
                     <i class="ri-delete-bin-6-line" /> Remove
@@ -35,11 +35,13 @@ export default {
     },
     methods: {
         onDelete() {
-            this.$store.dispatch("tenancy/deleteTenancyDocument", {
+            this.$emit("onDelete", this.source)
+            /*this.$store.dispatch("tenancy/deleteTenancyDocument", {
                 documnentID: this.source.id,
                 documentType: this.documentType
-            })
+            })*/
         },
+
         async onDownload() {
             const response = await this.$api.$get(`/api/documents/${this.source.id}/datas`)
             if (response) {
