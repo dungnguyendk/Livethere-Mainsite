@@ -47,6 +47,31 @@ export default {
             align-items: center;
         }
     }
+    @media screen and (max-width: 768px) {
+        .container {
+            .section__container {
+                display: block;
+                .section__left {
+                    width: 100%;
+                    padding: 0 2.4rem;
+                    margin-bottom: 7rem;
+                }
+                .section__right {
+                    width: 100%;
+                    padding: 0 2.4rem;
+                    .section__right-image {
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        
+                    }
+                    .section__right-content {
+                        text-align: justify;
+                    }
+                }
+            }
+        }
+    }
 }
 .section__left {
     width: 53.41%;
