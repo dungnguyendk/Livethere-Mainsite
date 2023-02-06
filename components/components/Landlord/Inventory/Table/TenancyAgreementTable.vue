@@ -6,7 +6,6 @@
                 <th id="agreementdate">Agreement Date </th>
                 <th id="startdate">Start date</th>
                 <th id="enddate">End date</th>
-                <!-- <th id="remark">Remark</th> -->
             </tr>
         </thead>
         <tbody>
@@ -31,7 +30,6 @@
 <script>
 import TableRecord from "~/components/components/Landlord/Inventory/Table/TableRecord.vue"
 import { mapState } from "vuex"
-import { state } from "~/store/app"
 
 export default {
     name: "TenancyAgreementTable",

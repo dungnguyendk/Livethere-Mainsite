@@ -2,7 +2,7 @@
     <form class="form form--landlord form--create-tenancy-agreement" @submit.prevent="submitForm">
         <p class="alert alert--red mb-10" v-if="isShowErrorMessage">{{ errorMessages }}</p>
         <template v-if="!confirm">
-            <div class="form__top"> <h3>Suspend agreement</h3> </div>
+            <div class="form__top"><h3>Suspend agreement</h3></div>
             <div class="form__fields">
                 <v-row>
                     <v-col cols="12" sm="12" md="12">
@@ -79,8 +79,8 @@ export default {
     },
     props: {
         contractID: {
-            type: String,
-            default: ""
+            type: Number,
+            default: 0
         }
     },
     computed: {
@@ -136,24 +136,13 @@ export default {
                 }
                 this.isShowErrorMessage = false
                 this.errorMessages = ""
-                console.log({ params })
                 await this.$store
                     .dispatch("inventory/suspendContractAgreement", params)
-                    .then((value) => {
-                        console.log({ Done: true })
-                        /*if (value) {
-                        if (value.id !== 0) {
-                            this.$emit("openSnackbar", (this.isOpenSnackbar = true))
-                            this.resetForm()
-                            this.onClose()
-                        } else {
-                            this.isShowErrorMessage = true
-                            this.errorMessages = value.responseMessage
+                    .then((res) => {
+                        if (res) {
+                            this.confirm = false
+                            this.$emit("close")
                         }
-                    } else {
-                        this.isShowErrorMessage = true
-                        this.errorMessages = value.responseMessage
-                    }*/
                     })
             } else {
                 console.error("error!")

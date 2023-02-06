@@ -26,16 +26,16 @@
                 <i class="ri-stop-circle-line"></i>
                 Suspend
             </v-btn>
+            <Dialog
+                title=""
+                size="small"
+                :open="suspendDialog"
+                @close="suspendDialog = false"
+                :actions="false"
+            >
+                <SuspendAgreementForm :contractID="source.id" @close="suspendDialog = false" />
+            </Dialog>
         </td>
-        <Dialog
-            title=""
-            size="small"
-            :open="suspendDialog"
-            @close="suspendDialog = false"
-            :actions="false"
-        >
-            <SuspendAgreementForm :contractID="source.id" @close="suspendDialog = false" />
-        </Dialog>
     </tr>
 </template>
 

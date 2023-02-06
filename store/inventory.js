@@ -223,32 +223,24 @@ export const actions = {
             return null
         }
     },
-    async suspendContractAgreement({ commit }, payload) {
+
+    async suspendContractAgreement({ commit, dispatch, state }, payload) {
         try {
             const response = await this.$axios.$put(
                 `${httpEndpoint.tenancyAgreements.updateEntry}`,
                 payload
             )
+
             if (response) {
-                if (response.id !== 0) {
-                    /* const responseSub = await this.$axios.$get(
-                        `${httpEndpoint.tenancyAgreements.getEntries}?AssestInventoryFID=${payload.assestInventoryFID}`
-                    )
-                    if (responseSub) {
-                        commit("setListTenancyAgreements", responseSub)
-                    }
-                    commit("setSnackbar", true)
-                    commit("setSnackbarMessage", response.responseMessage)*/
-                    return response
-                } else {
-                    /* console.log({ Error: response.responseMessage })*/
-                    return response
-                }
+                await dispatch("getListTenancyAgreements", state.inventoryDetails.id)
+                commit("setSnackbar", true)
+                commit("setSnackbarMessage", "This contract agreement has been suspended.")
+                return response
             } else {
-                return null
+                return false
             }
         } catch (e) {
-            return null
+            return false
         }
     },
 
@@ -257,6 +249,7 @@ export const actions = {
             const response = await this.$axios.$get(
                 `${httpEndpoint.tenancyAgreements.getEntries}?AssestInventoryFID=${payload}`
             )
+
             if (response) {
                 commit("setListTenancyAgreements", response)
             } else {
