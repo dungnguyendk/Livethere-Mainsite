@@ -1,10 +1,10 @@
 <template lang="html">
     <main>
-        <template v-if="loggedIn">
+        <!--        <template v-if="loggedIn">
             <LandlordPortal>
                 <InventoryDetails />
             </LandlordPortal>
-        </template>
+        </template>-->
     </main>
 </template>
 
@@ -22,7 +22,7 @@ export default {
     },
     layout: "landlord",
     head: {
-        title: `Units Inventory | ${appSettings.siteName}`
+        title: `Agreements | ${appSettings.siteName}`
     },
 
     computed: {
@@ -35,12 +35,11 @@ export default {
             this.$router.push("/landlord/signin")
         }
     },
-    async asyncData({ app, route, store }) {
+    async asyncData({ route, store }) {
         try {
             const internalID = route.params.id
             store.commit("inventory/setTenancyID", internalID)
             await store.dispatch("inventory/getInventoryDetails", internalID)
-            // store.commit("inventory/setUnits", internalID)
             const id = store.state.inventory.inventoryDetails.id
             await store.dispatch("inventory/getListTenancyAgreements", id)
         } catch (e) {

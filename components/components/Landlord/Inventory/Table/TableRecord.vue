@@ -8,24 +8,43 @@
             </div>
         </td>
         <td data-title="Agreement Date">
-            <p>{{ formatAgreementDate }}</p></td
-        >
+            <p>{{ formatAgreementDate }}</p>
+        </td>
         <td data-title="Start date"
             ><p>{{ formatStartDate }} </p></td
         >
-        <td data-title="End Date"
-            ><p>{{ formatEndDate }}</p>
-            <p>{{ source.statusDisplay }}</p>
+        <td data-title="End Date">
+            <div>
+                <p>{{ formatEndDate }}</p>
+                <p>{{ source.statusDisplay }}</p>
+            </div>
+            <v-btn
+                v-if="source.statusFID === 1"
+                class="btn btn--sm btn--ghost btn--red"
+                @click="suspendDialog = true"
+            >
+                <i class="ri-stop-circle-line"></i>
+                Suspend
+            </v-btn>
         </td>
-        <!-- <td data-title="Remark">
-            <p></p>
-        </td> -->
+        <!--        <Dialog
+            title="Suspend Agreement"
+            :open="suspendDialog"
+            @close="suspendDialog = false"
+            :actions="false"
+        >
+            <SuspendAgreementForm />
+        </Dialog>-->
     </tr>
 </template>
 
 <script>
+import Dialog from "~/components/elements/Dialog/Dialog.vue"
+import SuspendAgreementForm from "~/components/components/Landlord/Inventory/Form/SuspendAgreementForm.vue"
+
 export default {
     name: "TableRecord",
+    components: { SuspendAgreementForm, Dialog },
     props: {
         source: {
             type: Object,
@@ -42,10 +61,19 @@ export default {
         formatEndDate() {
             return this.$dayjs(this.source.endDate).format("DD-MMM-YYYY")
         }
+    },
+    data() {
+        return {
+            suspendDialog: false
+        }
     }
 }
 </script>
 <style lang="scss" scoped>
+.record__suspend {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 10.2rem;
+}
 tr {
     position: relative;
     vertical-align: top;
