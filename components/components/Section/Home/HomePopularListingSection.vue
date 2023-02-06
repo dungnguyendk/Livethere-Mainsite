@@ -10,8 +10,12 @@
                             <button>
                                 <i class="ri-arrow-left-s-line"></i>
                             </button>
-                            <div class="section__top-right-ruler">
+                            <div>
+                                <p>01</p>
+                                <div class="section__top-right-ruler">
                                 <div class="section__top-right-scroll"></div>
+                                </div>
+                                <p>03</p>
                             </div>
                             <button>
                                 <i class="ri-arrow-right-s-line"></i>
@@ -163,9 +167,8 @@ export default {
                         }
                     ]
                 }
-            ], 
-            width: 2, 
-
+            ],
+            width: 2
         }
     }
 }
@@ -195,38 +198,32 @@ export default {
     }
 }
 .section__body {
-
 }
-.section__top-right-process{
-
+.section__top-right-process {
     display: flex;
     justify-content: center;
     align-items: center;
-    button{
-        display: flex; 
+    button {
+        display: flex;
         align-items: center;
     }
-    .section__top-right-ruler{
+    .section__top-right-ruler {
         width: 9rem;
         background-color: var(--border-color);
         border-radius: 10rem;
         height: 1rem;
         overflow: hidden;
-        position: relative; 
-        .section__top-right-scroll{
-        height: 1rem; 
-        width: 2rem; 
-        background-color: blue;
-        border-radius: 10rem;
-        position: absolute;
-        z-index: 8;
-        right: 1rem;
-        
-        
+        position: relative;
+        .section__top-right-scroll {
+            height: 1rem;
+            width: 2rem;
+            background-color: var(--color-primary);
+            border-radius: 10rem;
+            position: absolute;
+            z-index: 8;
+            right: 1rem;
+        }
     }
-        
-    }
-    
 }
 .swiper {
     .swiper-item {
@@ -270,5 +267,4 @@ export default {
         margin: 0 3.8rem;
     }
 }
-
 </style>
