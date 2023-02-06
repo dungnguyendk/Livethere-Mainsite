@@ -86,7 +86,7 @@
                             </v-list-item>
                             <v-list-item @click="openSoldOutDialog = true" class="list-item--custom">
                                 <v-list-item-icon>
-                                    <v-icon v-text="`ri-store-2-line`"></v-icon>
+                                    <v-icon v-text="`ri-close-circle-line`"></v-icon>
                                 </v-list-item-icon>
                                 <v-list-item-content>
                                     <v-list-item-title>Sold Out</v-list-item-title>
@@ -101,9 +101,9 @@
                 <AddInventoryForm @close="openAddNewInventoryDialog = false" v-if="openAddNewInventoryDialog"
                     :sourceDetail="source.id" />
             </Dialog>
-            <Dialog :open="openSoldOutDialog" @close="closeDialogSoldOut" size="medium" :title="''"
-                :actions="false">
-                <SoldOutForm @close="openSoldOutDialog = false" v-if="openSoldOutDialog" :sourceDetail="source.id" :source="source" />
+            <Dialog :open="openSoldOutDialog" @close="closeDialogSoldOut" size="medium" :title="''" :actions="false">
+                <SoldOutForm @close="openSoldOutDialog = false" v-if="openSoldOutDialog" :sourceDetail="source.id"
+                    :source="source" />
             </Dialog>
             <DeleteDialog :open="deleteDialog" size="large" type="full" @close="deleteDialog = false"
                 @onSubmit="onDeleteInventory(source.id)" />
