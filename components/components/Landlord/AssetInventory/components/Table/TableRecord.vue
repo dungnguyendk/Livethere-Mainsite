@@ -51,7 +51,7 @@
         </td>
         <td data-label="Action">
             <div>
-                <v-menu offset-y>
+                <v-menu offset-y v-if="source.statusFID !== 4">
                     <template v-slot:activator="{ on, attrs }">
                         <v-btn x-small fab outlined class="more-option" v-bind="attrs" v-on="on"><i
                                 class="ri-more-fill"></i></v-btn>
@@ -67,7 +67,7 @@
                                     <v-list-item-title>Edit</v-list-item-title>
                                 </v-list-item-content>
                             </v-list-item>
-                            <v-list-item @click="onVisitInventoryUnits" class="list-item--custom--middle">
+                            <v-list-item @click="onVisitInventoryUnits" class="list-item--custom">
                                 <v-list-item-icon>
                                     <v-icon v-text="`ri-add-box-line`"></v-icon>
                                 </v-list-item-icon>
@@ -84,6 +84,14 @@
                                     <v-list-item-title>Delete</v-list-item-title>
                                 </v-list-item-content>
                             </v-list-item>
+                            <v-list-item @click="openSoldOutDialog = true" class="list-item--custom">
+                                <v-list-item-icon>
+                                    <v-icon v-text="`ri-store-2-line`"></v-icon>
+                                </v-list-item-icon>
+                                <v-list-item-content>
+                                    <v-list-item-title>Sold Out</v-list-item-title>
+                                </v-list-item-content>
+                            </v-list-item>
                         </v-list-item-group>
                     </v-list>
                 </v-menu>
@@ -92,6 +100,10 @@
                 :actions="false">
                 <AddInventoryForm @close="openAddNewInventoryDialog = false" v-if="openAddNewInventoryDialog"
                     :sourceDetail="source.id" />
+            </Dialog>
+            <Dialog :open="openSoldOutDialog" @close="closeDialogSoldOut" size="medium" :title="''"
+                :actions="false">
+                <SoldOutForm @close="openSoldOutDialog = false" v-if="openSoldOutDialog" :sourceDetail="source.id" :source="source" />
             </Dialog>
             <DeleteDialog :open="deleteDialog" size="large" type="full" @close="deleteDialog = false"
                 @onSubmit="onDeleteInventory(source.id)" />
@@ -104,13 +116,14 @@ import AssetInventoryBadge from "~/components/components/Landlord/AssetInventory
 import Dialog from "~/components/elements/Dialog/Dialog.vue"
 import DeleteDialog from "~/components/elements/Dialog/DeleteDialog.vue"
 import AddInventoryForm from "~/components/components/Landlord/AssetInventory/components/Dialog/Form/AddInventoryForm.vue"
+import SoldOutForm from "~/components/components/Landlord/AssetInventory/components/Dialog/Form/SoldOutForm.vue"
 import { convertNumberToCommas } from "~/ultilities/helpers"
 import { mapState } from "vuex"
 import qs from "qs"
 
 export default {
     name: "TableRecord",
-    components: { AssetInventoryBadge, Dialog, AddInventoryForm, DeleteDialog },
+    components: { AssetInventoryBadge, Dialog, AddInventoryForm, SoldOutForm, DeleteDialog },
     props: {
         source: {
             type: Object,
@@ -124,10 +137,12 @@ export default {
     data() {
         return {
             openAddNewInventoryDialog: false,
+            openSoldOutDialog: false,
             sizeDialog: "large",
             // floorAreaSqftFormatter: "",
             // landAreaFormatter: "",
             deleteDialog: false,
+            soldOutDialog: false,
         }
     },
     computed: {
@@ -141,16 +156,16 @@ export default {
             return this.source.landAreaSqft ? convertNumberToCommas(this.source.landAreaSqft) : ''
         },
         askingPriceFormatter() {
-            return this.source.askingPrice ? convertNumberToCommas(this.source.askingPrice) : ''
+            return this.source.askingPrice ? "$ " + convertNumberToCommas(this.source.askingPrice) : ''
         },
         estimatedMarketRentFormatter() {
-            return this.source.estimatedMarketRent ? convertNumberToCommas(this.source.estimatedMarketRent) : ''
+            return this.source.estimatedMarketRent ? "$ " + convertNumberToCommas(this.source.estimatedMarketRent) : ''
         },
         monthRentalFormatter() {
-            return this.source.tenancyDetail.monthRental ? convertNumberToCommas(this.source.tenancyDetail.monthRental) : ''
+            return this.source.tenancyDetail.monthRental ? "$ " + convertNumberToCommas(this.source.tenancyDetail.monthRental) : ''
         },
         estimatedAnnualRevenueFormatter() {
-            return this.source.tenancyDetail.estimatedAnnualRevenue ? convertNumberToCommas(this.source.tenancyDetail.estimatedAnnualRevenue) : ''
+            return this.source.tenancyDetail.estimatedAnnualRevenue ? "$ " + convertNumberToCommas(this.source.tenancyDetail.estimatedAnnualRevenue) : ''
         }
 
     },
@@ -187,7 +202,9 @@ export default {
         closeDialog() {
             this.$store.commit("inventories/setInventoryDetail", "")
             this.openAddNewInventoryDialog = false
-            // this.$router.push(`/landlord/assets/units/${this.source.internalID}`)
+        },
+        closeDialogSoldOut() {
+            this.openSoldOutDialog = false
         }
     },
     watch: {
