@@ -5,7 +5,7 @@
             <div class="form__top"> <h3>Suspend agreement</h3> </div>
             <div class="form__fields">
                 <v-row>
-                    <v-col cols="12" sm="12" md="6">
+                    <v-col cols="12" sm="12" md="12">
                         <div class="form__field">
                             <label class="required">End Date </label>
                             <v-menu
@@ -46,7 +46,7 @@
             </div>
             <div class="form__actions">
                 <v-btn class="btn btn--ghost btn--gray btn--sm" @click="onClose"> Cancel</v-btn>
-                <v-btn class="btn btn--primary btn--red btn--sm" @click="confirm = true">
+                <v-btn class="btn btn--primary btn--red btn--sm" @click="onSuspend">
                     Suspend
                 </v-btn>
             </div>
@@ -75,6 +75,12 @@ export default {
     validations: {
         endDate: {
             required
+        }
+    },
+    props: {
+        contractID: {
+            type: String,
+            default: ""
         }
     },
     computed: {
@@ -110,18 +116,32 @@ export default {
             return this.$dayjs(date).format("DD-MMM-YYYY")
         },
 
+        onSuspend() {
+            this.$v.$touch()
+            if (!this.$v.$invalid) {
+                this.confirm = true
+            }
+        },
+
         async submitForm() {
-            this.submitted = true
             this.$v.$touch()
             if (!this.$v.$invalid) {
                 const params = {
-                    assestInventoryFID: this.inventoryDetails.id,
+                    id: this.contractID,
+                    endDate: this.$dayjs(this.endDate)
+                        .format("YYYY-MM-DD")
+                        .toString()
+                        .replace(/^-/, ""),
                     remark: this.remark
                 }
                 this.isShowErrorMessage = false
                 this.errorMessages = ""
-                this.$store.dispatch("inventory/createTenancyAgreement", params).then((value) => {
-                    if (value) {
+                console.log({ params })
+                await this.$store
+                    .dispatch("inventory/suspendContractAgreement", params)
+                    .then((value) => {
+                        console.log({ Done: true })
+                        /*if (value) {
                         if (value.id !== 0) {
                             this.$emit("openSnackbar", (this.isOpenSnackbar = true))
                             this.resetForm()
@@ -133,8 +153,8 @@ export default {
                     } else {
                         this.isShowErrorMessage = true
                         this.errorMessages = value.responseMessage
-                    }
-                })
+                    }*/
+                    })
             } else {
                 console.error("error!")
             }

@@ -22,7 +22,7 @@ export default {
     },
     layout: "landlord",
     head: {
-        title: `Agreements | ${appSettings.siteName}`
+        title: `Contract Agreements | ${appSettings.siteName}`
     },
 
     computed: {

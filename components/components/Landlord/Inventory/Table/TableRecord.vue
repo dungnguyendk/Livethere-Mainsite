@@ -34,7 +34,7 @@
             @close="suspendDialog = false"
             :actions="false"
         >
-            <SuspendAgreementForm @close="suspendDialog = false" />
+            <SuspendAgreementForm :contractID="source.id" @close="suspendDialog = false" />
         </Dialog>
     </tr>
 </template>
