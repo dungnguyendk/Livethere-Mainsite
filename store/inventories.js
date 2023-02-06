@@ -153,5 +153,26 @@ export const actions = {
             commit("setSnackbar", false)
             commit("setSnackbarMessage", "Your message has been sent.")
         }
+    },
+    async putSoldOut({ commit }, payload) {
+        try {
+            if (payload) {
+                const response = await this.$axios.$put(
+                    `${httpEndpoint.inventories.putSoldOut}`,
+                    payload
+                )
+                if (response) {
+                    commit("setSnackbar", true)
+                    commit("setSnackbarMessage", "Update sold out successfully")
+                } else {
+                    commit("setSnackbar", false)
+                    commit("setSnackbarMessage", "Your message has been sent.")
+                }
+            }
+        } catch (e) {
+            console.log({ Error: e.message })
+            commit("setSnackbar", false)
+            commit("setSnackbarMessage", "Your message has been sent.")
+        }
     }
 }

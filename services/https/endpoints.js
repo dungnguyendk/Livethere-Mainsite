@@ -32,7 +32,8 @@ export const httpEndpoint = {
         deleteEntryByID: "/api/asset-inventories",
         getByInternalID: "/api/asset-inventories/by-internalID",
         getEntriesByTenanted: "/api/asset-inventories/tenanted",
-        getEntriesByVacant: "/api/asset-inventories/vacant"
+        getEntriesByVacant: "/api/asset-inventories/vacant",
+        putSoldOut: "/api/asset-inventories/sold-out"
     },
     postal: {
         getEntryByPostalCode: "/api/properties/details",
