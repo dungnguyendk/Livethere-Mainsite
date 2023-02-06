@@ -5,9 +5,23 @@
                 <div class="section__top">
                     <div class="section__top-left">&nbsp;</div>
                     <h3 class="section__top-title">Popular listings</h3>
-                    <div class="section__top-right">&nbsp;</div>
+                    <div class="section__top-right">
+                        <div class="section__top-right-process">
+                            <button>
+                                <i class="ri-arrow-left-s-line"></i>
+                            </button>
+                            <div class="section__top-right-ruler">
+                                <div class="section__top-right-scroll"></div>
+                            </div>
+                            <button>
+                                <i class="ri-arrow-right-s-line"></i>
+                            </button>
+                        </div>
+                   </div>
+                    </div>
                 </div>
                 <div class="section__body">
+                   
 
                 </div>
             </div>
@@ -149,7 +163,9 @@ export default {
                         }
                     ]
                 }
-            ]
+            ], 
+            width: 2, 
+
         }
     }
 }
@@ -179,6 +195,38 @@ export default {
     }
 }
 .section__body {
+
+}
+.section__top-right-process{
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    button{
+        display: flex; 
+        align-items: center;
+    }
+    .section__top-right-ruler{
+        width: 9rem;
+        background-color: var(--border-color);
+        border-radius: 10rem;
+        height: 1rem;
+        overflow: hidden;
+        position: relative; 
+        .section__top-right-scroll{
+        height: 1rem; 
+        width: 2rem; 
+        background-color: blue;
+        border-radius: 10rem;
+        position: absolute;
+        z-index: 8;
+        right: 1rem;
+        
+        
+    }
+        
+    }
+    
 }
 .swiper {
     .swiper-item {
@@ -222,4 +270,5 @@ export default {
         margin: 0 3.8rem;
     }
 }
+
 </style>
