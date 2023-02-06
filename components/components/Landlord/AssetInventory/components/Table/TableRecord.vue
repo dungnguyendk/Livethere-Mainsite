@@ -86,7 +86,7 @@
                             </v-list-item>
                             <v-list-item @click="openSoldOutDialog = true" class="list-item--custom">
                                 <v-list-item-icon>
-                                    <v-icon v-text="`ri-store-2-line`"></v-icon>
+                                    <v-icon v-text="`ri-close-circle-line`"></v-icon>
                                 </v-list-item-icon>
                                 <v-list-item-content>
                                     <v-list-item-title>Sold Out</v-list-item-title>
