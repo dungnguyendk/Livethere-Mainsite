@@ -43,7 +43,6 @@ export default {
             const id = store.state.inventory.inventoryDetails.id
             await store.dispatch("inventory/getListTenancyAgreements", id)
         } catch (e) {
-            console.log({ Error: e.message })
             return { listTenancyAgreements: null }
         }
     }

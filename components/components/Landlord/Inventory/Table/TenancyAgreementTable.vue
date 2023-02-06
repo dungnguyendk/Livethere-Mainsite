@@ -2,10 +2,11 @@
     <table class="table--responsive table--tenancy-agreement">
         <thead>
             <tr>
-                <th id="code">Tenancy Agreement Code </th>
-                <th id="agreementdate">Agreement Date </th>
-                <th id="startdate">Start date</th>
-                <th id="enddate">End date</th>
+                <th>Tenancy Agreement Code </th>
+                <th>Agreement Date </th>
+                <th>Contract date </th>
+                <th>Status</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>

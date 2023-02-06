@@ -10,14 +10,16 @@
         <td data-title="Agreement Date">
             <p>{{ formatAgreementDate }}</p>
         </td>
-        <td data-title="Start date"
-            ><p>{{ formatStartDate }} </p></td
-        >
-        <td data-title="End Date">
+        <td data-title="Contract Dates">
+            <p>Start: {{ formatStartDate }} </p>
+            <p>End: {{ formatEndDate }}</p>
+        </td>
+        <td data-title="Status">
             <div>
-                <p>{{ formatEndDate }}</p>
                 <p>{{ source.statusDisplay }}</p>
             </div>
+        </td>
+        <td data-title="End Date">
             <v-btn
                 v-if="source.statusFID === 1"
                 class="btn btn--sm btn--ghost btn--red"

@@ -12,7 +12,6 @@
                 <InventoryInformationPanel />
                 <div class="section__divider" />
                 <TenancyAgreementPanel @openSnackbar="openSnackbar($event)" />
-                <!--                <SuccessSnackBar :open="isOpenSnackbar" class="snackbar-custom" />-->
             </div>
         </div>
     </div>
