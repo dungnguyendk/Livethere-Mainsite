@@ -3,7 +3,7 @@
         <div class="form__top">
             <h3>{{ inventoryDetail.id ? "EDIT INVENTORY" : "ADD NEW INVENTORY" }}</h3>
         </div>
-        <p class="alert alert--red" v-if="!statusResponse">Something when wrong</p>
+        <p class="alert alert--red" v-if="!statusResponse">Something went wrong</p>
         <div class="form__fields">
             <div class="form__field">
                 <label>Property Type</label>
