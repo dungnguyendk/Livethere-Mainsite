@@ -27,20 +27,21 @@
                 Suspend
             </v-btn>
         </td>
-        <!--        <Dialog
-            title="Suspend Agreement"
+        <Dialog
+            title=""
+            size="small"
             :open="suspendDialog"
             @close="suspendDialog = false"
             :actions="false"
         >
-            <SuspendAgreementForm />
-        </Dialog>-->
+            <SuspendAgreementForm @close="suspendDialog = false" />
+        </Dialog>
     </tr>
 </template>
 
 <script>
 import Dialog from "~/components/elements/Dialog/Dialog.vue"
-import SuspendAgreementForm from "~/components/components/Landlord/Inventory/Form/SuspendAgreementForm.vue"
+import SuspendAgreementForm from "~/components/components/Landlord/Inventory/Form/SuspendAgreementForm"
 
 export default {
     name: "TableRecord",

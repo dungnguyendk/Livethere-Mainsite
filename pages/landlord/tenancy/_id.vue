@@ -1,10 +1,10 @@
 <template lang="html">
     <main>
-        <!--        <template v-if="loggedIn">
+        <template v-if="loggedIn">
             <LandlordPortal>
                 <InventoryDetails />
             </LandlordPortal>
-        </template>-->
+        </template>
     </main>
 </template>
 

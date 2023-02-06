@@ -1,7 +1,8 @@
 <template lang="html">
-    <form class="form form--create-tenancy-agreement" @submit.prevent="submitForm">
+    <form class="form form--landlord form--create-tenancy-agreement" @submit.prevent="submitForm">
         <p class="alert alert--red mb-10" v-if="isShowErrorMessage">{{ errorMessages }}</p>
-        <template v-if="submitted">
+        <template v-if="!confirm">
+            <div class="form__top"> <h3>Suspend agreement</h3> </div>
             <div class="form__fields">
                 <v-row>
                     <v-col cols="12" sm="12" md="6">
@@ -45,11 +46,18 @@
             </div>
             <div class="form__actions">
                 <v-btn class="btn btn--ghost btn--gray btn--sm" @click="onClose"> Cancel</v-btn>
-                <v-btn class="btn btn--primary btn--red btn--sm" type="submit"> Suspend</v-btn>
+                <v-btn class="btn btn--primary btn--red btn--sm" @click="confirm = true">
+                    Suspend
+                </v-btn>
             </div>
         </template>
-
-        <template v-else> </template>
+        <ConfirmBox
+            v-else
+            title="Confirm suspend?"
+            icon="ri-stop-fill"
+            @close="confirm = false"
+            @submit="submitForm"
+        />
     </form>
 </template>
 
@@ -58,9 +66,11 @@ import { validationMixin } from "vuelidate"
 import { required } from "vuelidate/lib/validators"
 import { setFormControlErrors } from "~/ultilities/form-validations"
 import { mapState } from "vuex"
+import ConfirmBox from "~/components/shared/Box/ConfirmBox.vue"
 
 export default {
     name: "SuspendAgreementForm",
+    components: { ConfirmBox },
     mixins: [validationMixin],
     validations: {
         endDate: {
@@ -81,7 +91,7 @@ export default {
             endDateMenu: "",
             endDateRaw: "",
             remark: "",
-            submitted: true,
+            submitted: false,
             isOpenSnackbar: false,
             isShowErrorMessage: false,
             errorMessages: "",
@@ -164,20 +174,6 @@ export default {
                 padding-bottom: 0 !important;
             }
         }
-    }
-}
-
-.radio--custom {
-    &::v-deep(label) {
-        margin-bottom: 0 !important;
-        font-size: 1.4rem;
-    }
-}
-
-.radio-group--optionDate {
-    &::v-deep {
-        margin-top: 0 !important;
-        padding-bottom: 2.4rem;
     }
 }
 </style>
