@@ -101,9 +101,9 @@
                 <AddInventoryForm @close="openAddNewInventoryDialog = false" v-if="openAddNewInventoryDialog"
                     :sourceDetail="source.id" />
             </Dialog>
-            <Dialog :open="openSoldOutDialog" @close="closeDialogSoldOut" size="medium" :title="''"
-                :actions="false">
-                <SoldOutForm @close="openSoldOutDialog = false" v-if="openSoldOutDialog" :sourceDetail="source.id" :source="source" />
+            <Dialog :open="openSoldOutDialog" @close="closeDialogSoldOut" size="medium" :title="''" :actions="false">
+                <SoldOutForm @close="openSoldOutDialog = false" v-if="openSoldOutDialog" :sourceDetail="source.id"
+                    :source="source" />
             </Dialog>
             <DeleteDialog :open="deleteDialog" size="large" type="full" @close="deleteDialog = false"
                 @onSubmit="onDeleteInventory(source.id)" />
