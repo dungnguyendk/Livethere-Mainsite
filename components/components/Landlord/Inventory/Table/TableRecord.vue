@@ -25,7 +25,6 @@
                 class="btn btn--sm btn--ghost btn--red"
                 @click="suspendDialog = true"
             >
-                <i class="ri-stop-circle-line"></i>
                 Suspend
             </v-btn>
             <Dialog
