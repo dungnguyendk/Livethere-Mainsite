@@ -22,7 +22,9 @@ export const httpEndpoint = {
         register: "/api/Registration",
         checkEmail: "/api/Registration/check-email",
         checkPhoneNumber: "/api/Registration/check-contactno",
-        checkUsername: "/api/Registration/check-username"
+        checkUsername: "/api/Registration/check-username",
+        otpSignIn: "/api/Authen/OTP-Login",
+        exchangeLoginToken: "/api/Authen/Exchange-Login-Token"
     },
     inventories: {
         getEntries: "/api/asset-inventories",

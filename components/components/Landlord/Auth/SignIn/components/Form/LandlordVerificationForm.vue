@@ -9,60 +9,144 @@
         </div>
         <div class="form__input">
             <v-otp-input
-                length="4"
+                class="otp--custom"
+                length="6"
                 type="number"
                 v-model="otp"
                 :disabled="loading"
                 @finish="onFinish"
-            ></v-otp-input>
-            <v-overlay absolute :value="loading">
-                <v-progress-circular indeterminate color="primary"></v-progress-circular>
-            </v-overlay>
+                @input="onChangeOtpInput"
+            />
         </div>
         <v-snackbar v-model="snackbar" :color="snackbarColor" :timeout="2000">
-            [
-
             {{ text }}
         </v-snackbar>
+
+        <p v-if="httpError !== ''" class="alert alert--red">
+            {{ httpError }}
+        </p>
         <div class="form__button">
-            <v-btn @click="onSubmit">Submit</v-btn>
+            <v-btn
+                class="btn btn--primary btn--green btn--submit"
+                :loading="loading"
+                @click="signInWithoutOtp"
+            >
+                Submit
+            </v-btn>
         </div>
 
         <div class="form__link">
-            <p>Didn't receive code? <NuxtLink to="/landlord/signin"> Resend OTP Again</NuxtLink></p>
+            <p>
+                Didn't receive code?
+                <v-btn :disabled="countdown === 0" text>Resend OTP Again</v-btn>
+            </p>
         </div>
         <!-- End Login form -->
     </div>
 </template>
 
 <script>
+import { mapState } from "vuex"
+
 export default {
-    name: "LandordForgotPasswordForm",
+    name: "LandlordVerificationForm",
+    computed: {
+        ...mapState({
+            userID: (state) => state.user.userID
+        })
+    },
     data: () => ({
         loading: false,
         snackbar: false,
         snackbarColor: "default",
         otp: "",
         text: "",
-        expectedOtp: "2006"
+        expectedOtp: "2006",
+        inputOtp: "",
+        httpError: "",
+        countdown: 15
     }),
     methods: {
-        onFinish(rsp) {
-            /* this.loading = true
-            setTimeout(() => {
-                this.loading = false
-                this.snackbarColor = rsp === this.expectedOtp ? "success" : "warning"
-                this.text = `Processed OTP with "${rsp}" (${this.snackbarColor})`
-                this.snackbar = true
-            }, 3500)*/
+        handleCountDown() {
+            setInterval(
+                function () {
+                    if (this.countdown > 0) {
+                        this.countdown--
+                    }
+                }.bind(this),
+                1000
+            )
         },
-        onSubmit() {
-            this.$router.push("/landlord/signin")
+
+        onFinish(inputText) {
+            this.inputOtp = inputText
+        },
+        onChangeOtpInput(text) {
+            console.log({ text })
+            this.loading = false
+            this.httpError = ""
+        },
+
+        async signInWithoutOtp() {
+            if (this.inputOtp !== "" && this.inputOtp.length === 6) {
+                this.loading = true
+                const params = {
+                    exchangeID: this.$route.query.token,
+                    userID: this.userID,
+                    otp: this.inputOtp,
+                    clientIPAddress: "192.168.1.1",
+                    clientUserAgent:
+                        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/89.0.4389.82 Safari/537.36",
+                    timeZone: "8"
+                }
+
+                const response = await this.$auth.loginWith("local", {
+                    data: params
+                })
+                this.handleCountDown()
+                this.loading = false
+                if (response && response.data) {
+                    this.otp = ""
+                    if (response.data.valid) {
+                        const { jwtToken } = response.data
+                        if (jwtToken) {
+                            this.httpError = "Logged in successfully"
+                            //window.location.href = "/landlord"
+                        } else {
+                            this.httpError = "The credentials is invalid. Please try again."
+                        }
+                    } else {
+                        this.httpError = response.data.message
+                            ? response.data.message
+                            : "The opt is invalid. Please try again."
+                    }
+                } else {
+                    this.httpError = "The credentials is incorrect. Please try again."
+                }
+            } else {
+                this.httpError = "Please enter a valid OTP (6 digits)."
+            }
         }
     }
 }
 </script>
 <style lang="scss" scoped>
+.otp--custom {
+    &::v-deep(.v-input--is-dirty) {
+        .v-input__control {
+            fieldset {
+                border-color: var(--color-yellow) !important;
+            }
+
+            input {
+                font-size: 1.6rem;
+                font-weight: 700;
+                color: var(--color-yellow) !important;
+            }
+        }
+    }
+}
+
 .form--otp {
     padding-top: 8.2rem;
     font-family: var(--font-primary);
@@ -74,9 +158,11 @@ export default {
     max-width: 375px;
     margin-left: auto;
     margin-right: auto;
+
     h3 {
         margin-bottom: 0;
     }
+
     .form__title {
         display: flex;
         justify-content: center;
@@ -90,9 +176,11 @@ export default {
         text-align: center;
         color: var(--color-title-black);
     }
+
     .form__instruction {
         padding-top: 3rem;
         padding-bottom: 2.4rem;
+
         p {
             font-family: var(--font-primary);
             font-style: normal;
@@ -104,8 +192,8 @@ export default {
             margin-bottom: 0;
         }
     }
+
     .form__input {
-        width: 22.8rem;
         margin-left: auto;
         margin-right: auto;
         font-family: var(--font-primary);
@@ -113,10 +201,12 @@ export default {
         font-weight: 700;
         padding-bottom: 4.4rem;
     }
+
     .form__button {
         display: flex;
         justify-content: center;
         align-items: center;
+
         button {
             background: var(--color-menu);
             width: 100%;
@@ -131,14 +221,17 @@ export default {
             font-style: normal;
         }
     }
+
     .form__link {
         padding-top: 3.4rem;
         display: flex;
         justify-content: center;
+
         p {
             margin: 0;
             font-size: 16px;
         }
+
         a {
             font-weight: 700;
             text-decoration-line: underline;
@@ -147,11 +240,13 @@ export default {
         }
     }
 }
+
 @media (max-width: 768px) {
     .form--otp {
         max-width: 33rem;
     }
 }
+
 @media (max-width: 390px) {
     .form--otp {
         max-width: 30rem;
