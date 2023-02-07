@@ -53,8 +53,8 @@ export default {
             return this.dashboard
                 ? {
                     name: "average",
-                    headerTitle: `Average Yield ${this.dashboard.lastYear}`,
-                    footerTitle: `Average Yield ${this.dashboard.currentYear}`,
+                    headerTitle: `Average Yield ${this.dashboard.currentYear}`,
+                    footerTitle: `Average Yield ${this.dashboard.lastYear}`,
                     averageYieldThisYear: this.dashboard.averageYieldThisYear ? this.dashboard.averageYieldThisYear.toFixed(2) : 0,
                     averageYieldThisYearCompare: this.dashboard.averageYieldThisYearCompare ? this.dashboard.averageYieldThisYearCompare.toFixed(2) : 0,
                     averageYieldLastYear: this.dashboard.averageYieldLastYear ? this.dashboard.averageYieldLastYear.toFixed(2) : 0,

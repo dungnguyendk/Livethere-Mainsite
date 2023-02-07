@@ -68,6 +68,7 @@ export default {
     computed: {
         ...mapState({
             statusResponse: (state) => state.inventories.statusResponse,
+            statusFID: (state) => state.inventories.typeSelect
         }),
         soldOutDateFormattedErrors() {
             return setFormControlErrors(this.$v.soldOutDateFormatted, "Sold Out Date is required")
