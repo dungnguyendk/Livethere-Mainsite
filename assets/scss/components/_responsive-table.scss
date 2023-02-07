@@ -64,12 +64,13 @@
 					grid-gap: 3rem;
 					border: none;
 					padding: 1.6rem;
+					font-size: 1.4rem;
 					border-top: none;
 					&:before {
 						content: attr(data-label);
 						font-weight: 700;
 						color: #0B0C0C;
-						font-size: 1.6rem;
+						font-size: 1.4rem;
 						text-align: left;
 					}
 				}
