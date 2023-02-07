@@ -32,7 +32,7 @@ export default {
         },
         size: {
             type: String,
-            default: "medium"
+            default: "medium" // small, medium, large
         },
         title: {
             type: String,
