@@ -27,6 +27,7 @@ export default {
 <style lang="scss" scoped>
 .section--home-cta{
     height: 25.4rem;
+    margin-top: 10.6rem;
     .section__container{
         display: flex;
         justify-content: center;

@@ -6,26 +6,51 @@
                     <div class="section__top-left">&nbsp;</div>
                     <h3 class="section__top-title">Popular listings</h3>
                     <div class="section__top-right">
-                        <div class="section__top-right-process">
-                            <button>
+                        <div class="section__top-process">
+                            <button @click="onPreviousSlide()">
                                 <i class="ri-arrow-left-s-line"></i>
                             </button>
-                            <div>
-                                <p>01</p>
-                                <div class="section__top-right-ruler">
-                                <div class="section__top-right-scroll"></div>
+                            <div class="section__top-ruler-wrapper">
+                                <p>{{ preNumber }}</p>
+                                <div class="section__top-ruler">
+                                <div class="section__top-scroll" :style="{'width' : width + '%'}"></div>
                                 </div>
-                                <p>03</p>
+                                <p>{{ nextNumber }}</p>
                             </div>
-                            <button>
+                            <button @click="onNextSlide()">
                                 <i class="ri-arrow-right-s-line"></i>
                             </button>
                         </div>
-                   </div>
                     </div>
                 </div>
                 <div class="section__body">
-                   
+                        <div class="swiper-item" v-for="item in popularListing" :key="item.id" >
+                        <div class="swiper-box" v-for="element in item.subListing" :key="element.id">
+                            <div class="swiper-box__top">
+                                <div class="swiper-box__image">
+                                    <img :src="element.imgURL" alt=""/>
+                                </div>
+                                <h3 class="swiper-box__title">{{ element.title }}</h3>
+                            </div>
+                            <div class="swiper-box__content">
+                                <div class="swiper-box__content-first">
+                                    <img :src="element.imgURLIconFirst" alt=""/>
+                                    <p>{{ element.address }}</p>
+                                </div>
+                                <div class="swiper-box__content-second">
+                                    <div>
+                                        <img :src="element.imgURLIconSecond" alt=""/>
+                                        <p>{{ element.totalBed }}</p>
+                                    </div>
+                                    <div>
+                                        <img :src="element.imgURLIconThird" alt=""/>
+                                        <p>{{ element.totalBath }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+              
+                    </div>
 
                 </div>
             </div>
@@ -58,7 +83,7 @@ export default {
                     subListing: [
                         {
                             id: 1,
-                            title: "Waterfront Bungalow at Ocean Drive",
+                            title: "Waterfront Bungalow",
                             imgURL: require(`../../../../static/img/listing1.png`),
                             imgURLIconFirst: require(`../../../../static/img/home-icon1.png`),
                             imgURLIconSecond: require(`../../../../static/img/home-icon2.png`),
@@ -91,84 +116,27 @@ export default {
                         }
                     ]
                 },
-                {
-                    id: 2,
-                    subListing: [
-                        {
-                            id: 4,
-                            title: "Skypark @ Somerset",
-                            imgURL: require(`../../../../static/img/listing3.png`),
-                            imgURLIconFirst: require(`../../../../static/img/home-icon1.png`),
-                            imgURLIconSecond: require(`../../../../static/img/home-icon2.png`),
-                            imgURLIconThird: require(`../../../../static/img/home-icon3.png`),
-                            address: "Ocean Drive, Singapore 098314",
-                            totalBed: 4,
-                            totalBath: 4
-                        },
-                        {
-                            id: 5,
-                            title: "Waterfront Bungalow at Ocean Drive",
-                            imgURL: require(`../../../../static/img/listing2.png`),
-                            imgURLIconFirst: require(`../../../../static/img/home-icon1.png`),
-                            imgURLIconSecond: require(`../../../../static/img/home-icon2.png`),
-                            imgURLIconThird: require(`../../../../static/img/home-icon3.png`),
-                            address: "Ocean Drive, Singapore 098314",
-                            totalBed: 5,
-                            totalBath: 3
-                        },
-                        {
-                            id: 6,
-                            title: "Waterfront Bungalow at Ocean Drive",
-                            imgURL: require(`../../../../static/img/listing1.png`),
-                            imgURLIconFirst: require(`../../../../static/img/home-icon1.png`),
-                            imgURLIconSecond: require(`../../../../static/img/home-icon2.png`),
-                            imgURLIconThird: require(`../../../../static/img/home-icon3.png`),
-                            address: "Ocean Drive, Singapore 098314",
-                            totalBed: 6,
-                            totalBath: 9
-                        }
-                    ]
-                },
-                {
-                    id: 3,
-                    subListing: [
-                        {
-                            id: 1,
-                            title: "Waterfront Bungalow at Ocean Drive",
-                            imgURL: require(`../../../../static/img/listing1.png`),
-                            imgURLIconFirst: require(`../../../../static/img/home-icon1.png`),
-                            imgURLIconSecond: require(`../../../../static/img/home-icon2.png`),
-                            imgURLIconThird: require(`../../../../static/img/home-icon3.png`),
-                            address: "Ocean Drive, Singapore 098314",
-                            totalBed: 4,
-                            totalBath: 4
-                        },
-                        {
-                            id: 2,
-                            title: "Skypark @ Somerset",
-                            imgURL: require(`../../../../static/img/listing2.png`),
-                            imgURLIconFirst: require(`../../../../static/img/home-icon1.png`),
-                            imgURLIconSecond: require(`../../../../static/img/home-icon2.png`),
-                            imgURLIconThird: require(`../../../../static/img/home-icon3.png`),
-                            address: "Ocean Drive, Singapore 098314",
-                            totalBed: 4,
-                            totalBath: 4
-                        },
-                        {
-                            id: 3,
-                            title: "Soleil @ Sinaran",
-                            imgURL: require(`../../../../static/img/listing3.png`),
-                            imgURLIconFirst: require(`../../../../static/img/home-icon1.png`),
-                            imgURLIconSecond: require(`../../../../static/img/home-icon2.png`),
-                            imgURLIconThird: require(`../../../../static/img/home-icon3.png`),
-                            address: "Ocean Drive, Singapore 098314",
-                            totalBed: 4,
-                            totalBath: 4
-                        }
-                    ]
-                }
             ],
-            width: 2
+            width: 14.3, //14.3 giá trị này tùy thuộc vào số lượng slide có trong carousel
+            preNumber: 1, 
+            nextNumber: 7
+        }
+    }, 
+    methods: {
+        onPreviousSlide(){
+            if(this.width > 14.3){
+                let plusNumber = (((9 / this.nextNumber) / 9) * 100)
+                this.width = Number(this.width.toFixed(1)) - Number(plusNumber.toFixed(1)) 
+                console.log("this.width: ", this.width)
+            }
+        }, 
+        onNextSlide(){
+            if(this.width < 100){
+                let plusNumber = (((9 / this.nextNumber) / 9) * 100)
+                this.width = Number(this.width.toFixed(1)) + Number(plusNumber.toFixed(1)) 
+                console.log("this.width: ", this.width)
+
+            }
         }
     }
 }
@@ -187,6 +155,7 @@ export default {
     align-items: center;
     margin-bottom: 3.4rem;
     .section__top-left {
+        width: 23.7rem;
     }
     .section__top-title {
         font-weight: 800;
@@ -199,39 +168,55 @@ export default {
 }
 .section__body {
 }
-.section__top-right-process {
+.section__top-process {
     display: flex;
     justify-content: center;
     align-items: center;
     button {
         display: flex;
         align-items: center;
+        i {
+            font-size: 1.8rem;
+        }
     }
-    .section__top-right-ruler {
-        width: 9rem;
-        background-color: var(--border-color);
-        border-radius: 10rem;
-        height: 1rem;
-        overflow: hidden;
-        position: relative;
-        .section__top-right-scroll {
-            height: 1rem;
-            width: 2rem;
-            background-color: var(--color-primary);
+
+    .section__top-ruler-wrapper {
+        display: flex; 
+        align-items: center;
+        justify-content: space-between;
+        margin: 0 2.85rem;
+        p{
+            margin-bottom: 0;
+            font-weight: 400; 
+            font-size: 1.6rem;
+            line-height: 2.8rem;
+        }
+        .section__top-ruler {
+            margin: 0 0.8rem;
+            width: 9rem;
+            background-color: var(--border-color);
             border-radius: 10rem;
-            position: absolute;
-            z-index: 8;
-            right: 1rem;
+            height: 0.2rem;
+            overflow: hidden;
+            position: relative;
+            .section__top-scroll {
+                height: 0.2rem;
+                background-color: var(--color-primary);
+                border-radius: 10rem;
+                position: absolute;
+                z-index: 8;
+                left: 0;
+            }
         }
     }
 }
-.swiper {
+
     .swiper-item {
         display: flex;
-        justify-content: center;
+        justify-content: space-between;
         align-items: center;
     }
-}
+
 .swiper-box {
     width: 30.77%;
     .swiper-box__top {
@@ -258,9 +243,37 @@ export default {
         }
     }
     .swiper-box__content {
+        margin-top: 0.95rem;
         .swiper-box__content-first {
+            display: flex;
+            align-items: center;
+            margin-bottom: 2.134rem;
+            p{
+                margin-bottom: 0;
+                font-weight: 500;
+                font-size: 1.6rem;
+                line-height: 2.4rem;
+                color: var(--color-title-black); 
+                margin-left: 1.25rem;
+            }
         }
         .swiper-box__content-second {
+            display: flex;
+            align-items: center;
+            div{
+                display: flex;
+                align-items: center;
+                p{
+                    margin-bottom: 0;
+                    margin-left: 1.25rem;
+                }
+                img{
+
+                }
+                &:first-child{
+                    margin-right: 5.279rem;
+                }
+            }
         }
     }
     &:nth-child(2) {

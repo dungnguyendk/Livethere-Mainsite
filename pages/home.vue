@@ -3,6 +3,7 @@
         <HomeBannerSection />
         <HomeIntroSection />
         <HomePopularListingSection/>
+        <HomeLatestProjectsSection/>
         <HomeCTASection />
     </main>
 </template>
@@ -12,9 +13,10 @@ import HomeBannerSection from "~/components/components/Section/Home/HomeBannerSe
 import HomeIntroSection from "~/components/components/Section/Home/HomeIntroSection.vue"
 import HomeCTASection from "~/components/components/Section/Home/HomeCTASection"
 import HomePopularListingSection from '~/components/components/Section/Home/HomePopularListingSection'
+import HomeLatestProjectsSection from '~/components/components/Section/Home/HomeLatestProjectsSection'
 
 export default {
-    components: { HomeIntroSection, HomeCTASection, HomeBannerSection,HomePopularListingSection },
+    components: { HomeIntroSection, HomeCTASection, HomeBannerSection,HomePopularListingSection, HomeLatestProjectsSection },
     head: {
         title: "Livethere"
     },
