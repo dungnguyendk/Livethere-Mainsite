@@ -83,7 +83,7 @@ export default {
                     subListing: [
                         {
                             id: 1,
-                            title: "Waterfront Bungalow",
+                            title: "Waterfront Bungalow at Ocean Drive",
                             imgURL: require(`../../../../static/img/listing1.png`),
                             imgURLIconFirst: require(`../../../../static/img/home-icon1.png`),
                             imgURLIconSecond: require(`../../../../static/img/home-icon2.png`),
@@ -143,7 +143,9 @@ export default {
 </script>
 <style lang="scss" scoped>
 .section--home-popular-listing {
-    margin-top: 16.3rem;
+    margin-top: 10.4rem;
+    padding:  5.9rem 0; 
+    background-color: var(--bg-color-white);
     .container {
         .section__container {
         }
@@ -240,6 +242,13 @@ export default {
             margin-bottom: 0;
             left: -1.2rem;
             width: 85.9%;
+            text-align: left;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
         }
     }
     .swiper-box__content {
