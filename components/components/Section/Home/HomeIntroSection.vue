@@ -98,8 +98,9 @@ export default {
 .section__right {
     width: 45.43%;
     padding-left: 4rem;
+    padding-top: 4rem;
     .section__right-image {
-        margin-bottom: 6rem;
+        margin-bottom: 4rem;
         img {
             object-fit: cover;
         }

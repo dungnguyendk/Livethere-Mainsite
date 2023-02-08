@@ -182,6 +182,8 @@ export default {
         align-items: center;
         i {
             font-size: 1.8rem;
+            color: var(--color-primary);
+            
         }
     }
 
@@ -192,9 +194,10 @@ export default {
         margin: 0 2.85rem;
         p{
             margin-bottom: 0;
-            font-weight: 400; 
+            font-weight: 700; 
             font-size: 1.6rem;
             line-height: 2.8rem;
+            color: var(--color-primary)
         }
         .section__top-ruler {
             margin: 0 0.8rem;
@@ -223,7 +226,7 @@ export default {
     }
 
 .swiper-box {
-    width: 30.77%;
+    width: 30.11%;
     .swiper-box__top {
         position: relative;
 
@@ -261,18 +264,19 @@ export default {
         }
     }
     .swiper-box__content {
-        margin-top: 0.95rem;
+        padding-top: 0.9rem;
         .swiper-box__content-first {
             display: flex;
             align-items: center;
-            margin-bottom: 1.8rem;
+            margin-bottom: 1rem;
             p{
                 margin-bottom: 0;
                 font-weight: 500;
                 font-size: 1.6rem;
                 line-height: 2.4rem;
                 color: var(--color-title-black); 
-                margin-left: 0.8rem;
+                padding-left: 1rem;
+
             }
         }
         .swiper-box__content-second {
@@ -284,12 +288,13 @@ export default {
                 p{
                     margin-bottom: 0;
                     margin-left: 0.8rem;
+                    color: var(--color-title-black);
                 }
                 img{
 
                 }
                 &:first-child{
-                    margin-right: 5.279rem;
+                    margin-right: 4.6rem;
                 }
             }
         }

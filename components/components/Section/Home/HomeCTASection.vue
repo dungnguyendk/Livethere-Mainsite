@@ -27,6 +27,7 @@ export default {
 <style lang="scss" scoped>
 .section--home-cta{
     height: 25.4rem;
+    border-bottom: 0.1rem solid var(--border-color);
     .section__container{
         display: flex;
         justify-content: center;
