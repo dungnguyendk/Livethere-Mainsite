@@ -31,7 +31,7 @@
                                     <img :src="element.imgURL" alt=""/>
                                 </div>
                                 <div class="swiper-box__title">
-                                    <nuxt-link to="" class="swiper-box__title-link"> {{ element.title }} </nuxt-link>
+                                    <nuxt-link to="/" class="swiper-box__title-link"> {{ element.title }} </nuxt-link>
                                 </div>
                             </div>
                             <div class="swiper-box__content">
