@@ -107,6 +107,7 @@ export default {
         line-height: 2.8rem;
         color: var(--color-primary);
         margin-bottom: 0;
+        text-align: center;
     }
     .section__top-right {
     }
