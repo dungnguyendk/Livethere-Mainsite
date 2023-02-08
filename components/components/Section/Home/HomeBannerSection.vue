@@ -31,7 +31,7 @@ export default {
 <style lang="scss" scoped>
 .section--home-banner{ 
     height: 54rem;
-    margin-bottom: 18.5rem;
+    margin-bottom: 8.1rem;
     .section__container{ 
         display: flex;
         justify-content: center;

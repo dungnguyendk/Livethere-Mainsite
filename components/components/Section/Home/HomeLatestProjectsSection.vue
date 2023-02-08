@@ -86,7 +86,8 @@ export default {
 
 <style lang="scss" scoped>
 .section--home-latest-projects {
-    padding-top: 8rem;
+    padding: 8rem;
+    margin-bottom: 2.6rem;
     .container {
         .section__container {
         }
@@ -105,6 +106,7 @@ export default {
         font-size: 2rem;
         line-height: 2.8rem;
         color: var(--color-primary);
+        margin-bottom: 0;
     }
     .section__top-right {
     }

@@ -40,6 +40,7 @@ export default {
 
 <style lang="scss" scoped>
 .section--home-intro {
+    padding: 10.4rem 0;
     .container {
         .section__container {
             display: flex;
@@ -74,11 +75,9 @@ export default {
     }
 }
 .section__left {
-    width: 53.41%;
+    width: 54.57%;
     display: flex;
-    padding-right: 7.3rem;
     .image-first {
-        margin-right: 1.5rem;
         width: 100%;
         img {
             object-fit: cover;
@@ -87,8 +86,7 @@ export default {
         }
     }
     .image-second {
-        margin-left: 1.5rem;
-        margin-top: 7.2rem;
+        margin: 7.2rem 3rem 0;
         width: 100%;
         img {
             object-fit: cover;
@@ -98,7 +96,8 @@ export default {
     }
 }
 .section__right {
-    width: 46.59%;
+    width: 45.43%;
+    padding-left: 4rem;
     .section__right-image {
         margin-bottom: 6rem;
         img {

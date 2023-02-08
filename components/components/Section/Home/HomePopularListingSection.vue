@@ -145,7 +145,6 @@ export default {
 </script>
 <style lang="scss" scoped>
 .section--home-popular-listing {
-    margin-top: 10.4rem;
     padding:  5.9rem 0; 
     background-color: var(--bg-color-white);
     .container {
@@ -166,6 +165,7 @@ export default {
         font-size: 2rem;
         line-height: 2.8rem;
         color: var(--color-primary);
+        margin-bottom: 0;
     }
     .section__top-right {
     }
@@ -264,7 +264,7 @@ export default {
         .swiper-box__content-first {
             display: flex;
             align-items: center;
-            margin-bottom: 2.134rem;
+            margin-bottom: 1.8rem;
             p{
                 margin-bottom: 0;
                 font-weight: 500;
