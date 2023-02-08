@@ -7,12 +7,24 @@
             </p>
 
             <div class="form__field">
+                <label class="required">Current Password</label>
+                <v-text-field
+                    v-model="oldPassword"
+                    type="password"
+                    outlined
+                    dense
+                    @input="onInputField"
+                    :error-messages="oldPasswordErrors"
+                />
+            </div>
+            <div class="form__field">
                 <label class="required">Password</label>
                 <v-text-field
                     v-model="password"
                     type="password"
                     outlined
                     dense
+                    @input="onInputField"
                     :error-messages="passwordErrors"
                 />
             </div>
@@ -23,23 +35,28 @@
                     type="password"
                     outlined
                     dense
-                    :error-messages="passwordErrors"
+                    @input="onInputField"
+                    :error-messages="confirmPasswordErrors"
                 />
             </div>
         </div>
 
         <div class="form__actions">
-            <v-btn class="btn btn--primary btn--green" @click="onSubmit">Login</v-btn>
+            <v-btn class="btn btn--primary btn--green" @click="onSubmit">Change password</v-btn>
+            <nuxt-link to="/landlord"> Back</nuxt-link>
         </div>
     </form>
 </template>
 
 <script>
 import { validationMixin } from "vuelidate"
-import { required } from "vuelidate/lib/validators"
-import { setFormControlErrors } from "~/ultilities/form-validations"
+import { helpers, required, sameAs } from "vuelidate/lib/validators"
 import { httpEndpoint } from "~/services/https/endpoints"
 
+const complexity = helpers.regex(
+    "complexity",
+    /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/
+)
 export default {
     name: "LandlordChangePasswordForm",
     mixins: [validationMixin],
@@ -47,11 +64,17 @@ export default {
         email: {
             required
         },
-        password: {
+        oldPassword: {
             required
         },
+        password: {
+            required,
+            complexity
+        },
         confirmPassword: {
-            required
+            required,
+            sameAsPassword: sameAs("password"),
+            complexity
         }
     },
     props: {
@@ -61,87 +84,75 @@ export default {
         }
     },
     computed: {
-        emailErrors() {
-            return setFormControlErrors(this.$v.email, "This field is required")
+        oldPasswordErrors() {
+            const errors = []
+            if (!this.$v.oldPassword.$dirty) return errors
+            !this.$v.oldPassword.required && errors.push("This field is required.")
+            return errors
         },
-
         passwordErrors() {
-            return setFormControlErrors(this.$v.password, "This field is required")
+            const errors = []
+            if (!this.$v.password.$dirty) return errors
+            !this.$v.password.required && errors.push("This field is required.")
+            !this.$v.password.complexity &&
+                errors.push(
+                    "Password needs: at least 8 characters, 1 uppercase character, 1 number and 1 special character"
+                )
+            return errors
+        },
+        confirmPasswordErrors() {
+            const errors = []
+            if (!this.$v.confirmPassword.$dirty) return errors
+            !this.$v.confirmPassword.required && errors.push("This field is required.")
+            !this.$v.confirmPassword.sameAsPassword && errors.push("Passwords do not match.")
+            !this.$v.confirmPassword.complexity &&
+                errors.push(
+                    "Password needs: at least 8 characters, 1 uppercase character, 1 number and 1 special character"
+                )
+            return errors
         }
     },
 
     data() {
         return {
             email: "",
+            oldPassword: "",
             password: "",
             confirmPassword: "",
-            httpError: ""
+            httpError: "",
+            loading: false
         }
     },
     methods: {
-        async signInWithoutOtp() {
+        onInputField() {
+            this.httpError = ""
+        },
+        async onChangePassword() {
+            this.loading = true
             const params = {
-                username: this.email, //"tester",
-                password: this.password, //"tester@123",
-                clientIPAddress: "11",
-                clientUserAgent: "11",
-                timeZone: "8"
+                oldPassword: this.oldPassword,
+                newPassword: this.password
             }
-            const response = await this.$auth.loginWith("local", {
-                data: params
-            })
+            const response = await this.$axios.$post(httpEndpoint.user.changePassword, params)
 
             if (response) {
-                if (response.data) {
-                    const { jwtToken } = response.data
-                    if (jwtToken) {
-                        window.location.href = "/landlord"
-                    } else {
-                        this.httpError = "The credentials is invalid. Please try again."
-                    }
-                } else {
-                    this.httpError = "The credentials is incorrect. Please try again."
-                }
+                this.loading = false
+                this.httpError = ""
+                await this.$store.dispatch("app/showSnackBar", "Change password successful.")
+                await this.$router.push({ name: "/landlord/signin" })
             } else {
-                this.httpError = "The credentials is incorrect. Please try again."
+                this.httpError = response.data.message
             }
         },
-        async signInWithOtp() {
-            const params = {
-                username: this.email, //"tester",
-                password: this.password //"tester@123"
-            }
-            const response = await this.$axios.$post(httpEndpoint.auth.otpSignIn, params)
-            if (response && response.valid) {
-                this.$store.commit("user/setUserID", response.userID)
-                await this.$router.push(`/landlord/signin/verify-otp?token=${response.exchangeID}`)
-            }
-            /*if (response) {
-                if (response.data) {
-                    const { jwtToken } = response.data
-                    if (jwtToken) {
-                        window.location.href = "/landlord"
-                    } else {
-                        this.httpError = "The credentials is invalid. Please try again."
-                    }
-                } else {
-                    this.httpError = "The credentials is incorrect. Please try again."
-                }
-            } else {
-                this.httpError = "The credentials is incorrect. Please try again."
-            }*/
-        },
+
         async onSubmit() {
             this.$v.$touch()
             try {
                 this.httpError = ""
                 if (!this.$v.$invalid) {
-                    if (this.otp) {
-                        await this.signInWithOtp()
-                    } else {
-                        await this.signInWithoutOtp()
-                    }
+                    await this.onChangePassword()
                 } else {
+                    this.httpError = "Your information is invalid. Please try again."
                 }
             } catch (e) {
                 console.log({ Error: e.message })
@@ -225,6 +236,10 @@ export default {
     .form__actions {
         display: flex;
         justify-content: space-between;
+        align-items: center;
+        flex-flow: column wrap;
+        grid-gap: 1.2rem;
+        gap: 1.2rem;
 
         .btn {
             width: 100%;
@@ -240,18 +255,6 @@ export default {
             line-height: 20px;
             color: var(--color-heading);
         }
-    }
-}
-
-@media (max-width: 768px) {
-    .signin__form {
-        max-width: 33rem;
-    }
-}
-
-@media (max-width: 768px) {
-    .signin__form {
-        max-width: 30rem;
     }
 }
 </style>

@@ -4,7 +4,8 @@ export const httpEndpoint = {
         getEntryByID: "api/Site/get-by-id"
     },
     user: {
-        getLandlordUserInfo: "api/User/LogonUser"
+        getLandlordUserInfo: "api/User/LogonUser",
+        changePassword: "/api/Authen/change-password"
     },
 
     pages: {
