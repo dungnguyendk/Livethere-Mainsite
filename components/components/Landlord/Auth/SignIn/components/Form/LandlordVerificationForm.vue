@@ -29,7 +29,7 @@
             <v-btn
                 class="btn btn--primary btn--green btn--submit"
                 :loading="loading"
-                @click="signInWithoutOtp"
+                @click="handleSignIn"
             >
                 Submit
             </v-btn>
@@ -108,7 +108,7 @@ export default {
             this.handleCountDown()
         },
 
-        async signInWithoutOtp() {
+        async handleSignIn() {
             if (this.inputOtp !== "" && this.inputOtp.length === 6) {
                 this.loading = true
                 const params = {
@@ -124,14 +124,14 @@ export default {
                 const response = await this.$auth.loginWith("local", {
                     data: params
                 })
-                this.handleCountDown()
                 this.loading = false
                 if (response && response.data) {
                     this.otp = ""
                     if (response.data.valid) {
                         const { jwtToken } = response.data
                         if (jwtToken) {
-                            this.httpError = "Logged in successfully"
+                            await this.$store.dispatch("app/showSnackBar", "Login successful!")
+                            window.location.href = "/landlord"
                         } else {
                             this.httpError = "The credentials is invalid. Please try again."
                         }
