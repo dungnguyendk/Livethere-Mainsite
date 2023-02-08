@@ -38,10 +38,18 @@
         <div class="form__link">
             <p>
                 Didn't receive code?
-                <v-btn :disabled="countdown === 0" text>Resend OTP Again</v-btn>
+                <a
+                    href="#"
+                    @click.prevent="handleResendOtp"
+                    :class="`btn--resend-otp ${countdown !== 0 ? 'disabled' : ''}`"
+                >
+                    OTP Again
+                </a>
+            </p>
+            <p v-if="countdown !== 0" class="ml-2">
+                <span> 0:{{ countdown < 10 ? `0${countdown}` : countdown }}</span>
             </p>
         </div>
-        <!-- End Login form -->
     </div>
 </template>
 
@@ -64,11 +72,12 @@ export default {
         expectedOtp: "2006",
         inputOtp: "",
         httpError: "",
-        countdown: 15
+        countdown: 0,
+        requestTime: 0
     }),
     methods: {
         handleCountDown() {
-            setInterval(
+            const coundwnInterval = setInterval(
                 function () {
                     if (this.countdown > 0) {
                         this.countdown--
@@ -76,15 +85,27 @@ export default {
                 }.bind(this),
                 1000
             )
+            if (this.countdown === 0) {
+                clearInterval(coundwnInterval)
+            }
+            this.countdown = 15
         },
 
         onFinish(inputText) {
             this.inputOtp = inputText
         },
-        onChangeOtpInput(text) {
-            console.log({ text })
+
+        onChangeOtpInput() {
             this.loading = false
             this.httpError = ""
+        },
+
+        handleResendOtp() {
+            this.countdown = 15
+            this.$store.dispatch("app/showSnackBar", "New OTP has been sent!")
+            this.httpError = ""
+            this.requestTime = this.requestTime + 1
+            this.handleCountDown()
         },
 
         async signInWithoutOtp() {
@@ -111,7 +132,6 @@ export default {
                         const { jwtToken } = response.data
                         if (jwtToken) {
                             this.httpError = "Logged in successfully"
-                            //window.location.href = "/landlord"
                         } else {
                             this.httpError = "The credentials is invalid. Please try again."
                         }
@@ -237,6 +257,14 @@ export default {
             text-decoration-line: underline;
             color: var(--color-menu);
             margin-bottom: 0;
+        }
+
+        .btn--resend-otp {
+            &.disabled {
+                color: var(--color-text) !important;
+                cursor: default;
+                text-decoration: none !important;
+            }
         }
     }
 }
