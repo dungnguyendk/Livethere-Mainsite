@@ -271,7 +271,7 @@ export default {
                 font-size: 1.6rem;
                 line-height: 2.4rem;
                 color: var(--color-title-black); 
-                margin-left: 1.25rem;
+                margin-left: 0.8rem;
             }
         }
         .swiper-box__content-second {
@@ -282,7 +282,7 @@ export default {
                 align-items: center;
                 p{
                     margin-bottom: 0;
-                    margin-left: 1.25rem;
+                    margin-left: 0.8rem;
                 }
                 img{
 
