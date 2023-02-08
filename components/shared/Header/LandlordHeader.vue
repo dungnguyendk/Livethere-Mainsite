@@ -38,6 +38,11 @@
                                         <nuxt-link to="/landlord"> Dashboard</nuxt-link>
                                     </v-list-item>
                                     <v-list-item>
+                                        <a href="/" @click.prevent="onChangePassword">
+                                            Change password
+                                        </a>
+                                    </v-list-item>
+                                    <v-list-item>
                                         <a href="/" @click.prevent="onLogout">Logout</a>
                                     </v-list-item>
                                 </v-list>
@@ -100,13 +105,15 @@ export default {
         }
     },
     created() {
-        //console.log({ userInfo: this.userInfo })
         if (!this.userInfo) {
             this.$store.dispatch("app/getUserInfo")
         }
     },
 
     methods: {
+        onChangePassword() {
+            this.$router.push("/landlord/change-password")
+        },
         async onLogout() {
             await this.$auth.logout().then(() => {
                 window.location.href = "/landlord/signin"
