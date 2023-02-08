@@ -86,6 +86,7 @@ export default {
 
 <style lang="scss" scoped>
 .section--home-latest-projects {
+    padding-top: 8rem;
     .container {
         .section__container {
         }

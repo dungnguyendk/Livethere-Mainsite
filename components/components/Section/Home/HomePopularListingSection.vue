@@ -30,7 +30,9 @@
                                 <div class="swiper-box__image">
                                     <img :src="element.imgURL" alt=""/>
                                 </div>
-                                <h3 class="swiper-box__title">{{ element.title }}</h3>
+                                <div class="swiper-box__title">
+                                    <nuxt-link to="" class="swiper-box__title-link"> {{ element.title }} </nuxt-link>
+                                </div>
                             </div>
                             <div class="swiper-box__content">
                                 <div class="swiper-box__content-first">
@@ -234,14 +236,19 @@ export default {
         .swiper-box__title {
             position: absolute;
             background-color: #edb842;
-            color: var(--color-white);
-            font-size: 2rem;
-            line-height: 2.8rem;
             padding: 2.2rem 1.6rem 2.5rem;
             bottom: 2.3rem;
             margin-bottom: 0;
+            display: flex;
+            align-items: center;
             left: -1.2rem;
             width: 85.9%;
+            max-height: 7.5rem;
+            box-sizing: border-box;
+            .swiper-box__title-link{
+            color: var(--color-white);
+            font-size: 2rem;
+            line-height: 2.8rem;
             text-align: left;
             text-overflow: ellipsis;
             display: -webkit-box;
@@ -249,6 +256,7 @@ export default {
             line-clamp: 2;
             -webkit-box-orient: vertical;
             overflow: hidden;
+            }
         }
     }
     .swiper-box__content {
