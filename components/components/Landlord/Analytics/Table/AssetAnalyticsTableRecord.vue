@@ -25,6 +25,9 @@
             </div>
             {{ estimatedCapitalGainFormat }}
         </td>
+        <td data-label="Monthly Rental">
+            {{ monthlyRentalFormat }}
+        </td>
         <td data-label="Rental Yield">
             {{ rentalYieldFormat }} %
         </td>
@@ -59,6 +62,9 @@ export default {
         },
         estimatedCapitalGainFormat() {
             return this.source.estimatedCapitalGain ? `SGD ${convertNumberToCommas(this.source.estimatedCapitalGain)}` : '-'
+        },
+        monthlyRentalFormat() {
+            return this.source.monthlyRental ? `SGD ${convertNumberToCommas(this.source.monthlyRental)}` : '-'
         },
         rentalYieldFormat() {
             return this.source.rentalYield ? this.source.rentalYield.toFixed(2) : 0
