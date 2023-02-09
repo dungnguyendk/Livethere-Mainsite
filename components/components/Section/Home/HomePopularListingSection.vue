@@ -151,6 +151,8 @@ export default {
         }
     }
     @media screen and (max-width: 768px) {
+        padding: 4rem 0;
+        margin-bottom: 8.1rem;
         .section__top {
             display: flex;
             justify-content: center;

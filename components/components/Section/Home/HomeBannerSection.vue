@@ -2,7 +2,7 @@
     <section class="section--home-banner">
         <div class="section__container">
             <div class="section__background-image">
-                <v-carousel :interval="interval" :show-arrows="false" hide-delimiters cycle height="540">
+                <v-carousel :interval="interval" :show-arrows="false" hide-delimiters cycle>
                     <v-carousel-item
                         v-for="image in listImageBanner"
                         :key="image.id"
@@ -50,7 +50,6 @@ export default {
 </script>
 <style lang="scss" scoped>
 .section--home-banner {
-    height: 54rem;
     margin-bottom: 8.1rem;
     .section__container {
         display: flex;
@@ -65,7 +64,7 @@ export default {
         .section__text-top {
             position: absolute;
             opacity: 0.4;
-            right: 5rem;
+            
             margin: 0 auto;
             top: 3.5rem;
             width: 60%;
@@ -78,7 +77,6 @@ export default {
     }
 }
 .section__background-image {
-    position: absolute;
     height: 100%;
     width: 100%;
 
@@ -94,6 +92,7 @@ export default {
     opacity: 0.4;
     width: 100%;
     height: 100%;
+    
 }
 .section__text-top {
     position: absolute;

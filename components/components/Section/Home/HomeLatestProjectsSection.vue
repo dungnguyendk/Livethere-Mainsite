@@ -110,6 +110,9 @@ export default {
         }
         .section__body {
             display: block;
+            display: flex;
+            flex-direction: column;
+            gap: 7rem;
         }
     }
 }
