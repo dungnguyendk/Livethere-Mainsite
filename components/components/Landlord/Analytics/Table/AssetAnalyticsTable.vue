@@ -7,8 +7,9 @@
                     <th>Unit No.</th>
                     <th>Purchase Date</th>
                     <th>Purchase Price</th>
-                    <th>Current Estimated Value</th>
-                    <th>Estimated Capital Gain</th>
+                    <th>Current Est Value</th>
+                    <th>Est Capital Gain</th>
+                    <th>Monthly Rental</th>
                     <th>Rental Yield</th>
                 </tr>
             </thead>
@@ -19,7 +20,7 @@
                 </template>
                 <template v-else>
                     <tr>
-                        <td colspan="7">
+                        <td colspan="8">
                             <p class="empty">No data found!</p>
                         </td>
                     </tr>
