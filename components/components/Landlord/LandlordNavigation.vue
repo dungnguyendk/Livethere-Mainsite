@@ -44,12 +44,12 @@ export default {
                     label: "Marketing",
                     path: "/landlord/marketing",
                     value: "/landlord/marketing"
-                },
-                {
+                }
+                /*{
                     label: "Insights",
                     path: "/landlord/insights",
                     value: "/landlord/insights"
-                }
+                }*/
             ]
         }
     },
