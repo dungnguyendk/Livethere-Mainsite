@@ -163,7 +163,7 @@
 
 <script>
 import { validationMixin } from "vuelidate"
-import { required, numeric, helpers } from "vuelidate/lib/validators"
+import { required } from "vuelidate/lib/validators"
 import { setFormControlErrors } from "~/ultilities/form-validations"
 import { convertCommasToNumber, convertNumberToCommas } from "~/ultilities/helpers"
 import { mapState } from "vuex"
@@ -416,17 +416,13 @@ export default {
     }
 }
 
-.radio--custom {
-    &::v-deep(label) {
-        margin-bottom: 0 !important;
-        font-size: 1.4rem;
-    }
+.radio--custom::v-deep(label) {
+    margin-bottom: 0 !important;
+    font-size: 1.4rem;
 }
 
-.radio-group--optionDate {
-    &::v-deep {
-        margin-top: 0 !important;
-        padding-bottom: 2.4rem;
-    }
+.radio-group--optionDate::v-deep {
+    margin-top: 0 !important;
+    padding-bottom: 2.4rem;
 }
 </style>

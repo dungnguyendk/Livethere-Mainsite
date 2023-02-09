@@ -7,7 +7,13 @@
             </p>
             <div class="form__field">
                 <label>Username</label>
-                <v-text-field v-model="email" :error-messages="emailErrors" outlined dense />
+                <v-text-field
+                    v-model="email"
+                    :error-messages="emailErrors"
+                    outlined
+                    dense
+                    @input="onInputChanged"
+                />
             </div>
             <div class="form__field">
                 <label>Password</label>
@@ -21,10 +27,12 @@
             </div>
         </div>
         <div class="form__link">
-            <NuxtLink to="/forgot-password"> Forgot password</NuxtLink>
+            <NuxtLink to="landlord/forgot-password">Forgot password</NuxtLink>
         </div>
         <div class="form__actions">
-            <v-btn class="btn btn--primary btn--green" @click="onSubmit">Login</v-btn>
+            <v-btn class="btn btn--primary btn--green" @click="onSubmit" :loading="loading">
+                Login
+            </v-btn>
         </div>
     </form>
 </template>
@@ -66,10 +74,14 @@ export default {
         return {
             email: "",
             password: "",
-            httpError: ""
+            httpError: "",
+            loading: false
         }
     },
     methods: {
+        onInputChanged() {
+            this.httpError = ""
+        },
         async signInWithoutOtp() {
             const params = {
                 username: this.email, //"tester",
@@ -102,25 +114,21 @@ export default {
                 username: this.email, //"tester",
                 password: this.password //"tester@123"
             }
+            this.loading = true
             const response = await this.$axios.$post(httpEndpoint.auth.otpSignIn, params)
-            if (response && response.valid) {
-                this.$store.commit("user/setUserID", response.userID)
-                await this.$router.push(`/landlord/signin/verify-otp?token=${response.exchangeID}`)
-            }
-            /*if (response) {
-                if (response.data) {
-                    const { jwtToken } = response.data
-                    if (jwtToken) {
-                        window.location.href = "/landlord"
-                    } else {
-                        this.httpError = "The credentials is invalid. Please try again."
-                    }
+            if (response) {
+                if (response.valid) {
+                    this.$store.commit("user/setUserID", response.userID)
+                    await this.$router.push(
+                        `/landlord/signin/verify-otp?token=${response.exchangeID}`
+                    )
                 } else {
-                    this.httpError = "The credentials is incorrect. Please try again."
+                    setTimeout(() => {
+                        this.loading = false
+                        this.httpError = response.message
+                    }, 1000)
                 }
-            } else {
-                this.httpError = "The credentials is incorrect. Please try again."
-            }*/
+            }
         },
         async onSubmit() {
             this.$v.$touch()

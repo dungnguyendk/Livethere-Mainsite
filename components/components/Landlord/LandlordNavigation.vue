@@ -1,10 +1,11 @@
 <template lang="html">
     <nav class="nav--landlord">
         <nuxt-link
-            v-for="item in navigation"
+            v-for="(item, index) in navigation"
             :to="item.value"
             :class="handleActive(item) ? 'active' : ''"
             @click.prevent="onSelectPanel(item)"
+            :key="index"
         >
             {{ item.label }}
         </nuxt-link>

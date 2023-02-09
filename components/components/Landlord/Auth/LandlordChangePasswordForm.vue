@@ -42,7 +42,9 @@
         </div>
 
         <div class="form__actions">
-            <v-btn class="btn btn--primary btn--green" @click="onSubmit">Change password</v-btn>
+            <v-btn class="btn btn--primary btn--green" @click="onSubmit" :loading="loading">
+                Change password
+            </v-btn>
             <nuxt-link to="/landlord"> Back</nuxt-link>
         </div>
     </form>
@@ -50,7 +52,7 @@
 
 <script>
 import { validationMixin } from "vuelidate"
-import { helpers, required, sameAs } from "vuelidate/lib/validators"
+import { helpers, not, required, sameAs } from "vuelidate/lib/validators"
 import { httpEndpoint } from "~/services/https/endpoints"
 
 const complexity = helpers.regex(
@@ -61,20 +63,17 @@ export default {
     name: "LandlordChangePasswordForm",
     mixins: [validationMixin],
     validations: {
-        email: {
-            required
-        },
         oldPassword: {
             required
         },
         password: {
             required,
-            complexity
+            complexity,
+            notSameOldPassword: not(sameAs("oldPassword"))
         },
         confirmPassword: {
             required,
-            sameAsPassword: sameAs("password"),
-            complexity
+            sameAsPassword: sameAs("password")
         }
     },
     props: {
@@ -98,6 +97,8 @@ export default {
                 errors.push(
                     "Password needs: at least 8 characters, 1 uppercase character, 1 number and 1 special character"
                 )
+            !this.$v.password.notSameOldPassword &&
+                errors.push("New password must be different from old password.")
             return errors
         },
         confirmPasswordErrors() {
@@ -105,10 +106,6 @@ export default {
             if (!this.$v.confirmPassword.$dirty) return errors
             !this.$v.confirmPassword.required && errors.push("This field is required.")
             !this.$v.confirmPassword.sameAsPassword && errors.push("Passwords do not match.")
-            !this.$v.confirmPassword.complexity &&
-                errors.push(
-                    "Password needs: at least 8 characters, 1 uppercase character, 1 number and 1 special character"
-                )
             return errors
         }
     },
@@ -133,16 +130,33 @@ export default {
                 oldPassword: this.oldPassword,
                 newPassword: this.password
             }
-            const response = await this.$axios.$post(httpEndpoint.user.changePassword, params)
+            const response = await this.$axios.$put(httpEndpoint.user.changePassword, params)
 
             if (response) {
-                this.loading = false
-                this.httpError = ""
-                await this.$store.dispatch("app/showSnackBar", "Change password successful.")
-                await this.$router.push({ name: "/landlord/signin" })
+                if (response.valid) {
+                    this.httpError = ""
+                    await this.$store.dispatch("app/showSnackBar", "Change password successful.")
+                    setTimeout(() => {
+                        this.loading = false
+                    }, 1200)
+                    await this.onLogout()
+                } else {
+                    this.httpError = response.message
+                    setTimeout(() => {
+                        this.loading = false
+                    }, 1200)
+                }
             } else {
                 this.httpError = response.data.message
             }
+        },
+
+        onResetForm() {},
+
+        async onLogout() {
+            await this.$auth.logout().then(() => {
+                window.location.href = "/landlord/signin"
+            })
         },
 
         async onSubmit() {
@@ -151,8 +165,6 @@ export default {
                 this.httpError = ""
                 if (!this.$v.$invalid) {
                     await this.onChangePassword()
-                } else {
-                    this.httpError = "Your information is invalid. Please try again."
                 }
             } catch (e) {
                 console.log({ Error: e.message })

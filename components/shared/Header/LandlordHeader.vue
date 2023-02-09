@@ -12,6 +12,7 @@
                                 v-for="(item, index) in menus"
                                 :to="`/${item.linkURL}`"
                                 :class="item.linkURL === path ? 'active' : ''"
+                                :key="index"
                             >
                                 {{ item.defaultName }}
                             </nuxt-link>
@@ -180,15 +181,6 @@ export default {
                 transform-origin: 0 100%;
             }
         }
-
-        &.active {
-            /* &:before {
-                 visibility: visible;
-                 opacity: 1;
-                 transform: scale3d(1, 1, 1);
-                 transform-origin: 0 100%;
-             }*/
-        }
     }
 }
 
@@ -199,7 +191,7 @@ export default {
     height: 8rem;
     background-color: var(--color-primary);
 
-    .btn--account::v-deep .v-btn__content {
+    .btn--account::v-deep(.v-btn__content) {
         display: flex;
         justify-content: center;
         align-items: center;

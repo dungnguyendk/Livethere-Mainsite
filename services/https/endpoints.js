@@ -5,7 +5,7 @@ export const httpEndpoint = {
     },
     user: {
         getLandlordUserInfo: "api/User/LogonUser",
-        changePassword: "/api/Authen/change-password"
+        changePassword: "/api/User/change-password"
     },
 
     pages: {
