@@ -26,6 +26,17 @@
                 <v-tooltip bottom v-if="source.name === 'portfolio'">
                     <template v-slot:activator="{ on, attrs }">
                         <div v-bind="attrs" v-on="on" class="icon-warning">
+                            <span class="percent--custom">PPI</span>
+                        </div>
+                    </template>
+                    <span>
+                        Property Performance Index <br />
+                        Index = Current Year Market Value * 100/ Last Year Market Value
+                    </span>
+                </v-tooltip>
+                <v-tooltip bottom v-if="source.name === 'portfolio'">
+                    <template v-slot:activator="{ on, attrs }">
+                        <div v-bind="attrs" v-on="on" class="icon-warning">
                             <img :src="require(`~/static/img/icon-${currentYearRate > 0 ? 'up' : 'down'}.svg`)" alt=""
                                 v-if="currentYearRate" />
                             <span class="percent">{{ currentYearRate? `${currentYearRate}%`: '-' }}</span>
@@ -50,6 +61,17 @@
                 </span>
             </div>
             <div class="widget--percent">
+                <v-tooltip bottom v-if="source.name === 'portfolio'">
+                    <template v-slot:activator="{ on, attrs }">
+                        <div v-bind="attrs" v-on="on" class="icon-warning">
+                            <span class="percent--custom">PAI</span>
+                        </div>
+                    </template>
+                    <span>
+                        Property Asset Index<br />
+                        Index = Current Market Value * 100 / Purchase Price of Portfolio
+                    </span>
+                </v-tooltip>
                 <v-tooltip bottom v-if="source.name === 'portfolio'">
                     <template v-slot:activator="{ on, attrs }">
                         <div v-bind="attrs" v-on="on" class="icon-warning">
@@ -166,7 +188,9 @@ export default {
     }
 }
 
-.widget--percent {}
+.widget--percent {
+    display: flex;
+}
 
 .percent {
     font-weight: 500;
@@ -174,6 +198,11 @@ export default {
     line-height: 2.2rem;
     text-align: right;
     color: #171717;
+
+    &--custom {
+        @extend .percent;
+        font-weight: 700;
+    }
 }
 
 .widget-footer {
