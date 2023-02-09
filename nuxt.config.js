@@ -35,7 +35,6 @@ export default {
         { src: "~plugins/chart.js", ssr: true },
         { src: "~plugins/phone-input.js", ssr: false },
         { src: "~plugins/dayjs.js", ssr: false }, 
-        // { src: "~plugins/swiper.js", ssr: true, mode: "client" },
     ],
 
     buildModules: [

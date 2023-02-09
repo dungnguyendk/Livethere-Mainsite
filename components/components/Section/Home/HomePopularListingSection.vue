@@ -117,27 +117,26 @@ export default {
                             totalBath: 4
                         }
                     ]
-                },
+                }
             ],
             width: 14.3, //14.3 giá trị này tùy thuộc vào số lượng slide có trong carousel
-            preNumber: 1, 
+            preNumber: 1,
             nextNumber: 7
         }
-    }, 
+    },
     methods: {
-        onPreviousSlide(){
-            if(this.width > 14.3){
-                let plusNumber = (((9 / this.nextNumber) / 9) * 100)
-                this.width = Number(this.width.toFixed(1)) - Number(plusNumber.toFixed(1)) 
+        onPreviousSlide() {
+            if (this.width > 14.3) {
+                let plusNumber = (9 / this.nextNumber / 9) * 100
+                this.width = Number(this.width.toFixed(1)) - Number(plusNumber.toFixed(1))
                 console.log("this.width: ", this.width)
             }
-        }, 
-        onNextSlide(){
-            if(this.width < 100){
-                let plusNumber = (((9 / this.nextNumber) / 9) * 100)
-                this.width = Number(this.width.toFixed(1)) + Number(plusNumber.toFixed(1)) 
+        },
+        onNextSlide() {
+            if (this.width < 100) {
+                let plusNumber = (9 / this.nextNumber / 9) * 100
+                this.width = Number(this.width.toFixed(1)) + Number(plusNumber.toFixed(1))
                 console.log("this.width: ", this.width)
-
             }
         }
     }
@@ -145,10 +144,109 @@ export default {
 </script>
 <style lang="scss" scoped>
 .section--home-popular-listing {
-    padding:  5.9rem 0; 
+    padding: 5.9rem 0;
     background-color: var(--bg-color-white);
     .container {
         .section__container {
+        }
+    }
+    @media screen and (max-width: 768px) {
+        .section__top {
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 3.4rem;
+            .section__top-left {
+                width: 0;
+                display: none;
+            }
+            .section__top-title {
+                margin-bottom: 1.9rem;
+          
+            }
+        }
+        .swiper-item {
+            display: flex;
+            flex-direction: column;
+            margin: 0 auto;
+        }
+        .swiper-box {
+            width: auto;
+            margin: 0 auto 4rem;
+            .swiper-box__top {
+                position: relative;
+
+                .swiper-box__image {
+                    img {
+                        width: 100%;
+                        object-fit: cover;
+                        border-radius: 2rem;
+                    }
+                }
+                .swiper-box__title {
+                    position: absolute;
+                    background-color: #edb842;
+                    padding: 2.2rem 1.6rem 2.5rem;
+                    bottom: 2.3rem;
+                    margin-bottom: 0;
+                    display: flex;
+                    align-items: center;
+                    left: -1.2rem;
+                    width: 85.9%;
+                    max-height: 7.5rem;
+                    box-sizing: border-box;
+                    .swiper-box__title-link {
+                        color: var(--color-white);
+                        font-size: 2rem;
+                        line-height: 2.8rem;
+                        text-align: left;
+                        text-overflow: ellipsis;
+                        display: -webkit-box;
+                        -webkit-line-clamp: 2;
+                        line-clamp: 2;
+                        -webkit-box-orient: vertical;
+                        overflow: hidden;
+                    }
+                }
+            }
+            .swiper-box__content {
+                padding-top: 0.9rem;
+                .swiper-box__content-first {
+                    display: flex;
+                    align-items: center;
+                    margin-bottom: 1rem;
+                    p {
+                        margin-bottom: 0;
+                        font-weight: 500;
+                        font-size: 1.6rem;
+                        line-height: 2.4rem;
+                        color: var(--color-title-black);
+                        padding-left: 1rem;
+                    }
+                }
+                .swiper-box__content-second {
+                    display: flex;
+                    align-items: center;
+                    div {
+                        display: flex;
+                        align-items: center;
+                        p {
+                            margin-bottom: 0;
+                            margin-left: 0.8rem;
+                            color: var(--color-title-black);
+                        }
+                        img {
+                        }
+                        &:first-child {
+                            margin-right: 4.6rem;
+                        }
+                    }
+                }
+            }
+            &:nth-child(2) {
+                margin: 0 auto 4rem;
+            }
         }
     }
 }
@@ -183,21 +281,20 @@ export default {
         i {
             font-size: 1.8rem;
             color: var(--color-primary);
-            
         }
     }
 
     .section__top-ruler-wrapper {
-        display: flex; 
+        display: flex;
         align-items: center;
         justify-content: space-between;
         margin: 0 2.85rem;
-        p{
+        p {
             margin-bottom: 0;
-            font-weight: 700; 
+            font-weight: 700;
             font-size: 1.6rem;
             line-height: 2.8rem;
-            color: var(--color-primary)
+            color: var(--color-primary);
         }
         .section__top-ruler {
             margin: 0 0.8rem;
@@ -219,11 +316,11 @@ export default {
     }
 }
 
-    .swiper-item {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
+.swiper-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
 
 .swiper-box {
     width: 30.11%;
@@ -249,17 +346,17 @@ export default {
             width: 85.9%;
             max-height: 7.5rem;
             box-sizing: border-box;
-            .swiper-box__title-link{
-            color: var(--color-white);
-            font-size: 2rem;
-            line-height: 2.8rem;
-            text-align: left;
-            text-overflow: ellipsis;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
+            .swiper-box__title-link {
+                color: var(--color-white);
+                font-size: 2rem;
+                line-height: 2.8rem;
+                text-align: left;
+                text-overflow: ellipsis;
+                display: -webkit-box;
+                -webkit-line-clamp: 2;
+                line-clamp: 2;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
             }
         }
     }
@@ -269,31 +366,29 @@ export default {
             display: flex;
             align-items: center;
             margin-bottom: 1rem;
-            p{
+            p {
                 margin-bottom: 0;
                 font-weight: 500;
                 font-size: 1.6rem;
                 line-height: 2.4rem;
-                color: var(--color-title-black); 
+                color: var(--color-title-black);
                 padding-left: 1rem;
-
             }
         }
         .swiper-box__content-second {
             display: flex;
             align-items: center;
-            div{
+            div {
                 display: flex;
                 align-items: center;
-                p{
+                p {
                     margin-bottom: 0;
                     margin-left: 0.8rem;
                     color: var(--color-title-black);
                 }
-                img{
-
+                img {
                 }
-                &:first-child{
+                &:first-child {
                     margin-right: 4.6rem;
                 }
             }

@@ -48,7 +48,19 @@ export default {
             align-items: center;
         }
     }
+    @media screen and (max-width: 992px){
+        .container {
+            .section__container {
+                .section__right {
+                    .section__right-content {
+                        text-align: justify;
+                    }
+                }
+            }
+        }
+    }
     @media screen and (max-width: 768px) {
+        padding: 0;
         .container {
             .section__container {
                 display: block;
@@ -67,12 +79,38 @@ export default {
                         
                     }
                     .section__right-content {
+                        text-align: center;
+                    }
+                    .section__right-title {
+                        text-align: center;
+                    }
+                }
+            }
+        }
+    }
+
+    @media screen and (max-width: 768px) {
+        padding: 0;
+        .container {
+            .section__container {
+     
+                .section__right {
+                    width: 100%;
+                    padding: 0 2.4rem;
+                    .section__right-image {
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        
+                    }
+                    .section__right-content {
                         text-align: justify;
                     }
                 }
             }
         }
     }
+    
 }
 .section__left {
     width: 54.57%;

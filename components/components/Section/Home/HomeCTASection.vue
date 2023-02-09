@@ -15,8 +15,8 @@
 
 <script>
 export default {
-    name: "HomeCTASection", 
-    data(){
+    name: "HomeCTASection",
+    data() {
         return {
             imgURLFirst: "/img/home-cta-bg.png"
         }
@@ -25,50 +25,72 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.section--home-cta{
+.section--home-cta {
     height: 25.4rem;
     border-bottom: 0.1rem solid var(--border-color);
-    .section__container{
+    .section__container {
         display: flex;
         justify-content: center;
         align-items: center;
         position: relative;
         height: 100%;
-        .section__background-image{
+        .section__background-image {
             position: absolute;
             height: 100%;
             width: 100%;
-            img{
+            img {
                 object-fit: cover;
                 width: 100%;
                 height: 100%;
             }
         }
-        .section__overlay{
+        .section__overlay {
             position: absolute;
             background-color: #000000;
             opacity: 0.55;
-            width: 100%; 
+            width: 100%;
             height: 100%;
         }
-        .section__content{
+        .section__content {
             position: absolute;
             display: flex;
             flex-direction: column;
             justify-content: center;
-            .section__content-title{
+            .section__content-title {
                 font-weight: 900;
-                font-size: 2.8rem; 
+                font-size: 2.8rem;
                 line-height: 3.8rem;
                 text-align: center;
-                color: var(--color-white); 
+                color: var(--color-white);
                 margin-bottom: 3.3rem;
-
             }
-            .section__content-button{
-               background-color: #EDB842;
-               width: 22rem;
-               margin: 0 auto;
+            .section__content-button {
+                background-color: #edb842;
+                width: 22rem;
+                margin: 0 auto;
+            }
+        }
+    }
+    @media screen and (max-width: 768px) {
+        .section__container {
+            .section__content {
+                position: absolute;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                .section__content-title {
+                    font-weight: 900;
+                    font-size: 1.8rem;
+                    line-height: 2.8rem;
+                    text-align: center;
+                    color: var(--color-white);
+                    margin-bottom: 3.3rem;
+                }
+                .section__content-button {
+                    background-color: #edb842;
+                    width: 22rem;
+                    margin: 0 auto;
+                }
             }
         }
     }

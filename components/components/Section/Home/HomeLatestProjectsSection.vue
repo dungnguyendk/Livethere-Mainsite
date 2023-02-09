@@ -35,12 +35,12 @@
 import ArticleGrid from "~/components/components/Landlord/Insights/Article/ArticleGrid.vue"
 export default {
     name: "HomeLatestProjectsSection",
-    components: { ArticleGrid},
+    components: { ArticleGrid },
     data() {
         return {
             width: 14.3, //14.3 giá trị này tùy thuộc vào số lượng slide có trong carousel
             preNumber: 1,
-            nextNumber: 7, 
+            nextNumber: 7,
             articles: [
                 {
                     id: 1,
@@ -92,6 +92,26 @@ export default {
         .section__container {
         }
     }
+    @media screen and (max-width: 768px) {
+        padding: 0;
+        .section__top {
+            display: flex;
+            justify-content: center;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 3.4rem;
+            .section__top-left {
+                width: 0;
+                display: none;
+            }
+            .section__top-title {
+                margin-bottom: 1.9rem;
+            }
+        }
+        .section__body {
+            display: block;
+        }
+    }
 }
 .section__top {
     display: flex;
@@ -114,10 +134,9 @@ export default {
 }
 .section__body {
     display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        width: 100%;
-        grid-gap: 2.4rem;
-
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    width: 100%;
+    grid-gap: 2.4rem;
 }
 .section__top-process {
     display: flex;
