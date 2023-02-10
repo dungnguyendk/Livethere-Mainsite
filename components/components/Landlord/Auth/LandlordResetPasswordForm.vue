@@ -1,45 +1,59 @@
 <template lang="html">
-    <form class="form--landlord form--signin">
+    <form class="form--landlord form--signin form--reset-password">
         <div class="form__top"><h3 class="form__title"> Reset password </h3></div>
         <p v-if="httpError !== '' && !loading" class="alert alert--red">
             {{ httpError }}
         </p>
 
-        <div class="form__fields">
-            <div v-if="" class="form__field">
-                <label class="required">New password</label>
-                <v-text-field
-                    v-model="password"
-                    type="password"
-                    outlined
-                    dense
-                    :error-messages="passwordErrors"
-                />
+        <template v-if="!success">
+            <div class="form__fields">
+                <div v-if="" class="form__field">
+                    <label class="required">New password</label>
+                    <v-text-field
+                        v-model="password"
+                        type="password"
+                        outlined
+                        dense
+                        :error-messages="passwordErrors"
+                    />
+                </div>
+                <div class="form__field">
+                    <label class="required">Confirm password</label>
+                    <v-text-field
+                        v-model="confirmPassword"
+                        type="password"
+                        outlined
+                        dense
+                        :error-messages="confirmPasswordErrors"
+                    />
+                </div>
             </div>
-            <div class="form__field">
-                <label class="required">Confirm password</label>
-                <v-text-field
-                    v-model="confirmPassword"
-                    type="password"
-                    outlined
-                    dense
-                    :error-messages="confirmPasswordErrors"
-                />
-            </div>
-        </div>
 
-        <div class="form__actions">
-            <v-btn class="btn btn--primary btn--green" @click="onSubmit" :loading="loading">
-                Reset your password
-            </v-btn>
-            <nuxt-link to="/landlord/signin"> Back</nuxt-link>
-        </div>
+            <div class="form__actions">
+                <v-btn class="btn btn--primary btn--green" @click="onSubmit" :loading="loading">
+                    Reset your password
+                </v-btn>
+                <nuxt-link to="/landlord/signin"> Back</nuxt-link>
+            </div>
+        </template>
+        <template v-else>
+            <div class="form__success-message">
+                <p class="alert alert--primary alert--message">Your password has been changed. </p>
+                <v-btn
+                    class="btn btn--outline btn--green mt-2 btn--fullwidth"
+                    @click="onSubmit"
+                    :loading="loading"
+                >
+                    Back to sign in
+                </v-btn>
+            </div>
+        </template>
     </form>
 </template>
 
 <script>
 import { validationMixin } from "vuelidate"
-import { helpers, not, required, sameAs } from "vuelidate/lib/validators"
+import { helpers, required, sameAs } from "vuelidate/lib/validators"
 import { httpEndpoint } from "~/services/https/endpoints"
 
 const complexity = helpers.regex(
@@ -52,8 +66,7 @@ export default {
     validations: {
         password: {
             required,
-            complexity,
-            notSameOldPassword: not(sameAs("oldPassword"))
+            complexity
         },
         confirmPassword: {
             required,
@@ -76,9 +89,6 @@ export default {
                 errors.push(
                     "Password needs: at least 8 characters, 1 uppercase character, 1 number and 1 special character"
                 )
-            !this.$v.password.notSameOldPassword &&
-                errors.push("New password must be different from old password.")
-            return errors
         },
         confirmPasswordErrors() {
             const errors = []
@@ -96,12 +106,11 @@ export default {
             httpError: "",
             loading: false,
             isTokenValid: false,
-            exchangeID: ""
+            exchangeID: "",
+            success: false
         }
     },
-    /* mounted() {
-        this.checkValidToken()
-    },*/
+
     methods: {
         onBack() {
             this.$router.push("/landlord/signin")
@@ -116,7 +125,6 @@ export default {
                     httpEndpoint.auth.checkValidResetToken,
                     params
                 )
-                console.log({ checkValidToken: response })
                 if (response) {
                     if (response.valid) {
                         this.isTokenValid = true
@@ -143,6 +151,7 @@ export default {
                 newPassword: this.password
             }
             console.log({ params })
+
             try {
                 const response = await this.$axios.$post(httpEndpoint.auth.resetPassword, params)
 
@@ -195,6 +204,13 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+.form--reset-password {
+    .form__success-message {
+        .btn {
+            width: 100%;
+        }
+    }
+}
 .form--signin {
     padding-top: 8.2rem;
     font-family: var(--font-primary);
