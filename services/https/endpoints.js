@@ -21,6 +21,7 @@ export const httpEndpoint = {
     auth: {
         login: "/api/Authen",
         register: "/api/Registration",
+        registerSendOTP: "/api/Registration/send-registration-otp",
         checkEmail: "/api/Registration/check-email",
         checkPhoneNumber: "/api/Registration/check-contactno",
         checkUsername: "/api/Registration/check-username",

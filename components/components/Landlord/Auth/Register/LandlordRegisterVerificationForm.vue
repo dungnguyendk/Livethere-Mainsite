@@ -1,12 +1,13 @@
 <template lang="html">
     <div class="form--otp">
-        <h3 class="form__title"> SMS VERIFICATION </h3>
+        <h3 class="form__title"> REGISTER SMS VERIFICATION </h3>
         <div class="form__instruction">
             <p>
                 SMS OTP had been sent. Please retrieved from your phone SMS message to get One Time
                 Password
             </p>
         </div>
+
         <div class="form__input">
             <v-otp-input
                 class="otp--custom"
@@ -22,14 +23,14 @@
             {{ text }}
         </v-snackbar>
 
-        <p v-if="httpError !== ''" class="alert alert--red">
+        <p v-if="httpError !== '' && !loading" class="alert alert--red">
             {{ httpError }}
         </p>
         <div class="form__button">
             <v-btn
                 class="btn btn--primary btn--green btn--submit"
                 :loading="loading"
-                @click="handleSignIn"
+                @click="handleRegister"
             >
                 Submit
             </v-btn>
@@ -55,12 +56,14 @@
 
 <script>
 import { mapState } from "vuex"
+import { httpEndpoint } from "~/services/https/endpoints"
 
 export default {
-    name: "LandlordVerificationForm",
+    name: "LandlordRegisterVerificationForm",
     computed: {
         ...mapState({
-            userID: (state) => state.user.userID
+            userID: (state) => state.user.userID,
+            registerDetails: (state) => state.user.registerDetails
         })
     },
     data: () => ({
@@ -75,6 +78,11 @@ export default {
         countdown: 0,
         requestTime: 0
     }),
+    created() {
+        if (this.registerDetails === null || this.registerDetails === undefined) {
+            this.$router.push("/landlord/register")
+        }
+    },
     methods: {
         handleCountDown() {
             const coundwnInterval = setInterval(
@@ -108,41 +116,40 @@ export default {
             this.handleCountDown()
         },
 
-        // function get current user agent
-
-        async handleSignIn() {
+        async handleRegister() {
             if (this.inputOtp !== "" && this.inputOtp.length === 6) {
                 this.loading = true
-                const params = {
-                    exchangeID: this.$route.query.token,
-                    userID: this.userID,
-                    otp: this.inputOtp,
-                    clientIPAddress: window.location.hostname,
-                    clientUserAgent: navigator.userAgent,
-                    timeZone: "8"
-                }
+                try {
+                    const params = {
+                        ...this.registerDetails,
+                        otp: this.inputOtp
+                    }
+                    console.log({ registerDetails: this.registerDetails, params })
 
-                const response = await this.$auth.loginWith("local", {
-                    data: params
-                })
-                this.loading = false
-                if (response && response.data) {
-                    this.otp = ""
-                    if (response.data.valid) {
-                        const { jwtToken } = response.data
-                        if (jwtToken) {
-                            await this.$store.dispatch("app/showSnackBar", "Login successful!")
-                            window.location.href = "/landlord"
+                    const response = await this.$axios.$post(httpEndpoint.auth.register, params)
+                    if (response) {
+                        this.otp = ""
+                        if (response.valid) {
+                            await this.$store.dispatch("app/showSnackBar", response.message)
+                            await this.$store.commit("user/setRegisterDetails", null)
+                            await this.$router.push("/landlord/signin")
                         } else {
-                            this.httpError = "The credentials is invalid. Please try again."
+                            this.loading = false
+                            this.httpError = response.message
+                                ? response.message
+                                : "The opt is invalid. Please try again."
+
+                            //await this.$router.push("/register")
                         }
                     } else {
-                        this.httpError = response.data.message
-                            ? response.data.message
+                        this.loading = false
+                        this.httpError = response.message
+                            ? response.message
                             : "The opt is invalid. Please try again."
                     }
-                } else {
-                    this.httpError = "The credentials is incorrect. Please try again."
+                } catch (e) {
+                    this.loading = false
+                    this.httpError = "Something went wrong. Please try again."
                 }
             } else {
                 this.httpError = "Please enter a valid OTP (6 digits)."

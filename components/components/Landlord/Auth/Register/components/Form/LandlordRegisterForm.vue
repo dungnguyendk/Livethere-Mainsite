@@ -82,10 +82,9 @@
                 </div>
             </div>
         </div>
-        <!--        <v-checkbox label="Verify Mobile & Email Info" color="#EDB842" hide-details />-->
         <div class="form--action">
             <div class="btn-group">
-                <v-btn class="btn btn--primary btn--green btn__add-file" type="submit">
+                <v-btn class="btn btn--primary btn--green" type="submit" :loading="loading">
                     Submit
                 </v-btn>
             </div>
@@ -95,9 +94,14 @@
 </template>
 <script>
 import { validationMixin } from "vuelidate"
-import { required, email, sameAs } from "vuelidate/lib/validators"
+import { required, email, sameAs, helpers } from "vuelidate/lib/validators"
 import { httpEndpoint } from "~/services/https/endpoints"
 import SuccessSnackBar from "~/components/shared/Snackbar/SuccessSnackBar.vue"
+
+const complexity = helpers.regex(
+    "complexity",
+    /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/
+)
 
 export default {
     name: "LandlordRegisterForm",
@@ -105,7 +109,7 @@ export default {
     mixins: [validationMixin],
     validations: {
         username: { required },
-        password: { required },
+        password: { required, complexity },
         verifiedPassword: {
             required,
             sameAsPassword: sameAs("password")
@@ -124,13 +128,18 @@ export default {
             const errors = []
             if (!this.$v.password.$dirty) return errors
             !this.$v.password.required && errors.push("Password is required")
+            !this.$v.password.complexity &&
+                errors.push(
+                    "Password needs: at least 8 characters, 1 uppercase character, 1 number and 1 special character"
+                )
             return errors
         },
         verifiedPasswordErrors() {
             const errors = []
             if (!this.$v.verifiedPassword.$dirty) return errors
             !this.$v.verifiedPassword.required && errors.push("Verified Password is required")
-            !this.$v.verifiedPassword.sameAsPassword && errors.push("Passwords must be identical.")
+            !this.$v.verifiedPassword.sameAsPassword &&
+                errors.push("Verified password must match the password.")
             return errors
         },
         emailErrors() {
@@ -147,6 +156,8 @@ export default {
             return errors
         }
     },
+    // write function has regex have to +65 and 8 digits
+
     data() {
         return {
             username: "",
@@ -159,6 +170,7 @@ export default {
             country: null,
             errorMessages: [],
             snackBarMessage: "",
+            loading: false,
             bindProps: {
                 mode: "international",
                 required: false,
@@ -230,36 +242,59 @@ export default {
             this.$v.$reset()
         },
 
-        async onSubmit() {
-            this.$v.$touch()
-            if (!this.$v.$invalid) {
+        // save register data
+        async saveRegisterData() {
+            try {
+                this.loading = true
                 const actualPhone = `${this.country} ${this.phone.replace(this.country, "")}`
-                const params = {
-                    username: this.username,
-                    contactName: this.contactName,
-                    email: this.email,
-                    password: this.password,
-                    mobile: actualPhone,
-                    exchangeID: "3fa85f64-5717-4562-b3fc-2c963f66afa6",
-                    createType: "LANDLORD"
-                }
                 await this.checkEmail(this.email)
                 await this.checkContactNo(actualPhone)
                 await this.checkUsername(this.username)
-                console.log({ ErorrMessages: this.errorMessages })
                 if (this.errorMessages.length === 0) {
-                    const response = await this.$axios.$post(httpEndpoint.auth.register, params)
-                    if (response) {
-                        console.log({ registerResponse: response })
-                        this.snackBarMessage = "Submit registration successfully!"
-                        setTimeout(() => {
-                            this.snackBarMessage = ""
-                            this.$router.push("/landlord/register/verify")
-                        }, 2000)
+                    try {
+                        const params = {
+                            username: this.username,
+                            contactName: this.contactName,
+                            email: this.email,
+                            password: this.password,
+                            mobile: actualPhone,
+                            otp: "",
+                            createType: "LANDLORD"
+                        }
+
+                        const response = await this.$axios.$post(
+                            httpEndpoint.auth.registerSendOTP,
+                            {
+                                mobileNo: actualPhone
+                            }
+                        )
+                        if (response) {
+                            this.loading = false
+                            if (response.valid) {
+                                await this.$store.commit("user/setRegisterDetails", params)
+                                await this.$router.push("/landlord/register/verify")
+                            } else {
+                                this.errorMessages = [
+                                    response.message
+                                        ? response.message
+                                        : "Something when wrong. Please try again."
+                                ]
+                            }
+                        }
+                    } catch (e) {
+                        this.loading = false
+                        console.log({ Errror: e.message })
                     }
                 }
-            } else {
-                /*this.onClose()*/
+            } catch (e) {
+                console.log({ Error: e.message })
+            }
+        },
+
+        onSubmit() {
+            this.$v.$touch()
+            if (!this.$v.$invalid) {
+                this.saveRegisterData()
             }
         }
     }
