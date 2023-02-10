@@ -26,7 +26,9 @@ export const httpEndpoint = {
         checkUsername: "/api/Registration/check-username",
         otpSignIn: "/api/Authen/OTP-Login",
         exchangeLoginToken: "/api/Authen/Exchange-Login-Token",
-        requestResetPassword: "api/Authen/request-reset-password"
+        requestResetPassword: "/api/Authen/request-reset-password",
+        checkValidResetToken: "/api/Authen/exchange-reset-password-token",
+        resetPassword: "/api/Authen/reset-password"
     },
     inventories: {
         getEntries: "/api/asset-inventories",
