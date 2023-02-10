@@ -101,8 +101,8 @@ export default {
 
     data() {
         return {
-            password: "Test@123",
-            confirmPassword: "Test@123",
+            password: "",
+            confirmPassword: "",
             httpError: "",
             loading: false,
             isTokenValid: false,
