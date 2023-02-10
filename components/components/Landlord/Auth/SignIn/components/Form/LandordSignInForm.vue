@@ -27,7 +27,7 @@
             </div>
         </div>
         <div class="form__link">
-            <NuxtLink to="landlord/forgot-password">Forgot password</NuxtLink>
+            <NuxtLink to="/landlord/forgot-password">Forgot password</NuxtLink>
         </div>
         <div class="form__actions">
             <v-btn class="btn btn--primary btn--green" @click="onSubmit" :loading="loading">
