@@ -95,7 +95,7 @@ export default {
             this.loading = true
             const params = {
                 email: this.email,
-                ipAddress: "192.168.1.1",
+                ipAddress: window.location.hostname,
                 userAgent: window.navigator.userAgent
             }
             try {

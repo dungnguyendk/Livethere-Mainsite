@@ -115,6 +115,7 @@ export default {
         onBack() {
             this.$router.push("/landlord/signin")
         },
+        // get current IP address by js
 
         async checkValidToken() {
             try {
@@ -150,7 +151,6 @@ export default {
                 exchangeID: this.exchangeID,
                 newPassword: this.password
             }
-            console.log({ params })
 
             try {
                 const response = await this.$axios.$post(httpEndpoint.auth.resetPassword, params)
