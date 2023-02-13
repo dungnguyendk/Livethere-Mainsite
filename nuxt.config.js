@@ -34,6 +34,7 @@ export default {
         { src: "~plugins/axios.js", ssr: true },
         { src: "~plugins/chart.js", ssr: true },
         { src: "~plugins/phone-input.js", ssr: false },
+        { src: "~plugins/vue-awesome-swiper.js", ssr: true, mode: "client" },
         { src: "~plugins/dayjs.js", ssr: false }, 
     ],
 

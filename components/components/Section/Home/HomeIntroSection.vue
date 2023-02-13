@@ -60,8 +60,7 @@ export default {
         }
     }
     @media screen and (max-width: 768px) {
-        padding: 0;
-        margin-bottom: 8.1rem;
+        padding: 3rem 0;
         .container {
             .section__container {
                 display: block;
@@ -91,7 +90,6 @@ export default {
     }
 
     @media screen and (max-width: 768px) {
-        padding: 0;
         .container {
             .section__container {
      
