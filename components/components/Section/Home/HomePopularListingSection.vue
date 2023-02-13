@@ -90,7 +90,7 @@
                     </swiper>
                     <div class="swiper-fraction">
                         <span class="fraction-to">0{{ this.fractionTo }}</span>
-                        <span class="fraction-form">0{{ this.fractionForm  }}</span>
+                        <span class="fraction-form">{{ this.fractionForm  }}</span>
                     </div>
                 </div>
             </div>
@@ -123,7 +123,7 @@ export default {
                 breakpoints: {
                     768: {
                     slidesPerView: 3,
-                    spaceBetween: 38
+                    spaceBetween: 26
                     },
                 }
             },
@@ -192,23 +192,15 @@ export default {
         }
     },
     methods: {
-        onPreviousSlide() {
-            if (this.width > 14.3) {
-                let plusNumber = (9 / this.nextNumber / 9) * 100
-                this.width = Number(this.width.toFixed(1)) - Number(plusNumber.toFixed(1))
-                console.log("this.width: ", this.width)
-            }
-        },
-        onNextSlide() {
-            if (this.width < 100) {
-                let plusNumber = (9 / this.nextNumber / 9) * 100
-                this.width = Number(this.width.toFixed(1)) + Number(plusNumber.toFixed(1))
-                console.log("this.width: ", this.width)
-            }
-        }
     },
+    // computed: {
+    //     fractionForm(){
+    //         return this.fractionForm.
+    //     }
+    // },
     mounted(){
-
+        this.fractionForm = this.popularListing.length.toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false})
+        
     }
 }
 </script>
@@ -307,9 +299,6 @@ export default {
                         }
                     }
                 }
-            }
-            &:nth-child(2) {
-                margin: 0 auto 4rem;
             }
         }
     }
@@ -445,10 +434,9 @@ export default {
 }
 
 .swiper-box {
-    width: 30.11%;
     .swiper-box__top {
         position: relative;
-
+        padding: 0 1.2rem;
         .swiper-box__image {
             img {
                 width: 100%;
@@ -515,9 +503,6 @@ export default {
                 }
             }
         }
-    }
-    &:nth-child(2) {
-        margin: 0 3.8rem;
     }
 }
 </style>
