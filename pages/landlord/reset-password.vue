@@ -1,14 +1,17 @@
 <template>
-    <div> <LandlordResetPasswordForm /> </div>
+    <LandlordAuth>
+        <LandlordResetPasswordForm />
+    </LandlordAuth>
 </template>
 
 <script>
 import { appSettings } from "~/app-settings"
 import LandlordResetPasswordForm from "~/components/components/Landlord/Auth/LandlordResetPasswordForm.vue"
+import LandlordAuth from "~/components/components/Landlord/LandlordAuth.vue"
 
 export default {
     layout: "landlord",
-    components: { LandlordResetPasswordForm },
+    components: { LandlordAuth, LandlordResetPasswordForm },
     head: {
         title: `Forgot password | ${appSettings.siteName}`
     }

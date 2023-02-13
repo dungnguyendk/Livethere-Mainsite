@@ -1,20 +1,18 @@
 <template>
-    <div>
+    <LandlordAuth>
         <LandlordTerms />
-    </div>
+    </LandlordAuth>
 </template>
 
 <script>
-import LandlordSignIn from "~/components/components/Landlord/Auth/SignIn/LandlordSignIn.vue"
-import LandlordRegisterBenefits from "~/components/components/Landlord/Auth/Register/LandlordRegisterBenefits.vue"
 import LandlordTerms from "~/components/components/Landlord/Auth/Register/LandlordTerms.vue"
 import { appSettings } from "~/app-settings"
+import LandlordAuth from "~/components/components/Landlord/LandlordAuth.vue"
 
 export default {
     components: {
-        LandlordTerms,
-        LandlordRegisterBenefits,
-        LandlordSignIn
+        LandlordAuth,
+        LandlordTerms
     },
     layout: "landlord",
     head: {

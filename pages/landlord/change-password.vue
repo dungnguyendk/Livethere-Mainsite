@@ -1,19 +1,19 @@
 <template>
-    <div>
+    <LandlordAuth>
         <LandlordChangePasswordForm />
-    </div>
+    </LandlordAuth>
 </template>
 
 <script>
-import LandordSignInForm from "~/components/components/Landlord/Auth/SignIn/components/Form/LandordSignInForm.vue"
 import LandlordChangePasswordForm from "~/components/components/Landlord/Auth/LandlordChangePasswordForm.vue"
 import { appSettings } from "~/app-settings"
+import LandlordAuth from "~/components/components/Landlord/LandlordAuth.vue"
 
 export default {
     layout: "landlord",
     components: {
-        LandlordChangePasswordForm,
-        LandordSignInForm
+        LandlordAuth,
+        LandlordChangePasswordForm
     },
     head: {
         title: `Change password | ${appSettings.siteName}`

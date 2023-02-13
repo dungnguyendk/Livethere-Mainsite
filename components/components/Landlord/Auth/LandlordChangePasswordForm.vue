@@ -2,7 +2,7 @@
     <form class="form--signin">
         <h3 class="form__title"> Change password </h3>
         <div class="form__fields">
-            <p v-if="httpError !== '' || !loading" class="alert alert--red">
+            <p v-if="httpError !== '' && !loading" class="alert alert--red">
                 {{ httpError }}
             </p>
 
