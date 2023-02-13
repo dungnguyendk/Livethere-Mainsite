@@ -27,7 +27,7 @@
                 <div class="section__body">
                     <swiper class="swiper swiper-item" :options="swiperOption">
                         <swiper-slide class="swiper-box" v-for="article in articles" :key="article.id">
-                            <ArticleGrid :article="article" />
+                            <ArticleGrid :article="article"/>
                         </swiper-slide>
                         <div class="swiper-button-prev" slot="button-prev"></div>
                         <div class="swiper-pagination" slot="pagination"></div>
@@ -147,22 +147,26 @@ export default {
             useGrouping: false
         })
     }, 
+    methods: {
+        
+    }
 }
 </script>
 
 <style lang="scss" scoped>
 .section--home-latest-projects {
     padding: 8rem 0;
-    margin-bottom: 2.6rem;
+    
+
     @media screen and (max-width: 768px) {
         .section__top {
             bottom: -2.5rem;
         }
     }
-    @media screen and (max-width: 480px) {
+    @media screen and (max-width: 720px) {
         padding: 4rem 0;
         .section__top {
-            bottom: 3rem;
+            bottom: 4rem;
         }
         .section__body {
             display: flex;
@@ -176,7 +180,7 @@ export default {
 }
 .section__top {
     position: relative;
-    bottom: -3.25rem;
+    bottom: -2.75rem;
     text-align: center;
     .section__top-title {
         font-weight: 800;
@@ -299,10 +303,14 @@ export default {
     justify-content: space-between;
     align-items: center;
     padding-top: 6rem;
+    padding-bottom: 2.6rem;
+
+
 }
 
+
 // .swiper-box {
-//     width: 30.77%;
+//     width: 30.77%;2
 //     .swiper-box__top {
 //         position: relative;
 
