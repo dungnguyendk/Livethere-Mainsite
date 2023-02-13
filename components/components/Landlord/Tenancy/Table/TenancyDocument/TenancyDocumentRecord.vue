@@ -9,10 +9,10 @@
         <td data-title="Actions">
             <div class="actions">
                 <v-btn class="btn btn--ghost btn--green btn--sm btn--withIcon" @click="onDownload">
-                    <i class="ri-download-cloud-2-line" /> Download
+                    <i class="ri-download-cloud-2-line" /><p>Download</p>
                 </v-btn>
                 <v-btn class="btn btn--ghost btn--red btn--sm btn--withIcon" @click="onDelete">
-                    <i class="ri-delete-bin-6-line" /> Remove
+                    <i class="ri-delete-bin-6-line" /> <p>Remove</p>
                 </v-btn>
             </div>
         </td>
@@ -67,6 +67,9 @@ export default {
     align-items: center;
     grid-gap: 0.4rem;
     gap: 0.4rem;
+    p {
+        margin-bottom: 0;
+    }
 }
 
 tr {
@@ -77,7 +80,7 @@ tr {
 td {
     padding: 3.3rem 2.4rem;
     border-bottom: 1px solid #e5e5e5;
-
+    margin: 0;
     p {
         display: flex;
         justify-content: left;
@@ -121,6 +124,12 @@ tr:nth-child(even) {
             color: #0b0c0c;
             font-size: 1.6rem;
             text-align: left;
+        }
+    }
+    .actions {
+        p {
+            margin-bottom: 0;
+            font-size: 0;
         }
     }
 }

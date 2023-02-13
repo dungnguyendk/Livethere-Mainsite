@@ -139,5 +139,27 @@ export default {
             grid-template-columns: minmax(0, 1fr);
         }
     }
+    @media screen and (max-width: 600px){
+        p {
+            grid-gap: 2.4rem;
+            gap: 2.4rem;
+
+            span {
+                font-weight: 500;
+                padding-right: 1.2rem;
+                font-size: 1.4rem;
+            }
+
+            strong {
+                font-size: 1.4rem;
+                font-weight: 500;
+                color: var(--color-heading);
+            }
+
+            &:not(:last-child) {
+                margin-bottom: 0.4rem;
+            }
+        }
+    }
 }
 </style>

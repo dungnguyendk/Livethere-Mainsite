@@ -61,8 +61,8 @@ export default {
 
     .section__top {
         display: flex;
-        justify-content: flex-start;
-        align-items: center;
+        // justify-content: flex-start;
+        // align-items: center;
         padding-bottom: 3.2rem;
 
         h3 {

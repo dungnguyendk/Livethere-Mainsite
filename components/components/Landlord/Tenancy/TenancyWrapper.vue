@@ -2,7 +2,7 @@
     <div class="section--tenancy">
         <div class="container">
             <div class="section__top">
-                <v-btn class="btn btn--outline btn--green btn--sm" @click="onBack">
+                <v-btn class="btn btn--outline btn--green btn--md btn-back" @click="onBack">
                     <i class="ri-arrow-left-line"></i>
                     Back
                 </v-btn>
@@ -114,6 +114,7 @@ export default {
     }
 
     .select-type {
+        // height: 1.8rem;
         display: none;
     }
 
@@ -137,6 +138,11 @@ export default {
             grid-gap: 1.2rem;
             > * {
                 align-self: center;
+            }
+            .btn-back {
+                i {
+                    padding-right: 0.4rem;
+                }
             }
         }
 
