@@ -2,9 +2,15 @@
     <tr>
         <td data-title="Tenancy Agreement Code">
             <div>
-                <nuxt-link :to="`/landlord/tenancy/details/${source.internalID}`">
+                <nuxt-link
+                    v-if="source.statusFID === 1"
+                    :to="`/landlord/tenancy/details/${source.internalID}`"
+                >
                     {{ source.tenancyRefCode }}
                 </nuxt-link>
+                <p v-else>
+                    {{ source.tenancyRefCode }}
+                </p>
             </div>
         </td>
         <td data-title="Agreement Date">
@@ -76,6 +82,7 @@ export default {
     display: grid;
     grid-template-columns: minmax(0, 1fr) 10.2rem;
 }
+
 tr {
     position: relative;
     vertical-align: top;
