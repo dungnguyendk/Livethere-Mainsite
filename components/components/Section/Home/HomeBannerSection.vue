@@ -92,6 +92,10 @@ export default {
     opacity: 0.4;
     width: 100%;
     height: 100%;
+    top: 0; 
+    left: 0; 
+    z-index: 8;
+
     
 }
 .section__text-top {
@@ -99,9 +103,11 @@ export default {
     opacity: 0.4;
     right: 7.1rem;
     top: 3.5rem;
+    z-index: 10; 
 }
 .section__text-bottom {
     position: absolute;
     bottom: 6.3rem;
+    z-index: 10;
 }
 </style>
