@@ -94,7 +94,7 @@
 </template>
 <script>
 import { validationMixin } from "vuelidate"
-import { required, email, sameAs, helpers } from "vuelidate/lib/validators"
+import { email, helpers, required, sameAs } from "vuelidate/lib/validators"
 import { httpEndpoint } from "~/services/https/endpoints"
 import SuccessSnackBar from "~/components/shared/Snackbar/SuccessSnackBar.vue"
 
@@ -302,6 +302,8 @@ export default {
 </script>
 <style lang="scss" scoped>
 .form--register {
+    max-width: 78rem;
+
     &__input {
         label {
             font-weight: 500;
