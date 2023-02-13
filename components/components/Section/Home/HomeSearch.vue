@@ -132,7 +132,30 @@ export default {
             .v-input__prepend-outer {
                 // margin-top: 0;
             }
+            @media screen and (max-width: 960px) {
+                border-right: 0;
+                
+            }
+        }
+        @media screen and (max-width: 1263px) {
+            margin-bottom: 1.2rem;
+            
+        }
+        @media screen and (max-width: 960px) {
+            margin-bottom: 1.2rem;
+            
         }
     }
+    @media screen and (max-width: 1263px) {
+        .btn--primary {
+            margin-bottom: 1.2rem
+        }
+    }
+    @media screen and (max-width: 960px) {
+        .col-auto {
+            width: 100%
+        }
+            
+    } 
 }
 </style>
