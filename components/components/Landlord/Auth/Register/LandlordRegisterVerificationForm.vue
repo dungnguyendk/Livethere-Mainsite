@@ -124,20 +124,22 @@ export default {
                         ...this.registerDetails,
                         otp: this.inputOtp
                     }
-                    console.log({ registerDetails: this.registerDetails, params })
-
+                    //console.log({ registerDetails: this.registerDetails, params })
                     const response = await this.$axios.$post(httpEndpoint.auth.register, params)
                     if (response) {
                         this.otp = ""
+                        this.loading = false
                         if (response.valid) {
                             await this.$store.dispatch("app/showSnackBar", response.message)
                             await this.$store.commit("user/setRegisterDetails", null)
-                            await this.$router.push("/landlord/signin")
+                            //await this.$router.push("/landlord/signin")
+                            setTimeout(() => {
+                                this.$router.push("/landlord/signin")
+                            }, 1000)
                         } else {
-                            this.loading = false
                             this.httpError = response.message
                                 ? response.message
-                                : "The opt is invalid. Please try again."
+                                : "Something when wrong, please try again."
 
                             //await this.$router.push("/register")
                         }
