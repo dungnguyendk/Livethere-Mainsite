@@ -27,15 +27,17 @@
                 <div class="section__body">
                     <swiper class="swiper swiper-item" :options="swiperOption">
                         <swiper-slide class="swiper-box" v-for="article in articles" :key="article.id">
-                            <ArticleGrid :article="article"/>
+                            <div class="article-wrapper">
+                                <ArticleGrid :article="article"/>
+                            </div>
                         </swiper-slide>
                         <div class="swiper-button-prev" slot="button-prev"></div>
                         <div class="swiper-pagination" slot="pagination"></div>
-                        <div class="swiper-button-next" slot="button-next"></div>
+                        <div class="swiper-button-next" slot="button-next" :class="{'swiper-button-active' : activeColorArrow}"></div>
                     </swiper>
                     <div class="swiper-fraction">
                         <span class="fraction-to">0{{ this.fractionTo }}</span>
-                        <span class="fraction-form">{{ this.fractionForm  }}</span>
+                        <span class="fraction-form" >{{ this.fractionForm  }}</span>
                     </div>
                 </div>
             </div>
@@ -49,6 +51,7 @@ export default {
     name: "HomeLatestProjectsSection",
     components: { ArticleGrid },
     data() {
+        const self = this
         return {
             articles: [
                 {
@@ -131,32 +134,42 @@ export default {
                 breakpoints: {
                     768: {
                         slidesPerView: 3,
-                        spaceBetween: 26
+                        spaceBetween: 16
+                    }
+                },
+                on: {
+                    slideChange: function () {
+                        let lastVisibleItem = this.realIndex + this.params.slidesPerView
+                        let slidesLength = this.slides.length - 2
+                        let lastVisibleIndex = this.realIndex + this.params.slidesPerView
+                        lastVisibleIndex === 9 ? self.activeColorArrow = true : self.activeColorArrow = false
                     }
                 }
             },
             preNumber: 1,
             nextNumber: 3,
             fractionTo: 1,
-            fractionForm: 3
+            fractionForm: 3, 
+            activeColorArrow: false
         }
+    },
+    computed: {
+      swiper() {
+        return this.$refs.mySwiper.swiper
+      }
     },
     mounted() {
         this.fractionForm = this.articles.length.toLocaleString("en-US", {
             minimumIntegerDigits: 2,
             useGrouping: false
         })
-    }, 
-    methods: {
-        
-    }
+    },
 }
 </script>
 
 <style lang="scss" scoped>
 .section--home-latest-projects {
     padding: 8rem 0;
-    
 
     @media screen and (max-width: 768px) {
         .section__top {
@@ -174,7 +187,6 @@ export default {
         }
         .swiper-item {
             padding-top: 4rem;
-            
         }
     }
 }
@@ -304,10 +316,13 @@ export default {
     align-items: center;
     padding-top: 6rem;
     padding-bottom: 2.6rem;
-
-
 }
-
+.article-wrapper {
+    padding: 0 1rem;
+}
+.swiper-button-active{
+    opacity: 1;
+}
 
 // .swiper-box {
 //     width: 30.77%;2

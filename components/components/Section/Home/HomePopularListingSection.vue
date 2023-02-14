@@ -84,7 +84,7 @@
                         </swiper-slide>
                         <div class="swiper-button-prev" slot="button-prev"></div>
                         <div class="swiper-pagination" slot="pagination"></div>
-                        <div class="swiper-button-next" slot="button-next"></div>
+                        <div class="swiper-button-next" slot="button-next" :class="{'swiper-button-active' : activeColorArrow}"></div>
                         
 
                     </swiper>
@@ -102,6 +102,7 @@
 export default {
     name: "HomePopularListingSection",
     data() {
+        const self = this
         return {
             imageURL: "/img/banner/topbannertwo.jpg",
             swiperOption: {
@@ -125,6 +126,14 @@ export default {
                     slidesPerView: 3,
                     spaceBetween: 26
                     },
+                }, 
+                on: {
+                    slideChange: function () {
+                        let lastVisibleItem = this.realIndex + this.params.slidesPerView
+                        let slidesLength = this.slides.length - 2
+                        let lastVisibleIndex = this.realIndex + this.params.slidesPerView
+                        lastVisibleIndex === 5 ? self.activeColorArrow = true : self.activeColorArrow = false
+                    }
                 }
             },
             popularListing: [
@@ -188,16 +197,9 @@ export default {
             nextNumber: 3,
             fractionTo: 1,
             fractionForm: 3,
-
+            activeColorArrow: false
         }
     },
-    methods: {
-    },
-    // computed: {
-    //     fractionForm(){
-    //         return this.fractionForm.
-    //     }
-    // },
     mounted(){
         this.fractionForm = this.popularListing.length.toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false})
         
@@ -220,6 +222,7 @@ export default {
         }
     }
 }
+
 .section__top {
     margin-bottom: -2.5rem;
     text-align: center;
@@ -419,5 +422,8 @@ export default {
             }
         }
     }
+}
+.swiper-button-active{
+    opacity: 1;
 }
 </style>
