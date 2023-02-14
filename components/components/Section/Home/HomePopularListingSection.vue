@@ -84,12 +84,13 @@
                         </swiper-slide>
                         <div class="swiper-button-prev" slot="button-prev"></div>
                         <div class="swiper-pagination" slot="pagination"></div>
-                        <div class="swiper-button-next" slot="button-next" :class="{'swiper-button-active' : activeColorArrow}"></div>
+                        <!-- <div class="swiper-button-next" slot="button-next" :class="{'swiper-button-active' : activeColorArrow}"></div> -->
+                        <div class="swiper-button-next" slot="button-next"></div>
                         
 
                     </swiper>
                     <div class="swiper-fraction">
-                        <span class="fraction-to">0{{ this.fractionTo }}</span>
+                        <span class="fraction-to">{{ this.fractionTo }}</span>
                         <span class="fraction-form">{{ this.fractionForm  }}</span>
                     </div>
                 </div>
@@ -203,6 +204,7 @@ export default {
     },
     mounted(){
         this.fractionForm = this.popularListing.length.toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false})
+        this.fractionTo = this.fractionTo.toLocaleString('en-US', {minimumIntegerDigits: 2, useGrouping:false})
         
     }
 }
