@@ -175,6 +175,7 @@ export const actions = {
             commit("setSnackbarMessage", "Your message has been sent.")
         }
     },
+
     async getInventoryDetails({ commit, dispatch }, payload) {
         try {
             const response = await this.$axios.$get(
@@ -193,7 +194,7 @@ export const actions = {
         }
     },
 
-    async createTenancyAgreement({ commit }, payload) {
+    async createTenancyAgreement({ commit, dispatch }, payload) {
         try {
             const responseMain = await this.$axios.$post(
                 `${httpEndpoint.tenancyAgreements.createEntry}`,
@@ -201,14 +202,18 @@ export const actions = {
             )
             if (responseMain) {
                 if (responseMain.id !== 0) {
+                    dispatch(
+                        "app/showSnackBar",
+                        responseMain.responseMessage || "Create contract success",
+                        { root: true }
+                    )
                     const responseSub = await this.$axios.$get(
                         `${httpEndpoint.tenancyAgreements.getEntries}?AssestInventoryFID=${payload.assestInventoryFID}`
                     )
+
                     if (responseSub) {
                         commit("setListTenancyAgreements", responseSub)
                     }
-                    commit("setSnackbar", true)
-                    commit("setSnackbarMessage", responseMain.responseMessage)
                     return responseMain
                 } else {
                     console.log({ Error: responseMain.responseMessage })
@@ -222,11 +227,33 @@ export const actions = {
             return null
         }
     },
+
+    async suspendContractAgreement({ commit, dispatch, state }, payload) {
+        try {
+            const response = await this.$axios.$put(
+                `${httpEndpoint.tenancyAgreements.updateEntry}`,
+                payload
+            )
+
+            if (response) {
+                await dispatch("getListTenancyAgreements", state.inventoryDetails.id)
+                commit("setSnackbar", true)
+                commit("setSnackbarMessage", "This contract agreement has been suspended.")
+                return response
+            } else {
+                return false
+            }
+        } catch (e) {
+            return false
+        }
+    },
+
     async getListTenancyAgreements({ commit }, payload) {
         try {
             const response = await this.$axios.$get(
                 `${httpEndpoint.tenancyAgreements.getEntries}?AssestInventoryFID=${payload}`
             )
+
             if (response) {
                 commit("setListTenancyAgreements", response)
             } else {

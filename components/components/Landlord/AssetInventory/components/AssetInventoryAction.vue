@@ -18,6 +18,7 @@ import { STATUS_DROPDOWN } from "~/ultilities/contants/asset-inventory.js"
 import qs from "qs"
 import Dialog from "~/components/elements/Dialog/Dialog.vue"
 import AddInventoryForm from "~/components/components/Landlord/AssetInventory/components/Dialog/Form/AddInventoryForm.vue"
+import { mapState } from "vuex"
 
 export default {
     name: "AssetInventoryAction",
@@ -33,17 +34,22 @@ export default {
             sizeDialog: "large"
         }
     },
+    computed: {
+        ...mapState({
+            statusFID: (state) => state.inventories.typeSelect
+        }),
+    },
     methods: {
         changeType() {
+            this.$store.commit("inventories/setTypeSelected", this.typeSelected)
             const params = qs.stringify({
                 StatusFID: this.typeSelected
             })
-            this.$store.commit("inventories/setTypeSelected", this.typeSelected)
-            if (this.typeSelected === 0 || this.typeSelected === 1) {
+            if (this.statusFID === 0 || this.statusFID === 1) {
                 this.$store.dispatch("inventories/getInventories", params)
-            } else if (this.typeSelected === 3) {
+            } else if (this.statusFID === 3) {
                 this.$store.dispatch("inventories/getInventoriesByTenanted", params)
-            } else if (this.typeSelected === 2) {
+            } else if (this.statusFID === 2) {
                 this.$store.dispatch("inventories/getInventoriesByVacant", params)
             }
         },

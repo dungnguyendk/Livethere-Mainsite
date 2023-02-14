@@ -1,22 +1,22 @@
 <template>
     <LandlordAuth>
-        <LandlordTerms />
+        <LandordSignInForm otp />
     </LandlordAuth>
 </template>
 
 <script>
-import LandlordTerms from "~/components/components/Landlord/Auth/Register/LandlordTerms.vue"
+import LandordSignInForm from "~/components/components/Landlord/Auth/SignIn/components/Form/LandordSignInForm.vue"
 import { appSettings } from "~/app-settings"
 import LandlordAuth from "~/components/components/Landlord/LandlordAuth.vue"
 
 export default {
+    layout: "landlord",
     components: {
         LandlordAuth,
-        LandlordTerms
+        LandordSignInForm
     },
-    layout: "landlord",
     head: {
-        title: `Landlord Register | ${appSettings.siteName}`
+        title: `Sign in | ${appSettings.siteName}`
     }
 }
 </script>

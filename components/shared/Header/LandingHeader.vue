@@ -8,10 +8,13 @@
                     </div>
                     <div class="header__center">
                         <ul class="menu--top">
-                            <nuxt-link v-for="(item, index) in menus" :to="`/${item.linkURL}`"
-                                       :class="item.linkURL === path ? 'active': ''"
+                            <nuxt-link
+                                v-for="(item, index) in menus"
+                                :to="`/${item.linkURL}`"
+                                :class="item.linkURL === path ? 'active' : ''"
+                                :key="index"
                             >
-                            {{ item.defaultName }}
+                                {{ item.defaultName }}
                             </nuxt-link>
                         </ul>
                     </div>
@@ -39,8 +42,7 @@ export default {
     props: {
         source: {
             type: Object,
-            default: () => {
-            }
+            default: () => {}
         }
     },
     computed: {
@@ -59,7 +61,7 @@ export default {
         }
     },
     mounted() {
-        console.log({pathName: this.$router})
+        console.log({ pathName: this.$router })
         //this.getData()
     },
     methods: {
@@ -119,13 +121,14 @@ export default {
                 transform-origin: 0 100%;
             }
         }
+
         &.active {
-           /* &:before {
-                visibility: visible;
-                opacity: 1;
-                transform: scale3d(1, 1, 1);
-                transform-origin: 0 100%;
-            }*/
+            /* &:before {
+                 visibility: visible;
+                 opacity: 1;
+                 transform: scale3d(1, 1, 1);
+                 transform-origin: 0 100%;
+             }*/
         }
     }
 }

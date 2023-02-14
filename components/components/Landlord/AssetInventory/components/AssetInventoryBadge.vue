@@ -1,7 +1,8 @@
 <template lang="html">
     <div :class="`badge--inventory ${type.toLowerCase()}`">
-        <span>{{ (type.toLowerCase() === "new" || type.toLowerCase() === "vacant" || type.toLowerCase() === "tenanted")
-                ? type : "n/a"
+        <span>{{ (type.toLowerCase() === "new" || type.toLowerCase() === "vacant" || type.toLowerCase() === "tenanted"
+            || type.toLowerCase() === "sold out")
+            ? type : "n/a"
         }}</span>
     </div>
 </template>
@@ -30,7 +31,7 @@ export default {
         padding: 0.5rem 1.6rem;
         border-radius: 0.8rem;
         text-align: center;
-        width: fit-content;
+        width: max-content;
         height: 3.4rem;
 
         span {
@@ -42,27 +43,27 @@ export default {
         }
 
         &.new {
-            @include typeInventory(
+            @include typeInventory(var(--color-type-new),
                 var(--color-type-new),
-                var(--color-type-new),
-                rgba(39, 168, 87, 0.1)
-            );
+                rgba(39, 168, 87, 0.1));
         }
 
         &.vacant {
-            @include typeInventory(
+            @include typeInventory(var(--color-type-vacant),
                 var(--color-type-vacant),
-                var(--color-type-vacant),
-                rgba(15, 170, 222, 0.1)
-            );
+                rgba(15, 170, 222, 0.1));
         }
 
         &.tenanted {
-            @include typeInventory(
+            @include typeInventory(var(--color-type-tenanted),
                 var(--color-type-tenanted),
-                var(--color-type-tenanted),
-                rgba(93, 95, 239, 0.1)
-            );
+                rgba(93, 95, 239, 0.1));
+        }
+
+        &.sold {
+            @include typeInventory(var(--color-type-sold),
+                var(--color-type-sold),
+                rgba(93, 95, 239, 0.1));
         }
     }
 }

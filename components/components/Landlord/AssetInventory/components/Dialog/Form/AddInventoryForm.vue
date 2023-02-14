@@ -3,7 +3,7 @@
         <div class="form__top">
             <h3>{{ inventoryDetail.id ? "EDIT INVENTORY" : "ADD NEW INVENTORY" }}</h3>
         </div>
-        <p class="alert alert--red" v-if="!statusResponse">Something when wrong</p>
+        <p class="alert alert--red" v-if="!statusResponse">Something went wrong</p>
         <div class="form__fields">
             <div class="form__field">
                 <label>Property Type</label>
@@ -44,6 +44,10 @@
             <div class="form__field">
                 <label>Project Name</label>
                 <v-text-field v-model.trim="projectName" outlined dense :error-messages="projectNameErrors" />
+            </div>
+            <div class="form__field">
+                <label>Location</label>
+                <v-text-field v-model.trim="location" outlined dense />
             </div>
             <div class="form__field">
                 <label>Tenure</label>
@@ -120,6 +124,7 @@ export default {
             })
         },
         bedroom: { required },
+        // location: { required },
         tenure: { required },
         floorArea: {
             required,
@@ -154,6 +159,7 @@ export default {
             projectName: "",
             bedroom: "",
             bedroomList: BEDROOM_TYPE,
+            location: "",
             tenure: "",
             tenureList: TENURE,
             floorArea: null,
@@ -192,6 +198,9 @@ export default {
         bedroomErrors() {
             return setFormControlErrors(this.$v.bedroom, "No of Bedroom(s) is required")
         },
+        // locationErrors() {
+        //     return setFormControlErrors(this.$v.location, "Location is required")
+        // },
         tenureErrors() {
             return setFormControlErrors(this.$v.tenure, "Tenure is required")
         },
@@ -218,6 +227,7 @@ export default {
             this.unitNo = this.inventoryDetail.unitNo ? this.inventoryDetail.unitNo : ""
             this.projectName = this.inventoryDetail.projectName ? this.inventoryDetail.projectName : ""
             this.bedroom = this.inventoryDetail.bedroomTypeFID ? this.bedroomList.find((i) => i.value.id === this.inventoryDetail.bedroomTypeFID).value : ""
+            this.location = this.inventoryDetail.location ? this.inventoryDetail.location : ""
             this.tenure = this.inventoryDetail.tenureType ? this.tenureList.find((i) => i.value.id === this.inventoryDetail.tenureType).value : ""
             this.floorArea = this.inventoryDetail.floorAreaSqft ? this.inventoryDetail.floorAreaSqft : ""
             this.landArea = this.inventoryDetail.landAreaSqft ? this.inventoryDetail.landAreaSqft : ""
@@ -231,6 +241,7 @@ export default {
             this.unitNo = ""
             this.projectName = ""
             this.bedroom = ""
+            this.location = ""
             this.tenure = ""
             this.floorArea = ""
             this.landArea = ""
@@ -256,6 +267,7 @@ export default {
                     streetName: this.streetName,
                     unitNo: this.unitNo,
                     projectName: this.projectName,
+                    location: this.location,
                     tenureType: this.tenure.id,
                     tenureDisplay: this.tenure.name,
                     floorAreaSqft: this.floorArea ? convertCommasToNumber(this.floorArea) : 0,
@@ -296,6 +308,7 @@ export default {
                     streetName: this.streetName,
                     unitNo: this.unitNo,
                     projectName: this.projectName,
+                    location: this.location,
                     tenureType: this.tenure.id,
                     tenureDisplay: this.tenure.name,
                     floorAreaSqft: this.floorArea ? convertCommasToNumber(this.floorArea) : 0,
@@ -368,6 +381,7 @@ export default {
             this.unitNo = ""
             this.projectName = ""
             this.bedroom = ""
+            this.location = ""
             this.tenure = ""
             this.floorArea = ""
             this.landArea = ""

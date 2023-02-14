@@ -1,6 +1,6 @@
 <template lang="html">
-    <div class="section__new-registration">
-        <h4 class="title__new-registration">New registration</h4>
+    <div class="section--register">
+        <h4 class="section__title">New registration</h4>
         <div class="section__form">
             <div class="section__form--term" :class="agreeTerm ? 'agree-term--checked' : ''">
                 <p>Landlords Portal Terms of Use:</p>
@@ -53,17 +53,15 @@ export default {
         return {
             agreeTerm: false
         }
-    },
-    methods: {
-        onRegister() {}
     }
 }
 </script>
 <style lang="scss" scoped>
-.section__new-registration {
+.section--register {
     display: flex;
     flex-direction: column;
     align-items: center;
+    padding: 3.2rem 0 6.4rem;
 }
 
 .agree-term {
@@ -118,7 +116,7 @@ export default {
     }
 }
 
-.title__new-registration {
+.section__title {
     margin: 4.2rem 0 3.2rem 0;
     text-transform: uppercase;
     font-weight: 700;

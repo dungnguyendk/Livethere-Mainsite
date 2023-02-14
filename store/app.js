@@ -5,12 +5,19 @@ export const state = () => ({
     token: null,
     appLoading: false,
     appLoadingMessage: "Loading...",
-    userInfo: null
+    userInfo: null,
+    snackBar: {
+        show: false,
+        message: ""
+    }
 })
 
 export const mutations = {
     setUserInfo(state, payload) {
         state.userInfo = payload
+    },
+    setSnackBar(state, payload) {
+        state.snackBar = payload
     }
 }
 
@@ -26,5 +33,18 @@ export const actions = {
         } catch (e) {
             commit("setUserInfo", null)
         }
+    },
+
+    async showSnackBar({ commit }, payload) {
+        commit("setSnackBar", {
+            show: true,
+            message: payload
+        })
+        setTimeout(() => {
+            commit("setSnackBar", {
+                show: false,
+                message: ""
+            })
+        }, 2500)
     }
 }
