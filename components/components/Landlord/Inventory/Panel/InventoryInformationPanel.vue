@@ -138,8 +138,21 @@ export default {
         .panel__columns {
             grid-template-columns: minmax(0, 1fr);
         }
+        p {
+            span {
+                font-size: 1.4rem;
+            }
+
+            strong {
+                font-size: 1.4rem;
+            }
+
+            &:not(:last-child) {
+                margin-bottom: 0.4rem;
+            }
+        }
     }
-    @media screen and (max-width: 600px){
+    @media screen and (max-width: 600px) {
         p {
             grid-gap: 2.4rem;
             gap: 2.4rem;
