@@ -1,22 +1,22 @@
 <template>
-    <div>
-        <LandlordVerification />
-    </div>
+    <LandlordAuth>
+        <LandlordRegisterVerificationForm />
+    </LandlordAuth>
 </template>
 
 <script>
-import LandlordTerms from "~/components/components/Landlord/Auth/Register/LandlordTerms.vue"
 import { appSettings } from "~/app-settings"
-import LandlordVerification from "~/components/components/Landlord/Auth/SignIn/LandlordVerification.vue"
+import LandlordRegisterVerificationForm from "~/components/components/Landlord/Auth/Register/LandlordRegisterVerificationForm.vue"
+import LandlordAuth from "~/components/components/Landlord/LandlordAuth.vue"
 
 export default {
     components: {
-        LandlordVerification,
-        LandlordTerms
+        LandlordAuth,
+        LandlordRegisterVerificationForm
     },
     layout: "landlord",
     head: {
-        title: `Register Landlord | ${appSettings.siteName}`
+        title: `Verify Register | ${appSettings.siteName}`
     }
 }
 </script>

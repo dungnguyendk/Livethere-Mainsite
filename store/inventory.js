@@ -194,7 +194,7 @@ export const actions = {
         }
     },
 
-    async createTenancyAgreement({ commit }, payload) {
+    async createTenancyAgreement({ commit, dispatch }, payload) {
         try {
             const responseMain = await this.$axios.$post(
                 `${httpEndpoint.tenancyAgreements.createEntry}`,
@@ -202,14 +202,18 @@ export const actions = {
             )
             if (responseMain) {
                 if (responseMain.id !== 0) {
+                    dispatch(
+                        "app/showSnackBar",
+                        responseMain.responseMessage || "Create contract success",
+                        { root: true }
+                    )
                     const responseSub = await this.$axios.$get(
                         `${httpEndpoint.tenancyAgreements.getEntries}?AssestInventoryFID=${payload.assestInventoryFID}`
                     )
+
                     if (responseSub) {
                         commit("setListTenancyAgreements", responseSub)
                     }
-                    commit("setSnackbar", true)
-                    commit("setSnackbarMessage", responseMain.responseMessage)
                     return responseMain
                 } else {
                     console.log({ Error: responseMain.responseMessage })

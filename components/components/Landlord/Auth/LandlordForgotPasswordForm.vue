@@ -1,80 +1,61 @@
 <template lang="html">
-    <form class="form--signin">
-        <h3 class="form__title"> Change password </h3>
-        <div class="form__fields">
+    <form class="form--forgot" @submit.prevent>
+        <div class="form__top">
+            <h3 class="form__title"> Forgot password?</h3>
+            <p class="form__subtitle">
+                Enter the email address associated with your account and we'll send you a link to
+                reset your password
+            </p>
+        </div>
+        <div v-if="!success" class="form__fields">
             <p v-if="httpError !== '' && !loading" class="alert alert--red">
                 {{ httpError }}
             </p>
 
             <div class="form__field">
-                <label class="required">Current Password</label>
+                <label class="required">Email address</label>
                 <v-text-field
-                    v-model="oldPassword"
-                    type="password"
+                    v-model="email"
+                    type="email"
                     outlined
                     dense
                     @input="onInputField"
-                    :error-messages="oldPasswordErrors"
-                />
-            </div>
-            <div class="form__field">
-                <label class="required">Password</label>
-                <v-text-field
-                    v-model="password"
-                    type="password"
-                    outlined
-                    dense
-                    @input="onInputField"
-                    :error-messages="passwordErrors"
-                />
-            </div>
-            <div class="form__field">
-                <label class="required">Confirm password</label>
-                <v-text-field
-                    v-model="confirmPassword"
-                    type="password"
-                    outlined
-                    dense
-                    @input="onInputField"
-                    :error-messages="confirmPasswordErrors"
+                    :error-messages="emailErrors"
                 />
             </div>
         </div>
+        <div v-else class="form__success">
+            <p class="alert alert--blue alert--success">
+                Your request to reset password has been sent. Please check your email.
+            </p>
+        </div>
 
-        <div class="form__actions">
-            <v-btn class="btn btn--primary btn--green" @click="onSubmit" :loading="loading">
-                Change password
+        <div v-if="!success" class="form__actions">
+            <v-btn v-if="" class="btn btn--primary btn--green" @click="onSubmit" :loading="loading">
+                Send request
             </v-btn>
-            <nuxt-link to="/landlord"> Back</nuxt-link>
+            <nuxt-link to="/landlord/signin"> Back</nuxt-link>
+        </div>
+        <div v-if="success" class="form__actions">
+            <v-btn v-if="" class="btn btn--outline btn--green" @click="onBackToSignIn()">
+                Back to sign in
+            </v-btn>
         </div>
     </form>
 </template>
 
 <script>
 import { validationMixin } from "vuelidate"
-import { helpers, not, required, sameAs } from "vuelidate/lib/validators"
+import { required, email } from "vuelidate/lib/validators"
 import { httpEndpoint } from "~/services/https/endpoints"
 
-const complexity = helpers.regex(
-    "complexity",
-    /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/
-)
-
 export default {
-    name: "LandlordChangePasswordForm",
+    name: "LandlordForgotPasswordForm",
     mixins: [validationMixin],
     validations: {
-        oldPassword: {
-            required
-        },
-        password: {
+        email: {
             required,
-            complexity,
-            notSameOldPassword: not(sameAs("oldPassword"))
-        },
-        confirmPassword: {
-            required,
-            sameAsPassword: sameAs("password")
+            email
         }
     },
     props: {
@@ -84,29 +65,11 @@ export default {
         }
     },
     computed: {
-        oldPasswordErrors() {
+        emailErrors() {
             const errors = []
-            if (!this.$v.oldPassword.$dirty) return errors
-            !this.$v.oldPassword.required && errors.push("This field is required.")
-            return errors
-        },
-        passwordErrors() {
-            const errors = []
-            if (!this.$v.password.$dirty) return errors
-            !this.$v.password.required && errors.push("This field is required.")
-            !this.$v.password.complexity &&
-                errors.push(
-                    "Password needs: at least 8 characters, 1 uppercase character, 1 number and 1 special character"
-                )
-            !this.$v.password.notSameOldPassword &&
-                errors.push("New password must be different from old password.")
-            return errors
-        },
-        confirmPasswordErrors() {
-            const errors = []
-            if (!this.$v.confirmPassword.$dirty) return errors
-            !this.$v.confirmPassword.required && errors.push("This field is required.")
-            !this.$v.confirmPassword.sameAsPassword && errors.push("Passwords do not match.")
+            if (!this.$v.email.$dirty) return errors
+            !this.$v.email.required && errors.push("Email is required.")
+            !this.$v.email.email && errors.push("Please enter a valid email address.")
             return errors
         }
     },
@@ -114,41 +77,58 @@ export default {
     data() {
         return {
             email: "",
-            oldPassword: "",
-            password: "",
-            confirmPassword: "",
             httpError: "",
-            loading: false
+            loading: false,
+            success: false
         }
     },
     methods: {
+        onBackToSignIn() {
+            this.$router.push("/landlord/signin")
+        },
+
         onInputField() {
             this.httpError = ""
         },
-        async onChangePassword() {
+
+        async onSendRequestChangPassword() {
             this.loading = true
             const params = {
-                oldPassword: this.oldPassword,
-                newPassword: this.password
+                email: this.email,
+                ipAddress: window.location.hostname,
+                userAgent: window.navigator.userAgent
             }
-            const response = await this.$axios.$put(httpEndpoint.user.changePassword, params)
+            try {
+                const response = await this.$axios.$post(
+                    httpEndpoint.auth.requestResetPassword,
+                    params
+                )
 
-            if (response) {
-                if (response.valid) {
-                    this.httpError = ""
-                    await this.$store.dispatch("app/showSnackBar", "Change password successful.")
-                    setTimeout(() => {
-                        this.loading = false
-                    }, 1200)
-                    await this.onLogout()
+                if (response) {
+                    if (response.valid) {
+                        this.httpError = ""
+                        this.success = true
+                        await this.$store.dispatch(
+                            "app/showSnackBar",
+                            "Send request to reset password successfully."
+                        )
+                        setTimeout(() => {
+                            this.loading = false
+                        }, 1200)
+                    } else {
+                        this.httpError = response.message
+                        setTimeout(() => {
+                            this.loading = false
+                        }, 1200)
+                    }
                 } else {
-                    this.httpError = response.message
+                    this.httpError = response.data.message
                     setTimeout(() => {
                         this.loading = false
                     }, 1200)
                 }
-            } else {
-                this.httpError = response.data.message
+            } catch (e) {
+                this.httpError = e.message
             }
         },
 
@@ -165,7 +145,7 @@ export default {
             try {
                 this.httpError = ""
                 if (!this.$v.$invalid) {
-                    await this.onChangePassword()
+                    await this.onSendRequestChangPassword()
                 }
             } catch (e) {
                 console.log({ Error: e.message })
@@ -175,7 +155,12 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.form--signin {
+.alert--success {
+    font-weight: 600;
+    text-align: center;
+    line-height: 1.4em;
+}
+.form--forgot {
     padding-top: 8.2rem;
     font-family: var(--font-primary);
     font-style: normal;
@@ -186,7 +171,15 @@ export default {
     max-width: 375px;
     margin-left: auto;
     margin-right: auto;
+    .form__top {
+        padding-bottom: 2.4rem;
 
+        p {
+            margin-top: 0.4rem;
+            text-align: center;
+            line-height: 1.4em;
+        }
+    }
     h3 {
         margin-bottom: 0;
     }

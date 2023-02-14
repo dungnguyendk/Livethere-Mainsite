@@ -47,6 +47,10 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+.section--register-benifit {
+    padding-bottom: 6.4rem;
+}
+
 .title__benefits {
     margin: 4.2rem 0 3.2rem 0;
     text-transform: uppercase;
