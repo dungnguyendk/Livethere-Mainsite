@@ -1,13 +1,13 @@
 import { httpEndpoint } from "~/services/https/endpoints"
 
 export const state = () => ({
-    postalDetails: {}
+    postalDetails: []
 })
 
 export const mutations = {
     setPostalDetails(state, payload) {
         state.postalDetails = payload
-        console.log("state.postalDetails::", state.postalDetails)
+        // console.log("state.postalDetails::", state.postalDetails)
     }
 }
 

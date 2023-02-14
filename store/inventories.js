@@ -2,7 +2,7 @@ import { httpEndpoint } from "~/services/https/endpoints"
 
 export const state = () => ({
     inventories: [],
-    inventoryDetail: "",
+    inventoryDetail: null,
     typeSelect: 0,
     snackbar: false,
     snackbarMessage: "Your message has been sent.",
@@ -104,13 +104,13 @@ export const actions = {
                 `${httpEndpoint.inventories.getEntryById}/${payload}`
             )
             if (response) {
-                commit("setInventoryDetail", response ? response : "")
+                commit("setInventoryDetail", response ? response : null)
             } else {
-                commit("setInventoryDetail", "")
+                commit("setInventoryDetail", null)
             }
         } catch (e) {
             console.log({ Error: e.message })
-            commit("setInventoryDetail", "")
+            commit("setInventoryDetail", null)
         }
     },
     async updateInventory({ commit }, payload) {
