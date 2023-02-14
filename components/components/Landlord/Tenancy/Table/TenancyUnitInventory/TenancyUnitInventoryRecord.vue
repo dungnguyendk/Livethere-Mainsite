@@ -198,7 +198,6 @@ tr:nth-child(even) {
         font-size: 2.4rem;
     }
 }
-
 @media screen and (max-width: 768px) {
     tr:nth-child(even) {
         background: #fafafa;
