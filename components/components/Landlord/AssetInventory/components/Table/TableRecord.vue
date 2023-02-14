@@ -85,12 +85,12 @@
                                     <v-list-item-title>Delete</v-list-item-title>
                                 </v-list-item-content>
                             </v-list-item>
-                            <v-list-item @click="openSoldOutDialog = true" class="list-item--custom">
+                            <v-list-item @click="openSoldDialog = true" class="list-item--custom">
                                 <v-list-item-icon>
                                     <v-icon v-text="`ri-close-circle-line`"></v-icon>
                                 </v-list-item-icon>
                                 <v-list-item-content>
-                                    <v-list-item-title>Sold Out</v-list-item-title>
+                                    <v-list-item-title>Sold</v-list-item-title>
                                 </v-list-item-content>
                             </v-list-item>
                         </v-list-item-group>
@@ -102,8 +102,8 @@
                 <AddInventoryForm @close="openAddNewInventoryDialog = false" v-if="openAddNewInventoryDialog"
                     :sourceDetail="source.id" />
             </Dialog>
-            <Dialog :open="openSoldOutDialog" @close="closeDialogSoldOut" size="medium" :title="''" :actions="false">
-                <SoldOutForm @close="openSoldOutDialog = false" v-if="openSoldOutDialog" :sourceDetail="source.id"
+            <Dialog :open="openSoldDialog" @close="closeDialogSoldOut" size="medium" :title="''" :actions="false">
+                <SoldOutForm @close="openSoldDialog = false" v-if="openSoldDialog" :sourceDetail="source.id"
                     :source="source" />
             </Dialog>
             <DeleteDialog :open="deleteDialog" size="large" type="full" @close="deleteDialog = false"
@@ -138,7 +138,7 @@ export default {
     data() {
         return {
             openAddNewInventoryDialog: false,
-            openSoldOutDialog: false,
+            openSoldDialog: false,
             sizeDialog: "large",
             // floorAreaSqftFormatter: "",
             // landAreaFormatter: "",
@@ -205,7 +205,7 @@ export default {
             this.openAddNewInventoryDialog = false
         },
         closeDialogSoldOut() {
-            this.openSoldOutDialog = false
+            this.openSoldDialog = false
         }
     },
     watch: {

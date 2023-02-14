@@ -154,11 +154,11 @@ export const actions = {
             commit("setSnackbarMessage", "Your message has been sent.")
         }
     },
-    async putSoldOut({ commit }, payload) {
+    async putSold({ commit }, payload) {
         try {
             if (payload) {
                 const response = await this.$axios.$put(
-                    `${httpEndpoint.inventories.putSoldOut}`,
+                    `${httpEndpoint.inventories.putSold}`,
                     payload
                 )
                 if (response) {
