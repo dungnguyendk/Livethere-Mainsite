@@ -34,7 +34,7 @@
         </td>
         <td data-label="Status" v-if="statusFID === 0 || statusFID === 1">
             <a @click="handleClickOpenRow(source.internalID)">
-                <AssetInventoryBadge :type="source.statusDisplay ? source.statusDisplay.toUpperCase() : ''"
+                <AssetInventoryBadge :type="source?.statusDisplay ? source.statusDisplay.toUpperCase() : ''"
                     :source="source" />
             </a>
         </td>
