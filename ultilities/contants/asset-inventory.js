@@ -101,14 +101,14 @@ export const TENURE = [
             id: 1,
             name: "LH"
         },
-        text: "LH (Lease Hold)"
+        text: "LH (Leasehold)"
     },
     {
         value: {
             id: 2,
             name: "FH"
         },
-        text: "FH (Free Hold)"
+        text: "FH (Freehold)"
     }
 ]
 export const CONDITIONS = [

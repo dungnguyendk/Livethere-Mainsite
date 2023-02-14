@@ -9,7 +9,7 @@
                     <th v-if="statusFID === 0 || statusFID === 1">Bedroom Type</th>
                     <th v-if="statusFID === 0 || statusFID === 1">Floor Area (sqft)</th>
                     <th v-if="statusFID === 0 || statusFID === 1">Land Area (sqft)</th>
-                    <th>Address</th>
+                    <th>Address<br />Location</th>
                     <th v-if="statusFID === 0 || statusFID === 1">Status</th>
                     <th v-if="statusFID === 2">Estimated Market Rent</th>
                     <th v-if="statusFID === 2">Asking Rent</th>
