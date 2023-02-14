@@ -62,21 +62,21 @@
             </div>
         </header>
         <div class="mobile">
-            <MobileHeader />
+            <MobileNavigation />
         </div>
     </div>
 </template>
 
 <script>
 import SiteLogo from "~/components/shared/Logo/SiteLogo.vue"
-import MobileHeader from "~/components/shared/Header/MobileHeader.vue"
+import MobileNavigation from "~/components/shared/Drawer/MobileNavigation.vue"
 import { httpEndpoint } from "~/services/https/endpoints"
 import { defaultMenu } from "~/ultilities/menus"
 import { mapState } from "vuex"
 
 export default {
     name: "LandlordHeader",
-    components: { MobileHeader, SiteLogo },
+    components: { MobileNavigation, SiteLogo },
     props: {
         source: {
             type: Object,
