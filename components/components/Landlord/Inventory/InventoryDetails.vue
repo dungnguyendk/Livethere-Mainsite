@@ -61,8 +61,8 @@ export default {
 
     .section__top {
         display: flex;
-        justify-content: flex-start;
-        align-items: center;
+        // justify-content: flex-start;
+        // align-items: center;
         padding-bottom: 3.2rem;
 
         h3 {
@@ -71,6 +71,23 @@ export default {
             text-align: center;
             display: block;
             flex-basis: 100%;
+        }
+    }
+    @media screen and (max-width: 768px) {
+        .section__top {
+            display: block;
+            // justify-content: flex-start;
+            // align-items: center;
+            padding-bottom: 1.5rem;
+
+            h3 {
+                padding-top: 1.2rem;
+                margin-bottom: 0;
+                font-size: 2.4rem;
+                text-align: center;
+                display: block;
+                flex-basis: 100%;
+            }
         }
     }
 
