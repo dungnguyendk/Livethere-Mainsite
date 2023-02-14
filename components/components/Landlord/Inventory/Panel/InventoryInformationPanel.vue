@@ -89,11 +89,13 @@ export default {
             gap: 2.4rem;
 
             span {
+                font-size: 1.6rem;
                 font-weight: 500;
                 padding-right: 1.2rem;
             }
 
             strong {
+                font-size: 1.6rem;
                 font-weight: 500;
                 color: var(--color-heading);
             }
@@ -131,6 +133,11 @@ export default {
 
         .panel__columns {
             grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+        .panel__column {
+            p {
+                font-size: 1.6rem;
+            }
         }
     }
 

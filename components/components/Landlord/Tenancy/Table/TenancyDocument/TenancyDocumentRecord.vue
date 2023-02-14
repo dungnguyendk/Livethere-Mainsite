@@ -98,11 +98,27 @@ td {
         overflow: hidden;
     }
 }
-
 tr:nth-child(even) {
     background-color: #fafafa;
 }
-
+@media screen and (max-width: 1279px) {
+    .actions {
+        p {
+            margin-bottom: 0;
+            font-size: 1.4rem;
+        }
+    }
+}
+@media screen and (max-width: 1023px) {
+    .actions {
+        display: flex;
+        justify-content: center;
+        p {
+            margin-bottom: 0;
+            font-size: 1.4;
+        }
+    }
+}
 @media screen and (max-width: 768px) {
     tr:nth-child(even) {
         background-color: #fafafa;
@@ -127,6 +143,8 @@ tr:nth-child(even) {
         }
     }
     .actions {
+        display: flex;
+        justify-content: flex-end;
         p {
             margin-bottom: 0;
             font-size: 0;

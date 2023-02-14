@@ -108,7 +108,6 @@ export default {
         }
     }
 }
-
 @media (max-width: 768px) {
     .table--responsive tbody tr {
         margin-bottom: 0;
