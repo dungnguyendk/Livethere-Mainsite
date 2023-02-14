@@ -132,7 +132,8 @@ export default {
                         let lastVisibleItem = this.realIndex + this.params.slidesPerView
                         let slidesLength = this.slides.length - 2
                         let lastVisibleIndex = this.realIndex + this.params.slidesPerView
-                        lastVisibleIndex === 5 ? self.activeColorArrow = true : self.activeColorArrow = false
+                        lastVisibleIndex === Number(self.fractionForm) ? self.activeColorArrow = true : self.activeColorArrow = false
+                       
                     }
                 }
             },
