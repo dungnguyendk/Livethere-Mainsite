@@ -1,0 +1,35 @@
+.icon-svg {
+	display: inline-block;
+	font-size: inherit;
+	text-rendering: auto;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	width: 24px;
+	height: 24px;
+	mask-repeat: no-repeat;
+	-webkit-mask-repeat: no-repeat;
+	mask-position: center;
+	-webkit-mask-position: center;
+	mask-size: contain;
+	-webkit-mask-size: contain;
+	background-color: var(--color-primary);
+	transform: translate3d(0, 0, 0);
+}
+.svg-bathroom {
+	mask-image: url("/img/icons/bathroom.svg");
+}
+.svg-bedroom {
+	mask-image: url("/img/icons/bedroom.svg");
+}
+.svg-location {
+	mask-image: url("/img/icons/location.svg");
+}
+.svg-buildings {
+	mask-image: url("/img/icons/buildings.svg");
+}
+.svg-dollar-circle {
+	mask-image: url("/img/icons/dollar-circle.svg");
+}
+.svg-location {
+	mask-image: url("/img/icons/location.svg");
+}
