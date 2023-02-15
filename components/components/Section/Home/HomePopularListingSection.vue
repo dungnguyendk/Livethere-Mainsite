@@ -215,6 +215,7 @@ export default {
     background-color: var(--bg-color-white);
     
     @media screen and (max-width: 768px) {
+        padding: 3.2rem 0;
         .section__top{
             margin-bottom: 3rem;
         }
