@@ -2,7 +2,7 @@
     <v-navigation-drawer class="drawer ps-drawer" v-model="drawer" absolute temporary>
         <div>
             <v-btn class="ps-drawer__close" @click.prevent="handleCloseDrawer()" variant="text">
-                <i class="ri-close-fill"></i>
+                <i class="icon-svg svg-close"></i>
             </v-btn>
         </div>
         <div class="ps-drawer__content">
