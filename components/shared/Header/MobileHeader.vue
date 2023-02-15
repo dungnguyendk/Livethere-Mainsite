@@ -2,31 +2,61 @@
     <header class="header--mobile" id="mobile-sticky">
         <div class="header__left">
             <a href="#" class="header__toggle" @click.prevent="handleOpenMenuDrawer">
-                <i class="feather icon icon-menu" />
+                <i class="ri-menu-line"></i>
             </a>
         </div>
         <div class="header__content">
             <SiteLogo />
         </div>
         <div class="header__right">
-            <v-btn icon class="btn--search">
-                <i class="ri-search-line"></i>
-            </v-btn>
+            <v-dialog
+                v-model="dialogSearch"
+                fullscreen
+                hide-overlay
+                transition="dialog-bottom-transition"
+                
+            >
+                <template v-slot:activator="{ on, attrs }">
+                    <v-btn icon class="btn--search" v-bind="attrs" v-on="on" elevation="0">
+                        <i class="ri-search-line"></i>
+                    </v-btn>
+                </template>
+                <v-card class="dialog-search">
+                    <v-btn icon @click="dialogSearch = false">
+                        <i class="icon-svg svg-close"></i>
+                    </v-btn>
+                    <v-card-text>
+                        <v-text-field
+                            prepend-inner-icon="icon-svg svg-map"
+                            placeholder="Where do you want to live?"
+                            outlined
+                            dense
+                        ></v-text-field>
+                    </v-card-text>
+                </v-card>
+            </v-dialog>
         </div>
+        <MobileNavigation />
     </header>
 </template>
 
 <script>
 import { mapState } from "vuex"
 import SiteLogo from "~/components/shared/Logo/SiteLogo.vue"
+import MobileNavigation from "~/components/shared/Drawer/MobileNavigation.vue"
 
 export default {
     name: "MobileHeader",
-    components: { SiteLogo },
+    components: { SiteLogo, MobileNavigation },
     computed: {
         ...mapState({
             appDrawer: (state) => state.app.appDrawer
         })
+    },
+    data() {
+        return {
+            dialogSearch: false
+        }
     },
 
     methods: {
@@ -111,4 +141,47 @@ export default {
         display: none;
     }
 }
+.dialog-search {
+    border-radius: 0;
+    margin: 0;
+    .v-btn--icon  {
+        border-radius: 0.4px;
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        .icon-svg {
+            background-color: #828586;
+        }
+    }
+    .v-card__text {
+        padding-top: 6.5rem
+    }
+    :deep(.v-input) {
+        fieldset {
+            // color: #DFE0E0;
+        }
+        .svg-map {
+            background-color: #E7B242;
+        }
+        .v-label {
+            font-size: 1.6rem;
+            color: #001327;
+        }
+        ::placeholder {
+            font-size: 1.6rem;
+            color: #001327;
+        }
+        .v-input__slot {
+            min-height: 4.8rem !important;
+        }
+        .v-input__prepend-inner {
+            margin-top: 1.2rem;
+            margin-right: 0.4rem;
+        }
+    }
+}
+
+.v-dialog--fullscreen {
+        margin: 0;
+    }
 </style>
