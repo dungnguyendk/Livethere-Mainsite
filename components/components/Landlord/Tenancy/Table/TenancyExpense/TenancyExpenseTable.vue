@@ -68,9 +68,9 @@ export default {
             setTimeout(() => {
                 this.snackBar = false
             }, 2000)
-        }, 
-        openDeleteDialog(e){
-          this.$emit('open', {open: e.open, id: e.id});
+        },
+        openDeleteDialog(e) {
+            this.$emit("open", { open: e.open, id: e.id })
             console.log("target event: ", e)
         }
     }
@@ -119,7 +119,7 @@ export default {
     }
 }
 @media (max-width: 820) {
-    .table--tenancy-expsense{
+    .table--tenancy-expsense {
         th:nth-child(1) {
             min-width: 20rem;
         }
@@ -130,8 +130,7 @@ export default {
     }
     .table--responsive tbody tr {
         margin-bottom: 0;
-        border: 1px solid #e5e5e5;
-        
+        border-top: 1px solid #e5e5e5;
     }
     table {
         width: 100%;
@@ -139,7 +138,9 @@ export default {
     tr td {
         display: block;
     }
-    th,
+    th {
+        font-size: 1.4rem;
+    }
     tbody {
         display: block;
     }
@@ -151,7 +152,7 @@ export default {
 @media (max-width: 768px) {
     .table--responsive tbody tr {
         margin-bottom: 0;
-        border: 1px solid #e5e5e5;
+        //border: 1px solid #e5e5e5;
     }
     table {
         width: 100%;

@@ -74,7 +74,7 @@ export default {
 @media (max-width: 768px) {
     .table--responsive tbody tr {
         margin-bottom: 0;
-        border: 1px solid #e5e5e5;
+        border-top: 1px solid #e5e5e5;
     }
     .table--tenancy-agreement {
         display: flex;
@@ -94,7 +94,9 @@ export default {
     tr td {
         display: block;
     }
-    th,
+    th {
+        font-size: 1.4rem;
+    }
     tbody {
         display: block;
     }
