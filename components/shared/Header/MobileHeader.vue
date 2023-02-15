@@ -2,8 +2,9 @@
     <header class="header--mobile" id="mobile-sticky">
         <div class="header__left">
             <a href="#" class="header__toggle" @click.prevent="handleOpenMenuDrawer">
-                <i class="feather icon icon-menu" />
+                <i class="ri-menu-line"></i>
             </a>
+            
         </div>
         <div class="header__content">
             <SiteLogo />
@@ -13,16 +14,18 @@
                 <i class="ri-search-line"></i>
             </v-btn>
         </div>
+        <MobileNavigation  />
     </header>
 </template>
 
 <script>
 import { mapState } from "vuex"
 import SiteLogo from "~/components/shared/Logo/SiteLogo.vue"
+import MobileNavigation from "~/components/shared/Drawer/MobileNavigation.vue"
 
 export default {
     name: "MobileHeader",
-    components: { SiteLogo },
+    components: { SiteLogo, MobileNavigation },
     computed: {
         ...mapState({
             appDrawer: (state) => state.app.appDrawer

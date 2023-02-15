@@ -1,114 +1,165 @@
 <template lang="html">
-    <header class="header--mobile nav" id="mobile-sticky">
-        <div class="header__left">
-            <a href="#" class="header__toggle" @click.prevent="handleOpenMenuDrawer">
-                <i class="feather icon icon-menu" />
-            </a>
-        </div>
-        <div class="header__content">
-            <SiteLogo />
-        </div>
-        <div class="header__right">
-            <v-btn icon class="btn--search">
-                <i class="ri-search-line"></i>
+    <v-navigation-drawer class="drawer ps-drawer" v-model="drawer" absolute temporary>
+        <div>
+            <v-btn class="ps-drawer__close" @click.prevent="handleCloseDrawer()" variant="text">
+                <i class="ri-close-fill"></i>
             </v-btn>
         </div>
-    </header>
+        <div class="ps-drawer__content">
+            <template v-if="loggedIn">
+                <v-list v-if="userInfo" class="ps-drawer__user">
+                    <v-list-subheader class="user-header"><i class="ri-user-line"></i>{{ userInfo.displayName }}</v-list-subheader>
+                    <v-list-group>
+                        <v-list-item>
+                            <nuxt-link to="/landlord"> Dashboard</nuxt-link>
+                        </v-list-item>
+                        <v-list-item>
+                            <a href="/" @click.prevent="onChangePassword"> Change password </a>
+                        </v-list-item>
+                        <v-list-item>
+                            <a href="/" @click.prevent="onLogout">Logout</a>
+                        </v-list-item>
+                    </v-list-group>
+                </v-list>
+            </template>
+            <nuxt-link
+                v-for="(item, index) in menus"
+                :to="`/${item.linkURL}`"
+                :class="item.linkURL === path ? 'active' : ''"
+                :key="index"
+            >
+                {{ item.defaultName }}
+            </nuxt-link>
+            <template v-if="loggedIn === false">
+                <div class="ps-drawer__bottom">
+                    <nuxt-link to="/landlord/signin" class="header__link"> Login </nuxt-link>
+                    <nuxt-link to="/register" class="header__link"> Register</nuxt-link>
+                </div>
+            </template>
+        </div>
+    </v-navigation-drawer>
 </template>
 
 <script>
 import { mapState } from "vuex"
 import SiteLogo from "~/components/shared/Logo/SiteLogo.vue"
-
+import { defaultMenu } from "~/ultilities/menus"
 export default {
     name: "MobileNavigation",
     components: { SiteLogo },
     computed: {
         ...mapState({
-            appDrawer: (state) => state.app.appDrawer
-        })
+            appDrawer: (state) => state.app.appDrawer,
+            userInfo: (state) => state.app.userInfo
+        }),
+        name() {
+            return this.data
+        },
+        path() {
+            return this.$router.path
+        },
+        loggedIn() {
+            return this.$auth.loggedIn
+        },
+    },
+    data() {
+        return {
+            drawer: false,
+            menus: defaultMenu,
+            menuID: 0
+        }
     },
 
     methods: {
-        handleOpenMenuDrawer() {
+        handleCloseDrawer() {
             this.$store.commit("app/setAppDrawer", !this.appDrawer)
+        },
+        async onLogout() {
+            await this.$auth.logout().then(() => {
+                window.location.href = "/landlord/signin"
+            })
         }
+    },
+    created() {
+        this.drawer = this.appDrawer
+    },
+    watch:{
+        appDrawer(){
+            this.drawer = this.appDrawer
+        },
     }
 }
 </script>
 
 <style lang="scss" scoped>
-.btn--search {
-    color: #fff;
-
-    i {
-        font-size: 2rem;
-        color: #fff;
-    }
-}
-
-.header--mobile {
-    display: flex;
-    flex-flow: row nowrap;
-    justify-content: space-between;
-    padding: 10px 16px;
-    background-color: var(--color-primary);
-
-    > * {
-        flex-basis: 100%;
-    }
-
-    .header__toggle {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-        color: #fff;
-
-        i {
-            font-size: 20px;
-        }
-
-        &:hover,
-        &:focus,
-        &:active {
-            background-color: rgba(#fff, 0.5);
-        }
-    }
-
-    .header__content {
-        display: flex;
-        flex-flow: column nowrap;
-        justify-content: center;
-        align-items: center;
-        flex: 1 1 100%;
-
-        .og-logo {
-            display: inline-block;
-        }
-    }
-
-    .header__right {
-        display: flex;
-        justify-content: flex-end;
-    }
-
-    &.mobile--sticky {
-        position: fixed;
-        z-index: 100;
+.ps-drawer {
+    width: 100% !important;
+    background-color: #0b0c0c;
+    .ps-drawer__close {
+        position: absolute;
         top: 0;
-        left: 0;
-        width: 100%;
+        right: 0;
+        background-color: transparent;
+        padding: 0;
+        min-width: 4.4rem;
+        i {
+            font-size: 3.8rem;
+            color: white;
+        }
     }
-
-    @media screen and (min-width: 768px) {
-        padding-left: calc((100% - 600px) / 2);
-        padding-right: calc((100% - 600px) / 2);
+    .ps-drawer__content {
+        display: block;
+        display: flex;
+        flex-direction: column;
+        padding-top: 3.4rem;
+        a {
+            font-size: 2rem;
+            color: white;
+            // line-height: 4.8rem;
+            padding: 1.2rem 3.2rem;
+        }
     }
-    @media screen and (min-width: 1200px) {
-        display: none;
+    .ps-drawer__user {
+        padding: 0 1.6rem 1.6rem;
+        position: relative;
+        border-bottom: 1px solid white;
+        .v-list-item {
+            color: white;
+            font-size: 2rem;
+        }
+        .ri-user-line {
+            font-size: 2rem;
+            margin-right: 0.8rem;
+        }
+        .user-header{
+            display: flex;
+            align-items: center;
+            color: white;
+            font-size: 2rem;
+            display: block;
+            padding: 0 0.8rem;
+        }
+        :deep(.v-list-group__header) {
+            position: absolute;
+            top: -0.6rem;
+            left: 0;
+            right: 0;
+        }
+        :deep(.v-list-group) {
+            .mdi.mdi-chevron-down {
+                color: white;
+                position: absolute;
+                top: 1rem;
+                right: 1rem;
+            }
+            a {
+                padding: 1.2rem;
+            }
+        }
+        
+    }
+    .ps-drawer__bottom {
+        padding-top: 3.2rem;
     }
 }
 </style>
