@@ -6,31 +6,37 @@
                 <span>premium</span>
             </div>
             <nuxt-link to="/" class="card__header-title">{{ project.title }}</nuxt-link>
-            <div>&nbsp;</div>
+
         </div>
         <div class="card__image">
-            <img :src="project.imgURL" alt="" />
+            <nuxt-link to="/">
+                <img :src="project.imgURL" alt="" />
+            </nuxt-link>
         </div>
         <div class="card__content">
             <div class="card__content-fee">
                 <h3 class="card__content-price">S$ {{ project.price }}/month</h3>
                 <div class="card__content-emotions">
-                    <img :src="require(`~/static/img/icon-export.svg`)" alt="">
-                    <i class="ri-heart-3-line"></i>
+                    <button>
+                        <i class="icon-svg svg-export"></i>
+                    </button>
+                    <button>
+                        <i class="icon-svg svg-heart"></i>
+                    </button>
                 </div>
             </div>
             <div class="card__content-infor">
-                <div class="card__content-location card__content-style ">
-                    <img :src="require(`~/static/img/icon-location.svg`)" alt="" />
+                <div class="card__content-location card__content-style">
+                    <i class="icon-svg svg-location"></i>
                     <span>{{ project.location }}</span>
                 </div>
-                <div class="card__content-bed-bath  ">
+                <div class="card__content-bed-bath">
                     <div class="card__content-bed card__content-style">
-                        <img :src="require(`~/static/img/icon-bedroom.svg`)" alt="" />
+                        <i class="icon-svg svg-bedroom"></i>
                         <span>{{ project.totalBed }}</span>
                     </div>
-                    <div class="card__content-bath card__content-style ">
-                        <img :src="require(`~/static/img/icon-bathroom.svg`)" alt="" />
+                    <div class="card__content-bath card__content-style">
+                        <i class="icon-svg svg-bathroom"></i>
                         <span>{{ project.totalBath }}</span>
                     </div>
                 </div>
@@ -60,7 +66,7 @@ export default {
 .card__header {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+
     padding: 1rem 2.9rem 0.8rem;
     .card__header-logo {
         display: flex;
@@ -90,6 +96,7 @@ export default {
         -webkit-line-clamp: 2;
         line-clamp: 2;
         overflow: hidden;
+        margin: 0 auto;
         -webkit-box-orient: vertical;
         &:hover {
             color: var(--color-primary);
@@ -116,50 +123,43 @@ export default {
             color: #edb842;
             margin-bottom: 0;
         }
-        .card__content-emotions{
+        .card__content-emotions {
             display: flex;
             align-items: center;
-            img{
-                margin-right: 1.6rem;
-                cursor: pointer;
-            }
-            i{
-                font-size: 2.4rem;
-                color: var(--color-label);
-                cursor: pointer;
-
+            button{
+                i{
+                    width: 2.4rem; 
+                    background-color: var(--color-label);
+                }
+                &:first-child{
+                    margin-right: 1.6rem;
+                }
             }
         }
     }
 }
 .card__content-infor {
-    .card__content-location{
+    .card__content-location {
         margin-bottom: 1.4rem;
-        span{
-            text-overflow: ellipsis;
-        display: -webkit-box;
-        -webkit-line-clamp: 1;
-        line-clamp: 1;
-        overflow: hidden;
-        -webkit-box-orient: vertical;
-        }
+
     }
     .card__content-bed-bath {
         display: flex;
         align-items: center;
 
-    .card__content-bed{
-        margin-right: 4.6rem;
-    }
+        .card__content-bed {
+            margin-right: 4.6rem;
+        }
     }
 }
 .card__content-style {
     display: flex;
     align-items: center;
 
-    img {
-        filter: brightness(0) saturate(100%) invert(87%) sepia(13%) saturate(2665%)
-            hue-rotate(332deg) brightness(103%) contrast(86%);
+    i {
+        width: 3.2rem;
+        height: 3.2rem;
+        background-color: #edb842;
     }
     span {
         font-weight: 500;
