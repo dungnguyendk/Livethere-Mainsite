@@ -17,7 +17,7 @@
             <div class="card__content-fee">
                 <h3 class="card__content-price">S$ {{ project.price }}/month</h3>
                 <div class="card__content-emotions">
-                    <button>
+                    <button @click="openShareSocialDialog(project.id)">
                         <i class="icon-svg svg-export"></i>
                     </button>
                     <button>
@@ -52,6 +52,16 @@ export default {
         project: {
             type: Object,
             default: () => {}
+        }
+    },
+    data(){
+        return{
+           isOpenShareSocialDialog: false
+        }
+    }, 
+    methods: {
+        openShareSocialDialog(id){
+            this.$emit("open", {id: id, open: this.isOpenShareSocialDialog = true})
         }
     }
 }

@@ -25,5 +25,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-
+.form--share-social{
+    
+}
 </style>

@@ -15,9 +15,8 @@
                         <template v-slot:activator="{ on, attrs }">
                             <v-btn class="section__btn-sort btn btn--outline
                                 btn--green section__btn-style"
-                             v-bind="attrs"
-                             v-on="on"
-                            >
+                                v-bind="attrs"
+                                v-on="on">
                                 <i class="icon-svg svg-sort"></i>
                                 <span>Sort by</span>
                                 <i class="icon-svg svg-arrow-down"></i>
@@ -26,9 +25,8 @@
                         <v-list>
                             <v-list-item-group>
                                 <v-list-item
-                                 v-for="(item, index) in listSort"
-                                 :key="index"
-                                >
+                                    v-for="(item, index) in listSort"
+                                    :key="index">
                                     <v-list-item-title>{{ item.title }}</v-list-item-title>
                                 </v-list-item>
                             </v-list-item-group>
@@ -53,17 +51,22 @@
                 </div>
                 <div class="section__body-list">
                     <ProjectCard v-for="(project, index) in listProjects"
-                        :key="index" :project="project"/>
+                        :key="index" :project="project" @open="openShareSocialDialog($event)"/>
                     </div>
-                    <Dialog :open="openFilterProjectDialog" :title="''">
-                        <FilterProjectForm/>
-                        </Dialog>
-                    </div>
-                </div>
-            </section>
-        </template>
+                    <Dialog
+                        :open="openFilterProjectDialog"
+                        :title="''" @close="closeDialog"
+                        :actions="false"
+                    >
+                        <FilterProjectForm @close="openFilterProjectDialog=
+                            false"/>
+                    </Dialog>
+            </div>
+        </div>
+    </section>
+</template>
 
-        <script>
+<script>
 import Dialog from "~/components/elements/Dialog/Dialog.vue"
 import ProjectCard from "./components/Card/ProjectCard.vue"
 import FilterProjectForm from "~/components/components/Projects/components/Form/FilterProjectForm"
@@ -112,28 +115,37 @@ export default {
             ],
             listSort: [
                 {
-                    id: 1, 
-                    title: 'Newest', 
+                    id: 1,
+                    title: "Newest",
                     value: 1
-                }, 
+                },
                 {
-                    id: 2, 
-                    title: 'Relevant', 
+                    id: 2,
+                    title: "Relevant",
                     value: 2
-                }, 
+                },
                 {
-                    id: 3, 
-                    title: 'Lowest Price', 
+                    id: 3,
+                    title: "Lowest Price",
                     value: 3
-                }, 
+                },
                 {
-                    id: 4, 
-                    title: 'Highest Price', 
+                    id: 4,
+                    title: "Highest Price",
                     value: 4
                 }
             ],
             isActiveMap: false,
-            openFilterProjectDialog: false
+            openFilterProjectDialog: false, 
+            isOpenShareSocialDialog: false, 
+        }
+    },
+    methods: {
+        closeDialog() {
+            this.openFilterProjectDialog = false
+        }, 
+        openShareSocialDialog(e){
+            this.isOpenShareSocialDialog = e.open
         }
     }
 }
