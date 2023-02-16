@@ -6,7 +6,6 @@
                 <span>premium</span>
             </div>
             <nuxt-link to="/" class="card__header-title">{{ project.title }}</nuxt-link>
-
         </div>
         <div class="card__image">
             <nuxt-link to="/">
@@ -20,8 +19,8 @@
                     <button @click="openShareSocialDialog(project.id)">
                         <i class="icon-svg svg-export"></i>
                     </button>
-                    <button>
-                        <i class="icon-svg svg-heart"></i>
+                    <button @click="activeHeartEmotion(project.id)">
+                        <i class="ri-heart-3-line" :class="{'active-heart' : project.activeHeart}"></i>
                     </button>
                 </div>
             </div>
@@ -52,18 +51,32 @@ export default {
         project: {
             type: Object,
             default: () => {}
+        },
+        listProject: {
+            type: Array,
+            default: () => []
         }
     },
-    data(){
-        return{
-           isOpenShareSocialDialog: false
+    data() {
+        return {
+            isOpenShareSocialDialog: false, 
+            isActiveItemEmotion: 1, 
         }
-    }, 
+    },
     methods: {
-        openShareSocialDialog(id){
-            this.$emit("open", {id: id, open: this.isOpenShareSocialDialog = true})
+        openShareSocialDialog(id) {
+            this.$emit("open", { id: id, open: (this.isOpenShareSocialDialog = true) })
+        },
+        activeHeartEmotion(id) {
+            try {
+                var project = this.listProject.find((e) => e.id === id)
+                project.activeHeart = !project.activeHeart
+               
+                
+            } catch (error) {
+                console.log(error)
+            }
         }
-      
     }
 }
 </script>
@@ -126,7 +139,7 @@ export default {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        margin-bottom: 2rem;
+        margin-bottom: 1rem;
         .card__content-price {
             font-weight: 800;
             font-size: 2.2rem;
@@ -137,13 +150,19 @@ export default {
         .card__content-emotions {
             display: flex;
             align-items: center;
-            button{
-                i{
-                    width: 2.4rem; 
-                    background-color: var(--color-label);
+            button {
+                display: flex;
+                align-items: center;
+                i {
+                    width: 2.4rem;
+                    font-size: 2.4rem;
+                    color: var(--color-label);
                 }
-                &:first-child{
+                &:first-child {
                     margin-right: 1.6rem;
+                    i {
+                        background-color: var(--color-label);
+                    }
                 }
             }
         }
@@ -151,8 +170,7 @@ export default {
 }
 .card__content-infor {
     .card__content-location {
-        margin-bottom: 1.4rem;
-
+        margin-bottom: 1rem;
     }
     .card__content-bed-bath {
         display: flex;
@@ -177,7 +195,13 @@ export default {
         font-size: 1.8rem;
         line-height: 2.4rem;
         color: var(--color-title-black);
-        padding-left: 1.25rem;
+        padding-left: 0.5rem;
+    }
+}
+.active-heart {
+    &::before{
+        content: "\EE0A";
+        color: var(--color-primary)
     }
 }
 </style>

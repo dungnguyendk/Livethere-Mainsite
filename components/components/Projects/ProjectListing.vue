@@ -11,27 +11,18 @@
                     </v-btn>
                 </div>
                 <div class="section__top-right">
-                    <v-menu offset-y>
-                        <template v-slot:activator="{ on, attrs }">
-                            <v-btn class="section__btn-sort btn btn--outline
-                                btn--green section__btn-style"
-                                v-bind="attrs"
-                                v-on="on">
-                                <i class="icon-svg svg-sort"></i>
-                                <span>Sort by</span>
-                                <i class="icon-svg svg-arrow-down"></i>
-                            </v-btn>
-                        </template>
-                        <v-list>
-                            <v-list-item-group>
-                                <v-list-item
-                                    v-for="(item, index) in listSort"
-                                    :key="index">
-                                    <v-list-item-title>{{ item.title }}</v-list-item-title>
-                                </v-list-item>
-                            </v-list-item-group>
-                        </v-list>
-                    </v-menu>
+                    <v-select
+                        v-model="selectionSort"
+                        
+                        :items="listSort"
+                        item-text="title"
+                        item-value="value"
+                        class="select-custom"
+                        outlined
+                        dense
+                        prepend-inner-icon="icon-svg svg-sort"
+                        append-icon="mdi-chevron-down">
+                    </v-select>
                     <v-btn class="section__btn-map btn btn--outline btn--green
                         section__btn-style" @click="isActiveMap= !isActiveMap">
                         <i class="icon-svg svg-map"></i>
@@ -50,17 +41,18 @@
                         referrerpolicy="no-referrer-when-downgrade"></iframe>
                 </div>
                 <div class="section__body-list">
-                    <ProjectCard v-for="(project, index) in listProjects"
-                        :key="index" :project="project" @open="openShareSocialDialog($event)"/>
+                    <ProjectCard v-for="(project, index) in listProject"
+                        :key="index" :project="project" @open="openShareSocialDialog($event)" :listProject="listProject"/>
                     </div>
                     <Dialog
                         :open="isOpenFilterProjectDialog"
-                        :title="''" 
+                        :title="'Filter'" 
                         @close="closeFilterProjectDialog"
                         :actions="false"
+                        class="dialog-custom"
                     >
-                        <FilterProjectForm @close="isOpenFilterProjectDialog=
-                            false"/>
+                        <!-- <FilterProjectForm @close="isOpenFilterProjectDialog=
+                            false"/> -->
                     </Dialog>
                     <Dialog
                         :open="isOpenShareSocialDialog"
@@ -85,7 +77,7 @@ export default {
     components: { ProjectCard, Dialog, FilterProjectForm, ShareSocialForm },
     data() {
         return {
-            listProjects: [
+            listProject: [
                 {
                     id: 1,
                     title: "Eden Residences Capitol",
@@ -93,7 +85,8 @@ export default {
                     location: "2 Sinaran Drive, Singapore 307467",
                     price: 30000,
                     totalBed: 3,
-                    totalBath: 2
+                    totalBath: 2,
+                    activeHeart: false
                 },
                 {
                     id: 2,
@@ -102,7 +95,8 @@ export default {
                     location: "22 Saint Thomas Walk, Singapore 238107",
                     price: 18000,
                     totalBed: 4,
-                    totalBath: 4
+                    totalBath: 4,
+                    activeHeart: false
                 },
                 {
                     id: 3,
@@ -111,7 +105,8 @@ export default {
                     location: "92 Robertson Quay, Singapore 238260",
                     price: 56000,
                     totalBed: 8,
-                    totalBath: 10
+                    totalBath: 10,
+                    activeHeart: false
                 },
                 {
                     id: 4,
@@ -120,7 +115,8 @@ export default {
                     location: "Marina Boulevard, Singapore 018987",
                     price: 15800,
                     totalBed: 5,
-                    totalBath: 9
+                    totalBath: 9,
+                    activeHeart: false
                 }
             ],
             listSort: [
@@ -146,18 +142,19 @@ export default {
                 }
             ],
             isActiveMap: false,
-            isOpenFilterProjectDialog: false, 
-            isOpenShareSocialDialog: false, 
+            isOpenFilterProjectDialog: false,
+            isOpenShareSocialDialog: false,
+            selectionSort: 1
         }
     },
     methods: {
         closeFilterProjectDialog() {
             this.isOpenFilterProjectDialog = false
-        }, 
-        closeShareSocialDialog(){
+        },
+        closeShareSocialDialog() {
             this.isOpenShareSocialDialog = false
         },
-        openShareSocialDialog(e){
+        openShareSocialDialog(e) {
             this.isOpenShareSocialDialog = e.open
         }
     }
@@ -188,7 +185,10 @@ export default {
     align-items: center;
     justify-content: space-between;
     padding: 1.6rem 0 2.4rem;
-
+    .section__top-right {
+        display: flex;
+        align-items: center;
+    }
     .section__btn-sort {
         span {
             margin-right: 0.4rem;
@@ -229,6 +229,36 @@ export default {
     &:focus {
         i {
             background-color: var(--color-white);
+        }
+    }
+}
+.select-custom {
+    margin-right: 1.2rem;
+
+    ::v-deep(.v-text-field__details) {
+        display: none;
+        margin-bottom: 0;
+    }
+    ::v-deep(.v-input__slot) {
+        margin-bottom: 0;
+        border-radius: 0.6rem;
+        border-color: var(--color-primary);
+        .v-input__prepend-inner {
+            i {
+                width: 1.6rem;
+            }
+        }
+        .v-select__selections {
+            input {
+                display: none;
+            }
+        }
+        .v-select__selection {
+            max-width: 100%;
+            font-weight: 700;
+            font-size: 1.6rem;
+            line-height: 2rem;
+            color: var(--color-primary)
         }
     }
 }
