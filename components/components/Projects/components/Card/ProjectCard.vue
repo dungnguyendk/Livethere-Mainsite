@@ -63,6 +63,7 @@ export default {
         openShareSocialDialog(id){
             this.$emit("open", {id: id, open: this.isOpenShareSocialDialog = true})
         }
+      
     }
 }
 </script>

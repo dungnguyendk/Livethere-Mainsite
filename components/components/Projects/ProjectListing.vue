@@ -5,7 +5,7 @@
                 <div class="section__top-left">
                     <v-btn class="section__btn-filter btn btn--outline
                         btn--green section__btn-style"
-                        @click="openFilterProjectDialog= true">
+                        @click="isOpenFilterProjectDialog= true">
                         <i class="icon-svg svg-candle"></i>
                         <span>More Filters</span>
                     </v-btn>
@@ -54,12 +54,21 @@
                         :key="index" :project="project" @open="openShareSocialDialog($event)"/>
                     </div>
                     <Dialog
-                        :open="openFilterProjectDialog"
-                        :title="''" @close="closeDialog"
+                        :open="isOpenFilterProjectDialog"
+                        :title="''" 
+                        @close="closeFilterProjectDialog"
                         :actions="false"
                     >
-                        <FilterProjectForm @close="openFilterProjectDialog=
+                        <FilterProjectForm @close="isOpenFilterProjectDialog=
                             false"/>
+                    </Dialog>
+                    <Dialog
+                        :open="isOpenShareSocialDialog"
+                        :title="'Share this listing'"
+                        :actions="false"
+                        @close="closeShareSocialDialog"
+                    >
+                        <ShareSocialForm/>     
                     </Dialog>
             </div>
         </div>
@@ -70,9 +79,10 @@
 import Dialog from "~/components/elements/Dialog/Dialog.vue"
 import ProjectCard from "./components/Card/ProjectCard.vue"
 import FilterProjectForm from "~/components/components/Projects/components/Form/FilterProjectForm"
+import ShareSocialForm from "./components/Form/ShareSocialForm.vue"
 export default {
     name: "ProjectListing",
-    components: { ProjectCard, Dialog, FilterProjectForm },
+    components: { ProjectCard, Dialog, FilterProjectForm, ShareSocialForm },
     data() {
         return {
             listProjects: [
@@ -136,14 +146,17 @@ export default {
                 }
             ],
             isActiveMap: false,
-            openFilterProjectDialog: false, 
+            isOpenFilterProjectDialog: false, 
             isOpenShareSocialDialog: false, 
         }
     },
     methods: {
-        closeDialog() {
-            this.openFilterProjectDialog = false
+        closeFilterProjectDialog() {
+            this.isOpenFilterProjectDialog = false
         }, 
+        closeShareSocialDialog(){
+            this.isOpenShareSocialDialog = false
+        },
         openShareSocialDialog(e){
             this.isOpenShareSocialDialog = e.open
         }
