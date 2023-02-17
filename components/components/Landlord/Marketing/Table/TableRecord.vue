@@ -29,7 +29,8 @@
             {{ source.landAreaSqft ? landAreaSqftFormatter : "-" }}
         </td>
         <td data-label="Address">
-            {{ source.streetName }}
+            {{ source.streetName ? source.streetName : "-" }} <br />
+            {{ source.location ? source.location : "-" }}
         </td>
         <td data-label="Status">
             <a>
@@ -57,7 +58,7 @@ export default {
     props: {
         source: {
             type: Object,
-            default: () => { }
+            default: () => null
         },
         selectedId: {
             type: Number,

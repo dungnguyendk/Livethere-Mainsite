@@ -1,6 +1,6 @@
 <template>
     <tr :class="`table--record ${source.id !== selectedId && selectedId !== -1 ? 'unSelected' : ''
-    }`">
+        }`">
         <td data-label="Property">
             <div>
                 <img :src="require(`~/static/img/${source.propertyType === 1 ? 'condo' : source.propertyType === 2 ? 'apt' : 'landed'}.png`)"
@@ -34,7 +34,7 @@
         </td>
         <td data-label="Status" v-if="statusFID === 0 || statusFID === 1">
             <a @click="handleClickOpenRow(source.internalID)">
-                <AssetInventoryBadge :type="source.statusDisplay ? source.statusDisplay.toUpperCase() : ''"
+                <AssetInventoryBadge :type="source?.statusDisplay ? source.statusDisplay.toUpperCase() : ''"
                     :source="source" />
             </a>
         </td>
@@ -85,25 +85,24 @@
                                     <v-list-item-title>Delete</v-list-item-title>
                                 </v-list-item-content>
                             </v-list-item>
-                            <v-list-item @click="openSoldOutDialog = true" class="list-item--custom">
+                            <v-list-item @click="openSoldDialog = true" class="list-item--custom">
                                 <v-list-item-icon>
                                     <v-icon v-text="`ri-close-circle-line`"></v-icon>
                                 </v-list-item-icon>
                                 <v-list-item-content>
-                                    <v-list-item-title>Sold Out</v-list-item-title>
+                                    <v-list-item-title>Sold</v-list-item-title>
                                 </v-list-item-content>
                             </v-list-item>
                         </v-list-item-group>
                     </v-list>
                 </v-menu>
             </div>
-            <Dialog :open="openAddNewInventoryDialog" @close="closeDialog" :size="sizeDialog" :title="''"
-                :actions="false">
+            <Dialog :open="openAddNewInventoryDialog" @close="closeDialog" :size="sizeDialog" :title="''" :actions="false">
                 <AddInventoryForm @close="openAddNewInventoryDialog = false" v-if="openAddNewInventoryDialog"
                     :sourceDetail="source.id" />
             </Dialog>
-            <Dialog :open="openSoldOutDialog" @close="closeDialogSoldOut" size="medium" :title="''" :actions="false">
-                <SoldOutForm @close="openSoldOutDialog = false" v-if="openSoldOutDialog" :sourceDetail="source.id"
+            <Dialog :open="openSoldDialog" @close="closeDialogSoldOut" size="medium" :title="''" :actions="false">
+                <SoldOutForm @close="openSoldDialog = false" v-if="openSoldDialog" :sourceDetail="source.id"
                     :source="source" />
             </Dialog>
             <DeleteDialog :open="deleteDialog" size="large" type="full" @close="deleteDialog = false"
@@ -128,7 +127,7 @@ export default {
     props: {
         source: {
             type: Object,
-            default: () => { }
+            default: () => null
         },
         selectedId: {
             type: Number,
@@ -138,7 +137,7 @@ export default {
     data() {
         return {
             openAddNewInventoryDialog: false,
-            openSoldOutDialog: false,
+            openSoldDialog: false,
             sizeDialog: "large",
             // floorAreaSqftFormatter: "",
             // landAreaFormatter: "",
@@ -205,7 +204,7 @@ export default {
             this.openAddNewInventoryDialog = false
         },
         closeDialogSoldOut() {
-            this.openSoldOutDialog = false
+            this.openSoldDialog = false
         }
     },
     watch: {

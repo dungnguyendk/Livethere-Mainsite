@@ -40,7 +40,7 @@ export default {
     props: {
         source: {
             type: Object,
-            default: () => { }
+            default: () => null
         },
         selectedId: {
             type: Number,
