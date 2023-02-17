@@ -48,7 +48,7 @@ export default {
     props: {
         source: {
             type: Object,
-            default: () => { }
+            default: () => null
         },
         sourceDetail: {
             type: Number,

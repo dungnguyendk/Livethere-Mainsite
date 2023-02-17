@@ -39,7 +39,7 @@ export default {
     props: {
         source: {
             type: Object,
-            default: () => { }
+            default: () => null
         },
         chartId: {
             type: String,

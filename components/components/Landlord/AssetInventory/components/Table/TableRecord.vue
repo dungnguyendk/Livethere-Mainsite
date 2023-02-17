@@ -1,6 +1,6 @@
 <template>
     <tr :class="`table--record ${source.id !== selectedId && selectedId !== -1 ? 'unSelected' : ''
-    }`">
+        }`">
         <td data-label="Property">
             <div>
                 <img :src="require(`~/static/img/${source.propertyType === 1 ? 'condo' : source.propertyType === 2 ? 'apt' : 'landed'}.png`)"
@@ -97,8 +97,7 @@
                     </v-list>
                 </v-menu>
             </div>
-            <Dialog :open="openAddNewInventoryDialog" @close="closeDialog" :size="sizeDialog" :title="''"
-                :actions="false">
+            <Dialog :open="openAddNewInventoryDialog" @close="closeDialog" :size="sizeDialog" :title="''" :actions="false">
                 <AddInventoryForm @close="openAddNewInventoryDialog = false" v-if="openAddNewInventoryDialog"
                     :sourceDetail="source.id" />
             </Dialog>
@@ -128,7 +127,7 @@ export default {
     props: {
         source: {
             type: Object,
-            default: () => { }
+            default: () => null
         },
         selectedId: {
             type: Number,
