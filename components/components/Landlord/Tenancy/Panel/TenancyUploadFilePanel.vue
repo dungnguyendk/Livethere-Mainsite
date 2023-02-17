@@ -14,12 +14,17 @@
                 :include-styling="false"
                 v-on:vdropzone-thumbnail="thumbnail"
                 v-on:vdropzone-success="(file, response) => onUploadSuccess(file, response)"
+                v-on:vdropzone-upload-progress="
+                    (file, progress, bytesSent) => onUploadProgress(file, progress, bytesSent)
+                "
             >
                 <div class="dropzone--custom">
                     <h4 class="dropzone__heading">
                         <i class="ri-upload-cloud-2-line" />
                         Drop files here or click to upload
                     </h4>
+                    <p v-if="progress === 0">Supported format: PDF. File size limit: 50 MB</p>
+                    <p v-else>Uploading...</p>
                 </div>
             </Dropzone>
         </div>
@@ -53,6 +58,7 @@ export default {
             confirmDialog: false,
             isNewFile: false,
             newFile: null,
+            progress: 0,
             dropzoneOptions: {
                 url: `${appMedia.baseURL}/api/documents`,
                 thumbnailWidth: 0,
@@ -73,6 +79,10 @@ export default {
         }
     },
     methods: {
+        onUploadProgress(file, progress, bytesSent) {
+            this.progress = progress.toFixed(0)
+        },
+
         template: function () {
             return `<div class="dz-preview dz-file-preview">
                 <div class="dz-image">
@@ -117,7 +127,11 @@ export default {
             this.$refs.dropRef.removeAllFiles()
             const fileInfo = await this.$api.$get(`${httpEndpoint.documents}/${response.data.id}`)
             if (fileInfo && fileInfo.data) {
-                this.$emit("onUpdateDocuments", fileInfo, response.data.id)
+                setTimeout(() => {
+                    this.progress = 0
+                    this.$emit("onUpdateDocuments", fileInfo, response.data.id)
+                    this.$store.dispatch("app/showSnackBar", "Uploaded successfully")
+                }, 2000)
             }
         }
     }
@@ -151,6 +165,7 @@ export default {
         }
     }
 }
+
 .card--dropzone::v-deep(.dz-preview) {
     display: none;
 }
