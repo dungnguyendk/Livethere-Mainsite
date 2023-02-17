@@ -13,7 +13,6 @@
                 <div class="section__top-right">
                     <v-select
                         v-model="selectionSort"
-                        
                         :items="listSort"
                         item-text="title"
                         item-value="value"
@@ -36,9 +35,11 @@
                     'section__body-map--disabled'">
                     <iframe
                         src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.107901410066!2d106.71887761533426!3d10.803047261654479!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x317529f8273eaed5%3A0x27fe58a754c470b0!2zQ8O0bmcgdHkgQ-G7lSBwaOG6p24gxJDhuqd1IFTGsCBYw6J5IEThu7FuZyBCY29ucw!5e0!3m2!1sen!2s!4v1676437005731!5m2!1sen!2s"
-                        width="600" height="450" style="border:0;"
+                         style="border:0;"
                         allowfullscreen="" loading="lazy"
-                        referrerpolicy="no-referrer-when-downgrade"></iframe>
+                        referrerpolicy="no-referrer-when-downgrade"
+                        class="section__body-map-custom"
+                        ></iframe>
                 </div>
                 <div class="section__body-list">
                     <ProjectCard v-for="(project, index) in listProject"
@@ -50,7 +51,6 @@
                     <FilterDialog 
                      :open="isOpenFilterProjectDialog"
                      @close="closeFilterProjectDialog"
-                     
                     />
                     <Dialog
                         :open="isOpenShareSocialDialog"
@@ -171,11 +171,26 @@ export default {
         }
     }
     @media screen and (max-width: 450px) {
+        .section__body-load-more{
+            button{
+                padding: 2rem 0 2.8rem;
+            }
+        }
         .section__body-list {
             display: grid;
             grid-template-columns: repeat(1, minmax(0, 1fr));
             grid-gap: 4.8rem;
             padding: 2rem;
+        }
+    }
+    @media screen and (max-width: 400px) {
+        .section__btn-style{
+            i{
+
+            }
+            span{
+                display: none;
+            }
         }
     }
 }
@@ -200,10 +215,14 @@ export default {
 .section__body-map {
     transition: 300ms linear;
     overflow: hidden;
+    .section__body-map-custom{
+        height: 25.6rem;
+    }
+
 }
 .section__body-map--active {
     margin-bottom: 2.4rem;
-    height: 45.6rem;
+    height: 25.6rem;
 }
 .section__body-map--disabled {
     height: 0;

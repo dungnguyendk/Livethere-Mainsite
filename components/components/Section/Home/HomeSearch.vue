@@ -101,7 +101,7 @@ export default {
         box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.04), 0px 8px 16px rgba(0, 0, 0, 0.08);
         border-radius: 0.8rem;
         padding: 1.8rem 1.6rem;
-        background-color: white;
+        background-color: var(--color-white);
     }
     .form__field {
         label {

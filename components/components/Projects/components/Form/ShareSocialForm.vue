@@ -1,19 +1,19 @@
 <template>
     <form class="form--share-social">
         <div class="form__top">
-            <v-btn class="ma-1" fab color="primary">
+            <v-btn class="ma-1 form__btn-custom" color="primary" large height="60">
                 <v-icon>mdi-facebook</v-icon>
             </v-btn>
-            <v-btn class="ma-1" fab color="primary">
+            <v-btn class="ma-1 form__btn-custom" color="primary" large height="60">
                 <v-icon>mdi-instagram</v-icon>
             </v-btn>
-            <v-btn  class="ma-1" fab color="primary">
+            <v-btn  class="ma-1 form__btn-custom" color="primary" large height="60">
                 <v-icon>mdi-snapchat</v-icon>
             </v-btn>
-            <v-btn  class="ma-1" fab color="primary">
+            <v-btn  class="ma-1 form__btn-custom" color="primary" large height="60">
                 <v-icon>mdi-gmail</v-icon>
             </v-btn>
-            <v-btn class="ma-1" fab color="primary">
+            <v-btn class="ma-1 form__btn-custom" color="primary" large height="60">
                 <v-icon>mdi-whatsapp</v-icon>
             </v-btn>
         </div>
@@ -50,6 +50,7 @@ export default {
         display: flex;
         align-items: center;
         justify-content: center;
+        margin-bottom: 1.5rem;
     }
 }
 .form__field {
@@ -60,5 +61,11 @@ export default {
             color: var(--color-label);
             margin-bottom: 0.8rem;
         }
+}
+.form__btn-custom{
+    padding: 1.5rem;
+    i{
+        font-size: 3.6rem;
     }
+}
 </style>

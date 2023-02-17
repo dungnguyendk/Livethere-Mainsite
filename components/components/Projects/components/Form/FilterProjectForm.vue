@@ -1,10 +1,7 @@
 <template lang="html">
     <form class="form--filter-projects">
-        <div class="form__top">
-            <h3>Filter</h3>
-        </div>
         <div class="form__fields">
-            <div class="form__field">
+            <div class="form__field mb-custom-1">
                 <label>Location</label>
                 <v-text-field
                     outlined
@@ -13,19 +10,26 @@
                     placeholder="Where do you want to live?">
                 </v-text-field>
             </div>
-            <div class="form__field">
+            <div class="form__field mb-custom-2">
                 <label>Property Type</label>
                 <v-select
                     v-model="propertyType"
+                    :items="propertyTypeList"
+                    item-text="text"
+                    item-value="value.name"
                     outlined
                     dense
                     prepend-inner-icon="icon-svg svg-buildings"
-                    append-icon="mdi-chevron-down">
+                    append-icon="mdi-chevron-down"
+                    class="form__field-select-custom">
                 </v-select>
             </div>
-            <div class="form__field3">
+            <div class="form__field3 mb-custom-1">
                 <div class="form__field">
                     <v-checkbox
+                        on-icon="ri-checkbox-circle-fill"
+                        off-icon="ri-checkbox-blank-circle-line"
+                        label="circle"
                         color="#EDB842"
                         hide-details
                         class="form__field-checkbox-custom">
@@ -38,6 +42,9 @@
                 </div>
                 <div class="form__field">
                     <v-checkbox
+                        on-icon="ri-checkbox-circle-fill"
+                        off-icon="ri-checkbox-blank-circle-line"
+                        label="circle"
                         color="#EDB842"
                         hide-details
                         class="form__field-checkbox-custom">
@@ -50,68 +57,123 @@
                     </v-checkbox>
                 </div>
             </div>
-            <div class="form__field2">
+            <div class="form__field2 mb-custom-1">
                 <div class="form__field">
                     <label>Bedrooms</label>
                     <v-select
-                        v-model="bedrooms"
+                        v-model="bedroom"
+                        :items="bedroomList"
+                        item-text="text"
+                        item-value="value.name"
                         outlined
                         dense
                         prepend-inner-icon="icon-svg svg-bedroom"
-                        append-icon="mdi-chevron-down">
+                        append-icon="mdi-chevron-down"
+                        class="form__field-select-custom">
                     </v-select>
                 </div>
                 <div class="form__field">
                     <label>Bathrooms</label>
                     <v-select
-                        v-model="bathrooms"
+                        v-model="bathroom"
                         dense
                         outlined
                         prepend-inner-icon="icon-svg svg-bathroom"
-                        append-icon="mdi-chevron-down">
+                        append-icon="mdi-chevron-down"
+                        class="form__field-select-custom">
                     </v-select>
                 </div>
             </div>
-            <div class="form__field">
+            <div class="form__field mb-custom-1">
                 <label>Rent per Month (S$)</label>
                 <v-range-slider
                     thumb-color="#f7f7f9"
                     track-fill-color="#EDB842"
                     track-color="#E5E5E5"
-                    class="form__field-range-custom">
+                    class="form__field-range-custom"
+                    v-model="rangeRentPer"
+                    :min="minRentPer"
+                    :max="maxRentPer"
+                >
                     <template v-slot:prepend>
-                        <p>$4,000</p>
+                        <v-text-field
+                            :value="rangeRentPer[0]"
+                            hide-details
+                            dense
+                            full-width
+                            prefix="$"
+                            flat 
+                            solo
+                            class="form__field-text-field-custom"
+                            style="width: 65px"
+                            >
+                        </v-text-field>
                     </template>
                     <template v-slot:append>
-                        <p>$15,000</p>
+                        <v-text-field
+                            :value="rangeRentPer[1]"
+                            hide-details
+                            dense
+                            full-width
+                            prefix="$"
+                            flat 
+                            solo
+                            class="form__field-text-field-custom"
+                            style="width: 65px"
+                            >
+                        </v-text-field>
                     </template>
                 </v-range-slider>
             </div>
-            <div class="form__field">
+            <div class="form__field mb-custom-3">
                 <label>Unit Size (sq.ft)</label>
                 <v-range-slider
                     thumb-color="#f7f7f9"
                     track-fill-color="#EDB842"
                     track-color="#E5E5E5"
-                    class="form__field-range-custom">
+                    class="form__field-range-custom"
+                    v-model="rangeUnitSize"
+                    :min="minUnitSize"
+                    :max="maxUnitSize"
+                >
                     <template v-slot:prepend>
-                        <p>100</p>
+                        <v-text-field
+                            :value="rangeUnitSize[0]"
+                            hide-details
+                            dense
+                            flat 
+                            solo
+                            class="form__field-text-field-custom"
+                            style="width: 65px"
+                            >
+                        </v-text-field>
                     </template>
                     <template v-slot:append>
-                        <p>10,000+</p>
+                        <v-text-field
+                            :value="rangeUnitSize[1]"
+                            hide-details
+                            dense
+                            flat 
+                            solo
+                            class="form__field-text-field-custom"
+                            style="width: 65px"
+                            >
+                        </v-text-field>
                     </template>
                 </v-range-slider>
             </div>
             <div class="form__field">
                 <label>Amenities</label>
-                <v-item-group multiple>
+                <v-item-group multiple v-model="selected">
                     <v-item
                         v-for="(amenities, index) in listAmenities"
-                        :key="index"
-                        v-slot="{active, toggle}">
+                        :key="amenities"
+                        v-slot="{active, toggle}"
+                        >
                         <v-chip
+                            :input-value="active"
+                            active-class="primary--text"
                             label
-                            color="#ffffff66"
                             class="ma-1 form__field-tag-custom"
                             @click="toggle">
                             <i :class="amenities.icon"></i>
@@ -121,17 +183,18 @@
                 </v-item-group>
             </div>
         </div>
-        <div class="card__footer">
-            <div class="btn-group">
-                <i class="icon-svg svg-close"></i>
+        <div class="form__footer">
+            <div class="form__btn">
                 <v-btn class="btn btn--ghost btn--red" @click="onClose()">Reset</v-btn>
                 <v-btn class="btn btn--primary btn--green" @click="onClose()">Apply</v-btn>
             </div>
         </div>
+
     </form>
 </template>
 
 <script>
+import { PROPERTY_TYPE, BEDROOM_TYPE } from "~/ultilities/contants/asset-inventory"
 export default {
     name: "FilterProjectForm",
     data() {
@@ -177,45 +240,78 @@ export default {
                     title: "Function Room",
                     icon: "icon-svg svg-function-room"
                 }
-            ], 
-            propertyType: "All", 
-            bedrooms: "Select", 
-            bathrooms: "Select"
+            ],
+            propertyType: "CONDO",
+            propertyTypeList: PROPERTY_TYPE,
+            bedroom: "Studio",
+            bedroomList: BEDROOM_TYPE,
+            bathroom: "Select",
+            minRentPer: 4000,
+            maxRentPer: 20000,
+            rangeRentPer: [8000, 15000],
+            minUnitSize: 100,
+            maxUnitSize: 10000, 
+            rangeUnitSize: [4000, 10000], 
+            selected: []
         }
-    }, 
+    },
     methods: {
         onClose() {
             this.$emit("close")
-        },
+        }
     }
 }
 </script>
 <style lang="scss" scoped>
 .form--filter-projects {
-    padding: 0 2.6rem 2.2rem;
-    .form__top {
-        h3 {
-            font-weight: 700;
-            font-size: 2rem;
-            line-height: 2.7rem;
-            text-align: center;
+    ::v-deep(.v-input__slot) {
+        padding: 0 !important;
+        input {
+            font-weight: 500;
+            font-size: 1.6rem;
+            line-height: 2.4rem;
+            color: var(--color-label)
+        }
+        .v-text-field__prefix{
+            font-weight: 500;
+            font-size: 1.6rem;
+            line-height: 2.4rem;
+            color: var(--color-label)
+        }
+
+    }
+}
+.form__footer {
+    padding: 0 5rem 3.3rem;
+    .form__border-top {
+        margin-bottom: 3rem;
+        width: 100%;
+        height: 0.1rem;
+        background-color: var(--border-color);
+    }
+    .form__btn {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        button {
+            &:last-child {
+                margin-left: 1rem;
+            }
         }
     }
 }
 .form__fields {
-    border-bottom: 0.1rem solid var(--border-color);
     margin-bottom: 2.4rem;
+    padding: 0 5rem 3.2rem;
+    border-bottom: 0.1rem solid var(--border-color);
     .form__field {
-        margin-bottom: 3.2rem;
+        
         label {
             font-weight: 500;
             font-size: 1.6rem;
             line-height: 2rem;
             color: var(--color-label);
             margin-bottom: 0.8rem;
-        }
-        &:last-child {
-            margin-bottom: 2.3rem;
         }
     }
     .form__field2 {
@@ -228,8 +324,18 @@ export default {
         align-items: center;
         .form__field {
             &:first-child {
-                margin-right: 9rem;
+                margin-right: 7rem;
             }
+        }
+    }
+}
+.form__field-select-custom {
+    ::v-deep(.v-select__slot) {
+        .v-select__selection--comma {
+            font-weight: 500;
+            font-size: 1.6rem;
+            line-height: 2rem;
+            color: var(--color-title-black);
         }
     }
 }
@@ -239,9 +345,10 @@ export default {
             display: none;
         }
         .v-input__slot {
-            padding: 0 1.6rem !important;
+            padding: 0 !important;
             .v-input__prepend-inner {
                 margin-right: 0.5rem;
+                margin-left: 1.6rem;
             }
         }
 
@@ -251,6 +358,7 @@ export default {
                 font-size: 1.6rem;
                 line-height: 2rem;
                 color: var(--color-title-black);
+                padding-top: 1rem;
             }
         }
     }
@@ -267,10 +375,12 @@ export default {
     }
     img {
         width: 3.4rem;
+        height: 3.4rem;
         margin-left: 0.2rem;
     }
 }
 .form__field-checkbox-custom {
+    margin-right: 0.6rem;
     input {
         border-radius: 50%;
     }
@@ -278,7 +388,12 @@ export default {
 .form__field-range-custom {
     display: block;
     position: relative;
-
+    ::v-deep(.v-input__slot) {
+        top: -0.7rem;
+        .v-slider__track-container {
+            height: 0.4rem;
+        }
+    }
     ::v-deep(.v-slider__thumb) {
         background-color: var(--color-white);
         width: 2rem;
@@ -297,7 +412,7 @@ export default {
             font-weight: 500;
             font-size: 1.6rem;
             line-height: 2.4rem;
-            color: var(--color-label)
+            color: var(--color-label);
         }
     }
     ::v-deep(.v-input__append-outer) {
@@ -311,7 +426,7 @@ export default {
             font-weight: 500;
             font-size: 1.6rem;
             line-height: 2.4rem;
-            color: var(--color-label)
+            color: var(--color-label);
         }
     }
 }
@@ -328,6 +443,13 @@ export default {
         width: 1.6rem;
     }
 }
-.card__footer {
+.mb-custom-1 {
+    margin-bottom: 3rem;
+}
+.mb-custom-2 {
+    margin-bottom: 1.9rem;
+}
+.mb-custom-3 {
+    margin-bottom: 4.2rem;
 }
 </style>
