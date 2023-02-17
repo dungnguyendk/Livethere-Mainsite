@@ -43,18 +43,18 @@
                         </v-btn>
                     </div>
                 </div>
-                <div class="detail-info__more">
-                    <!-- <div class="detail-info__more-price">S$ 30000/month</div> -->
-                    <!-- <div class="detail-info__more-location">
+                <!-- <div class="detail-info__more">
+                    <div class="detail-info__more-price">S$ 30000/month</div>
+                    <div class="detail-info__more-location">
                         <i class="icon-svg svg-location"></i>
                         <span>2 Sinaran Drive, Singapore 307467</span>
-                    </div> -->
+                    </div>
                     <div class="detail-info__more-bb">
                         <span>
                             <i class="icon-svg svg-bedroom"></i>3</span>
                         <span><i class="icon-svg svg-bathroom"></i>2</span>
                     </div
-                </div>
+                </div> -->
             </div>
             <div class="detail-contact"> </div>
         </section>
