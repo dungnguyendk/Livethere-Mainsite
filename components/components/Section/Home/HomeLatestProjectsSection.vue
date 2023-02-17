@@ -33,10 +33,11 @@
                         </swiper-slide>
                         <div class="swiper-button-prev" slot="button-prev"></div>
                         <div class="swiper-pagination" slot="pagination"></div>
-                        <div class="swiper-button-next" slot="button-next" :class="{'swiper-button-active' : activeColorArrow}"></div>
+                        <!-- <div class="swiper-button-next" slot="button-next" :class="{'swiper-button-active' : activeColorArrow}"></div> -->
+                        <div class="swiper-button-next" slot="button-next"></div>
                     </swiper>
                     <div class="swiper-fraction">
-                        <span class="fraction-to">0{{ this.fractionTo }}</span>
+                        <span class="fraction-to">{{ this.fractionTo }}</span>
                         <span class="fraction-form" >{{ this.fractionForm  }}</span>
                     </div>
                 </div>
@@ -163,6 +164,10 @@ export default {
             minimumIntegerDigits: 2,
             useGrouping: false
         })
+        this.fractionTo = this.fractionTo.toLocaleString("en-US", {
+            minimumIntegerDigits: 2,
+            useGrouping: false
+        })
     },
 }
 </script>
@@ -170,16 +175,18 @@ export default {
 <style lang="scss" scoped>
 .section--home-latest-projects {
     padding: 8rem 0;
-
+    @media screen and (max-width: 960px) {
+        padding: 5rem 0;
+    }
     @media screen and (max-width: 768px) {
         .section__top {
             bottom: -2.5rem;
         }
     }
     @media screen and (max-width: 720px) {
-        padding: 4rem 0;
+        padding: 5rem 0 4rem;
         .section__top {
-            bottom: 4rem;
+            bottom: 2rem;
         }
         .section__body {
             display: flex;
