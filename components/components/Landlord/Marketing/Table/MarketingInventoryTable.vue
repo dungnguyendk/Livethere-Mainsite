@@ -9,7 +9,7 @@
                     <th>Bedroom Type</th>
                     <th>Floor Area (sqft)</th>
                     <th>Land Area (sqft)</th>
-                    <th>Address</th>
+                    <th>Address<br />Location</th>
                     <th>Status</th>
                     <th></th>
                 </tr>

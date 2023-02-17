@@ -61,7 +61,7 @@ export default {
     },
     watch: {
         typeSelected() {
-            console.log(this.typeSelected);
+            // console.log(this.typeSelected);
         }
     }
 }
