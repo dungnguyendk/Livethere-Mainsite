@@ -43,17 +43,11 @@
                 <div class="section__body-list">
                     <ProjectCard v-for="(project, index) in listProject"
                         :key="index" :project="project" @open="openShareSocialDialog($event)" :listProject="listProject"/>
-                    </div>
-                    <Dialog
-                        :open="isOpenFilterProjectDialog"
-                        :title="'Filter'" 
-                        @close="closeFilterProjectDialog"
-                        :actions="false"
-                        class="dialog-custom"
-                    >
-                        <!-- <FilterProjectForm @close="isOpenFilterProjectDialog=
-                            false"/> -->
-                    </Dialog>
+                </div>
+                <div class="section__body-load-more">
+                    <button>Load more</button>
+                </div>
+                    
                     <Dialog
                         :open="isOpenShareSocialDialog"
                         :title="'Share this listing'"
@@ -72,9 +66,10 @@ import Dialog from "~/components/elements/Dialog/Dialog.vue"
 import ProjectCard from "./components/Card/ProjectCard.vue"
 import FilterProjectForm from "~/components/components/Projects/components/Form/FilterProjectForm"
 import ShareSocialForm from "./components/Form/ShareSocialForm.vue"
+import FilterDialog from "~/components/components/Projects/components/Dialog/FilterDialog"
 export default {
     name: "ProjectListing",
-    components: { ProjectCard, Dialog, FilterProjectForm, ShareSocialForm },
+    components: { ProjectCard, Dialog, FilterProjectForm, ShareSocialForm, FilterDialog },
     data() {
         return {
             listProject: [
@@ -232,6 +227,21 @@ export default {
         }
     }
 }
+.section__body-load-more {
+    button {
+        font-weight: 700;
+        font-size: 1.6rem;
+        line-height: 2rem;
+        color: var(--color-primary);
+        text-decoration: underline;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 5.8rem 0 3.8rem;
+
+        width: 100%;
+    }
+}
 .select-custom {
     margin-right: 1.2rem;
 
@@ -258,7 +268,7 @@ export default {
             font-weight: 700;
             font-size: 1.6rem;
             line-height: 2rem;
-            color: var(--color-primary)
+            color: var(--color-primary);
         }
     }
 }
