@@ -92,6 +92,10 @@ export default {
 
     td {
         padding: 1.2rem 1.6rem !important;
+
+        @media only screen and (min-width: 768px) and (max-width: 1280px) {
+            padding: 0.6rem 0.8rem !important;
+        }
     }
 }
 

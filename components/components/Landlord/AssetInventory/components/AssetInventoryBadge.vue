@@ -42,7 +42,7 @@ export default {
             font-weight: 600;
         }
 
-        @media only screen and (max-width: 768px) {
+        @media only screen and (max-width: 820px) {
             margin-left: auto;
         }
 

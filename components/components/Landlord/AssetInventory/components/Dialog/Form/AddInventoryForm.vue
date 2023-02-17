@@ -1,20 +1,19 @@
 <template>
     <form @submit.prevent="onFormSubmit" class="form--add-new-inventory">
         <div class="form__top">
-            <h3>{{ inventoryDetail?.id? "EDIT INVENTORY": "ADD NEW INVENTORY" }}</h3>
+            <h3>{{ inventoryDetail?.id ? "EDIT INVENTORY" : "ADD NEW INVENTORY" }}</h3>
         </div>
         <p class="alert alert--red" v-if="!statusResponse">Something went wrong</p>
         <div class="form__fields">
             <div class="form__field">
                 <label>Property Type</label>
-                <v-select v-model.trim="propertyType" :items="propertyTypeList" item-text="text" item-value="value"
-                    outlined dense placeholder="Please select" :error-messages="propertyTypeErrors" />
+                <v-select v-model.trim="propertyType" :items="propertyTypeList" item-text="text" item-value="value" outlined
+                    dense placeholder="Please select" :error-messages="propertyTypeErrors" />
             </div>
             <div class="form__field2">
                 <div class="form__field">
                     <label>Postal Code</label>
-                    <v-text-field v-model="postalCode" hide-spin-buttons outlined dense
-                        :error-messages="postalCodeErrors">
+                    <v-text-field v-model="postalCode" hide-spin-buttons outlined dense :error-messages="postalCodeErrors">
                         <template v-slot:prepend-inner>
                             <v-icon @click="searchPostalCode">mdi-magnify</v-icon>
                         </template>
@@ -51,19 +50,18 @@
             </div>
             <div class="form__field">
                 <label>Tenure</label>
-                <v-select v-model="tenure" outlined dense placeholder="Please select" :items="tenureList"
-                    item-text="text" item-value="value" :error-messages="tenureErrors" />
+                <v-select v-model="tenure" outlined dense placeholder="Please select" :items="tenureList" item-text="text"
+                    item-value="value" :error-messages="tenureErrors" />
             </div>
             <div class="form__field">
                 <label>Floor Area (sqft)</label>
-                <v-text-field v-model.trim="floorArea" outlined dense hide-spin-buttons
-                    :error-messages="floorAreaErrors" />
+                <v-text-field v-model.trim="floorArea" outlined dense hide-spin-buttons :error-messages="floorAreaErrors" />
             </div>
             <div class="form__field2">
                 <div class="form__field">
                     <label>Purchased Price</label>
                     <v-text-field v-model.trim="purchasedPrice" outlined dense hide-spin-buttons
-                        :error-messages="purchasedPriceErrors" suffix="SGD" reverse>
+                        :error-messages="purchasedPriceErrors" suffix="S$" reverse>
                     </v-text-field>
                 </div>
                 <div class="form__field">
@@ -82,15 +80,14 @@
             </div>
             <div class="form__field" v-if="propertyType.name === 'LANDED PROPERTY'">
                 <label>Land Area (sqft)</label>
-                <v-text-field v-model.trim="landArea" outlined dense hide-spin-buttons
-                    :error-messages="landAreaErrors" />
+                <v-text-field v-model.trim="landArea" outlined dense hide-spin-buttons :error-messages="landAreaErrors" />
             </div>
         </div>
         <div class="card__footer">
             <div class="btn-group">
                 <v-btn class="btn btn--primary btn--green btn__add-file"
                     @click="inventoryDetail ? updateInventories() : createInventories()" :loading="loading">
-                    {{ inventoryDetail? "Update": "Add" }}</v-btn>
+                    {{ inventoryDetail ? "Update" : "Add" }}</v-btn>
                 <span class="cancel-form" @click="onClose()"> Cancel </span>
             </div>
         </div>
@@ -269,7 +266,7 @@ export default {
                     projectName: this.projectName,
                     location: this.location,
                     tenureType: this.tenure.id,
-                    tenureDisplay: this.tenure.name,
+                    tenureDisplay: this.tenure.tenureDisplay,
                     floorAreaSqft: this.floorArea ? convertCommasToNumber(this.floorArea) : 0,
                     landAreaSqft: this.landArea ? convertCommasToNumber(this.landArea) : 0,
                     city: "Singapore",
@@ -310,7 +307,7 @@ export default {
                     projectName: this.projectName,
                     location: this.location,
                     tenureType: this.tenure.id,
-                    tenureDisplay: this.tenure.name,
+                    tenureDisplay: this.tenure.tenureDisplay,
                     floorAreaSqft: this.floorArea ? convertCommasToNumber(this.floorArea) : 0,
                     landAreaSqft: this.landArea ? convertCommasToNumber(this.landArea) : 0,
                     city: "Singapore",
@@ -405,7 +402,7 @@ export default {
     },
     watch: {
         postalCode(val) {
-            if (this.inventoryDetail.postalCode === null || this.inventoryDetail.postalCode !== this.postalCode) {
+            if (this.inventoryDetail?.postalCode === null || this.inventoryDetail?.postalCode !== this.postalCode) {
                 this.onChangePostalCode()
             }
         },
@@ -476,6 +473,16 @@ export default {
         display: grid;
         column-gap: 2.4rem;
         grid-template-columns: repeat(1, 1fr);
+
+        label {
+            font-size: 1.4rem;
+        }
+    }
+
+    .form__field2 {
+        label {
+            font-size: 1.4rem;
+        }
     }
 }
 

@@ -139,8 +139,6 @@ export default {
             openAddNewInventoryDialog: false,
             openSoldDialog: false,
             sizeDialog: "large",
-            // floorAreaSqftFormatter: "",
-            // landAreaFormatter: "",
             deleteDialog: false,
             soldOutDialog: false,
         }
@@ -156,16 +154,16 @@ export default {
             return this.source.landAreaSqft ? convertNumberToCommas(this.source.landAreaSqft) : ''
         },
         askingPriceFormatter() {
-            return this.source.askingPrice ? "$ " + convertNumberToCommas(this.source.askingPrice) : ''
+            return this.source.askingPrice ? "S$ " + convertNumberToCommas(this.source.askingPrice) : ''
         },
         estimatedMarketRentFormatter() {
-            return this.source.estimatedMarketRent ? "$ " + convertNumberToCommas(this.source.estimatedMarketRent) : ''
+            return this.source.estimatedMarketRent ? "S$ " + convertNumberToCommas(this.source.estimatedMarketRent) : ''
         },
         monthRentalFormatter() {
-            return this.source.tenancyDetail.monthRental ? "$ " + convertNumberToCommas(this.source.tenancyDetail.monthRental) : ''
+            return this.source.tenancyDetail.monthRental ? "S$ " + convertNumberToCommas(this.source.tenancyDetail.monthRental) : ''
         },
         estimatedAnnualRevenueFormatter() {
-            return this.source.tenancyDetail.estimatedAnnualRevenue ? "$ " + convertNumberToCommas(this.source.tenancyDetail.estimatedAnnualRevenue) : ''
+            return this.source.tenancyDetail.estimatedAnnualRevenue ? "S$ " + convertNumberToCommas(this.source.tenancyDetail.estimatedAnnualRevenue) : ''
         }
 
     },
@@ -237,6 +235,9 @@ export default {
         padding: 1.2rem 1.6rem !important;
         text-align: left;
         vertical-align: top;
+        @media only screen and (min-width: 768px) and (max-width: 1280px){
+            padding: 0.6rem 0.8rem !important;
+        }
     }
 }
 
