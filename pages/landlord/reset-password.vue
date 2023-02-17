@@ -13,7 +13,7 @@ export default {
     layout: "landlord",
     components: { LandlordAuth, LandlordResetPasswordForm },
     head: {
-        title: `Forgot password | ${appSettings.siteName}`
+        title: `Reset your password | ${appSettings.siteName}`
     }
 }
 </script>

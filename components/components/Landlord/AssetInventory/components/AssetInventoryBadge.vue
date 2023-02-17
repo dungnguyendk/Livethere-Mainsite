@@ -1,6 +1,6 @@
 <template lang="html">
     <div :class="`badge--inventory badge--inventory__type-${source.statusFID}`">
-        <span>{{ source.statusDisplay.toUpperCase() }}</span>
+        <span>{{ source?.statusDisplay?.toUpperCase() }}</span>
     </div>
 </template>
 
@@ -15,7 +15,7 @@ export default {
         },
         source: {
             type: Object,
-            default: () => { }
+            default: () => null
         }
     },
     created() {

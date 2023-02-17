@@ -1,7 +1,7 @@
 <template>
     <form @submit.prevent="onFormSubmit" class="form--add-new-inventory">
         <div class="form__top">
-            <h3>{{ inventoryDetail.id ? "EDIT INVENTORY" : "ADD NEW INVENTORY" }}</h3>
+            <h3>{{ inventoryDetail?.id? "EDIT INVENTORY": "ADD NEW INVENTORY" }}</h3>
         </div>
         <p class="alert alert--red" v-if="!statusResponse">Something went wrong</p>
         <div class="form__fields">
@@ -72,7 +72,7 @@
                         offset-y min-width="auto">
                         <template v-slot:activator="{ on, attrs }">
                             <v-text-field v-model="purchasedDateFormatted" outlined dense
-                                :error-messages="purchasedDateFormattedErrors" persistent-hint
+                                :error-messages="purchasedDateFormattedErrors" persistent-hint readonly
                                 prepend-inner-icon="mdi-calendar" v-bind="attrs"
                                 @blur="purchasedDate = parseDate(purchasedDate)" v-on="on"></v-text-field>
                         </template>

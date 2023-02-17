@@ -10,7 +10,7 @@
                     <th>Current Est Value</th>
                     <th>Est Capital Gain</th>
                     <th>Monthly Rental</th>
-                    <th>Rental Yield</th>
+                    <th>Gross Rental Yield</th>
                 </tr>
             </thead>
             <tbody>

@@ -5,11 +5,11 @@
         </div>
         <p class="alert alert--red" v-if="!statusResponse">Something went wrong</p>
         <div class="form__field">
-            <label>Sold Out Date</label>
+            <label>Sold Date</label>
             <v-menu ref="menu1" v-model="menu1" :close-on-content-click="false" transition="scale-transition" offset-y
                 min-width="auto">
                 <template v-slot:activator="{ on, attrs }">
-                    <v-text-field v-model="soldOutDateFormatted" :error-messages="soldOutDateFormattedErrors" outlined
+                    <v-text-field v-model="soldDateFormatted" :error-messages="soldDateFormattedErrors" outlined
                         dense persistent-hint readonly prepend-inner-icon="mdi-calendar" v-bind="attrs"
                         @blur="soldOutDate = parseDate(soldOutDate)" v-on="on"></v-text-field>
                 </template>
@@ -18,7 +18,7 @@
         </div>
         <div class="form__field">
             <label>Remarks</label>
-            <v-textarea v-model.trim="soldOutRemark" outlined dense />
+            <v-textarea v-model.trim="soldRemark" outlined dense />
         </div>
         <div class="card__footer">
             <div class="btn-group">
@@ -28,7 +28,7 @@
             </div>
         </div>
         <ConfirmDialog :open="confirmDialog" size="large" type="full" @close="confirmDialog = false" :loading="loading"
-            @onSubmit="putSoldOut" />
+            @onSubmit="putSold" />
     </form>
 </template>
 <script>
@@ -43,12 +43,12 @@ export default {
     components: { ConfirmDialog },
     mixins: [validationMixin],
     validations: {
-        soldOutDateFormatted: { required }
+        soldDateFormatted: { required }
     },
     props: {
         source: {
             type: Object,
-            default: () => { }
+            default: () => null
         },
         sourceDetail: {
             type: Number,
@@ -57,9 +57,9 @@ export default {
     },
     data() {
         return {
-            soldOutRemark: "",
+            soldRemark: "",
             soldOutDate: "",
-            soldOutDateFormatted: "",
+            soldDateFormatted: "",
             menu1: false,
             loading: false,
             confirmDialog: false
@@ -70,8 +70,8 @@ export default {
             statusResponse: (state) => state.inventories.statusResponse,
             statusFID: (state) => state.inventories.typeSelect
         }),
-        soldOutDateFormattedErrors() {
-            return setFormControlErrors(this.$v.soldOutDateFormatted, "Sold Out Date is required")
+        soldDateFormattedErrors() {
+            return setFormControlErrors(this.$v.soldDateFormatted, "Sold Date is required")
         },
     },
     created() {
@@ -91,14 +91,14 @@ export default {
                 this.loading = false
             }
         },
-        putSoldOut() {
+        putSold() {
             this.onFormSubmit()
             const params = {
                 id: this.sourceDetail,
-                soldOutRemark: this.soldOutRemark,
+                soldRemark: this.soldRemark,
                 soldOutDate: this.soldOutDate ? this.soldOutDate : ''
             }
-            this.$store.dispatch("inventories/putSoldOut", params).then(() => {
+            this.$store.dispatch("inventories/putSold", params).then(() => {
                 const paramStatusFID = qs.stringify({
                     StatusFID: this.statusFID
                 })
@@ -127,7 +127,7 @@ export default {
     },
     watch: {
         soldOutDate() {
-            this.soldOutDateFormatted = this.formatDate(this.soldOutDate)
+            this.soldDateFormatted = this.formatDate(this.soldOutDate)
         },
     }
 }

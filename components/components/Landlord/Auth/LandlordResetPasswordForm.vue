@@ -15,6 +15,7 @@
                         outlined
                         dense
                         :error-messages="passwordErrors"
+                        :disabled="!isTokenValid"
                     />
                 </div>
                 <div class="form__field">
@@ -25,6 +26,7 @@
                         outlined
                         dense
                         :error-messages="confirmPasswordErrors"
+                        :disabled="!isTokenValid"
                     />
                 </div>
             </div>
@@ -43,6 +45,7 @@
                     class="btn btn--outline btn--green mt-2 btn--fullwidth"
                     @click="onSubmit"
                     :loading="loading"
+                    :disabled="!isTokenValid"
                 >
                     Back to sign in
                 </v-btn>
@@ -111,6 +114,14 @@ export default {
         }
     },
 
+    mounted() {
+        const params = {
+            token: this.$route.query.token && decodeURIComponent(this.$route.query.token)
+        }
+        console.log({ initialParams: params })
+        this.checkValidToken()
+    },
+
     methods: {
         onBack() {
             this.$router.push("/landlord/signin")
@@ -126,20 +137,24 @@ export default {
                     httpEndpoint.auth.checkValidResetToken,
                     params
                 )
+                console.log({ response })
                 if (response) {
                     if (response.valid) {
                         this.isTokenValid = true
                         this.exchangeID = response.exchangeID
                         return true
                     } else {
+                        this.isTokenValid = false
                         this.httpError = "Your request is invalid or expired."
                         return false
                     }
                 } else {
+                    this.isTokenValid = false
                     this.httpError = "Invalid token"
                     return false
                 }
             } catch (e) {
+                this.isTokenValid = false
                 this.httpError = "Something went wrong, please try again."
                 return false
             }
@@ -189,12 +204,8 @@ export default {
             this.$v.$touch()
             try {
                 this.httpError = ""
-                if (!this.$v.$invalid) {
-                    await this.checkValidToken().then((response) => {
-                        if (response) {
-                            this.onResetPassword()
-                        }
-                    })
+                if (!this.$v.$invalid && this.isTokenValid) {
+                    await this.onResetPassword()
                 }
             } catch (e) {
                 console.log({ Error: e.message })
@@ -211,6 +222,7 @@ export default {
         }
     }
 }
+
 .form--signin {
     padding-top: 8.2rem;
     font-family: var(--font-primary);
