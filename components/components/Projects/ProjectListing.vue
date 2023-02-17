@@ -47,7 +47,11 @@
                 <div class="section__body-load-more">
                     <button>Load more</button>
                 </div>
-                    
+                    <FilterDialog 
+                     :open="isOpenFilterProjectDialog"
+                     @close="closeFilterProjectDialog"
+                     
+                    />
                     <Dialog
                         :open="isOpenShareSocialDialog"
                         :title="'Share this listing'"
