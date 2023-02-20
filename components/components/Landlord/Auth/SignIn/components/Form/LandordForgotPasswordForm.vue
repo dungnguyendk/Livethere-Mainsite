@@ -8,7 +8,7 @@
         <form class="form__input">
             <div>
                 <label>Email Address</label>
-                <v-text-field required outlined dense placeholder="Type here"> </v-text-field>
+                <v-text-field required outlined dense placeholder="Type here"></v-text-field>
             </div>
             <div class="form__button">
                 <button>Send</button>
@@ -18,7 +18,6 @@
                 <NuxtLink class="form__link--forgot-link" to="/sign-in"> Back to login</NuxtLink>
             </div>
         </form>
-        <!-- End Login form -->
     </div>
 </template>
 
@@ -39,9 +38,11 @@ export default {
     max-width: 375px;
     margin-left: auto;
     margin-right: auto;
+
     h3 {
         margin-bottom: 0;
     }
+
     .form__title {
         display: flex;
         justify-content: center;
@@ -55,9 +56,11 @@ export default {
         text-align: center;
         color: #171717;
     }
+
     .form__instruction {
         padding-top: 3rem;
         padding-bottom: 2.4rem;
+
         p {
             font-family: var(--font-primary);
             font-style: normal;
@@ -69,22 +72,26 @@ export default {
             margin-bottom: 0;
         }
     }
+
     .form__input {
         font-family: var(--font-primary);
         font-style: normal;
         font-size: 16px;
         line-height: 20px;
+
         label {
             padding-bottom: 0.3rem;
             font-weight: 500;
             color: #737373;
         }
     }
+
     .form__button {
         padding-top: 1.2rem;
         display: flex;
         justify-content: center;
         align-items: center;
+
         button {
             background: var(--color-menu);
             width: 100%;
@@ -100,16 +107,19 @@ export default {
             font-style: normal;
         }
     }
+
     .form__link {
         padding-top: 3.4rem;
         display: flex;
         justify-content: center;
+
         .form__link--forgot-link {
             font-weight: 700;
             text-decoration-line: underline;
             color: var(--color-menu);
         }
     }
+
     //deep
     :deep(.v-input) {
         input {
@@ -122,11 +132,13 @@ export default {
         }
     }
 }
+
 @media (max-width: 768px) {
     .form__forgot-password {
         max-width: 33rem;
     }
 }
+
 @media (max-width: 390px) {
     .form__forgot-password {
         max-width: 30rem;

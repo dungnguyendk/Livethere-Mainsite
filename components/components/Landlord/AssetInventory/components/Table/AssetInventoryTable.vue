@@ -9,7 +9,7 @@
                     <th v-if="statusFID === 0 || statusFID === 1">Bedroom Type</th>
                     <th v-if="statusFID === 0 || statusFID === 1">Floor Area (sqft)</th>
                     <th v-if="statusFID === 0 || statusFID === 1">Land Area (sqft)</th>
-                    <th>Address</th>
+                    <th>Address<br />Location</th>
                     <th v-if="statusFID === 0 || statusFID === 1">Status</th>
                     <th v-if="statusFID === 2">Estimated Market Rent</th>
                     <th v-if="statusFID === 2">Asking Rent</th>
@@ -28,7 +28,7 @@
                         </tr>
                         <tr class="tr-total">
                             <td colspan="4">Grand Total Revenue:</td>
-                            <td colspan="2"><span>$ {{ formatMoney(totalMoney) }}</span></td>
+                            <td colspan="2"><span>S$ {{ formatMoney(totalMoney) }}</span></td>
                         </tr>
                     </template>
                 </template>
@@ -42,13 +42,13 @@
             </tbody>
         </table>
         <!--        <slide-up-down :active="showExpandedPanel" :duration="300">
-            <ExpandedPanel @onClose="onCloseExpandedPanel" />
-        </slide-up-down>-->
+                <ExpandedPanel @onClose="onCloseExpandedPanel" />
+            </slide-up-down>-->
         <!-- <v-snackbar v-model="snackbar" :timeout="2000" top right text color="green darken-4">
-            <span class="message--snackBar">
-                <i class="ri-information-line" /> {{ snackbarMessage }}
-            </span>
-        </v-snackbar> -->
+                <span class="message--snackBar">
+                    <i class="ri-information-line" /> {{ snackbarMessage }}
+                </span>
+            </v-snackbar> -->
     </div>
 </template>
 

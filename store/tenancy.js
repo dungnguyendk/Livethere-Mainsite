@@ -10,7 +10,7 @@ export const state = () => ({
     expenses: [],
     documents: [],
     statusResponse: true,
-    tenancyLinks: "details",
+    tenancyLinks: "details"
 })
 
 export const mutations = {
@@ -40,7 +40,7 @@ export const mutations = {
     },
     setTenancyLink(state, payload) {
         state.tenancyLinks = payload
-    },
+    }
 }
 
 export const actions = {
@@ -144,6 +144,7 @@ export const actions = {
             )
             if (response && response !== 0) {
                 dispatch("getExpanses", parseInt(rootState.tenancy.tenancyDetails.id))
+                dispatch("app/showSnackBar", "Create expense successfull", { root: true })
             } else {
             }
         } catch (e) {

@@ -18,7 +18,6 @@
 </template>
 
 <script>
-import TenantAgreementTable from "~/components/components/Landlord/Inventory/Table/TenancyAgreementTable.vue"
 import InventoryInformationPanel from "~/components/components/Landlord/Inventory/Panel/InventoryInformationPanel.vue"
 import TenancyUnitInventory from "~/components/components/Landlord/Tenancy/TenancyUnitInventory.vue"
 import { mapState } from "vuex"
@@ -27,8 +26,7 @@ export default {
     name: "InventoryUnits",
     components: {
         TenancyUnitInventory,
-        InventoryInformationPanel,
-        TenantAgreementTable
+        InventoryInformationPanel
     },
     computed: {
         ...mapState({

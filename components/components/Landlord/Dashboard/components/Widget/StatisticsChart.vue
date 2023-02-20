@@ -14,8 +14,8 @@
                     </v-tooltip>
                 </div>
                 <span class="price">
-                    {{ source.name === "portfolio" ? "SGD" : "" }}
-                    {{ currentYear? currentYear: '-' }}
+                    {{ source.name === "portfolio" ? "S$" : "" }}
+                    {{ currentYear ? currentYear : '-' }}
                     {{ source.name === "average" ? (currentYear ? "%" : "") : "" }}
                 </span>
             </div>
@@ -26,26 +26,37 @@
                 <v-tooltip bottom v-if="source.name === 'portfolio'">
                     <template v-slot:activator="{ on, attrs }">
                         <div v-bind="attrs" v-on="on" class="icon-warning">
+                            <span class="percent--custom">PPI</span>
+                        </div>
+                    </template>
+                    <span>
+                        Property Performance Index <br />
+                        Index = Current Year Est. Market Value / Last Year’s Est. Market Value
+                    </span>
+                </v-tooltip>
+                <v-tooltip bottom v-if="source.name === 'portfolio'">
+                    <template v-slot:activator="{ on, attrs }">
+                        <div v-bind="attrs" v-on="on" class="icon-warning">
                             <img :src="require(`~/static/img/icon-${currentYearRate > 0 ? 'up' : 'down'}.svg`)" alt=""
                                 v-if="currentYearRate" />
-                            <span class="percent">{{ currentYearRate? `${currentYearRate}%`: '-' }}</span>
+                            <span class="percent">{{ currentYearRate ? `${currentYearRate}%` : '-' }}</span>
                         </div>
                     </template>
                     <span>Compared to the previous year</span>
                 </v-tooltip>
-                <div v-else>
-                    <img :src="require(`~/static/img/icon-${currentYearRate > 0 ? 'up' : 'down'}.svg`)" alt=""
-                        v-if="currentYearRate" />
-                    <span class="percent">{{ currentYearRate? `${currentYearRate}%`: '-' }}</span>
-                </div>
+                <!-- <div v-else>
+                                        <img :src="require(`~/static/img/icon-${currentYearRate > 0 ? 'up' : 'down'}.svg`)" alt=""
+                                            v-if="currentYearRate" />
+                                        <span class="percent">{{ currentYearRate ? `${currentYearRate}%` : '-' }}</span>
+                                    </div> -->
             </div>
         </div>
         <div class="widget-footer">
             <div class="widget--content">
                 <span class="widget-title">{{ source.footerTitle }}</span>
                 <span class="price">
-                    {{ source.name === "portfolio" ? "SGD" : "" }}
-                    {{ lastYear? lastYear: '-' }}
+                    {{ source.name === "portfolio" ? "S$" : "" }}
+                    {{ lastYear ? lastYear : '-' }}
                     {{ source.name === "average" ? (lastYear ? "%" : "") : "" }}
                 </span>
             </div>
@@ -53,18 +64,29 @@
                 <v-tooltip bottom v-if="source.name === 'portfolio'">
                     <template v-slot:activator="{ on, attrs }">
                         <div v-bind="attrs" v-on="on" class="icon-warning">
+                            <span class="percent--custom">PAI</span>
+                        </div>
+                    </template>
+                    <span>
+                        Property Asset Index<br />
+                        Index = Current Year Est. Market Value / Purchase Price of Portfolio
+                    </span>
+                </v-tooltip>
+                <v-tooltip bottom v-if="source.name === 'portfolio'">
+                    <template v-slot:activator="{ on, attrs }">
+                        <div v-bind="attrs" v-on="on" class="icon-warning">
                             <img :src="require(`~/static/img/icon-${lastYearRate > 0 ? 'up' : 'down'}.svg`)" alt=""
                                 v-if="lastYearRate" />
-                            <span class="percent">{{ lastYearRate? `${lastYearRate}%`: '-' }}</span>
+                            <span class="percent">{{ lastYearRate ? `${lastYearRate}%` : '-' }}</span>
                         </div>
                     </template>
                     <span>Compared to the current portfolio price</span>
                 </v-tooltip>
-                <div v-else>
-                    <img :src="require(`~/static/img/icon-${lastYearRate > 0 ? 'up' : 'down'}.svg`)" alt=""
-                        v-if="lastYearRate" />
-                    <span class="percent">{{ lastYearRate? `${lastYearRate}%`: '-' }}</span>
-                </div>
+                <!-- <div v-else>
+                                        <img :src="require(`~/static/img/icon-${lastYearRate > 0 ? 'up' : 'down'}.svg`)" alt=""
+                                            v-if="lastYearRate" />
+                                        <span class="percent">{{ lastYearRate ? `${lastYearRate}%` : '-' }}</span>
+                                    </div> -->
             </div>
         </div>
     </div>
@@ -77,7 +99,7 @@ export default {
     props: {
         source: {
             type: Object,
-            default: () => { }
+            default: () => null
         }
     },
     data() {
@@ -166,7 +188,9 @@ export default {
     }
 }
 
-.widget--percent {}
+.widget--percent {
+    display: flex;
+}
 
 .percent {
     font-weight: 500;
@@ -174,6 +198,11 @@ export default {
     line-height: 2.2rem;
     text-align: right;
     color: #171717;
+
+    &--custom {
+        @extend .percent;
+        font-weight: 700;
+    }
 }
 
 .widget-footer {
@@ -200,5 +229,21 @@ export default {
     margin-left: 0.5rem;
     position: relative;
     z-index: 2;
+}
+
+@media only screen and (max-width: 768px) {
+    .widget-header {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .widget-footer {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .widget--percent {
+        margin-left: auto;
+    }
 }
 </style>

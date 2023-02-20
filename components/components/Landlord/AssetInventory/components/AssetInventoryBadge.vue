@@ -1,8 +1,6 @@
 <template lang="html">
-    <div :class="`badge--inventory ${type.toLowerCase()}`">
-        <span>{{ (type.toLowerCase() === "new" || type.toLowerCase() === "vacant" || type.toLowerCase() === "tenanted")
-                ? type : "n/a"
-        }}</span>
+    <div :class="`badge--inventory badge--inventory__type-${source.statusFID}`">
+        <span>{{ source?.statusDisplay?.toUpperCase() }}</span>
     </div>
 </template>
 
@@ -14,7 +12,14 @@ export default {
         type: {
             type: String,
             default: "new" // 'new' || 'vacant' || 'Tenanted'
+        },
+        source: {
+            type: Object,
+            default: () => null
         }
+    },
+    created() {
+        // console.log("source::", this.source);
     }
 }
 </script>
@@ -30,40 +35,43 @@ export default {
         padding: 0.5rem 1.6rem;
         border-radius: 0.8rem;
         text-align: center;
-        width: fit-content;
+        width: max-content;
         height: 3.4rem;
 
         span {
             font-weight: 600;
         }
 
-        @media only screen and (max-width: 768px) {
+        @media only screen and (max-width: 820px) {
             margin-left: auto;
         }
 
-        &.new {
-            @include typeInventory(
-                var(--color-type-new),
-                var(--color-type-new),
-                rgba(39, 168, 87, 0.1)
-            );
+        &__type {
+            &-1 {
+                @include typeInventory(var(--color-type-new),
+                    var(--color-type-new),
+                    rgba(39, 168, 87, 0.1));
+            }
+
+            &-2 {
+                @include typeInventory(var(--color-type-vacant),
+                    var(--color-type-vacant),
+                    rgba(15, 170, 222, 0.1));
+            }
+
+            &-3 {
+                @include typeInventory(var(--color-type-tenanted),
+                    var(--color-type-tenanted),
+                    rgba(93, 95, 239, 0.1));
+            }
+
+            &-4 {
+                @include typeInventory(var(--color-type-sold),
+                    var(--color-type-sold),
+                    rgba(93, 95, 239, 0.1));
+            }
         }
 
-        &.vacant {
-            @include typeInventory(
-                var(--color-type-vacant),
-                var(--color-type-vacant),
-                rgba(15, 170, 222, 0.1)
-            );
-        }
-
-        &.tenanted {
-            @include typeInventory(
-                var(--color-type-tenanted),
-                var(--color-type-tenanted),
-                rgba(93, 95, 239, 0.1)
-            );
-        }
     }
 }
 </style>

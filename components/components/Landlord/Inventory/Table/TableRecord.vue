@@ -2,30 +2,57 @@
     <tr>
         <td data-title="Tenancy Agreement Code">
             <div>
-                <nuxt-link :to="`/landlord/tenancy/details/${source.internalID}`">
+                <nuxt-link
+                    v-if="source.statusFID === 1"
+                    :to="`/landlord/tenancy/details/${source.internalID}`"
+                >
                     {{ source.tenancyRefCode }}
                 </nuxt-link>
+                <p v-else>
+                    {{ source.tenancyRefCode }}
+                </p>
             </div>
         </td>
         <td data-title="Agreement Date">
-            <p>{{ formatAgreementDate }}</p></td
-        >
-        <td data-title="Start date"
-            ><p>{{ formatStartDate }} </p></td
-        >
-        <td data-title="End Date"
-            ><p>{{ formatEndDate }}</p>
-            <p>{{ source.statusDisplay }}</p>
+            <p>{{ formatAgreementDate }}</p>
         </td>
-        <!-- <td data-title="Remark">
-            <p></p>
-        </td> -->
+        <td data-title="Contract Dates">
+            <p>Start: {{ formatStartDate }} </p>
+            <p>End: {{ formatEndDate }}</p>
+        </td>
+        <td data-title="Status">
+            <div>
+                <p>{{ source.statusDisplay }}</p>
+            </div>
+        </td>
+        <td data-title="End Date">
+            <v-btn
+                v-if="source.statusFID === 1"
+                class="btn btn--sm btn--ghost btn--red"
+                @click="suspendDialog = true"
+            >
+                Suspend
+            </v-btn>
+            <Dialog
+                title=""
+                size="small"
+                :open="suspendDialog"
+                @close="suspendDialog = false"
+                :actions="false"
+            >
+                <SuspendAgreementForm :contractID="source.id" @close="suspendDialog = false" />
+            </Dialog>
+        </td>
     </tr>
 </template>
 
 <script>
+import Dialog from "~/components/elements/Dialog/Dialog.vue"
+import SuspendAgreementForm from "~/components/components/Landlord/Inventory/Form/SuspendAgreementForm"
+
 export default {
     name: "TableRecord",
+    components: { SuspendAgreementForm, Dialog },
     props: {
         source: {
             type: Object,
@@ -42,10 +69,20 @@ export default {
         formatEndDate() {
             return this.$dayjs(this.source.endDate).format("DD-MMM-YYYY")
         }
+    },
+    data() {
+        return {
+            suspendDialog: false
+        }
     }
 }
 </script>
 <style lang="scss" scoped>
+.record__suspend {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 10.2rem;
+}
+
 tr {
     position: relative;
     vertical-align: top;

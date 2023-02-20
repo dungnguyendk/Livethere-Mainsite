@@ -131,8 +131,31 @@ export default {
         z-index: 9;
     }
 }
+@media (max-width: 1279px) {
+    .nav--tenancy {
+        position: relative;
+        display: grid;
+        grid-gap: 2.4rem;
 
-@media (max-width: 768px) {
+        &:before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 1.6rem;
+            width: 1px;
+            height: 100%;
+            background-color: #e5e5e5;
+            transform: translateX(-50%);
+            z-index: 1;
+        }
+    }
+}
+@media (max-width: 1023px) {
+    .nav--tenancy {
+        display: none;
+    }
+}
+@media (max-width: 767px) {
     .link {
         display: flex;
         grid-gap: 1.6rem;

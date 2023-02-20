@@ -2,7 +2,22 @@
     <form class="form form--create-tenancy-agreement" @submit.prevent="submitForm">
         <div class="form__fields">
             <v-row>
-                <v-col cols="12" sm="12" md="12">
+                <v-col cols="12" sm="12" md="6">
+                    <div class="form__field">
+                        <label class="required">Expense Type </label>
+                        <v-select
+                            v-model="type"
+                            item-text="text"
+                            item-value="value"
+                            :items="typeItems"
+                            placeholder="Please select"
+                            dense
+                            outlined
+                            :error-messages="typeErrors"
+                        />
+                    </div>
+                </v-col>
+                <v-col cols="12" sm="12" md="6">
                     <div class="form__field">
                         <label class="required">Item Name </label>
                         <v-text-field
@@ -92,6 +107,9 @@ export default {
         },
         itemPrice: {
             required
+        },
+        type: {
+            required
         }
     },
 
@@ -110,12 +128,16 @@ export default {
 
         itemPriceErrors() {
             return setFormControlErrors(this.$v.itemPrice, "This field is required")
+        },
+        typeErrors() {
+            return setFormControlErrors(this.$v.type, "This field is required")
         }
     },
 
     data() {
         return {
             tenancyContractAgreementFID: 0,
+            type: "",
             itemName: "",
             currencyType: "SGD",
             currencyName: "SINGAPORE DOLLAR",
@@ -124,6 +146,61 @@ export default {
             purchaseDate: "",
             purchaseDateMenu: "",
             purchaseDateRaw: "",
+            typeItems: [
+                {
+                    text: "Housing Loans",
+                    value: "1"
+                },
+                {
+                    text: "Property Tax",
+                    value: "2"
+                },
+                {
+                    text: "Fire Insurance",
+                    value: "3"
+                },
+                {
+                    text: "Repairs",
+                    value: "4"
+                },
+                {
+                    text: "Maintainance",
+                    value: "5"
+                },
+                {
+                    text: "Costs Securing Tenant",
+                    value: "6"
+                },
+                {
+                    text: "Costs of Supervision of Management fees",
+                    value: "7"
+                },
+                {
+                    text: "Furniture and Fittings",
+                    value: "8"
+                },
+                {
+                    text: "Internet Charges/Expenses",
+                    value: "9"
+                },
+                {
+                    text: "Utilities Expenses",
+                    value: "10"
+                },
+                {
+                    text: "Expenses incurred on properties that are not generating rental income",
+                    value: "11"
+                },
+                {
+                    text: "Commision",
+                    value: "12"
+                },
+                {
+                    text: "Others",
+                    value: "13"
+                }
+            ],
+
             //
             remark: ""
         }
@@ -159,8 +236,10 @@ export default {
             this.itemPrice = 0
             this.itemName = ""
             this.remark = ""
+            this.type = ""
             this.$v.$reset()
         },
+
         async submitForm() {
             this.submitted = true
             this.$v.$touch()
@@ -168,6 +247,8 @@ export default {
             if (!this.$v.$invalid) {
                 const params = {
                     tenancyContractAgreementFID: this.tenancyDetails.id,
+                    expenseTypeFID: parseFloat(this.type),
+                    expenseTypeName: this.typeItems.find((t) => t.value === this.type).text,
                     itemName: this.itemName,
                     itemPrice: this.itemPrice ? convertCommasToNumber(this.itemPrice) : 0,
                     currencyType: this.currencyType,

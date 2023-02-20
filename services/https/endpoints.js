@@ -4,7 +4,8 @@ export const httpEndpoint = {
         getEntryByID: "api/Site/get-by-id"
     },
     user: {
-        getLandlordUserInfo: "api/User/LogonUser"
+        getLandlordUserInfo: "api/User/LogonUser",
+        changePassword: "/api/User/change-password"
     },
 
     pages: {
@@ -20,9 +21,15 @@ export const httpEndpoint = {
     auth: {
         login: "/api/Authen",
         register: "/api/Registration",
+        registerSendOTP: "/api/Registration/send-registration-otp",
         checkEmail: "/api/Registration/check-email",
         checkPhoneNumber: "/api/Registration/check-contactno",
-        checkUsername: "/api/Registration/check-username"
+        checkUsername: "/api/Registration/check-username",
+        otpSignIn: "/api/Authen/OTP-Login",
+        exchangeLoginToken: "/api/Authen/Exchange-Login-Token",
+        requestResetPassword: "/api/Authen/request-reset-password",
+        checkValidResetToken: "/api/Authen/exchange-reset-password-token",
+        resetPassword: "/api/Authen/reset-password"
     },
     inventories: {
         getEntries: "/api/asset-inventories",
@@ -32,7 +39,8 @@ export const httpEndpoint = {
         deleteEntryByID: "/api/asset-inventories",
         getByInternalID: "/api/asset-inventories/by-internalID",
         getEntriesByTenanted: "/api/asset-inventories/tenanted",
-        getEntriesByVacant: "/api/asset-inventories/vacant"
+        getEntriesByVacant: "/api/asset-inventories/vacant",
+        putSold: "/api/asset-inventories/sold-out"
     },
     postal: {
         getEntryByPostalCode: "/api/properties/details",

@@ -1,36 +1,15 @@
 <template lang="html">
     <div class="asset-inventory__action">
         <div class="select-type">
-            <v-select
-                v-model="typeSelected"
-                :items="typeSelections"
-                item-text="value"
-                item-value="id"
-                hide-details
-                outlined
-                dense
-                class="me-2"
-                @change="changeType"
-            />
+            <v-select v-model="typeSelected" :items="typeSelections" item-text="value" item-value="id" hide-details outlined
+                dense class="me-2" @change="changeType" />
         </div>
-        <v-btn
-            class="btn btn--outline btn--green btn--md add-new"
-            @click="openAddNewInventoryDialog = true"
-        >
+        <v-btn class="btn btn--outline btn--green btn--md add-new" @click="openAddNewInventoryDialog = true">
             <v-icon left>ri-add-box-line</v-icon>
             Add New Inventory
         </v-btn>
-        <Dialog
-            :open="openAddNewInventoryDialog"
-            @close="closeDialog"
-            :actions="false"
-            :size="sizeDialog"
-            :title="''"
-        >
-            <AddInventoryForm
-                @close="openAddNewInventoryDialog = false"
-                v-if="openAddNewInventoryDialog"
-            />
+        <Dialog :open="openAddNewInventoryDialog" @close="closeDialog" :actions="false" :size="sizeDialog" :title="''">
+            <AddInventoryForm @close="openAddNewInventoryDialog = false" v-if="openAddNewInventoryDialog" />
         </Dialog>
     </div>
 </template>
@@ -39,6 +18,7 @@ import { STATUS_DROPDOWN } from "~/ultilities/contants/asset-inventory.js"
 import qs from "qs"
 import Dialog from "~/components/elements/Dialog/Dialog.vue"
 import AddInventoryForm from "~/components/components/Landlord/AssetInventory/components/Dialog/Form/AddInventoryForm.vue"
+import { mapState } from "vuex"
 
 export default {
     name: "AssetInventoryAction",
@@ -54,17 +34,22 @@ export default {
             sizeDialog: "large"
         }
     },
+    computed: {
+        ...mapState({
+            statusFID: (state) => state.inventories.typeSelect
+        }),
+    },
     methods: {
         changeType() {
+            this.$store.commit("inventories/setTypeSelected", this.typeSelected)
             const params = qs.stringify({
                 StatusFID: this.typeSelected
             })
-            this.$store.commit("inventories/setTypeSelected", this.typeSelected)
-            if (this.typeSelected.id === 0 || this.typeSelected.id === 1) {
+            if (this.statusFID === 0 || this.statusFID === 1) {
                 this.$store.dispatch("inventories/getInventories", params)
-            } else if (this.typeSelected.id === 3) {
+            } else if (this.statusFID === 3) {
                 this.$store.dispatch("inventories/getInventoriesByTenanted", params)
-            } else if (this.typeSelected.id === 2) {
+            } else if (this.statusFID === 2) {
                 this.$store.dispatch("inventories/getInventoriesByVacant", params)
             }
         },
@@ -75,9 +60,9 @@ export default {
         }
     },
     watch: {
-        // typeSelected() {
-        //     console.log(this.typeSelected);
-        // }
+        typeSelected() {
+            // console.log(this.typeSelected);
+        }
     }
 }
 </script>

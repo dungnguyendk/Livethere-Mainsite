@@ -37,6 +37,7 @@ export default {
                 StatusFID: 0
             })
             await store.dispatch("inventories/getInventories", param)
+            await store.commit("inventories/setTypeSelected", 0)
         } catch (e) {
             console.log({ Error: e.message })
         }

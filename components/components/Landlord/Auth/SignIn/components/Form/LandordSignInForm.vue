@@ -1,14 +1,19 @@
 <template lang="html">
     <form class="form--signin">
         <h3 class="form__title"> Login </h3>
-
         <div class="form__fields">
             <p v-if="httpError !== ''" class="alert alert--red">
                 {{ httpError }}
             </p>
             <div class="form__field">
                 <label>Username</label>
-                <v-text-field v-model="email" :error-messages="emailErrors" outlined dense />
+                <v-text-field
+                    v-model="email"
+                    :error-messages="emailErrors"
+                    outlined
+                    dense
+                    @input="onInputChanged"
+                />
             </div>
             <div class="form__field">
                 <label>Password</label>
@@ -22,10 +27,12 @@
             </div>
         </div>
         <div class="form__link">
-            <NuxtLink to="/forgot-password"> Forgot password</NuxtLink>
+            <NuxtLink to="/landlord/forgot-password">Forgot password</NuxtLink>
         </div>
         <div class="form__actions">
-            <v-btn class="btn btn--primary btn--green" @click="onSubmit">Login</v-btn>
+            <v-btn class="btn btn--primary btn--green" @click="onSubmit" :loading="loading">
+                Login
+            </v-btn>
         </div>
     </form>
 </template>
@@ -34,6 +41,7 @@
 import { validationMixin } from "vuelidate"
 import { required } from "vuelidate/lib/validators"
 import { setFormControlErrors } from "~/ultilities/form-validations"
+import { httpEndpoint } from "~/services/https/endpoints"
 
 export default {
     name: "LandordSignInForm",
@@ -44,6 +52,12 @@ export default {
         },
         password: {
             required
+        }
+    },
+    props: {
+        otp: {
+            type: Boolean,
+            default: false
         }
     },
     computed: {
@@ -60,40 +74,73 @@ export default {
         return {
             email: "",
             password: "",
-            httpError: ""
+            httpError: "",
+            loading: false
         }
     },
     methods: {
+        onInputChanged() {
+            this.httpError = ""
+        },
+        async signInWithoutOtp() {
+            const params = {
+                username: this.email, //"tester",
+                password: this.password, //"tester@123",
+                clientIPAddress: "11",
+                clientUserAgent: "11",
+                timeZone: "8"
+            }
+            const response = await this.$auth.loginWith("local", {
+                data: params
+            })
+
+            if (response) {
+                if (response.data) {
+                    const { jwtToken } = response.data
+                    if (jwtToken) {
+                        window.location.href = "/landlord"
+                    } else {
+                        this.httpError = "The credentials is invalid. Please try again."
+                    }
+                } else {
+                    this.httpError = "The credentials is incorrect. Please try again."
+                }
+            } else {
+                this.httpError = "The credentials is incorrect. Please try again."
+            }
+        },
+        async signInWithOtp() {
+            const params = {
+                username: this.email, //"tester",
+                password: this.password //"tester@123"
+            }
+            this.loading = true
+            const response = await this.$axios.$post(httpEndpoint.auth.otpSignIn, params)
+            if (response) {
+                if (response.valid) {
+                    this.$store.commit("user/setUserID", response.userID)
+                    await this.$router.push(
+                        `/landlord/signin/verify-otp?token=${response.exchangeID}`
+                    )
+                } else {
+                    setTimeout(() => {
+                        this.loading = false
+                        this.httpError = response.message
+                    }, 1000)
+                }
+            }
+        },
         async onSubmit() {
             this.$v.$touch()
             try {
                 this.httpError = ""
                 if (!this.$v.$invalid) {
-                    const params = {
-                        username: this.email, //"tester",
-                        password: this.password, //"tester@123",
-                        clientIPAddress: "11",
-                        clientUserAgent: "11",
-                        timeZone: "8"
-                    }
-                    const response = await this.$auth.loginWith("local", {
-                        data: params
-                    })
-
-                    if (response) {
-                        if (response.data) {
-                            const { jwtToken } = response.data
-                            if (jwtToken) {
-                                window.location.href = "/landlord"
-                            } else {
-                                this.httpError = "The credentials is invalid. Please try again."
-                            }
-                        } else {
-                            this.httpError = "The credentials is incorrect. Please try again."
-                        }
+                    if (this.otp) {
+                        await this.signInWithOtp()
                     } else {
-                        this.httpError = "The credentials is incorrect. Please try again."
+                        await this.signInWithoutOtp()
                     }
+                } else {
                 }
             } catch (e) {
                 console.log({ Error: e.message })

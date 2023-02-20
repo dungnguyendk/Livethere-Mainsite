@@ -5,27 +5,38 @@
                 <img :src="require(`~/static/img/${source.icon}.png`)" alt="">
                 <div class="header-title">
                     <span class="income">Income {{ source.incomeYear }}</span>
-                    <span class="price">SGD {{ priceFormat }}</span>
+                    <span class="price">S$ {{ priceFormat }}</span>
                 </div>
             </div>
-            <div :class="`growth growth--${source.incomeRate < 0 ? 'red' : 'green'}`"
-                v-if="source.name === 'Current year' && source.incomeRate">
-                <i :class="`ri-arrow-${source.incomeRate < 0 ? 'down' : 'up'}-s-fill`"></i>
-                <span class="percent">{{ source.incomeRate ? `${source.incomeRate}%` : '-' }}</span>
-            </div>
+            <v-tooltip bottom v-if="source.name === 'Current year' && source.incomeRate">
+                <template v-slot:activator="{ on, attrs }">
+                    <div v-bind="attrs" v-on="on" :class="`growth growth--${source.incomeRate < 0 ? 'red' : 'green'}`">
+                        <i :class="`ri-arrow-${source.incomeRate < 0 ? 'down' : 'up'}-s-fill`"></i>
+                        <span class="percent">{{ source.incomeRate ? `${source.incomeRate}%` : '-' }}</span>
+                    </div>
+                </template>
+                <span>
+                    YoY Income Growth <br />
+                    Current Year Income / Previous Year Income
+                </span>
+            </v-tooltip>
+            <!-- <div :class="`growth growth--${source.incomeRate < 0 ? 'red' : 'green'}`"
+                                v-if="source.name === 'Current year' && source.incomeRate">
+                                <i :class="`ri-arrow-${source.incomeRate < 0 ? 'down' : 'up'}-s-fill`"></i>
+                                <span class="percent">{{ source.incomeRate ? `${source.incomeRate}%` : '-' }}</span>
+                            </div> -->
         </div>
         <!-- <img :src="require(`~/static/img/${source.img}.png`)" alt="" class="chart-line"> -->
-        <div class="chartjs-size-monitor">
-            <div class="chartjs-size-monitor-expand">
-                <div class=""></div>
-            </div>
-            <div class="chartjs-size-monitor-shrink">
-                <div class=""></div>
-            </div>
-        </div>
+        <!-- <div class="chartjs-size-monitor">
+                        <div class="chartjs-size-monitor-expand">
+                            <div class=""></div>
+                        </div>
+                        <div class="chartjs-size-monitor-shrink">
+                            <div class=""></div>
+                        </div>
+                    </div> -->
         <Bar :chart-options="chartOptions" :chart-data="chartData" :chart-id="chartId" :dataset-id-key="datasetIdKey"
-            class="chartjs-render-monitor" />
-
+            class="chartjs-render-monitor" style="height: auto" />
     </div>
 </template>
 
@@ -39,7 +50,7 @@ export default {
     props: {
         source: {
             type: Object,
-            default: () => { }
+            default: () => null
         },
         chartId: {
             type: String,
@@ -73,7 +84,7 @@ export default {
     data() {
         return {
             chartOptions: {
-                aspectRatio: 3.5,
+                aspectRatio: false,
                 elements: {
                     // point: {
                     //     radius: 3
@@ -196,6 +207,11 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: center;
+
+    i {
+        font-size: 2.4rem;
+        line-height: normal;
+    }
 
     &--red {
         color: #FF4A55;

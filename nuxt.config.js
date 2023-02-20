@@ -1,5 +1,6 @@
 import { appSettings } from "./app-settings"
 import { httpEndpoint } from "./services/https/endpoints"
+
 export default {
     ssr: true,
     components: false,
@@ -33,7 +34,8 @@ export default {
         { src: "~plugins/vue-side-up-down.js", ssr: false },
         { src: "~plugins/axios.js", ssr: true },
         { src: "~plugins/chart.js", ssr: true },
-        { src: "~plugins/phone-input.js", ssr: false }
+        { src: "~plugins/phone-input.js", ssr: false },
+        { src: "~plugins/dayjs.js", ssr: false }
     ],
 
     buildModules: [
@@ -84,7 +86,7 @@ export default {
                     autoFetch: false
                 },
                 endpoints: {
-                    login: { url: httpEndpoint.auth.login, method: "post" },
+                    login: { url: httpEndpoint.auth.exchangeLoginToken, method: "post" },
                     logout: false,
                     user: false
                 }
@@ -100,6 +102,12 @@ export default {
                 }
             }
         }
+    },
+    dayjs: {
+        plugins: [
+            "utc", // import 'dayjs/plugin/utc'
+            "customParseFormat" // import 'dayjs/plugin/customParseFormat'
+        ] // Your Day.js plugin
     },
 
     router: {

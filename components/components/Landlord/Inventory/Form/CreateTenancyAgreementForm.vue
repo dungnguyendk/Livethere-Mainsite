@@ -163,7 +163,7 @@
 
 <script>
 import { validationMixin } from "vuelidate"
-import { required, numeric, helpers } from "vuelidate/lib/validators"
+import { required } from "vuelidate/lib/validators"
 import { setFormControlErrors } from "~/ultilities/form-validations"
 import { convertCommasToNumber, convertNumberToCommas } from "~/ultilities/helpers"
 import { mapState } from "vuex"
@@ -306,9 +306,18 @@ export default {
                 const params = {
                     tenancyRefCode: this.tenancyRefCode,
                     assestInventoryFID: this.inventoryDetails.id,
-                    agreementDate: this.$moment(this.agreementDate).format("YYYY-MM-DD"),
-                    startDate: this.$moment(this.startDate).format("YYYY-MM-DD"),
-                    endDate: this.$moment(this.endDate).format("YYYY-MM-DD"),
+                    agreementDate: this.$dayjs(this.agreementDateRaw)
+                        .format("YYYY-MM-DD")
+                        .toString()
+                        .replace(/^-/, ""),
+                    startDate: this.$dayjs(this.startDate)
+                        .format("YYYY-MM-DD")
+                        .toString()
+                        .replace(/^-/, ""),
+                    endDate: this.$dayjs(this.endDate)
+                        .format("YYYY-MM-DD")
+                        .toString()
+                        .replace(/^-/, ""),
                     currencyType: "SGD",
                     currencyName: "Singapore Dollar",
                     cultureCode: "en-SG",
@@ -324,7 +333,6 @@ export default {
                     params.startDate,
                     params.endDate
                 )
-
                 if (validateDate) {
                     this.isShowErrorMessage = false
                     this.errorMessages = ""
@@ -369,8 +377,15 @@ export default {
             this.remark = ""
         },
         validateStartDateAndEndDate(start, end) {
-            console.log({ start, end })
-            return this.$moment(start).isBefore(end)
+            const startDateFormat = this.$dayjs(this.startDate)
+                .format("YYYY-MM-DD")
+                .toString()
+                .replace(/^-/, "")
+            const endDateFormat = this.$dayjs(this.endDate)
+                .format("YYYY-MM-DD")
+                .toString()
+                .replace(/^-/, "")
+            return this.$dayjs(endDateFormat).isAfter(this.$dayjs(startDateFormat))
         }
     }
 }
@@ -401,17 +416,13 @@ export default {
     }
 }
 
-.radio--custom {
-    &::v-deep(label) {
-        margin-bottom: 0 !important;
-        font-size: 1.4rem;
-    }
+.radio--custom::v-deep(label) {
+    margin-bottom: 0 !important;
+    font-size: 1.4rem;
 }
 
-.radio-group--optionDate {
-    &::v-deep() {
-        margin-top: 0 !important;
-        padding-bottom: 2.4rem;
-    }
+.radio-group--optionDate::v-deep {
+    margin-top: 0 !important;
+    padding-bottom: 2.4rem;
 }
 </style>

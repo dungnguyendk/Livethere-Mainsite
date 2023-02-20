@@ -9,32 +9,33 @@
                 <h3> {{ inventoryDetails ? inventoryDetails.propertyName : "Untitled" }} </h3>
             </div>
             <div class="section__container">
-                <SuccessSnackBar :open="isOpenSnackbar" class="snackbar-custom"/>
-                <InventoryInformationPanel/>
+                <InventoryInformationPanel />
                 <div class="section__divider" />
-                <TenancyAgreementPanel @openSnackbar="openSnackbar($event)"/>
+                <TenancyAgreementPanel @openSnackbar="openSnackbar($event)" />
             </div>
         </div>
     </div>
 </template>
 
 <script>
-import TenantAgreementTable from "~/components/components/Landlord/Inventory/Table/TenancyAgreementTable.vue"
 import InventoryInformationPanel from "~/components/components/Landlord/Inventory/Panel/InventoryInformationPanel.vue"
 import TenancyAgreementPanel from "~/components/components/Landlord/Tenancy/Panel/TenancyAgreementPanel.vue"
 import SuccessSnackBar from "~/components/shared/Snackbar/SuccessSnackBar.vue"
 import { mapState } from "vuex"
 
-
 export default {
     name: "InventoryDetails",
-    components: { TenancyAgreementPanel, InventoryInformationPanel, TenantAgreementTable, SuccessSnackBar },
+    components: {
+        TenancyAgreementPanel,
+        InventoryInformationPanel,
+        SuccessSnackBar
+    },
     computed: {
         ...mapState({
             inventoryDetails: (state) => state.inventory.inventoryDetails
         })
     },
-    data(){
+    data() {
         return {
             isOpenSnackbar: false
         }
@@ -42,8 +43,8 @@ export default {
     methods: {
         onBack() {
             this.$router.push("/landlord/assets")
-        }, 
-        openSnackbar(e){
+        },
+        openSnackbar(e) {
             this.isOpenSnackbar = e
         }
     }
@@ -60,8 +61,8 @@ export default {
 
     .section__top {
         display: flex;
-        justify-content: flex-start;
-        align-items: center;
+        // justify-content: flex-start;
+        // align-items: center;
         padding-bottom: 3.2rem;
 
         h3 {
@@ -72,6 +73,23 @@ export default {
             flex-basis: 100%;
         }
     }
+    @media screen and (max-width: 768px) {
+        .section__top {
+            display: block;
+            // justify-content: flex-start;
+            // align-items: center;
+            padding-bottom: 1.5rem;
+
+            h3 {
+                padding-top: 1.2rem;
+                margin-bottom: 0;
+                font-size: 2.4rem;
+                text-align: center;
+                display: block;
+                flex-basis: 100%;
+            }
+        }
+    }
 
     .section__container {
         padding: 2.6rem 2.4rem;
@@ -80,7 +98,7 @@ export default {
         box-shadow: 0 0 4px rgba(0, 0, 0, 0.04), 0px 4px 8px rgba(0, 0, 0, 0.06);
     }
 }
-.snackbar-custom{
-    top: 14rem
+.snackbar-custom {
+    top: 14rem;
 }
 </style>

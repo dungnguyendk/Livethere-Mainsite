@@ -89,11 +89,13 @@ export default {
             gap: 2.4rem;
 
             span {
+                font-size: 1.6rem;
                 font-weight: 500;
                 padding-right: 1.2rem;
             }
 
             strong {
+                font-size: 1.6rem;
                 font-weight: 500;
                 color: var(--color-heading);
             }
@@ -132,11 +134,51 @@ export default {
         .panel__columns {
             grid-template-columns: repeat(2, minmax(0, 1fr));
         }
+        .panel__column {
+            p {
+                font-size: 1.6rem;
+            }
+        }
     }
 
     @media screen and (max-width: 768px) {
         .panel__columns {
             grid-template-columns: minmax(0, 1fr);
+        }
+        p {
+            span {
+                font-size: 1.4rem;
+            }
+
+            strong {
+                font-size: 1.4rem;
+            }
+
+            &:not(:last-child) {
+                margin-bottom: 0.4rem;
+            }
+        }
+    }
+    @media screen and (max-width: 600px) {
+        p {
+            grid-gap: 2.4rem;
+            gap: 2.4rem;
+
+            span {
+                font-weight: 500;
+                padding-right: 1.2rem;
+                font-size: 1.4rem;
+            }
+
+            strong {
+                font-size: 1.4rem;
+                font-weight: 500;
+                color: var(--color-heading);
+            }
+
+            &:not(:last-child) {
+                margin-bottom: 0.4rem;
+            }
         }
     }
 }
