@@ -31,112 +31,97 @@
             </div>
             <div class="page__content">
                 <div class="page__content-left">
-                    <div class="page__expansion-description">
-                        <v-expansion-panels flat
-                            class="expansion-description-custom
-                            expansion-panel-custom">
-                            <v-expansion-panel>
-                                <v-expansion-panel-header
-                                    expand-icon="mdi-menu-down">
-                                    Description
-                                    <template v-slot:actions>
-                                        <v-icon color="primary">
-                                            $expand
-                                        </v-icon>
-                                    </template>
-                                </v-expansion-panel-header>
-                                <v-expansion-panel-content>
-                                    <p>The centrepiece of an iconic integrated
-                                        development comprising three landmarks –
-                                        Stamford House, Capitol Building and
-                                        Capitol
-                                        Theatre. Located in the Civic District,
-                                        perched above Singapore’s well-known
-                                        historical street corner, the curved
-                                        residential block offers a front row
-                                        seat to
-                                        the city’s Civic and Cultural District
-                                        as
-                                        well as spectacular views of Marina Bay
-                                        and
-                                        beyond.</p>
-                                    <p>Eden Residences Capitol is a luxurious
-                                        residential edifice that sits across the
-                                        road from The City Hall MRT Interchange
-                                        and
-                                        is literally a stone’s throw away to
-                                        Peninsula Plaza and Raffles City. Living
-                                        in
-                                        the Eden Residences Capitol provides an
-                                        easy
-                                        access to the fitness and recreational
-                                        parks
-                                        like that of Fort Canning Park.
-                                        Residents
-                                        can also enjoy the convenience of the
-                                        amenities nearby such as banks,
-                                        supermarket,
-                                        retails outlets, restaurants and other
-                                        necessities.</p>
-                                </v-expansion-panel-content>
-                            </v-expansion-panel>
-                        </v-expansion-panels>
-                    </div>
-                    <div class="page__expansion-property">
-                        <v-expansion-panels flat
-                            class="expansion-property-custom
-                            expansion-panel-custom">
-                            <v-expansion-panel>
-                                <v-expansion-panel-header expand-icon="mdi-menu-down">
-                                    Property Details
-                                    <template v-slot:actions>
-                                        <v-icon color="primary">
-                                          $expand
-                                        </v-icon>
-                                    </template>
-                                </v-expansion-panel-header>
-                                <v-expansion-panel-content>
-                                    <div class="expansion-property-row">
-                                        <p>monthly price:</p>
-                                        <p>S$ 30,000 </p>
-                                    </div>
-                                    <div class="expansion-property-row">
-                                        <p>unit size:</p>
-                                        <p>5,963 sqft </p>
-                                    </div>
-                                    <div class="expansion-property-row">
-                                        <p>monthly price PSF:</p>
-                                        <p>S$ 5.03</p>
-                                    </div>
-                                    <div class="expansion-property-row">
-                                        <p>lease term:</p>
-                                        <p>24 months </p>
-                                    </div>
-                                    <div class="expansion-property-row">
-                                        <p>furnishing:</p>
-                                        <p>Fully Furnished</p>
-                                    </div>
-                                    <div class="expansion-property-row">
-                                        <p>built year:</p>
-                                        <p>2015</p>
-                                    </div>
-                                    <div class="expansion-property-row">
-                                        <p>tenure:</p>
-                                        <p>99-year Leasehold</p>
-                                    </div>
-                                    <div class="expansion-property-row">
-                                        <p>property type:</p>
-                                        <p>Condo</p>
-                                    </div>
-                                </v-expansion-panel-content>
-                            </v-expansion-panel>
-                        </v-expansion-panels>
-                    </div>
-                    <div class="page__available-from">
-                        <v-expansion-panels flat
-                            class="expansion-available-custom
-                            expansion-panel-custom">
-                            <v-expansion-panel>
+                    <v-expansion-panels flat>
+                        <v-expansion-panel class="expansion-description expansion-panel-custom">
+                            <v-expansion-panel-header
+                                expand-icon="mdi-menu-down">
+                                Description
+                                <template v-slot:actions>
+                                    <v-icon color="primary">
+                                        $expand
+                                    </v-icon>
+                                </template>
+                            </v-expansion-panel-header>
+                            <v-expansion-panel-content>
+                                <p>The centrepiece of an iconic integrated
+                                    development comprising three landmarks –
+                                    Stamford House, Capitol Building and
+                                    Capitol
+                                    Theatre. Located in the Civic District,
+                                    perched above Singapore’s well-known
+                                    historical street corner, the curved
+                                    residential block offers a front row
+                                    seat to
+                                    the city’s Civic and Cultural District
+                                    as
+                                    well as spectacular views of Marina Bay
+                                    and
+                                    beyond.</p>
+                                <p>Eden Residences Capitol is a luxurious
+                                    residential edifice that sits across the
+                                    road from The City Hall MRT Interchange
+                                    and
+                                    is literally a stone’s throw away to
+                                    Peninsula Plaza and Raffles City. Living
+                                    in
+                                    the Eden Residences Capitol provides an
+                                    easy
+                                    access to the fitness and recreational
+                                    parks
+                                    like that of Fort Canning Park.
+                                    Residents
+                                    can also enjoy the convenience of the
+                                    amenities nearby such as banks,
+                                    supermarket,
+                                    retails outlets, restaurants and other
+                                    necessities.</p>
+                            </v-expansion-panel-content>
+                        </v-expansion-panel>
+                        <v-expansion-panel class="expansion-property expansion-panel-custom">
+                            <v-expansion-panel-header expand-icon="mdi-menu-down">
+                                Property Details
+                                <template v-slot:actions>
+                                    <v-icon color="primary">
+                                        $expand
+                                    </v-icon>
+                                </template>
+                            </v-expansion-panel-header>
+                            <v-expansion-panel-content>
+                                <div class="expansion-property-row">
+                                    <p>monthly price:</p>
+                                    <p>S$ 30,000 </p>
+                                </div>
+                                <div class="expansion-property-row">
+                                    <p>unit size:</p>
+                                    <p>5,963 sqft </p>
+                                </div>
+                                <div class="expansion-property-row">
+                                    <p>monthly price PSF:</p>
+                                    <p>S$ 5.03</p>
+                                </div>
+                                <div class="expansion-property-row">
+                                    <p>lease term:</p>
+                                    <p>24 months </p>
+                                </div>
+                                <div class="expansion-property-row">
+                                    <p>furnishing:</p>
+                                    <p>Fully Furnished</p>
+                                </div>
+                                <div class="expansion-property-row">
+                                    <p>built year:</p>
+                                    <p>2015</p>
+                                </div>
+                                <div class="expansion-property-row">
+                                    <p>tenure:</p>
+                                    <p>99-year Leasehold</p>
+                                </div>
+                                <div class="expansion-property-row">
+                                    <p>property type:</p>
+                                    <p>Condo</p>
+                                </div>
+                            </v-expansion-panel-content>
+                        </v-expansion-panel>
+                        <v-expansion-panel class="expansion-available expansion-panel-custom">
                                 <v-expansion-panel-header expand-icon="mdi-menu-down">
                                     Available from
                                     <template v-slot:actions>
@@ -151,9 +136,29 @@
                                         <p>2022-02-01</p>
                                     </div>
                                 </v-expansion-panel-content>
-                            </v-expansion-panel>
-                        </v-expansion-panels>
-                    </div>
+                        </v-expansion-panel>
+                        <v-expansion-panel class="expansion-amenities expansion-panel-custom">
+                                <v-expansion-panel-header expand-icon="mdi-menu-down">
+                                    Amenities
+                                    <template v-slot:actions>
+                                        <v-icon color="primary">
+                                          $expand
+                                        </v-icon>
+                                    </template>
+                                </v-expansion-panel-header>
+                                <v-expansion-panel-content>
+                                    <div class="expansion-amenities-row">
+                                        <div class="expansion-amenities-column" v-for="(item, index) in listAmenities" :key="index">
+                                            <div class="expansion-amenities-icon" v-for="(element, index) in item.listIcons" :key="index">
+                                                <i :class="element.icon"></i>
+                                                <p></p>
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                </v-expansion-panel-content>
+                        </v-expansion-panel>
+                    </v-expansion-panels>
                 </div>
                 <div class="page__content-right">
                     <ContactAgentCard/>
@@ -208,6 +213,109 @@ export default {
                     id: 8,
                     imgURL: require(`../../../static/img/static/One-Shenton-DSC_8.jpeg`)
                 }
+            ], 
+            listAmenities: [
+                {
+                    id: 1, 
+                    listIcons: [
+                        {
+                            id: 1, 
+                            icon: "icon-svg svg-free-wifi"
+                        }, 
+                        {
+                            id: 2, 
+                            icon: "icon-svg svg-pool"
+                        }, 
+                        {
+                            id: 3, 
+                            icon: "icon-svg svg-bathtub"
+                        }, 
+                        {
+                            id: 4, 
+                            icon: "icon-svg svg-spa"
+                        }, 
+                        {
+                            id: 5, 
+                            icon: "icon-svg svg-sauna"
+                        }, 
+                        {
+                            id: 6, 
+                            icon: "icon-svg svg-bbq"
+                        }, 
+                        {
+                            id: 7, 
+                            icon: "icon-svg svg-concierge"
+                        }
+                        
+                    ]
+                }, 
+                {
+                    id: 2, 
+                    listIcons: [
+                    {
+                            id: 8, 
+                            icon: "icon-svg svg-game-room"
+                        }, 
+                        {
+                            id: 9, 
+                            icon: "icon-svg svg-tennis-court"
+                        }, 
+                        {
+                            id: 10, 
+                            icon: "icon-svg svg-patio"
+                        }, 
+                        {
+                            id: 11, 
+                            icon: "icon-svg svg-taxi"
+                        }, 
+                        {
+                            id: 12, 
+                            icon: "icon-svg svg-pet-allowed"
+                        }, 
+                        {
+                            id: 13, 
+                            icon: "icon-svg svg-pool-view"
+                        }, 
+                        {
+                            id: 14, 
+                            icon: "icon-svg svg-jacuzzi"
+                        }
+                    ]
+                }, 
+                {
+                    id: 3, 
+                    listIcons: [
+                        {
+                            id: 15, 
+                            icon: "icon-svg svg-gym"
+                        }, 
+                        {
+                            id: 16, 
+                            icon: "icon-svg svg-yoga"
+                        }, 
+                        {
+                            id: 17, 
+                            icon: "icon-svg svg-gourmet-kitchen"
+                        }, 
+                        {
+                            id: 18, 
+                            icon: "icon-svg svg-restaurant"
+                        }, 
+                        {
+                            id: 19, 
+                            icon: "icon-svg svg-playground"
+                        }, 
+                        {
+                            id: 20, 
+                            icon: "icon-svg svg-squash-court"
+                        }, 
+                        {
+                            id: 21, 
+                            icon: "icon-svg svg-social-lounge"
+                        }
+                    ]
+                }
+
             ]
         }
     }
