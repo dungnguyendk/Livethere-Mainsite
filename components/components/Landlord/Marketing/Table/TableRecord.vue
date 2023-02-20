@@ -72,7 +72,7 @@ export default {
     },
     computed: {
         ...mapState({
-            statusFID: (state) => state.inventories.typeSelect,
+            // statusFID: (state) => state.inventories.typeSelect,
             statusResponse: (state) => state.marketing.statusResponse
         }),
         floorAreaSqftFormatter() {
