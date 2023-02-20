@@ -1,7 +1,7 @@
 <template>
     <form @submit.prevent="onFormSubmit" class="form--add-new-inventory">
         <div class="form__top">
-            <h3>{{ source?.propertyName? source.propertyName : "SOLD OUT" }}</h3>
+            <h3>{{ source?.propertyName ? source.propertyName : "SOLD OUT" }}</h3>
         </div>
         <p class="alert alert--red" v-if="!statusResponse">Something went wrong</p>
         <div class="form__field">
@@ -9,8 +9,8 @@
             <v-menu ref="menu1" v-model="menu1" :close-on-content-click="false" transition="scale-transition" offset-y
                 min-width="auto">
                 <template v-slot:activator="{ on, attrs }">
-                    <v-text-field v-model="soldDateFormatted" :error-messages="soldDateFormattedErrors" outlined
-                        dense persistent-hint readonly prepend-inner-icon="mdi-calendar" v-bind="attrs"
+                    <v-text-field v-model="soldDateFormatted" :error-messages="soldDateFormattedErrors" outlined dense
+                        persistent-hint readonly prepend-inner-icon="mdi-calendar" v-bind="attrs"
                         @blur="soldOutDate = parseDate(soldOutDate)" v-on="on"></v-text-field>
                 </template>
                 <v-date-picker v-model="soldOutDate" no-title @input="menu1 = false"></v-date-picker>
@@ -27,8 +27,8 @@
                 <span class="cancel-form" @click="onClose()"> Cancel </span>
             </div>
         </div>
-        <ConfirmDialog :open="confirmDialog" size="large" type="full" @close="confirmDialog = false" :loading="loading"
-            @onSubmit="putSold" />
+        <ConfirmDialog :open="confirmDialog" content="Are you sure update this item ?" @close="confirmDialog = false"
+            :loading="loading" @onSubmit="putSold" />
     </form>
 </template>
 <script>

@@ -23,8 +23,8 @@ export default {
     },
     computed: {
         ...mapState({
-            snackbar: (state) => state.inventories.snackbar,
-            snackbarMessage: (state) => state.inventories.snackbarMessage
+            snackbar: (state) => state.marketing.snackbar,
+            snackbarMessage: (state) => state.marketing.snackbarMessage
         }),
     },
     methods: {
@@ -34,23 +34,17 @@ export default {
                 this.snackbarActive = this.snackbar
                 this.snackbarMessageActive = this.snackbarMessage
                 setTimeout(() => {
-                    this.$store.commit("inventories/setSnackbar", false)
+                    this.$store.commit("marketing/setSnackbar", false)
                 }, 2000)
             }
         }
     },
     watch: {
         snackbar() {
-            // console.log("snackbar:::", this.snackbar);
             this.setSnackBar()
         },
-        // snackbarMessage() {
-        //     this.snackbarMessageActive = this.snackbarMessage
-        // }
     }
 }
 </script>
 
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>

@@ -45,10 +45,10 @@
                     <span>Compared to the previous year</span>
                 </v-tooltip>
                 <!-- <div v-else>
-                                        <img :src="require(`~/static/img/icon-${currentYearRate > 0 ? 'up' : 'down'}.svg`)" alt=""
-                                            v-if="currentYearRate" />
-                                        <span class="percent">{{ currentYearRate ? `${currentYearRate}%` : '-' }}</span>
-                                    </div> -->
+                    <img :src="require(`~/static/img/icon-${currentYearRate > 0 ? 'up' : 'down'}.svg`)" alt=""
+                        v-if="currentYearRate" />
+                    <span class="percent">{{ currentYearRate ? `${currentYearRate}%` : '-' }}</span>
+                </div> -->
             </div>
         </div>
         <div class="widget-footer">
@@ -83,10 +83,10 @@
                     <span>Compared to the current portfolio price</span>
                 </v-tooltip>
                 <!-- <div v-else>
-                                        <img :src="require(`~/static/img/icon-${lastYearRate > 0 ? 'up' : 'down'}.svg`)" alt=""
-                                            v-if="lastYearRate" />
-                                        <span class="percent">{{ lastYearRate ? `${lastYearRate}%` : '-' }}</span>
-                                    </div> -->
+                    <img :src="require(`~/static/img/icon-${lastYearRate > 0 ? 'up' : 'down'}.svg`)" alt=""
+                        v-if="lastYearRate" />
+                    <span class="percent">{{ lastYearRate ? `${lastYearRate}%` : '-' }}</span>
+                </div> -->
             </div>
         </div>
     </div>
