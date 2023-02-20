@@ -297,7 +297,7 @@ export default {
     }
 }
 .form__footer {
-    padding: 0 5rem 3.3rem;
+    padding: 2.4rem 5rem 3.3rem;
     .form__border-top {
         margin-bottom: 3rem;
         width: 100%;
@@ -316,9 +316,12 @@ export default {
     }
 }
 .form__fields {
-    margin-bottom: 2.4rem;
     padding: 0 5rem 3.2rem;
     border-bottom: 0.1rem solid var(--border-color);
+    max-height: calc(90vh - 190px);
+    overflow: auto;
+    /* width */
+
     .form__field {
         
         label {
@@ -474,5 +477,21 @@ export default {
 }
 .mb-custom-3 {
     margin-bottom: 4.2rem;
+}
+::-webkit-scrollbar {
+  width: .5rem;
+}
+
+::-webkit-scrollbar-track {
+  border-radius: 1rem;
+}
+
+
+::-webkit-scrollbar-thumb {
+    background: #bfbfbf;
+  border-radius: 1rem;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #a2a0a0
 }
 </style>

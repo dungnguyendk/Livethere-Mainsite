@@ -32,6 +32,7 @@ export default {
     box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.04), 0px 4px 8px rgba(0, 0, 0, 0.06);
     border-radius: 0px 0px 80px 80px;
     background-color: var(--color-white);
+    overflow: hidden;
     .section--search__form {
         border-radius: 0;
         box-shadow: none;
