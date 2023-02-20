@@ -37,7 +37,7 @@
                             placeholder="0"
                             outlined
                             :error-messages="itemPriceErrors"
-                            :suffix="currencyType"
+                            suffix="S$"
                             reverse
                         />
                     </div>
