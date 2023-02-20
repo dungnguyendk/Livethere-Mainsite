@@ -124,7 +124,7 @@ export default {
     }
 }
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 820px) {
     .section-content {
         grid-template-columns: repeat(1, 1fr);
     }

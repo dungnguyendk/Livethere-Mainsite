@@ -5,7 +5,8 @@
                 <StatusIcon type="warning" />
             </template>
             <template slot="content">
-                <p><strong>Are you sure update this item ?</strong></p>
+                <p><strong>{{ content }}</strong></p>
+                <!-- <p><strong>Are you sure update this item ?</strong></p> -->
             </template>
             <template slot="actions">
                 <v-btn class="btn btn--ghost btn--gray" @click="onClose()"> Cancel</v-btn>
@@ -38,6 +39,10 @@ export default {
         loading: {
             type: Boolean,
             default: false
+        },
+        content: {
+            type: String,
+            default: null
         }
     },
     methods: {

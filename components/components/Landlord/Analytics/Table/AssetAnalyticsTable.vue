@@ -7,7 +7,16 @@
                     <th>Unit No.</th>
                     <th>Purchase Date</th>
                     <th>Purchase Price</th>
-                    <th>Current Est Value</th>
+                    <th>Current Est. Value <br />(AES OIS)
+                        <v-tooltip bottom>
+                            <template v-slot:activator="{ on, attrs }">
+                                <v-icon color="yellow" v-bind="attrs" v-on="on" class="icon-warning">
+                                    ri-error-warning-line
+                                </v-icon>
+                            </template>
+                            <span>Provided by AES Technologies Online Indicative System</span>
+                        </v-tooltip>
+                    </th>
                     <th>Est Capital Gain</th>
                     <th>Monthly Rental</th>
                     <th>Gross Rental Yield</th>
@@ -41,69 +50,6 @@ export default {
     components: { AssetAnalyticsTableRecord, ExpandedPanel },
     data() {
         return {
-            // items: [
-            //     {
-            //         id: 1,
-            //         propertyName: "Lloyd Sixtyfive",
-            //         unitNo: "08-10",
-            //         purchaseDate: "26/11/2022",
-            //         purchasePrice: "SGD 1,200,000",
-            //         currentEstimatedValue: "SGD 1,500,000",
-            //         estimatedCapitalGain:
-            //             "SGD 120,000 - SGD 150,000 SGD 120,000 - SGD 150,000 SGD 120,000 - SGD 150,000",
-            //         rentalYield: "1.2%"
-            //     },
-            //     {
-            //         id: 2,
-            //         propertyName: "Skypark @ Somerset",
-            //         unitNo: "02-96",
-            //         purchaseDate: "05/02/2021",
-            //         purchasePrice: "SGD 1,000,000",
-            //         currentEstimatedValue: "SGD 1,200,000",
-            //         estimatedCapitalGain: "SGD 120,000 - SGD 150,000",
-            //         rentalYield: "0.8%"
-            //     },
-            //     {
-            //         id: 3,
-            //         propertyName: "Lloyd Sixtyfive",
-            //         unitNo: "08-10",
-            //         purchaseDate: "26/11/2022",
-            //         purchasePrice: "SGD 1,200,000",
-            //         currentEstimatedValue: "SGD 1,500,000",
-            //         estimatedCapitalGain: "SGD 120,000 - SGD 150,000",
-            //         rentalYield: "1.2%"
-            //     },
-            //     {
-            //         id: 4,
-            //         propertyName: "Lloyd Sixtyfive",
-            //         unitNo: "08-10",
-            //         purchaseDate: "26/11/2022",
-            //         purchasePrice: "SGD 1,200,000",
-            //         currentEstimatedValue: "SGD 1,500,000",
-            //         estimatedCapitalGain: "SGD 120,000 - SGD 150,000",
-            //         rentalYield: "1.2%"
-            //     },
-            //     {
-            //         id: 5,
-            //         propertyName: "Lloyd Sixtyfive",
-            //         unitNo: "08-10",
-            //         purchaseDate: "26/11/2022",
-            //         purchasePrice: "SGD 1,200,000",
-            //         currentEstimatedValue: "SGD 1,500,000",
-            //         estimatedCapitalGain: "SGD 120,000 - SGD 150,000",
-            //         rentalYield: "1.2%"
-            //     },
-            //     {
-            //         id: 6,
-            //         propertyName: "Lloyd Sixtyfive",
-            //         unitNo: "08-10",
-            //         purchaseDate: "26/11/2022",
-            //         purchasePrice: "SGD 1,200,000",
-            //         currentEstimatedValue: "SGD 1,500,000",
-            //         estimatedCapitalGain: "SGD 120,000 - SGD 150,000",
-            //         rentalYield: "1.2%"
-            //     }
-            // ],
             showExpandedPanel: false,
             selectedId: -1
         }
@@ -151,5 +97,12 @@ export default {
     @media only screen and (max-width: 768px) {
         padding: 0;
     }
+    @media only screen and (min-width: 768px) and (max-width: 1280px) {
+        padding: 0;
+    }
+}
+
+.icon-warning {
+    font-size: 1.8rem;
 }
 </style>
