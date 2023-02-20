@@ -17,7 +17,7 @@
                     </p>
                     <p>
                         <span>Secure Deposit:</span>
-                        <strong>SGD {{ secureDepositFormatter }}</strong>
+                        <strong>S$ {{ secureDepositFormatter }}</strong>
                     </p>
                 </div>
                 <div class="section__column">
@@ -27,7 +27,7 @@
                     </p>
                     <p>
                         <span>Monthly Rent:</span>
-                        <strong>SGD {{ monthlyRentalFormatter }}</strong>
+                        <strong>S$ {{ monthlyRentalFormatter }}</strong>
                     </p>
                 </div>
             </div>
@@ -36,8 +36,9 @@
 </template>
 
 <script>
-import { mapState } from 'vuex';
+import { mapState } from "vuex"
 import { convertNumberToCommas } from "~/ultilities/helpers"
+
 export default {
     name: "TenancyDetailsPanel",
     data() {
@@ -55,18 +56,26 @@ export default {
     },
     created() {
         // console.log("this.tenancyDetails", this.tenancyDetails)
-        this.startDateFormatter = this.tenancyDetails ? this.formatDate(this.tenancyDetails.startDate) : ""
-        this.endDateFormatter = this.tenancyDetails ? this.formatDate(this.tenancyDetails.endDate) : ""
-        this.monthlyRentalFormatter = this.tenancyDetails ? convertNumberToCommas(this.tenancyDetails.monthlyRental) : ""
-        this.secureDepositFormatter = this.tenancyDetails ? convertNumberToCommas(this.tenancyDetails.secureDeposit) : ""
+        this.startDateFormatter = this.tenancyDetails
+            ? this.formatDate(this.tenancyDetails.startDate)
+            : ""
+        this.endDateFormatter = this.tenancyDetails
+            ? this.formatDate(this.tenancyDetails.endDate)
+            : ""
+        this.monthlyRentalFormatter = this.tenancyDetails
+            ? convertNumberToCommas(this.tenancyDetails.monthlyRental)
+            : ""
+        this.secureDepositFormatter = this.tenancyDetails
+            ? convertNumberToCommas(this.tenancyDetails.secureDeposit)
+            : ""
     },
     methods: {
         formatDate(date) {
             if (!date) return null
 
             return this.$moment(date).format("DD-MMM-YYYY")
-        },
-    },
+        }
+    }
 }
 </script>
 <style lang="scss" scoped>
