@@ -40,39 +40,40 @@
             </a>
         </td>
         <td data-label="Action">
-            <v-btn class="btn btn--outline btn--green btn--md add-new">
+            <v-btn class="btn btn--outline btn--green btn--md add-new" @click="confirmListWithUs = true">
                 List with Us
             </v-btn>
         </td>
+        <ConfirmDialog :open="confirmListWithUs" content="Do you want list with us ?" size="large" type="full"
+            @close="confirmListWithUs = false" :loading="loading" @onSubmit="putListWithUs" />
     </tr>
 </template>
 
 <script>
 import AssetInventoryBadge from "~/components/components/Landlord/AssetInventory/components/AssetInventoryBadge.vue"
+import ConfirmDialog from "~/components/elements/Dialog/ConfirmDialog.vue"
 import { convertNumberToCommas } from "~/ultilities/helpers"
 import { mapState } from "vuex"
 
 export default {
     name: "TableRecord",
-    components: { AssetInventoryBadge },
+    components: { AssetInventoryBadge, ConfirmDialog },
     props: {
         source: {
             type: Object,
             default: () => null
-        },
-        selectedId: {
-            type: Number,
-            default: () => -1
         }
     },
     data() {
         return {
-            sizeDialog: "large",
+            loading: false,
+            confirmListWithUs: false
         }
     },
     computed: {
         ...mapState({
-            statusFID: (state) => state.inventories.typeSelect
+            statusFID: (state) => state.inventories.typeSelect,
+            statusResponse: (state) => state.marketing.statusResponse
         }),
         floorAreaSqftFormatter() {
             return this.source.floorAreaSqft ? convertNumberToCommas(this.source.floorAreaSqft) : ''
@@ -86,6 +87,13 @@ export default {
     methods: {
         handleClickOpenRow(item) {
             this.$emit("handleClickOpenRow", item)
+        },
+        putListWithUs() {
+            this.loading = true
+            this.$store.dispatch("marketing/putStatusListWithUs", this.source.id).then(() => {
+                this.loading = false
+                this.confirmListWithUs = false
+            })
         },
     },
     watch: {

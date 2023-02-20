@@ -82,5 +82,8 @@ export const httpEndpoint = {
     },
     analytics: {
         getEntries: "api/Analytic/analytic-dashboard"
+    },
+    marketing: {
+        postEntriesListWithUs: "api/marketing/list-with-us"
     }
 }
