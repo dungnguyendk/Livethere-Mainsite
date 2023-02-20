@@ -16,12 +16,12 @@
             <div class="card__content-fee">
                 <h3 class="card__content-price">S$ {{ project.price }}/month</h3>
                 <div class="card__content-emotions">
-                    <button @click="openShareSocialDialog(project.id)">
+                    <v-btn icon @click="openShareSocialDialog(project.id)">
                         <i class="icon-svg svg-export"></i>
-                    </button>
-                    <button @click="activeHeartEmotion(project.id)">
+                    </v-btn>
+                    <v-btn icon  @click="activeHeartEmotion(project.id)">
                         <i class="ri-heart-3-line" :class="{'active-heart' : project.activeHeart}"></i>
-                    </button>
+                    </v-btn>
                 </div>
             </div>
             <div class="card__content-infor">

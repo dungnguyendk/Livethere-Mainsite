@@ -105,6 +105,7 @@
                             flat 
                             solo
                             class="form__field-text-field-custom"
+                            disabled
                             style="width: 65px"
                             >
                         </v-text-field>
@@ -119,6 +120,7 @@
                             flat 
                             solo
                             class="form__field-text-field-custom"
+                            disabled
                             style="width: 65px"
                             >
                         </v-text-field>
@@ -145,6 +147,7 @@
                             solo
                             class="form__field-text-field-custom"
                             style="width: 65px"
+                            disabled
                             >
                         </v-text-field>
                     </template>
@@ -157,6 +160,7 @@
                             solo
                             class="form__field-text-field-custom"
                             style="width: 65px"
+                            disabled
                             >
                         </v-text-field>
                     </template>
@@ -266,6 +270,7 @@ export default {
 .form--filter-projects {
     ::v-deep(.v-input__slot) {
         padding: 0 !important;
+        
         input {
             font-weight: 500;
             font-size: 1.6rem;
@@ -366,6 +371,13 @@ export default {
 .v-input--selection-controls {
     margin-top: 0;
 }
+.form__field-text-field-custom{
+    ::v-deep(.v-input__control){
+        .v-input__slot{
+            background-color: transparent !important;
+        }
+    }
+}
 .form__field-label-custom {
     span {
         font-weight: 400;
@@ -390,6 +402,7 @@ export default {
     position: relative;
     ::v-deep(.v-input__slot) {
         top: -0.7rem;
+        
         .v-slider__track-container {
             height: 0.4rem;
         }

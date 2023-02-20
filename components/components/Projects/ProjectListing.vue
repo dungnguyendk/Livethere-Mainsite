@@ -171,6 +171,14 @@ export default {
         }
     }
     @media screen and (max-width: 450px) {
+        .section__btn-style{
+            i{
+
+            }
+            span{
+                display: none;
+            }
+        }
         .section__body-load-more{
             button{
                 padding: 2rem 0 2.8rem;
@@ -183,16 +191,7 @@ export default {
             padding: 2rem;
         }
     }
-    @media screen and (max-width: 400px) {
-        .section__btn-style{
-            i{
 
-            }
-            span{
-                display: none;
-            }
-        }
-    }
 }
 .section__top {
     display: flex;
