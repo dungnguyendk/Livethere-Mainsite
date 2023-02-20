@@ -1,10 +1,14 @@
 import { httpEndpoint } from "~/services/https/endpoints"
 export const state = () => ({
+    marketings: [],
     snackbar: false,
     snackbarMessage: "Your message has been sent.",
     statusResponse: true
 })
 export const mutations = {
+    setMarketings(state, payload) {
+        state.marketings = payload
+    },
     setSnackbar(state, payload) {
         state.snackbar = payload
     },
@@ -16,6 +20,19 @@ export const mutations = {
     }
 }
 export const actions = {
+    async getMarketings({ commit }, payload) {
+        try {
+            const response = await this.$axios.$get(`${httpEndpoint.marketing.getEntries}`)
+            if (response) {
+                commit("setMarketings", response)
+            } else {
+                commit("setMarketings", [])
+            }
+        } catch (e) {
+            commit("setMarketings", [])
+            console.log({ Error: e.message })
+        }
+    },
     async putStatusListWithUs({ commit }, payload) {
         try {
             const response = await this.$axios.$post(

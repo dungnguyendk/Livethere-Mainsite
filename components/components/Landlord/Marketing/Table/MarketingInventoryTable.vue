@@ -15,8 +15,8 @@
                 </tr>
             </thead>
             <tbody>
-                <template v-if="inventories.length > 0">
-                    <TableRecord v-for="item in inventories" :source="item" :key="item.id"
+                <template v-if="marketings.length > 0">
+                    <TableRecord v-for="item in marketings" :source="item" :key="item.id"
                         @handleClickOpenRow="handleClickOpenRow(item)" />
                 </template>
                 <template v-else>
@@ -48,7 +48,7 @@ export default {
     },
     computed: {
         ...mapState({
-            inventories: (state) => state.inventories.inventories,
+            marketings: (state) => state.marketing.marketings,
         }),
     },
     created() {

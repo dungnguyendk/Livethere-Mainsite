@@ -35,11 +35,12 @@ export default {
     },
     async asyncData({ app, store }) {
         try {
-            const param = qs.stringify({
-                StatusFID: 0
-            })
-            await store.dispatch("inventories/getInventories", param)
-            await store.commit("inventories/setTypeSelected", 0)
+            // const param = qs.stringify({
+            //     StatusFID: 0
+            // })
+            // await store.dispatch("inventories/getInventories", param)
+            // await store.commit("inventories/setTypeSelected", 0)
+            await store.dispatch("marketing/getMarketings")
         } catch (e) {
             console.log({ Error: e.message })
         }
