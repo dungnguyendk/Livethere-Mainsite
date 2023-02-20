@@ -114,6 +114,10 @@ export default {
         padding: 1.2rem 1.6rem !important;
         text-align: left;
         vertical-align: top;
+
+        @media only screen and (min-width: 768px) and (max-width: 1280px) {
+            padding: 0.6rem 0.8rem !important;
+        }
     }
 }
 
