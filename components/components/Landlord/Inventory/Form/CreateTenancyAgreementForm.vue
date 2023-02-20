@@ -127,7 +127,7 @@
                             dense
                             outlined
                             :error-messages="monthlyRentalErrors"
-                            suffix="SGD"
+                            suffix="S$"
                             reverse
                         />
                     </div>
@@ -140,7 +140,7 @@
                             dense
                             outlined
                             :error-messages="secureDepositErrors"
-                            suffix="SGD"
+                            suffix="S$"
                             reverse
                         />
                     </div>

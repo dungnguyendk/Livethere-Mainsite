@@ -28,7 +28,7 @@
                         </tr>
                         <tr class="tr-total">
                             <td colspan="4">Grand Total Revenue:</td>
-                            <td colspan="2"><span>$ {{ formatMoney(totalMoney) }}</span></td>
+                            <td colspan="2"><span>S$ {{ formatMoney(totalMoney) }}</span></td>
                         </tr>
                     </template>
                 </template>
@@ -42,13 +42,13 @@
             </tbody>
         </table>
         <!--        <slide-up-down :active="showExpandedPanel" :duration="300">
-            <ExpandedPanel @onClose="onCloseExpandedPanel" />
-        </slide-up-down>-->
+                <ExpandedPanel @onClose="onCloseExpandedPanel" />
+            </slide-up-down>-->
         <!-- <v-snackbar v-model="snackbar" :timeout="2000" top right text color="green darken-4">
-            <span class="message--snackBar">
-                <i class="ri-information-line" /> {{ snackbarMessage }}
-            </span>
-        </v-snackbar> -->
+                <span class="message--snackBar">
+                    <i class="ri-information-line" /> {{ snackbarMessage }}
+                </span>
+            </v-snackbar> -->
     </div>
 </template>
 

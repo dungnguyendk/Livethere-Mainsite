@@ -18,11 +18,23 @@
             {{ currentEstimatedValueFormat }}
         </td>
         <td data-label="Estimated Capital Gain" class="td-custom">
-            <div :class="`growth growth--${source.estimatedCapitalGainRate < 0 ? 'red' : 'green'}`"
+            <v-tooltip bottom v-if="source.estimatedCapitalGain">
+                    <template v-slot:activator="{ on, attrs }">
+                        <div v-bind="attrs" v-on="on" :class="`growth growth--${source.estimatedCapitalGainRate < 0 ? 'red' : 'green'}`">
+                            <i :class="`ri-arrow-${source.estimatedCapitalGainRate < 0 ? 'down' : 'up'}-s-fill`"></i>
+                            <span class="percent">{{ source.estimatedCapitalGainRate }}%</span>
+                        </div>
+                    </template>
+                    <span>
+                        Est Capital Gain <br />
+                        Current Est. Value / Purchase Price
+                    </span>
+                </v-tooltip>
+            <!-- <div :class="`growth growth--${source.estimatedCapitalGainRate < 0 ? 'red' : 'green'}`"
                 v-if="source.estimatedCapitalGain">
                 <i :class="`ri-arrow-${source.estimatedCapitalGainRate < 0 ? 'down' : 'up'}-s-fill`"></i>
                 <span class="percent">{{ source.estimatedCapitalGainRate }}%</span>
-            </div>
+            </div> -->
             {{ estimatedCapitalGainFormat }}
         </td>
         <td data-label="Monthly Rental">
@@ -55,16 +67,16 @@ export default {
             return this.source.purchasedDate ? this.formatDate(this.source.purchasedDate) : '-'
         },
         purchasedPriceFormat() {
-            return this.source.purchasedPrice ? `SGD ${convertNumberToCommas(this.source.purchasedPrice)}` : '-'
+            return this.source.purchasedPrice ? `S$ ${convertNumberToCommas(this.source.purchasedPrice)}` : '-'
         },
         currentEstimatedValueFormat() {
-            return this.source.currentEstimatedValue ? `SGD ${convertNumberToCommas(this.source.currentEstimatedValue)}` : '-'
+            return this.source.currentEstimatedValue ? `S$ ${convertNumberToCommas(this.source.currentEstimatedValue)}` : '-'
         },
         estimatedCapitalGainFormat() {
-            return this.source.estimatedCapitalGain ? `SGD ${convertNumberToCommas(this.source.estimatedCapitalGain)}` : '-'
+            return this.source.estimatedCapitalGain ? `S$ ${convertNumberToCommas(this.source.estimatedCapitalGain)}` : '-'
         },
         monthlyRentalFormat() {
-            return this.source.monthlyRental ? `SGD ${convertNumberToCommas(this.source.monthlyRental)}` : '-'
+            return this.source.monthlyRental ? `S$ ${convertNumberToCommas(this.source.monthlyRental)}` : '-'
         },
         rentalYieldFormat() {
             return this.source.rentalYield ? this.source.rentalYield.toFixed(2) : 0
@@ -120,6 +132,11 @@ export default {
     display: flex;
     flex-direction: row;
     align-items: center;
+
+    i {
+        font-size: 2.4rem;
+        line-height: normal;
+    }
 
     &--red {
         color: #FF4A55;

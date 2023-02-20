@@ -1,8 +1,8 @@
 <template lang="html">
     <div class="asset-inventory__action">
         <div class="select-type">
-            <v-select v-model="typeSelected" :items="typeSelections" item-text="value" item-value="id" hide-details
-                outlined dense class="me-2" @change="changeType" />
+            <v-select v-model="typeSelected" :items="typeSelections" item-text="value" item-value="id" hide-details outlined
+                dense class="me-2" @change="changeType" />
         </div>
         <v-btn class="btn btn--outline btn--green btn--md add-new" @click="openAddNewInventoryDialog = true">
             <v-icon left>ri-add-box-line</v-icon>

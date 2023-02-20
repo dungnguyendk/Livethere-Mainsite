@@ -2,9 +2,9 @@
     <table class="table--responsive table--tenancy-info">
         <thead>
             <tr>
-                <th id="description">Name </th>
+                <th id="description">Name</th>
                 <th id="quantity">Quantity</th>
-                <th id="totalValue">Total Value</th>
+                <th id="totalValue">Amount</th>
                 <!-- <th id="conditionRemarks">Condition Remarks</th> -->
                 <th></th>
             </tr>
@@ -31,6 +31,7 @@
 <script>
 import TenancyInventoryRecord from "./TenancyUnitInventoryRecord.vue"
 import { mapState } from "vuex"
+
 export default {
     name: "TenancyInventoryTable",
     components: { TenancyInventoryRecord },
@@ -54,11 +55,14 @@ export default {
     border-width: 0px 1px 1px 1px;
     border-style: solid;
     border-color: #e5e5e5;
+
     thead {
         justify-content: space-between;
+
         tr {
             position: relative;
         }
+
         th {
             padding: 1.5rem 2.4rem 1.5rem;
             background-color: var(--color-menu);
@@ -70,6 +74,7 @@ export default {
             color: var(--color-white);
         }
     }
+
     // th:nth-child(1) {
     //     min-width: 27.2rem;
     // }
@@ -81,6 +86,7 @@ export default {
         flex-wrap: nowrap;
     }
 }
+
 @media (max-width: 768px) {
     .table--responsive tbody tr {
         margin-bottom: 0;

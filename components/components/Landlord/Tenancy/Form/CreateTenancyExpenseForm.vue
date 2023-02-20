@@ -37,7 +37,7 @@
                             placeholder="0"
                             outlined
                             :error-messages="itemPriceErrors"
-                            :suffix="currencyType"
+                            suffix="S$"
                             reverse
                         />
                     </div>
@@ -148,16 +148,56 @@ export default {
             purchaseDateRaw: "",
             typeItems: [
                 {
-                    text: "Commision",
+                    text: "Housing Loans",
                     value: "1"
                 },
                 {
-                    text: "Repairs/Maintenance",
+                    text: "Property Tax",
                     value: "2"
                 },
                 {
-                    text: "Others",
+                    text: "Fire Insurance",
                     value: "3"
+                },
+                {
+                    text: "Repairs",
+                    value: "4"
+                },
+                {
+                    text: "Maintainance",
+                    value: "5"
+                },
+                {
+                    text: "Costs Securing Tenant",
+                    value: "6"
+                },
+                {
+                    text: "Costs of Supervision of Management fees",
+                    value: "7"
+                },
+                {
+                    text: "Furniture and Fittings",
+                    value: "8"
+                },
+                {
+                    text: "Internet Charges/Expenses",
+                    value: "9"
+                },
+                {
+                    text: "Utilities Expenses",
+                    value: "10"
+                },
+                {
+                    text: "Expenses incurred on properties that are not generating rental income",
+                    value: "11"
+                },
+                {
+                    text: "Commision",
+                    value: "12"
+                },
+                {
+                    text: "Others",
+                    value: "13"
                 }
             ],
 
