@@ -2,24 +2,24 @@
     <v-app>
         <v-main>
             <LandlordHeader />
-            <ProjectDetail />
+            <ProjectDetail/>
             <LandingFooter />
         </v-main>
     </v-app>
 </template>
 
 <script>
-import LandlordHeader from "~/components/shared/Header/LandlordHeader.vue"
-import LandingFooter from "~/components/shared/Footer/LandingFooter.vue"
+import LandlordHeader from "~/components/shared/Header/LandlordHeader"
+import LandingFooter from "~/components/shared/Footer/LandingFooter"
 import ProjectDetail from "~/components/components/Projects/ProjectDetail.vue"
 export default {
+    name: "LiveThereMainSiteDetails",
     components: { LandlordHeader, LandingFooter, ProjectDetail },
     head: {
-        title: "Project Detail"
-    }
+        title: "Livethere"
+    },
 }
 </script>
 
 <style lang="scss" scoped>
-
 </style>

@@ -159,7 +159,7 @@ export default {
     }
 }
 </script>
-        <style lang="scss" scoped>
+<style lang="scss" scoped>
 .section--project-listing-filter-sort {
     background-color: var(--bg-color-white);
     @media screen and (max-width: 768px) {

@@ -1,58 +1,178 @@
 <template lang="html">
-    <div class="container">
-        <section class="project--detail-top">
-            <div class="project--detail-gallery">
-                <div class="gallery-container" v-if="listGallery">
-                    <div
-                        class="gallery-item"
-                        v-for="(gallery, index) in listGallery.slice(0, 4)"
-                        :key="index"
-                    >
-                        <img :src="gallery.imgURL" alt="" />
-                    </div>
+    <div class="page--project-detail">
+        <div class="container">
+            <div class="page__top">
+                <div class="page__top-left">
+                    <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit.
+                        Voluptas nemo deserunt nihil veritatis culpa ipsa
+                        adipisci illum repudiandae omnis unde. Magnam itaque
+                        reiciendis dolores molestiae officiis. Dolores ut quia
+                        autem aliquid placeat, molestias laudantium corrupti
+                        sapiente cupiditate rerum perferendis, tempora ipsum
+                        quis non culpa et assumenda a iure commodi recusandae
+                        fugiat. Reprehenderit exercitationem cumque unde ut
+                        nihil, laudantium atque illum alias, blanditiis, laborum
+                        quibusdam voluptatem maxime necessitatibus aperiam. Enim
+                        facilis iste repudiandae quae porro fugit, quasi ex
+                        consectetur? Consectetur, obcaecati nesciunt sit
+                        voluptate fuga eaque soluta, accusantium deserunt
+                        laborum quas dolores, sequi vel doloremque laboriosam
+                        maxime labore consequatur! Amet, cum!</p>
+                </div>
+                <div class="page__top-right">
+                    <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.107901410066!2d106.71887761533426!3d10.803047261654479!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x317529f8273eaed5%3A0x27fe58a754c470b0!2zQ8O0bmcgdHkgQ-G7lSBwaOG6p24gxJDhuqd1IFTGsCBYw6J5IEThu7FuZyBCY29ucw!5e0!3m2!1sen!2s!4v1676437005731!5m2!1sen!2s"
+                        style="border:0;"
+                        allowfullscreen="" loading="lazy"
+                        referrerpolicy="no-referrer-when-downgrade"
+                        class="page__top-map">
+                    </iframe>
                 </div>
             </div>
-            <div class="project-detail--map">
-                <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3988.8233709700994!2d103.8484674152801!3d1.2795892621523093!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31da1911ff0cbdc1%3A0x57e6c26a1be98171!2s1%20Shenton%20Way%2C%20One%20Shenton%20Way%2C%20Singapore%20068803!5e0!3m2!1sen!2s!4v1676608374966!5m2!1sen!2s"
-                    style="border: 0"
-                    allowfullscreen=""
-                    loading="lazy"
-                    referrerpolicy="no-referrer-when-downgrade"
-                ></iframe>
-            </div>
-        </section>
-        <div>
-            <v-btn class="btn--outline btn--green">
-                <i class="icon-svg svg-arrow-left"></i>Back to Result
-            </v-btn>
-        </div>
-        <section class="project--detail-info">
-            <div class="detail-info">
-                <div class="detail-info__head">
-                    <h2 class="detail-info__title">
-                        <img :src="require(`~/static/img/logos/logo-project.svg`)" alt="" />
-                        Eden Residences Capitol
-                    </h2>
-                    <div class="detail-info__action">
-                        <v-btn icon>
-                            <v-icon>icon-svg svg-export</v-icon>
-                        </v-btn>
-                        <v-btn icon>
-                            <v-icon>ri-heart-3-line</v-icon>
-                        </v-btn>
+            <div class="page__content">
+                <div class="page__content-left">
+                    <div class="page__expansion-description">
+                        <v-expansion-panels flat
+                            class="expansion-description-custom
+                            expansion-panel-custom">
+                            <v-expansion-panel>
+                                <v-expansion-panel-header
+                                    expand-icon="mdi-menu-down">
+                                    Description
+                                    <template v-slot:actions>
+                                        <v-icon color="primary">
+                                            $expand
+                                        </v-icon>
+                                    </template>
+                                </v-expansion-panel-header>
+                                <v-expansion-panel-content>
+                                    <p>The centrepiece of an iconic integrated
+                                        development comprising three landmarks –
+                                        Stamford House, Capitol Building and
+                                        Capitol
+                                        Theatre. Located in the Civic District,
+                                        perched above Singapore’s well-known
+                                        historical street corner, the curved
+                                        residential block offers a front row
+                                        seat to
+                                        the city’s Civic and Cultural District
+                                        as
+                                        well as spectacular views of Marina Bay
+                                        and
+                                        beyond.</p>
+                                    <p>Eden Residences Capitol is a luxurious
+                                        residential edifice that sits across the
+                                        road from The City Hall MRT Interchange
+                                        and
+                                        is literally a stone’s throw away to
+                                        Peninsula Plaza and Raffles City. Living
+                                        in
+                                        the Eden Residences Capitol provides an
+                                        easy
+                                        access to the fitness and recreational
+                                        parks
+                                        like that of Fort Canning Park.
+                                        Residents
+                                        can also enjoy the convenience of the
+                                        amenities nearby such as banks,
+                                        supermarket,
+                                        retails outlets, restaurants and other
+                                        necessities.</p>
+                                </v-expansion-panel-content>
+                            </v-expansion-panel>
+                        </v-expansion-panels>
+                    </div>
+                    <div class="page__expansion-property">
+                        <v-expansion-panels flat
+                            class="expansion-property-custom
+                            expansion-panel-custom">
+                            <v-expansion-panel>
+                                <v-expansion-panel-header expand-icon="mdi-menu-down">
+                                    Property Details
+                                    <template v-slot:actions>
+                                        <v-icon color="primary">
+                                          $expand
+                                        </v-icon>
+                                    </template>
+                                </v-expansion-panel-header>
+                                <v-expansion-panel-content>
+                                    <div class="expansion-property-row">
+                                        <p>monthly price:</p>
+                                        <p>S$ 30,000 </p>
+                                    </div>
+                                    <div class="expansion-property-row">
+                                        <p>unit size:</p>
+                                        <p>5,963 sqft </p>
+                                    </div>
+                                    <div class="expansion-property-row">
+                                        <p>monthly price PSF:</p>
+                                        <p>S$ 5.03</p>
+                                    </div>
+                                    <div class="expansion-property-row">
+                                        <p>lease term:</p>
+                                        <p>24 months </p>
+                                    </div>
+                                    <div class="expansion-property-row">
+                                        <p>furnishing:</p>
+                                        <p>Fully Furnished</p>
+                                    </div>
+                                    <div class="expansion-property-row">
+                                        <p>built year:</p>
+                                        <p>2015</p>
+                                    </div>
+                                    <div class="expansion-property-row">
+                                        <p>tenure:</p>
+                                        <p>99-year Leasehold</p>
+                                    </div>
+                                    <div class="expansion-property-row">
+                                        <p>property type:</p>
+                                        <p>Condo</p>
+                                    </div>
+                                </v-expansion-panel-content>
+                            </v-expansion-panel>
+                        </v-expansion-panels>
+                    </div>
+                    <div class="page__available-from">
+                        <v-expansion-panels flat
+                            class="expansion-available-custom
+                            expansion-panel-custom">
+                            <v-expansion-panel>
+                                <v-expansion-panel-header expand-icon="mdi-menu-down">
+                                    Available from
+                                    <template v-slot:actions>
+                                        <v-icon color="primary">
+                                          $expand
+                                        </v-icon>
+                                    </template>
+                                </v-expansion-panel-header>
+                                <v-expansion-panel-content>
+                                    <div class="available-from-row">
+                                        <i class="icon-svg svg-calendar"></i>
+                                        <p>2022-02-01</p>
+                                    </div>
+                                </v-expansion-panel-content>
+                            </v-expansion-panel>
+                        </v-expansion-panels>
                     </div>
                 </div>
-            </div>
-            <div class="detail-contact"> </div>
-        </section>
-    </div>
-</template>
+                <div class="page__content-right">
+                    <ContactAgentCard/>
+                        <EnquiryForm/>
+                            <NotiCard/>
+                            </div>
+                        </div>
 
-<script>
+                    </div>
+                </div>
+            </template>
+
+            <script>
+import EnquiryForm from "~/components/components/Projects/components/Form/EnquiryForm"
+import ContactAgentCard from "./components/Card/ContactAgentCard.vue"
+import NotiCard from "~/components/components/Projects/components/Card/NotiCard"
 export default {
     name: "ProjectListing",
-    components: {},
+    components: { EnquiryForm, ContactAgentCard, NotiCard },
     data() {
         return {
             listGallery: [
@@ -94,5 +214,90 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+.page--project-detail {
+    //left: 66.98
+    //right: 33.02
+}
+.page__top {
+    margin: 2.4rem 0 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .page__top-left {
+        width: 66.98%;
+        margin-right: 1.2rem;
+    }
+    .page__top-right {
+        width: 33.02%;
+        margin-left: 1.2rem;
+        .page__top-map {
+            height: 49.2rem;
+            border-radius: 2rem;
+            width: 100%;
+        }
+    }
+}
+.page__content {
+    display: flex;
 
+    .page__content-left {
+        width: 66.98%;
+    }
+    .page__content-right {
+        width: 33.02%;
+    }
+}
+.expansion-panel-custom {
+    border-bottom: 0.1rem solid var(--border-color);
+    .v-expansion-panel-header {
+        font-weight: 700;
+        font-size: 2rem;
+        line-height: 2rem;
+    }
+    .v-expansion-panel-content {
+        p {
+            font-weight: 400;
+            font-size: 1.6rem;
+            line-height: 2.4rem;
+            color: var(--color-title-black);
+        }
+    }
+}
+.icon-custom {
+    color: var(--color-primary) !important;
+}
+.expansion-property-row {
+    display: flex;
+    align-items: center;
+    p {
+        margin-bottom: 0;
+        &:first-child {
+            font-weight: 700;
+            font-size: 1.6rem;
+            line-height: 3.2rem;
+            color: var(--color-label);
+            text-transform: capitalize;
+            margin-right: 6.4rem;
+            width: 14.1rem;
+        }
+        &:last-child {
+            font-weight: 400;
+            font-size: 1.6rem;
+            line-height: 3.2rem;
+            color: var(--color-title-black);
+            text-align: left;
+        }
+    }
+}
+.available-from-row{
+    display: flex;
+    align-items: center;
+    i{
+        background-color: var(--color-title-black);
+        margin-right: 0.8rem;
+    }
+    p{
+        margin-bottom: 0;
+    }
+}
 </style>
