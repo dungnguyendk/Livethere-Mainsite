@@ -105,8 +105,8 @@
                             flat 
                             solo
                             class="form__field-text-field-custom"
-                            disabled
                             style="width: 65px"
+                            type="number"
                             >
                         </v-text-field>
                     </template>
@@ -120,7 +120,7 @@
                             flat 
                             solo
                             class="form__field-text-field-custom"
-                            disabled
+                            type="number"
                             style="width: 65px"
                             >
                         </v-text-field>
@@ -147,7 +147,7 @@
                             solo
                             class="form__field-text-field-custom"
                             style="width: 65px"
-                            disabled
+                            type="number"
                             >
                         </v-text-field>
                     </template>
@@ -160,7 +160,7 @@
                             solo
                             class="form__field-text-field-custom"
                             style="width: 65px"
-                            disabled
+                            type="number"
                             >
                         </v-text-field>
                     </template>
@@ -275,7 +275,17 @@ export default {
             font-weight: 500;
             font-size: 1.6rem;
             line-height: 2.4rem;
-            color: var(--color-label)
+            color: var(--color-label);
+
+        }
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        input[type=number] {
+            -moz-appearance: textfield;
         }
         .v-text-field__prefix{
             font-weight: 500;
