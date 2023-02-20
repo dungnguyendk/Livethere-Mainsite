@@ -43,18 +43,6 @@
                         </v-btn>
                     </div>
                 </div>
-                <!-- <div class="detail-info__more">
-                    <div class="detail-info__more-price">S$ 30000/month</div>
-                    <div class="detail-info__more-location">
-                        <i class="icon-svg svg-location"></i>
-                        <span>2 Sinaran Drive, Singapore 307467</span>
-                    </div>
-                    <div class="detail-info__more-bb">
-                        <span>
-                            <i class="icon-svg svg-bedroom"></i>3</span>
-                        <span><i class="icon-svg svg-bathroom"></i>2</span>
-                    </div
-                </div> -->
             </div>
             <div class="detail-contact"> </div>
         </section>
@@ -106,61 +94,5 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.btn--outline {
-    font-weight: bold;
-    text-transform: none;
-    height: 4rem !important;
-    border-radius: 0.8rem;
-    box-shadow: none;
-    .icon-svg {
-        width: 1.6rem;
-        height: 1.6rem;
-        margin-right: 0.4rem;
-    }
-    &:hover {
-        .icon-svg {
-            background-color: white;
-        }
-    }
-    :deep(.v-btn__content) {
-        font-weight: bold;
-    }
-}
-.project--detail-top {
-    display: grid;
-    grid-template-columns: 2fr 1fr;
-    grid-column-gap: 2.4rem;
-    margin-bottom: 2.8rem;
-}
-.project--detail-gallery {
-    .gallery-container {
-        display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        grid-gap: 0.8rem;
-        border-radius: 2rem;
-        overflow: hidden;
-    }
-    .gallery-item {
-        &:first-child {
-            grid-column-start: 1;
-            grid-column-end: 4;
-            grid-row-start: 1;
-            grid-row-end: 4;
-        }
-    }
-}
-.project-detail--map {
-    border-radius: 2rem;
-    overflow: hidden;
-    iframe {
-        width: 100%;
-        height: 100%;
-    }
-}
-.project--detail-info {
-    display: grid;
-    grid-template-columns: 2fr 1fr;
-    grid-row-gap: 2.4rem;
-    margin-bottom: 2.8rem;
-}
+
 </style>
