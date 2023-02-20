@@ -1,17 +1,23 @@
 <template lang="html">
     <tr>
-        <td data-title="Description">
-            <p>{{ source.itemName }}</p>
-        </td>
-        <td data-title="Price">
-            <p>{{ source.currencyType }} {{ price }}</p>
-        </td>
         <td data-title="Date">
+            <!--            <pre>
+                                                                {{ source }}
+                                                            </pre
+                        >-->
             <p>{{ purchaseDate }} </p>
         </td>
-        <td data-title="Actions">
+        <td data-title="Category">
+            <p>{{ source.expenseTypeName || "n/a" }}</p>
+        </td>
+        <td data-title="Description">
+            <p>{{ source.remark || "n/a" }}</p>
+        </td>
+        <td data-title="Price">
+            <p>{{ source.currencyType === "SGD" && "S$" }} {{ price }}</p>
+        </td>
+        <td data-title="Action">
             <v-btn class="btn btn--ghost btn--sm btn--red" @click="onDelete"> Delete</v-btn>
-
         </td>
     </tr>
 </template>
@@ -28,7 +34,9 @@ export default {
             return convertNumberToCommas(this.source.itemPrice)
         },
         purchaseDate() {
-            return this.$moment(this.source.purchaseDate).format("DD-MMM-YYYY")
+            return this.source.purchaseDate
+                ? this.$moment(this.source.purchaseDate).format("DD-MMM-YYYY")
+                : "n/a"
         }
     },
     props: {
@@ -46,7 +54,7 @@ export default {
     },
     methods: {
         onDelete() {
-            this.$emit("open", {open: this.isOpenDeleteDialog = true, id: this.source.id})
+            this.$emit("open", { open: (this.isOpenDeleteDialog = true), id: this.source.id })
         }
     }
 }
@@ -59,7 +67,6 @@ tr {
 
 td {
     padding: 3.3rem 2.4rem;
-    border-bottom: 1px solid #e5e5e5;
 
     p {
         display: flex;
@@ -83,10 +90,11 @@ td {
 td:nth-child(2) {
     padding-left: 0;
 }
-td:nth-child(4) {
+
+/*td:nth-child(4) {
     display: flex;
     justify-content: flex-end;
-}
+}*/
 
 tr:nth-child(even) {
     background-color: #fafafa;
@@ -96,6 +104,7 @@ tr:nth-child(even) {
     tr:nth-child(even) {
         background-color: #fafafa;
     }
+
     td[data-title] {
         display: grid;
         justify-content: space-between;

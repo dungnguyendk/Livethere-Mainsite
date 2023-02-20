@@ -1,12 +1,25 @@
 <template lang="html">
     <div>
-        <table class="table--responsive table--tenancy-expsense">
+        <table class="table--responsive table--tenancy-expsense" id="table-tenancy-expsense">
             <thead>
                 <tr>
-                    <th id="description">Description</th>
-                    <th id="price">Price</th>
-                    <th id="date">Date</th>
-                    <th id="actions">Actions</th>
+                    <th>
+                        Date
+                        <v-btn icon color="white" @click="onSortByDate">
+                            <i v-if="sortByDate" class="ri-arrow-up-s-fill" />
+                            <i v-else class="ri-arrow-down-s-fill" />
+                        </v-btn>
+                    </th>
+                    <th>
+                        Category
+                        <v-btn icon color="white" @click="onSortByCategory">
+                            <i v-if="sortByCategory" class="ri-arrow-up-s-fill" />
+                            <i v-else class="ri-arrow-down-s-fill" />
+                        </v-btn>
+                    </th>
+                    <th>Description</th>
+                    <th>Price</th>
+                    <th />
                 </tr>
             </thead>
             <tbody>
@@ -28,7 +41,6 @@
                 </template>
             </tbody>
         </table>
-        <SuccessSnackBar />
     </div>
 </template>
 
@@ -44,31 +56,44 @@ export default {
     components: { SuccessSnackBar, CreateTenancyExpenseForm, Dialog, TenancyExpenseRecord },
     computed: {
         ...mapState({
-            expenses: (state) => state.tenancy.expenses
+            expenses: (state) => state.tenancy.expenses,
+            tenancyDetails: (state) => state.tenancy.tenancyDetails
         })
     },
     data() {
         return {
             snackBar: false,
-            snackBarMessage: ""
+            snackBarMessage: "",
+            sortByCategory: false,
+            sortByDate: false
         }
     },
     methods: {
-        showDeleteSuccess() {
-            this.snackBar = true
-            this.snackBarMessage = "Delete tenancy expense successfully!"
-            setTimeout(() => {
-                this.snackBar = false
-            }, 2000)
+        onSortByCategory() {
+            this.sortByCategory = !this.sortByCategory
+            this.$store.dispatch("tenancy/getExpenses", {
+                id: this.tenancyDetails.id,
+                query: {
+                    SortBy: "expenseTypeName",
+                    SortDirection: this.sortByCategory ? "asc" : "desc"
+                }
+            })
         },
 
-        showCreateSuccess() {
-            this.snackBar = true
-            this.snackBarMessage = "Create tenancy expense successfully!"
-            setTimeout(() => {
-                this.snackBar = false
-            }, 2000)
+        onSortByDate() {
+            this.sortByDate = !this.sortByDate
+            this.$store.dispatch("tenancy/getExpenses", {
+                id: this.tenancyDetails.id,
+                query: {
+                    SortBy: "purchaseDate",
+                    SortDirection: this.sortByDate ? "asc" : "desc"
+                }
+            })
         },
+        showDeleteSuccess() {
+            this.$store.dispatch("app/showSnackBar", "Delete expense successfully! ")
+        },
+
         openDeleteDialog(e) {
             this.$emit("open", { open: e.open, id: e.id })
             console.log("target event: ", e)
@@ -77,6 +102,12 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+#table-tenancy-expsense {
+    @media screen and (min-width: 1024px) {
+        table-layout: fixed;
+    }
+}
+
 .table--tenancy-expsense {
     width: 100%;
     position: relative;
@@ -86,7 +117,7 @@ export default {
     bottom: 0;
     box-sizing: border-box;
     background-color: var(--color-white);
-    border-width: 0px 1px 1px 1px;
+    border-width: 0 1px 1px 1px;
     border-style: solid;
     border-color: #e5e5e5;
 
@@ -113,12 +144,13 @@ export default {
     //     min-width: 35.2rem;
     // }
 
-    th:nth-child(4) {
-        display: flex;
-        justify-content: flex-end;
-    }
+    /* th:nth-child(4) {
+         display: flex;
+         justify-content: flex-end;
+     }*/
 }
-@media (max-width: 820) {
+
+@media (max-width: 820px) {
     .table--tenancy-expsense {
         th:nth-child(1) {
             min-width: 20rem;
