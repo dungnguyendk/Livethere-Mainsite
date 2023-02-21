@@ -2,7 +2,7 @@
     <tr class="table--record">
         <td data-label="Property">
             <div>
-                <img :src="require(`~/static/img/${source.propertyType === 1 ? 'condo' : source.propertyType === 2 ? 'apt' : 'landed'}.png`)"
+                <img :src="require(`~/static/img/${source.propertyType === 1 ? 'condo' : source.propertyType === 2 ? 'apt' : 'landed'}.svg`)"
                     alt="" class="table--record__img" />
                 <p class="first-child">
                     <!-- @click="handleClickOpenRow(source.internalID)" -->
