@@ -81,10 +81,8 @@
                             <v-expansion-panel-header expand-icon="mdi-menu-down">
                                 Property Details
                                 <template v-slot:actions>
-                                    <v-icon color="primary">
-                                        $expand
-                                    </v-icon>
-                                </template>
+    <v-icon color="primary"> $expand </v-icon>
+</template>
                             </v-expansion-panel-header>
                             <v-expansion-panel-content>
                                 <div class="expansion-property-row">
@@ -125,10 +123,8 @@
                                 <v-expansion-panel-header expand-icon="mdi-menu-down">
                                     Available from
                                     <template v-slot:actions>
-                                        <v-icon color="primary">
-                                          $expand
-                                        </v-icon>
-                                    </template>
+    <v-icon color="primary"> $expand </v-icon>
+</template>
                                 </v-expansion-panel-header>
                                 <v-expansion-panel-content>
                                     <div class="available-from-row">
@@ -141,17 +137,15 @@
                                 <v-expansion-panel-header expand-icon="mdi-menu-down">
                                     Amenities
                                     <template v-slot:actions>
-                                        <v-icon color="primary">
-                                          $expand
-                                        </v-icon>
-                                    </template>
+    <v-icon color="primary"> $expand </v-icon>
+</template>
                                 </v-expansion-panel-header>
                                 <v-expansion-panel-content>
                                     <div class="expansion-amenities-row">
                                         <div class="expansion-amenities-column" v-for="(item, index) in listAmenities" :key="index">
                                             <div class="expansion-amenities-icon" v-for="(element, index) in item.listIcons" :key="index">
                                                 <i :class="element.icon"></i>
-                                                <p></p>
+                                                <p>{{ element.text }}</p>
                                             </div>
                                         </div>
                                         
@@ -213,109 +207,128 @@ export default {
                     id: 8,
                     imgURL: require(`../../../static/img/static/One-Shenton-DSC_8.jpeg`)
                 }
-            ], 
+            ],
             listAmenities: [
                 {
-                    id: 1, 
+                    id: 1,
                     listIcons: [
                         {
-                            id: 1, 
-                            icon: "icon-svg svg-free-wifi"
-                        }, 
+                            id: 1,
+                            icon: "icon-svg svg-free-wifi",
+                            text: "free wifi"
+                        },
                         {
-                            id: 2, 
-                            icon: "icon-svg svg-pool"
-                        }, 
+                            id: 2,
+                            icon: "icon-svg svg-pool",
+                            text: "pool"
+                        },
                         {
-                            id: 3, 
-                            icon: "icon-svg svg-bathtub"
-                        }, 
+                            id: 3,
+                            icon: "icon-svg svg-bathtub",
+                            text: "bathtub"
+                        },
                         {
-                            id: 4, 
-                            icon: "icon-svg svg-spa"
-                        }, 
+                            id: 4,
+                            icon: "icon-svg svg-spa",
+                            text: "spa"
+                        },
                         {
-                            id: 5, 
-                            icon: "icon-svg svg-sauna"
-                        }, 
+                            id: 5,
+                            icon: "icon-svg svg-sauna",
+                            text: "sauna"
+                        },
                         {
-                            id: 6, 
-                            icon: "icon-svg svg-bbq"
-                        }, 
+                            id: 6,
+                            icon: "icon-svg svg-bbq",
+                            text: "BBQ"
+                        },
                         {
-                            id: 7, 
-                            icon: "icon-svg svg-concierge"
-                        }
-                        
-                    ]
-                }, 
-                {
-                    id: 2, 
-                    listIcons: [
-                    {
-                            id: 8, 
-                            icon: "icon-svg svg-game-room"
-                        }, 
-                        {
-                            id: 9, 
-                            icon: "icon-svg svg-tennis-court"
-                        }, 
-                        {
-                            id: 10, 
-                            icon: "icon-svg svg-patio"
-                        }, 
-                        {
-                            id: 11, 
-                            icon: "icon-svg svg-taxi"
-                        }, 
-                        {
-                            id: 12, 
-                            icon: "icon-svg svg-pet-allowed"
-                        }, 
-                        {
-                            id: 13, 
-                            icon: "icon-svg svg-pool-view"
-                        }, 
-                        {
-                            id: 14, 
-                            icon: "icon-svg svg-jacuzzi"
+                            id: 7,
+                            icon: "icon-svg svg-concierge",
+                            text: "concierge"
                         }
                     ]
-                }, 
+                },
                 {
-                    id: 3, 
+                    id: 2,
                     listIcons: [
                         {
-                            id: 15, 
-                            icon: "icon-svg svg-gym"
-                        }, 
+                            id: 8,
+                            icon: "icon-svg svg-game-room",
+                            text: "games room"
+                        },
                         {
-                            id: 16, 
-                            icon: "icon-svg svg-yoga"
-                        }, 
+                            id: 9,
+                            icon: "icon-svg svg-tennis-court",
+                            text: "tennis-court"
+                        },
                         {
-                            id: 17, 
-                            icon: "icon-svg svg-gourmet-kitchen"
-                        }, 
+                            id: 10,
+                            icon: "icon-svg svg-patio",
+                            text: "patio"
+                        },
                         {
-                            id: 18, 
-                            icon: "icon-svg svg-restaurant"
-                        }, 
+                            id: 11,
+                            icon: "icon-svg svg-taxi",
+                            text: "taxi"
+                        },
                         {
-                            id: 19, 
-                            icon: "icon-svg svg-playground"
-                        }, 
+                            id: 12,
+                            icon: "icon-svg svg-pet-allowed",
+                            text: "pets allowed"
+                        },
                         {
-                            id: 20, 
-                            icon: "icon-svg svg-squash-court"
-                        }, 
+                            id: 13,
+                            icon: "icon-svg svg-pool-view",
+                            text: "pool view"
+                        },
                         {
-                            id: 21, 
-                            icon: "icon-svg svg-social-lounge"
+                            id: 14,
+                            icon: "icon-svg svg-jacuzzi",
+                            text: "jacuzzi"
+                        }
+                    ]
+                },
+                {
+                    id: 3,
+                    listIcons: [
+                        {
+                            id: 15,
+                            icon: "icon-svg svg-gym",
+                            text: "gym"
+                        },
+                        {
+                            id: 16,
+                            icon: "icon-svg svg-yoga",
+                            text: "yoga"
+                        },
+                        {
+                            id: 17,
+                            icon: "icon-svg svg-gourmet-kitchen",
+                            text: "gourmet kitchen"
+                        },
+                        {
+                            id: 18,
+                            icon: "icon-svg svg-restaurant",
+                            text: "restaurant"
+                        },
+                        {
+                            id: 19,
+                            icon: "icon-svg svg-playground",
+                            text: "playground"
+                        },
+                        {
+                            id: 20,
+                            icon: "icon-svg svg-squash-court",
+                            text: "squash court"
+                        },
+                        {
+                            id: 21,
+                            icon: "icon-svg svg-social-lounge",
+                            text: "social lounge"
                         }
                     ]
                 }
-
             ]
         }
     }
@@ -397,15 +410,35 @@ export default {
         }
     }
 }
-.available-from-row{
+.available-from-row {
     display: flex;
     align-items: center;
-    i{
+    i {
         background-color: var(--color-title-black);
         margin-right: 0.8rem;
     }
-    p{
+    p {
         margin-bottom: 0;
     }
+}
+.expansion-amenities-icon {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1.7rem;
+    p {
+        margin-bottom: 0;
+        font-weight: 400;
+        font-size: 1.6rem;
+        line-height: 2.4rem;
+        color: var(--color-title-black); 
+        text-transform: capitalize;
+        margin-left: 1.2rem;
+        
+    }
+}
+.expansion-amenities-row{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 </style>
