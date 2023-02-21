@@ -9,7 +9,7 @@ export const defaultMenu = [
     },
     {
         defaultName: "Landlords",
-        linkURL: "https://www.livethere.com/landlords"
+        linkURL: "/landlord"
     },
     {
         defaultName: "About us",

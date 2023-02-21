@@ -40,7 +40,10 @@
                                         <nuxt-link to="/landlord"> Dashboard</nuxt-link>
                                     </v-list-item>
                                     <v-list-item>
-                                        <a href="/" @click.prevent="onChangePassword">
+                                        <a
+                                            href="/landlord/change-password"
+                                            @click.prevent="onChangePassword"
+                                        >
                                             Change password
                                         </a>
                                     </v-list-item>

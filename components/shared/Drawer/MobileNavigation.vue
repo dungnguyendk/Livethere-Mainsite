@@ -8,13 +8,17 @@
         <div class="ps-drawer__content">
             <template v-if="loggedIn">
                 <v-list v-if="userInfo" class="ps-drawer__user">
-                    <v-list-subheader class="user-header"><i class="ri-user-line"></i>{{ userInfo.displayName }}</v-list-subheader>
+                    <v-list-subheader class="user-header"
+                        ><i class="ri-user-line"></i>{{ userInfo.displayName }}</v-list-subheader
+                    >
                     <v-list-group>
                         <v-list-item>
                             <nuxt-link to="/landlord"> Dashboard</nuxt-link>
                         </v-list-item>
                         <v-list-item>
-                            <a href="/" @click.prevent="onChangePassword"> Change password </a>
+                            <a href="/landlord/change-password" @click.prevent="onChangePassword">
+                                Change password
+                            </a>
                         </v-list-item>
                         <v-list-item>
                             <a href="/" @click.prevent="onLogout">Logout</a>
@@ -22,14 +26,24 @@
                     </v-list-group>
                 </v-list>
             </template>
-            <nuxt-link
-                v-for="(item, index) in menus"
-                :to="`/${item.linkURL}`"
-                :class="item.linkURL === path ? 'active' : ''"
-                :key="index"
-            >
-                {{ item.defaultName }}
-            </nuxt-link>
+            <template v-for="(item, index) in menus">
+                <nuxt-link
+                    v-if="item.defaultName === 'Landlords'"
+                    :to="item.linkURL"
+                    :class="item.linkURL === path ? 'active' : ''"
+                    :key="index"
+                >
+                    {{ item.defaultName }}
+                </nuxt-link>
+                <a
+                    v-else
+                    :href="item.linkURL"
+                    :class="item.linkURL === path ? 'active' : ''"
+                    target="_blank"
+                >
+                    {{ item.defaultName }}
+                </a>
+            </template>
             <template v-if="loggedIn === false">
                 <div class="ps-drawer__bottom">
                     <nuxt-link to="/landlord/signin" class="header__link"> Login </nuxt-link>
@@ -60,7 +74,7 @@ export default {
         },
         loggedIn() {
             return this.$auth.loggedIn
-        },
+        }
     },
     data() {
         return {
@@ -71,6 +85,10 @@ export default {
     },
 
     methods: {
+        onChangePassword() {
+            this.$store.commit("app/setAppDrawer", false)
+            this.$router.push("/landlord/change-password")
+        },
         handleCloseDrawer() {
             this.$store.commit("app/setAppDrawer", !this.appDrawer)
         },
@@ -83,10 +101,10 @@ export default {
     created() {
         this.drawer = this.appDrawer
     },
-    watch:{
-        appDrawer(){
+    watch: {
+        appDrawer() {
             this.drawer = this.appDrawer
-        },
+        }
     }
 }
 </script>
@@ -131,7 +149,7 @@ export default {
             font-size: 2rem;
             margin-right: 0.8rem;
         }
-        .user-header{
+        .user-header {
             display: flex;
             align-items: center;
             color: white;
@@ -156,7 +174,6 @@ export default {
                 padding: 1.2rem;
             }
         }
-        
     }
     .ps-drawer__bottom {
         padding-top: 3.2rem;
