@@ -17,7 +17,7 @@
                             <span>Provided by AES Technologies Online Indicative System</span>
                         </v-tooltip>
                     </th>
-                    <th>Est Capital Gain</th>
+                    <th>Est. Capital Gain</th>
                     <th>Monthly Rental</th>
                     <th>Gross Rental Yield</th>
                 </tr>

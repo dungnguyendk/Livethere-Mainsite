@@ -1,8 +1,8 @@
 <template lang="html">
     <div>
         <img src="~/static/img/banner-dashboard.png" alt="img-banner" class="banner banner-dashboard" />
-        <div class="container" v-if="dashboard">
-            <div class="section-content">
+        <div class="container">
+            <div class="section-content" v-if="dashboard">
                 <InventoryChart />
                 <ExpiringLeasesChart />
                 <StatisticsChart :source="portfolio" />
@@ -10,17 +10,21 @@
                 <IncomeChart :source="incomeCurrentYear" />
                 <StatisticsChart :source="average" />
             </div>
-        </div>
-        <div class="container dashboard-no-data" v-else>
-            <strong>No data found!</strong>
-        </div>
-        <div class="container">
-            <h5>Disclaimer</h5>
-            <p>All of the above information is for reference only. Although reasonable and cautious measures are applied to
-                prepare the above information, Livethere/Savills does not warrant the accuracy, timeliness, reasonableness
-                or completeness of any such information and valuation or whether they are fit for any purposes.
-                Livethere/Savills does not assume any liabilities of any kind to you for any reliance on such information
-                and valuation or owe any duty of care to you as a result of providing such information.</p>
+            <div class="dashboard-no-data" v-else>
+                <strong>No data found!</strong>
+            </div>
+            <div class="block-disclaimer">
+                <h5>Disclaimer</h5>
+                <p>All of the above information is for reference only. Although reasonable and
+                    cautious measures are applied
+                    to
+                    prepare the above information, Livethere/Savills does not warrant the accuracy, timeliness,
+                    reasonableness
+                    or completeness of any such information and valuation or whether they are fit for any purposes.
+                    Livethere/Savills does not assume any liabilities of any kind to you for any reliance on such
+                    information
+                    and valuation or owe any duty of care to you as a result of providing such information.</p>
+            </div>
         </div>
     </div>
 </template>
@@ -116,7 +120,7 @@ export default {
 }
 
 .section-content {
-    padding: 4rem 0;
+    padding: 2rem 0;
     display: grid;
     grid-column-gap: 2.4rem;
     grid-row-gap: 4.8rem;
@@ -131,7 +135,16 @@ export default {
         font-size: 3.2rem;
     }
 }
-
+.block-disclaimer {
+    padding-bottom: 1rem;
+    h5 {
+        font-size: 1.4rem;
+    }
+    p {
+        margin-bottom: 0;
+        line-height: 1.8rem;
+    }
+}
 @media only screen and (max-width: 820px) {
     .section-content {
         grid-template-columns: repeat(1, 1fr);

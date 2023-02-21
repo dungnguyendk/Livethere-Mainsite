@@ -8,14 +8,15 @@
                     </div>
                     <div class="header__center">
                         <ul class="menu--top">
-                            <nuxt-link
+                            <a 
                                 v-for="(item, index) in menus"
-                                :to="`/${item.linkURL}`"
+                                :href="item.linkURL"
                                 :class="item.linkURL === path ? 'active' : ''"
                                 :key="index"
+                                target="_blank"
                             >
                                 {{ item.defaultName }}
-                            </nuxt-link>
+                            </a>
                         </ul>
                     </div>
                     <div class="header__right">
