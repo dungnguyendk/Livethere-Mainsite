@@ -24,7 +24,7 @@ export default {
 
 <style lang="scss" scoped>
 .card--noti {
-    background-color: var(#edb842, 0.08);
+    background: rgba(237, 184, 66, 0.08);
     border-radius: 0.8rem;
     padding: 1.2rem 2.4rem;
     .card__header {

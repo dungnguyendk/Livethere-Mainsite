@@ -51,6 +51,7 @@ export default {
     border-radius: 2rem;
     background-color: var(--color-white);
     margin-bottom: 2.4rem;
+    margin-top: 5.5rem;
     .card__header {
         padding: 1.7rem 2.4rem 0;
         h3 {

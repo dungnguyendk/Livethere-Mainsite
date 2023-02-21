@@ -11,7 +11,18 @@
             </div>
             <div class="form__field">
                 <label>phone number</label>
-                <v-text-field outlined dense > </v-text-field>
+                <vue-tel-input-vuetify
+                        outlined
+                        dense
+                        v-bind="bindProps"
+                        label=""
+                        clearable
+                        autocomplete="off"
+                        :disabledFetchingCountry="true"
+                        placeholder="+65"
+                        v-on:country-changed="countryChanged"
+                        class="form__field-tel-input-custom"
+                />
             </div>
             <div class="form__field">
                 <label>email</label>
@@ -31,7 +42,20 @@ export default {
     name: "EnquiryForm",
 
     data() {
-        return {}
+        return {
+            bindProps: {
+                mode: "international",
+                required: false,
+                enabledCountryCode: true,
+                enabledFlags: true,
+                autocomplete: "off",
+                name: "telephone",
+                maxLen: 25,
+                inputOptions: {
+                    showDialCode: true
+                }
+            }
+        }
     },
 
     mounted() {},
@@ -88,6 +112,15 @@ export default {
         .v-text-field__details {
             display: none;
         }
+    }
+}
+::v-deep(.form__field-tel-input-custom){
+    .v-text-field__details{
+        display: none;
+    }
+    .v-input__slot{
+        margin-bottom: 0;
+        border: none
     }
 }
 </style>
