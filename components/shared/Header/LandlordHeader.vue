@@ -66,7 +66,7 @@
             </div>
         </header>
         <div class="mobile">
-            <MobileHeader />
+            <LandlordMobileHeader />
         </div>
     </div>
 </template>
@@ -77,10 +77,11 @@ import MobileHeader from "~/components/shared/Header/MobileHeader.vue"
 import { httpEndpoint } from "~/services/https/endpoints"
 import { defaultMenu } from "~/ultilities/menus"
 import { mapState } from "vuex"
+import LandlordMobileHeader from "~/components/shared/Header/LandlordMobileHeader.vue"
 
 export default {
     name: "LandlordHeader",
-    components: { MobileHeader, SiteLogo },
+    components: { LandlordMobileHeader, MobileHeader, SiteLogo },
     props: {
         source: {
             type: Object,

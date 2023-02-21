@@ -9,9 +9,6 @@
             <SiteLogo />
         </div>
         <div class="header__right">
-            <!--            <v-btn icon class="btn&#45;&#45;search" @click="onOpenExternalSearch">
-                <i class="ri-search-line"></i>
-            </v-btn>-->
             <v-dialog
                 v-model="dialogSearch"
                 fullscreen
@@ -24,17 +21,7 @@
                     </v-btn>
                 </template>
                 <v-card class="dialog-search">
-                    <v-btn icon @click="dialogSearch = false">
-                        <i class="icon-svg svg-close"></i>
-                    </v-btn>
-                    <v-card-text>
-                        <v-text-field
-                            prepend-inner-icon="icon-svg svg-map"
-                            placeholder="Where do you want to live?"
-                            outlined
-                            dense
-                        ></v-text-field>
-                    </v-card-text>
+                    <template v-if="!loggedIn"> <LandlordSignIn /> </template>
                 </v-card>
             </v-dialog>
         </div>
@@ -46,14 +33,19 @@
 import { mapState } from "vuex"
 import SiteLogo from "~/components/shared/Logo/SiteLogo.vue"
 import MobileNavigation from "~/components/shared/Drawer/MobileNavigation.vue"
+import LandlordSignIn from "~/components/components/Landlord/Auth/SignIn/LandlordSignIn.vue"
 
 export default {
-    name: "MobileHeader",
-    components: { SiteLogo, MobileNavigation },
+    name: "LandlordMobileHeader",
+    components: { LandlordSignIn, SiteLogo, MobileNavigation },
     computed: {
         ...mapState({
-            appDrawer: (state) => state.app.appDrawer
-        })
+            appDrawer: (state) => state.app.appDrawer,
+            userInfo: (state) => state.app.userInfo
+        }),
+        loggedIn() {
+            return this.$auth.loggedIn
+        }
     },
     data() {
         return {
