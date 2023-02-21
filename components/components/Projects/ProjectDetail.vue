@@ -156,12 +156,12 @@
                 </div>
                 <div class="page__content-right">
                     <ContactAgentCard/>
-                        <EnquiryForm/>
-                            <NotiCard/>
-                            </div>
-                        </div>
+                    <EnquiryForm/>
+                    <NotiCard/>
+                </div>
+            </div>
 
-                    </div>
+            </div>
                 </div>
             </template>
 
@@ -363,6 +363,7 @@ export default {
 
     .page__content-left {
         width: 66.98%;
+        padding-right: 12.3rem;
     }
     .page__content-right {
         width: 33.02%;
