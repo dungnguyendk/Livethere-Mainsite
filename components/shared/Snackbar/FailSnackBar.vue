@@ -16,7 +16,7 @@ export default {
         },
         message: {
             type: String,
-            default: "Fail, please try again !"
+            default: "Something went wrong, please try again !"
         },
     },
 }
