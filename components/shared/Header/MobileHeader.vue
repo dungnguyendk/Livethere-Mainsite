@@ -9,7 +9,10 @@
             <SiteLogo />
         </div>
         <div class="header__right">
-            <v-dialog
+            <v-btn icon class="btn--search" @click="onOpenExternalSearch">
+                <i class="ri-search-line"></i>
+            </v-btn>
+            <!--            <v-dialog
                 v-model="dialogSearch"
                 fullscreen
                 hide-overlay
@@ -17,7 +20,7 @@
                 
             >
                 <template v-slot:activator="{ on, attrs }">
-                    <v-btn icon class="btn--search" v-bind="attrs" v-on="on" elevation="0">
+                    <v-btn icon class="btn&#45;&#45;search" v-bind="attrs" v-on="on" elevation="0">
                         <i class="ri-search-line"></i>
                     </v-btn>
                 </template>
@@ -34,7 +37,7 @@
                         ></v-text-field>
                     </v-card-text>
                 </v-card>
-            </v-dialog>
+            </v-dialog>-->
         </div>
         <MobileNavigation />
     </header>
@@ -60,6 +63,9 @@ export default {
     },
 
     methods: {
+        onOpenExternalSearch() {
+            window.open("https://www.livethere.com/search/results?from=home")
+        },
         handleOpenMenuDrawer() {
             this.$store.commit("app/setAppDrawer", !this.appDrawer)
         }
@@ -144,7 +150,7 @@ export default {
 .dialog-search {
     border-radius: 0;
     margin: 0;
-    .v-btn--icon  {
+    .v-btn--icon {
         border-radius: 0.4px;
         position: absolute;
         top: 1rem;
@@ -154,14 +160,14 @@ export default {
         }
     }
     .v-card__text {
-        padding-top: 6.5rem
+        padding-top: 6.5rem;
     }
     :deep(.v-input) {
         fieldset {
             // color: #DFE0E0;
         }
         .svg-map {
-            background-color: #E7B242;
+            background-color: #e7b242;
         }
         .v-label {
             font-size: 1.6rem;
@@ -182,6 +188,6 @@ export default {
 }
 
 .v-dialog--fullscreen {
-        margin: 0;
-    }
+    margin: 0;
+}
 </style>

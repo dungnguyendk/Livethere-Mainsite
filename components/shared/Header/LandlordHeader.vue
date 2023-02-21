@@ -8,7 +8,7 @@
                     </div>
                     <div class="header__center">
                         <ul class="menu--top">
-                            <a 
+                            <a
                                 v-for="(item, index) in menus"
                                 :href="item.linkURL"
                                 :class="item.linkURL === path ? 'active' : ''"
