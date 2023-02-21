@@ -14,6 +14,14 @@
         <div class="container dashboard-no-data" v-else>
             <strong>No data found!</strong>
         </div>
+        <div class="container">
+            <h5>Disclaimer</h5>
+            <p>All of the above information is for reference only. Although reasonable and cautious measures are applied to
+                prepare the above information, Livethere/Savills does not warrant the accuracy, timeliness, reasonableness
+                or completeness of any such information and valuation or whether they are fit for any purposes.
+                Livethere/Savills does not assume any liabilities of any kind to you for any reliance on such information
+                and valuation or owe any duty of care to you as a result of providing such information.</p>
+        </div>
     </div>
 </template>
 
