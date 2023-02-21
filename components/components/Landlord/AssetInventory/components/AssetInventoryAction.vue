@@ -151,7 +151,7 @@ export default {
 @media only screen and (min-width: 768px) and (max-width: 1280px) {
     .asset-inventory {
         &__action {
-            padding: 1rem 0;
+            padding: 1rem 1.5rem;
         }
     }
 }
