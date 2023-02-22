@@ -16,13 +16,26 @@
             </div>
         </div>
         <div class="card__features">
-            <v-btn class="btn btn--outline btn--green btn-custom" width="74">
+            <v-btn 
+             class="btn btn--outline btn--green btn-custom" 
+             width="74"
+             href="sms:/+65 97663322?body=I Would like to check the availability for Suites @ Central, 57B Devonshire Road, Singapore 239899, https://www.livethere.com/listing/suites-at-central-227."
+             target="_blank"
+            >
                 <i class="icon-svg svg-messages"></i>
             </v-btn>
-            <v-btn class="btn btn--outline btn--green btn-custom" width="74">
+            <v-btn 
+             class="btn btn--outline btn--green btn-custom" 
+             width="74"
+             href="tel://+65 97663322"
+             >
                 <i class="icon-svg svg-call-calling"></i>
             </v-btn>
-            <v-btn class="btn btn--outline btn--green btn-custom" width="74">
+            <v-btn 
+             class="btn btn--outline btn--green btn-custom" 
+             width="74"
+             href=""
+            >
                 <i class="icon-svg svg-calendar"></i>
 
             </v-btn>

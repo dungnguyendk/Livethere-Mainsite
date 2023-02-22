@@ -268,6 +268,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .form--filter-projects {
+    background-color: var(--color-white);
     ::v-deep(.v-input__slot) {
         padding: 0 !important;
         

@@ -60,7 +60,11 @@ export default {
 
     mounted() {},
 
-    methods: {}
+    methods: {
+        countryChanged(country) {
+            this.country = "+" + country.dialCode
+        },
+    }
 }
 </script>
 
