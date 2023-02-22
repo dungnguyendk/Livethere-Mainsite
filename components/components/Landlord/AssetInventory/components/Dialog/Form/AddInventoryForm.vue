@@ -20,7 +20,7 @@
                     </v-text-field>
                 </div>
                 <div class="form__field">
-                    <label>House No.</label>
+                    <label>Block / House No.</label>
                     <v-text-field v-model.trim="houseNo" outlined dense :error-messages="houseNoErrors" />
                 </div>
             </div>
