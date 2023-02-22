@@ -4,17 +4,18 @@
             <div class="page__top">
                 <div class="page__top-left">
                     <div class="page__top-left-list-images">
-                        <div class="page__top-left-first page__top-left-image-custom">
-                            <img src="../../../static/img/listing1.png" alt="">
+                        <div class="page__top-left-column">
+                            <img src="../../../static/img/static/One-Shenton-DSC_1.jpeg" alt="">
                         </div>
-                        <div class="page__top-left-second page__top-left-image-custom">
-                            <img src="../../../static/img/listing2.png" alt="">
+                        <div class="page__top-left-column">
+                            <img src="../../../static/img/static/One-Shenton-DSC_2.jpeg" alt="">
                         </div>
-                        <div class="page__top-left-third page__top-left-image-custom">
-                            <img src="../../../static/img/listing3.png" alt="">
+                        <div class="page__top-left-column">
+                            <img src="../../../static/img/static/One-Shenton-DSC_3.jpeg" alt="">
                         </div>
-                        <div class="page__top-left-fourth page__top-left-image-custom">
-                            <img src="../../../static/img/listing1.png" alt="">
+                        <div class="page__top-left-column">
+                            <img src="../../../static/img/static/One-Shenton-DSC_4.jpeg" alt="">
+                            <span>+12 photos</span>
                         </div>
                     </div>
                     </div>
@@ -151,9 +152,8 @@
                                         expand-icon="mdi-menu-down">
                                         Property Details
                                         <template v-slot:actions>
-                                            <v-icon color="primary"> $expand
-                                            </v-icon>
-                                        </template>
+    <v-icon color="primary"> $expand </v-icon>
+</template>
                                     </v-expansion-panel-header>
                                     <v-expansion-panel-content>
                                         <div class="expansion-property-row">
@@ -196,9 +196,8 @@
                                         expand-icon="mdi-menu-down">
                                         Available from
                                         <template v-slot:actions>
-                                            <v-icon color="primary"> $expand
-                                            </v-icon>
-                                        </template>
+    <v-icon color="primary"> $expand </v-icon>
+</template>
                                     </v-expansion-panel-header>
                                     <v-expansion-panel-content>
                                         <div class="available-from-row">
@@ -213,9 +212,8 @@
                                         expand-icon="mdi-menu-down">
                                         Amenities
                                         <template v-slot:actions>
-                                            <v-icon color="primary"> $expand
-                                            </v-icon>
-                                        </template>
+    <v-icon color="primary"> $expand </v-icon>
+</template>
                                     </v-expansion-panel-header>
                                     <v-expansion-panel-content>
                                         <div class="expansion-amenities-row">
@@ -972,10 +970,59 @@ export default {
 }
 .page__top-left-list-images{
     display: grid;
-    grid-template-columns: auto auto auto auto;
-    .page__top-left-image-custom{
-        grid-column-start: 1;
-        // grid-column-end: 4;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    // height: 49.2rem;
+    // .page__top-left-image-custom{
+    //     grid-column-start: 1;
+    //     grid-column-end: 4;
+    // }
+    column-gap: 0.8rem;
+    row-gap: 0.8rem;
+    .page__top-left-column{
+        cursor: pointer;
+        &:nth-child(1){
+            grid-column-start: 1;
+            grid-column-end: 4;
+            grid-row-start: 1;
+            grid-row-end: 2;
+            img{
+             height: auto;
+            }
+        }
+        &:nth-child(2){
+            img{
+                border-radius: 0 0 0 2rem;
+            }
+        }
+        &:nth-child(4){
+            // position: relative;
+            // display: flex;
+            // align-items: center;
+            // justify-content: center;
+            img{
+                border-radius: 0 0 2rem 0;
+            }
+            // span{
+            //     font-weight: 500;
+            //     font-size: 1.6rem;
+            //     line-height: 2.4rem;
+            //     color: var(--color-white);
+            //     position: absolute;
+            //     z-index: 10;
+            // }
+            // &::after{
+            //     content: "";
+            //     width: 100%; 
+            //     height: 100%; 
+            //     background-color: rgba(0, 0, 0, 0.6);
+            //     display: block;
+            //     position: absolute;
+            //     top: 0; 
+            //     left: 0;
+            //     border-radius: 0 0 2rem 0;
+            //     z-index: 7;
+            // }
+        }
     }
 
 }
