@@ -158,7 +158,7 @@ export default {
                             await this.$store.commit("user/setRegisterDetails", null)
                             setTimeout(() => {
                                 this.$router.push("/landlord/signin")
-                            }, 3600)
+                            }, 2400)
                         } else {
                             this.httpError = response.message
                                 ? response.message
