@@ -10,18 +10,54 @@
         </div>
         <div class="header__right">
             <v-dialog
-                v-model="dialogSearch"
+                v-model="dialogUser"
                 fullscreen
                 hide-overlay
-                transition="dialog-bottom-transition"
+                transition="dialog-top-transition"
             >
                 <template v-slot:activator="{ on, attrs }">
                     <v-btn icon class="btn--search" v-bind="attrs" v-on="on" elevation="0">
                         <i class="ri-user-line"></i>
                     </v-btn>
                 </template>
-                <v-card class="dialog-search">
-                    <template v-if="!loggedIn"> <LandlordSignIn /> </template>
+                <v-card class="dialog-search ps-drawer">
+                    <v-btn class="ps-drawer__close" @click="dialogUser = false" variant="text">
+                        <i class="icon-svg svg-close"></i>
+                    </v-btn>
+                    <template v-if="loggedIn">
+                        <v-list v-if="userInfo" class="ps-drawer__user">
+                            <!-- <v-list-subheader class="user-header"
+                                ><i class="ri-user-line"></i
+                                >{{ userInfo.displayName }}</v-list-subheader
+                            > -->
+                                <v-list-item>
+                                    <nuxt-link to="/landlord"> Dashboard</nuxt-link>
+                                </v-list-item>
+                                <v-list-item>
+                                    <a
+                                        href="/landlord/change-password"
+                                        @click.prevent="onChangePassword"
+                                    >
+                                        Change password
+                                    </a>
+                                </v-list-item>
+                                <v-list-item>
+                                    <a href="/" @click.prevent="onLogout">Logout</a>
+                                </v-list-item>
+                        </v-list>
+                    </template>
+                    <template v-else>
+                        <v-list>
+                            <v-list-item>
+                                <nuxt-link to="/landlord/signin" class="header__link">
+                                    Login
+                                </nuxt-link>
+                            </v-list-item>
+                            <v-list-item>
+                                <nuxt-link to="/register" class="header__link"> Register</nuxt-link>
+                            </v-list-item>
+                        </v-list>
+                    </template>
                 </v-card>
             </v-dialog>
         </div>
@@ -49,7 +85,7 @@ export default {
     },
     data() {
         return {
-            dialogSearch: false
+            dialogUser: false
         }
     },
 
@@ -139,6 +175,7 @@ export default {
 .dialog-search {
     border-radius: 0;
     margin: 0;
+    background-color: #0b0c0c;
     .v-btn--icon {
         border-radius: 0.4px;
         position: absolute;
@@ -146,6 +183,18 @@ export default {
         right: 1rem;
         .icon-svg {
             background-color: #828586;
+        }
+    }
+    .ps-drawer__close {
+        position: absolute;
+        top: 0;
+        right: 0;
+        background-color: transparent;
+        padding: 0;
+        min-width: 4.4rem;
+        i {
+            font-size: 3.8rem;
+            color: white;
         }
     }
     .v-card__text {
@@ -178,5 +227,79 @@ export default {
 
 .v-dialog--fullscreen {
     margin: 0;
+}
+.ps-drawer {
+    width: 100% !important;
+    background-color: #0b0c0c;
+    padding-top: 5rem !important;
+    .ps-drawer__close {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        background-color: transparent;
+        padding: 0;
+        min-width: 4.4rem;
+        i {
+            font-size: 3.8rem;
+            color: white;
+        }
+    }
+    .ps-drawer__content {
+        display: block;
+        display: flex;
+        flex-direction: column;
+        padding-top: 3.4rem;
+        a {
+            font-size: 2rem;
+            color: white;
+            // line-height: 4.8rem;
+            padding: 1.2rem 3.2rem;
+        }
+    }
+    .ps-drawer__user {
+        padding: 0 1.6rem 1.6rem;
+        position: relative;
+        background-color: #0b0c0c;
+        .v-list {
+
+        }
+        .v-list-item {
+            color: white;
+            font-size: 2rem;
+            justify-content: center;
+        }
+        .ri-user-line {
+            font-size: 2rem;
+            margin-right: 0.8rem;
+        }
+        .user-header {
+            display: flex;
+            align-items: center;
+            color: white;
+            font-size: 2rem;
+            display: block;
+            padding: 0 0.8rem;
+        }
+        :deep(.v-list-group__header) {
+            position: absolute;
+            top: -0.6rem;
+            left: 0;
+            right: 0;
+        }
+        :deep(.v-list-group) {
+            .mdi.mdi-chevron-down {
+                color: white;
+                position: absolute;
+                top: 1rem;
+                right: 1rem;
+            }
+            a {
+                padding: 1.2rem;
+            }
+        }
+    }
+    .ps-drawer__bottom {
+        padding-top: 3.2rem;
+    }
 }
 </style>
