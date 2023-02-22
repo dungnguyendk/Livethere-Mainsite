@@ -179,6 +179,7 @@ export default {
                 autocomplete: "off",
                 name: "telephone",
                 maxLen: 25,
+                onlyCountries: ["SG"],
                 inputOptions: {
                     showDialCode: true
                 }
