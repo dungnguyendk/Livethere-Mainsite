@@ -32,7 +32,7 @@ export default {
         background-color: #ffff;
     }
     @media screen and (max-width: 768px) {
-        padding: 0 1.2rem;
+        // padding: 0 1.2rem;
     }
 }
 </style>

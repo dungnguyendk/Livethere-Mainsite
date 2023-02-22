@@ -114,7 +114,7 @@ export default {
     }
 
     @media only screen and (min-width: 768px) and (max-width: 1280px) {
-        padding: 0;
+        padding: 0 1.5rem;
     }
 }
 
