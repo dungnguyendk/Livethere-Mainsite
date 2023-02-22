@@ -29,7 +29,9 @@
                 </p>
                 <p>
                     <span>Property Type:</span>
-                    <strong>{{ inventoryDetails ? inventoryDetails.propertyType : "n/a" }}</strong>
+                    <strong>{{
+                        inventoryDetails ? inventoryDetails.propertyTypeDisplay : "n/a"
+                    }}</strong>
                 </p>
             </div>
             <div class="panel__column">
@@ -57,6 +59,7 @@
 <script>
 import { mapState } from "vuex"
 import { convertNumberToCommas } from "~/ultilities/helpers"
+
 export default {
     name: "InventoryInformationPanel",
     computed: {
