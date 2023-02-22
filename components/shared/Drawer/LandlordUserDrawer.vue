@@ -1,28 +1,35 @@
 <template lang="html">
-    <v-navigation-drawer class="drawer ps-drawer" v-model="drawer" absolute temporary>
+    <v-navigation-drawer class="drawer ps-drawer" v-model="open" absolute temporary>
         <div>
-            <v-btn class="ps-drawer__close" @click.prevent="handleCloseDrawer()" variant="text">
-                <i class="icon-svg svg-close"></i>
+            <v-btn class="ps-drawer__close" @click.stop="onClose">
+                <i class="icon-svg svg-close" />
             </v-btn>
         </div>
         <div class="ps-drawer__content">
-            <template v-for="(item, index) in menus">
-                <nuxt-link
-                    v-if="item.defaultName === 'Landlords'"
-                    :to="item.linkURL"
-                    :class="item.linkURL === path ? 'active' : ''"
-                    :key="index"
-                >
-                    {{ item.defaultName }}
-                </nuxt-link>
-                <a
-                    v-else
-                    :href="item.linkURL"
-                    :class="item.linkURL === path ? 'active' : ''"
-                    target="_blank"
-                >
-                    {{ item.defaultName }}
-                </a>
+            <template v-if="loggedIn">
+                <v-list v-if="userInfo" class="ps-drawer__user">
+                    <v-list-item>
+                        <nuxt-link to="/landlord"> Dashboard</nuxt-link>
+                    </v-list-item>
+                    <v-list-item>
+                        <a href="/landlord/change-password" @click.prevent="onChangePassword">
+                            Change password
+                        </a>
+                    </v-list-item>
+                    <v-list-item>
+                        <a href="/" @click.prevent="onLogout">Logout</a>
+                    </v-list-item>
+                </v-list>
+            </template>
+            <template v-else>
+                <v-list class="ps-drawer__user">
+                    <v-list-item>
+                        <nuxt-link to="/landlord/signin" class="header__link"> Login</nuxt-link>
+                    </v-list-item>
+                    <v-list-item>
+                        <nuxt-link to="/register" class="header__link"> Register</nuxt-link>
+                    </v-list-item>
+                </v-list>
             </template>
         </div>
     </v-navigation-drawer>
@@ -30,55 +37,35 @@
 
 <script>
 import { mapState } from "vuex"
-import SiteLogo from "~/components/shared/Logo/SiteLogo.vue"
-import { defaultMenu } from "~/ultilities/menus"
 
 export default {
-    name: "MobileNavigation",
-    components: { SiteLogo },
+    name: "LandlordUserDrawer",
     computed: {
         ...mapState({
             appDrawer: (state) => state.app.appDrawer,
             userInfo: (state) => state.app.userInfo
         }),
-        name() {
-            return this.data
-        },
-        path() {
-            return this.$router.path
-        },
         loggedIn() {
             return this.$auth.loggedIn
         }
     },
-    data() {
-        return {
-            drawer: false,
-            menus: defaultMenu,
-            menuID: 0
+    props: {
+        open: {
+            type: Boolean,
+            default: false
         }
     },
-
     methods: {
-        onChangePassword() {
-            this.$store.commit("app/setAppDrawer", false)
-            this.$router.push("/landlord/change-password")
+        onClose() {
+            this.$emit("close")
         },
-        handleCloseDrawer() {
-            this.$store.commit("app/setAppDrawer", !this.appDrawer)
+        onChangePassword() {
+            this.$router.push("/landlord/change-password")
         },
         async onLogout() {
             await this.$auth.logout().then(() => {
                 window.location.href = "/landlord/signin"
             })
-        }
-    },
-    created() {
-        this.drawer = this.appDrawer
-    },
-    watch: {
-        appDrawer() {
-            this.drawer = this.appDrawer
         }
     }
 }
@@ -104,7 +91,6 @@ export default {
     }
 
     .ps-drawer__content {
-        display: block;
         display: flex;
         flex-direction: column;
         padding-top: 4rem;
@@ -113,18 +99,18 @@ export default {
             font-size: 2rem;
             color: white;
             // line-height: 4.8rem;
-            padding: 1.2rem 3.2rem;
+            padding: 1.2rem 0;
         }
     }
 
     .ps-drawer__user {
         padding: 0 1.6rem 1.6rem;
         position: relative;
-        border-bottom: 1px solid white;
 
         .v-list-item {
             color: white;
             font-size: 2rem;
+            padding: 0;
         }
 
         .ri-user-line {
