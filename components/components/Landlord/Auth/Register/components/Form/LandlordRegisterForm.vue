@@ -280,11 +280,16 @@ export default {
                                         : "Something when wrong. Please try again."
                                 ]
                             }
+                        } else {
+                            this.loading = false
+                            this.errorMessages = ["Something when wrong. Please try again."]
                         }
                     } catch (e) {
                         this.loading = false
                         console.log({ Errror: e.message })
                     }
+                } else {
+                    this.loading = false
                 }
             } catch (e) {
                 console.log({ Error: e.message })
