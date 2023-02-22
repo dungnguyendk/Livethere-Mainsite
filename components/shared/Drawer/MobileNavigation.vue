@@ -115,8 +115,8 @@ export default {
     background-color: #0b0c0c;
     .ps-drawer__close {
         position: absolute;
-        top: 0;
-        right: 0;
+        top: 1rem;
+        right: 1rem;
         background-color: transparent;
         padding: 0;
         min-width: 4.4rem;
@@ -129,7 +129,7 @@ export default {
         display: block;
         display: flex;
         flex-direction: column;
-        padding-top: 3.4rem;
+        padding-top: 4rem;
         a {
             font-size: 2rem;
             color: white;
