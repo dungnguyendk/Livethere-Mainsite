@@ -69,6 +69,9 @@ export default {
     box-shadow: 0px 34px 100px rgba(69, 77, 104, 0.18);
     border-radius: 1.6rem;
     background-color: var(--color-white);
+    &.v-dialog--fullscreen {
+        border-radius: 0;
+    }
 }
 
 .btn-group {

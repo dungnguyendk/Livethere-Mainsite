@@ -1,20 +1,22 @@
 <template lang="html">
     <div>
         <MarketingInventoryTable />
-        <v-snackbar v-model="snackbarActive" :timeout="2000" top right text color="green darken-4">
+        <!-- <v-snackbar v-model="snackbarActive" :timeout="2000" top right text color="green darken-4">
             <span class="message--snackBar">
                 <i class="ri-information-line" /> {{ snackbarMessageActive }}
             </span>
-        </v-snackbar>
+        </v-snackbar> -->
+        <SuccessSnackBar :open="snackbarActive" :message="snackbarMessageActive" />
     </div>
 </template>
 
 <script>
 import MarketingInventoryTable from "~/components/components/Landlord/Marketing/Table/MarketingInventoryTable.vue"
+import SuccessSnackBar from "~/components/shared/Snackbar/SuccessSnackBar.vue"
 import { mapState } from "vuex";
 export default {
     name: "Marketing",
-    components: { MarketingInventoryTable },
+    components: { MarketingInventoryTable, SuccessSnackBar },
     data() {
         return {
             snackbarActive: false,
