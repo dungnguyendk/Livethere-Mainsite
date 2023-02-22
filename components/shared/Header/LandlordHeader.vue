@@ -214,6 +214,18 @@ export default {
         grid-template-columns: 12rem minmax(0, 1fr) 12rem;
     }
 
+    .header__link {
+        font-family: var(--font-second);
+        font-size: 1.8rem;
+        color: #fff;
+        font-weight: 700;
+
+        &:hover,
+        &:focus {
+            color: #fff;
+        }
+    }
+
     .header__actions {
         display: flex;
         justify-content: flex-end;
@@ -235,18 +247,6 @@ export default {
         align-items: center;
         grid-gap: 1.2rem;
         gap: 1.2rem;
-
-        a {
-            font-family: var(--font-second);
-            font-size: 2rem;
-            color: #fff;
-            font-weight: 700;
-
-            &:hover,
-            &:focus {
-                color: #fff;
-            }
-        }
     }
 }
 

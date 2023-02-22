@@ -11,14 +11,12 @@
 <script>
 import { appSettings } from "~/app-settings"
 import LandlordPortal from "~/components/components/Landlord/LandlordPortal.vue"
-import AssetInventory from "~/components/components/Landlord/AssetInventory/AssetInventory.vue"
 import InventoryUnits from "~/components/components/Landlord/Inventory/InventoryUnits.vue"
 
 export default {
     layout: "landlord",
     components: {
         InventoryUnits,
-        AssetInventory,
         LandlordPortal
     },
 

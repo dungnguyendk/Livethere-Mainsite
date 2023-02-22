@@ -15,8 +15,6 @@
 <script>
 import { appSettings } from "~/app-settings"
 import LandlordPortal from "~/components/components/Landlord/LandlordPortal.vue"
-
-import AssetInventory from "~/components/components/Landlord/AssetInventory/AssetInventory.vue"
 import TenancyWrapper from "~/components/components/Landlord/Tenancy/TenancyWrapper"
 import TenancyExpensesPanel from "~/components/components/Landlord/Tenancy/Panel/TenancyExpensesPanel"
 import { mapState } from "vuex"
@@ -25,8 +23,6 @@ export default {
     components: {
         TenancyExpensesPanel,
         TenancyWrapper,
-        AssetInventory,
-
         LandlordPortal
     },
     layout: "landlord",
