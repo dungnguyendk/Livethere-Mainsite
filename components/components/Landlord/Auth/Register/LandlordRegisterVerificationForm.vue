@@ -49,7 +49,7 @@
                 </a>
             </p>
             <p v-if="countdown !== 0" class="ml-2">
-                <span v-if="countdown >= 60"> 1:{{ countdown }}</span>
+                <span v-if="countdown >= 60"> 1:00</span>
                 <span v-else> 0:{{ countdown < 10 ? `0${countdown}` : countdown }}</span>
             </p>
         </div>
@@ -127,6 +127,7 @@ export default {
                             this.countdown = LANDLORD_COUNTDOWN_TIME
                             this.handleCountDown()
                         } else {
+                            this.countdown = LANDLORD_COUNTDOWN_TIME
                             this.handleCountDown()
                             this.httpError = response.message
                                 ? response.message
