@@ -94,7 +94,7 @@
 </template>
 <script>
 import { validationMixin } from "vuelidate"
-import { email, helpers, required, sameAs } from "vuelidate/lib/validators"
+import { email, helpers, minLength, required, sameAs } from "vuelidate/lib/validators"
 import { httpEndpoint } from "~/services/https/endpoints"
 import SuccessSnackBar from "~/components/shared/Snackbar/SuccessSnackBar.vue"
 
@@ -108,7 +108,7 @@ export default {
     components: { SuccessSnackBar },
     mixins: [validationMixin],
     validations: {
-        username: { required },
+        username: { required, minLength: minLength(6) },
         password: { required, complexity },
         verifiedPassword: {
             required,
@@ -122,6 +122,7 @@ export default {
             const errors = []
             if (!this.$v.username.$dirty) return errors
             !this.$v.username.required && errors.push("Preferred Username is required")
+            !this.$v.username.minLength && errors.push("Preferred Username at least 6 characters")
             return errors
         },
         passwordErrors() {
