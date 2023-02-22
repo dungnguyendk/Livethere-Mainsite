@@ -14,22 +14,33 @@
         <td data-label="Purchase Price">
             {{ purchasedPriceFormat }}
         </td>
-        <td data-label="Current Estimated Value">
-            {{ currentEstimatedValueFormat }}
-        </td>
-        <td data-label="Estimated Capital Gain" class="td-custom">
-            <v-tooltip bottom v-if="source.estimatedCapitalGain">
-                    <template v-slot:activator="{ on, attrs }">
-                        <div v-bind="attrs" v-on="on" :class="`growth growth--${source.estimatedCapitalGainRate < 0 ? 'red' : 'green'}`">
-                            <i :class="`ri-arrow-${source.estimatedCapitalGainRate < 0 ? 'down' : 'up'}-s-fill`"></i>
-                            <span class="percent">{{ source.estimatedCapitalGainRate }}%</span>
-                        </div>
+        <td data-label="Current Est. Value (AES OIS)">
+            <span>
+                <v-tooltip bottom>
+                    <template v-slot:activator="{ on, attrs }" v-if="source.currentEstimatedValue">
+                        <v-icon color="red" v-bind="attrs" v-on="on" class="icon-warning d-lg-none">
+                            ri-error-warning-line
+                        </v-icon>
                     </template>
-                    <span>
-                        Est Capital Gain <br />
-                        Current Est. Value / Purchase Price
-                    </span>
+                    <span>Provided by AES Technologies Online Indicative System</span>
                 </v-tooltip>
+                {{ currentEstimatedValueFormat }}
+            </span>
+        </td>
+        <td data-label="Est. Capital Gain" class="td-custom">
+            <v-tooltip bottom v-if="source.estimatedCapitalGain">
+                <template v-slot:activator="{ on, attrs }">
+                    <div v-bind="attrs" v-on="on"
+                        :class="`growth growth--${source.estimatedCapitalGainRate < 0 ? 'red' : 'green'}`">
+                        <i :class="`ri-arrow-${source.estimatedCapitalGainRate < 0 ? 'down' : 'up'}-s-fill`"></i>
+                        <span class="percent">{{ source.estimatedCapitalGainRate }}%</span>
+                    </div>
+                </template>
+                <span>
+                    Est Capital Gain <br />
+                    Current Est. Value / Purchase Price
+                </span>
+            </v-tooltip>
             <!-- <div :class="`growth growth--${source.estimatedCapitalGainRate < 0 ? 'red' : 'green'}`"
                 v-if="source.estimatedCapitalGain">
                 <i :class="`ri-arrow-${source.estimatedCapitalGainRate < 0 ? 'down' : 'up'}-s-fill`"></i>
@@ -40,7 +51,7 @@
         <td data-label="Monthly Rental">
             {{ monthlyRentalFormat }}
         </td>
-        <td data-label="Rental Yield">
+        <td data-label="Gross Rental Yield">
             {{ rentalYieldFormat }} %
         </td>
     </tr>
@@ -123,6 +134,16 @@ export default {
 
 .td-custom {
     position: relative;
+}
+
+@media only screen and (min-width: 820px) and (max-width: 1280px) {
+    .percent {
+        font-size: 1.2rem;
+    }
+
+    .growth {
+        right: 0.6rem !important;
+    }
 }
 
 .growth {
