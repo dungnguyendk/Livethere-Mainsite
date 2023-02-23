@@ -165,9 +165,7 @@ export default {
             purchasedDate: "",
             purchasedDateFormatted: "",
             menu1: false,
-            loading: false,
-            disableUnitNo: false,
-            hideLanded: false,
+            loading: false
         }
     },
     computed: {
