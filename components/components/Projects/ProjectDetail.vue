@@ -10,7 +10,9 @@
                                 v-for="(image, idx) in listImagesLimited"
                                 :key="idx"
                                 @click="index = idx"
-                                :class="{'active-total-images' : image.id === 4 && listImages.length > 4}"
+                                :class="{
+                                    'active-total-images': image.id === 4 && listImages.length > 4
+                                }"
                             >
                                 <img :src="image.src" alt="" />
                                 <span v-if="image.id === 4 && listImages.length > 4"
@@ -142,8 +144,8 @@
                                     <v-expansion-panel-header expand-icon="mdi-menu-down">
                                         Property Details
                                         <template v-slot:actions>
-    <v-icon color="primary"> $expand </v-icon>
-</template>
+                                            <v-icon color="primary"> $expand </v-icon>
+                                        </template>
                                     </v-expansion-panel-header>
                                     <v-expansion-panel-content>
                                         <div class="expansion-property-row">
@@ -186,8 +188,8 @@
                                     <v-expansion-panel-header expand-icon="mdi-menu-down">
                                         Available from
                                         <template v-slot:actions>
-    <v-icon color="primary"> $expand </v-icon>
-</template>
+                                            <v-icon color="primary"> $expand </v-icon>
+                                        </template>
                                     </v-expansion-panel-header>
                                     <v-expansion-panel-content>
                                         <div class="available-from-row">
@@ -202,8 +204,8 @@
                                     <v-expansion-panel-header expand-icon="mdi-menu-down">
                                         Amenities
                                         <template v-slot:actions>
-    <v-icon color="primary"> $expand </v-icon>
-</template>
+                                            <v-icon color="primary"> $expand </v-icon>
+                                        </template>
                                     </v-expansion-panel-header>
                                     <v-expansion-panel-content>
                                         <div class="expansion-amenities-row">
@@ -570,7 +572,6 @@ export default {
                     id: 10,
                     src: require(`../../../static/img/static/One-Shenton-DSC_4.jpeg`)
                 }
-
             ],
             isOpenShareSocialDialog: false
         }
@@ -601,8 +602,34 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+.page--project-detail{
+    @media screen and (max-width: 768px) {
+        .page__content{
+            .page__content-left{
+                padding-right: 4rem;
+            }
+        }
+    }
+    @media screen and (max-width: 767px){
+        .page__top{
+            display: inline-block;
+            .page__top-left{
+                margin-bottom: 2.7rem;
+            }
+        }
+        .page__content{
+            display: inline-block;
+            .page__content-left{
+                padding-right: 0;
+            }
+        }
+        .expansion-amenities-row{
+            display: inline-block;
+        }
+    }
+}
 .page__top {
-    margin-bottom:2.7rem;
+    margin-bottom: 2.7rem;
     display: grid;
     grid-template-columns: 2fr 1fr;
     grid-column-gap: 2.4rem;
@@ -707,29 +734,30 @@ export default {
         line-height: 2rem;
         padding: 0;
     }
-    .v-expansion-panel-header__icon{
-        i{
+    .v-expansion-panel-header__icon {
+        i {
             font-size: 3.5rem;
         }
     }
     .v-expansion-panel-content {
-        padding: 0 0 2.4rem;
-
         p {
             font-weight: 400;
             font-size: 1.6rem;
             line-height: 2.4rem;
             color: var(--color-title-black);
-            &:nth-child(2) {
+            &:last-child {
                 margin-bottom: 0;
             }
         }
     }
     ::v-deep(.v-expansion-panel-content__wrap) {
-        padding: 0;
+        padding: 0 0 2.4rem;
     }
     &::before {
         box-shadow: none;
+    }
+    &:nth-child(4) {
+        border-bottom: none;
     }
 }
 .icon-custom {
@@ -943,7 +971,7 @@ export default {
 }
 .page__content-left-content {
     .page__content-left-price {
-        margin-bottom: 1.3rem;
+        margin-bottom: 1.7rem;
 
         h3 {
             font-weight: 800;
@@ -954,7 +982,7 @@ export default {
         }
     }
     .page__content-left-info {
-        margin-bottom: 2.5rem;
+        margin-bottom: 1.8rem;
         .page__content-left-location {
             margin-bottom: 1rem;
         }
@@ -963,7 +991,10 @@ export default {
             align-items: center;
         }
         .page__content-left-bed {
-            margin-right: 5.8rem;
+            margin-right: 5.5rem;
+            span {
+                margin-left: 0.5rem;
+            }
         }
     }
 }
@@ -1007,7 +1038,7 @@ export default {
             }
         }
         &:nth-child(4) {
-            img{
+            img {
                 border-radius: 0 0 2rem 0;
             }
         }
@@ -1031,7 +1062,7 @@ export default {
 }
 .page--project-detail-second {
     background-color: var(--color-white);
-    padding: 4.6rem 0 8.25rem;
+    padding: 3rem 0 7rem;
 }
 .active-total-images {
     &:nth-child(4) {
@@ -1064,5 +1095,4 @@ export default {
         }
     }
 }
-
 </style>

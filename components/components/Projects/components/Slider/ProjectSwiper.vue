@@ -169,7 +169,6 @@ export default {
 
 <style lang="scss" scoped>
 .swiper--project {
-
     .swiper__top {
         position: relative;
         bottom: -2.75rem;
@@ -186,6 +185,21 @@ export default {
     }
     .swiper__content {
         position: relative;
+    }
+    @media only screen and (max-width: 767px) {
+        .swiper-item {
+            padding-top: 10rem;
+        }
+        .swiper-pagination-progressbar {
+            top: 6.5rem;
+        }
+        .swiper-button-prev,
+        .swiper-button-next {
+            top: 7.5rem;
+        }
+        .swiper-fraction{
+            top: 5.5rem;
+        }
     }
 }
 .swiper-button-prev,

@@ -16,30 +16,20 @@
             </div>
         </div>
         <div class="card__features">
-            <v-btn 
-             class="btn btn--outline btn--green btn-custom" 
-             width="74"
-             href="sms:/+65 97663322?body=I Would like to check the availability for Suites @ Central, 57B Devonshire Road, Singapore 239899, https://www.livethere.com/listing/suites-at-central-227."
-             target="_blank"
+            <v-btn
+                class="btn btn--outline btn--green btn-custom"
+                href="sms:/+65 97663322?body=I Would like to check the availability for Suites @ Central, 57B Devonshire Road, Singapore 239899, https://www.livethere.com/listing/suites-at-central-227."
+                target="_blank"
             >
                 <i class="icon-svg svg-messages"></i>
             </v-btn>
-            <v-btn 
-             class="btn btn--outline btn--green btn-custom" 
-             width="74"
-             href="tel://+65 97663322"
-             >
+            <v-btn class="btn btn--outline btn--green btn-custom" href="tel://+65 97663322">
                 <i class="icon-svg svg-call-calling"></i>
             </v-btn>
-            <v-btn 
-             class="btn btn--outline btn--green btn-custom" 
-             width="74"
-             href=""
-            >
+            <v-btn class="btn btn--outline btn--green btn-custom" href="">
                 <i class="icon-svg svg-calendar"></i>
-
             </v-btn>
-            <v-btn class="btn btn--outline btn--green btn-custom" width="74">
+            <v-btn class="btn btn--outline btn--green btn-custom">
                 <i class="icon-svg svg-whatsapp"></i>
             </v-btn>
         </div>
@@ -79,7 +69,6 @@ export default {
         padding: 1rem 2.4rem 2rem;
         display: flex;
         align-items: flex-start;
-
         .card__content-avatar {
             margin-right: 1.2rem;
             padding-top: 0.7rem;
@@ -107,12 +96,85 @@ export default {
         justify-content: space-between;
         align-items: center;
         padding: 0 1.6rem 2.4rem;
+        flex-wrap: wrap;
+    }
+    @media screen and (max-width: 1024px) {
+        .btn-custom {
+            width: 4.5rem;
+        }
+    }
+    @media screen and (max-width: 920px) {
+        .card__content {
+            flex-direction: column;
+            justify-content: center;
+            .card__content-avatar {
+                margin: 0 auto;
+                padding-top: 0;
+                padding-bottom: 1.5rem;
+            }
+            .card__content-infor {
+                display: flex;
+                justify-content: center;
+                flex-direction: column;
+                width: 100%;
+                h3 {
+                    text-align: center;
+                }
+                p {
+                    text-align: center;
+                }
+            }
+        }
+        .card__features {
+            display: grid;
+            grid-template-columns: auto auto;
+            row-gap: 1rem;
+            column-gap: 1rem;
+            margin: 0 auto;
+            width: 60%;
+            padding-left: 0;
+            padding-right: 0;
+            .btn-custom {
+                width: 8rem;
+            }
+        }
+    }
+    @media screen and (max-width: 912px) {
+        .card__features {
+            width: 70%;
+            .btn-custom {
+                width: 9rem;
+            }
+        }
+    }
+    @media screen and (max-width: 874px) {
+        .card__features {
+            width: 60%;
+            .btn-custom {
+                width: 6rem;
+            }
+        }
+    }
+    @media screen and (max-width: 767px) {
+        .card__features {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 1.6rem 2.4rem;
+            flex-wrap: wrap;
+   
+            // .btn-custom{
+            //     width: 14rem;
+            // }
+        }
     }
 }
-.btn-custom{
-    &:hover, &:active{
-        i{
-            background-color: var(--color-white)
+.btn-custom {
+    width: 7.4rem;
+    &:hover,
+    &:active {
+        i {
+            background-color: var(--color-white);
         }
     }
 }
