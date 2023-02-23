@@ -12,8 +12,6 @@
                     dense
                     placeholder="Type here"
                     :error-messages="usernameErrors"
-                    @input="$v.username.$touch()"
-                    @blur="$v.username.$touch()"
                 />
             </div>
             <div class="form--register__input">
@@ -30,8 +28,6 @@
                         placeholder="Type here"
                         type="password"
                         :error-messages="passwordErrors"
-                        @input="$v.password.$touch()"
-                        @blur="$v.password.$touch()"
                     />
                 </div>
                 <div class="form--register__input">
@@ -43,8 +39,6 @@
                         placeholder="Type here"
                         type="password"
                         :error-messages="verifiedPasswordErrors"
-                        @input="$v.verifiedPassword.$touch()"
-                        @blur="$v.verifiedPassword.$touch()"
                     />
                 </div>
             </div>
@@ -57,8 +51,6 @@
                         dense
                         placeholder="Type here"
                         :error-messages="emailErrors"
-                        @input="$v.email.$touch()"
-                        @blur="$v.email.$touch()"
                     />
                 </div>
                 <div class="form--register__input mobile-form-control">
@@ -76,8 +68,6 @@
                         placeholder="+65 00000000"
                         v-on:country-changed="countryChanged"
                         :error-messages="phoneErrors"
-                        @input="$v.phone.$touch()"
-                        @blur="$v.phone.$touch()"
                     />
                 </div>
             </div>
@@ -97,11 +87,23 @@ import { validationMixin } from "vuelidate"
 import { email, helpers, minLength, required, sameAs } from "vuelidate/lib/validators"
 import { httpEndpoint } from "~/services/https/endpoints"
 import SuccessSnackBar from "~/components/shared/Snackbar/SuccessSnackBar.vue"
+import {
+    MESSAGE_EMAIL_EXISTS,
+    MESSAGE_INVALID_EMAIL,
+    MESSAGE_INVALID_SINGAPORE_PHONE_NUMBER,
+    MESSAGE_PHONE_EXISTS,
+    MESSAGE_REQUIRED_EMAIL,
+    MESSAGE_REQUIRED_PHONE_NUMBER,
+    MESSAGE_SERVER_ERROR,
+    MESSAGE_USERNAME_EXISTS
+} from "~/ultilities/error-messages"
 
 const complexity = helpers.regex(
     "complexity",
     /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/
 )
+
+const singaporePhoneNumber = helpers.regex("singaporePhoneNumber", /^\+65\s\d{8}$/)
 
 export default {
     name: "LandlordRegisterForm",
@@ -115,7 +117,7 @@ export default {
             sameAsPassword: sameAs("password")
         },
         email: { required, email },
-        phone: { required }
+        phone: { required, singaporePhoneNumber }
     },
     computed: {
         usernameErrors() {
@@ -146,18 +148,19 @@ export default {
         emailErrors() {
             const errors = []
             if (!this.$v.email.$dirty) return errors
-            !this.$v.email.required && errors.push("Email Address is required")
-            !this.$v.email.email && errors.push("Email Address is valid")
+            !this.$v.email.required && errors.push(MESSAGE_REQUIRED_EMAIL)
+            !this.$v.email.email && errors.push(MESSAGE_INVALID_EMAIL)
             return errors
         },
         phoneErrors() {
             const errors = []
             if (!this.$v.phone.$dirty) return errors
-            !this.$v.phone.required && errors.push("Phone No is required")
+            !this.$v.phone.required && errors.push(MESSAGE_REQUIRED_PHONE_NUMBER)
+            !this.$v.phone.singaporePhoneNumber &&
+                errors.push(MESSAGE_INVALID_SINGAPORE_PHONE_NUMBER)
             return errors
         }
     },
-    // write function has regex have to +65 and 8 digits
 
     data() {
         return {
@@ -199,45 +202,57 @@ export default {
         },
 
         async checkEmail(payload) {
-            const response = await this.$axios.$get(
-                `${httpEndpoint.auth.checkEmail}?email=${payload}`,
-                email
-            )
-            if (response) {
-                const message = "This email is exist. Please use another email!"
-                if (!response.valid) {
-                    this.assignErrorMessage(message)
-                } else {
-                    this.errorMessages = this.errorMessages.filter((item) => item !== message)
+            try {
+                const response = await this.$axios.$get(
+                    `${httpEndpoint.auth.checkEmail}?email=${payload}`,
+                    email
+                )
+                if (response) {
+                    const message = MESSAGE_EMAIL_EXISTS
+                    if (!response.valid) {
+                        this.assignErrorMessage(message)
+                    } else {
+                        this.errorMessages = this.errorMessages.filter((item) => item !== message)
+                    }
                 }
+            } catch (e) {
+                this.assignErrorMessage(MESSAGE_SERVER_ERROR)
             }
         },
         async checkContactNo(payload) {
-            const response = await this.$axios.$get(
-                `${httpEndpoint.auth.checkPhoneNumber}?contactNo=${payload}`,
-                email
-            )
-            if (response) {
-                const message = "This phone number is exist. Please use another phone number!"
-                if (!response.valid) {
-                    this.assignErrorMessage(message)
-                } else {
-                    this.errorMessages = this.errorMessages.filter((item) => item !== message)
+            try {
+                const response = await this.$axios.$get(
+                    `${httpEndpoint.auth.checkPhoneNumber}?contactNo=${payload}`,
+                    email
+                )
+                if (response) {
+                    const message = MESSAGE_PHONE_EXISTS
+                    if (!response.valid) {
+                        this.assignErrorMessage(MESSAGE_PHONE_EXISTS)
+                    } else {
+                        this.errorMessages = this.errorMessages.filter((item) => item !== message)
+                    }
                 }
+            } catch (e) {
+                this.assignErrorMessage(MESSAGE_SERVER_ERROR)
             }
         },
         async checkUsername(payload) {
-            const response = await this.$axios.$get(
-                `${httpEndpoint.auth.checkUsername}?userName=${payload}`,
-                email
-            )
-            if (response) {
-                const message = "This username is exist. Please use another username!"
-                if (!response.valid) {
-                    this.assignErrorMessage(message)
-                } else {
-                    this.errorMessages = this.errorMessages.filter((item) => item !== message)
+            try {
+                const response = await this.$axios.$get(
+                    `${httpEndpoint.auth.checkUsername}?userName=${payload}`,
+                    email
+                )
+                if (response) {
+                    const message = MESSAGE_USERNAME_EXISTS
+                    if (!response.valid) {
+                        this.assignErrorMessage(message)
+                    } else {
+                        this.errorMessages = this.errorMessages.filter((item) => item !== message)
+                    }
                 }
+            } catch (e) {
+                this.assignErrorMessage(MESSAGE_SERVER_ERROR)
             }
         },
         resetForm() {
@@ -277,14 +292,12 @@ export default {
                                 await this.$router.push("/landlord/register/verify")
                             } else {
                                 this.errorMessages = [
-                                    response.message
-                                        ? response.message
-                                        : "Something when wrong. Please try again."
+                                    response.message ? response.message : MESSAGE_SERVER_ERROR
                                 ]
                             }
                         } else {
                             this.loading = false
-                            this.errorMessages = ["Something when wrong. Please try again."]
+                            this.errorMessages = [MESSAGE_SERVER_ERROR]
                         }
                     } catch (e) {
                         this.loading = false
@@ -301,6 +314,7 @@ export default {
         onSubmit() {
             this.$v.$touch()
             if (!this.$v.$invalid) {
+                this.errorMessages = []
                 this.saveRegisterData()
             }
         }
