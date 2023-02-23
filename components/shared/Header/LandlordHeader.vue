@@ -111,7 +111,7 @@ export default {
         }
     },
     created() {
-        if (!this.userInfo) {
+        if (!this.userInfo && this.loggedIn) {
             this.$store.dispatch("app/getUserInfo")
         }
     },
