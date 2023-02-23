@@ -1042,7 +1042,7 @@ export default {
 }
 .page--project-detail-first {
     margin-bottom: 5.8rem;
-    // background-color: var(--border-color);
+    background-color: var(--bg-color-white);
 }
 .page--project-detail-second {
     background-color: var(--color-white);
