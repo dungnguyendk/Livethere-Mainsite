@@ -1,15 +1,36 @@
 <template lang="html">
     <div class="asset-inventory__action">
         <div class="select-type">
-            <v-select v-model="typeSelected" :items="typeSelections" item-text="value" item-value="id" hide-details outlined
-                dense class="me-2" @change="changeType" />
+            <v-select
+                v-model="typeSelected"
+                :items="typeSelections"
+                item-text="value"
+                item-value="id"
+                hide-details
+                outlined
+                dense
+                class="me-2"
+                @change="changeType"
+            />
         </div>
-        <v-btn class="btn btn--outline btn--green btn--md add-new" @click="openAddNewInventoryDialog = true">
+        <v-btn
+            class="btn btn--outline btn--green btn--md add-new"
+            @click="openAddNewInventoryDialog = true"
+        >
             <v-icon left>ri-add-box-line</v-icon>
             Add New Inventory
         </v-btn>
-        <Dialog :open="openAddNewInventoryDialog" @close="closeDialog" :actions="false" :size="sizeDialog" :title="''">
-            <AddInventoryForm @close="openAddNewInventoryDialog = false" v-if="openAddNewInventoryDialog" />
+        <Dialog
+            :open="openAddNewInventoryDialog"
+            @close="closeDialog"
+            :actions="false"
+            :size="sizeDialog"
+            :title="''"
+        >
+            <AddInventoryForm
+                @close="openAddNewInventoryDialog = false"
+                v-if="openAddNewInventoryDialog"
+            />
         </Dialog>
     </div>
 </template>
@@ -37,7 +58,7 @@ export default {
     computed: {
         ...mapState({
             statusFID: (state) => state.inventories.typeSelect
-        }),
+        })
     },
     methods: {
         changeType() {
@@ -69,7 +90,6 @@ export default {
 <style lang="scss" scoped>
 .asset-inventory {
     &__action {
-        padding: 4.6rem (278/1920) * 100% 0 (278/1920) * 100%;
         display: flex;
         justify-content: space-between;
         align-items: center;

@@ -1,5 +1,5 @@
 <template lang="html">
-    <div class="form--otp">
+    <form class="form--otp" @submit.prevent>
         <h3 class="form__title"> REGISTER SMS VERIFICATION </h3>
         <div class="form__instruction">
             <p>
@@ -28,6 +28,7 @@
         </p>
         <div class="form__button">
             <v-btn
+                type="submit"
                 class="btn btn--primary btn--green btn--submit"
                 :loading="loading"
                 @click="handleRegister"
@@ -48,15 +49,17 @@
                 </a>
             </p>
             <p v-if="countdown !== 0" class="ml-2">
-                <span> 0:{{ countdown < 10 ? `0${countdown}` : countdown }}</span>
+                <span v-if="countdown >= 60"> 1:00</span>
+                <span v-else> 0:{{ countdown < 10 ? `0${countdown}` : countdown }}</span>
             </p>
         </div>
-    </div>
+    </form>
 </template>
 
 <script>
 import { mapState } from "vuex"
 import { httpEndpoint } from "~/services/https/endpoints"
+import { LANDLORD_COUNTDOWN_TIME } from "~/ultilities/contants/landlord"
 
 export default {
     name: "LandlordRegisterVerificationForm",
@@ -72,7 +75,6 @@ export default {
         snackbarColor: "default",
         otp: "",
         text: "",
-        expectedOtp: "2006",
         inputOtp: "",
         httpError: "",
         countdown: 0,
@@ -96,7 +98,7 @@ export default {
             if (this.countdown === 0) {
                 clearInterval(coundwnInterval)
             }
-            this.countdown = 15
+            this.countdown = LANDLORD_COUNTDOWN_TIME
         },
 
         onFinish(inputText) {
@@ -108,12 +110,36 @@ export default {
             this.httpError = ""
         },
 
-        handleResendOtp() {
-            this.countdown = 15
-            this.$store.dispatch("app/showSnackBar", "New OTP has been sent!")
-            this.httpError = ""
-            this.requestTime = this.requestTime + 1
-            this.handleCountDown()
+        async handleResendOtp() {
+            if (this.countdown === 0) {
+                this.httpError = ""
+                try {
+                    const response = await this.$axios.$post(httpEndpoint.auth.registerSendOTP, {
+                        mobileNo: this.registerDetails.mobile
+                    })
+                    if (response) {
+                        if (response.valid) {
+                            await this.$store.dispatch(
+                                "app/showSnackBar",
+                                response.message || "The opt has been set"
+                            )
+                            this.httpError = ""
+                            this.countdown = LANDLORD_COUNTDOWN_TIME
+                            this.handleCountDown()
+                        } else {
+                            this.countdown = LANDLORD_COUNTDOWN_TIME
+                            this.handleCountDown()
+                            this.httpError = response.message
+                                ? response.message
+                                : "Can't send OTP. Please try again."
+                        }
+                    } else {
+                        this.httpError = response.message || "Can't send OTP. Please try again."
+                    }
+                } catch (e) {
+                    this.httpError = e.message || "Can't send OTP. Please try again."
+                }
+            }
         },
 
         async handleRegister() {
@@ -124,7 +150,6 @@ export default {
                         ...this.registerDetails,
                         otp: this.inputOtp
                     }
-                    //console.log({ registerDetails: this.registerDetails, params })
                     const response = await this.$axios.$post(httpEndpoint.auth.register, params)
                     if (response) {
                         this.otp = ""
@@ -132,16 +157,13 @@ export default {
                         if (response.valid) {
                             await this.$store.dispatch("app/showSnackBar", response.message)
                             await this.$store.commit("user/setRegisterDetails", null)
-                            //await this.$router.push("/landlord/signin")
                             setTimeout(() => {
                                 this.$router.push("/landlord/signin")
-                            }, 1000)
+                            }, 2400)
                         } else {
                             this.httpError = response.message
                                 ? response.message
                                 : "Something when wrong, please try again."
-
-                            //await this.$router.push("/register")
                         }
                     } else {
                         this.loading = false
