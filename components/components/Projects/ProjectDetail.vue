@@ -707,6 +707,11 @@ export default {
         line-height: 2rem;
         padding: 0;
     }
+    .v-expansion-panel-header__icon{
+        i{
+            font-size: 3.5rem;
+        }
+    }
     .v-expansion-panel-content {
         padding: 0 0 2.4rem;
 
