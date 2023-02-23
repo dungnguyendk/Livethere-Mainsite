@@ -169,9 +169,9 @@ export default {
 
 <style lang="scss" scoped>
 .swiper--project {
-    
     .swiper__top {
-        margin-bottom: 3.4rem;
+        position: relative;
+        bottom: -2.75rem;
         text-align: center;
         h3 {
             font-weight: 800;
@@ -315,5 +315,12 @@ export default {
 }
 .swiper-button-active {
     opacity: 1;
+}
+.swiper-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 6rem;
+    padding-bottom: 2.6rem;
 }
 </style>
