@@ -17,6 +17,7 @@
                         v-bind="bindProps"
                         label=""
                         clearable
+                        defaultCountry="SG"
                         autocomplete="off"
                         :disabledFetchingCountry="true"
                         placeholder="+65"

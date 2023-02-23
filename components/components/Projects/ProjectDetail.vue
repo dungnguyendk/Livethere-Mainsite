@@ -1,274 +1,244 @@
 <template lang="html">
     <div class="page--project-detail">
-        <div class="container page--project-detail-first">
-            <div class="page__top">
-                <div class="page__top-left">
-                    <div class="page__top-left-list-images">
-                        <div
-                            class="page__top-left-column open-tinybox"
-                            v-for="(image, idx) in listImages"
-                            :key="idx"
-                            @click="index = idx"
-                        >
-                            <img :src="image.src" alt="" />
-                        </div>
-                        <Tinybox
-                            v-model="index"
-                            :images="listImages"
-                        ></Tinybox>
-                    </div>
-                </div>
-                <div class="page__top-right">
-                    <iframe
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.107901410066!2d106.71887761533426!3d10.803047261654479!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x317529f8273eaed5%3A0x27fe58a754c470b0!2zQ8O0bmcgdHkgQ-G7lSBwaOG6p24gxJDhuqd1IFTGsCBYw6J5IEThu7FuZyBCY29ucw!5e0!3m2!1sen!2s!4v1676437005731!5m2!1sen!2s"
-                        style="border: 0"
-                        allowfullscreen=""
-                        loading="lazy"
-                        referrerpolicy="no-referrer-when-downgrade"
-                    >
-                    </iframe>
-                </div>
-            </div>
-            <div class="page__content">
-                <div class="page__content-left">
-                    <div class="page__content-left-info">
-                        <div class="page__content-left-back">
-                            <nuxt-link to="/" class="btn btn--outline btn--green btn-custom">
-                                <v-icon size="16">mdi-arrow-left</v-icon>
-                                <span>Back to Result</span>
-                            </nuxt-link>
-                        </div>
-                        <div class="page__content-left-header">
-                            <div class="page__content-left-iconic">
-                                <div class="page__content-left-logo">
-                                    <img
-                                        :src="require(`~/static/img/logos/logo-project.svg`)"
-                                        alt=""
-                                    />
-                                    <span>premium</span>
-                                </div>
-                                <h3 class="page__content-left-title">Eden Residences Capitol</h3>
-                            </div>
-                            <div class="page__content-left-emotions">
-                                <v-btn icon @click="isOpenShareSocialDialog = true">
-                                    <i class="icon-svg svg-export"></i>
-                                </v-btn>
-
-                                <v-btn icon @click="activeHeart = !activeHeart">
-                                    <i
-                                        class="ri-heart-3-line"
-                                        :class="{ 'active-heart': activeHeart }"
-                                    ></i>
-                                </v-btn>
-                            </div>
-                        </div>
-                        <div class="page__content-left-content">
-                            <div class="page__content-left-price">
-                                <h3>S$ 30,000/month</h3>
-                            </div>
-                            <div class="page__content-left-info">
-                                <div
-                                    class="page__content-left-location page__content-left-icon-custom"
-                                >
-                                    <i class="icon-svg svg-location"></i>
-                                    <span>1 Shenton Way, Singapore 068803</span>
-                                </div>
-                                <div class="page__content-left-bed-bath">
-                                    <div
-                                        class="page__content-left-bed page__content-left-icon-custom"
-                                    >
-                                        <i class="icon-svg svg-bedroom"></i>
-                                        <span>5</span>
-                                    </div>
-                                    <div
-                                        class="page__content-left-bath page__content-left-icon-custom"
-                                    >
-                                        <i class="icon-svg svg-bathroom"></i>
-                                        <span>10</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="page-content-left-expansion">
-                        <v-expansion-panels flat v-model="panel" multiple>
-                            <v-expansion-panel
-                                expand
-                                v-model="panel"
-                                class="expansion-description expansion-panel-custom"
+        <div class="page--project-detail-first">
+            <div class="container">
+                <div class="page__top">
+                    <div class="page__top-left">
+                        <div class="page__top-left-list-images">
+                            <div
+                                class="page__top-left-column open-tinybox"
+                                v-for="(image, idx) in listImagesLimited"
+                                :key="idx"
+                                @click="index = idx"
                             >
-                                <v-expansion-panel-header expand-icon="mdi-menu-down">
-                                    Description
-                                    <template v-slot:actions>
-                                        <v-icon color="primary"> $expand </v-icon>
-                                    </template>
-                                </v-expansion-panel-header>
-                                <v-expansion-panel-content>
-                                    <p
-                                        >The centrepiece of an iconic integrated development
-                                        comprising three landmarks – Stamford House, Capitol
-                                        Building and Capitol Theatre. Located in the Civic District,
-                                        perched above Singapore’s well-known historical street
-                                        corner, the curved residential block offers a front row seat
-                                        to the city’s Civic and Cultural District as well as
-                                        spectacular views of Marina Bay and beyond.</p
+                                <img :src="image.src" alt="" />
+                                <span v-if="image.id === 4 && listImages.length > 4"
+                                    >+{{ totalImagesSlider }} photos</span
+                                >
+                            </div>
+                            <Tinybox
+                                v-model="index"
+                                :images="listImages"
+                                :loop="loopCheckbox"
+                                :no-thumbs="!thumbsCheckbox"
+                            ></Tinybox>
+                        </div>
+                    </div>
+                    <div class="page__top-right">
+                        <iframe
+                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.107901410066!2d106.71887761533426!3d10.803047261654479!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x317529f8273eaed5%3A0x27fe58a754c470b0!2zQ8O0bmcgdHkgQ-G7lSBwaOG6p24gxJDhuqd1IFTGsCBYw6J5IEThu7FuZyBCY29ucw!5e0!3m2!1sen!2s!4v1676437005731!5m2!1sen!2s"
+                            style="border: 0"
+                            allowfullscreen=""
+                            loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade"
+                        >
+                        </iframe>
+                    </div>
+                </div>
+                <div class="page__content">
+                    <div class="page__content-left">
+                        <div class="page__content-left-info">
+                            <div class="page__content-left-back">
+                                <nuxt-link to="/" class="btn btn--outline btn--green btn-custom">
+                                    <v-icon size="16">mdi-arrow-left</v-icon>
+                                    <span>Back to Result</span>
+                                </nuxt-link>
+                            </div>
+                            <div class="page__content-left-header">
+                                <div class="page__content-left-iconic">
+                                    <div class="page__content-left-logo">
+                                        <img
+                                            :src="require(`~/static/img/logos/logo-project.svg`)"
+                                            alt=""
+                                        />
+                                        <span>premium</span>
+                                    </div>
+                                    <h3 class="page__content-left-title"
+                                        >Eden Residences Capitol</h3
                                     >
-                                    <p
-                                        >Eden Residences Capitol is a luxurious residential edifice
-                                        that sits across the road from The City Hall MRT Interchange
-                                        and is literally a stone’s throw away to Peninsula Plaza and
-                                        Raffles City. Living in the Eden Residences Capitol provides
-                                        an easy access to the fitness and recreational parks like
-                                        that of Fort Canning Park. Residents can also enjoy the
-                                        convenience of the amenities nearby such as banks,
-                                        supermarket, retails outlets, restaurants and other
-                                        necessities.</p
+                                </div>
+                                <div class="page__content-left-emotions">
+                                    <v-btn icon @click="isOpenShareSocialDialog = true">
+                                        <i class="icon-svg svg-export"></i>
+                                    </v-btn>
+
+                                    <v-btn icon @click="activeHeart = !activeHeart">
+                                        <i
+                                            class="ri-heart-3-line"
+                                            :class="{ 'active-heart': activeHeart }"
+                                        ></i>
+                                    </v-btn>
+                                </div>
+                            </div>
+                            <div class="page__content-left-content">
+                                <div class="page__content-left-price">
+                                    <h3>S$ 30,000/month</h3>
+                                </div>
+                                <div class="page__content-left-info">
+                                    <div
+                                        class="page__content-left-location page__content-left-icon-custom"
                                     >
-                                </v-expansion-panel-content>
-                            </v-expansion-panel>
-                            <v-expansion-panel class="expansion-property expansion-panel-custom">
-                                <v-expansion-panel-header expand-icon="mdi-menu-down">
-                                    Property Details
-                                    <template v-slot:actions>
-                                        <v-icon color="primary"> $expand </v-icon>
-                                    </template>
-                                </v-expansion-panel-header>
-                                <v-expansion-panel-content>
-                                    <div class="expansion-property-row">
-                                        <p>monthly price:</p>
-                                        <p>S$ 30,000 </p>
+                                        <i class="icon-svg svg-location"></i>
+                                        <span>1 Shenton Way, Singapore 068803</span>
                                     </div>
-                                    <div class="expansion-property-row">
-                                        <p>unit size:</p>
-                                        <p>5,963 sqft </p>
-                                    </div>
-                                    <div class="expansion-property-row">
-                                        <p>monthly price PSF:</p>
-                                        <p>S$ 5.03</p>
-                                    </div>
-                                    <div class="expansion-property-row">
-                                        <p>lease term:</p>
-                                        <p>24 months </p>
-                                    </div>
-                                    <div class="expansion-property-row">
-                                        <p>furnishing:</p>
-                                        <p>Fully Furnished</p>
-                                    </div>
-                                    <div class="expansion-property-row">
-                                        <p>built year:</p>
-                                        <p>2015</p>
-                                    </div>
-                                    <div class="expansion-property-row">
-                                        <p>tenure:</p>
-                                        <p>99-year Leasehold</p>
-                                    </div>
-                                    <div class="expansion-property-row">
-                                        <p>property type:</p>
-                                        <p>Condo</p>
-                                    </div>
-                                </v-expansion-panel-content>
-                            </v-expansion-panel>
-                            <v-expansion-panel class="expansion-available expansion-panel-custom">
-                                <v-expansion-panel-header expand-icon="mdi-menu-down">
-                                    Available from
-                                    <template v-slot:actions>
-                                        <v-icon color="primary"> $expand </v-icon>
-                                    </template>
-                                </v-expansion-panel-header>
-                                <v-expansion-panel-content>
-                                    <div class="available-from-row">
-                                        <i class="icon-svg svg-calendar"></i>
-                                        <p>2022-02-01</p>
-                                    </div>
-                                </v-expansion-panel-content>
-                            </v-expansion-panel>
-                            <v-expansion-panel class="expansion-amenities expansion-panel-custom">
-                                <v-expansion-panel-header expand-icon="mdi-menu-down">
-                                    Amenities
-                                    <template v-slot:actions>
-                                        <v-icon color="primary"> $expand </v-icon>
-                                    </template>
-                                </v-expansion-panel-header>
-                                <v-expansion-panel-content>
-                                    <div class="expansion-amenities-row">
+                                    <div class="page__content-left-bed-bath">
                                         <div
-                                            class="expansion-amenities-column"
-                                            v-for="(item, index) in listAmenities"
-                                            :key="index"
+                                            class="page__content-left-bed page__content-left-icon-custom"
                                         >
-                                            <div
-                                                class="expansion-amenities-icon"
-                                                v-for="(element, index) in item.listIcons"
-                                                :key="index"
-                                            >
-                                                <i :class="element.icon"></i>
-                                                <p>{{ element.text }}</p>
-                                            </div>
+                                            <i class="icon-svg svg-bedroom"></i>
+                                            <span>5</span>
+                                        </div>
+                                        <div
+                                            class="page__content-left-bath page__content-left-icon-custom"
+                                        >
+                                            <i class="icon-svg svg-bathroom"></i>
+                                            <span>10</span>
                                         </div>
                                     </div>
-                                </v-expansion-panel-content>
-                            </v-expansion-panel>
-                        </v-expansion-panels>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="page-content-left-expansion">
+                            <v-expansion-panels flat v-model="panel" multiple>
+                                <v-expansion-panel
+                                    expand
+                                    v-model="panel"
+                                    class="expansion-description expansion-panel-custom"
+                                >
+                                    <v-expansion-panel-header expand-icon="mdi-menu-down">
+                                        Description
+                                        <template v-slot:actions>
+                                            <v-icon color="primary"> $expand </v-icon>
+                                        </template>
+                                    </v-expansion-panel-header>
+                                    <v-expansion-panel-content>
+                                        <p
+                                            >The centrepiece of an iconic integrated development
+                                            comprising three landmarks – Stamford House, Capitol
+                                            Building and Capitol Theatre. Located in the Civic
+                                            District, perched above Singapore’s well-known
+                                            historical street corner, the curved residential block
+                                            offers a front row seat to the city’s Civic and Cultural
+                                            District as well as spectacular views of Marina Bay and
+                                            beyond.</p
+                                        >
+                                        <p
+                                            >Eden Residences Capitol is a luxurious residential
+                                            edifice that sits across the road from The City Hall MRT
+                                            Interchange and is literally a stone’s throw away to
+                                            Peninsula Plaza and Raffles City. Living in the Eden
+                                            Residences Capitol provides an easy access to the
+                                            fitness and recreational parks like that of Fort Canning
+                                            Park. Residents can also enjoy the convenience of the
+                                            amenities nearby such as banks, supermarket, retails
+                                            outlets, restaurants and other necessities.</p
+                                        >
+                                    </v-expansion-panel-content>
+                                </v-expansion-panel>
+                                <v-expansion-panel
+                                    class="expansion-property expansion-panel-custom"
+                                >
+                                    <v-expansion-panel-header expand-icon="mdi-menu-down">
+                                        Property Details
+                                        <template v-slot:actions>
+                                            <v-icon color="primary"> $expand </v-icon>
+                                        </template>
+                                    </v-expansion-panel-header>
+                                    <v-expansion-panel-content>
+                                        <div class="expansion-property-row">
+                                            <p>monthly price:</p>
+                                            <p>S$ 30,000 </p>
+                                        </div>
+                                        <div class="expansion-property-row">
+                                            <p>unit size:</p>
+                                            <p>5,963 sqft </p>
+                                        </div>
+                                        <div class="expansion-property-row">
+                                            <p>monthly price PSF:</p>
+                                            <p>S$ 5.03</p>
+                                        </div>
+                                        <div class="expansion-property-row">
+                                            <p>lease term:</p>
+                                            <p>24 months </p>
+                                        </div>
+                                        <div class="expansion-property-row">
+                                            <p>furnishing:</p>
+                                            <p>Fully Furnished</p>
+                                        </div>
+                                        <div class="expansion-property-row">
+                                            <p>built year:</p>
+                                            <p>2015</p>
+                                        </div>
+                                        <div class="expansion-property-row">
+                                            <p>tenure:</p>
+                                            <p>99-year Leasehold</p>
+                                        </div>
+                                        <div class="expansion-property-row">
+                                            <p>property type:</p>
+                                            <p>Condo</p>
+                                        </div>
+                                    </v-expansion-panel-content>
+                                </v-expansion-panel>
+                                <v-expansion-panel
+                                    class="expansion-available expansion-panel-custom"
+                                >
+                                    <v-expansion-panel-header expand-icon="mdi-menu-down">
+                                        Available from
+                                        <template v-slot:actions>
+                                            <v-icon color="primary"> $expand </v-icon>
+                                        </template>
+                                    </v-expansion-panel-header>
+                                    <v-expansion-panel-content>
+                                        <div class="available-from-row">
+                                            <i class="icon-svg svg-calendar"></i>
+                                            <p>2022-02-01</p>
+                                        </div>
+                                    </v-expansion-panel-content>
+                                </v-expansion-panel>
+                                <v-expansion-panel
+                                    class="expansion-amenities expansion-panel-custom"
+                                >
+                                    <v-expansion-panel-header expand-icon="mdi-menu-down">
+                                        Amenities
+                                        <template v-slot:actions>
+                                            <v-icon color="primary"> $expand </v-icon>
+                                        </template>
+                                    </v-expansion-panel-header>
+                                    <v-expansion-panel-content>
+                                        <div class="expansion-amenities-row">
+                                            <div
+                                                class="expansion-amenities-column"
+                                                v-for="(item, index) in listAmenities"
+                                                :key="index"
+                                            >
+                                                <div
+                                                    class="expansion-amenities-icon"
+                                                    v-for="(element, index) in item.listIcons"
+                                                    :key="index"
+                                                >
+                                                    <i :class="element.icon"></i>
+                                                    <p>{{ element.text }}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </v-expansion-panel-content>
+                                </v-expansion-panel>
+                            </v-expansion-panels>
+                        </div>
                     </div>
-                </div>
-                <div class="page__content-right">
-                    <div class="page__content-right-sticky">
-                        <ContactAgentCard />
-                        <EnquiryForm />
+                    <div class="page__content-right">
+                        <div class="page__content-right-sticky">
+                            <ContactAgentCard />
+                            <EnquiryForm />
+                            <NotiCard />
+                        </div>
                     </div>
-                    <NotiCard />
                 </div>
             </div>
         </div>
-        <div class="container page--project-detail-second">
-            <div class="page__listing">
-                <div class="page__listing-top">
-                    <h3>most viewed listings</h3>
-                </div>
-                <div class="page__listing-content">
-                    <swiper class="swiper swiper-item" :options="swiperOption">
-                        <swiper-slide
-                            class="swiper-box"
-                            v-for="element in popularListing"
-                            :key="element.id"
-                        >
-                            <div class="swiper-box__top">
-                                <div class="swiper-box__image">
-                                    <img :src="element.imgURL" alt="" />
-                                </div>
-                                <div class="swiper-box__title">
-                                    <nuxt-link to="/" class="swiper-box__title-link">
-                                        {{ element.title }}
-                                    </nuxt-link>
-                                </div>
-                            </div>
-                            <div class="swiper-box__content">
-                                <div class="swiper-box__content-first">
-                                    <img :src="element.imgURLIconFirst" alt="" />
-                                    <p>{{ element.address }}</p>
-                                </div>
-                                <div class="swiper-box__content-second">
-                                    <div>
-                                        <img :src="element.imgURLIconSecond" alt="" />
-                                        <p>{{ element.totalBed }}</p>
-                                    </div>
-                                    <div>
-                                        <img :src="element.imgURLIconThird" alt="" />
-                                        <p>{{ element.totalBath }}</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </swiper-slide>
-                        <div class="swiper-button-prev" slot="button-prev"></div>
-                        <div class="swiper-pagination" slot="pagination"></div>
-                        <!-- <div class="swiper-button-next" slot="button-next" :class="{'swiper-button-active' : activeColorArrow}"></div> -->
-                        <div class="swiper-button-next" slot="button-next"></div>
-                    </swiper>
-                    <div class="swiper-fraction">
-                        <span class="fraction-to">{{ this.fractionTo }}</span>
-                        <span class="fraction-form">{{ this.fractionForm }}</span>
-                    </div>
-                </div>
+        <div class="page--project-detail-second">
+            <div class="container">
+                <ProjectSwiper />
             </div>
             <Dialog
                 :open="isOpenShareSocialDialog"
@@ -287,9 +257,10 @@ import ContactAgentCard from "./components/Card/ContactAgentCard.vue"
 import NotiCard from "~/components/components/Projects/components/Card/NotiCard"
 import ShareSocialForm from "./components/Form/ShareSocialForm.vue"
 import Dialog from "~/components/elements/Dialog/Dialog.vue"
+import ProjectSwiper from "~/components/components/Projects/components/Slider/ProjectSwiper"
 export default {
     name: "ProjectListing",
-    components: { EnquiryForm, ContactAgentCard, NotiCard, ShareSocialForm, Dialog },
+    components: { EnquiryForm, ContactAgentCard, NotiCard, ShareSocialForm, Dialog, ProjectSwiper },
     data() {
         const self = this
         return {
@@ -556,6 +527,7 @@ export default {
             activeHeart: false,
             index: null,
             loopCheckbox: false,
+            thumbsCheckbox: true,
             listImages: [
                 {
                     id: 1,
@@ -572,9 +544,33 @@ export default {
                 {
                     id: 4,
                     src: require(`../../../static/img/static/One-Shenton-DSC_4.jpeg`)
+                },
+                {
+                    id: 5,
+                    src: require(`../../../static/img/static/One-Shenton-DSC_4.jpeg`)
+                },
+                {
+                    id: 6,
+                    src: require(`../../../static/img/static/One-Shenton-DSC_4.jpeg`)
+                },
+                {
+                    id: 7,
+                    src: require(`../../../static/img/static/One-Shenton-DSC_4.jpeg`)
+                },
+                {
+                    id: 8,
+                    src: require(`../../../static/img/static/One-Shenton-DSC_4.jpeg`)
+                },
+                {
+                    id: 9,
+                    src: require(`../../../static/img/static/One-Shenton-DSC_4.jpeg`)
+                },
+                {
+                    id: 10,
+                    src: require(`../../../static/img/static/One-Shenton-DSC_4.jpeg`)
                 }
             ],
-            isOpenShareSocialDialog: false,
+            isOpenShareSocialDialog: false
         }
     },
     mounted() {
@@ -590,6 +586,14 @@ export default {
     methods: {
         closeShareSocialDialog() {
             this.isOpenShareSocialDialog = false
+        }
+    },
+    computed: {
+        listImagesLimited() {
+            return this.listImages.slice(0, 4)
+        },
+        totalImagesSlider() {
+            return Number(this.listImages.length) - 4
         }
     }
 }
@@ -978,6 +982,7 @@ export default {
     row-gap: 0.8rem;
     .page__top-left-column {
         cursor: pointer;
+
         &:nth-child(1) {
             grid-column-start: 1;
             grid-column-end: 4;
@@ -985,6 +990,7 @@ export default {
             grid-row-end: 2;
             img {
                 height: auto;
+                border-radius: 2rem 2rem 0 0;
             }
         }
         &:nth-child(2) {
@@ -1025,7 +1031,7 @@ export default {
 }
 .page__content-right-sticky {
     position: sticky;
-    top: 8rem;
+    top: 0rem;
     z-index: 20;
 }
 .active-heart {
@@ -1036,5 +1042,10 @@ export default {
 }
 .page--project-detail-first {
     margin-bottom: 5.8rem;
+    // background-color: var(--border-color);
+}
+.page--project-detail-second {
+    background-color: var(--color-white);
+    padding: 4.6rem 0 8.25rem;
 }
 </style>
