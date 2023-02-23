@@ -5,16 +5,17 @@
                 <div class="page__top-left">
                     <div class="page__top-left-list-images">
                         <div
-                            class="page__top-left-column"
-                            v-for="(image, index) in listImages"
-                            :key="index"
+                            class="page__top-left-column open-tinybox"
+                            v-for="(image, idx) in listImages"
+                            :key="idx"
+                            @click="index = idx"
                         >
-                            <img :src="image.imgURL" alt="" />
+                            <img :src="image.src" alt="" />
                         </div>
-                        <!-- <Tinybox
+                        <Tinybox
                             v-model="index"
                             :images="listImages"
-                        /> -->
+                        ></Tinybox>
                     </div>
                 </div>
                 <div class="page__top-right">
@@ -544,7 +545,7 @@ export default {
             fractionTo: 1,
             fractionForm: 3,
             activeColorArrow: false,
-            index: 1,
+            // index: 1,
             listTestTinyBox: [
                 "../../../static/img/listing1.png",
                 "../../../static/img/listing1.png",
@@ -558,42 +559,22 @@ export default {
             listImages: [
                 {
                     id: 1,
-                    imgURL: require(`../../../static/img/static/One-Shenton-DSC_1.jpeg`)
+                    src: require(`../../../static/img/static/One-Shenton-DSC_1.jpeg`)
                 },
                 {
                     id: 2,
-                    imgURL: require(`../../../static/img/static/One-Shenton-DSC_2.jpeg`)
+                    src: require(`../../../static/img/static/One-Shenton-DSC_2.jpeg`)
                 },
                 {
                     id: 3,
-                    imgURL: require(`../../../static/img/static/One-Shenton-DSC_3.jpeg`)
+                    src: require(`../../../static/img/static/One-Shenton-DSC_3.jpeg`)
                 },
                 {
                     id: 4,
-                    imgURL: require(`../../../static/img/static/One-Shenton-DSC_4.jpeg`)
+                    src: require(`../../../static/img/static/One-Shenton-DSC_4.jpeg`)
                 }
             ],
-            isOpenShareSocialDialog: false
-            // listImages: [
-            //     {
-            //         src: "https://picsum.photos/id/13/500/1000",
-            //         alt: "An empty beach",
-            //         // thumbnail: "https://picsum.photos/id/13/200",
-            //         caption: "Beach"
-            //     },
-            //     {
-            //         src: "https://picsum.photos/id/42/1500/600",
-            //         alt: "A café desk",
-            //         caption: "Café"
-            //     },
-            //     {
-            //         src: "https://picsum.photos/id/256/800/800",
-            //         // thumbnail: "https://picsum.photos/id/256/200",
-            //         caption: "Mountain range"
-            //     },
-            //     // "https://picsum.photos/id/69/800/600",
-            //     // "https://picsum.photos/id/420/800/600"
-            // ]
+            isOpenShareSocialDialog: false,
         }
     },
     mounted() {
