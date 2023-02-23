@@ -177,19 +177,19 @@ export default {
             statusResponse: (state) => state.inventories.statusResponse,
         }),
         propertyTypeErrors() {
-            return setFormControlErrors(this.$v.propertyType, "This field is required")
+            return setFormControlErrors(this.$v.propertyType, "Property Type is required")
         },
         postalCodeErrors() {
             return setFormControlErrors(this.$v.postalCode, "Postal Code is required")
         },
         houseNoErrors() {
-            return setFormControlErrors(this.$v.houseNo, "House No is required")
+            return setFormControlErrors(this.$v.houseNo, "Block / House No. is required")
         },
         streetNameErrors() {
             return setFormControlErrors(this.$v.streetName, "Street Name is required")
         },
         unitNoErrors() {
-            return setFormControlErrors(this.$v.unitNo, "Unit no is required")
+            return setFormControlErrors(this.$v.unitNo, "Unit No. is required")
         },
         projectNameErrors() {
             return setFormControlErrors(this.$v.projectName, "Project Name is required")
@@ -204,16 +204,16 @@ export default {
             return setFormControlErrors(this.$v.tenure, "Tenure is required")
         },
         floorAreaErrors() {
-            return setFormControlErrors(this.$v.floorArea, "Floor Area is required")
+            return setFormControlErrors(this.$v.floorArea, "Floor Area (sqft) is required")
         },
         landAreaErrors() {
-            return setFormControlErrors(this.$v.landArea, "Land Area is required")
+            return setFormControlErrors(this.$v.landArea, "Land Area (sqft) is required")
         },
         purchasedPriceErrors() {
             return setFormControlErrors(this.$v.purchasedPrice, "Purchased Price is required")
         },
         purchasedDateFormattedErrors() {
-            return setFormControlErrors(this.$v.purchasedDateFormatted, "Purchased Date is required")
+            return setFormControlErrors(this.$v.purchasedDateFormatted, "Date of Purchase is required")
         },
     },
     created() {
