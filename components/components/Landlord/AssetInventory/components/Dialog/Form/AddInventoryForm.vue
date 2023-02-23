@@ -8,7 +8,7 @@
             <div class="form__field">
                 <label>Property Type</label>
                 <v-select v-model.trim="propertyType" :items="propertyTypeList" item-text="text" item-value="value" outlined
-                    dense placeholder="Please select" :error-messages="propertyTypeErrors" />
+                    dense placeholder="Please select" :error-messages="propertyTypeErrors" @change="onChangePropertyType()" />
             </div>
             <div class="form__field2">
                 <div class="form__field">
@@ -29,10 +29,10 @@
                 <v-text-field v-model.trim="streetName" outlined dense :error-messages="streetNameErrors" />
             </div>
             <div class="form__field2">
-                <div class="form__field">
+                <div class="form__field" v-if="!hideLanded">
                     <label>Unit No.</label>
                     <v-text-field v-model.trim="unitNo" outlined dense :error-messages="unitNoErrors"
-                        @change="searchPostalCode" />
+                        @change="searchPostalCode" :disabled="disableUnitNo" />
                 </div>
                 <div class="form__field">
                     <label>No of Bedroom(s)</label>
@@ -40,7 +40,7 @@
                         item-text="text" item-value="value" :error-messages="bedroomErrors" />
                 </div>
             </div>
-            <div class="form__field">
+            <div class="form__field" v-if="!hideLanded">
                 <label>Project Name</label>
                 <v-text-field v-model.trim="projectName" outlined dense :error-messages="projectNameErrors" />
             </div>
@@ -59,13 +59,13 @@
             </div>
             <div class="form__field2">
                 <div class="form__field">
-                    <label>Purchased Price</label>
+                    <label>Purchase Price</label>
                     <v-text-field v-model.trim="purchasedPrice" outlined dense hide-spin-buttons
                         :error-messages="purchasedPriceErrors" suffix="S$" reverse>
                     </v-text-field>
                 </div>
                 <div class="form__field">
-                    <label>Purchased Date</label>
+                    <label>Date of Purchase</label>
                     <v-menu ref="menu1" v-model="menu1" :close-on-content-click="false" transition="scale-transition"
                         offset-y min-width="auto">
                         <template v-slot:activator="{ on, attrs }">
@@ -345,10 +345,22 @@ export default {
                         `${httpEndpoint.postal.getEntryByPostalCode}?${param}`
                     )
                     if (response) {
+                        // console.log("postalCode response",response);
                         this.loading = false
-                        response.propertyType && response.propertyType !== null ? this.propertyType = this.propertyTypeList.find(
-                            (item) => item.value.name === response.propertyType
-                        ).value : this.propertyType = ''
+                        // response.propertyType && response.propertyType !== null ? this.propertyType = this.propertyTypeList.find(
+                        //     (item) => item.value.name === response.propertyType
+                        // ).value : this.propertyType = ''
+
+                       if(response.propertyCategory === "LANDED"){
+                            this.propertyType = this.propertyTypeList.find(
+                                (item) => item.value.name === "LANDED PROPERTY"
+                            ).value
+                       }else {
+                            response.propertyType && response.propertyType !== null ? this.propertyType = this.propertyTypeList.find(
+                                (item) => item.value.name === response.propertyType
+                            ).value : this.propertyType = ''
+                       }
+
                         this.houseNo = response.houseNo
                         this.streetName = response.streetName
                         this.unitNo = this.unitNo ? this.unitNo : response.unitNo
@@ -384,6 +396,20 @@ export default {
             this.landArea = ""
             this.purchasedPrice = ""
             this.purchasedDate = ""
+        },
+        onChangePropertyType(){
+            this.houseNo = ""
+            this.streetName = ""
+            this.unitNo = ""
+            this.projectName = ""
+            this.bedroom = ""
+            this.location = ""
+            this.tenure = ""
+            this.floorArea = ""
+            this.landArea = ""
+            this.purchasedPrice = ""
+            this.purchasedDate = ""
+            this.postalCode = ""
         },
         onClose() {
             this.$store.commit("inventories/setInventoryDetail", '')
@@ -430,6 +456,21 @@ export default {
         purchasedDate() {
             this.purchasedDateFormatted = this.formatDate(this.purchasedDate)
         },
+        // propertyType(val) {
+        //     this.onChangePropertyType()
+        //     // console.log("propertyType::", val.id === 3);
+        //     if (val.id === 3) {
+        //         this.disableUnitNo = true
+        //     } else {
+        //         this.disableUnitNo = false
+        propertyType(val){
+            // console.log("watch propertyType",val);
+            if(val.name === "LANDED PROPERTY"){
+                this.hideLanded = true
+            }else {
+                this.hideLanded = false
+            }
+        }
     }
 }
 </script>
