@@ -10,6 +10,7 @@
                                 v-for="(image, idx) in listImagesLimited"
                                 :key="idx"
                                 @click="index = idx"
+                                :class="{'active-total-images' : image.id === 4 && listImages.length > 4}"
                             >
                                 <img :src="image.src" alt="" />
                                 <span v-if="image.id === 4 && listImages.length > 4"
@@ -141,8 +142,8 @@
                                     <v-expansion-panel-header expand-icon="mdi-menu-down">
                                         Property Details
                                         <template v-slot:actions>
-                                            <v-icon color="primary"> $expand </v-icon>
-                                        </template>
+    <v-icon color="primary"> $expand </v-icon>
+</template>
                                     </v-expansion-panel-header>
                                     <v-expansion-panel-content>
                                         <div class="expansion-property-row">
@@ -185,8 +186,8 @@
                                     <v-expansion-panel-header expand-icon="mdi-menu-down">
                                         Available from
                                         <template v-slot:actions>
-                                            <v-icon color="primary"> $expand </v-icon>
-                                        </template>
+    <v-icon color="primary"> $expand </v-icon>
+</template>
                                     </v-expansion-panel-header>
                                     <v-expansion-panel-content>
                                         <div class="available-from-row">
@@ -201,8 +202,8 @@
                                     <v-expansion-panel-header expand-icon="mdi-menu-down">
                                         Amenities
                                         <template v-slot:actions>
-                                            <v-icon color="primary"> $expand </v-icon>
-                                        </template>
+    <v-icon color="primary"> $expand </v-icon>
+</template>
                                     </v-expansion-panel-header>
                                     <v-expansion-panel-content>
                                         <div class="expansion-amenities-row">
@@ -569,6 +570,7 @@ export default {
                     id: 10,
                     src: require(`../../../static/img/static/One-Shenton-DSC_4.jpeg`)
                 }
+
             ],
             isOpenShareSocialDialog: false
         }
@@ -600,7 +602,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .page__top {
-    margin: 2.4rem 0 2.7rem;
+    margin-bottom:2.7rem;
     display: grid;
     grid-template-columns: 2fr 1fr;
     grid-column-gap: 2.4rem;
@@ -698,6 +700,7 @@ export default {
     border-bottom: 0.1rem solid var(--border-color);
     margin-top: 0;
     border-radius: 0 !important;
+    background: transparent !important;
     .v-expansion-panel-header {
         font-weight: 700;
         font-size: 2rem;
@@ -999,32 +1002,8 @@ export default {
             }
         }
         &:nth-child(4) {
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            img {
+            img{
                 border-radius: 0 0 2rem 0;
-            }
-            span {
-                font-weight: 500;
-                font-size: 1.6rem;
-                line-height: 2.4rem;
-                color: var(--color-white);
-                position: absolute;
-                z-index: 10;
-            }
-            &::after {
-                content: "";
-                width: 100%;
-                height: 100%;
-                background-color: rgba(0, 0, 0, 0.6);
-                display: block;
-                position: absolute;
-                top: 0;
-                left: 0;
-                border-radius: 0 0 2rem 0;
-                z-index: 7;
             }
         }
     }
@@ -1041,11 +1020,44 @@ export default {
     }
 }
 .page--project-detail-first {
-    margin-bottom: 5.8rem;
+    padding-bottom: 5.8rem;
+    padding-top: 2.4rem;
     background-color: var(--bg-color-white);
 }
 .page--project-detail-second {
     background-color: var(--color-white);
     padding: 4.6rem 0 8.25rem;
 }
+.active-total-images {
+    &:nth-child(4) {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        img {
+            border-radius: 0 0 2rem 0;
+        }
+        span {
+            font-weight: 500;
+            font-size: 1.6rem;
+            line-height: 2.4rem;
+            color: var(--color-white);
+            position: absolute;
+            z-index: 10;
+        }
+        &::after {
+            content: "";
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            border-radius: 0 0 2rem 0;
+            z-index: 7;
+        }
+    }
+}
+
 </style>

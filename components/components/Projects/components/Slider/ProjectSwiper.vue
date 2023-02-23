@@ -169,6 +169,7 @@ export default {
 
 <style lang="scss" scoped>
 .swiper--project {
+
     .swiper__top {
         position: relative;
         bottom: -2.75rem;
