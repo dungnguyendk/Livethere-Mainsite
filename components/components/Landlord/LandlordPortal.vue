@@ -21,7 +21,7 @@ export default {
 <style lang="scss" scoped>
 .page--landlord {
     background-color: #fafafa;
-    min-height: 100vh;
+    // min-height: 100vh;
 
     .page__top {
         display: flex;
@@ -32,7 +32,7 @@ export default {
         background-color: #ffff;
     }
     @media screen and (max-width: 768px) {
-        padding: 0 1.2rem;
+        // padding: 0 1.2rem;
     }
 }
 </style>

@@ -26,6 +26,7 @@ export const httpEndpoint = {
         checkPhoneNumber: "/api/Registration/check-contactno",
         checkUsername: "/api/Registration/check-username",
         otpSignIn: "/api/Authen/OTP-Login",
+        resendOtpSignIn: "/api/Authen/Resend-OTP-Login",
         exchangeLoginToken: "/api/Authen/Exchange-Login-Token",
         requestResetPassword: "/api/Authen/request-reset-password",
         checkValidResetToken: "/api/Authen/exchange-reset-password-token",

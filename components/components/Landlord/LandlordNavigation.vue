@@ -102,7 +102,7 @@ export default {
         grid-gap: 1.2rem;
         gap: 1.2rem;
         a {
-            font-size: 1.2rem;
+            font-size: 1.4rem;
         }
     }
 }

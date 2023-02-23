@@ -9,36 +9,12 @@
             <SiteLogo />
         </div>
         <div class="header__right">
-            <!--            <v-btn icon class="btn&#45;&#45;search" @click="onOpenExternalSearch">
-                <i class="ri-search-line"></i>
-            </v-btn>-->
-            <v-dialog
-                v-model="dialogSearch"
-                fullscreen
-                hide-overlay
-                transition="dialog-bottom-transition"
-            >
-                <template v-slot:activator="{ on, attrs }">
-                    <v-btn icon class="btn--search" v-bind="attrs" v-on="on" elevation="0">
-                        <i class="ri-user-line"></i>
-                    </v-btn>
-                </template>
-                <v-card class="dialog-search">
-                    <v-btn icon @click="dialogSearch = false">
-                        <i class="icon-svg svg-close"></i>
-                    </v-btn>
-                    <v-card-text>
-                        <v-text-field
-                            prepend-inner-icon="icon-svg svg-map"
-                            placeholder="Where do you want to live?"
-                            outlined
-                            dense
-                        ></v-text-field>
-                    </v-card-text>
-                </v-card>
-            </v-dialog>
+            <v-btn icon class="btn--search" elevation="0" @click.prevent="userDrawer = !userDrawer">
+                <i class="ri-user-line" />
+            </v-btn>
         </div>
         <MobileNavigation />
+        <LandlordUserDrawer :open="userDrawer" @close="userDrawer = false" />
     </header>
 </template>
 
@@ -46,27 +22,41 @@
 import { mapState } from "vuex"
 import SiteLogo from "~/components/shared/Logo/SiteLogo.vue"
 import MobileNavigation from "~/components/shared/Drawer/MobileNavigation.vue"
+import LandlordSignIn from "~/components/components/Landlord/Auth/SignIn/LandlordSignIn.vue"
+import LandlordUserDrawer from "~/components/shared/Drawer/LandlordUserDrawer.vue"
 
 export default {
-    name: "MobileHeader",
-    components: { SiteLogo, MobileNavigation },
+    name: "LandlordMobileHeader",
+    components: { LandlordUserDrawer, LandlordSignIn, SiteLogo, MobileNavigation },
     computed: {
         ...mapState({
-            appDrawer: (state) => state.app.appDrawer
-        })
+            appDrawer: (state) => state.app.appDrawer,
+            userInfo: (state) => state.app.userInfo
+        }),
+        loggedIn() {
+            return this.$auth.loggedIn
+        }
     },
     data() {
         return {
-            dialogSearch: false
+            userDrawer: false
         }
     },
 
     methods: {
+        onChangePassword() {
+            this.$router.push("/landlord/change-password")
+        },
         onOpenExternalSearch() {
             window.open("https://www.livethere.com/search/results?from=home")
         },
         handleOpenMenuDrawer() {
             this.$store.commit("app/setAppDrawer", !this.appDrawer)
+        },
+        async onLogout() {
+            await this.$auth.logout().then(() => {
+                window.location.href = "/landlord/signin"
+            })
         }
     }
 }
@@ -144,39 +134,49 @@ export default {
         display: none;
     }
 }
+
 .dialog-search {
     border-radius: 0;
     margin: 0;
+
     .v-btn--icon {
         border-radius: 0.4px;
         position: absolute;
         top: 1rem;
         right: 1rem;
+
         .icon-svg {
             background-color: #828586;
         }
     }
+
     .v-card__text {
         padding-top: 6.5rem;
     }
+
     :deep(.v-input) {
         fieldset {
             // color: #DFE0E0;
         }
+
         .svg-map {
             background-color: #e7b242;
         }
+
         .v-label {
             font-size: 1.6rem;
             color: #001327;
         }
+
         ::placeholder {
             font-size: 1.6rem;
             color: #001327;
         }
+
         .v-input__slot {
             min-height: 4.8rem !important;
         }
+
         .v-input__prepend-inner {
             margin-top: 1.2rem;
             margin-right: 0.4rem;
@@ -186,5 +186,86 @@ export default {
 
 .v-dialog--fullscreen {
     margin: 0;
+}
+
+.ps-drawer {
+    width: 100% !important;
+    background-color: #0b0c0c;
+
+    .ps-drawer__close {
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        background-color: transparent;
+        padding: 0;
+        min-width: 4.4rem;
+
+        i {
+            font-size: 3.8rem;
+            color: white;
+        }
+    }
+
+    .ps-drawer__content {
+        display: flex;
+        flex-direction: column;
+        padding-top: 4rem;
+
+        a {
+            font-size: 2rem;
+            color: white;
+            // line-height: 4.8rem;
+            padding: 1.2rem 0;
+        }
+    }
+
+    .ps-drawer__user {
+        padding: 0 1.6rem 1.6rem;
+        position: relative;
+
+        .v-list-item {
+            color: white;
+            font-size: 2rem;
+            padding: 0;
+        }
+
+        .ri-user-line {
+            font-size: 2rem;
+            margin-right: 0.8rem;
+        }
+
+        .user-header {
+            display: flex;
+            align-items: center;
+            color: white;
+            font-size: 2rem;
+            display: block;
+            padding: 0 0.8rem;
+        }
+
+        :deep(.v-list-group__header) {
+            position: absolute;
+            top: -0.6rem;
+            left: 0;
+            right: 0;
+        }
+
+        :deep(.v-list-group) {
+            .mdi.mdi-chevron-down {
+                color: white;
+                position: absolute;
+                top: 1rem;
+                right: 1rem;
+            }
+
+            a {
+                padding: 1.2rem;
+            }
+        }
+    }
+
+    .ps-drawer__bottom {
+        padding-top: 3.2rem;
+    }
 }
 </style>

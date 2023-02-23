@@ -24,13 +24,13 @@
                                     <label>Price</label>
                                     <v-select
                                         v-model="price"
-                                        :items="countries"
-                                        item-text="countryName"
-                                        item-value="countryName"
+                                        :items="priceList"
+                                        item-text="text"
+                                        item-value="value"
                                         required
                                         hide-details
                                         prepend-icon="icon-svg svg-dollar-circle"
-                                        label="Select"
+                                        placeholder="Select"
                                     ></v-select>
                                 </div>
                             </v-col>
@@ -39,13 +39,13 @@
                                     <label>Bedroom</label>
                                     <v-select
                                         v-model="bedroom"
-                                        :items="countries"
-                                        item-text="countryName"
-                                        item-value="countryName"
+                                        :items="bedroomList"
+                                        item-text="text"
+                                        item-value="value"
                                         required
                                         hide-details
                                         prepend-icon="icon-svg svg-bedroom"
-                                        label="Select"
+                                        placeholder="Select"
                                     ></v-select>
                                 </div>
                             </v-col>
@@ -54,13 +54,13 @@
                                     <label>Property Type</label>
                                     <v-select
                                         v-model="propertyType"
-                                        :items="countries"
-                                        item-text="countryName"
-                                        item-value="countryName"
+                                        :items="propertyTypeList"
+                                        item-text="text"
+                                        item-value="value"
                                         required
                                         hide-details
                                         prepend-icon="icon-svg svg-buildings"
-                                        label="Select"
+                                        placeholder="Select"
                                     ></v-select>
                                 </div>
                             </v-col>
@@ -76,6 +76,7 @@
 </template>
 <script>
 import { countries } from "~/ultilities/country"
+import { PROPERTY_TYPE, BEDROOM_TYPE } from "~/ultilities/contants/asset-inventory.js"
 export default {
     name: "HomeSearch",
     data() {
@@ -83,8 +84,22 @@ export default {
             location: "SINGAPORE",
             countries: countries,
             price: "",
-            bedroom: "",
-            propertyType: ""
+            bedroomList: BEDROOM_TYPE,
+            propertyTypeList: PROPERTY_TYPE,
+            priceList: [
+                {
+                    value: 1,
+                    text: "$1,000 - $7,000"
+                },
+                {
+                    value: 2,
+                    text: "$7,000 - $15,000"
+                },
+                {
+                    value: 3,
+                    text: "$15,000 - $20,000"
+                },
+            ]
         }
     }
 }

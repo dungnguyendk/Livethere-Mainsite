@@ -8,14 +8,15 @@
                     </div>
                     <div class="header__center">
                         <ul class="menu--top">
-                            <nuxt-link
+                            <a
                                 v-for="(item, index) in menus"
-                                :to="`/${item.linkURL}`"
+                                :href="item.linkURL"
                                 :class="item.linkURL === path ? 'active' : ''"
                                 :key="index"
+                                target="_blank"
                             >
                                 {{ item.defaultName }}
-                            </nuxt-link>
+                            </a>
                         </ul>
                     </div>
                     <div class="header__right">
@@ -39,7 +40,10 @@
                                         <nuxt-link to="/landlord"> Dashboard</nuxt-link>
                                     </v-list-item>
                                     <v-list-item>
-                                        <a href="/" @click.prevent="onChangePassword">
+                                        <a
+                                            href="/landlord/change-password"
+                                            @click.prevent="onChangePassword"
+                                        >
                                             Change password
                                         </a>
                                     </v-list-item>
@@ -62,7 +66,7 @@
             </div>
         </header>
         <div class="mobile">
-            <MobileHeader />
+            <LandlordMobileHeader />
         </div>
     </div>
 </template>
@@ -73,10 +77,11 @@ import MobileHeader from "~/components/shared/Header/MobileHeader.vue"
 import { httpEndpoint } from "~/services/https/endpoints"
 import { defaultMenu } from "~/ultilities/menus"
 import { mapState } from "vuex"
+import LandlordMobileHeader from "~/components/shared/Header/LandlordMobileHeader.vue"
 
 export default {
     name: "LandlordHeader",
-    components: { MobileHeader, SiteLogo },
+    components: { LandlordMobileHeader, MobileHeader, SiteLogo },
     props: {
         source: {
             type: Object,
@@ -209,6 +214,18 @@ export default {
         grid-template-columns: 12rem minmax(0, 1fr) 12rem;
     }
 
+    .header__link {
+        font-family: var(--font-second);
+        font-size: 1.8rem;
+        color: #fff;
+        font-weight: 700;
+
+        &:hover,
+        &:focus {
+            color: #fff;
+        }
+    }
+
     .header__actions {
         display: flex;
         justify-content: flex-end;
@@ -230,18 +247,6 @@ export default {
         align-items: center;
         grid-gap: 1.2rem;
         gap: 1.2rem;
-
-        a {
-            font-family: var(--font-second);
-            font-size: 2rem;
-            color: #fff;
-            font-weight: 700;
-
-            &:hover,
-            &:focus {
-                color: #fff;
-            }
-        }
     }
 }
 
