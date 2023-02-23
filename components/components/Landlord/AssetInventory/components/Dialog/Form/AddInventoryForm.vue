@@ -32,7 +32,7 @@
                 <div class="form__field">
                     <label>Unit No.</label>
                     <v-text-field v-model.trim="unitNo" outlined dense :error-messages="unitNoErrors"
-                        @change="searchPostalCode" />
+                        @change="searchPostalCode" :disabled="disableUnitNo" />
                 </div>
                 <div class="form__field">
                     <label>No of Bedroom(s)</label>
@@ -165,7 +165,8 @@ export default {
             purchasedDate: "",
             purchasedDateFormatted: "",
             menu1: false,
-            loading: false
+            loading: false,
+            disableUnitNo: false
         }
     },
     computed: {
@@ -385,6 +386,21 @@ export default {
             this.purchasedPrice = ""
             this.purchasedDate = ""
         },
+        onChangePropertyType() {
+            // this.propertyType = ""
+            // this.postalCode = ""
+            // this.houseNo = ""
+            // this.streetName = ""
+            // this.unitNo = ""
+            // this.projectName = ""
+            // this.bedroom = ""
+            // this.location = ""
+            // this.tenure = ""
+            // this.floorArea = ""
+            // this.landArea = ""
+            // this.purchasedPrice = ""
+            // this.purchasedDate = ""
+        },
         onClose() {
             this.$store.commit("inventories/setInventoryDetail", '')
             this.$emit("close")
@@ -430,6 +446,15 @@ export default {
         purchasedDate() {
             this.purchasedDateFormatted = this.formatDate(this.purchasedDate)
         },
+        propertyType(val) {
+            this.onChangePropertyType()
+            // console.log("propertyType::", val.id === 3);
+            if (val.id === 3) {
+                this.disableUnitNo = true
+            } else {
+                this.disableUnitNo = false
+            }
+        }
     }
 }
 </script>
