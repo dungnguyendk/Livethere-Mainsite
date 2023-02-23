@@ -8,7 +8,8 @@
             <div class="form__field">
                 <label>Property Type</label>
                 <v-select v-model.trim="propertyType" :items="propertyTypeList" item-text="text" item-value="value" outlined
-                    dense placeholder="Please select" :error-messages="propertyTypeErrors" @change="onChangePropertyType()" />
+                    dense placeholder="Please select" :error-messages="propertyTypeErrors"
+                    @change="onChangePropertyType()" />
             </div>
             <div class="form__field2">
                 <div class="form__field">
@@ -166,7 +167,7 @@ export default {
             purchasedDateFormatted: "",
             menu1: false,
             loading: false,
-            hideLanded: false,
+            hideLanded: false
         }
     },
     computed: {
@@ -254,7 +255,6 @@ export default {
         },
         async createInventories() {
             this.onFormSubmit()
-            // console.log("submit!", this.$v.$invalid)
             this.$v.$touch()
             if (!this.$v.$invalid) {
                 const params = {
@@ -294,7 +294,6 @@ export default {
         },
         updateInventories() {
             this.onFormSubmit()
-            // console.log("Update!", this.$v.$invalid)
             this.$v.$touch()
             if (!this.$v.$invalid) {
                 const params = {
@@ -346,22 +345,24 @@ export default {
                         `${httpEndpoint.postal.getEntryByPostalCode}?${param}`
                     )
                     if (response) {
-                        // console.log("postalCode response",response);
                         this.loading = false
-                        // response.propertyType && response.propertyType !== null ? this.propertyType = this.propertyTypeList.find(
-                        //     (item) => item.value.name === response.propertyType
-                        // ).value : this.propertyType = ''
-
-                       if(response.propertyCategory === "LANDED"){
+                        if (response.propertyCategory === "LANDED") {
                             this.propertyType = this.propertyTypeList.find(
                                 (item) => item.value.name === "LANDED PROPERTY"
                             ).value
-                       }else {
+                            this.floorArea = response.floorAreaSqft !== 0 ? response.floorAreaSqft : ''
+                            this.landArea = response.landAreaSqft !== 0 ? response.landAreaSqft : ''
+                            this.purchasedPrice = response.consider !== 0 ? response.consider : ''
+                            this.purchasedDate = response.contractDate !== 0 ? response.contractDate : ''
+                        } else {
                             response.propertyType && response.propertyType !== null ? this.propertyType = this.propertyTypeList.find(
                                 (item) => item.value.name === response.propertyType
                             ).value : this.propertyType = ''
-                       }
-
+                            this.floorArea = this.unitNo && response.floorAreaSqft !== 0 ? response.floorAreaSqft : ''
+                            this.landArea = this.unitNo && response.landAreaSqft !== 0 ? response.landAreaSqft : ''
+                            this.purchasedPrice = this.unitNo && response.consider !== 0 ? response.consider : ''
+                            this.purchasedDate = this.unitNo && response.contractDate !== 0 ? response.contractDate : ''
+                        }
                         this.houseNo = response.houseNo
                         this.streetName = response.streetName
                         this.unitNo = this.unitNo ? this.unitNo : response.unitNo
@@ -369,14 +370,9 @@ export default {
                         response.tenureType && response.tenureType !== null ? this.tenure = this.tenureList.find(
                             (item) => item.value.name === response.tenureType
                         ).value : this.tenure = ''
-                        this.floorArea = this.unitNo && response.floorAreaSqft !== 0 ? response.floorAreaSqft : ''
-                        this.landArea = this.unitNo && response.landAreaSqft !== 0 ? response.landAreaSqft : ''
-                        this.purchasedPrice = this.unitNo && response.consider !== 0 ? response.consider : ''
-                        this.purchasedDate = this.unitNo && response.contractDate !== 0 ? response.contractDate : ''
                     } else {
                         this.loading = false
                     }
-
                 } catch (e) {
                     console.log(e)
                 }
@@ -385,7 +381,7 @@ export default {
             }
         },
         onChangePostalCode() {
-            // this.propertyType = ""
+            this.propertyType = ""
             this.houseNo = ""
             this.streetName = ""
             this.unitNo = ""
@@ -397,8 +393,9 @@ export default {
             this.landArea = ""
             this.purchasedPrice = ""
             this.purchasedDate = ""
+            this.$v.$reset()
         },
-        onChangePropertyType(){
+        onChangePropertyType() {
             this.houseNo = ""
             this.streetName = ""
             this.unitNo = ""
@@ -411,6 +408,7 @@ export default {
             this.purchasedPrice = ""
             this.purchasedDate = ""
             this.postalCode = ""
+            this.$v.$reset()
         },
         onClose() {
             this.$store.commit("inventories/setInventoryDetail", '')
@@ -457,11 +455,18 @@ export default {
         purchasedDate() {
             this.purchasedDateFormatted = this.formatDate(this.purchasedDate)
         },
-        propertyType(val){
+        // propertyType(val) {
+        //     this.onChangePropertyType()
+        //     // console.log("propertyType::", val.id === 3);
+        //     if (val.id === 3) {
+        //         this.disableUnitNo = true
+        //     } else {
+        //         this.disableUnitNo = false
+        propertyType(val) {
             // console.log("watch propertyType",val);
-            if(val.name === "LANDED PROPERTY"){
+            if (val.name === "LANDED PROPERTY") {
                 this.hideLanded = true
-            }else {
+            } else {
                 this.hideLanded = false
             }
         }
