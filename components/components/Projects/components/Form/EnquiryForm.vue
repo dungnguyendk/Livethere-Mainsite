@@ -31,7 +31,7 @@
             </div>
             <div class="form__field">
                 <label>message</label>
-                <v-textarea outlined dense  height="120"> </v-textarea>
+                <v-textarea outlined dense auto-grow height="120"> </v-textarea>
             </div>
             <v-btn class="btn btn--primary btn--green btn-custom">Enquire Now</v-btn>
         </div>
