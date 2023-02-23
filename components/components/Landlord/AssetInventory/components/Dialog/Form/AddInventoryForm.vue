@@ -32,7 +32,7 @@
                 <div class="form__field" v-if="!hideLanded">
                     <label>Unit No.</label>
                     <v-text-field v-model.trim="unitNo" outlined dense :error-messages="unitNoErrors"
-                        @change="searchPostalCode" :disabled="disableUnitNo" />
+                        @change="searchPostalCode" />
                 </div>
                 <div class="form__field">
                     <label>No of Bedroom(s)</label>
@@ -165,7 +165,8 @@ export default {
             purchasedDate: "",
             purchasedDateFormatted: "",
             menu1: false,
-            loading: false
+            loading: false,
+            hideLanded: false
         }
     },
     computed: {
@@ -351,15 +352,15 @@ export default {
                         //     (item) => item.value.name === response.propertyType
                         // ).value : this.propertyType = ''
 
-                       if(response.propertyCategory === "LANDED"){
+                        if (response.propertyCategory === "LANDED") {
                             this.propertyType = this.propertyTypeList.find(
                                 (item) => item.value.name === "LANDED PROPERTY"
                             ).value
-                       }else {
+                        } else {
                             response.propertyType && response.propertyType !== null ? this.propertyType = this.propertyTypeList.find(
                                 (item) => item.value.name === response.propertyType
                             ).value : this.propertyType = ''
-                       }
+                        }
 
                         this.houseNo = response.houseNo
                         this.streetName = response.streetName
@@ -397,7 +398,7 @@ export default {
             this.purchasedPrice = ""
             this.purchasedDate = ""
         },
-        onChangePropertyType(){
+        onChangePropertyType() {
             this.houseNo = ""
             this.streetName = ""
             this.unitNo = ""
@@ -463,11 +464,11 @@ export default {
         //         this.disableUnitNo = true
         //     } else {
         //         this.disableUnitNo = false
-        propertyType(val){
+        propertyType(val) {
             // console.log("watch propertyType",val);
-            if(val.name === "LANDED PROPERTY"){
+            if (val.name === "LANDED PROPERTY") {
                 this.hideLanded = true
-            }else {
+            } else {
                 this.hideLanded = false
             }
         }
