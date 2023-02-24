@@ -7,9 +7,7 @@
                         >Your Personal Property Concierge Managing All your property needs</h3
                     >
                     <p class="section__header-text">
-                        We also help you find the right tenant with ease through our expansive
-                        database as well as gain high visibility for your property with our
-                        marketing services.
+                        We also help you find the right tenant with ease through our expansive database as well as gain high visibility for your property with our marketing services.
                     </p>
                 </div>
                 <div class="section__content">
@@ -89,6 +87,7 @@ export default {
                 font-size: 1.6rem;
                 line-height: 2.4rem;
                 margin-bottom: 0;
+                padding: 0 18rem;
                 color: var(--color-title-black);
             }
         }
@@ -126,6 +125,11 @@ export default {
         .section__container {
             .section__content {
                 grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+            .section__header {
+                .section__header-text {
+                    padding: 0;
+                }
             }
         }
     }

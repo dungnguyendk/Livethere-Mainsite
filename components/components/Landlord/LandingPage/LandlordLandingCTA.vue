@@ -10,12 +10,12 @@
                 <div class="section__right">
                     <div class="section__right-content">
                         <h3 class="section__content-title">
-                            Start your journey in finding your perfect home in Singapore’s desirable locales</h3
+                            Bump up your property’s visibility with Livethere now</h3
                         >
                         <p class="section__content-text">
-                            We take out the hassle and put in the ease to your home renting process. We manage your journey from beginning to end, as well as aftercare. In other words – we make living easy!</p
+                            With our tailored marketing services, we’ll put you and your property high on our priority list!</p
                         >
-                        <v-btn class="btn btn--primary btn--green">Find Out More</v-btn>
+                        <v-btn class="btn btn--primary btn--green">List Your Property</v-btn>
                     </div>
                 </div>
             </div>

@@ -3,7 +3,7 @@
         <div class="container">
             <div class="section__container">
                 <div class="section__content">
-                    <h3>Find the best homes <span>in the best neighbourhood</span></h3>
+                    <h3>Maximise your rental income, minus the hassle</h3>
                     <div class="section__form">
                         <EnquiryForm />
                     </div>

@@ -12,14 +12,10 @@
                 </div>
                 <div class="section__right">
                     <p>
-                        There’s no better time than now to make the most out of your property. It’s
-                        easy.
+                        There’s no better time than now to make the most out of your property. It’s easy.
                     </p>
                     <p>
-                        With our expansive pool of ready tenants from all over the globe, we’ll find
-                        you the right match specific to your requirements, grow your income as well
-                        as manage your property. We take you through the process start to finish.
-                        And it doesn’t end there, we’ll be with you the entire journey.
+                        With our expansive pool of ready tenants from all over the globe, we’ll find you the right match specific to your requirements, grow your income as well as manage your property. We take you through the process start to finish. And it doesn’t end there, we’ll be with you the entire journey.
                     </p>
                 </div>
             </div>
@@ -40,7 +36,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .section--landing-intro {
-    padding: 5.1rem 0;
+    padding: 10.7rem 0 2.7rem;
 
     .section__container {
         display: flex;
@@ -48,18 +44,23 @@ export default {
         align-items: center;
 
         .section__left {
-            width: 54.77%;
             display: flex;
             z-index: 1;
+            width: 56%;
+            justify-content: flex-end;
+            position: relative;
 
             .image-first {
-                width: 46.5%;
-                border: 0.8rem solid #ffffff;
-                border-radius: 2rem;
-                filter: drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.04))
-                    drop-shadow(0px 8px 16px rgba(0, 0, 0, 0.08));
+                width: 50.5%;
+                // border: 0.8rem solid #ffffff;
+                // border-radius: 2rem;
+                // filter: drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.04))
+                //     drop-shadow(0px 8px 16px rgba(0, 0, 0, 0.08));
                 overflow: hidden;
                 height: fit-content;
+                position: absolute;
+                top: -6rem;
+                left: -5px;
 
                 img {
                     width: 100%;
@@ -68,16 +69,15 @@ export default {
             }
 
             .image-second {
-                width: 58.41%;
-                border: 0.8rem solid #ffffff;
-                border-radius: 2rem;
+                width: 62%;
+                // border: 0.8rem solid #ffffff;
+                // border-radius: 2rem;
                 overflow: hidden;
-                margin-top: 5.8rem;
                 position: relative;
-                right: 6.8rem;
+                right: 5.4rem;
                 z-index: -1;
-                filter: drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.04))
-                    drop-shadow(0px 8px 16px rgba(0, 0, 0, 0.08));
+                // filter: drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.04))
+                //     drop-shadow(0px 8px 16px rgba(0, 0, 0, 0.08));
 
                 img {
                     width: 100%;
@@ -87,7 +87,7 @@ export default {
         }
 
         .section__right {
-            width: 45.22%;
+            width: 44%;
 
             p {
                 font-weight: 500;
@@ -116,36 +116,11 @@ export default {
                 z-index: 1;
 
                 .image-first {
-                    width: 46.5%;
-                    border: 0.8rem solid #ffffff;
-                    border-radius: 2rem;
-                    filter: drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.04))
-                        drop-shadow(0px 8px 16px rgba(0, 0, 0, 0.08));
-                    overflow: hidden;
-                    height: fit-content;
-
-                    img {
-                        width: 100%;
-                        object-fit: cover;
-                    }
+                  
                 }
 
                 .image-second {
-                    width: 100%;
-                    border: 0.8rem solid #ffffff;
-                    border-radius: 2rem;
-                    overflow: hidden;
-                    margin-top: 5.8rem;
-                    position: relative;
-                    right: 6.8rem;
-                    z-index: 1;
-                    filter: drop-shadow(0px 0px 4px rgba(0, 0, 0, 0.04))
-                        drop-shadow(0px 8px 16px rgba(0, 0, 0, 0.08));
-
-                    img {
-                        width: 100%;
-                        object-fit: cover;
-                    }
+                   right: 0;
                 }
             }
 
