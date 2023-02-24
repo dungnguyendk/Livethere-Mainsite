@@ -2,10 +2,10 @@
     <div class="section--landlord">
         <div class="container">
             <div class="section__top">
-                <AssetInventoryAction/>
+                <AssetInventoryAction />
             </div>
             <div class="section__container">
-                <AssetInventoryTable/>
+                <AssetInventoryTable />
             </div>
             <v-snackbar
                 v-model="snackbarActive"
@@ -16,7 +16,7 @@
                 color="green darken-4"
             >
                 <span class="message--snackBar">
-                    <i class="ri-information-line"/> {{ snackbarMessageActive }}
+                    <i class="ri-information-line" /> {{ snackbarMessageActive }}
                 </span>
             </v-snackbar>
         </div>
@@ -24,14 +24,13 @@
 </template>
 
 <script>
-import AssetInventoryTable
-    from "~/components/components/Landlord/AssetInventory/components/Table/AssetInventoryTable.vue"
+import AssetInventoryTable from "~/components/components/Landlord/AssetInventory/components/Table/AssetInventoryTable.vue"
 import AssetInventoryAction from "~/components/components/Landlord/AssetInventory/components/AssetInventoryAction.vue"
-import {mapState} from "vuex"
+import { mapState } from "vuex"
 
 export default {
     name: "AssetInventory",
-    components: {AssetInventoryTable, AssetInventoryAction},
+    components: { AssetInventoryTable, AssetInventoryAction },
     data() {
         return {
             snackbarActive: false,
