@@ -27,7 +27,7 @@ export default {
 <style lang="scss" scoped>
 .section--enquiry-form {
     background-color: #fafafa;
-    padding-bottom: 4.2rem;
+    padding-bottom: 5.2rem;
 
     .section__content {
         max-width: 50%;
