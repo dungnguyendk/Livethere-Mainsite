@@ -3,13 +3,13 @@
         <div class="container">
             <div class="section__container">
                 <div class="section__content">
-                    <h3>Maximise your rental income, minus the hassle</h3>
+                    <h3>Find the best homes <span>in the best neighbourhood</span></h3>
                     <div class="section__form">
                         <EnquiryForm />
                     </div>
                 </div>
                 <div class="section__image">
-                    <img src="~/static/img/landlords/landing-enquiry-bg.jpeg" alt="" />
+                    <img src="~/static/img/landlords/landing-enquiry-bg.jpg" alt="" />
                 </div>
             </div>
         </div>
@@ -40,6 +40,12 @@ export default {
             font-size: 4rem;
             color: var(--color-heading);
             padding-bottom: 1.6rem;
+            span {
+                font-size: 4rem;
+                color: var(--color-heading);
+                font-weight: bold;
+                display: block;
+            }
         }
     }
 

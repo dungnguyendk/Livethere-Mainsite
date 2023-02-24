@@ -70,6 +70,8 @@ export default {
 <style lang="scss" scoped>
 .section--landing-service {
     padding: 4.2rem 0 6.8rem;
+    background-color: var(--bg-color-white);
+
     .section__container {
         .section__header {
             margin-bottom: 3.6rem;
@@ -87,7 +89,7 @@ export default {
                 font-size: 1.6rem;
                 line-height: 2.4rem;
                 margin-bottom: 0;
-                color: #171717;
+                color: var(--color-title-black);
             }
         }
 
@@ -98,7 +100,8 @@ export default {
             .section__box {
                 flex-wrap: wrap;
                 justify-content: center;
-                padding: 2.4rem 1.6rem;
+                padding: 2.4rem 7rem;
+                background-color: white;
                 .section__box-icon {
                     margin-bottom: 1.2rem;
                     img {
@@ -147,7 +150,7 @@ export default {
                     font-size: 1.6rem;
                     line-height: 2.4rem;
                     margin-bottom: 0;
-                    color: #171717;
+                    color: var(--color-title-black);
                 }
             }
 

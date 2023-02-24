@@ -14,7 +14,6 @@ import LandlordPortal from "~/components/components/Landlord/LandlordPortal.vue"
 import LandlordDashboard from "~/components/components/Landlord/Dashboard/LandlordDashboard.vue"
 import { appSettings } from "~/app-settings"
 
-ư
 export default {
     components: { LandlordPortal, LandlordDashboard },
     layout: "landlord",
