@@ -115,7 +115,8 @@ export default {
                 this.httpError = ""
                 try {
                     const response = await this.$axios.$post(httpEndpoint.auth.registerSendOTP, {
-                        mobileNo: this.registerDetails.mobile
+                        mobileNo: this.registerDetails.mobile,
+                        email: this.registerDetails.email
                     })
                     if (response) {
                         if (response.valid) {
