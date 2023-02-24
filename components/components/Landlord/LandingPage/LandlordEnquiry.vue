@@ -9,7 +9,7 @@
                     </div>
                 </div>
                 <div class="section__image">
-                    <img src="~/static/img/landlords/landing-enquiry-bg.jpeg" alt="" />
+                    <img src="~/static/img/landlords/landing-enquiry-bg.jpg" alt="" />
                 </div>
             </div>
         </div>
@@ -27,7 +27,7 @@ export default {
 <style lang="scss" scoped>
 .section--enquiry-form {
     background-color: #fafafa;
-    padding-bottom: 4.2rem;
+    padding-bottom: 5.2rem;
 
     .section__content {
         max-width: 50%;
@@ -40,6 +40,12 @@ export default {
             font-size: 4rem;
             color: var(--color-heading);
             padding-bottom: 1.6rem;
+            span {
+                font-size: 4rem;
+                color: var(--color-heading);
+                font-weight: bold;
+                display: block;
+            }
         }
     }
 

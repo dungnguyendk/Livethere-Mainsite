@@ -7,9 +7,7 @@
                         >Your Personal Property Concierge Managing All your property needs</h3
                     >
                     <p class="section__header-text">
-                        We also help you find the right tenant with ease through our expansive
-                        database as well as gain high visibility for your property with our
-                        marketing services.
+                        We also help you find the right tenant with ease through our expansive database as well as gain high visibility for your property with our marketing services.
                     </p>
                 </div>
                 <div class="section__content">
@@ -70,6 +68,8 @@ export default {
 <style lang="scss" scoped>
 .section--landing-service {
     padding: 4.2rem 0 6.8rem;
+    background-color: var(--bg-color-white);
+
     .section__container {
         .section__header {
             margin-bottom: 3.6rem;
@@ -87,7 +87,8 @@ export default {
                 font-size: 1.6rem;
                 line-height: 2.4rem;
                 margin-bottom: 0;
-                color: #171717;
+                padding: 0 18rem;
+                color: var(--color-title-black);
             }
         }
 
@@ -98,7 +99,8 @@ export default {
             .section__box {
                 flex-wrap: wrap;
                 justify-content: center;
-                padding: 2.4rem 1.6rem;
+                padding: 2.4rem 7rem;
+                background-color: white;
                 .section__box-icon {
                     margin-bottom: 1.2rem;
                     img {
@@ -124,6 +126,11 @@ export default {
             .section__content {
                 grid-template-columns: repeat(2, minmax(0, 1fr));
             }
+            .section__header {
+                .section__header-text {
+                    padding: 0;
+                }
+            }
         }
     }
     @media screen and (max-width: 768px) {
@@ -147,7 +154,7 @@ export default {
                     font-size: 1.6rem;
                     line-height: 2.4rem;
                     margin-bottom: 0;
-                    color: #171717;
+                    color: var(--color-title-black);
                 }
             }
 

@@ -1,6 +1,6 @@
 <template lang="html">
     <div class="form--enquiry">
-        <h4 class="form__title">Drop us a note. We’ll be in touch with you </h4>
+        <h4 class="form__title">Drop us a note. We’ll be in touch with you</h4>
         <form class="form__fields" @submit.prevent="onFormSubmit">
             <v-row>
                 <v-col cols="12" sm="12" md="6">
