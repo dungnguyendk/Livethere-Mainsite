@@ -4,28 +4,7 @@
             <div class="container">
                 <div class="page__top">
                     <div class="page__top-left">
-                        <div class="page__top-left-list-images">
-                            <div
-                                class="page__top-left-column open-tinybox"
-                                v-for="(image, idx) in listImagesLimited"
-                                :key="idx"
-                                @click="index = idx"
-                                :class="{
-                                    'active-total-images': image.id === 4 && listImages.length > 4
-                                }"
-                            >
-                                <img :src="image.src" alt="" />
-                                <span v-if="image.id === 4 && listImages.length > 4"
-                                    >+{{ totalImagesSlider }} photos</span
-                                >
-                            </div>
-                            <Tinybox
-                                v-model="index"
-                                :images="listImages"
-                                :loop="loopCheckbox"
-                                :no-thumbs="!thumbsCheckbox"
-                            ></Tinybox>
-                        </div>
+                        <LightBoxListing/>
                     </div>
                     <div class="page__top-right">
                         <iframe
@@ -102,131 +81,7 @@
                             </div>
                         </div>
                         <div class="page-content-left-expansion">
-                            <v-expansion-panels flat v-model="panel" multiple>
-                                <v-expansion-panel
-                                    expand
-                                    v-model="panel"
-                                    class="expansion-description expansion-panel-custom"
-                                >
-                                    <v-expansion-panel-header expand-icon="mdi-menu-down">
-                                        Description
-                                        <template v-slot:actions>
-                                            <v-icon color="primary"> $expand </v-icon>
-                                        </template>
-                                    </v-expansion-panel-header>
-                                    <v-expansion-panel-content>
-                                        <p
-                                            >The centrepiece of an iconic integrated development
-                                            comprising three landmarks – Stamford House, Capitol
-                                            Building and Capitol Theatre. Located in the Civic
-                                            District, perched above Singapore’s well-known
-                                            historical street corner, the curved residential block
-                                            offers a front row seat to the city’s Civic and Cultural
-                                            District as well as spectacular views of Marina Bay and
-                                            beyond.</p
-                                        >
-                                        <p
-                                            >Eden Residences Capitol is a luxurious residential
-                                            edifice that sits across the road from The City Hall MRT
-                                            Interchange and is literally a stone’s throw away to
-                                            Peninsula Plaza and Raffles City. Living in the Eden
-                                            Residences Capitol provides an easy access to the
-                                            fitness and recreational parks like that of Fort Canning
-                                            Park. Residents can also enjoy the convenience of the
-                                            amenities nearby such as banks, supermarket, retails
-                                            outlets, restaurants and other necessities.</p
-                                        >
-                                    </v-expansion-panel-content>
-                                </v-expansion-panel>
-                                <v-expansion-panel
-                                    class="expansion-property expansion-panel-custom"
-                                >
-                                    <v-expansion-panel-header expand-icon="mdi-menu-down">
-                                        Property Details
-                                        <template v-slot:actions>
-                                            <v-icon color="primary"> $expand </v-icon>
-                                        </template>
-                                    </v-expansion-panel-header>
-                                    <v-expansion-panel-content>
-                                        <div class="expansion-property-row">
-                                            <p>monthly price:</p>
-                                            <p>S$ 30,000 </p>
-                                        </div>
-                                        <div class="expansion-property-row">
-                                            <p>unit size:</p>
-                                            <p>5,963 sqft </p>
-                                        </div>
-                                        <div class="expansion-property-row">
-                                            <p>monthly price PSF:</p>
-                                            <p>S$ 5.03</p>
-                                        </div>
-                                        <div class="expansion-property-row">
-                                            <p>lease term:</p>
-                                            <p>24 months </p>
-                                        </div>
-                                        <div class="expansion-property-row">
-                                            <p>furnishing:</p>
-                                            <p>Fully Furnished</p>
-                                        </div>
-                                        <div class="expansion-property-row">
-                                            <p>built year:</p>
-                                            <p>2015</p>
-                                        </div>
-                                        <div class="expansion-property-row">
-                                            <p>tenure:</p>
-                                            <p>99-year Leasehold</p>
-                                        </div>
-                                        <div class="expansion-property-row">
-                                            <p>property type:</p>
-                                            <p>Condo</p>
-                                        </div>
-                                    </v-expansion-panel-content>
-                                </v-expansion-panel>
-                                <v-expansion-panel
-                                    class="expansion-available expansion-panel-custom"
-                                >
-                                    <v-expansion-panel-header expand-icon="mdi-menu-down">
-                                        Available from
-                                        <template v-slot:actions>
-                                            <v-icon color="primary"> $expand </v-icon>
-                                        </template>
-                                    </v-expansion-panel-header>
-                                    <v-expansion-panel-content>
-                                        <div class="available-from-row">
-                                            <i class="icon-svg svg-calendar"></i>
-                                            <p>2022-02-01</p>
-                                        </div>
-                                    </v-expansion-panel-content>
-                                </v-expansion-panel>
-                                <v-expansion-panel
-                                    class="expansion-amenities expansion-panel-custom"
-                                >
-                                    <v-expansion-panel-header expand-icon="mdi-menu-down">
-                                        Amenities
-                                        <template v-slot:actions>
-                                            <v-icon color="primary"> $expand </v-icon>
-                                        </template>
-                                    </v-expansion-panel-header>
-                                    <v-expansion-panel-content>
-                                        <div class="expansion-amenities-row">
-                                            <div
-                                                class="expansion-amenities-column"
-                                                v-for="(item, index) in listAmenities"
-                                                :key="index"
-                                            >
-                                                <div
-                                                    class="expansion-amenities-icon"
-                                                    v-for="(element, index) in item.listIcons"
-                                                    :key="index"
-                                                >
-                                                    <i :class="element.icon"></i>
-                                                    <p>{{ element.text }}</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </v-expansion-panel-content>
-                                </v-expansion-panel>
-                            </v-expansion-panels>
+                            <PanelListing/>
                         </div>
                     </div>
                     <div class="page__content-right">
@@ -261,370 +116,66 @@ import NotiCard from "~/components/components/Projects/components/Card/NotiCard"
 import ShareSocialForm from "./components/Form/ShareSocialForm.vue"
 import Dialog from "~/components/elements/Dialog/Dialog.vue"
 import ProjectSwiper from "~/components/components/Projects/components/Slider/ProjectSwiper"
+import PanelListing from '~/components/components/Projects/components/Panel/PanelListing'
+import LightBoxListing from "./components/Box/LightBoxListing.vue"
 export default {
     name: "ProjectListing",
-    components: { EnquiryForm, ContactAgentCard, NotiCard, ShareSocialForm, Dialog, ProjectSwiper },
+    components: { 
+        EnquiryForm, 
+        ContactAgentCard, 
+        NotiCard, 
+        ShareSocialForm, 
+        Dialog, 
+        ProjectSwiper, 
+        PanelListing, 
+        LightBoxListing
+    },
     data() {
-        const self = this
         return {
-            listGallery: [
-                {
-                    id: 1,
-                    imgURL: require(`../../../static/img/static/One-Shenton-DSC_1.jpeg`)
-                },
-                {
-                    id: 2,
-                    imgURL: require(`../../../static/img/static/One-Shenton-DSC_2.jpeg`)
-                },
-                {
-                    id: 3,
-                    imgURL: require(`../../../static/img/static/One-Shenton-DSC_3.jpeg`)
-                },
-                {
-                    id: 4,
-                    imgURL: require(`../../../static/img/static/One-Shenton-DSC_4.jpeg`)
-                },
-                {
-                    id: 5,
-                    imgURL: require(`../../../static/img/static/One-Shenton-DSC_5.jpeg`)
-                },
-                {
-                    id: 6,
-                    imgURL: require(`../../../static/img/static/One-Shenton-DSC_6.jpeg`)
-                },
-                {
-                    id: 7,
-                    imgURL: require(`../../../static/img/static/One-Shenton-DSC_7.jpeg`)
-                },
-                {
-                    id: 8,
-                    imgURL: require(`../../../static/img/static/One-Shenton-DSC_8.jpeg`)
-                }
-            ],
-            listAmenities: [
-                {
-                    id: 1,
-                    listIcons: [
-                        {
-                            id: 1,
-                            icon: "icon-svg svg-free-wifi",
-                            text: "free wifi"
-                        },
-                        {
-                            id: 2,
-                            icon: "icon-svg svg-pool",
-                            text: "pool"
-                        },
-                        {
-                            id: 3,
-                            icon: "icon-svg svg-bathtub",
-                            text: "bathtub"
-                        },
-                        {
-                            id: 4,
-                            icon: "icon-svg svg-spa",
-                            text: "spa"
-                        },
-                        {
-                            id: 5,
-                            icon: "icon-svg svg-sauna",
-                            text: "sauna"
-                        },
-                        {
-                            id: 6,
-                            icon: "icon-svg svg-bbq",
-                            text: "BBQ"
-                        },
-                        {
-                            id: 7,
-                            icon: "icon-svg svg-concierge",
-                            text: "concierge"
-                        }
-                    ]
-                },
-                {
-                    id: 2,
-                    listIcons: [
-                        {
-                            id: 8,
-                            icon: "icon-svg svg-game-room",
-                            text: "games room"
-                        },
-                        {
-                            id: 9,
-                            icon: "icon-svg svg-tennis-court",
-                            text: "tennis-court"
-                        },
-                        {
-                            id: 10,
-                            icon: "icon-svg svg-patio",
-                            text: "patio"
-                        },
-                        {
-                            id: 11,
-                            icon: "icon-svg svg-taxi",
-                            text: "taxi"
-                        },
-                        {
-                            id: 12,
-                            icon: "icon-svg svg-pet-allowed",
-                            text: "pets allowed"
-                        },
-                        {
-                            id: 13,
-                            icon: "icon-svg svg-pool-view",
-                            text: "pool view"
-                        },
-                        {
-                            id: 14,
-                            icon: "icon-svg svg-jacuzzi",
-                            text: "jacuzzi"
-                        }
-                    ]
-                },
-                {
-                    id: 3,
-                    listIcons: [
-                        {
-                            id: 15,
-                            icon: "icon-svg svg-gym",
-                            text: "gym"
-                        },
-                        {
-                            id: 16,
-                            icon: "icon-svg svg-yoga",
-                            text: "yoga"
-                        },
-                        {
-                            id: 17,
-                            icon: "icon-svg svg-gourmet-kitchen",
-                            text: "gourmet kitchen"
-                        },
-                        {
-                            id: 18,
-                            icon: "icon-svg svg-restaurant",
-                            text: "restaurant"
-                        },
-                        {
-                            id: 19,
-                            icon: "icon-svg svg-playground",
-                            text: "playground"
-                        },
-                        {
-                            id: 20,
-                            icon: "icon-svg svg-squash-court",
-                            text: "squash court"
-                        },
-                        {
-                            id: 21,
-                            icon: "icon-svg svg-social-lounge",
-                            text: "social lounge"
-                        }
-                    ]
-                }
-            ],
             imageURL: "/img/banner/topbannertwo.jpg",
-            swiperOption: {
-                loop: false,
-                duration: 5000,
-                speed: 750,
-                arrows: true,
-                autoplay: false,
-                slidesPerView: 1,
-                spaceBetween: 10,
-                pagination: {
-                    el: ".swiper-pagination",
-                    type: "progressbar"
-                },
-                navigation: {
-                    nextEl: ".swiper-button-next",
-                    prevEl: ".swiper-button-prev"
-                },
-                breakpoints: {
-                    768: {
-                        slidesPerView: 3,
-                        spaceBetween: 26
-                    }
-                },
-                on: {
-                    slideChange: function () {
-                        let lastVisibleItem = this.realIndex + this.params.slidesPerView
-                        let slidesLength = this.slides.length - 2
-                        let lastVisibleIndex = this.realIndex + this.params.slidesPerView
-                        lastVisibleIndex === Number(self.fractionForm)
-                            ? (self.activeColorArrow = true)
-                            : (self.activeColorArrow = false)
-                    }
-                }
-            },
-            popularListing: [
-                {
-                    id: 1,
-                    title: "Waterfront Bungalow at Ocean Drive",
-                    imgURL: require(`../../../static/img/listing1.png`),
-                    imgURLIconFirst: require(`../../../static/img/home-icon1.png`),
-                    imgURLIconSecond: require(`../../../static/img/home-icon2.png`),
-                    imgURLIconThird: require(`../../../static/img/home-icon3.png`),
-                    address: "Ocean Drive, Singapore 098314",
-                    totalBed: 4,
-                    totalBath: 4
-                },
-                {
-                    id: 2,
-                    title: "Skypark @ Somerset",
-                    imgURL: require(`../../../static/img/listing2.png`),
-                    imgURLIconFirst: require(`../../../static/img/home-icon1.png`),
-                    imgURLIconSecond: require(`../../../static/img/home-icon2.png`),
-                    imgURLIconThird: require(`../../../static/img/home-icon3.png`),
-                    address: "Ocean Drive, Singapore 098314",
-                    totalBed: 4,
-                    totalBath: 4
-                },
-                {
-                    id: 3,
-                    title: "Soleil @ Sinaran",
-                    imgURL: require(`../../../static/img/listing3.png`),
-                    imgURLIconFirst: require(`../../../static/img/home-icon1.png`),
-                    imgURLIconSecond: require(`../../../static/img/home-icon2.png`),
-                    imgURLIconThird: require(`../../../static/img/home-icon3.png`),
-                    address: "Ocean Drive, Singapore 098314",
-                    totalBed: 4,
-                    totalBath: 4
-                },
-                {
-                    id: 4,
-                    title: "Skypark @ Somerset",
-                    imgURL: require(`../../../static/img/listing2.png`),
-                    imgURLIconFirst: require(`../../../static/img/home-icon1.png`),
-                    imgURLIconSecond: require(`../../../static/img/home-icon2.png`),
-                    imgURLIconThird: require(`../../../static/img/home-icon3.png`),
-                    address: "Ocean Drive, Singapore 098314",
-                    totalBed: 4,
-                    totalBath: 4
-                },
-                {
-                    id: 5,
-                    title: "Soleil @ Sinaran",
-                    imgURL: require(`../../../static/img/listing3.png`),
-                    imgURLIconFirst: require(`../../../static/img/home-icon1.png`),
-                    imgURLIconSecond: require(`../../../static/img/home-icon2.png`),
-                    imgURLIconThird: require(`../../../static/img/home-icon3.png`),
-                    address: "Ocean Drive, Singapore 098314",
-                    totalBed: 4,
-                    totalBath: 4
-                }
-            ],
-            preNumber: 1,
-            nextNumber: 3,
-            fractionTo: 1,
-            fractionForm: 3,
-            activeColorArrow: false,
-            // index: 1,
-            listTestTinyBox: [
-                "../../../static/img/listing1.png",
-                "../../../static/img/listing1.png",
-                "../../../static/img/listing1.png",
-                "../../../static/img/listing1.png"
-            ],
-            panel: [0, 1, 2, 3],
             activeHeart: false,
-            index: null,
-            loopCheckbox: false,
-            thumbsCheckbox: true,
-            listImages: [
-                {
-                    id: 1,
-                    src: require(`../../../static/img/static/One-Shenton-DSC_1.jpeg`)
-                },
-                {
-                    id: 2,
-                    src: require(`../../../static/img/static/One-Shenton-DSC_2.jpeg`)
-                },
-                {
-                    id: 3,
-                    src: require(`../../../static/img/static/One-Shenton-DSC_3.jpeg`)
-                },
-                {
-                    id: 4,
-                    src: require(`../../../static/img/static/One-Shenton-DSC_4.jpeg`)
-                },
-                {
-                    id: 5,
-                    src: require(`../../../static/img/static/One-Shenton-DSC_4.jpeg`)
-                },
-                {
-                    id: 6,
-                    src: require(`../../../static/img/static/One-Shenton-DSC_4.jpeg`)
-                },
-                {
-                    id: 7,
-                    src: require(`../../../static/img/static/One-Shenton-DSC_4.jpeg`)
-                },
-                {
-                    id: 8,
-                    src: require(`../../../static/img/static/One-Shenton-DSC_4.jpeg`)
-                },
-                {
-                    id: 9,
-                    src: require(`../../../static/img/static/One-Shenton-DSC_4.jpeg`)
-                },
-                {
-                    id: 10,
-                    src: require(`../../../static/img/static/One-Shenton-DSC_4.jpeg`)
-                }
-            ],
             isOpenShareSocialDialog: false
         }
-    },
-    mounted() {
-        this.fractionForm = this.popularListing.length.toLocaleString("en-US", {
-            minimumIntegerDigits: 2,
-            useGrouping: false
-        })
-        this.fractionTo = this.fractionTo.toLocaleString("en-US", {
-            minimumIntegerDigits: 2,
-            useGrouping: false
-        })
     },
     methods: {
         closeShareSocialDialog() {
             this.isOpenShareSocialDialog = false
         }
     },
-    computed: {
-        listImagesLimited() {
-            return this.listImages.slice(0, 4)
-        },
-        totalImagesSlider() {
-            return Number(this.listImages.length) - 4
-        }
-    }
+
 }
 </script>
 <style lang="scss" scoped>
-.page--project-detail{
+.page--project-detail {
     @media screen and (max-width: 768px) {
-        .page__content{
-            .page__content-left{
+        .page__content {
+            .page__content-left {
                 padding-right: 4rem;
             }
         }
     }
-    @media screen and (max-width: 767px){
-        .page__top{
+    @media screen and (max-width: 767px) {
+        .page__top {
             display: inline-block;
-            .page__top-left{
+            .page__top-left {
                 margin-bottom: 2.7rem;
             }
         }
-        .page__content{
+        .page__content {
             display: inline-block;
-            .page__content-left{
+            .page__content-left {
                 padding-right: 0;
             }
+            .page-content-left-expansion{
+                margin-bottom: 2.7rem;
+            }
         }
-        .expansion-amenities-row{
-            display: inline-block;
+
+        .page--project-detail-first{
+            padding-bottom: 0;
+        }
+        .page--project-detail-second{
+            padding-bottom: 2.7rem;
         }
     }
 }
@@ -671,233 +222,8 @@ export default {
         }
     }
 }
-.page__listing-content {
-    // position: relative;
-    .swiper-button-prev,
-    .swiper-button-next {
-        width: 1.8rem;
-        height: 2.8rem;
-        top: 2rem;
-        right: 0;
-        left: auto;
-        &::after {
-            font-size: 1.8rem;
-            color: var(--color-primary);
-            display: none;
-        }
-        &::before {
-            content: "\ea6e";
-            font-family: "remixicon" !important;
-            font-style: normal;
-            font-size: 1.8rem;
-            color: var(--color-primary);
-        }
-    }
-    .swiper-button-prev {
-        right: 20.5rem;
-        &::before {
-            content: "\ea64";
-        }
-    }
-    .swiper-pagination-progressbar {
-        right: 6.8rem;
-        left: auto;
-        width: 9rem;
-        height: 0.2rem;
-        background-color: var(--border-color);
-        :deep(.swiper-pagination-progressbar-fill) {
-            background: var(--color-primary);
-        }
-    }
-    .swiper-fraction {
-        right: 5.5rem;
-        span {
-            font-size: 1.6rem;
-            color: var(--color-title-black);
-        }
-        .fraction-to {
-            color: var(--color-primary);
-            position: absolute;
-            top: 0;
-            right: 12.6rem;
-        }
-    }
-}
-.expansion-panel-custom {
-    border-bottom: 0.1rem solid var(--border-color);
-    margin-top: 0;
-    border-radius: 0 !important;
-    background: transparent !important;
-    .v-expansion-panel-header {
-        font-weight: 700;
-        font-size: 2rem;
-        line-height: 2rem;
-        padding: 0;
-    }
-    .v-expansion-panel-header__icon {
-        i {
-            font-size: 3.5rem;
-        }
-    }
-    .v-expansion-panel-content {
-        p {
-            font-weight: 400;
-            font-size: 1.6rem;
-            line-height: 2.4rem;
-            color: var(--color-title-black);
-            &:last-child {
-                margin-bottom: 0;
-            }
-        }
-    }
-    ::v-deep(.v-expansion-panel-content__wrap) {
-        padding: 0 0 2.4rem;
-    }
-    &::before {
-        box-shadow: none;
-    }
-    &:nth-child(4) {
-        border-bottom: none;
-    }
-}
 .icon-custom {
     color: var(--color-primary) !important;
-}
-.expansion-property-row {
-    display: flex;
-    align-items: center;
-    p {
-        margin-bottom: 0;
-        &:first-child {
-            font-weight: 700;
-            font-size: 1.6rem;
-            line-height: 3.2rem;
-            color: var(--color-label);
-            text-transform: capitalize;
-            margin-right: 6.4rem;
-            width: 14.1rem;
-        }
-        &:last-child {
-            font-weight: 400;
-            font-size: 1.6rem;
-            line-height: 3.2rem;
-            color: var(--color-title-black);
-            text-align: left;
-        }
-    }
-}
-.available-from-row {
-    display: flex;
-    align-items: center;
-    i {
-        background-color: var(--color-title-black);
-        margin-right: 0.8rem;
-    }
-    p {
-        margin-bottom: 0;
-    }
-}
-.expansion-amenities-icon {
-    display: flex;
-    align-items: center;
-    margin-bottom: 1.7rem;
-    p {
-        margin-bottom: 0;
-        font-weight: 400;
-        font-size: 1.6rem;
-        line-height: 2.4rem;
-        color: var(--color-title-black);
-        text-transform: capitalize;
-        margin-left: 1.2rem;
-    }
-}
-.expansion-amenities-row {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-.swiper-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    // padding-top:
-    padding-top: 60px;
-}
-
-.swiper-box {
-    .swiper-box__top {
-        position: relative;
-        padding: 0 1.2rem;
-        .swiper-box__image {
-            img {
-                width: 100%;
-                object-fit: cover;
-                border-radius: 2rem;
-            }
-        }
-        .swiper-box__title {
-            position: absolute;
-            background-color: #edb842;
-            padding: 2.2rem 1.6rem 2.5rem;
-            bottom: 2.3rem;
-            margin-bottom: 0;
-            display: flex;
-            align-items: center;
-            left: -1.2rem;
-            width: 85.9%;
-            max-height: 7.5rem;
-            box-sizing: border-box;
-            .swiper-box__title-link {
-                color: var(--color-white);
-                font-size: 2rem;
-                line-height: 2.8rem;
-                text-align: left;
-                text-overflow: ellipsis;
-                display: -webkit-box;
-                -webkit-line-clamp: 2;
-                line-clamp: 2;
-                -webkit-box-orient: vertical;
-                overflow: hidden;
-            }
-        }
-    }
-    .swiper-box__content {
-        padding-top: 0.9rem;
-        .swiper-box__content-first {
-            display: flex;
-            align-items: center;
-            margin-bottom: 1rem;
-            p {
-                margin-bottom: 0;
-                font-weight: 500;
-                font-size: 1.6rem;
-                line-height: 2.4rem;
-                color: var(--color-title-black);
-                padding-left: 1rem;
-            }
-        }
-        .swiper-box__content-second {
-            display: flex;
-            align-items: center;
-            div {
-                display: flex;
-                align-items: center;
-                p {
-                    margin-bottom: 0;
-                    margin-left: 0.8rem;
-                    color: var(--color-title-black);
-                }
-                img {
-                }
-                &:first-child {
-                    margin-right: 4.6rem;
-                }
-            }
-        }
-    }
-}
-.swiper-button-active {
-    opacity: 1;
 }
 .page__content-left-back {
     margin-bottom: 2.1rem;
@@ -1014,36 +340,7 @@ export default {
         padding-left: 0.4rem;
     }
 }
-.page__top-left-list-images {
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    column-gap: 0.8rem;
-    row-gap: 0.8rem;
-    .page__top-left-column {
-        cursor: pointer;
 
-        &:nth-child(1) {
-            grid-column-start: 1;
-            grid-column-end: 4;
-            grid-row-start: 1;
-            grid-row-end: 2;
-            img {
-                height: auto;
-                border-radius: 2rem 2rem 0 0;
-            }
-        }
-        &:nth-child(2) {
-            img {
-                border-radius: 0 0 0 2rem;
-            }
-        }
-        &:nth-child(4) {
-            img {
-                border-radius: 0 0 2rem 0;
-            }
-        }
-    }
-}
 .page__content-right-sticky {
     position: sticky;
     top: 0rem;
@@ -1064,35 +361,5 @@ export default {
     background-color: var(--color-white);
     padding: 3rem 0 7rem;
 }
-.active-total-images {
-    &:nth-child(4) {
-        position: relative;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        img {
-            border-radius: 0 0 2rem 0;
-        }
-        span {
-            font-weight: 500;
-            font-size: 1.6rem;
-            line-height: 2.4rem;
-            color: var(--color-white);
-            position: absolute;
-            z-index: 10;
-        }
-        &::after {
-            content: "";
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.6);
-            display: block;
-            position: absolute;
-            top: 0;
-            left: 0;
-            border-radius: 0 0 2rem 0;
-            z-index: 7;
-        }
-    }
-}
+
 </style>

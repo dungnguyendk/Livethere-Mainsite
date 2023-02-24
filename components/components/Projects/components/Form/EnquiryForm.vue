@@ -100,6 +100,10 @@ export default {
             display: block;
         }
     }
+    @media screen and (max-width: 767px){
+            margin-bottom: 2.7rem;
+
+    }
 }
 .form__field {
     margin-bottom: 1.6rem;

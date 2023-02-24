@@ -156,16 +156,14 @@ export default {
         }
     }
     @media screen and (max-width: 767px) {
+        margin-top: 0.3rem;
+        margin-bottom: 2.7rem;
         .card__features {
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 0 1.6rem 2.4rem;
             flex-wrap: wrap;
-   
-            // .btn-custom{
-            //     width: 14rem;
-            // }
         }
     }
 }

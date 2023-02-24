@@ -197,8 +197,17 @@ export default {
         .swiper-button-next {
             top: 7.5rem;
         }
-        .swiper-fraction{
+        .swiper-fraction {
             top: 5.5rem;
+        }
+        .swiper-box__content-second {
+            p {
+                font-weight: 500;
+                font-size: 1.6rem;
+                line-height: 2.4rem;
+                color: var(--color-title-black); 
+                
+            }
         }
     }
 }
