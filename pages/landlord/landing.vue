@@ -6,6 +6,7 @@
         <LandlordLandingCTA />
     </main>
 </template>
+
 <script>
 import LandlordLandingIntro from "~/components/components/Landlord/LandingPage/LandlordLandingIntro"
 import LandlordLandingServices from "~/components/components/Landlord/LandingPage/LandlordLandingServices.vue"

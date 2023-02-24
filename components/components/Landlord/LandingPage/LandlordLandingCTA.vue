@@ -9,16 +9,13 @@
                 </div>
                 <div class="section__right">
                     <div class="section__right-content">
-                        <h3 class="section__content-title"
-                            >Start your journey in finding your perfect home in Singapore’s
-                            desirable locales</h3
+                        <h3 class="section__content-title">
+                            Bump up your property’s visibility with Livethere now</h3
                         >
-                        <p class="section__content-text"
-                            >We take out the hassle and put in the ease to your home renting
-                            process. We manage your journey from beginning to end, as well as
-                            aftercare. In other words – we make living easy!</p
+                        <p class="section__content-text">
+                            With our tailored marketing services, we’ll put you and your property high on our priority list!</p
                         >
-                        <v-btn class="btn btn--primary btn--green">Find Out More</v-btn>
+                        <v-btn class="btn btn--primary btn--green">List Your Property</v-btn>
                     </div>
                 </div>
             </div>
@@ -31,7 +28,7 @@ export default {
     name: "LandlordLandingCTA",
     data() {
         return {
-            imgURL: "/img/cta-recover.png"
+            imgURL: "/img/landlords/landing-cta.png"
         }
     }
 }
@@ -40,22 +37,28 @@ export default {
 <style lang="scss" scoped>
 .section--landing-cta {
     padding: 4.3rem 0;
+
     .section__container {
         display: flex;
         justify-content: center;
         align-items: center;
+
         .section__left {
             width: 54.77%;
             padding-right: 6.8rem;
+
             .section__image {
                 img {
                     width: 100%;
                     object-fit: cover;
+                    border-radius: 20px;
                 }
             }
         }
+
         .section__right {
             width: 45.22%;
+
             .section__right-content {
                 .section__content-title {
                     font-weight: 800;
@@ -65,6 +68,7 @@ export default {
                     text-align: left;
                     margin-bottom: 2.4rem;
                 }
+
                 .section__content-text {
                     font-weight: 500;
                     font-size: 1.6rem;
@@ -76,16 +80,20 @@ export default {
             }
         }
     }
+
     @media screen and(max-width: 768px) {
         max-width: 42rem;
         margin: 0 auto;
         .section__container {
             display: block;
+
             .section__left {
                 width: 100%;
                 padding-right: 0;
+
                 .section__image {
                     margin-bottom: 1.5rem;
+
                     img {
                         width: 100%;
                         object-fit: cover;
@@ -95,12 +103,14 @@ export default {
 
             .section__right {
                 width: 100%;
+
                 .section__right-content {
                     .section__content-title {
                         font-weight: 800;
 
                         text-align: justify;
                     }
+
                     .section__content-text {
                         text-align: justify;
                     }

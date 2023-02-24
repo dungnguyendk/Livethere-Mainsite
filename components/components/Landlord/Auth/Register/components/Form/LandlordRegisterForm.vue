@@ -78,7 +78,11 @@
                     Submit
                 </v-btn>
             </div>
+            <v-btn v-if="onDevelopment" class="btn btn--outline btn--blue" @click="autoFillForm">
+                Auto fill (Development only)
+            </v-btn>
         </div>
+
         <SuccessSnackBar :open="snackBarMessage !== ''" :message="snackBarMessage" />
     </form>
 </template>
@@ -97,13 +101,16 @@ import {
     MESSAGE_SERVER_ERROR,
     MESSAGE_USERNAME_EXISTS
 } from "~/ultilities/error-messages"
+import { CURRENT_ENV } from "~/app-settings"
+
+import { faker } from "@faker-js/faker"
 
 const complexity = helpers.regex(
     "complexity",
     /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/
 )
 
-const singaporePhoneNumber = helpers.regex("singaporePhoneNumber", /^\+65\s\d{8}$/)
+const singaporePhoneNumber = helpers.regex("singaporePhoneNumber", /^\+65 \d{4}( ?\d{4})$/)
 
 export default {
     name: "LandlordRegisterForm",
@@ -120,6 +127,7 @@ export default {
         phone: { required, singaporePhoneNumber }
     },
     computed: {
+        onDevelopment: () => CURRENT_ENV === "develop",
         usernameErrors() {
             const errors = []
             if (!this.$v.username.$dirty) return errors
@@ -178,7 +186,7 @@ export default {
             bindProps: {
                 mode: "international",
                 required: false,
-                enabledCountryCode: true,
+                enabledCountryCode: false,
                 enabledFlags: true,
                 autocomplete: "off",
                 name: "telephone",
@@ -192,6 +200,16 @@ export default {
     },
 
     methods: {
+        autoFillForm() {
+            this.username = faker.name.firstName().toLowerCase()
+            this.contactName = faker.name.findName()
+            this.email = "minhnghia.luong@asiaesolutions.com"
+            this.phone = "+65 81008399"
+            this.password = "Test@123"
+            this.verifiedPassword = "Test@123"
+            this.otp = ""
+        },
+
         countryChanged(country) {
             this.country = "+" + country.dialCode
         },
@@ -263,9 +281,11 @@ export default {
         async saveRegisterData() {
             try {
                 this.loading = true
-                const actualPhone = `${this.country} ${this.phone.replace(this.country, "")}`
+                const actualPhone = `${this.country} ${this.phone
+                    .replace(this.country, "")
+                    .replace(/ /g, "")}`
                 await this.checkEmail(this.email)
-                await this.checkContactNo(actualPhone)
+                await this.checkContactNo(actualPhone.replace(/^\+/, ""))
                 await this.checkUsername(this.username)
                 if (this.errorMessages.length === 0) {
                     try {
@@ -274,7 +294,7 @@ export default {
                             contactName: this.contactName,
                             email: this.email,
                             password: this.password,
-                            mobile: actualPhone,
+                            mobile: actualPhone.replace(/^\+/, ""),
                             otp: "",
                             createType: "LANDLORD"
                         }
@@ -282,7 +302,8 @@ export default {
                         const response = await this.$axios.$post(
                             httpEndpoint.auth.registerSendOTP,
                             {
-                                mobileNo: actualPhone
+                                mobileNo: actualPhone.replace(/^\+/, ""),
+                                email: this.email
                             }
                         )
                         if (response) {

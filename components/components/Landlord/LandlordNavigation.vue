@@ -27,8 +27,8 @@ export default {
             navigation: [
                 {
                     label: "Dashboard",
-                    path: "/landlord",
-                    value: "/landlord"
+                    path: "/landlord/dashboard",
+                    value: "/landlord/dashboard"
                 },
                 {
                     label: "Assets",
