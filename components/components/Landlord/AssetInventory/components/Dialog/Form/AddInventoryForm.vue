@@ -381,7 +381,7 @@ export default {
             }
         },
         onChangePostalCode() {
-            this.propertyType = ""
+            // this.propertyType = ""
             this.houseNo = ""
             this.streetName = ""
             this.unitNo = ""
