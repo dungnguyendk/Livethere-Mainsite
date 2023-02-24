@@ -8,7 +8,12 @@
                     </div>
                     <div class="header__center">
                         <ul class="menu--top">
-                            <nuxt-link v-for="(item, index) in menus" :to="`/${item.linkURL}`">
+                            <nuxt-link
+                                v-for="(item, index) in menus"
+                                :to="`/${item.linkURL}`"
+                                :class="item.linkURL === path ? 'active' : ''"
+                                :key="index"
+                            >
                                 {{ item.defaultName }}
                             </nuxt-link>
                         </ul>
@@ -26,10 +31,10 @@
 </template>
 
 <script>
-import { mapState } from "vuex"
 import SiteLogo from "~/components/shared/Logo/SiteLogo.vue"
 import MobileHeader from "~/components/shared/Header/MobileHeader.vue"
 import { httpEndpoint } from "~/services/https/endpoints"
+import { defaultMenu } from "~/ultilities/menus"
 
 export default {
     name: "LandingHeader",
@@ -40,15 +45,24 @@ export default {
             default: () => {}
         }
     },
+    computed: {
+        name() {
+            return this.data
+        },
+        path() {
+            return this.$router.path
+        }
+    },
 
     data() {
         return {
-            menus: [],
+            menus: defaultMenu,
             menuID: 0
         }
     },
-    created() {
-        this.getData()
+    mounted() {
+        console.log({ pathName: this.$router })
+        //this.getData()
     },
     methods: {
         // each section has different getData() method
@@ -106,6 +120,15 @@ export default {
                 transform: scale3d(1, 1, 1);
                 transform-origin: 0 100%;
             }
+        }
+
+        &.active {
+            /* &:before {
+                 visibility: visible;
+                 opacity: 1;
+                 transform: scale3d(1, 1, 1);
+                 transform-origin: 0 100%;
+             }*/
         }
     }
 }

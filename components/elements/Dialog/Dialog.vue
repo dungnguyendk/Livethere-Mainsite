@@ -1,6 +1,7 @@
 <template>
     <v-dialog v-model="openDialog" :width="sizeDialog" persistent>
-        <DialogCard :title="title" @close="onClose()" :type="type" :actions="actions">
+        <DialogCard :title="title" @close="onClose" :actions="actions">
+            <slot />
             <template slot="content">
                 <slot name="content" />
             </template>
@@ -31,15 +32,11 @@ export default {
         },
         size: {
             type: String,
-            default: "medium"
+            default: "medium" // small, medium, large
         },
         title: {
             type: String,
             default: "Default Dialog"
-        },
-        type: {
-            type: String,
-            default: "full"
         },
         actions: {
             type: Boolean,
@@ -72,6 +69,9 @@ export default {
     box-shadow: 0px 34px 100px rgba(69, 77, 104, 0.18);
     border-radius: 1.6rem;
     background-color: var(--color-white);
+    &.v-dialog--fullscreen {
+        border-radius: 0;
+    }
 }
 
 .btn-group {

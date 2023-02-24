@@ -1,0 +1,29 @@
+.panel--landlord {
+	.panel__top {
+		padding-bottom: 2rem;
+
+		h3 {
+			margin-bottom: 0;
+			font-size: 2rem;
+			color: var(--color-primary);
+			font-weight: 700;
+		}
+	}
+
+	&.panel--with-to-actions {
+		.panel__top {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+		}
+	}
+
+	@media screen and (max-width: 1279px) {
+		.panel__top {
+			h3 {
+				font-size: 1.6rem;
+			}
+		}
+
+	}
+}

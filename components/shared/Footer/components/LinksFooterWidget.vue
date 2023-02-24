@@ -4,15 +4,15 @@
             <h3 class="widget__title">About livethere</h3>
         </div>
         <div class="widget__container">
-            <template v-if="source">
+            <!--            <template v-if="source">
                 <nuxt-link v-for="(item, index) in source" :to="`/${item.linkURL}`">
                     {{ item.defaultName }}
                 </nuxt-link>
-            </template>
-            <template v-else>
-                <nuxt-link v-for="(link, index) in links" :to="link.url" :key="index">
+            </template>-->
+            <template>
+                <a v-for="(link, index) in links" :href="link.url" :key="index" target="_blank">
                     {{ link.label }}
-                </nuxt-link>
+                </a>
             </template>
         </div>
     </div>
@@ -31,27 +31,27 @@ export default {
         return {
             links: [
                 {
-                    url: "/",
+                    url: "https://www.livethere.com/tenants",
                     label: "Tenants"
                 },
                 {
-                    url: "/",
+                    url: "https://www.livethere.com/privacy-policy",
                     label: "Privacy"
                 },
                 {
-                    url: "/",
+                    url: "https://www.livethere.com/landlords",
                     label: "Landlords"
                 },
                 {
-                    url: "/",
+                    url: "https://www.livethere.com/terms-n-conditions",
                     label: "Terms & Conditions"
                 },
                 {
-                    url: "/",
+                    url: "https://www.livethere.com/about-us",
                     label: "About Us"
                 },
                 {
-                    url: "/",
+                    url: "https://www.livethere.com/",
                     label: "Contact Us"
                 }
             ]

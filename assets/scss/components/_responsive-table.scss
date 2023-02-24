@@ -1,18 +1,17 @@
-.table--asset-analytic {
-	color: #fff;
+.table--asset {
+	color: var(--color-white);
 	width: 100%;
 
 	thead {
 		th {
-			background: #00634F;
+			background: var(--color-menu);
 			padding: 1.6rem;
 			font-weight: 700;
 			font-size: 1.6rem;
 			line-height: 2.4rem;
-			// max-width: 30rem;
 		}
-		th:nth-child(n + 4) {
-			text-align: right;
+		th:nth-child(1) {
+			text-align: left;
 		}
 	}
 
@@ -27,28 +26,21 @@
 		}
 		tr {
 			vertical-align: middle;
-			border: 1px solid #E5E5E5;
+			border: 1px solid var(--border-color);
 		}
-		tr:nth-child(even) {
-			background-color: #FAFAFA;
-		}
-		td:last-child {
-			text-align: left !important;
-		}
-		td:nth-child(n + 4) {
-			text-align: right;
+		td:nth-child(1) {
+			text-align: left;
 		}
 		td {
 			padding: 3.2rem 1.6rem;
 			font-weight: 400;
 			font-size: 1.6rem;
 			line-height: 2.4rem;
-			// max-width: 30rem;
 		}
 	}
 }
-@media only screen and (max-width: 768px) {
-	.table--asset-analytic { 
+@media only screen and (max-width: 820px) {
+	.table--asset { 
 		&.table--responsive{
 			thead {
 				display: none;
@@ -56,7 +48,7 @@
 			tr {
 				display: block;
 				margin-bottom: 1rem;
-				border: 1px solid #ddd;
+				border: 1px solid var(--border-color);
 			}
 			tbody {
 				display: block;
@@ -72,12 +64,13 @@
 					grid-gap: 3rem;
 					border: none;
 					padding: 1.6rem;
+					font-size: 1.4rem;
 					border-top: none;
 					&:before {
 						content: attr(data-label);
 						font-weight: 700;
 						color: #0B0C0C;
-						font-size: 1.6rem;
+						font-size: 1.4rem;
 						text-align: left;
 					}
 				}
@@ -86,11 +79,11 @@
 		
 	}
 }
-@media only screen and (min-width: 768px) and (max-width: 1280px){
-	.table--asset-analytic { 
+@media only screen and (min-width: 820px) and (max-width: 1280px){
+	.table--asset { 
 		thead {
 			th {
-				padding: 1.2rem;
+				padding: 0.6rem;
 				font-size: 1.2rem;
 				line-height: 2rem;
 			}
@@ -100,7 +93,8 @@
 				font-size: 1.4rem;
 			}
 			td {
-				padding: 1.2rem;
+				height: 6rem;
+				padding: 0.6rem;
 				font-size: 1.2rem;
 				line-height: 2rem;
 			}
@@ -108,7 +102,7 @@
 	}
 }
 @media only screen and (min-width: 1280px) and (max-width: 1440px){
-	.table--asset-analytic { 
+	.table--asset { 
 		thead {
 			th {
 				font-size: 1.4rem;

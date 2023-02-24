@@ -1,4 +1,4 @@
-import { appMedia } from "~/app-settings"
+import { appMedia, appVo } from "~/app-settings"
 export default function ({ $axios, redirect }, inject) {
     $axios.onRequest((config) => {
         console.log("Making request to " + config.url)
@@ -21,9 +21,21 @@ export default function ({ $axios, redirect }, inject) {
         }
     })
 
+    const apivo = $axios.create({
+        // headers: {
+        //     common: {
+        //         Accept: "text/plain, */*"
+        //     }
+        // }
+    })
+
     // Set baseURL to something different
     api.setBaseURL(`${appMedia.baseURL}`)
+    // Set baseURL to something different
+    apivo.setBaseURL(`${appVo.baseURL}`)
 
     // Inject to context as $api
     inject("api", api)
+    // Inject to context as $apivo
+    inject("apivo", apivo)
 }
