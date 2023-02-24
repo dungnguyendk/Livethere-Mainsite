@@ -26,10 +26,16 @@
             <v-btn class="btn btn--outline btn--green btn-custom" href="tel://+65 97663322">
                 <i class="icon-svg svg-call-calling"></i>
             </v-btn>
-            <v-btn class="btn btn--outline btn--green btn-custom" href="">
+            <v-btn 
+             class="btn btn--outline btn--green btn-custom"
+             @click="onOpenContactDetailDialog()"   
+            >
                 <i class="icon-svg svg-calendar"></i>
             </v-btn>
-            <v-btn class="btn btn--outline btn--green btn-custom">
+            <v-btn 
+             class="btn btn--outline btn--green btn-custom"
+             @click="onOpenConfirmDetailDialog()"
+            >
                 <i class="icon-svg svg-whatsapp"></i>
             </v-btn>
         </div>
@@ -41,7 +47,17 @@ export default {
     name: "ContactAgentCard",
     data() {
         return {
-            imgURLAvatar: "/img/static/contact-agent-avar.jpg"
+            imgURLAvatar: "/img/static/contact-agent-avar.jpg", 
+            isOpenConfirmDetailDialog: false, 
+            isOpenContactDetailDialog: false,
+        }
+    }, 
+    methods: {
+        onOpenConfirmDetailDialog(){
+            this.$emit("openConfirm", this.isOpenConfirmDetailDialog = true)
+        }, 
+        onOpenContactDetailDialog(){
+            this.$emit("openContact", this.isOpenContactDetailDialog = true)
         }
     }
 }

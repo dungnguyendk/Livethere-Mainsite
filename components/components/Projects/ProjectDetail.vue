@@ -4,7 +4,7 @@
             <div class="container">
                 <div class="page__top">
                     <div class="page__top-left">
-                        <LightBoxListing/>
+                        <LightBoxListing />
                     </div>
                     <div class="page__top-right">
                         <iframe
@@ -81,12 +81,15 @@
                             </div>
                         </div>
                         <div class="page-content-left-expansion">
-                            <PanelListing/>
+                            <PanelListing />
                         </div>
                     </div>
                     <div class="page__content-right">
                         <div class="page__content-right-sticky">
-                            <ContactAgentCard />
+                            <ContactAgentCard 
+                            @openConfirm="openConfirmDetailDialog($event)" 
+                            @openContact="openContactDetailDialog($event)"
+                            />
                             <EnquiryForm />
                             <NotiCard />
                         </div>
@@ -106,6 +109,14 @@
             >
                 <ShareSocialForm />
             </Dialog>
+            <ConfirmDetailDialog 
+             :open="isOpenConfirmDetailDialog"
+             @close="closeConfirmDetailDialog"
+            />
+            <ContactDetailDialog
+             :open="isOpenContactDetailDialog"
+             @close="closeContactDetailDialog"
+            />
         </div>
     </div>
 </template>
@@ -116,33 +127,50 @@ import NotiCard from "~/components/components/Projects/components/Card/NotiCard"
 import ShareSocialForm from "./components/Form/ShareSocialForm.vue"
 import Dialog from "~/components/elements/Dialog/Dialog.vue"
 import ProjectSwiper from "~/components/components/Projects/components/Slider/ProjectSwiper"
-import PanelListing from '~/components/components/Projects/components/Panel/PanelListing'
+import PanelListing from "~/components/components/Projects/components/Panel/PanelListing"
 import LightBoxListing from "./components/Box/LightBoxListing.vue"
+import ConfirmDetailDialog from "./components/Dialog/ConfirmDetailDialog.vue"
+import ContactDetailDialog from "./components/Dialog/ContactDetailDialog.vue"
 export default {
     name: "ProjectListing",
-    components: { 
-        EnquiryForm, 
-        ContactAgentCard, 
-        NotiCard, 
-        ShareSocialForm, 
-        Dialog, 
-        ProjectSwiper, 
-        PanelListing, 
-        LightBoxListing
+    components: {
+        EnquiryForm,
+        ContactAgentCard,
+        NotiCard,
+        ShareSocialForm,
+        Dialog,
+        ProjectSwiper,
+        PanelListing,
+        LightBoxListing, 
+        ConfirmDetailDialog, 
+        ContactDetailDialog
     },
     data() {
         return {
             imageURL: "/img/banner/topbannertwo.jpg",
             activeHeart: false,
-            isOpenShareSocialDialog: false
+            isOpenShareSocialDialog: false,
+            isOpenConfirmDetailDialog: false,
+            isOpenContactDetailDialog: false
         }
     },
     methods: {
         closeShareSocialDialog() {
             this.isOpenShareSocialDialog = false
+        },
+        openConfirmDetailDialog(e) {
+            this.isOpenConfirmDetailDialog = true
+        }, 
+        openContactDetailDialog(e) {
+            this.isOpenContactDetailDialog = true
+        },
+        closeConfirmDetailDialog(){
+            this.isOpenConfirmDetailDialog = false
+        }, 
+        closeContactDetailDialog(){
+            this.isOpenContactDetailDialog = false
         }
-    },
-
+    }
 }
 </script>
 <style lang="scss" scoped>
@@ -166,15 +194,15 @@ export default {
             .page__content-left {
                 padding-right: 0;
             }
-            .page-content-left-expansion{
+            .page-content-left-expansion {
                 margin-bottom: 2.7rem;
             }
         }
 
-        .page--project-detail-first{
+        .page--project-detail-first {
             padding-bottom: 0;
         }
-        .page--project-detail-second{
+        .page--project-detail-second {
             padding-bottom: 2.7rem;
         }
     }
@@ -361,5 +389,4 @@ export default {
     background-color: var(--color-white);
     padding: 3rem 0 7rem;
 }
-
 </style>

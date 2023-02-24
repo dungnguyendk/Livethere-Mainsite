@@ -1,12 +1,5 @@
 <template>
-    <form class="form--confirm-details">
-        <div class="form__top">
-            <h3>Confirm your details</h3>
-            <p
-                >*Please confirm your details before proceeding. Agents are more likely to respond to
-                enquiries with contact details
-            </p>
-        </div>
+    <form class="form--contact-details">
         <div class="form__fields">
             <div class="form__field">
                 <label>name</label>
@@ -32,6 +25,10 @@
                 <label>email</label>
                 <v-text-field outlined dense placeholder="Email *"> </v-text-field>
             </div>
+            <div class="form__field">
+                <label>message</label>
+                <v-textarea outlined dense height="120" placeholder="Message *"> </v-textarea>
+            </div>
             <v-btn class="btn btn--primary btn--green btn-custom">Verify & continue</v-btn>
         </div>
     </form>
@@ -39,7 +36,8 @@
 
 <script>
 export default {
-    name: "LiveThereMainSiteConfirmDetailForm",
+    name: 'ContactDetailForm',
+
     data() {
         return {
             bindProps: {
@@ -54,51 +52,24 @@ export default {
                     showDialCode: true
                 }
             }
-        }
+        };
     },
 
-    mounted() {},
+    mounted() {
+        
+    },
 
     methods: {
         countryChanged(country) {
             this.country = "+" + country.dialCode
         }
     }
-}
+};
 </script>
 
 <style lang="scss" scoped>
-.form--confirm-details {
-    .form__top {
-        h3 {
-            font-weight: 700;
-            font-size: 3rem;
-            line-height: 2rem;
-            color: #000000;
-            text-transform: capitalize;
-            margin-bottom: 2rem;
-        }
-        p {
-            font-weight: 500;
-            font-size: 2rem;
-            line-height: 2.4rem;
-            color: #ef4444;
-            margin-bottom: 2rem;
-        }
-    }
-    @media screen and(max-width: 767px){
-        
-    .form__top {
-        h3 {
-            font-size: 2rem;
-            margin-bottom: 1rem;
-        }
-        p {
-            font-size: 2rem;
-            text-align: justify;
-        }
-    }
-    }
+.form--contact-details{
+
 }
 .form__field {
     margin-bottom: 3rem;
@@ -131,5 +102,4 @@ export default {
     }
 
 }
-
 </style>
