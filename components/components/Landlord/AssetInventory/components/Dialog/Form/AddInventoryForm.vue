@@ -122,7 +122,6 @@ export default {
             })
         },
         bedroom: { required },
-        // location: { required },
         tenure: { required },
         floorArea: {
             required,
@@ -197,9 +196,6 @@ export default {
         bedroomErrors() {
             return setFormControlErrors(this.$v.bedroom, "No of Bedroom(s) is required")
         },
-        // locationErrors() {
-        //     return setFormControlErrors(this.$v.location, "Location is required")
-        // },
         tenureErrors() {
             return setFormControlErrors(this.$v.tenure, "Tenure is required")
         },
@@ -217,7 +213,6 @@ export default {
         },
     },
     created() {
-        // console.log("this.inventoryDetail", this.inventoryDetail.propertyType);
         if (this.inventoryDetail) {
             this.propertyType = this.inventoryDetail.propertyType ? this.propertyTypeList.find((i) => i.value.id === this.inventoryDetail.propertyType).value : ""
             this.postalCode = this.inventoryDetail.postalCode ? this.inventoryDetail.postalCode : ""
@@ -247,7 +242,6 @@ export default {
             this.purchasedPrice = ""
             this.purchasedDate = ""
         }
-        // console.log("this.sourceDetail::", this.sourceDetail);
     },
     methods: {
         onFormSubmit() {
@@ -381,7 +375,7 @@ export default {
             }
         },
         onChangePostalCode() {
-            this.propertyType = ""
+            // this.propertyType = ""
             this.houseNo = ""
             this.streetName = ""
             this.unitNo = ""
@@ -455,15 +449,7 @@ export default {
         purchasedDate() {
             this.purchasedDateFormatted = this.formatDate(this.purchasedDate)
         },
-        // propertyType(val) {
-        //     this.onChangePropertyType()
-        //     // console.log("propertyType::", val.id === 3);
-        //     if (val.id === 3) {
-        //         this.disableUnitNo = true
-        //     } else {
-        //         this.disableUnitNo = false
         propertyType(val) {
-            // console.log("watch propertyType",val);
             if (val.name === "LANDED PROPERTY") {
                 this.hideLanded = true
             } else {
