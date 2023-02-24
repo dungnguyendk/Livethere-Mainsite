@@ -2,39 +2,53 @@
     <div class="form--enquiry">
         <h4 class="form__title">Drop us a note. We’ll be in touch with you</h4>
         <form class="form__fields" @submit.prevent="onFormSubmit">
-            <v-row>
-                <v-col cols="12" sm="12" md="6">
-                    <label>Full name</label>
-                    <v-text-field v-model.trim="fullName" outlined dense :error-messages="fullNameErrors" />
-                    <!-- <v-text-field v-model="fullName" outlined dense hide-details /> -->
-                </v-col>
-                <v-col cols="12" sm="12" md="6">
-                    <label>Email</label>
-                    <v-text-field v-model.trim="email" outlined dense :error-messages="emailErrors" />
-                    <!-- <v-text-field v-model="email" outlined dense hide-details /> -->
-                </v-col>
-                <v-col cols="12" sm="12" md="6">
-                    <label>Address</label>
-                    <v-text-field v-model.trim="address" outlined dense :error-messages="addressErrors" />
-                    <!-- <v-text-field v-model="address" outlined dense hide-details /> -->
-                </v-col>
-                <v-col cols="12" sm="12" md="6">
-                    <label>Country</label>
-                    <v-select v-model="country" outlined dense placeholder="Please select" :items="countries"
-                        item-text="countryName" item-value="ccode" :error-messages="countryErrors" />
-                    <!-- <v-select v-model="country" :items="countries" item-text="countryName" item-value="ccode" outlined dense
-                        hide-details /> -->
-                </v-col>
-                <v-col cols="12" sm="12" md="12">
-                    <div class="form__field--enquiry-type">
-                        <label>Enquiry Type </label>
-                        <v-select v-model="enquiryType" outlined dense placeholder="Please select" :items="enquiryListing"
-                            item-text="text" :error-messages="enquiryTypeErrors" />
-                        <!-- <v-select v-model="enquiryType" :items="enquiryListing" item-text="text" outlined dense
-                            hide-details /> -->
-                    </div>
-                </v-col>
-            </v-row>
+            <div class="form__field">
+                <label>Full name</label>
+                <v-text-field
+                    v-model.trim="fullName"
+                    outlined
+                    dense
+                    :error-messages="fullNameErrors"
+                />
+            </div>
+            <div class="form__field">
+                <label>Email</label>
+                <v-text-field v-model.trim="email" outlined dense :error-messages="emailErrors" />
+            </div>
+            <div class="form__field">
+                <label>Address</label>
+                <v-text-field
+                    v-model.trim="address"
+                    outlined
+                    dense
+                    :error-messages="addressErrors"
+                />
+            </div>
+            <div class="form__field">
+                <label>Country</label>
+                <v-select
+                    v-model="country"
+                    outlined
+                    dense
+                    placeholder="Please select"
+                    :items="countries"
+                    item-text="countryName"
+                    item-value="ccode"
+                    :error-messages="countryErrors"
+                />
+            </div>
+            <div class="form__field">
+                <label>Enquiry Type </label>
+                <v-select
+                    v-model="enquiryType"
+                    outlined
+                    dense
+                    placeholder="Please select"
+                    :items="enquiryListing"
+                    item-text="text"
+                    :error-messages="enquiryTypeErrors"
+                />
+            </div>
         </form>
         <div class="form__actions">
             <v-btn class="btn btn--primary btn--green" @click="onFormSubmit">Submit</v-btn>
@@ -106,7 +120,6 @@ export default {
         enquiryTypeErrors() {
             return setFormControlErrors(this.$v.enquiryType, "Enquiry Type is required")
         }
-
     },
     methods: {
         onFormSubmit() {
@@ -137,10 +150,10 @@ export default {
     margin: auto;
 
     .form__title {
-        display: flex;
-        justify-content: center;
+        // display: flex;
+        // justify-content: center;
         text-align: center;
-        align-items: center;
+        // align-items: center;
         padding-top: 2.1rem;
         color: var(--color-menu);
         font-weight: 800;
@@ -158,6 +171,15 @@ export default {
         font-weight: 500;
         font-size: 1.6rem;
         line-height: 2rem;
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-gap: 0 2.4rem;
+        .form__field:nth-child(5) {
+            grid-row-start: 3;
+            grid-row-end: 5;
+            grid-column-start: 1;
+            grid-column-end: 3;
+        }
     }
 
     .form__actions {
@@ -182,6 +204,27 @@ export default {
             font-size: 1.6rem;
             line-height: 2rem;
             color: var(--color-heading);
+        }
+    }
+    @media screen and(max-width: 1024px) {
+        h4 {
+            padding: 0 1.2rem;
+        }
+    }
+    @media screen and(max-width: 500px) {
+        .form__title {
+            font-size: 2rem;
+        }
+        .form__fields {
+            display: block;
+        }
+        label {
+            font-size: 1.4rem;
+        }
+        :deep(.v-input) {
+            input {
+                font-size: 1.4rem;
+            }
         }
     }
 }

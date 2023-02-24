@@ -2,14 +2,14 @@
     <div class="section--enquiry-form">
         <div class="container">
             <div class="section__container">
+                <div class="section__image">
+                    <img src="~/static/img/landlords/landing-enquiry-bg.jpg" alt="" />
+                </div>
                 <div class="section__content">
                     <h3>Maximise your rental income, minus the hassle</h3>
                     <div class="section__form">
                         <EnquiryForm />
                     </div>
-                </div>
-                <div class="section__image">
-                    <img src="~/static/img/landlords/landing-enquiry-bg.jpg" alt="" />
                 </div>
             </div>
         </div>
@@ -64,6 +64,39 @@ export default {
 
     .section__container {
         position: relative;
+    }
+    @media screen and(max-width: 1023px) {
+        .section__content {
+            // max-width: 65%;
+            h3 {
+                font-size: 3rem;
+            }
+        }
+       
+    }
+    @media screen and(max-width: 768px) {
+        .section__content {
+            max-width: 100%;
+            position: relative;
+            h3 {
+                // align-items: center;
+                font-size: 2.5rem;
+            }
+        }
+        .section__image {
+            max-width:85%;
+        }
+    }
+    @media screen and(max-width: 600px) {
+        .section__content {
+            h3 {
+                // align-items: center;
+                text-align: center;
+            }
+        }
+        .section__image {
+            max-width:100%;
+        }
     }
 }
 </style>
