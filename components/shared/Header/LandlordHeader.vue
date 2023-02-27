@@ -142,6 +142,13 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+.header.header--landing {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 99;
+}
 .btn--account {
     border: none;
     box-shadow: none;

@@ -88,6 +88,8 @@ export default {
 .ps-drawer {
     width: 100% !important;
     background-color: #0b0c0c;
+    z-index: 98;
+    position: fixed;
 
     .ps-drawer__close {
         position: absolute;

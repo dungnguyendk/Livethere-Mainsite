@@ -32,7 +32,7 @@ export default {
     .section__content {
         max-width: 50%;
         position: relative;
-        z-index: 99;
+        z-index: 7;
 
         padding-top: 3.6rem;
 

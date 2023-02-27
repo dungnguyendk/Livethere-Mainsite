@@ -1,5 +1,5 @@
 <template lang="html">
-    <header class="header--mobile" id="mobile-sticky">
+    <header  id="mobile-sticky" class="header--mobile" :class="appDrawer ? 'header--mobile' : 'header--mobile open-drawer'">
         <div class="header__left">
             <a href="#" class="header__toggle" @click.prevent="handleOpenMenuDrawer">
                 <i class="ri-menu-line" />
@@ -67,6 +67,7 @@ export default {
         },
         handleOpenMenuDrawer() {
             this.$store.commit("app/setAppDrawer", !this.appDrawer)
+            console.log("handleOpenMenuDrawer",this.appDrawer);
         }
     }
 }
@@ -88,6 +89,11 @@ export default {
     justify-content: space-between;
     padding: 10px 16px;
     background-color: var(--color-primary);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 99;
 
     > * {
         flex-basis: 100%;
@@ -143,6 +149,11 @@ export default {
     @media screen and (min-width: 1280px) {
         display: none;
     }
+}
+.header--mobile.open-drawer {
+position: static;
+    margin-bottom: -6.4rem;
+    transition: none;
 }
 .dialog-search {
     border-radius: 0;
