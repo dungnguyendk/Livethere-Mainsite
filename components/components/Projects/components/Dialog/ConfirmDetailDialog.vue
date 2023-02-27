@@ -99,7 +99,22 @@ export default {
         }
         .card__content-form {
             padding: 2.7rem 2.4rem;
-
+        }
+    }
+    @media screen and (max-width: 412px) {
+        .card__header {
+            .card__header-back {
+                h3 {
+                    font-size: 2rem;
+                }
+            }
+        }
+        .card__content {
+            .card__content-user-info {
+                p {
+                    font-size: 2rem;
+                }
+            }
         }
     }
 }

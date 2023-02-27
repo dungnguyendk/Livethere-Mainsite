@@ -136,7 +136,46 @@ export default {
             }
         }
     }
-    .card__content {
+    @media screen and(max-width: 480px) {
+        .card__header {
+            .card__header-back {
+                h3 {
+                    font-size: 2rem;
+                }
+            }
+        }
+        .card__content-box {
+            border-radius: 1rem;
+            border: 0.1rem solid var(--border-color);
+            padding: 2rem 2.4rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 2.7rem 0;
+            cursor: pointer;
+            .card__content-box-text {
+                h3 {
+                    font-size: 2rem;
+                }
+                p {
+                    font-size: 1.5rem;
+                }
+            }
+            .card__content-box-image {
+                margin-left: 0.8rem;
+            }
+        }
+        .card__content-article {
+            p {
+                font-size: 1.5rem;
+                text-align: justify;
+            }
+        }
+        .card__content-article-info {
+            span {
+                font-size: 1.8rem;
+            }
+        }
     }
 }
 .card__content-box-info {

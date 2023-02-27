@@ -3,8 +3,8 @@
         <div class="form__top">
             <h3>Confirm your details</h3>
             <p
-                >*Please confirm your details before proceeding. Agents are more likely to respond to
-                enquiries with contact details
+                >*Please confirm your details before proceeding. Agents are more likely to respond
+                to enquiries with contact details
             </p>
         </div>
         <div class="form__fields">
@@ -86,18 +86,16 @@ export default {
             margin-bottom: 2rem;
         }
     }
-    @media screen and(max-width: 767px){
-        
-    .form__top {
-        h3 {
-            font-size: 2rem;
-            margin-bottom: 1rem;
+    @media screen and (max-width: 412px) {
+        .form__top {
+            h3 {
+                font-size: 2rem;
+            }
+            p {
+                font-size: 1.5rem;
+                text-align: justify;
+            }
         }
-        p {
-            font-size: 2rem;
-            text-align: justify;
-        }
-    }
     }
 }
 .form__field {
@@ -111,25 +109,23 @@ export default {
         margin-bottom: 0.8rem;
     }
 }
-.v-text-field{
-    ::v-deep(.v-input__control){
+.v-text-field {
+    ::v-deep(.v-input__control) {
         .v-text-field__details {
             display: none;
         }
     }
 }
-::v-deep(.form__field-tel-input-custom){
-    .v-text-field__details{
+::v-deep(.form__field-tel-input-custom) {
+    .v-text-field__details {
         display: none;
     }
 }
-.btn-custom{
+.btn-custom {
     display: inline-block;
     width: 100%;
-    ::v-deep(.v-btn__content){
+    ::v-deep(.v-btn__content) {
         font-size: 2rem !important;
     }
-
 }
-
 </style>
