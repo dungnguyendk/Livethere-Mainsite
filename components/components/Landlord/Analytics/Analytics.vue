@@ -1,5 +1,7 @@
 <template lang="html">
-    <AssetAnalyticsTable />
+    <div class="container">
+        <AssetAnalyticsTable />
+    </div>
 </template>
 
 <script>

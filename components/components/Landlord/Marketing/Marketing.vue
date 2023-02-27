@@ -1,5 +1,5 @@
 <template lang="html">
-    <div>
+    <div class="container">
         <MarketingInventoryTable />
         <!-- <v-snackbar v-model="snackbarActive" :timeout="2000" top right text color="green darken-4">
             <span class="message--snackBar">
