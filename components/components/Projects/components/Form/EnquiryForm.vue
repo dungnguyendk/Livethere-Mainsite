@@ -1,5 +1,5 @@
 <template>
-    <form class="form-enquiry">
+    <form class="form-enquiry" @submit.prevent="onFormSubmit">
         <div class="form__top">
             <h3>enquiry form</h3>
             <p>* All fields are required</p>
@@ -7,43 +7,101 @@
         <div class="form__fields">
             <div class="form__field">
                 <label>name</label>
-                <v-text-field outlined dense placeholder="Example text"> </v-text-field>
+                <v-text-field 
+                 outlined 
+                 dense 
+                 placeholder="Example text"
+                 v-model="name"
+                 :error-messages="nameErrors"
+                > 
+                </v-text-field>
             </div>
             <div class="form__field">
                 <label>phone number</label>
                 <vue-tel-input-vuetify
-                        outlined
-                        dense
-                        v-bind="bindProps"
-                        label=""
-                        clearable
-                        defaultCountry="SG"
-                        autocomplete="off"
-                        :disabledFetchingCountry="true"
-                        placeholder="+65"
-                        v-on:country-changed="countryChanged"
-                        class="form__field-tel-input-custom"
+                    v-model.trim="phone"
+                    :error-messages="phoneErrors"
+                    outlined
+                    dense
+                    v-bind="bindProps"
+                    label=""
+                    clearable
+                    defaultCountry="SG"
+                    autocomplete="off"
+                    :disabledFetchingCountry="true"
+                    placeholder="+65"
+                    v-on:country-changed="countryChanged"
+                    class="form__field-tel-input-custom"
                 />
             </div>
             <div class="form__field">
                 <label>email</label>
-                <v-text-field outlined dense placeholder="Example text"> </v-text-field>
+                <v-text-field 
+                 outlined 
+                 dense 
+                 placeholder="Example text"
+                 v-model="email"
+                 :error-messages="emailErrors"
+                > </v-text-field>
             </div>
             <div class="form__field">
                 <label>message</label>
-                <v-textarea outlined dense  height="120"> </v-textarea>
+                <v-textarea 
+                outlined 
+                dense 
+                height="120"
+                :error-messages="messageErrors"
+                v-model="message"
+                > 
+                </v-textarea>
             </div>
-            <v-btn class="btn btn--primary btn--green btn-custom">Enquire Now</v-btn>
+            <v-btn class="btn btn--primary btn--green btn-custom" type="submit" :loading="loading">Enquire Now</v-btn>
         </div>
     </form>
 </template>
 
 <script>
+import { validationMixin } from "vuelidate"
+import { required, helpers, email } from "vuelidate/lib/validators"
+import { setFormControlErrors } from "~/ultilities/form-validations"
+import {
+    MESSAGE_EMAIL_EXISTS,
+    MESSAGE_INVALID_EMAIL,
+    MESSAGE_INVALID_SINGAPORE_PHONE_NUMBER,
+    MESSAGE_PHONE_EXISTS,
+    MESSAGE_REQUIRED_EMAIL,
+    MESSAGE_REQUIRED_PHONE_NUMBER,
+    MESSAGE_SERVER_ERROR,
+    MESSAGE_USERNAME_EXISTS
+} from "~/ultilities/error-messages"
 export default {
     name: "EnquiryForm",
-
+    mixins: [validationMixin],
+    validations: {
+        name: {
+            required
+        }, 
+        phone: {
+            required, 
+        }, 
+        email: {
+            required, 
+            email
+        },
+        message: {
+            required
+        }
+    },
     data() {
         return {
+            name: "", 
+            phone: null, 
+            countryCode: null, 
+            country: null, 
+            errorMessages: [], 
+            loading: false, 
+            message: "",
+            email: "",
             bindProps: {
                 mode: "international",
                 required: false,
@@ -59,12 +117,38 @@ export default {
         }
     },
 
-    mounted() {},
+    computed: {
+        nameErrors(){
+            return setFormControlErrors(this.$v.name, "Name Required")
+        }, 
+        emailErrors(){
+            const errors = []
+            if(!this.$v.email.$dirty) return errors
+            !this.$v.email.required && errors.push(MESSAGE_REQUIRED_EMAIL)
+            !this.$v.email.email && errors.push(MESSAGE_INVALID_EMAIL)
+            return errors
+        }, 
+        phoneErrors() {
+            const errors = []
+            if (!this.$v.phone.$dirty) return errors
+            !this.$v.phone.required && errors.push(MESSAGE_REQUIRED_PHONE_NUMBER)
+            return errors
+        },
+        messageErrors(){
+            return setFormControlErrors(this.$v.message, "Message Required")
+        }
+    },
 
     methods: {
         countryChanged(country) {
             this.country = "+" + country.dialCode
-        },
+        }, 
+        onFormSubmit(){
+            this.$v.$touch()
+            if(!this.$v.$invalid){
+                this.errorMessages = []
+            }
+        }, 
     }
 }
 </script>
@@ -95,18 +179,20 @@ export default {
     }
     .form__fields {
         padding: 0 2.4rem 2rem;
-        .btn-custom{
+        .btn-custom {
             margin: 0 auto;
             display: block;
+            ::v-deep(.v-btn__content) {
+                font-size: 1.6rem !important;
+            }
         }
     }
-    @media screen and (max-width: 767px){
-            margin-bottom: 2.7rem;
-
+    @media screen and (max-width: 767px) {
+        margin-bottom: 2.7rem;
     }
 }
 .form__field {
-    margin-bottom: 1.6rem;
+ 
     label {
         font-weight: 500;
         font-size: 1.6rem;
@@ -116,20 +202,11 @@ export default {
         margin-bottom: 0.4rem;
     }
 }
-.v-text-field{
-    ::v-deep(.v-input__control){
-        .v-text-field__details {
-            display: none;
-        }
-    }
-}
-::v-deep(.form__field-tel-input-custom){
-    .v-text-field__details{
-        display: none;
-    }
-    .v-input__slot{
+
+::v-deep(.form__field-tel-input-custom) {
+    .v-input__slot {
         margin-bottom: 0;
-        border: none
+        border: none;
     }
 }
 </style>

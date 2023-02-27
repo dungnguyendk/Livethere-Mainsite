@@ -72,7 +72,6 @@ const complexity = helpers.regex(
     "complexity",
     /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/
 )
-const singaporePhoneNumber = helpers.regex("singaporePhoneNumber", /^\+65 \d{4}( ?\d{4})$/)
 export default {
     name: "LiveThereMainSiteConfirmDetailForm",
     mixins: [validationMixin],
@@ -82,7 +81,7 @@ export default {
         }, 
         phone: {
             required, 
-            singaporePhoneNumber
+  
         }, 
         email: {
             required, 
@@ -104,8 +103,6 @@ export default {
             const errors = []
             if (!this.$v.phone.$dirty) return errors
             !this.$v.phone.required && errors.push(MESSAGE_REQUIRED_PHONE_NUMBER)
-            !this.$v.phone.singaporePhoneNumber &&
-                errors.push(MESSAGE_INVALID_SINGAPORE_PHONE_NUMBER)
             return errors
         }
     },
@@ -161,7 +158,7 @@ export default {
         }
         p {
             font-weight: 500;
-            font-size: 1.76rem;
+            font-size: 1.6rem;
             line-height: 2.4rem;
             color: #ef4444;
             margin-bottom: 2rem;
@@ -180,7 +177,7 @@ export default {
 
     label {
         font-weight: 500;
-        font-size: 1.76rem;
+        font-size: 1.6rem;
         line-height: 2rem;
         color: var(--color-label);
         text-transform: capitalize;
