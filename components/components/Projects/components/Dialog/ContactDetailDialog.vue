@@ -126,7 +126,7 @@ export default {
             padding: 2.7rem 2.4rem;
             h3 {
                 font-weight: 700;
-                font-size: 3rem;
+                font-size: 2.5rem;
                 line-height: 2rem;
                 color: var(--color-title-black);
                 margin-bottom: 0;
@@ -192,7 +192,7 @@ export default {
     .card__content-box-text {
         h3 {
             font-weight: 700;
-            font-size: 3rem;
+            font-size: 2.5rem;
             line-height: 2rem;
             color: var(--color-title-black);
             margin-bottom: 2.7rem;

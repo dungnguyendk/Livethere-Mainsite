@@ -1,5 +1,8 @@
 <template>
-    <form class="form--confirm-details">
+    <form 
+     class="form--confirm-details"
+     @submit.prevent="onFormSubmit"
+    >
         <div class="form__top">
             <h3>Confirm your details</h3>
             <p
@@ -10,11 +13,18 @@
         <div class="form__fields">
             <div class="form__field">
                 <label>name</label>
-                <v-text-field outlined dense placeholder="Name *"> </v-text-field>
+                <v-text-field 
+                 outlined 
+                 dense 
+                 placeholder="Name *"
+                 v-model="name"
+                 :error-messages="nameErrors"
+                ></v-text-field>
             </div>
             <div class="form__field">
                 <label>phone number</label>
                 <vue-tel-input-vuetify
+                    v-model="phone"
                     outlined
                     dense
                     v-bind="bindProps"
@@ -25,30 +35,71 @@
                     :disabledFetchingCountry="true"
                     placeholder="+65"
                     v-on:country-changed="countryChanged"
+                    :error-messages="phoneErrors"
                     class="form__field-tel-input-custom"
                 />
             </div>
             <div class="form__field">
                 <label>email</label>
-                <v-text-field outlined dense placeholder="Email *"> </v-text-field>
+                <v-text-field 
+                 outlined 
+                 dense 
+                 placeholder="Email *"
+                 v-model="email"
+                 :error-messages="emailErrors"
+                > </v-text-field>
             </div>
-            <v-btn class="btn btn--primary btn--green btn-custom">Verify & continue</v-btn>
+            <v-btn class="btn btn--primary btn--green btn-custom" @click="confirmDetails()">Verify & continue</v-btn>
         </div>
     </form>
 </template>
 
 <script>
+import { validationMixin } from "vuelidate"
+import { required } from "vuelidate/lib/validators"
+import { setFormControlErrors } from "~/ultilities/form-validations"
 export default {
     name: "LiveThereMainSiteConfirmDetailForm",
+    mixins: [validationMixin],
+    validations: {
+        name: {
+            required
+        }, 
+        phone: {
+            required
+        }, 
+        email: {
+            required
+        }
+    },
+    computed: {
+        nameErrors(){
+            return setFormControlErrors(this.$v.name, "Name Required")
+        }, 
+        phoneErrors(){
+            return setFormControlErrors(this.$v.phone, "Phone Number Required")
+        }, 
+        emailErrors(){
+            return setFormControlErrors(this.$v.email, "Email Required")
+        }
+    },
     data() {
         return {
+            name: "", 
+            email: "", 
+            phone: null,
+            countryCode: null, 
+            country: null, 
+            errorMessages: [], 
+            loading: false,
             bindProps: {
                 mode: "international",
                 required: false,
-                enabledCountryCode: true,
+                enabledCountryCode: false,
                 enabledFlags: true,
                 autocomplete: "off",
                 name: "telephone",
+                onlyCountries: ["SG"],
                 maxLen: 25,
                 inputOptions: {
                     showDialCode: true
@@ -57,11 +108,16 @@ export default {
         }
     },
 
-    mounted() {},
-
     methods: {
         countryChanged(country) {
             this.country = "+" + country.dialCode
+        }, 
+        onFormSubmit(){
+            this.loading = true
+        }, 
+        confirmDetails(){
+            this.onFormSubmit()
+            this.$v.$touch()
         }
     }
 }
@@ -72,7 +128,7 @@ export default {
     .form__top {
         h3 {
             font-weight: 700;
-            font-size: 3rem;
+            font-size: 2.5rem;
             line-height: 2rem;
             color: #000000;
             text-transform: capitalize;
@@ -99,7 +155,7 @@ export default {
     }
 }
 .form__field {
-    margin-bottom: 3rem;
+
     label {
         font-weight: 500;
         font-size: 2rem;
@@ -112,15 +168,11 @@ export default {
 .v-text-field {
     ::v-deep(.v-input__control) {
         .v-text-field__details {
-            display: none;
+            // display: none;
         }
     }
 }
-::v-deep(.form__field-tel-input-custom) {
-    .v-text-field__details {
-        display: none;
-    }
-}
+
 .btn-custom {
     display: inline-block;
     width: 100%;

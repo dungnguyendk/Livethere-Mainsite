@@ -259,11 +259,19 @@ export default {
     .btn-custom {
         display: flex;
         align-items: center;
+        i{
+            color: var(--color-primary)
+        }
         span {
             font-weight: 700;
             font-size: 1.6rem;
             line-height: 2rem;
             margin-left: 0.4rem;
+        }
+        &:hover{
+            i{
+                color: var(--color-white)
+            }
         }
     }
 }

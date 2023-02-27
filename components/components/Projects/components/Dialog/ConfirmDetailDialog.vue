@@ -30,6 +30,7 @@
 
 <script>
 import ConfirmDetailForm from "~/components/components/Projects/components/Form/ConfirmDetailForm"
+
 export default {
     name: "ConfirmDetailDialog",
     components: { ConfirmDetailForm },
@@ -71,7 +72,7 @@ export default {
             padding: 2.7rem 2.4rem;
             h3 {
                 font-weight: 700;
-                font-size: 3rem;
+                font-size: 2.5rem;
                 line-height: 2rem;
                 color: var(--color-title-black);
                 margin-bottom: 0;
@@ -89,7 +90,7 @@ export default {
             padding: 2.7rem 2.4rem;
             p {
                 font-weight: 700;
-                font-size: 3rem;
+                font-size: 2rem;
                 line-height: 2rem;
                 color: var(--color-title-black);
                 margin-bottom: 0;
@@ -105,14 +106,14 @@ export default {
         .card__header {
             .card__header-back {
                 h3 {
-                    font-size: 2rem;
+                    font-size: 1.5rem;
                 }
             }
         }
         .card__content {
             .card__content-user-info {
                 p {
-                    font-size: 2rem;
+                    font-size: 1.5rem;
                 }
             }
         }

@@ -1,13 +1,25 @@
 <template>
-    <form class="form--contact-details">
+    <form 
+     class="form--contact-details"
+    
+    >
         <div class="form__fields">
             <div class="form__field">
                 <label>name</label>
-                <v-text-field outlined dense placeholder="Name *"> </v-text-field>
+                <v-text-field 
+                 outlined 
+                 dense 
+                 placeholder="Name *"
+                 v-model="name"
+                 :error-messages="nameErrors"
+                > 
+                </v-text-field>
             </div>
             <div class="form__field">
                 <label>phone number</label>
                 <vue-tel-input-vuetify
+                    v-model="phone"
+                    :error-messages="phoneErrors"
                     outlined
                     dense
                     v-bind="bindProps"
@@ -23,23 +35,59 @@
             </div>
             <div class="form__field">
                 <label>email</label>
-                <v-text-field outlined dense placeholder="Email *"> </v-text-field>
+                <v-text-field 
+                 outlined 
+                 dense 
+                 placeholder="Email *"
+                 v-model="email"
+                 :error-messages="emailErrors"
+                 > 
+                </v-text-field>
             </div>
             <div class="form__field">
                 <label>message</label>
-                <v-textarea outlined dense height="120" placeholder="Message *"> </v-textarea>
+                <v-textarea 
+                 outlined 
+                 dense 
+                 height="120" 
+                 placeholder="Message *"
+                 :error-messages="messageErrors"
+                > 
+                </v-textarea>
             </div>
-            <v-btn class="btn btn--primary btn--green btn-custom">Verify & continue</v-btn>
+            <v-btn class="btn btn--primary btn--green btn-custom" @click="contactDetails()">Verify & continue</v-btn>
         </div>
     </form>
 </template>
 
 <script>
+import { validationMixin } from "vuelidate"
+import { required } from "vuelidate/lib/validators"
+import { setFormControlErrors } from "~/ultilities/form-validations"
 export default {
     name: 'ContactDetailForm',
-
+    validations: {
+        name: {
+            required
+        }, 
+        phone: {
+            required
+        }, 
+        email: {
+            required
+        }, 
+        message: {
+            required
+        }
+    },
     data() {
         return {
+            name: "", 
+            phone: null, 
+            countryCode: null, 
+            country: null, 
+            errorMessages: [], 
+            loading: false, 
             bindProps: {
                 mode: "international",
                 required: false,
@@ -54,14 +102,31 @@ export default {
             }
         };
     },
-
-    mounted() {
-        
+    computed: {
+        nameErrors(){
+            return setFormControlErrors(this.$v.name, "Name Required")
+        }, 
+        phoneErrors(){
+            return setFormControlErrors(this.$v.phone, "Phone Number Required")
+        }, 
+        emailErrors(){
+            return setFormControlErrors(this.$v.email, "Email Required")
+        }, 
+        messageErrors(){
+            return setFormControlErrors(this.$v.message, "Message Required")
+        }
     },
 
     methods: {
         countryChanged(country) {
             this.country = "+" + country.dialCode
+        },
+        onFormSubmit(){
+            this.loading = true
+        }, 
+        contactDetails(){
+            this.onFormSubmit()
+            this.$v.$touch()
         }
     }
 };
@@ -72,7 +137,7 @@ export default {
 
 }
 .form__field {
-    margin-bottom: 3rem;
+
     label {
         font-weight: 500;
         font-size: 2rem;
@@ -80,18 +145,6 @@ export default {
         color: var(--color-label);
         text-transform: capitalize;
         margin-bottom: 0.8rem;
-    }
-}
-.v-text-field{
-    ::v-deep(.v-input__control){
-        .v-text-field__details {
-            display: none;
-        }
-    }
-}
-::v-deep(.form__field-tel-input-custom){
-    .v-text-field__details{
-        display: none;
     }
 }
 .btn-custom{

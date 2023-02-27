@@ -26,15 +26,15 @@
             <v-btn class="btn btn--outline btn--green btn-custom" href="tel://+65 97663322">
                 <i class="icon-svg svg-call-calling"></i>
             </v-btn>
-            <v-btn 
-             class="btn btn--outline btn--green btn-custom"
-             @click="onOpenContactDetailDialog()"   
+            <v-btn
+                class="btn btn--outline btn--green btn-custom"
+                @click="onOpenContactDetailDialog()"
             >
                 <i class="icon-svg svg-calendar"></i>
             </v-btn>
-            <v-btn 
-             class="btn btn--outline btn--green btn-custom"
-             @click="onOpenConfirmDetailDialog()"
+            <v-btn
+                class="btn btn--outline btn--green btn-custom"
+                @click="onOpenConfirmDetailDialog()"
             >
                 <i class="icon-svg svg-whatsapp"></i>
             </v-btn>
@@ -47,17 +47,17 @@ export default {
     name: "ContactAgentCard",
     data() {
         return {
-            imgURLAvatar: "/img/static/contact-agent-avar.jpg", 
-            isOpenConfirmDetailDialog: false, 
-            isOpenContactDetailDialog: false,
+            imgURLAvatar: "/img/static/contact-agent-avar.jpg",
+            isOpenConfirmDetailDialog: false,
+            isOpenContactDetailDialog: false
         }
-    }, 
+    },
     methods: {
-        onOpenConfirmDetailDialog(){
-            this.$emit("openConfirm", this.isOpenConfirmDetailDialog = true)
-        }, 
-        onOpenContactDetailDialog(){
-            this.$emit("openContact", this.isOpenContactDetailDialog = true)
+        onOpenConfirmDetailDialog() {
+            this.$emit("openConfirm", (this.isOpenConfirmDetailDialog = true))
+        },
+        onOpenContactDetailDialog() {
+            this.$emit("openContact", (this.isOpenContactDetailDialog = true))
         }
     }
 }
@@ -115,11 +115,16 @@ export default {
         flex-wrap: wrap;
     }
     @media screen and (max-width: 1024px) {
-        .btn-custom {
-            width: 4.5rem;
+        .card__features {
+            .btn-custom {
+                width: 6rem;
+                i {
+                    width: 2rem;
+                }
+            }
         }
     }
-    @media screen and (max-width: 920px) {
+    @media screen and (max-width: 768px) {
         .card__content {
             flex-direction: column;
             justify-content: center;
@@ -142,44 +147,12 @@ export default {
             }
         }
         .card__features {
-            display: grid;
-            grid-template-columns: auto auto;
-            row-gap: 1rem;
-            column-gap: 1rem;
-            margin: 0 auto;
-            width: 60%;
-            padding-left: 0;
-            padding-right: 0;
             .btn-custom {
-                width: 8rem;
+                width: 4rem;
+                i {
+                    width: 2rem;
+                }
             }
-        }
-    }
-    @media screen and (max-width: 912px) {
-        .card__features {
-            width: 70%;
-            .btn-custom {
-                width: 9rem;
-            }
-        }
-    }
-    @media screen and (max-width: 874px) {
-        .card__features {
-            width: 60%;
-            .btn-custom {
-                width: 6rem;
-            }
-        }
-    }
-    @media screen and (max-width: 767px) {
-        margin-top: 0.3rem;
-        margin-bottom: 2.7rem;
-        .card__features {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 0 1.6rem 2.4rem;
-            flex-wrap: wrap;
         }
     }
 }
