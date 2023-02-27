@@ -1,8 +1,5 @@
 <template>
-    <form 
-     class="form--confirm-details"
-     @submit.prevent="onFormSubmit"
-    >
+    <form class="form--confirm-details" @submit.prevent="onFormSubmit">
         <div class="form__top">
             <h3>Confirm your details</h3>
             <p
@@ -13,12 +10,12 @@
         <div class="form__fields">
             <div class="form__field">
                 <label>name</label>
-                <v-text-field 
-                 outlined 
-                 dense 
-                 placeholder="Name *"
-                 v-model="name"
-                 :error-messages="nameErrors"
+                <v-text-field
+                    outlined
+                    dense
+                    placeholder="Name *"
+                    v-model="name"
+                    :error-messages="nameErrors"
                 ></v-text-field>
             </div>
             <div class="form__field">
@@ -41,15 +38,18 @@
             </div>
             <div class="form__field">
                 <label>email</label>
-                <v-text-field 
-                 outlined 
-                 dense 
-                 placeholder="Email *"
-                 v-model="email"
-                 :error-messages="emailErrors"
-                > </v-text-field>
+                <v-text-field
+                    outlined
+                    dense
+                    placeholder="Email *"
+                    v-model="email"
+                    :error-messages="emailErrors"
+                >
+                </v-text-field>
             </div>
-            <v-btn class="btn btn--primary btn--green btn-custom" type="submit" :loading="loading">Verify & continue</v-btn>
+            <v-btn class="btn btn--primary btn--green btn-custom" type="submit" :loading="loading"
+                >Verify & continue</v-btn
+            >
         </div>
     </form>
 </template>
@@ -79,27 +79,26 @@ export default {
     validations: {
         name: {
             required
-        }, 
+        },
         phone: {
-            required, 
-  
-        }, 
+            required
+        },
         email: {
-            required, 
+            required,
             email
         }
     },
     computed: {
-        nameErrors(){
+        nameErrors() {
             return setFormControlErrors(this.$v.name, "Name Required")
-        }, 
-        emailErrors(){
+        },
+        emailErrors() {
             const errors = []
-            if(!this.$v.email.$dirty) return errors
+            if (!this.$v.email.$dirty) return errors
             !this.$v.email.required && errors.push(MESSAGE_REQUIRED_EMAIL)
             !this.$v.email.email && errors.push(MESSAGE_INVALID_EMAIL)
             return errors
-        }, 
+        },
         phoneErrors() {
             const errors = []
             if (!this.$v.phone.$dirty) return errors
@@ -111,12 +110,12 @@ export default {
     },
     data() {
         return {
-            name: "", 
-            email: "", 
+            name: "",
+            email: "",
             phone: null,
-            countryCode: null, 
-            country: null, 
-            errorMessages: [], 
+            countryCode: null,
+            country: null,
+            errorMessages: [],
             loading: false,
             bindProps: {
                 mode: "international",
@@ -137,13 +136,13 @@ export default {
     methods: {
         countryChanged(country) {
             this.country = "+" + country.dialCode
-        }, 
-        onFormSubmit(){
+        },
+        onFormSubmit() {
             this.$v.$touch()
-            if(!this.$v.$invalid){
+            if (!this.$v.$invalid) {
                 this.errorMessages = []
             }
-        }, 
+        }
     }
 }
 </script>
@@ -170,14 +169,12 @@ export default {
     @media screen and (max-width: 412px) {
         .form__top {
             p {
-
                 text-align: justify;
             }
         }
     }
 }
 .form__field {
-
     label {
         font-weight: 500;
         font-size: 1.6rem;
@@ -186,8 +183,20 @@ export default {
         text-transform: capitalize;
         margin-bottom: 0.8rem;
     }
+    ::v-deep(.v-input__control){
+        .v-input__slot{
+            margin-bottom: 1rem;
+        }
+    }
+    ::v-deep(.v-text-field__details){
+        padding-left: 0;
+    }
 }
-
+.form__field-tel-input-custom{
+    ::v-deep(.v-input__control){
+        margin-right: 0.4rem;
+    }
+}
 
 .btn-custom {
     display: inline-block;
@@ -195,5 +204,6 @@ export default {
     ::v-deep(.v-btn__content) {
         font-size: 1.6rem !important;
     }
+
 }
 </style>

@@ -238,7 +238,7 @@ export default {
 
 <style lang="scss" scoped>
 .section--listing-expansion-panel{
-    @media screen and (max-width: 767px) {
+    @media screen and (max-width: 820px) {
         .expansion-amenities-row {
             grid-template-columns: repeat(2, 1fr);
         }

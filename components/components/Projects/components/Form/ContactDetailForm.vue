@@ -170,6 +170,19 @@ export default {
         text-transform: capitalize;
         margin-bottom: 0.8rem;
     }
+    ::v-deep(.v-input__control){
+        .v-input__slot{
+            margin-bottom: 1rem;
+        }
+    }
+    ::v-deep(.v-text-field__details){
+        padding-left: 0;
+    }
+}
+.form__field-tel-input-custom{
+    ::v-deep(.v-input__control){
+        margin-right: 0.4rem;
+    }
 }
 .btn-custom {
     display: inline-block;

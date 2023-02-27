@@ -10,7 +10,7 @@
                 <v-text-field 
                  outlined 
                  dense 
-                 placeholder="Example text"
+                 placeholder="Name *"
                  v-model="name"
                  :error-messages="nameErrors"
                 > 
@@ -39,7 +39,7 @@
                 <v-text-field 
                  outlined 
                  dense 
-                 placeholder="Example text"
+                 placeholder="Email *"
                  v-model="email"
                  :error-messages="emailErrors"
                 > </v-text-field>
@@ -194,6 +194,11 @@ export default {
         margin-bottom: 2.7rem;
     }
 }
+.form__field-tel-input-custom{
+    ::v-deep(.v-input__control){
+        margin-right: 0.4rem;
+    }
+}
 .form__field {
  
     label {
@@ -204,11 +209,19 @@ export default {
         text-transform: capitalize;
         margin-bottom: 0.4rem;
     }
+    ::v-deep(.v-input__control){
+        .v-input__slot{
+            margin-bottom: 1rem;
+        }
+    }
+    ::v-deep(.v-text-field__details){
+        padding-left: 0;
+    }
 }
 
 ::v-deep(.form__field-tel-input-custom) {
     .v-input__slot {
-        margin-bottom: 0;
+        margin-bottom: 0.4rem;
         border: none;
     }
 }

@@ -47,7 +47,7 @@
                                 inspection date and time.</p
                             >
                             <div class="card__content-article-check">
-                                <v-tooltip bottom left>
+                                <v-tooltip top>
                                     <template v-slot:activator="{ on, attrs }">
                                         <div
                                             v-bind="attrs"
@@ -197,6 +197,7 @@ export default {
         margin-bottom: 0;
     }
     .card__content-article-check {
+        display: inline-block;
     }
 }
 .card__content-article-info {

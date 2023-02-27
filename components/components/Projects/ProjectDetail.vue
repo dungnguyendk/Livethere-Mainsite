@@ -141,8 +141,8 @@ export default {
         Dialog,
         ProjectSwiper,
         PanelListing,
-        LightBoxListing, 
-        ConfirmDetailDialog, 
+        LightBoxListing,
+        ConfirmDetailDialog,
         ContactDetailDialog
     },
     data() {
@@ -160,14 +160,14 @@ export default {
         },
         openConfirmDetailDialog(e) {
             this.isOpenConfirmDetailDialog = true
-        }, 
+        },
         openContactDetailDialog(e) {
             this.isOpenContactDetailDialog = true
         },
-        closeConfirmDetailDialog(){
+        closeConfirmDetailDialog() {
             this.isOpenConfirmDetailDialog = false
-        }, 
-        closeContactDetailDialog(){
+        },
+        closeContactDetailDialog() {
             this.isOpenContactDetailDialog = false
         }
     }
@@ -204,6 +204,17 @@ export default {
         }
         .page--project-detail-second {
             padding-bottom: 2.7rem;
+        }
+        .page__content-left-header {
+            display: inline-block;
+            width: 100%;
+            .page__content-left-iconic{
+                justify-content: center;    
+                margin-bottom: 1rem;
+            }
+            .page__content-left-emotions{
+                justify-content: flex-end;
+            }
         }
     }
 }
@@ -259,8 +270,8 @@ export default {
     .btn-custom {
         display: flex;
         align-items: center;
-        i{
-            color: var(--color-primary)
+        i {
+            color: var(--color-primary);
         }
         span {
             font-weight: 700;
@@ -268,9 +279,9 @@ export default {
             line-height: 2rem;
             margin-left: 0.4rem;
         }
-        &:hover{
-            i{
-                color: var(--color-white)
+        &:hover {
+            i {
+                color: var(--color-white);
             }
         }
     }
