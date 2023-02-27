@@ -95,11 +95,11 @@ export default {
     padding: 6rem 0;
 
     @media only screen and (max-width: 768px) {
-        padding: 0;
+        padding: 3rem 0;
     }
 
     @media only screen and (min-width: 768px) and (max-width: 1280px) {
-        padding: 0 1.6rem;
+        padding: 1rem 0;
     }
 }
 
