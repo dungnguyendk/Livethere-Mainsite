@@ -74,6 +74,7 @@ import {
     MESSAGE_SERVER_ERROR,
     MESSAGE_USERNAME_EXISTS
 } from "~/ultilities/error-messages"
+const singaporePhoneNumber = helpers.regex("singaporePhoneNumber", /^\+65 \d{4}( ?\d{4})$/)
 export default {
     name: "EnquiryForm",
     mixins: [validationMixin],
@@ -132,6 +133,8 @@ export default {
             const errors = []
             if (!this.$v.phone.$dirty) return errors
             !this.$v.phone.required && errors.push(MESSAGE_REQUIRED_PHONE_NUMBER)
+            !this.$v.phone.singaporePhoneNumber &&
+                errors.push(MESSAGE_INVALID_SINGAPORE_PHONE_NUMBER)
             return errors
         },
         messageErrors(){
