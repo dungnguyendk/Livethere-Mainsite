@@ -143,12 +143,15 @@ td {
         border: none;
         padding: 1.6rem;
         border-top: none;
+        p {
+            font-size: 1.4rem;
+        }
 
         &:before {
             content: attr(data-title);
             font-weight: 700;
             color: #0b0c0c;
-            font-size: 1.6rem;
+            font-size: 1.4rem;
             text-align: left;
         }
     }
