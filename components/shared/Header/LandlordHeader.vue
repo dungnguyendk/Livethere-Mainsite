@@ -8,13 +8,8 @@
                     </div>
                     <div class="header__center">
                         <ul class="menu--top">
-                            <a
-                                v-for="(item, index) in menus"
-                                :href="item.linkURL"
-                                :class="item.linkURL === path ? 'active' : ''"
-                                :key="index"
-                                target="_blank"
-                            >
+                            <a v-for="(item, index) in menus" :href="item.linkURL"
+                                :class="item.linkURL === path ? 'active' : ''" :key="index">
                                 {{ item.defaultName }}
                             </a>
                         </ul>
@@ -23,27 +18,17 @@
                         <template v-if="loggedIn">
                             <v-menu v-if="userInfo" offset-y>
                                 <template v-slot:activator="{ on, attrs }">
-                                    <v-btn
-                                        class="btn--account"
-                                        color="primary"
-                                        dark
-                                        v-bind="attrs"
-                                        v-on="on"
-                                        outlined
-                                    >
+                                    <v-btn class="btn--account" color="primary" dark v-bind="attrs" v-on="on" outlined>
                                         {{ userInfo.displayName }}
                                         <i class="ri-arrow-drop-down-line"></i>
                                     </v-btn>
                                 </template>
                                 <v-list>
                                     <v-list-item>
-                                        <nuxt-link to="/landlord"> Dashboard</nuxt-link>
+                                        <nuxt-link to="/landlord/dashboard"> Dashboard</nuxt-link>
                                     </v-list-item>
                                     <v-list-item>
-                                        <a
-                                            href="/landlord/change-password"
-                                            @click.prevent="onChangePassword"
-                                        >
+                                        <a href="/landlord/change-password" @click.prevent="onChangePassword">
                                             Change password
                                         </a>
                                     </v-list-item>
@@ -85,7 +70,7 @@ export default {
     props: {
         source: {
             type: Object,
-            default: () => {}
+            default: () => { }
         }
     },
 
@@ -97,7 +82,8 @@ export default {
             return this.data
         },
         path() {
-            return this.$router.path
+            console.log(this.$router.currentRoute.path);
+            return this.$router.currentRoute.path
         },
         loggedIn() {
             return this.$auth.loggedIn
@@ -168,6 +154,21 @@ export default {
         font-size: 1.8rem;
         color: #fff;
         font-weight: 600;
+
+        &.active {
+            &:before {
+                content: "";
+                width: 100%;
+                height: 1px;
+                background-color: #fff;
+                transform: none;
+                transition: none;
+                transform-origin: 0;
+                visibility: visible;
+                position: absolute;
+                opacity: 2;
+            }
+        }
 
         &:before {
             content: "";

@@ -8,15 +8,8 @@
             </p>
         </div>
         <div class="form__input">
-            <v-otp-input
-                class="otp--custom"
-                length="6"
-                type="number"
-                v-model="otp"
-                :disabled="loading"
-                @finish="onFinish"
-                @input="onChangeOtpInput"
-            />
+            <v-otp-input class="otp--custom" length="6" type="number" v-model="otp" :disabled="loading" @finish="onFinish"
+                @input="onChangeOtpInput" />
         </div>
         <v-snackbar v-model="snackbar" :color="snackbarColor" :timeout="2000">
             {{ text }}
@@ -26,11 +19,7 @@
             {{ httpError }}
         </p>
         <div class="form__button">
-            <v-btn
-                class="btn btn--primary btn--green btn--submit"
-                :loading="loading"
-                @click="handleSignIn"
-            >
+            <v-btn class="btn btn--primary btn--green btn--submit" :loading="loading" @click="handleSignIn">
                 Submit
             </v-btn>
         </div>
@@ -38,11 +27,8 @@
         <div class="form__link">
             <p>
                 Didn't receive code?
-                <a
-                    href="#"
-                    @click.prevent="handleResendOtp"
-                    :class="`btn--resend-otp ${countdown !== 0 ? 'disabled' : ''}`"
-                >
+                <a href="#" @click.prevent="handleResendOtp"
+                    :class="`btn--resend-otp ${countdown !== 0 ? 'disabled' : ''}`">
                     OTP Again
                 </a>
             </p>
@@ -157,7 +143,7 @@ export default {
                         const { jwtToken } = response.data
                         if (jwtToken) {
                             await this.$store.dispatch("app/showSnackBar", "Login successful!")
-                            window.location.href = "/landlord"
+                            window.location.href = "/landlord/dashboard"
                         } else {
                             this.httpError = "The credentials is invalid. Please try again."
                         }
