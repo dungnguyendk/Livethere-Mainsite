@@ -2,7 +2,9 @@
     <v-app>
         <v-main>
             <LandlordHeader />
-            <ProjectDetail/>
+            <div class="pageWrapper">
+                <ProjectDetail/>
+            </div>
             <LandingFooter />
         </v-main>
     </v-app>
@@ -22,4 +24,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.pageWrapper {
+    margin-top: 8rem;
+    min-height: calc(100vh - 20rem);
+    @media screen and(max-width: 1280px) {
+        margin-top: 6.4rem;
+    }
+}
 </style>
