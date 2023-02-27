@@ -1,5 +1,5 @@
 <template lang="html">
-    <header class="header--mobile" id="mobile-sticky">
+    <header id="mobile-sticky" :class="appDrawer || userDrawer ? 'header--mobile open-drawer' : 'header--mobile '">
         <div class="header__left">
             <a href="#" class="header__toggle" @click.prevent="handleOpenMenuDrawer">
                 <i class="ri-menu-line" />
@@ -52,6 +52,7 @@ export default {
         },
         handleOpenMenuDrawer() {
             this.$store.commit("app/setAppDrawer", !this.appDrawer)
+            console.log("handleOpenMenuDrawer",this.appDrawer);
         },
         async onLogout() {
             await this.$auth.logout().then(() => {
@@ -78,7 +79,11 @@ export default {
     justify-content: space-between;
     padding: 10px 16px;
     background-color: var(--color-primary);
-
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 99;
     > * {
         flex-basis: 100%;
     }
@@ -134,7 +139,11 @@ export default {
         display: none;
     }
 }
-
+.header--mobile.open-drawer {
+position: static;
+    margin-bottom: -6.4rem;
+    transition: none;
+}
 .dialog-search {
     border-radius: 0;
     margin: 0;
@@ -191,6 +200,9 @@ export default {
 .ps-drawer {
     width: 100% !important;
     background-color: #0b0c0c;
+    z-index: 99;
+    bottom: 0;
+    position: fixed;
 
     .ps-drawer__close {
         position: absolute;

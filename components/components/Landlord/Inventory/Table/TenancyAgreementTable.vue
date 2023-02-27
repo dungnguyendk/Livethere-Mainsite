@@ -71,7 +71,7 @@ export default {
         }
     }
 }
-@media (max-width: 768px) {
+@media (max-width: 767px) {
     .table--responsive tbody tr {
         margin-bottom: 0;
         border-top: 1px solid #e5e5e5;
