@@ -166,7 +166,7 @@ export default {
     }
 
     .form__fields {
-        padding: 2.4rem 2.3rem 2.4rem 2.4rem;
+        padding: 2.4rem 2.3rem 0rem 2.4rem;
         color: var(--color-label);
         font-weight: 500;
         font-size: 1.6rem;
@@ -174,6 +174,7 @@ export default {
         display: grid;
         grid-template-columns: repeat(2, minmax(0, 1fr));
         grid-gap: 0 2.4rem;
+
         .form__field:nth-child(5) {
             grid-row-start: 3;
             grid-row-end: 5;
@@ -206,12 +207,13 @@ export default {
             color: var(--color-heading);
         }
     }
+
     @media screen and(max-width: 1024px) {
         h4 {
             padding: 0 1.2rem;
         }
     }
-    @media screen and(max-width: 500px) {
+    @media screen and(max-width: 600px) {
         .form__title {
             font-size: 2rem;
         }

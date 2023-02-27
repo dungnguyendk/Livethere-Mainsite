@@ -26,13 +26,13 @@ export default {
 </script>
 <style lang="scss" scoped>
 .section--enquiry-form {
-    background-color: #fafafa;
+    background-color: var(--bg-color-white);
     padding-bottom: 5.2rem;
 
     .section__content {
         max-width: 50%;
         position: relative;
-        z-index: 99;
+        z-index: 7;
 
         padding-top: 3.6rem;
 
