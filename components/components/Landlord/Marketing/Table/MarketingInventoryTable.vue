@@ -1,5 +1,5 @@
 <template lang="html">
-    <div class="container">
+    <div class="asset__table">
         <table class="table--responsive table--asset">
             <thead>
                 <tr>
@@ -104,6 +104,18 @@ export default {
             font-size: 2rem;
             line-height: 2.8rem;
         }
+    }
+}
+
+.asset__table {
+    padding: 6rem 0;
+
+    @media only screen and (max-width: 768px) {
+        padding: 0;
+    }
+
+    @media only screen and (min-width: 768px) and (max-width: 1280px) {
+        padding: 0 1.6rem;
     }
 }
 
