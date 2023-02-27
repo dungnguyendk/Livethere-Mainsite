@@ -14,7 +14,7 @@
             <div class="card__content">
                 <div class="container">
                     <div class="card__content-user-info">
-                        <v-avatar size="74">
+                        <v-avatar size="50">
                             <img src="https://picsum.photos/600/400.jpg?random=" alt="" />
                         </v-avatar>
                         <p>wu chin whee</p>
@@ -72,7 +72,7 @@ export default {
             padding: 2.7rem 2.4rem;
             h3 {
                 font-weight: 700;
-                font-size: 2.5rem;
+                font-size: 1.76rem;
                 line-height: 2rem;
                 color: var(--color-title-black);
                 margin-bottom: 0;
@@ -90,7 +90,7 @@ export default {
             padding: 2.7rem 2.4rem;
             p {
                 font-weight: 700;
-                font-size: 2rem;
+                font-size: 1.76rem;
                 line-height: 2rem;
                 color: var(--color-title-black);
                 margin-bottom: 0;
@@ -100,22 +100,6 @@ export default {
         }
         .card__content-form {
             padding: 2.7rem 2.4rem;
-        }
-    }
-    @media screen and (max-width: 412px) {
-        .card__header {
-            .card__header-back {
-                h3 {
-                    font-size: 1.5rem;
-                }
-            }
-        }
-        .card__content {
-            .card__content-user-info {
-                p {
-                    font-size: 1.5rem;
-                }
-            }
         }
     }
 }

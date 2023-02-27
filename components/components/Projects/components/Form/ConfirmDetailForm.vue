@@ -24,7 +24,7 @@
             <div class="form__field">
                 <label>phone number</label>
                 <vue-tel-input-vuetify
-                    v-model="phone"
+                    v-model.trim="phone"
                     outlined
                     dense
                     v-bind="bindProps"
@@ -49,15 +49,30 @@
                  :error-messages="emailErrors"
                 > </v-text-field>
             </div>
-            <v-btn class="btn btn--primary btn--green btn-custom" @click="confirmDetails()">Verify & continue</v-btn>
+            <v-btn class="btn btn--primary btn--green btn-custom" type="submit" :loading="loading">Verify & continue</v-btn>
         </div>
     </form>
 </template>
 
 <script>
 import { validationMixin } from "vuelidate"
-import { required } from "vuelidate/lib/validators"
+import { required, helpers, email } from "vuelidate/lib/validators"
 import { setFormControlErrors } from "~/ultilities/form-validations"
+import {
+    MESSAGE_EMAIL_EXISTS,
+    MESSAGE_INVALID_EMAIL,
+    MESSAGE_INVALID_SINGAPORE_PHONE_NUMBER,
+    MESSAGE_PHONE_EXISTS,
+    MESSAGE_REQUIRED_EMAIL,
+    MESSAGE_REQUIRED_PHONE_NUMBER,
+    MESSAGE_SERVER_ERROR,
+    MESSAGE_USERNAME_EXISTS
+} from "~/ultilities/error-messages"
+const complexity = helpers.regex(
+    "complexity",
+    /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/
+)
+const singaporePhoneNumber = helpers.regex("singaporePhoneNumber", /^\+65 \d{4}( ?\d{4})$/)
 export default {
     name: "LiveThereMainSiteConfirmDetailForm",
     mixins: [validationMixin],
@@ -66,21 +81,32 @@ export default {
             required
         }, 
         phone: {
-            required
+            required, 
+            singaporePhoneNumber
         }, 
         email: {
-            required
+            required, 
+            email
         }
     },
     computed: {
         nameErrors(){
             return setFormControlErrors(this.$v.name, "Name Required")
         }, 
-        phoneErrors(){
-            return setFormControlErrors(this.$v.phone, "Phone Number Required")
-        }, 
         emailErrors(){
-            return setFormControlErrors(this.$v.email, "Email Required")
+            const errors = []
+            if(!this.$v.email.$dirty) return errors
+            !this.$v.email.required && errors.push(MESSAGE_REQUIRED_EMAIL)
+            !this.$v.email.email && errors.push(MESSAGE_INVALID_EMAIL)
+            return errors
+        }, 
+        phoneErrors() {
+            const errors = []
+            if (!this.$v.phone.$dirty) return errors
+            !this.$v.phone.required && errors.push(MESSAGE_REQUIRED_PHONE_NUMBER)
+            !this.$v.phone.singaporePhoneNumber &&
+                errors.push(MESSAGE_INVALID_SINGAPORE_PHONE_NUMBER)
+            return errors
         }
     },
     data() {
@@ -113,12 +139,11 @@ export default {
             this.country = "+" + country.dialCode
         }, 
         onFormSubmit(){
-            this.loading = true
-        }, 
-        confirmDetails(){
-            this.onFormSubmit()
             this.$v.$touch()
-        }
+            if(!this.$v.$invalid){
+                this.errorMessages = []
+            }
+        }, 
     }
 }
 </script>
@@ -128,7 +153,7 @@ export default {
     .form__top {
         h3 {
             font-weight: 700;
-            font-size: 2.5rem;
+            font-size: 2.08rem;
             line-height: 2rem;
             color: #000000;
             text-transform: capitalize;
@@ -136,7 +161,7 @@ export default {
         }
         p {
             font-weight: 500;
-            font-size: 2rem;
+            font-size: 1.76rem;
             line-height: 2.4rem;
             color: #ef4444;
             margin-bottom: 2rem;
@@ -144,11 +169,8 @@ export default {
     }
     @media screen and (max-width: 412px) {
         .form__top {
-            h3 {
-                font-size: 2rem;
-            }
             p {
-                font-size: 1.5rem;
+
                 text-align: justify;
             }
         }
@@ -158,26 +180,20 @@ export default {
 
     label {
         font-weight: 500;
-        font-size: 2rem;
+        font-size: 1.76rem;
         line-height: 2rem;
         color: var(--color-label);
         text-transform: capitalize;
         margin-bottom: 0.8rem;
     }
 }
-.v-text-field {
-    ::v-deep(.v-input__control) {
-        .v-text-field__details {
-            // display: none;
-        }
-    }
-}
+
 
 .btn-custom {
     display: inline-block;
     width: 100%;
     ::v-deep(.v-btn__content) {
-        font-size: 2rem !important;
+        font-size: 1.6rem !important;
     }
 }
 </style>

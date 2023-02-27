@@ -1,7 +1,7 @@
 <template>
     <form 
      class="form--contact-details"
-    
+     @submit.prevent="onFormSubmit"
     >
         <div class="form__fields">
             <div class="form__field">
@@ -18,7 +18,7 @@
             <div class="form__field">
                 <label>phone number</label>
                 <vue-tel-input-vuetify
-                    v-model="phone"
+                    v-model.trim="phone"
                     :error-messages="phoneErrors"
                     outlined
                     dense
@@ -55,15 +55,30 @@
                 > 
                 </v-textarea>
             </div>
-            <v-btn class="btn btn--primary btn--green btn-custom" @click="contactDetails()">Verify & continue</v-btn>
+            <v-btn class="btn btn--primary btn--green btn-custom" :loading="loading" type="submit">Verify & continue</v-btn>
         </div>
     </form>
 </template>
 
 <script>
 import { validationMixin } from "vuelidate"
-import { required } from "vuelidate/lib/validators"
+import { required, helpers, email } from "vuelidate/lib/validators"
 import { setFormControlErrors } from "~/ultilities/form-validations"
+import {
+    MESSAGE_EMAIL_EXISTS,
+    MESSAGE_INVALID_EMAIL,
+    MESSAGE_INVALID_SINGAPORE_PHONE_NUMBER,
+    MESSAGE_PHONE_EXISTS,
+    MESSAGE_REQUIRED_EMAIL,
+    MESSAGE_REQUIRED_PHONE_NUMBER,
+    MESSAGE_SERVER_ERROR,
+    MESSAGE_USERNAME_EXISTS
+} from "~/ultilities/error-messages"
+const complexity = helpers.regex(
+    "complexity",
+    /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/
+)
+const singaporePhoneNumber = helpers.regex("singaporePhoneNumber", /^\+65 \d{4}( ?\d{4})$/)
 export default {
     name: 'ContactDetailForm',
     validations: {
@@ -71,11 +86,13 @@ export default {
             required
         }, 
         phone: {
-            required
+            required, 
+            singaporePhoneNumber
         }, 
         email: {
-            required
-        }, 
+            required, 
+            email
+        },
         message: {
             required
         }
@@ -106,12 +123,21 @@ export default {
         nameErrors(){
             return setFormControlErrors(this.$v.name, "Name Required")
         }, 
-        phoneErrors(){
-            return setFormControlErrors(this.$v.phone, "Phone Number Required")
-        }, 
         emailErrors(){
-            return setFormControlErrors(this.$v.email, "Email Required")
+            const errors = []
+            if(!this.$v.email.$dirty) return errors
+            !this.$v.email.required && errors.push(MESSAGE_REQUIRED_EMAIL)
+            !this.$v.email.email && errors.push(MESSAGE_INVALID_EMAIL)
+            return errors
         }, 
+        phoneErrors() {
+            const errors = []
+            if (!this.$v.phone.$dirty) return errors
+            !this.$v.phone.required && errors.push(MESSAGE_REQUIRED_PHONE_NUMBER)
+            !this.$v.phone.singaporePhoneNumber &&
+                errors.push(MESSAGE_INVALID_SINGAPORE_PHONE_NUMBER)
+            return errors
+        },
         messageErrors(){
             return setFormControlErrors(this.$v.message, "Message Required")
         }
@@ -122,12 +148,12 @@ export default {
             this.country = "+" + country.dialCode
         },
         onFormSubmit(){
-            this.loading = true
-        }, 
-        contactDetails(){
-            this.onFormSubmit()
             this.$v.$touch()
-        }
+            if(!this.$v.$invalid){
+                this.errorMessages = []
+            }
+        }, 
+
     }
 };
 </script>
@@ -140,7 +166,7 @@ export default {
 
     label {
         font-weight: 500;
-        font-size: 2rem;
+        font-size: 1.76rem;
         line-height: 2rem;
         color: var(--color-label);
         text-transform: capitalize;
@@ -151,7 +177,7 @@ export default {
     display: inline-block;
     width: 100%;
     ::v-deep(.v-btn__content){
-        font-size: 2rem !important;
+        font-size: 1.6rem !important;
     }
 
 }

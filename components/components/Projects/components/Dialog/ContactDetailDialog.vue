@@ -126,7 +126,7 @@ export default {
             padding: 2.7rem 2.4rem;
             h3 {
                 font-weight: 700;
-                font-size: 2.5rem;
+                font-size: 1.76rem;
                 line-height: 2rem;
                 color: var(--color-title-black);
                 margin-bottom: 0;
@@ -137,45 +137,17 @@ export default {
         }
     }
     @media screen and(max-width: 480px) {
-        .card__header {
-            .card__header-back {
-                h3 {
-                    font-size: 2rem;
-                }
-            }
-        }
         .card__content-box {
-            border-radius: 1rem;
-            border: 0.1rem solid var(--border-color);
-            padding: 2rem 2.4rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin: 2.7rem 0;
-            cursor: pointer;
-            .card__content-box-text {
-                h3 {
-                    font-size: 2rem;
-                }
-                p {
-                    font-size: 1.5rem;
-                }
-            }
             .card__content-box-image {
                 margin-left: 0.8rem;
             }
         }
         .card__content-article {
             p {
-                font-size: 1.5rem;
                 text-align: justify;
             }
         }
-        .card__content-article-info {
-            span {
-                font-size: 1.8rem;
-            }
-        }
+
     }
 }
 .card__content-box-info {
@@ -192,7 +164,7 @@ export default {
     .card__content-box-text {
         h3 {
             font-weight: 700;
-            font-size: 2.5rem;
+            font-size: 1.76rem;
             line-height: 2rem;
             color: var(--color-title-black);
             margin-bottom: 2.7rem;
@@ -201,7 +173,7 @@ export default {
         }
         p {
             font-weight: 500;
-            font-size: 2rem;
+            font-size: 1.76rem;
             line-height: 2rem;
             color: var(--color-title-black);
             margin-bottom: 0;
@@ -219,7 +191,7 @@ export default {
 .card__content-article {
     p {
         font-weight: 500;
-        font-size: 2rem;
+        font-size: 1.76rem;
         line-height: 3rem;
         color: var(--color-title-black);
         margin-bottom: 0;
@@ -233,7 +205,7 @@ export default {
     align-items: center;
     span {
         font-weight: 500;
-        font-size: 2.5rem;
+        font-size: 1.76rem;
         line-height: 3rem;
         color: var(--color-title-black);
         margin-right: 0.5rem;
@@ -247,8 +219,6 @@ export default {
     display: inline-block;
     width: 100%;
     padding: 2.4rem 0;
-    ::v-deep(.v-btn__content) {
-        font-size: 2rem !important;
-    }
+
 }
 </style>
