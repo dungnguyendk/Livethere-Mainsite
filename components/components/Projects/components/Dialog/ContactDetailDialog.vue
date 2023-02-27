@@ -173,7 +173,7 @@ export default {
         }
         p {
             font-weight: 500;
-            font-size: 1.76rem;
+            font-size: 1.6rem;
             line-height: 2rem;
             color: var(--color-title-black);
             margin-bottom: 0;
@@ -191,7 +191,7 @@ export default {
 .card__content-article {
     p {
         font-weight: 500;
-        font-size: 1.76rem;
+        font-size: 1.6rem;
         line-height: 3rem;
         color: var(--color-title-black);
         margin-bottom: 0;
@@ -205,7 +205,7 @@ export default {
     align-items: center;
     span {
         font-weight: 500;
-        font-size: 1.76rem;
+        font-size: 1.6rem;
         line-height: 3rem;
         color: var(--color-title-black);
         margin-right: 0.5rem;
