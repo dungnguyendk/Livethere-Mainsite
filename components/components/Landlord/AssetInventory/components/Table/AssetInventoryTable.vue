@@ -1,5 +1,5 @@
 <template lang="html">
-    <div class="asset-analytic">
+    <div class="asset__table">
         <table class="table--responsive table--asset">
             <thead>
                 <tr>
@@ -20,22 +20,15 @@
             </thead>
             <tbody>
                 <template v-if="inventories.length > 0">
-                    <TableRecord
-                        v-for="item in inventories"
-                        :source="item"
-                        :selectedId="selectedId"
-                        :key="item.id"
-                        @handleClickOpenRow="handleClickOpenRow(item)"
-                    />
+                    <TableRecord v-for="item in inventories" :source="item" :selectedId="selectedId" :key="item.id"
+                        @handleClickOpenRow="handleClickOpenRow(item)" />
                     <template v-if="(statusFID === 2 || statusFID === 3) && selectedId === -1">
                         <tr class="tr-hidden">
                             <td></td>
                         </tr>
                         <tr class="tr-total">
                             <td colspan="4">Grand Total Revenue:</td>
-                            <td colspan="2"
-                                ><span>S$ {{ formatMoney(totalMoney) }}</span></td
-                            >
+                            <td colspan="2"><span>S$ {{ formatMoney(totalMoney) }}</span></td>
                         </tr>
                     </template>
                 </template>
@@ -108,15 +101,15 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.asset-analytic {
-    //padding: 0 1.6rem;
+.asset__table {
+    padding: 0 0 6rem 0;
 
     @media only screen and (max-width: 768px) {
         padding: 0;
     }
 
     @media only screen and (min-width: 768px) and (max-width: 1280px) {
-        padding: 0 1.6rem;
+        padding: 0;
     }
 }
 

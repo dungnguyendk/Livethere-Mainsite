@@ -1,5 +1,5 @@
 <template lang="html">
-    <div class="asset-analytic">
+    <div class="asset__table">
         <table class="table--responsive table--asset">
             <thead>
                 <tr>
@@ -91,15 +91,15 @@ export default {
     }
 }
 
-.asset-analytic {
-    padding: (32/1920) * 100% (278/1920) * 100% (126/1920) * 100% (278/1920) * 100%;
+.asset__table {
+    padding: 6rem 0;
 
     @media only screen and (max-width: 768px) {
-        padding: 0;
+        padding: 3rem 0;
     }
 
     @media only screen and (min-width: 768px) and (max-width: 1280px) {
-        padding: 0 1.5rem;
+        padding: 1rem 0;
     }
 }
 

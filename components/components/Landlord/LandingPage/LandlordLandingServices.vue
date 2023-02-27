@@ -7,9 +7,7 @@
                         >Your Personal Property Concierge Managing All your property needs</h3
                     >
                     <p class="section__header-text">
-                        We also help you find the right tenant with ease through our expansive
-                        database as well as gain high visibility for your property with our
-                        marketing services.
+                        We also help you find the right tenant with ease through our expansive database as well as gain high visibility for your property with our marketing services.
                     </p>
                 </div>
                 <div class="section__content">
@@ -43,23 +41,33 @@ export default {
                 },
                 {
                     id: 3,
-                    imgURL: "/img/icon-3.png",
-                    text: "Easy Search for Rental Properties"
+                    imgURL: "/img/tenant-database.png",
+                    text: "Good Tenant Database"
                 },
                 {
                     id: 4,
-                    imgURL: "/img/icon-4.png",
-                    text: "Home Rental Journey Tailored to Your Lifestyle"
+                    imgURL: "/img/icon-6.png",
+                    text: "Dedicated End-to-End Customer Support"
                 },
                 {
                     id: 5,
-                    imgURL: "/img/icon-5.png",
-                    text: "Seamless Rental Experience & Aftercare"
+                    imgURL: "/img/marketing-service.png",
+                    text: "Professional Property Marketing Services"
                 },
                 {
                     id: 6,
-                    imgURL: "/img/icon-6.png",
-                    text: "Dedicated End-to-End Customer Support"
+                    imgURL: "/img/icon-5.png",
+                    text: "Seamless Renting Experience & Aftercare"
+                },
+                {
+                    id: 7,
+                    imgURL: "/img/market-trends.png",
+                    text: "Insights into Latest Residential Market Trends"
+                },
+                {
+                    id: 8,
+                    imgURL: "/img/invest-divest.png",
+                    text: "Invest & Divest in Residential Market"
                 }
             ]
         }
@@ -89,18 +97,19 @@ export default {
                 font-size: 1.6rem;
                 line-height: 2.4rem;
                 margin-bottom: 0;
+                padding: 0 18rem;
                 color: var(--color-title-black);
             }
         }
 
         .section__content {
             display: grid;
-            grid-template-columns: repeat(3, minmax(0, 1fr));
+            grid-template-columns: repeat(4, minmax(0, 1fr));
             grid-gap: 2.4rem;
             .section__box {
                 flex-wrap: wrap;
                 justify-content: center;
-                padding: 2.4rem 7rem;
+                padding: 2.4rem;
                 background-color: white;
                 .section__box-icon {
                     margin-bottom: 1.2rem;
@@ -126,6 +135,11 @@ export default {
         .section__container {
             .section__content {
                 grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+            .section__header {
+                .section__header-text {
+                    padding: 0;
+                }
             }
         }
     }
