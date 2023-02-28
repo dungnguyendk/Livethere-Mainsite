@@ -8,8 +8,6 @@ export const state = () => ({
     internalID: {},
     entriesID: {},
     listTenancyAgreements: null,
-    snackbar: false,
-    snackbarMessage: "Your message has been sent.",
     tenancyID: ""
 })
 
@@ -34,12 +32,6 @@ export const mutations = {
     },
     setListTenancyAgreements(state, payload) {
         state.listTenancyAgreements = payload
-    },
-    setSnackbar(state, payload) {
-        state.snackbar = payload
-    },
-    setSnackbarMessage(state, payload) {
-        state.snackbarMessage = payload
     },
     setTenancyID(state, payload) {
         state.tenancyID = payload
@@ -105,17 +97,14 @@ export const actions = {
         }
     },
 
-    async createUnitInventory({ commit }, payload) {
+    async createUnitInventory({ commit, dispatch }, payload) {
         try {
             console.log({ Called: `${httpEndpoint.unit.getEntries}` })
             const response = await this.$axios.$post(`${httpEndpoint.unit.getEntries}`, payload)
             if (response) {
-                commit("setSnackbar", true)
-                commit("setSnackbarMessage", "Create new unit inventory success")
+                dispatch("app/showSnackBar", "Create unit inventory successfully", { root: true })
                 return true
             } else {
-                commit("setSnackbar", false)
-                commit("setSnackbarMessage", "Your message has been sent.")
                 return false
             }
         } catch (e) {
@@ -138,41 +127,35 @@ export const actions = {
             commit("setInventoryUnitDetail", "")
         }
     },
-    async updateUnitInventory({ commit }, payload) {
+    async updateUnitInventory({ commit, dispatch }, payload) {
         try {
             const response = await this.$axios.$put(`${httpEndpoint.unit.updateEntry}`, payload)
             if (response) {
-                commit("setSnackbar", true)
-                commit("setSnackbarMessage", "Update unit inventory success")
+                dispatch("app/showSnackBar", "Update unit inventory successfully", { root: true })
                 return true
             } else {
-                commit("setSnackbar", false)
-                commit("setSnackbarMessage", "Your message has been sent.")
                 return false
             }
         } catch (e) {
             console.log({ Error: e.message })
-            commit("setSnackbar", false)
-            commit("setSnackbarMessage", "Your message has been sent.")
+
         }
     },
-    async deleteUnitInventory({ commit }, payload) {
+    async deleteUnitInventory({ commit, dispatch }, payload) {
         try {
             const response = await this.$axios.$delete(
                 `${httpEndpoint.unit.deleteEntryByID}`,
                 payload
             )
             if (response) {
-                commit("setSnackbar", true)
-                commit("setSnackbarMessage", "Delete unit inventory success")
+                dispatch("app/showSnackBar", "Delete unit inventory successfully", {root: true})
+
             } else {
-                commit("setSnackbar", false)
-                commit("setSnackbarMessage", "Your message has been sent.")
+                return false
             }
         } catch (e) {
             console.log({ Error: e.message })
-            commit("setSnackbar", false)
-            commit("setSnackbarMessage", "Your message has been sent.")
+            return false
         }
     },
 
