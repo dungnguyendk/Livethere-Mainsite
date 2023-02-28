@@ -7,7 +7,7 @@
             <p>{{ source.quantity ? quantityFormat : "-" }}</p>
         </td>
         <td data-title="Total Value">
-            <p> {{ source.currencyType }} {{ source.totalValue ? totalValueFormat : "-" }} </p>
+            <p> S$ {{ source.totalValue ? totalValueFormat : "-" }} </p>
         </td>
         <!-- <td data-title="Condition Remarks">
             <p>{{ source.remark }} </p>
@@ -66,7 +66,6 @@
 <script>
 import { mapState } from "vuex"
 import DeleteDialog from "~/components/elements/Dialog/DeleteDialog.vue"
-import { httpEndpoint } from "~/services/https/endpoints"
 import Dialog from "~/components/elements/Dialog/Dialog.vue"
 import AddUnitInventoryForm from "../../../AssetInventory/components/Form/AddUnitInventoryForm.vue"
 import { convertNumberToCommas } from "~/ultilities/helpers"
@@ -198,6 +197,7 @@ tr:nth-child(even) {
         font-size: 2.4rem;
     }
 }
+
 @media screen and (max-width: 768px) {
     tr:nth-child(even) {
         background: #fafafa;
