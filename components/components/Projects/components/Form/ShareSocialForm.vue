@@ -1,20 +1,20 @@
 <template>
     <form class="form--share-social">
         <div class="form__top">
-            <v-btn class="ma-1 form__btn-custom" color="primary" large height="60" width="60">
-                <v-icon>mdi-facebook</v-icon>
+            <v-btn class="ma-1 form__btn-custom" color="#3b5998" height="48" width="48">
+                <i class="ri-facebook-fill"></i>
             </v-btn>
-            <v-btn class="ma-1 form__btn-custom" color="primary" large height="60" width="60">
-                <v-icon>mdi-instagram</v-icon>
+            <v-btn class="ma-1 form__btn-custom" color="#25d366" height="48" width="48">
+                <i class="ri-whatsapp-line"></i>
             </v-btn>
-            <v-btn  class="ma-1 form__btn-custom" color="primary" large height="60" width="60">
-                <v-icon>mdi-snapchat</v-icon>
+            <v-btn  class="ma-1 form__btn-custom" color="#00b800" height="48" width="48">
+                <i class="ri-line-line"></i>
             </v-btn>
-            <v-btn  class="ma-1 form__btn-custom" color="primary" large height="60" width="60">
-                <v-icon>mdi-gmail</v-icon>
+            <v-btn  class="ma-1 form__btn-custom" color="#37aee2" height="48" width="48">
+                <i class="ri-telegram-line"></i>
             </v-btn>
-            <v-btn class="ma-1 form__btn-custom" color="primary" large height="60" width="60">
-                <v-icon>mdi-whatsapp</v-icon>
+            <v-btn class="ma-1 form__btn-custom" color="#7f7f7f" height="48" width="48">
+                <i class="ri-mail-line"></i>
             </v-btn>
         </div>
         <div class="form__field">
@@ -23,6 +23,7 @@
                 outlined
                 dense
                 placeholder="https://www.livethere.com/listing/eden-residences-capitol-129"
+                class="form__field-text-field-custom"
             >
             </v-text-field>
         </div>
@@ -45,27 +46,34 @@ export default {
 
 <style lang="scss" scoped>
 .form--share-social {
-    padding: 0 2.6rem 2.2rem;
     .form__top {
         display: flex;
         align-items: center;
         justify-content: center;
-        margin-bottom: 1.5rem;
+        margin-bottom: 1.6rem;
     }
 }
 .form__field {
         label {
             font-weight: 500;
-            font-size: 1.6rem;
+            font-size: 1.4rem;
             line-height: 2rem;
             color: var(--color-label);
             margin-bottom: 0.8rem;
         }
 }
 .form__btn-custom{
-    padding: 1.5rem;
+    padding: 0 !important;
+    min-width: 4.8rem !important;
     i{
-        font-size: 3.6rem;
+        font-size: 2.5rem;
+        color: var(--color-white)
+    }
+}
+.form__field-text-field-custom{
+    ::v-deep(.v-text-field__details)
+    {
+        display: none;
     }
 }
 </style>

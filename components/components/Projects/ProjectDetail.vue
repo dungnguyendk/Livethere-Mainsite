@@ -101,14 +101,10 @@
             <div class="container">
                 <ProjectSwiper />
             </div>
-            <Dialog
-                :open="isOpenShareSocialDialog"
-                :title="'Share this listing'"
-                :actions="false"
-                @close="closeShareSocialDialog"
-            >
-                <ShareSocialForm />
-            </Dialog>
+            <ShareSocialDialog
+             :open="isOpenShareSocialDialog"
+             @close="closeShareSocialDialog"
+            />
             <ConfirmDetailDialog 
              :open="isOpenConfirmDetailDialog"
              @close="closeConfirmDetailDialog"
@@ -124,26 +120,24 @@
 import EnquiryForm from "~/components/components/Projects/components/Form/EnquiryForm"
 import ContactAgentCard from "./components/Card/ContactAgentCard.vue"
 import NotiCard from "~/components/components/Projects/components/Card/NotiCard"
-import ShareSocialForm from "./components/Form/ShareSocialForm.vue"
-import Dialog from "~/components/elements/Dialog/Dialog.vue"
 import ProjectSwiper from "~/components/components/Projects/components/Slider/ProjectSwiper"
 import PanelListing from "~/components/components/Projects/components/Panel/PanelListing"
 import LightBoxListing from "./components/Box/LightBoxListing.vue"
 import ConfirmDetailDialog from "./components/Dialog/ConfirmDetailDialog.vue"
 import ContactDetailDialog from "./components/Dialog/ContactDetailDialog.vue"
+import ShareSocialDialog from '~/components/components/Projects/components/Dialog/ShareSocialDialog'
 export default {
     name: "ProjectListing",
     components: {
         EnquiryForm,
         ContactAgentCard,
         NotiCard,
-        ShareSocialForm,
-        Dialog,
         ProjectSwiper,
         PanelListing,
         LightBoxListing,
         ConfirmDetailDialog,
-        ContactDetailDialog
+        ContactDetailDialog, 
+        ShareSocialDialog
     },
     data() {
         return {
@@ -208,11 +202,11 @@ export default {
         .page__content-left-header {
             display: inline-block;
             width: 100%;
-            .page__content-left-iconic{
-                justify-content: center;    
+            .page__content-left-iconic {
+                justify-content: center;
                 margin-bottom: 1rem;
             }
-            .page__content-left-emotions{
+            .page__content-left-emotions {
                 justify-content: flex-end;
             }
         }

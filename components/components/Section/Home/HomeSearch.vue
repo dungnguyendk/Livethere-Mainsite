@@ -86,6 +86,7 @@ export default {
             price: "",
             bedroomList: BEDROOM_TYPE,
             propertyTypeList: PROPERTY_TYPE,
+            propertyType: "",
             priceList: [
                 {
                     value: 1,

@@ -51,29 +51,26 @@
                     <FilterDialog 
                      :open="isOpenFilterProjectDialog"
                      @close="closeFilterProjectDialog"
+                    
                     />
-                    <Dialog
-                        :open="isOpenShareSocialDialog"
-                        :title="'Share this listing'"
-                        :actions="false"
-                        @close="closeShareSocialDialog"
-                    >
-                        <ShareSocialForm/>     
-                    </Dialog>
+                    <ShareSocialDialog
+                     :open="isOpenShareSocialDialog"
+                     @close="closeShareSocialDialog"
+                    />
             </div>
         </div>
     </section>
 </template>
 
 <script>
-import Dialog from "~/components/elements/Dialog/Dialog.vue"
 import ProjectCard from "./components/Card/ProjectCard.vue"
 import FilterProjectForm from "~/components/components/Projects/components/Form/FilterProjectForm"
 import ShareSocialForm from "./components/Form/ShareSocialForm.vue"
 import FilterDialog from "~/components/components/Projects/components/Dialog/FilterDialog"
+import ShareSocialDialog from '~/components/components/Projects/components/Dialog/ShareSocialDialog'
 export default {
     name: "ProjectListing",
-    components: { ProjectCard, Dialog, FilterProjectForm, ShareSocialForm, FilterDialog },
+    components: { ProjectCard, FilterProjectForm, ShareSocialForm, FilterDialog, ShareSocialDialog },
     data() {
         return {
             listProject: [
@@ -193,6 +190,7 @@ export default {
     }
 
 }
+
 .section__top {
     display: flex;
     align-items: center;
@@ -266,6 +264,7 @@ export default {
 }
 .select-custom {
     margin-right: 1.2rem;
+    border: none !important;
 
     ::v-deep(.v-text-field__details) {
         display: none;
@@ -273,11 +272,11 @@ export default {
     }
     ::v-deep(.v-input__slot) {
         margin-bottom: 0;
-        border-radius: 0.6rem;
-        border-color: var(--color-primary);
+
         .v-input__prepend-inner {
             i {
                 width: 1.6rem;
+                background-color: var(--color-primary)
             }
         }
         .v-select__selections {
@@ -292,6 +291,15 @@ export default {
             line-height: 2rem;
             color: var(--color-primary);
         }
+        fieldset{
+            border: 0.2rem solid var(--color-primary); 
+            border-radius: 0.8rem;
+        }
     }
+    // ::v-deep(.v-input__control){
+    //     border: 0.1rem solid var(--color-primary);
+    //     border-radius: 0.8rem;
+
+    // }
 }
 </style>

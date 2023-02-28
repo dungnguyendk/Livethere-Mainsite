@@ -7,7 +7,8 @@
                     outlined
                     dense
                     prepend-inner-icon="icon-svg svg-location"
-                    placeholder="Where do you want to live?">
+                    placeholder="Where do you want to live?"
+                >
                 </v-text-field>
             </div>
             <div class="form__field mb-custom-2">
@@ -21,7 +22,8 @@
                     dense
                     prepend-inner-icon="icon-svg svg-buildings"
                     append-icon="mdi-chevron-down"
-                    class="form__field-select-custom">
+                    class="form__field-select-custom"
+                >
                 </v-select>
             </div>
             <div class="form__field3 mb-custom-1">
@@ -32,7 +34,10 @@
                         label="circle"
                         color="#EDB842"
                         hide-details
-                        class="form__field-checkbox-custom">
+                        class="form__field-checkbox-custom"
+                        v-model="selectAll"
+                        @change="select_All($event)"
+                    >
                         <template v-slot:label>
                             <div class="form__field-label-custom">
                                 <span>All</span>
@@ -47,13 +52,15 @@
                         label="circle"
                         color="#EDB842"
                         hide-details
-                        class="form__field-checkbox-custom">
+                        class="form__field-checkbox-custom"
+                        v-model="selectedLivethere"
+                    >
                         <template v-slot:label>
-    <div class="form__field-label-custom">
-        <span>Livethere Premium</span>
-        <img :src="require(`~/static/img/logos/logo-project.svg`)" alt="" />
-    </div>
-</template>
+                            <div class="form__field-label-custom">
+                                <span>Livethere Premium</span>
+                                <img :src="require(`~/static/img/logos/logo-project.svg`)" alt="" />
+                            </div>
+                        </template>
                     </v-checkbox>
                 </div>
             </div>
@@ -69,7 +76,8 @@
                         dense
                         prepend-inner-icon="icon-svg svg-bedroom"
                         append-icon="mdi-chevron-down"
-                        class="form__field-select-custom">
+                        class="form__field-select-custom"
+                    >
                     </v-select>
                 </div>
                 <div class="form__field">
@@ -80,7 +88,8 @@
                         outlined
                         prepend-inner-icon="icon-svg svg-bathroom"
                         append-icon="mdi-chevron-down"
-                        class="form__field-select-custom">
+                        class="form__field-select-custom"
+                    >
                     </v-select>
                 </div>
             </div>
@@ -102,12 +111,12 @@
                             dense
                             full-width
                             prefix="$"
-                            flat 
+                            flat
                             solo
                             class="form__field-text-field-custom"
                             style="width: 65px"
                             type="number"
-                            >
+                        >
                         </v-text-field>
                     </template>
                     <template v-slot:append>
@@ -117,12 +126,12 @@
                             dense
                             full-width
                             prefix="$"
-                            flat 
+                            flat
                             solo
                             class="form__field-text-field-custom"
                             type="number"
                             style="width: 65px"
-                            >
+                        >
                         </v-text-field>
                     </template>
                 </v-range-slider>
@@ -143,12 +152,12 @@
                             :value="rangeUnitSize[0]"
                             hide-details
                             dense
-                            flat 
+                            flat
                             solo
                             class="form__field-text-field-custom"
                             style="width: 65px"
                             type="number"
-                            >
+                        >
                         </v-text-field>
                     </template>
                     <template v-slot:append>
@@ -156,12 +165,12 @@
                             :value="rangeUnitSize[1]"
                             hide-details
                             dense
-                            flat 
+                            flat
                             solo
                             class="form__field-text-field-custom"
                             style="width: 65px"
                             type="number"
-                            >
+                        >
                         </v-text-field>
                     </template>
                 </v-range-slider>
@@ -171,15 +180,16 @@
                 <v-item-group multiple v-model="selected">
                     <v-item
                         v-for="(amenities, index) in listAmenities"
-                        :key="amenities"
-                        v-slot="{active, toggle}"
-                        >
+                        :key="index"
+                        v-slot="{ active, toggle }"
+                    >
                         <v-chip
                             :input-value="active"
                             active-class="primary--text"
                             label
                             class="ma-1 form__field-tag-custom"
-                            @click="toggle">
+                            @click="toggle"
+                        >
                             <i :class="amenities.icon"></i>
                             <span>{{ amenities.title }}</span>
                         </v-chip>
@@ -193,7 +203,6 @@
                 <v-btn class="btn btn--primary btn--green" @click="onClose()">Apply</v-btn>
             </div>
         </div>
-
     </form>
 </template>
 
@@ -254,14 +263,20 @@ export default {
             maxRentPer: 20000,
             rangeRentPer: [8000, 15000],
             minUnitSize: 100,
-            maxUnitSize: 10000, 
+            maxUnitSize: 10000,
             rangeUnitSize: [4000, 10000], 
-            selected: []
+            selectAll: false, 
+            selectedLivethere: true,
+            selected: [],
+
         }
     },
     methods: {
         onClose() {
             this.$emit("close")
+        },
+        select_All(e) {
+            // if(e == true && )
         }
     }
 }
@@ -271,13 +286,12 @@ export default {
     background-color: var(--color-white);
     ::v-deep(.v-input__slot) {
         padding: 0 !important;
-        
+
         input {
             font-weight: 500;
             font-size: 1.6rem;
             line-height: 2.4rem;
             color: var(--color-label);
-
         }
         input::-webkit-outer-spin-button,
         input::-webkit-inner-spin-button {
@@ -285,16 +299,15 @@ export default {
             margin: 0;
         }
 
-        input[type=number] {
+        input[type="number"] {
             -moz-appearance: textfield;
         }
-        .v-text-field__prefix{
+        .v-text-field__prefix {
             font-weight: 500;
             font-size: 1.6rem;
             line-height: 2.4rem;
-            color: var(--color-label)
+            color: var(--color-label);
         }
-
     }
 }
 .form__footer {
@@ -324,7 +337,6 @@ export default {
     /* width */
 
     .form__field {
-        
         label {
             font-weight: 500;
             font-size: 1.6rem;
@@ -385,9 +397,9 @@ export default {
 .v-input--selection-controls {
     margin-top: 0;
 }
-.form__field-text-field-custom{
-    ::v-deep(.v-input__control){
-        .v-input__slot{
+.form__field-text-field-custom {
+    ::v-deep(.v-input__control) {
+        .v-input__slot {
             background-color: transparent !important;
         }
     }
@@ -416,7 +428,7 @@ export default {
     position: relative;
     ::v-deep(.v-input__slot) {
         top: -0.7rem;
-        
+
         .v-slider__track-container {
             height: 0.4rem;
         }
@@ -480,19 +492,18 @@ export default {
     margin-bottom: 4.2rem;
 }
 ::-webkit-scrollbar {
-  width: .5rem;
+    width: 0.5rem;
 }
 
 ::-webkit-scrollbar-track {
-  border-radius: 1rem;
+    border-radius: 1rem;
 }
-
 
 ::-webkit-scrollbar-thumb {
     background: #bfbfbf;
-  border-radius: 1rem;
+    border-radius: 1rem;
 }
 ::-webkit-scrollbar-thumb:hover {
-    background: #a2a0a0
+    background: #a2a0a0;
 }
 </style>

@@ -1,5 +1,5 @@
 <template>
-    <v-dialog v-model="open" fullscreen>
+    <v-dialog v-model="openDialog" fullscreen>
         <div class="card--dialog">
             <div class="card__header">
                 <div class="container">
@@ -115,6 +115,9 @@ export default {
 
 <style lang="scss" scoped>
 .card--dialog {
+    height: 100%;
+    background-color: var(--color-white);
+
     .card__header {
         background-color: var(--color-white);
         box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.04), 0px 8px 16px rgba(0, 0, 0, 0.08);
@@ -167,7 +170,7 @@ export default {
             font-size: 1.76rem;
             line-height: 2rem;
             color: var(--color-title-black);
-            margin-bottom: 2.7rem;
+            margin-bottom: 2rem;
             text-transform: capitalize;
             text-align: left;
         }
@@ -181,10 +184,11 @@ export default {
     }
     .card__content-box-image {
         width: 7rem;
-        height: 7rem;
+        height: auto;
         img {
             width: 100%;
-            height: 100%;
+            object-fit: cover;
+            height: auto;
         }
     }
 }
