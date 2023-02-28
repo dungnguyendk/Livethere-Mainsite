@@ -15,11 +15,11 @@
 <script>
 import { appSettings } from "~/app-settings"
 import LandlordPortal from "~/components/components/Landlord/LandlordPortal.vue"
-import AssetInventory from "~/components/components/Landlord/AssetInventory/AssetInventory.vue"
 import InventoryDetails from "~/components/components/Landlord/Inventory/InventoryDetails.vue"
 import TenancyDetails from "~/components/components/Landlord/Tenancy/TenancyDetails"
 import TenancyWrapper from "~/components/components/Landlord/Tenancy/TenancyWrapper.vue"
 import TenancyUnitInventory from "~/components/components/Landlord/Tenancy/TenancyUnitInventory.vue"
+import { generateLandlordsSEOMetaTags } from "~/ultilities/seo-configs"
 
 export default {
     components: {
@@ -27,8 +27,6 @@ export default {
         TenancyWrapper,
         TenancyDetails,
         InventoryDetails,
-        AssetInventory,
-
         LandlordPortal
     },
     layout: "landlord",
@@ -46,7 +44,8 @@ export default {
             this.$router.push("/landlord/signin")
         }
     },
-    async asyncData({ route, store }) {
+    async asyncData({ route, store, app }) {
+        app.head.meta = generateLandlordsSEOMetaTags(app.head.meta)
         try {
             //await store.dispatch("inventory/getInventoryDetails", route.params.id)
             await store.dispatch("tenancy/getTenancyDetails", route.params.id)

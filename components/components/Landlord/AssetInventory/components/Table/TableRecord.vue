@@ -3,7 +3,7 @@
         }`">
         <td data-label="Property">
             <div>
-                <img :src="require(`~/static/img/${source.propertyType === 1 ? 'condo' : source.propertyType === 2 ? 'apt' : 'landed'}.png`)"
+                <img :src="require(`~/static/img/${source.propertyType === 1 ? 'condo' : source.propertyType === 2 ? 'apt' : 'landed'}.svg`)"
                     alt="" class="table--record__img" />
                 <p class="first-child" @click="handleClickOpenRow(source.internalID)">
                     {{
@@ -235,7 +235,8 @@ export default {
         padding: 1.2rem 1.6rem !important;
         text-align: left;
         vertical-align: top;
-        @media only screen and (min-width: 768px) and (max-width: 1280px){
+
+        @media only screen and (min-width: 768px) and (max-width: 1280px) {
             padding: 0.6rem 0.8rem !important;
         }
     }

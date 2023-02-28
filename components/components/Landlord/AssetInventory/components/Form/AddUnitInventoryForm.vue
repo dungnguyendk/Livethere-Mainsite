@@ -45,14 +45,14 @@
                 </v-col>
                 <v-col cols="12" sm="12" md="6">
                     <div class="form__field">
-                        <label class="required">Unit Price </label>
+                        <label class="required">Amount </label>
                         <v-text-field
                             v-model="value"
                             outlined
                             dense
                             hide-spin-buttons
                             :error-messages="valueErrors"
-                            suffix="SGD"
+                            suffix="S$"
                             reverse
                         >
                         </v-text-field>
@@ -83,7 +83,7 @@
 import { validationMixin } from "vuelidate"
 import { required } from "vuelidate/lib/validators"
 import { setFormControlErrors } from "~/ultilities/form-validations"
-import { convertNumberToCommas, convertCommasToNumber } from "~/ultilities/helpers"
+import { convertCommasToNumber, convertNumberToCommas } from "~/ultilities/helpers"
 import { CONDITIONS } from "~/ultilities/contants/asset-inventory.js"
 import { mapState } from "vuex"
 

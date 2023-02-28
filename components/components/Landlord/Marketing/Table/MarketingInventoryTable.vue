@@ -1,5 +1,5 @@
 <template lang="html">
-    <div class="asset-analytic">
+    <div class="asset__table">
         <table class="table--responsive table--asset">
             <thead>
                 <tr>
@@ -15,8 +15,8 @@
                 </tr>
             </thead>
             <tbody>
-                <template v-if="inventories.length > 0">
-                    <TableRecord v-for="item in inventories" :source="item" :key="item.id"
+                <template v-if="marketings.length > 0">
+                    <TableRecord v-for="item in marketings" :source="item" :key="item.id"
                         @handleClickOpenRow="handleClickOpenRow(item)" />
                 </template>
                 <template v-else>
@@ -48,7 +48,7 @@ export default {
     },
     computed: {
         ...mapState({
-            inventories: (state) => state.inventories.inventories,
+            marketings: (state) => state.marketing.marketings,
         }),
     },
     created() {
@@ -66,18 +66,6 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.asset-analytic {
-    padding: (32/1920) * 100% (278/1920) * 100% (126/1920) * 100% (278/1920) * 100%;
-
-    @media only screen and (max-width: 768px) {
-        padding: 0;
-    }
-
-    @media only screen and (min-width: 768px) and (max-width: 1280px) {
-        padding: 0;
-    }
-}
-
 .table--asset {
     thead {
         th {
@@ -116,6 +104,18 @@ export default {
             font-size: 2rem;
             line-height: 2.8rem;
         }
+    }
+}
+
+.asset__table {
+    padding: 6rem 0;
+
+    @media only screen and (max-width: 768px) {
+        padding: 1rem 0;
+    }
+
+    @media only screen and (min-width: 768px) and (max-width: 1280px) {
+        padding: 1rem 0;
     }
 }
 

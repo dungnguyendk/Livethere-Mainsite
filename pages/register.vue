@@ -9,6 +9,7 @@ import LandlordSignIn from "~/components/components/Landlord/Auth/SignIn/Landlor
 import LandlordRegisterBenefits from "~/components/components/Landlord/Auth/Register/LandlordRegisterBenefits.vue"
 import { appSettings } from "~/app-settings"
 import LandlordAuth from "~/components/components/Landlord/LandlordAuth.vue"
+import { generateLandlordsSEOMetaTags } from "~/ultilities/seo-configs"
 
 export default {
     components: {
@@ -19,6 +20,9 @@ export default {
     layout: "landlord",
     head: {
         title: `Register | ${appSettings.siteName}`
+    },
+    async asyncData({ app }) {
+        app.head.meta = generateLandlordsSEOMetaTags(app.head.meta)
     }
 }
 </script>

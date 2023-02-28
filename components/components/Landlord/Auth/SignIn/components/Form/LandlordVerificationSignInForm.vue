@@ -8,15 +8,8 @@
             </p>
         </div>
         <div class="form__input">
-            <v-otp-input
-                class="otp--custom"
-                length="6"
-                type="number"
-                v-model="otp"
-                :disabled="loading"
-                @finish="onFinish"
-                @input="onChangeOtpInput"
-            />
+            <v-otp-input class="otp--custom" length="6" type="number" v-model="otp" :disabled="loading" @finish="onFinish"
+                @input="onChangeOtpInput" />
         </div>
         <v-snackbar v-model="snackbar" :color="snackbarColor" :timeout="2000">
             {{ text }}
@@ -26,11 +19,7 @@
             {{ httpError }}
         </p>
         <div class="form__button">
-            <v-btn
-                class="btn btn--primary btn--green btn--submit"
-                :loading="loading"
-                @click="handleSignIn"
-            >
+            <v-btn class="btn btn--primary btn--green btn--submit" :loading="loading" @click="handleSignIn">
                 Submit
             </v-btn>
         </div>
@@ -38,15 +27,13 @@
         <div class="form__link">
             <p>
                 Didn't receive code?
-                <a
-                    href="#"
-                    @click.prevent="handleResendOtp"
-                    :class="`btn--resend-otp ${countdown !== 0 ? 'disabled' : ''}`"
-                >
+                <a href="#" @click.prevent="handleResendOtp"
+                    :class="`btn--resend-otp ${countdown !== 0 ? 'disabled' : ''}`">
                     OTP Again
                 </a>
             </p>
             <p v-if="countdown !== 0" class="ml-2">
+                <span v-if="countdown >= 60"> 1:00</span>
                 <span> 0:{{ countdown < 10 ? `0${countdown}` : countdown }}</span>
             </p>
         </div>
@@ -55,12 +42,15 @@
 
 <script>
 import { mapState } from "vuex"
+import { LANDLORD_COUNTDOWN_TIME } from "~/ultilities/contants/landlord"
+import { httpEndpoint } from "~/services/https/endpoints"
 
 export default {
-    name: "LandlordVerificationForm",
+    name: "LandlordVerificationSignInForm",
     computed: {
         ...mapState({
-            userID: (state) => state.user.userID
+            userID: (state) => state.user.userID,
+            signInDetails: (state) => state.user.signInDetails
         })
     },
     data: () => ({
@@ -86,9 +76,10 @@ export default {
                 1000
             )
             if (this.countdown === 0) {
+                this.httpError = ""
                 clearInterval(coundwnInterval)
             }
-            this.countdown = 15
+            this.countdown = LANDLORD_COUNTDOWN_TIME
         },
 
         onFinish(inputText) {
@@ -100,12 +91,32 @@ export default {
             this.httpError = ""
         },
 
-        handleResendOtp() {
-            this.countdown = 15
-            this.$store.dispatch("app/showSnackBar", "New OTP has been sent!")
-            this.httpError = ""
-            this.requestTime = this.requestTime + 1
-            this.handleCountDown()
+        async handleResendOtp() {
+            console.log({ test: true })
+            if (this.countdown === 0) {
+                try {
+                    const response = await this.$axios.$post(httpEndpoint.auth.resendOtpSignIn, {
+                        exchangeID: this.$route.query.token,
+                        userID: this.userID
+                    })
+                    if (response) {
+                        if (response.valid) {
+                            this.countdown = LANDLORD_COUNTDOWN_TIME
+                            await this.$store.dispatch("app/showSnackBar", "New OTP has been sent!")
+                            this.httpError = ""
+                            this.handleCountDown()
+                        } else {
+                            this.countdown = LANDLORD_COUNTDOWN_TIME
+                            this.handleCountDown()
+                            this.httpError = response.message || "Can't send OTP, please try again "
+                        }
+                    } else {
+                        this.httpError = response.message || "Can't send OTP, please try again "
+                    }
+                } catch (e) {
+                    this.httpError = "Can't send OTP, please try again "
+                }
+            }
         },
 
         // function get current user agent
@@ -132,7 +143,7 @@ export default {
                         const { jwtToken } = response.data
                         if (jwtToken) {
                             await this.$store.dispatch("app/showSnackBar", "Login successful!")
-                            window.location.href = "/landlord"
+                            window.location.href = "/landlord/dashboard"
                         } else {
                             this.httpError = "The credentials is invalid. Please try again."
                         }

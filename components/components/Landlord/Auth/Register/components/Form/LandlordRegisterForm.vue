@@ -12,8 +12,6 @@
                     dense
                     placeholder="Type here"
                     :error-messages="usernameErrors"
-                    @input="$v.username.$touch()"
-                    @blur="$v.username.$touch()"
                 />
             </div>
             <div class="form--register__input">
@@ -30,8 +28,6 @@
                         placeholder="Type here"
                         type="password"
                         :error-messages="passwordErrors"
-                        @input="$v.password.$touch()"
-                        @blur="$v.password.$touch()"
                     />
                 </div>
                 <div class="form--register__input">
@@ -43,8 +39,6 @@
                         placeholder="Type here"
                         type="password"
                         :error-messages="verifiedPasswordErrors"
-                        @input="$v.verifiedPassword.$touch()"
-                        @blur="$v.verifiedPassword.$touch()"
                     />
                 </div>
             </div>
@@ -57,8 +51,6 @@
                         dense
                         placeholder="Type here"
                         :error-messages="emailErrors"
-                        @input="$v.email.$touch()"
-                        @blur="$v.email.$touch()"
                     />
                 </div>
                 <div class="form--register__input mobile-form-control">
@@ -76,8 +68,6 @@
                         placeholder="+65 00000000"
                         v-on:country-changed="countryChanged"
                         :error-messages="phoneErrors"
-                        @input="$v.phone.$touch()"
-                        @blur="$v.phone.$touch()"
                     />
                 </div>
             </div>
@@ -88,40 +78,61 @@
                     Submit
                 </v-btn>
             </div>
+            <v-btn v-if="onDevelopment" class="btn btn--outline btn--blue" @click="autoFillForm">
+                Auto fill (Development only)
+            </v-btn>
         </div>
+
         <SuccessSnackBar :open="snackBarMessage !== ''" :message="snackBarMessage" />
     </form>
 </template>
 <script>
 import { validationMixin } from "vuelidate"
-import { email, helpers, required, sameAs } from "vuelidate/lib/validators"
+import { email, helpers, minLength, required, sameAs } from "vuelidate/lib/validators"
 import { httpEndpoint } from "~/services/https/endpoints"
 import SuccessSnackBar from "~/components/shared/Snackbar/SuccessSnackBar.vue"
+import {
+    MESSAGE_EMAIL_EXISTS,
+    MESSAGE_INVALID_EMAIL,
+    MESSAGE_INVALID_SINGAPORE_PHONE_NUMBER,
+    MESSAGE_PHONE_EXISTS,
+    MESSAGE_REQUIRED_EMAIL,
+    MESSAGE_REQUIRED_PHONE_NUMBER,
+    MESSAGE_SERVER_ERROR,
+    MESSAGE_USERNAME_EXISTS
+} from "~/ultilities/error-messages"
+import { CURRENT_ENV } from "~/app-settings"
+
+import { faker } from "@faker-js/faker"
 
 const complexity = helpers.regex(
     "complexity",
     /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/
 )
 
+const singaporePhoneNumber = helpers.regex("singaporePhoneNumber", /^\+65 \d{4}( ?\d{4})$/)
+
 export default {
     name: "LandlordRegisterForm",
     components: { SuccessSnackBar },
     mixins: [validationMixin],
     validations: {
-        username: { required },
+        username: { required, minLength: minLength(6) },
         password: { required, complexity },
         verifiedPassword: {
             required,
             sameAsPassword: sameAs("password")
         },
         email: { required, email },
-        phone: { required }
+        phone: { required, singaporePhoneNumber }
     },
     computed: {
+        onDevelopment: () => CURRENT_ENV === "develop",
         usernameErrors() {
             const errors = []
             if (!this.$v.username.$dirty) return errors
             !this.$v.username.required && errors.push("Preferred Username is required")
+            !this.$v.username.minLength && errors.push("Preferred Username at least 6 characters")
             return errors
         },
         passwordErrors() {
@@ -145,18 +156,19 @@ export default {
         emailErrors() {
             const errors = []
             if (!this.$v.email.$dirty) return errors
-            !this.$v.email.required && errors.push("Email Address is required")
-            !this.$v.email.email && errors.push("Email Address is valid")
+            !this.$v.email.required && errors.push(MESSAGE_REQUIRED_EMAIL)
+            !this.$v.email.email && errors.push(MESSAGE_INVALID_EMAIL)
             return errors
         },
         phoneErrors() {
             const errors = []
             if (!this.$v.phone.$dirty) return errors
-            !this.$v.phone.required && errors.push("Phone No is required")
+            !this.$v.phone.required && errors.push(MESSAGE_REQUIRED_PHONE_NUMBER)
+            !this.$v.phone.singaporePhoneNumber &&
+                errors.push(MESSAGE_INVALID_SINGAPORE_PHONE_NUMBER)
             return errors
         }
     },
-    // write function has regex have to +65 and 8 digits
 
     data() {
         return {
@@ -174,11 +186,12 @@ export default {
             bindProps: {
                 mode: "international",
                 required: false,
-                enabledCountryCode: true,
+                enabledCountryCode: false,
                 enabledFlags: true,
                 autocomplete: "off",
                 name: "telephone",
                 maxLen: 25,
+                onlyCountries: ["SG"],
                 inputOptions: {
                     showDialCode: true
                 }
@@ -187,6 +200,16 @@ export default {
     },
 
     methods: {
+        autoFillForm() {
+            this.username = faker.name.firstName().toLowerCase()
+            this.contactName = faker.name.findName()
+            this.email = "minhnghia.luong@asiaesolutions.com"
+            this.phone = "+65 81008399"
+            this.password = "Test@123"
+            this.verifiedPassword = "Test@123"
+            this.otp = ""
+        },
+
         countryChanged(country) {
             this.country = "+" + country.dialCode
         },
@@ -197,45 +220,57 @@ export default {
         },
 
         async checkEmail(payload) {
-            const response = await this.$axios.$get(
-                `${httpEndpoint.auth.checkEmail}?email=${payload}`,
-                email
-            )
-            if (response) {
-                const message = "This email is exist. Please use another email!"
-                if (!response.valid) {
-                    this.assignErrorMessage(message)
-                } else {
-                    this.errorMessages = this.errorMessages.filter((item) => item !== message)
+            try {
+                const response = await this.$axios.$get(
+                    `${httpEndpoint.auth.checkEmail}?email=${payload}`,
+                    email
+                )
+                if (response) {
+                    const message = MESSAGE_EMAIL_EXISTS
+                    if (!response.valid) {
+                        this.assignErrorMessage(message)
+                    } else {
+                        this.errorMessages = this.errorMessages.filter((item) => item !== message)
+                    }
                 }
+            } catch (e) {
+                this.assignErrorMessage(MESSAGE_SERVER_ERROR)
             }
         },
         async checkContactNo(payload) {
-            const response = await this.$axios.$get(
-                `${httpEndpoint.auth.checkPhoneNumber}?contactNo=${payload}`,
-                email
-            )
-            if (response) {
-                const message = "This phone number is exist. Please use another phone number!"
-                if (!response.valid) {
-                    this.assignErrorMessage(message)
-                } else {
-                    this.errorMessages = this.errorMessages.filter((item) => item !== message)
+            try {
+                const response = await this.$axios.$get(
+                    `${httpEndpoint.auth.checkPhoneNumber}?contactNo=${payload}`,
+                    email
+                )
+                if (response) {
+                    const message = MESSAGE_PHONE_EXISTS
+                    if (!response.valid) {
+                        this.assignErrorMessage(MESSAGE_PHONE_EXISTS)
+                    } else {
+                        this.errorMessages = this.errorMessages.filter((item) => item !== message)
+                    }
                 }
+            } catch (e) {
+                this.assignErrorMessage(MESSAGE_SERVER_ERROR)
             }
         },
         async checkUsername(payload) {
-            const response = await this.$axios.$get(
-                `${httpEndpoint.auth.checkUsername}?userName=${payload}`,
-                email
-            )
-            if (response) {
-                const message = "This username is exist. Please use another username!"
-                if (!response.valid) {
-                    this.assignErrorMessage(message)
-                } else {
-                    this.errorMessages = this.errorMessages.filter((item) => item !== message)
+            try {
+                const response = await this.$axios.$get(
+                    `${httpEndpoint.auth.checkUsername}?userName=${payload}`,
+                    email
+                )
+                if (response) {
+                    const message = MESSAGE_USERNAME_EXISTS
+                    if (!response.valid) {
+                        this.assignErrorMessage(message)
+                    } else {
+                        this.errorMessages = this.errorMessages.filter((item) => item !== message)
+                    }
                 }
+            } catch (e) {
+                this.assignErrorMessage(MESSAGE_SERVER_ERROR)
             }
         },
         resetForm() {
@@ -246,9 +281,11 @@ export default {
         async saveRegisterData() {
             try {
                 this.loading = true
-                const actualPhone = `${this.country} ${this.phone.replace(this.country, "")}`
+                const actualPhone = `${this.country} ${this.phone
+                    .replace(this.country, "")
+                    .replace(/ /g, "")}`
                 await this.checkEmail(this.email)
-                await this.checkContactNo(actualPhone)
+                await this.checkContactNo(actualPhone.replace(/^\+/, ""))
                 await this.checkUsername(this.username)
                 if (this.errorMessages.length === 0) {
                     try {
@@ -257,7 +294,7 @@ export default {
                             contactName: this.contactName,
                             email: this.email,
                             password: this.password,
-                            mobile: actualPhone,
+                            mobile: actualPhone.replace(/^\+/, ""),
                             otp: "",
                             createType: "LANDLORD"
                         }
@@ -265,7 +302,8 @@ export default {
                         const response = await this.$axios.$post(
                             httpEndpoint.auth.registerSendOTP,
                             {
-                                mobileNo: actualPhone
+                                mobileNo: actualPhone.replace(/^\+/, ""),
+                                email: this.email
                             }
                         )
                         if (response) {
@@ -275,16 +313,19 @@ export default {
                                 await this.$router.push("/landlord/register/verify")
                             } else {
                                 this.errorMessages = [
-                                    response.message
-                                        ? response.message
-                                        : "Something when wrong. Please try again."
+                                    response.message ? response.message : MESSAGE_SERVER_ERROR
                                 ]
                             }
+                        } else {
+                            this.loading = false
+                            this.errorMessages = [MESSAGE_SERVER_ERROR]
                         }
                     } catch (e) {
                         this.loading = false
                         console.log({ Errror: e.message })
                     }
+                } else {
+                    this.loading = false
                 }
             } catch (e) {
                 console.log({ Error: e.message })
@@ -294,6 +335,7 @@ export default {
         onSubmit() {
             this.$v.$touch()
             if (!this.$v.$invalid) {
+                this.errorMessages = []
                 this.saveRegisterData()
             }
         }

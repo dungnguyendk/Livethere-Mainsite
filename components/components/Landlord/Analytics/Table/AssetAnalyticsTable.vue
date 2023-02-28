@@ -1,5 +1,5 @@
 <template lang="html">
-    <div class="asset-analytic">
+    <div class="asset__table">
         <table class="table--responsive table--asset">
             <thead>
                 <tr>
@@ -17,7 +17,7 @@
                             <span>Provided by AES Technologies Online Indicative System</span>
                         </v-tooltip>
                     </th>
-                    <th>Est Capital Gain</th>
+                    <th>Est. Capital Gain</th>
                     <th>Monthly Rental</th>
                     <th>Gross Rental Yield</th>
                 </tr>
@@ -91,18 +91,19 @@ export default {
     }
 }
 
-.asset-analytic {
-    padding: (32/1920) * 100% (278/1920) * 100% (126/1920) * 100% (278/1920) * 100%;
+.asset__table {
+    padding: 6rem 0;
 
     @media only screen and (max-width: 768px) {
-        padding: 0;
+        padding: 3rem 0;
     }
+
     @media only screen and (min-width: 768px) and (max-width: 1280px) {
-        padding: 0;
+        padding: 1rem 0;
     }
 }
 
 .icon-warning {
-    font-size: 1.8rem;
+    font-size: 1.8rem !important;
 }
 </style>

@@ -111,14 +111,15 @@ export default {
         },
         async signInWithOtp() {
             const params = {
-                username: this.email, //"tester",
-                password: this.password //"tester@123"
+                username: this.email,
+                password: this.password
             }
             this.loading = true
             const response = await this.$axios.$post(httpEndpoint.auth.otpSignIn, params)
             if (response) {
                 if (response.valid) {
-                    this.$store.commit("user/setUserID", response.userID)
+                    await this.$store.commit("user/setUserID", response.userID)
+                    await this.$store.dispatch("user/setSignInDetails", params)
                     await this.$router.push(
                         `/landlord/signin/verify-otp?token=${response.exchangeID}`
                     )
@@ -126,7 +127,7 @@ export default {
                     setTimeout(() => {
                         this.loading = false
                         this.httpError = response.message
-                    }, 1000)
+                    }, 2400)
                 }
             }
         },

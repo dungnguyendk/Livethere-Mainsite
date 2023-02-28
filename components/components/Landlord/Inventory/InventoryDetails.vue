@@ -73,7 +73,7 @@ export default {
             flex-basis: 100%;
         }
     }
-    @media screen and (max-width: 768px) {
+    @media screen and (max-width: 767px) {
         .section__top {
             display: block;
             // justify-content: flex-start;

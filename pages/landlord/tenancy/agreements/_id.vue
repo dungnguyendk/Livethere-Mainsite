@@ -11,24 +11,21 @@
 <script>
 import { appSettings } from "~/app-settings"
 import LandlordPortal from "~/components/components/Landlord/LandlordPortal.vue"
-
-import AssetInventory from "~/components/components/Landlord/AssetInventory/AssetInventory.vue"
 import InventoryDetails from "~/components/components/Landlord/Inventory/InventoryDetails.vue"
 import TenancyDetails from "~/components/components/Landlord/Tenancy/TenancyDetails"
 import TenancyAgreements from "~/components/components/Landlord/Tenancy/TenancyAgreements"
 import qs from "qs"
 import { tenancyDocumentTypes } from "~/ultilities/tenancy-helpers"
+import { generateLandlordsSEOMetaTags } from "~/ultilities/seo-configs"
 
 export default {
     components: {
         TenancyAgreements,
         TenancyDetails,
         InventoryDetails,
-        AssetInventory,
-
         LandlordPortal
     },
-    layout: 'landlord',
+    layout: "landlord",
     head: {
         title: `Tenancy Agreement | ${appSettings.siteName}`
     },
@@ -43,7 +40,8 @@ export default {
             this.$router.push("/landlord/signin")
         }
     },
-    async asyncData({ route, store }) {
+    async asyncData({ route, store, app }) {
+        app.head.meta = generateLandlordsSEOMetaTags(app.head.meta)
         try {
             await store.dispatch("tenancy/getTenancyDetails", route.params.id)
             const documentType = tenancyDocumentTypes.agreement

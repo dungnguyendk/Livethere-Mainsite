@@ -12,13 +12,14 @@
 import { appSettings } from "~/app-settings"
 import Marketing from "~/components/components/Landlord/Marketing/Marketing.vue"
 import LandlordPortal from "~/components/components/Landlord/LandlordPortal.vue"
-import qs from "qs"
+import { generateLandlordsSEOMetaTags } from "~/ultilities/seo-configs"
+
 export default {
     components: {
         LandlordPortal,
-        Marketing,
+        Marketing
     },
-    layout: 'landlord',
+    layout: "landlord",
     head: {
         title: `Landlord | ${appSettings.siteName}`
     },
@@ -34,12 +35,9 @@ export default {
         }
     },
     async asyncData({ app, store }) {
+        app.head.meta = generateLandlordsSEOMetaTags(app.head.meta)
         try {
-            const param = qs.stringify({
-                StatusFID: 0
-            })
-            await store.dispatch("inventories/getInventories", param)
-            await store.commit("inventories/setTypeSelected", 0)
+            await store.dispatch("marketing/getMarketings")
         } catch (e) {
             console.log({ Error: e.message })
         }

@@ -8,7 +8,8 @@
             <div class="form__field">
                 <label>Property Type</label>
                 <v-select v-model.trim="propertyType" :items="propertyTypeList" item-text="text" item-value="value" outlined
-                    dense placeholder="Please select" :error-messages="propertyTypeErrors" />
+                    dense placeholder="Please select" :error-messages="propertyTypeErrors"
+                    @change="onChangePropertyType()" />
             </div>
             <div class="form__field2">
                 <div class="form__field">
@@ -20,7 +21,7 @@
                     </v-text-field>
                 </div>
                 <div class="form__field">
-                    <label>House No.</label>
+                    <label>Block / House No.</label>
                     <v-text-field v-model.trim="houseNo" outlined dense :error-messages="houseNoErrors" />
                 </div>
             </div>
@@ -29,7 +30,7 @@
                 <v-text-field v-model.trim="streetName" outlined dense :error-messages="streetNameErrors" />
             </div>
             <div class="form__field2">
-                <div class="form__field">
+                <div class="form__field" v-if="!hideLanded">
                     <label>Unit No.</label>
                     <v-text-field v-model.trim="unitNo" outlined dense :error-messages="unitNoErrors"
                         @change="searchPostalCode" />
@@ -40,7 +41,7 @@
                         item-text="text" item-value="value" :error-messages="bedroomErrors" />
                 </div>
             </div>
-            <div class="form__field">
+            <div class="form__field" v-if="!hideLanded">
                 <label>Project Name</label>
                 <v-text-field v-model.trim="projectName" outlined dense :error-messages="projectNameErrors" />
             </div>
@@ -59,13 +60,13 @@
             </div>
             <div class="form__field2">
                 <div class="form__field">
-                    <label>Purchased Price</label>
+                    <label>Purchase Price</label>
                     <v-text-field v-model.trim="purchasedPrice" outlined dense hide-spin-buttons
                         :error-messages="purchasedPriceErrors" suffix="S$" reverse>
                     </v-text-field>
                 </div>
                 <div class="form__field">
-                    <label>Purchased Date</label>
+                    <label>Date of Purchase</label>
                     <v-menu ref="menu1" v-model="menu1" :close-on-content-click="false" transition="scale-transition"
                         offset-y min-width="auto">
                         <template v-slot:activator="{ on, attrs }">
@@ -121,7 +122,6 @@ export default {
             })
         },
         bedroom: { required },
-        // location: { required },
         tenure: { required },
         floorArea: {
             required,
@@ -165,7 +165,8 @@ export default {
             purchasedDate: "",
             purchasedDateFormatted: "",
             menu1: false,
-            loading: false
+            loading: false,
+            hideLanded: false
         }
     },
     computed: {
@@ -175,19 +176,19 @@ export default {
             statusResponse: (state) => state.inventories.statusResponse,
         }),
         propertyTypeErrors() {
-            return setFormControlErrors(this.$v.propertyType, "This field is required")
+            return setFormControlErrors(this.$v.propertyType, "Property Type is required")
         },
         postalCodeErrors() {
             return setFormControlErrors(this.$v.postalCode, "Postal Code is required")
         },
         houseNoErrors() {
-            return setFormControlErrors(this.$v.houseNo, "House No is required")
+            return setFormControlErrors(this.$v.houseNo, "Block / House No. is required")
         },
         streetNameErrors() {
             return setFormControlErrors(this.$v.streetName, "Street Name is required")
         },
         unitNoErrors() {
-            return setFormControlErrors(this.$v.unitNo, "Unit no is required")
+            return setFormControlErrors(this.$v.unitNo, "Unit No. is required")
         },
         projectNameErrors() {
             return setFormControlErrors(this.$v.projectName, "Project Name is required")
@@ -195,27 +196,23 @@ export default {
         bedroomErrors() {
             return setFormControlErrors(this.$v.bedroom, "No of Bedroom(s) is required")
         },
-        // locationErrors() {
-        //     return setFormControlErrors(this.$v.location, "Location is required")
-        // },
         tenureErrors() {
             return setFormControlErrors(this.$v.tenure, "Tenure is required")
         },
         floorAreaErrors() {
-            return setFormControlErrors(this.$v.floorArea, "Floor Area is required")
+            return setFormControlErrors(this.$v.floorArea, "Floor Area (sqft) is required")
         },
         landAreaErrors() {
-            return setFormControlErrors(this.$v.landArea, "Land Area is required")
+            return setFormControlErrors(this.$v.landArea, "Land Area (sqft) is required")
         },
         purchasedPriceErrors() {
             return setFormControlErrors(this.$v.purchasedPrice, "Purchased Price is required")
         },
         purchasedDateFormattedErrors() {
-            return setFormControlErrors(this.$v.purchasedDateFormatted, "Purchased Date is required")
+            return setFormControlErrors(this.$v.purchasedDateFormatted, "Date of Purchase is required")
         },
     },
     created() {
-        // console.log("this.inventoryDetail", this.inventoryDetail.propertyType);
         if (this.inventoryDetail) {
             this.propertyType = this.inventoryDetail.propertyType ? this.propertyTypeList.find((i) => i.value.id === this.inventoryDetail.propertyType).value : ""
             this.postalCode = this.inventoryDetail.postalCode ? this.inventoryDetail.postalCode : ""
@@ -245,7 +242,6 @@ export default {
             this.purchasedPrice = ""
             this.purchasedDate = ""
         }
-        // console.log("this.sourceDetail::", this.sourceDetail);
     },
     methods: {
         onFormSubmit() {
@@ -253,7 +249,6 @@ export default {
         },
         async createInventories() {
             this.onFormSubmit()
-            // console.log("submit!", this.$v.$invalid)
             this.$v.$touch()
             if (!this.$v.$invalid) {
                 const params = {
@@ -293,7 +288,6 @@ export default {
         },
         updateInventories() {
             this.onFormSubmit()
-            // console.log("Update!", this.$v.$invalid)
             this.$v.$touch()
             if (!this.$v.$invalid) {
                 const params = {
@@ -346,9 +340,23 @@ export default {
                     )
                     if (response) {
                         this.loading = false
-                        response.propertyType && response.propertyType !== null ? this.propertyType = this.propertyTypeList.find(
-                            (item) => item.value.name === response.propertyType
-                        ).value : this.propertyType = ''
+                        if (response.propertyCategory === "LANDED") {
+                            this.propertyType = this.propertyTypeList.find(
+                                (item) => item.value.name === "LANDED PROPERTY"
+                            ).value
+                            this.floorArea = response.floorAreaSqft !== 0 ? response.floorAreaSqft : ''
+                            this.landArea = response.landAreaSqft !== 0 ? response.landAreaSqft : ''
+                            this.purchasedPrice = response.consider !== 0 ? response.consider : ''
+                            this.purchasedDate = response.contractDate !== 0 ? response.contractDate : ''
+                        } else {
+                            response.propertyType && response.propertyType !== null ? this.propertyType = this.propertyTypeList.find(
+                                (item) => item.value.name === response.propertyType
+                            ).value : this.propertyType = ''
+                            this.floorArea = this.unitNo && response.floorAreaSqft !== 0 ? response.floorAreaSqft : ''
+                            this.landArea = this.unitNo && response.landAreaSqft !== 0 ? response.landAreaSqft : ''
+                            this.purchasedPrice = this.unitNo && response.consider !== 0 ? response.consider : ''
+                            this.purchasedDate = this.unitNo && response.contractDate !== 0 ? response.contractDate : ''
+                        }
                         this.houseNo = response.houseNo
                         this.streetName = response.streetName
                         this.unitNo = this.unitNo ? this.unitNo : response.unitNo
@@ -356,14 +364,9 @@ export default {
                         response.tenureType && response.tenureType !== null ? this.tenure = this.tenureList.find(
                             (item) => item.value.name === response.tenureType
                         ).value : this.tenure = ''
-                        this.floorArea = this.unitNo && response.floorAreaSqft !== 0 ? response.floorAreaSqft : ''
-                        this.landArea = this.unitNo && response.landAreaSqft !== 0 ? response.landAreaSqft : ''
-                        this.purchasedPrice = this.unitNo && response.consider !== 0 ? response.consider : ''
-                        this.purchasedDate = this.unitNo && response.contractDate !== 0 ? response.contractDate : ''
                     } else {
                         this.loading = false
                     }
-
                 } catch (e) {
                     console.log(e)
                 }
@@ -384,6 +387,22 @@ export default {
             this.landArea = ""
             this.purchasedPrice = ""
             this.purchasedDate = ""
+            this.$v.$reset()
+        },
+        onChangePropertyType() {
+            this.houseNo = ""
+            this.streetName = ""
+            this.unitNo = ""
+            this.projectName = ""
+            this.bedroom = ""
+            this.location = ""
+            this.tenure = ""
+            this.floorArea = ""
+            this.landArea = ""
+            this.purchasedPrice = ""
+            this.purchasedDate = ""
+            this.postalCode = ""
+            this.$v.$reset()
         },
         onClose() {
             this.$store.commit("inventories/setInventoryDetail", '')
@@ -430,6 +449,13 @@ export default {
         purchasedDate() {
             this.purchasedDateFormatted = this.formatDate(this.purchasedDate)
         },
+        propertyType(val) {
+            if (val.name === "LANDED PROPERTY") {
+                this.hideLanded = true
+            } else {
+                this.hideLanded = false
+            }
+        }
     }
 }
 </script>

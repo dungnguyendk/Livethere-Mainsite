@@ -1,12 +1,7 @@
 <template lang="html">
     <nav class="nav--landlord">
-        <nuxt-link
-            v-for="(item, index) in navigation"
-            :to="item.value"
-            :class="handleActive(item) ? 'active' : ''"
-            @click.prevent="onSelectPanel(item)"
-            :key="index"
-        >
+        <nuxt-link v-for="(item, index) in navigation" :to="item.value" :class="handleActive(item) ? 'active' : ''"
+            @click.prevent="onSelectPanel(item)" :key="index">
             {{ item.label }}
         </nuxt-link>
     </nav>
@@ -27,7 +22,7 @@ export default {
             navigation: [
                 {
                     label: "Dashboard",
-                    path: "/landlord",
+                    path: "/landlord/dashboard",
                     value: "/landlord"
                 },
                 {
@@ -56,13 +51,13 @@ export default {
     methods: {
         handleActive(menuItem) {
             if (this.path === menuItem.path) return true
-            if (this.path.includes("/landlord/tenancy") && menuItem.path === "/landlord/assets")
-                return true
-            if (
-                this.path.includes("/landlord/assets/units") &&
-                menuItem.path === "/landlord/assets"
-            )
-                return true
+            // if (this.path.includes("/landlord/tenancy") && menuItem.path === "/landlord/assets")
+            //     return true
+            // if (
+            //     this.path.includes("/landlord/assets/units") &&
+            //     menuItem.path === "/landlord/assets"
+            // )
+            //     return true
         },
         onSelectPanel(panel) {
             this.activePanel = panel.value
@@ -82,14 +77,50 @@ export default {
         font-size: 1.6rem;
         font-weight: 500;
 
+        &:before {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 75%;
+            height: 1px;
+            background-color: var(--color-primary);
+            visibility: hidden;
+            opacity: 0;
+            transform: scale3d(0, 1, 1);
+            transition: transform 0.25s ease;
+            transform-origin: 100% 0%;
+        }
+
         &:hover,
         &:focus {
             color: var(--color-primary);
+
+            &:before {
+                visibility: visible;
+                opacity: 1;
+                transform: scale3d(1, 1, 1);
+                transform-origin: 0 100%;
+            }
         }
 
         &.active {
             font-weight: 700;
             color: var(--color-primary);
+
+            &:before {
+                content: "";
+                width: 100%;
+                height: 1px;
+                top: 100%;
+                background-color: var(--color-primary);
+                transform: none;
+                transition: none;
+                transform-origin: 0;
+                visibility: visible;
+                position: absolute;
+                opacity: 1;
+            }
         }
     }
 
@@ -101,8 +132,9 @@ export default {
     @media screen and (max-width: 768px) {
         grid-gap: 1.2rem;
         gap: 1.2rem;
+
         a {
-            font-size: 1.2rem;
+            font-size: 1.4rem;
         }
     }
 }

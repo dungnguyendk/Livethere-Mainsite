@@ -1,5 +1,5 @@
 <template lang="html">
-    <div class="asset-analytic">
+    <div class="asset__table">
         <table class="table--responsive table--asset">
             <thead>
                 <tr>
@@ -41,14 +41,6 @@
                 </template>
             </tbody>
         </table>
-        <!--        <slide-up-down :active="showExpandedPanel" :duration="300">
-                <ExpandedPanel @onClose="onCloseExpandedPanel" />
-            </slide-up-down>-->
-        <!-- <v-snackbar v-model="snackbar" :timeout="2000" top right text color="green darken-4">
-                <span class="message--snackBar">
-                    <i class="ri-information-line" /> {{ snackbarMessage }}
-                </span>
-            </v-snackbar> -->
     </div>
 </template>
 
@@ -75,7 +67,10 @@ export default {
         }),
         totalMoney() {
             if (this.statusFID === 3) {
-                return this.inventories.reduce((sum, item) => sum + item.tenancyDetail?.estimatedAnnualRevenue, 0)
+                return this.inventories.reduce(
+                    (sum, item) => sum + item.tenancyDetail?.estimatedAnnualRevenue,
+                    0
+                )
             } else if (this.statusFID === 2) {
                 return this.inventories.reduce((sum, item) => sum + item.estimatedMarketRent, 0)
             } else {
@@ -98,16 +93,16 @@ export default {
              this.showExpandedPanel = true*/
         },
         formatMoney(number) {
-            if (number || number === 0) return convertNumberToCommas(number);
-            return "0";
-        },
+            if (number || number === 0) return convertNumberToCommas(number)
+            return "0"
+        }
     },
     watch: {}
 }
 </script>
 <style lang="scss" scoped>
-.asset-analytic {
-    padding: (32/1920) * 100% (278/1920) * 100% (126/1920) * 100% (278/1920) * 100%;
+.asset__table {
+    padding: 0 0 6rem 0;
 
     @media only screen and (max-width: 768px) {
         padding: 0;

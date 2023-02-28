@@ -1,26 +1,26 @@
-export const defaultMenu  = [
+export const defaultMenu = [
     {
         defaultName: "Home",
-        linkURL: '/'
+        linkURL: "https://www.livethere.com/"
     },
     {
         defaultName: "Tenants",
-        linkURL: '/Tenants'
+        linkURL: "https://www.livethere.com/tenants"
     },
     {
         defaultName: "Landlords",
-        linkURL: '/landlord'
+        linkURL: "/landlord/dashboard"
     },
     {
         defaultName: "About us",
-        linkURL: '/about-us'
+        linkURL: "https://www.livethere.com/about-us"
     },
     {
         defaultName: "Search",
-        linkURL: '/search'
+        linkURL: "https://www.livethere.com/search/results?from=home"
     },
     {
         defaultName: "Contact us",
-        linkURL: '/contact-us'
+        linkURL: "https://www.livethere.com/"
     }
 ]

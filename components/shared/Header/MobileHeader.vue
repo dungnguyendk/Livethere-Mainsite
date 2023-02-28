@@ -1,37 +1,73 @@
 <template lang="html">
-    <header class="header--mobile" id="mobile-sticky">
+    <header  id="mobile-sticky" class="header--mobile" :class="appDrawer ? 'header--mobile' : 'header--mobile open-drawer'">
         <div class="header__left">
             <a href="#" class="header__toggle" @click.prevent="handleOpenMenuDrawer">
-                <i class="feather icon icon-menu" />
+                <i class="ri-menu-line" />
             </a>
         </div>
         <div class="header__content">
             <SiteLogo />
         </div>
         <div class="header__right">
-            <v-btn icon class="btn--search">
+            <!--            <v-btn icon class="btn&#45;&#45;search" @click="onOpenExternalSearch">
                 <i class="ri-search-line"></i>
-            </v-btn>
+            </v-btn>-->
+            <v-dialog
+                v-model="dialogSearch"
+                fullscreen
+                hide-overlay
+                transition="dialog-bottom-transition"
+            >
+                <template v-slot:activator="{ on, attrs }">
+                    <v-btn icon class="btn--search" v-bind="attrs" v-on="on" elevation="0">
+                        <i class="ri-user-line"></i>
+                    </v-btn>
+                </template>
+                <v-card class="dialog-search">
+                    <v-btn icon @click="dialogSearch = false">
+                        <i class="icon-svg svg-close"></i>
+                    </v-btn>
+                    <v-card-text>
+                        <v-text-field
+                            prepend-inner-icon="icon-svg svg-map"
+                            placeholder="Where do you want to live?"
+                            outlined
+                            dense
+                        ></v-text-field>
+                    </v-card-text>
+                </v-card>
+            </v-dialog>
         </div>
+        <MobileNavigation />
     </header>
 </template>
 
 <script>
 import { mapState } from "vuex"
 import SiteLogo from "~/components/shared/Logo/SiteLogo.vue"
+import MobileNavigation from "~/components/shared/Drawer/MobileNavigation.vue"
 
 export default {
     name: "MobileHeader",
-    components: { SiteLogo },
+    components: { SiteLogo, MobileNavigation },
     computed: {
         ...mapState({
             appDrawer: (state) => state.app.appDrawer
         })
     },
+    data() {
+        return {
+            dialogSearch: false
+        }
+    },
 
     methods: {
+        onOpenExternalSearch() {
+            window.open("https://www.livethere.com/search/results?from=home")
+        },
         handleOpenMenuDrawer() {
             this.$store.commit("app/setAppDrawer", !this.appDrawer)
+            console.log("handleOpenMenuDrawer",this.appDrawer);
         }
     }
 }
@@ -53,6 +89,11 @@ export default {
     justify-content: space-between;
     padding: 10px 16px;
     background-color: var(--color-primary);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 99;
 
     > * {
         flex-basis: 100%;
@@ -104,11 +145,57 @@ export default {
     }
 
     @media screen and (min-width: 768px) {
-        padding-left: calc((100% - 600px) / 2);
-        padding-right: calc((100% - 600px) / 2);
     }
-    @media screen and (min-width: 1200px) {
+    @media screen and (min-width: 1280px) {
         display: none;
     }
+}
+.header--mobile.open-drawer {
+position: static;
+    margin-bottom: -6.4rem;
+    transition: none;
+}
+.dialog-search {
+    border-radius: 0;
+    margin: 0;
+    .v-btn--icon {
+        border-radius: 0.4px;
+        position: absolute;
+        top: 1rem;
+        right: 1rem;
+        .icon-svg {
+            background-color: #828586;
+        }
+    }
+    .v-card__text {
+        padding-top: 6.5rem;
+    }
+    :deep(.v-input) {
+        fieldset {
+            // color: #DFE0E0;
+        }
+        .svg-map {
+            background-color: #e7b242;
+        }
+        .v-label {
+            font-size: 1.6rem;
+            color: #001327;
+        }
+        ::placeholder {
+            font-size: 1.6rem;
+            color: #001327;
+        }
+        .v-input__slot {
+            min-height: 4.8rem !important;
+        }
+        .v-input__prepend-inner {
+            margin-top: 1.2rem;
+            margin-right: 0.4rem;
+        }
+    }
+}
+
+.v-dialog--fullscreen {
+    margin: 0;
 }
 </style>

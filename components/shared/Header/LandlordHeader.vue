@@ -8,38 +8,27 @@
                     </div>
                     <div class="header__center">
                         <ul class="menu--top">
-                            <nuxt-link
-                                v-for="(item, index) in menus"
-                                :to="`/${item.linkURL}`"
-                                :class="item.linkURL === path ? 'active' : ''"
-                                :key="index"
-                            >
+                            <a v-for="(item, index) in menus" :href="item.linkURL"
+                                :class="item.linkURL === path ? 'active' : ''" :key="index">
                                 {{ item.defaultName }}
-                            </nuxt-link>
+                            </a>
                         </ul>
                     </div>
                     <div class="header__right">
                         <template v-if="loggedIn">
                             <v-menu v-if="userInfo" offset-y>
                                 <template v-slot:activator="{ on, attrs }">
-                                    <v-btn
-                                        class="btn--account"
-                                        color="primary"
-                                        dark
-                                        v-bind="attrs"
-                                        v-on="on"
-                                        outlined
-                                    >
+                                    <v-btn class="btn--account" color="primary" dark v-bind="attrs" v-on="on" outlined>
                                         {{ userInfo.displayName }}
                                         <i class="ri-arrow-drop-down-line"></i>
                                     </v-btn>
                                 </template>
                                 <v-list>
                                     <v-list-item>
-                                        <nuxt-link to="/landlord"> Dashboard</nuxt-link>
+                                        <nuxt-link to="/landlord/dashboard"> Dashboard</nuxt-link>
                                     </v-list-item>
                                     <v-list-item>
-                                        <a href="/" @click.prevent="onChangePassword">
+                                        <a href="/landlord/change-password" @click.prevent="onChangePassword">
                                             Change password
                                         </a>
                                     </v-list-item>
@@ -62,7 +51,7 @@
             </div>
         </header>
         <div class="mobile">
-            <MobileHeader />
+            <LandlordMobileHeader />
         </div>
     </div>
 </template>
@@ -73,14 +62,15 @@ import MobileHeader from "~/components/shared/Header/MobileHeader.vue"
 import { httpEndpoint } from "~/services/https/endpoints"
 import { defaultMenu } from "~/ultilities/menus"
 import { mapState } from "vuex"
+import LandlordMobileHeader from "~/components/shared/Header/LandlordMobileHeader.vue"
 
 export default {
     name: "LandlordHeader",
-    components: { MobileHeader, SiteLogo },
+    components: { LandlordMobileHeader, MobileHeader, SiteLogo },
     props: {
         source: {
             type: Object,
-            default: () => {}
+            default: () => { }
         }
     },
 
@@ -92,7 +82,8 @@ export default {
             return this.data
         },
         path() {
-            return this.$router.path
+            console.log(this.$router.currentRoute.path);
+            return this.$router.currentRoute.path
         },
         loggedIn() {
             return this.$auth.loggedIn
@@ -106,7 +97,7 @@ export default {
         }
     },
     created() {
-        if (!this.userInfo) {
+        if (!this.userInfo && this.loggedIn) {
             this.$store.dispatch("app/getUserInfo")
         }
     },
@@ -137,6 +128,13 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+.header.header--landing {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 99;
+}
 .btn--account {
     border: none;
     box-shadow: none;
@@ -156,6 +154,21 @@ export default {
         font-size: 1.8rem;
         color: #fff;
         font-weight: 600;
+
+        &.active {
+            &:before {
+                content: "";
+                width: 100%;
+                height: 1px;
+                background-color: #fff;
+                transform: none;
+                transition: none;
+                transform-origin: 0;
+                visibility: visible;
+                position: absolute;
+                opacity: 2;
+            }
+        }
 
         &:before {
             content: "";
@@ -209,6 +222,18 @@ export default {
         grid-template-columns: 12rem minmax(0, 1fr) 12rem;
     }
 
+    .header__link {
+        font-family: var(--font-second);
+        font-size: 1.8rem;
+        color: #fff;
+        font-weight: 700;
+
+        &:hover,
+        &:focus {
+            color: #fff;
+        }
+    }
+
     .header__actions {
         display: flex;
         justify-content: flex-end;
@@ -230,18 +255,6 @@ export default {
         align-items: center;
         grid-gap: 1.2rem;
         gap: 1.2rem;
-
-        a {
-            font-family: var(--font-second);
-            font-size: 2rem;
-            color: #fff;
-            font-weight: 700;
-
-            &:hover,
-            &:focus {
-                color: #fff;
-            }
-        }
     }
 }
 

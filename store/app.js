@@ -2,6 +2,7 @@ import { httpEndpoint } from "~/services/https/endpoints"
 
 export const state = () => ({
     appDrawer: false,
+    sidebarCollapse: false,
     token: null,
     appLoading: false,
     appLoadingMessage: "Loading...",
@@ -18,7 +19,13 @@ export const mutations = {
     },
     setSnackBar(state, payload) {
         state.snackBar = payload
-    }
+    },
+    setAppDrawer(state, payload) {
+        state.appDrawer = payload
+    },
+    setSidebarCollapse(state, payload) {
+        state.sidebarCollapse = payload
+    },
 }
 
 export const actions = {

@@ -29,7 +29,9 @@
                 </p>
                 <p>
                     <span>Property Type:</span>
-                    <strong>{{ inventoryDetails ? inventoryDetails.propertyType : "n/a" }}</strong>
+                    <strong>{{
+                        inventoryDetails ? inventoryDetails.propertyTypeDisplay : "n/a"
+                    }}</strong>
                 </p>
             </div>
             <div class="panel__column">
@@ -57,6 +59,7 @@
 <script>
 import { mapState } from "vuex"
 import { convertNumberToCommas } from "~/ultilities/helpers"
+
 export default {
     name: "InventoryInformationPanel",
     computed: {
@@ -83,14 +86,21 @@ export default {
         }
     }
 
+    .panel__columns {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        grid-gap: 2.4rem;
+    }
     .panel__column {
         p {
-            grid-gap: 2.4rem;
-            gap: 2.4rem;
+            display: flex;
+            //grid-gap: 2.4rem;
+            //gap: 2.4rem;
 
             span {
                 font-size: 1.6rem;
                 font-weight: 500;
+                // width: 14.7rem;
                 padding-right: 1.2rem;
             }
 
@@ -105,81 +115,137 @@ export default {
             }
         }
     }
-
-    .panel__columns {
-        display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        grid-gap: 2.4rem;
+    .panel__column:nth-child(1) {
+        p {
+            span {
+                min-width: 14.7rem;
+            }
+        }
+    }
+    .panel__column:nth-child(2) {
+        p {
+            span {
+                min-width: 11.7rem;
+            }
+        }
+    }
+    .panel__column:nth-child(3) {
+        p {
+            span {
+                min-width: 13.5rem;
+            }
+        }
     }
 
     .panel__container {
         background-color: #fff;
     }
 
-    @media screen and (min-width: 1280px) {
-        .panel__column {
-            p {
-                font-size: 1.6rem;
-            }
-        }
-    }
+    // @media screen and (min-width: 1280px) {
+    //     .panel__column {
+    //         p {
+    //             font-size: 1.6rem;
+    //         }
+    //     }
+    // }
 
-    @media screen and (max-width: 1279px) {
+    @media screen and (max-width: 1023px) {
         .panel__top {
             h3 {
                 font-size: 1.6rem;
             }
         }
-
         .panel__columns {
             grid-template-columns: repeat(2, minmax(0, 1fr));
+            grid-gap: 2.4rem;
+            gap: 1.5rem;
+            .panel__column {
+                p {
+                    font-size: 1.4rem;
+                    span {
+                        font-size: 1.4rem;
+                    }
+                    strong {
+                        font-size: 1.4rem;
+                    }
+                    &:not(:last-child) {
+                        margin-bottom: 0.4rem;
+                    }
+                }
+            }
         }
-        .panel__column {
+        .panel__column:nth-child(2) {
             p {
-                font-size: 1.6rem;
+                span {
+                    min-width: 10.5rem;
+                }
+            }
+        }
+        .panel__column:nth-child(1) {
+            p {
+                span {
+                    min-width: 13rem;
+                }
+            }
+        }
+        .panel__column:nth-child(3) {
+            p {
+                span {
+                    min-width: 13rem;
+                }
             }
         }
     }
 
-    @media screen and (max-width: 768px) {
+    @media screen and (max-width: 767px) {
         .panel__columns {
             grid-template-columns: minmax(0, 1fr);
-        }
-        p {
-            span {
-                font-size: 1.4rem;
-            }
-
-            strong {
-                font-size: 1.4rem;
-            }
-
-            &:not(:last-child) {
-                margin-bottom: 0.4rem;
-            }
-        }
-    }
-    @media screen and (max-width: 600px) {
-        p {
             grid-gap: 2.4rem;
-            gap: 2.4rem;
-
-            span {
-                font-weight: 500;
-                padding-right: 1.2rem;
-                font-size: 1.4rem;
+            gap: 1.5rem;
             }
-
-            strong {
-                font-size: 1.4rem;
-                font-weight: 500;
-                color: var(--color-heading);
+            .panel__column:nth-child(2) {
+            p {
+                span {
+                    min-width: 13rem;
+                }
             }
-
-            &:not(:last-child) {
-                margin-bottom: 0.4rem;
+        }
+        .panel__column:nth-child(1) {
+            p {
+                span {
+                    min-width: 13rem;
+                }
+            }
+        }
+        .panel__column:nth-child(3) {
+            p {
+                span {
+                    min-width: 13rem;
+                }
             }
         }
     }
+    // @media screen and (max-width: 600px) {
+    //     p {
+    //         grid-gap: 2.4rem;
+    //         gap: 2.4rem;
+
+    //         span {
+    //             font-weight: 500;
+    //             padding-right: 1.2rem;
+    //             font-size: 1.4rem;
+    //         }
+
+    //         strong {
+    //             font-size: 1.4rem;
+    //             font-weight: 500;
+    //             color: var(--color-heading);
+    //         }
+
+    //         &:not(:last-child) {
+    //             margin-bottom: 0.4rem;
+    //         }
+    //     }
+    // }
 }
 </style>

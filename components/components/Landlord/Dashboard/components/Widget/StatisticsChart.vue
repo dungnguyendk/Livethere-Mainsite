@@ -23,7 +23,7 @@
                 <div class="svg-header">
                     <img :src="require(`~/static/img/${source.widgetSVG}.svg`)" alt="" />
                 </div>
-                <v-tooltip bottom v-if="source.name === 'portfolio'">
+                <!-- <v-tooltip bottom v-if="source.name === 'portfolio'">
                     <template v-slot:activator="{ on, attrs }">
                         <div v-bind="attrs" v-on="on" class="icon-warning">
                             <span class="percent--custom">PPI</span>
@@ -43,12 +43,12 @@
                         </div>
                     </template>
                     <span>Compared to the previous year</span>
-                </v-tooltip>
+                </v-tooltip> -->
                 <!-- <div v-else>
-                                        <img :src="require(`~/static/img/icon-${currentYearRate > 0 ? 'up' : 'down'}.svg`)" alt=""
-                                            v-if="currentYearRate" />
-                                        <span class="percent">{{ currentYearRate ? `${currentYearRate}%` : '-' }}</span>
-                                    </div> -->
+                    <img :src="require(`~/static/img/icon-${currentYearRate > 0 ? 'up' : 'down'}.svg`)" alt=""
+                        v-if="currentYearRate" />
+                    <span class="percent">{{ currentYearRate ? `${currentYearRate}%` : '-' }}</span>
+                </div> -->
             </div>
         </div>
         <div class="widget-footer">
@@ -61,7 +61,7 @@
                 </span>
             </div>
             <div class="widget--percent">
-                <v-tooltip bottom v-if="source.name === 'portfolio'">
+                <!-- <v-tooltip bottom v-if="source.name === 'portfolio'">
                     <template v-slot:activator="{ on, attrs }">
                         <div v-bind="attrs" v-on="on" class="icon-warning">
                             <span class="percent--custom">PAI</span>
@@ -81,12 +81,12 @@
                         </div>
                     </template>
                     <span>Compared to the current portfolio price</span>
-                </v-tooltip>
+                </v-tooltip> -->
                 <!-- <div v-else>
-                                        <img :src="require(`~/static/img/icon-${lastYearRate > 0 ? 'up' : 'down'}.svg`)" alt=""
-                                            v-if="lastYearRate" />
-                                        <span class="percent">{{ lastYearRate ? `${lastYearRate}%` : '-' }}</span>
-                                    </div> -->
+                    <img :src="require(`~/static/img/icon-${lastYearRate > 0 ? 'up' : 'down'}.svg`)" alt=""
+                        v-if="lastYearRate" />
+                    <span class="percent">{{ lastYearRate ? `${lastYearRate}%` : '-' }}</span>
+                </div> -->
             </div>
         </div>
     </div>
