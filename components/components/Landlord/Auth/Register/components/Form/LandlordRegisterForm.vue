@@ -16,7 +16,7 @@
             </div>
             <div class="form--register__input">
                 <label>Contact name</label>
-                <v-text-field v-model="contactName" outlined dense />
+                <v-text-field v-model="contactName" outlined dense/>
             </div>
             <div class="form--register__input2">
                 <div class="form--register__input">
@@ -83,13 +83,13 @@
             </v-btn>
         </div>
 
-        <SuccessSnackBar :open="snackBarMessage !== ''" :message="snackBarMessage" />
+        <SuccessSnackBar :open="snackBarMessage !== ''" :message="snackBarMessage"/>
     </form>
 </template>
 <script>
-import { validationMixin } from "vuelidate"
-import { email, helpers, minLength, required, sameAs } from "vuelidate/lib/validators"
-import { httpEndpoint } from "~/services/https/endpoints"
+import {validationMixin} from "vuelidate"
+import {email, helpers, minLength, required, sameAs} from "vuelidate/lib/validators"
+import {httpEndpoint} from "~/services/https/endpoints"
 import SuccessSnackBar from "~/components/shared/Snackbar/SuccessSnackBar.vue"
 import {
     MESSAGE_EMAIL_EXISTS,
@@ -101,9 +101,9 @@ import {
     MESSAGE_SERVER_ERROR,
     MESSAGE_USERNAME_EXISTS
 } from "~/ultilities/error-messages"
-import { CURRENT_ENV } from "~/app-settings"
+import {CURRENT_ENV} from "~/app-settings"
 
-import { faker } from "@faker-js/faker"
+import {faker} from "@faker-js/faker"
 
 const complexity = helpers.regex(
     "complexity",
@@ -114,17 +114,17 @@ const singaporePhoneNumber = helpers.regex("singaporePhoneNumber", /^\+65 \d{4}(
 
 export default {
     name: "LandlordRegisterForm",
-    components: { SuccessSnackBar },
+    components: {SuccessSnackBar},
     mixins: [validationMixin],
     validations: {
-        username: { required, minLength: minLength(6) },
-        password: { required, complexity },
+        username: {required, minLength: minLength(6)},
+        password: {required, complexity},
         verifiedPassword: {
             required,
             sameAsPassword: sameAs("password")
         },
-        email: { required, email },
-        phone: { required, singaporePhoneNumber }
+        email: {required, email},
+        phone: {required, singaporePhoneNumber}
     },
     computed: {
         onDevelopment: () => CURRENT_ENV === "develop",
@@ -140,9 +140,9 @@ export default {
             if (!this.$v.password.$dirty) return errors
             !this.$v.password.required && errors.push("Password is required")
             !this.$v.password.complexity &&
-                errors.push(
-                    "Password needs: at least 8 characters, 1 uppercase character, 1 number and 1 special character"
-                )
+            errors.push(
+                "Password needs: at least 8 characters, 1 uppercase character, 1 number and 1 special character"
+            )
             return errors
         },
         verifiedPasswordErrors() {
@@ -150,7 +150,7 @@ export default {
             if (!this.$v.verifiedPassword.$dirty) return errors
             !this.$v.verifiedPassword.required && errors.push("Verified Password is required")
             !this.$v.verifiedPassword.sameAsPassword &&
-                errors.push("Verified password must match the password.")
+            errors.push("Verified password must match the password.")
             return errors
         },
         emailErrors() {
@@ -165,7 +165,7 @@ export default {
             if (!this.$v.phone.$dirty) return errors
             !this.$v.phone.required && errors.push(MESSAGE_REQUIRED_PHONE_NUMBER)
             !this.$v.phone.singaporePhoneNumber &&
-                errors.push(MESSAGE_INVALID_SINGAPORE_PHONE_NUMBER)
+            errors.push(MESSAGE_INVALID_SINGAPORE_PHONE_NUMBER)
             return errors
         }
     },
@@ -322,13 +322,13 @@ export default {
                         }
                     } catch (e) {
                         this.loading = false
-                        console.log({ Errror: e.message })
+                        console.log({Errror: e.message})
                     }
                 } else {
                     this.loading = false
                 }
             } catch (e) {
-                console.log({ Error: e.message })
+                console.log({Error: e.message})
             }
         },
 
@@ -359,6 +359,12 @@ export default {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
         column-gap: 2rem;
+    }
+
+    @media screen and (max-width: 767px) {
+        &__input2 {
+            grid-template-columns: minmax(0, 1fr);
+        }
     }
 }
 
