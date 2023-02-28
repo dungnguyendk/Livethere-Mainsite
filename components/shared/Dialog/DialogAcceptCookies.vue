@@ -39,7 +39,7 @@ export default {
     },
     mounted() {
         const acceptCookies = Cookies.get("accept_cookies")
-        if (acceptCookies && acceptCookies === 1) {
+        if (acceptCookies && acceptCookies === "1") {
             this.isActive = false
         }
     },
