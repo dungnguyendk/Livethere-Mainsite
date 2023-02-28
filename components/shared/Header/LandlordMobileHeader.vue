@@ -202,8 +202,7 @@ position: static;
     background-color: #0b0c0c;
     z-index: 99;
     bottom: 0;
-    max-height: 100vh;
-    height: 100vh;
+    position: fixed;
 
     .ps-drawer__close {
         position: absolute;
