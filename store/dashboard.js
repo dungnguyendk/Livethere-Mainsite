@@ -1,11 +1,11 @@
 import { httpEndpoint } from "~/services/https/endpoints"
+
 export const state = () => ({
     dashBoards: null
 })
 export const mutations = {
     setDashBoards(state, payload) {
         state.dashBoards = payload
-        // console.log("state.dashBoards::", state.dashBoards)
     }
 }
 export const actions = {

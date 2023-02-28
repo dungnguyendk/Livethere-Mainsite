@@ -22,10 +22,7 @@ export const mutations = {
     },
     setAppDrawer(state, payload) {
         state.appDrawer = payload
-    },
-    setSidebarCollapse(state, payload) {
-        state.sidebarCollapse = payload
-    },
+    }
 }
 
 export const actions = {
