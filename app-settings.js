@@ -17,7 +17,11 @@ const settings = [
     },
     {
         env: "production",
-        base_url: ""
+        base_url: "https://livethereapi.asiaesolutions.com/erppublic",
+        media_url: "https://livethereapi.asiaesolutions.com/assetfileapi", // need update
+        postal_url: "https://apivo.aestechgroup.com/aespostal",
+        mediaURLPath: "https://livethereapi.asiaesolutions.com/content/asset/", // need update
+        landlord: "https://api.livethere.com/landlord"
     }
 ]
 export const CURRENT_ENV = "develop"
