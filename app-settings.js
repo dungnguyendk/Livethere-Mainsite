@@ -33,11 +33,11 @@ export const appSettings = {
 }
 export const appMedia = {
     baseURL: currentSettings.media_url,
-    siteName: "Livethere "
+    siteName: "Livethere"
 }
 export const appVo = {
     baseURL: currentSettings.postal_url,
-    siteName: "Livethere "
+    siteName: "Livethere"
 }
 export const mediaSettings = {
     baseURL: currentSettings.mediaURLPath
