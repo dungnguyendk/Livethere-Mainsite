@@ -25,6 +25,11 @@
         line-height: 2rem !important;
     }
 }
+.theme--light{
+    .v-label {
+        color: #000000 !important;
+    }
+}
 .v-otp-input {
     .v-input {
         display: flex;
@@ -49,5 +54,10 @@
     .theme--light.v-input input,
     .theme--light.v-input textarea {
         color: var(--color-yellow) !important;
+    }
+}
+@media only screen and (max-width: 767.98px) { 
+    .v-label {
+        font-size: 1.4rem !important; 
     }
 }
