@@ -5,10 +5,10 @@
                 <img :src="require(`~/static/img/logos/logo-project.svg`)" alt="" />
                 <span>premium</span>
             </div>
-            <nuxt-link to="/" class="card__header-title">{{ project.title }}</nuxt-link>
+            <nuxt-link to="/projects/details" class="card__header-title">{{ project.title }}</nuxt-link>
         </div>
         <div class="card__image">
-            <nuxt-link to="/">
+            <nuxt-link to="/projects/details">
                 <img :src="project.imgURL" alt="" />
             </nuxt-link>
         </div>

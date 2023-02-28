@@ -21,7 +21,7 @@
                     <div class="page__content-left">
                         <div class="page__content-left-info">
                             <div class="page__content-left-back">
-                                <nuxt-link to="/projects" class="btn btn--outline btn--green btn-custom">
+                                <nuxt-link to="/" class="btn btn--outline btn--green btn-custom" @click="history.back()">
                                     <v-icon size="16">mdi-arrow-left</v-icon>
                                     <span>Back to Result</span>
                                 </nuxt-link>
@@ -104,6 +104,7 @@
             <ShareSocialDialog
              :open="isOpenShareSocialDialog"
              @close="closeShareSocialDialog"
+             :item="targetLinkURL"
             />
             <ConfirmDetailDialog 
              :open="isOpenConfirmDetailDialog"
@@ -125,7 +126,7 @@ import PanelListing from "~/components/components/Projects/components/Panel/Pane
 import LightBoxListing from "./components/Box/LightBoxListing.vue"
 import ConfirmDetailDialog from "./components/Dialog/ConfirmDetailDialog.vue"
 import ContactDetailDialog from "./components/Dialog/ContactDetailDialog.vue"
-import ShareSocialDialog from '~/components/components/Projects/components/Dialog/ShareSocialDialog'
+import ShareSocialDialog from "~/components/components/Projects/components/Dialog/ShareSocialDialog"
 export default {
     name: "ProjectListing",
     components: {
@@ -136,7 +137,7 @@ export default {
         PanelListing,
         LightBoxListing,
         ConfirmDetailDialog,
-        ContactDetailDialog, 
+        ContactDetailDialog,
         ShareSocialDialog
     },
     data() {
@@ -145,7 +146,18 @@ export default {
             activeHeart: false,
             isOpenShareSocialDialog: false,
             isOpenConfirmDetailDialog: false,
-            isOpenContactDetailDialog: false
+            isOpenContactDetailDialog: false,
+            targetLinkURL: {
+                id: 1,
+                title: "Eden Residences Capitol",
+                imgURL: require(`../../../static/img/project-01.png`),
+                location: "2 Sinaran Drive, Singapore 307467",
+                price: 30000,
+                totalBed: 3,
+                totalBath: 2,
+                activeHeart: false,
+                linkDetails: "http://localhost:3002/projects/details/1"
+            }
         }
     },
     methods: {

@@ -44,6 +44,7 @@
                 <div class="section__body-list">
                     <ProjectCard v-for="(project, index) in listProject"
                         :key="index" :project="project" @open="openShareSocialDialog($event)" :listProject="listProject"/>
+                      
                 </div>
                 <div class="section__body-load-more">
                     <button>Load more</button>
@@ -56,6 +57,7 @@
                     <ShareSocialDialog
                      :open="isOpenShareSocialDialog"
                      @close="closeShareSocialDialog"
+                     :item="targetLinkURL"
                     />
             </div>
         </div>
@@ -82,7 +84,8 @@ export default {
                     price: 30000,
                     totalBed: 3,
                     totalBath: 2,
-                    activeHeart: false
+                    activeHeart: false, 
+                    linkDetails: "http://localhost:3002/projects/details/1"
                 },
                 {
                     id: 2,
@@ -92,7 +95,9 @@ export default {
                     price: 18000,
                     totalBed: 4,
                     totalBath: 4,
-                    activeHeart: false
+                    activeHeart: false,
+                    linkDetails: "http://localhost:3002/projects/details/2"
+
                 },
                 {
                     id: 3,
@@ -102,7 +107,9 @@ export default {
                     price: 56000,
                     totalBed: 8,
                     totalBath: 10,
-                    activeHeart: false
+                    activeHeart: false, 
+                    linkDetails: "http://localhost:3002/projects/details/3"
+
                 },
                 {
                     id: 4,
@@ -112,7 +119,9 @@ export default {
                     price: 15800,
                     totalBed: 5,
                     totalBath: 9,
-                    activeHeart: false
+                    activeHeart: false, 
+                    linkDetails: "http://localhost:3002/projects/details/4"
+
                 }
             ],
             listSort: [
@@ -140,7 +149,9 @@ export default {
             isActiveMap: false,
             isOpenFilterProjectDialog: false,
             isOpenShareSocialDialog: false,
-            selectionSort: 1
+            selectionSort: 1, 
+            targetLinkURL: {}
+            
         }
     },
     methods: {
@@ -152,6 +163,10 @@ export default {
         },
         openShareSocialDialog(e) {
             this.isOpenShareSocialDialog = e.open
+            this.targetLinkURL = this.listProject.find(index=>{
+                return index.id === e.id
+            })
+
         }
     }
 }

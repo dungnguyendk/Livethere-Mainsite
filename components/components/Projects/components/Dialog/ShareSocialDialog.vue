@@ -1,5 +1,5 @@
 <template>
-    <v-dialog v-model="openDialog" persistent>
+    <v-dialog v-model="openDialog" width="600" persistent>
         <div class="card--dialog">
             <div class="card__header">
                 <h4>Share this listing</h4>
@@ -8,7 +8,7 @@
                 </button>
             </div>
             <div class="card__content">
-                <ShareSocialForm/>
+                <ShareSocialForm :item="item"/>
             </div>
         </div>
     </v-dialog>
@@ -21,14 +21,20 @@ export default {
     components: {ShareSocialForm},
     data() {
         return {
-            openDialog: false
+            openDialog: false, 
+    
         };
     },
     props: {
         open: {
             type: Boolean,
             default: false
+        }, 
+        item: {
+            type: Object, 
+            default: ()=> {}
         }
+
     },
     methods: {
         onClose() {
@@ -47,7 +53,7 @@ export default {
 <style lang="scss" scoped>
 .card--dialog{
     background: var(--color-white);
-    border-radius: 2rem;
+    border-radius: 0.4rem;
     .card__header{
         padding: 0.8rem 1.6rem;
         display: flex;

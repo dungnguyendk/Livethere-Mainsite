@@ -54,6 +54,7 @@
                         hide-details
                         class="form__field-checkbox-custom"
                         v-model="selectedLivethere"
+                        @change="select_Livethere($event)"
                     >
                         <template v-slot:label>
                             <div class="form__field-label-custom">
@@ -89,6 +90,9 @@
                         prepend-inner-icon="icon-svg svg-bathroom"
                         append-icon="mdi-chevron-down"
                         class="form__field-select-custom"
+                        :items="bathroomList"
+                        item-text="text"
+                        item-value="value.name"
                     >
                     </v-select>
                 </div>
@@ -207,7 +211,8 @@
 </template>
 
 <script>
-import { PROPERTY_TYPE, BEDROOM_TYPE } from "~/ultilities/contants/asset-inventory"
+import { PROPERTY_TYPE, BEDROOM_TYPE, BATHROOM_TYPE } from "~/ultilities/contants/asset-inventory"
+import { convertNumberToCommas } from "~/ultilities/helpers"
 export default {
     name: "FilterProjectForm",
     data() {
@@ -258,8 +263,9 @@ export default {
             propertyTypeList: PROPERTY_TYPE,
             bedroom: "Studio",
             bedroomList: BEDROOM_TYPE,
-            bathroom: "Select",
-            minRentPer: 4000,
+            bathroom: "Studio",
+            bathroomList: BATHROOM_TYPE,
+            minRentPer: 1000,
             maxRentPer: 20000,
             rangeRentPer: [8000, 15000],
             minUnitSize: 100,
@@ -276,7 +282,14 @@ export default {
             this.$emit("close")
         },
         select_All(e) {
-            // if(e == true && )
+            if(e == true && this.selectedLivethere == false){
+                this.selectedLivethere = true
+            }
+        }, 
+        select_Livethere(e){
+            if(e == false && this.selectAll == true){
+                this.selectAll = false
+            }
         }
     }
 }

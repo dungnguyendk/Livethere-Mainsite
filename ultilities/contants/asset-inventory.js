@@ -95,6 +95,60 @@ export const BEDROOM_TYPE = [
         text: "6 Bedroom or More"
     }
 ]
+
+export const BATHROOM_TYPE = [
+    {
+        value: {
+            id: 1,
+            name: "Studio"
+        },
+        text: "Studio"
+    },
+    {
+        value: {
+            id: 2,
+            name: "1 Bathroom"
+        },
+        text: "1 Bathroom"
+    },
+    {
+        value: {
+            id: 3,
+            name: "2 Bathroom"
+        },
+        text: "2 Bathroom"
+    },
+    {
+        value: {
+            id: 4,
+            name: "3 Bathroom"
+        },
+        text: "3 Bathroom"
+    },
+    {
+        value: {
+            id: 5,
+            name: "4 Bathroom"
+        },
+        text: "4 Bathroom"
+    },
+    {
+        value: {
+            id: 6,
+            name: "5 Bathroom"
+        },
+        text: "5 Bathroom"
+    },
+    {
+        value: {
+            id: 7,
+            name: "6 Bathroom or More"
+        },
+        text: "6 Bathroom or More"
+    }
+]
+
+
 export const TENURE = [
     {
         value: {

@@ -84,6 +84,7 @@ export default {
             location: "SINGAPORE",
             countries: countries,
             price: "",
+            bedroom: "Studio",
             bedroomList: BEDROOM_TYPE,
             propertyTypeList: PROPERTY_TYPE,
             propertyType: "",
