@@ -18,6 +18,7 @@ import LandlordPortal from "~/components/components/Landlord/LandlordPortal.vue"
 import TenancyWrapper from "~/components/components/Landlord/Tenancy/TenancyWrapper"
 import TenancyExpensesPanel from "~/components/components/Landlord/Tenancy/Panel/TenancyExpensesPanel"
 import { mapState } from "vuex"
+import { generateLandlordsSEOMetaTags } from "~/ultilities/seo-configs"
 
 export default {
     components: {
@@ -52,7 +53,8 @@ export default {
         }
     },
 
-    async asyncData({ route, store }) {
+    async asyncData({ route, store, app }) {
+        app.head.meta = generateLandlordsSEOMetaTags(app.head.meta)
         try {
             await store.dispatch("tenancy/getTenancyDetails", route.params.id)
         } catch (e) {

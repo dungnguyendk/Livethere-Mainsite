@@ -16,6 +16,7 @@ import TenancyDetails from "~/components/components/Landlord/Tenancy/TenancyDeta
 import TenancyStampDuty from "~/components/components/Landlord/Tenancy/TenancyStampDuty"
 import { tenancyDocumentTypes } from "~/ultilities/tenancy-helpers"
 import qs from "qs"
+import { generateLandlordsSEOMetaTags } from "~/ultilities/seo-configs"
 
 export default {
     components: {
@@ -39,7 +40,8 @@ export default {
             this.$router.push("/landlord/signin")
         }
     },
-    async asyncData({ route, store }) {
+    async asyncData({ route, store, app }) {
+        app.head.meta = generateLandlordsSEOMetaTags(app.head.meta)
         try {
             await store.dispatch("tenancy/getTenancyDetails", route.params.id)
             const documentType = tenancyDocumentTypes.stampDuty

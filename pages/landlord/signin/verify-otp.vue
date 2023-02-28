@@ -9,6 +9,7 @@ import LandlordTerms from "~/components/components/Landlord/Auth/Register/Landlo
 import { appSettings } from "~/app-settings"
 import LandlordVerificationSignInForm from "~/components/components/Landlord/Auth/SignIn/components/Form/LandlordVerificationSignInForm.vue"
 import LandlordAuth from "~/components/components/Landlord/LandlordAuth.vue"
+import { generateLandlordsSEOMetaTags } from "~/ultilities/seo-configs"
 
 export default {
     components: {
@@ -19,6 +20,9 @@ export default {
     layout: "landlord",
     head: {
         title: `Verify Sign in by OTP | ${appSettings.siteName}`
+    },
+    async asyncData({ app }) {
+        app.head.meta = generateLandlordsSEOMetaTags(app.head.meta)
     }
 }
 </script>

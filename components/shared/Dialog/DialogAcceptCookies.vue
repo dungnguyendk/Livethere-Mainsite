@@ -6,48 +6,54 @@
         <div class="section__wrapper">
             <div class="section__left">
                 <p>
-                    Livethere uses necessary cookies to operate our website. We will also use cookies to enhance your experience with Livethere, including to show you more personalised content and tailored advertisements, if you select “Allow all cookies”. <a href="https://www.livethere.com/privacy-policy#19Cookies" target="_blank" class="font-weight-bold text-decoration-underline">More Info</a>
+                    Livethere uses necessary cookies to operate our website. We will also use
+                    cookies to enhance your experience with Livethere, including to show you more
+                    personalised content and tailored advertisements, if you select “Allow all
+                    cookies”.
+                    <a
+                        href="https://www.livethere.com/privacy-policy#19Cookies"
+                        target="_blank"
+                        class="font-weight-bold text-decoration-underline"
+                        >More Info</a
+                    >
                 </p>
             </div>
             <div class="section__right">
-                <v-btn 
-                    class="btn btn--primary btn--green" 
-                    @click.prevent="handleAcceptDialog"
-                >
-                    Allow all cookies</v-btn
-                >
+                <v-btn class="btn btn--primary btn--green" @click.prevent="handleAcceptDialog">
+                    Allow all cookies
+                </v-btn>
             </div>
         </div>
     </div>
 </template>
 
 <script>
-import Cookies from "js-cookie";
+import Cookies from "js-cookie"
 
 export default {
     name: "DialogAcceptCookies",
     data() {
         return {
             isActive: true
-        };
+        }
     },
     mounted() {
-        const acceptCookies = Cookies.get("accept_cookies");
-        if (acceptCookies && acceptCookies == 1) {
-            this.isActive = false;
+        const acceptCookies = Cookies.get("accept_cookies")
+        if (acceptCookies && acceptCookies === 1) {
+            this.isActive = false
         }
     },
     methods: {
         handleCloseDialog() {
-            Cookies.set("accept_cookies", 0);
-            this.isActive = false;
+            Cookies.set("accept_cookies", 0)
+            this.isActive = false
         },
         handleAcceptDialog() {
-            Cookies.set("accept_cookies", 1);
-            this.isActive = false;
+            Cookies.set("accept_cookies", 1)
+            this.isActive = false
         }
     }
-};
+}
 </script>
 
 <style lang="scss" scoped>
@@ -61,11 +67,13 @@ export default {
     z-index: 9999;
     background-color: #1d2a30;
     transform: translateY(100%);
-    transition: all .25s cubic-bezier(.4,0,.2,1);
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+
     p {
         margin-bottom: 0;
         color: white;
     }
+
     a {
         &:hover {
             color: var(--color-primary);

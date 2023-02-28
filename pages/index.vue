@@ -13,6 +13,7 @@ import LandlordLandingCTA from "~/components/components/Landlord/LandingPage/Lan
 import EnquiryForm from "~/archived/enquiry-form/index.vue"
 import LandlordEnquiry from "~/components/components/Landlord/LandingPage/LandlordEnquiry.vue"
 import { appSettings } from "~/app-settings"
+import { generateLandlordsSEOMetaTags } from "~/ultilities/seo-configs"
 
 export default {
     layout: "landlord",
@@ -26,10 +27,9 @@ export default {
     head: {
         title: `Landlords | ${appSettings.siteName}`
     },
-    data() {
-        return {}
+
+    async asyncData({ app }) {
+        app.head.meta = generateLandlordsSEOMetaTags(app.head.meta)
     }
 }
 </script>
-
-<style lang="scss" scoped></style>

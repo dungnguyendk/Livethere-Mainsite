@@ -14,6 +14,7 @@ import LandlordPortal from "~/components/components/Landlord/LandlordPortal.vue"
 import InventoryDetails from "~/components/components/Landlord/Inventory/InventoryDetails.vue"
 import TenancyDetails from "~/components/components/Landlord/Tenancy/TenancyDetails.vue"
 import qs from "qs"
+import { generateLandlordsSEOMetaTags } from "~/ultilities/seo-configs"
 
 export default {
     components: {
@@ -38,6 +39,7 @@ export default {
     },
 
     async asyncData({ app, route, store }) {
+        app.head.meta = generateLandlordsSEOMetaTags(app.head.meta)
         try {
             const id = route.params.id
             await store.dispatch("tenancy/getTenancyDetails", id)

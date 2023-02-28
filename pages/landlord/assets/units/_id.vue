@@ -12,6 +12,7 @@
 import { appSettings } from "~/app-settings"
 import LandlordPortal from "~/components/components/Landlord/LandlordPortal.vue"
 import InventoryUnits from "~/components/components/Landlord/Inventory/InventoryUnits.vue"
+import { generateLandlordsSEOMetaTags } from "~/ultilities/seo-configs"
 
 export default {
     layout: "landlord",
@@ -36,11 +37,11 @@ export default {
         }
     },
 
-    async asyncData({ route, store }) {
+    async asyncData({ route, store, app }) {
+        app.head.meta = generateLandlordsSEOMetaTags(app.head.meta)
         try {
             const id = route.params.id
             await store.dispatch("inventory/getInventoryDetails", id)
-            //await store.dispatch("inventory/getUnitsByInventoryFID", id)
         } catch (e) {
             console.log({ Error: e.message })
         }
