@@ -76,12 +76,20 @@ export default {
     }
 }
 .form__field {
-    label {
-        font-weight: 500;
-        font-size: 1.4rem;
-        line-height: 2rem;
-        color: var(--color-label);
-        margin-bottom: 0.8rem;
+        label {
+            font-weight: 500;
+            font-size: 1.4rem;
+            line-height: 2rem;
+            color: var(--color-label);
+            margin-bottom: 0.8rem;
+        }
+}
+.form__btn-custom{
+    padding: 0 !important;
+    min-width: 4.8rem !important;
+    i{
+        font-size: 3rem;
+        color: var(--color-white)
     }
 }
 .form__btn-custom {
