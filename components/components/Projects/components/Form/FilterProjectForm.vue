@@ -57,11 +57,11 @@
                         @change="select_Livethere($event)"
                     >
                         <template v-slot:label>
-                            <div class="form__field-label-custom">
-                                <span>Livethere Premium</span>
-                                <img :src="require(`~/static/img/logos/logo-project.svg`)" alt="" />
-                            </div>
-                        </template>
+    <div class="form__field-label-custom">
+        <span>Livethere Premium</span>
+        <img :src="require(`~/static/img/logos/logo-project.svg`)" alt="" />
+    </div>
+</template>
                     </v-checkbox>
                 </div>
             </div>
@@ -73,8 +73,10 @@
                         :items="bedroomList"
                         item-text="text"
                         item-value="value.name"
+                        label="Select"
                         outlined
                         dense
+                        attach
                         prepend-inner-icon="icon-svg svg-bedroom"
                         append-icon="mdi-chevron-down"
                         class="form__field-select-custom"
@@ -90,6 +92,7 @@
                         prepend-inner-icon="icon-svg svg-bathroom"
                         append-icon="mdi-chevron-down"
                         class="form__field-select-custom"
+                        label="Select"
                         :items="bathroomList"
                         item-text="text"
                         item-value="value.name"
@@ -261,20 +264,19 @@ export default {
             ],
             propertyType: "CONDO",
             propertyTypeList: PROPERTY_TYPE,
-            bedroom: "Studio",
+            bedroom: "Select",
             bedroomList: BEDROOM_TYPE,
-            bathroom: "Studio",
+            bathroom: "Select",
             bathroomList: BATHROOM_TYPE,
             minRentPer: 1000,
             maxRentPer: 20000,
             rangeRentPer: [8000, 15000],
             minUnitSize: 100,
             maxUnitSize: 10000,
-            rangeUnitSize: [4000, 10000], 
-            selectAll: false, 
+            rangeUnitSize: [4000, 10000],
+            selectAll: false,
             selectedLivethere: true,
-            selected: [],
-
+            selected: []
         }
     },
     methods: {
@@ -282,12 +284,12 @@ export default {
             this.$emit("close")
         },
         select_All(e) {
-            if(e == true && this.selectedLivethere == false){
+            if (e == true && this.selectedLivethere == false) {
                 this.selectedLivethere = true
             }
-        }, 
-        select_Livethere(e){
-            if(e == false && this.selectAll == true){
+        },
+        select_Livethere(e) {
+            if (e == false && this.selectAll == true) {
                 this.selectAll = false
             }
         }
@@ -375,6 +377,16 @@ export default {
 }
 .form__field-select-custom {
     ::v-deep(.v-select__slot) {
+        .v-label--active {
+            left: -3.6rem !important;
+
+        }
+        label{
+            font-weight: 500;
+            font-size: 1.6rem;
+            line-height: 2rem;
+            color: var(--color-title-black)
+        }
         .v-select__selection--comma {
             font-weight: 500;
             font-size: 1.6rem;

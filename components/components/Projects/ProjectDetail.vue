@@ -21,10 +21,10 @@
                     <div class="page__content-left">
                         <div class="page__content-left-info">
                             <div class="page__content-left-back">
-                                <nuxt-link to="/" class="btn btn--outline btn--green btn-custom" @click="history.back()">
+                                <v-btn to="" class="btn btn--outline btn--green btn-custom" @click="$router.go(-1)">
                                     <v-icon size="16">mdi-arrow-left</v-icon>
                                     <span>Back to Result</span>
-                                </nuxt-link>
+                                </v-btn>
                             </div>
                             <div class="page__content-left-header">
                                 <div class="page__content-left-iconic">
