@@ -66,7 +66,7 @@ export default {
     padding: 0 !important;
     min-width: 4.8rem !important;
     i{
-        font-size: 2.5rem;
+        font-size: 3rem;
         color: var(--color-white)
     }
 }
