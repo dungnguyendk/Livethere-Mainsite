@@ -195,6 +195,7 @@ export default {
                         itemValue: this.value ? convertCommasToNumber(this.value) : 0,
                         remark: this.remark
                     }
+                    console.log("param created: ", params);
                     this.$store
                         .dispatch("inventory/createUnitInventory", params)
                         .then((response) => {
@@ -232,7 +233,7 @@ export default {
                 try {
                     const params = {
                         id: this.sourceDetail,
-                        assestInventoryFID: this.tenancyDetails.assestInventoryFID,
+                        assestInventoryFID: this.unitInventoryDetail.assestInventoryFID,
                         conditionTypeFID: this.condition.id,
                         cultureCode: "en-SG",
                         currencyType: this.currencyType,
@@ -243,14 +244,26 @@ export default {
                         itemValue: this.value ? convertCommasToNumber(this.value) : 0,
                         remark: this.remark
                     }
+                    console.log("params Update", params);
                     this.onClose()
                     this.$store
                         .dispatch("inventory/updateUnitInventory", params)
                         .then((response) => {
                             if (response) {
-                                const internalID = this.internalID
-                                this.$store.dispatch("inventory/getUnitsByInventoryFID", internalID)
+                                if (this.tenancyDetails) {
+                                    this.$store.dispatch(
+                                        "inventory/getUnitsByContractInternalID",
+                                        this.$route.params.id
+                                    )
+                                } else if (this.inventoryDetails) {
+                                    this.$store.dispatch(
+                                        "inventory/getUnitsByInventoryID",
+                                        this.inventoryDetails.id
+                                    )
+                                }
+
                                 this.errorMessage = false
+                                this.onClose()
                             } else {
                                 this.errorMessage = true
                             }
