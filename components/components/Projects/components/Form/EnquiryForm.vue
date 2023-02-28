@@ -49,7 +49,6 @@
                 <v-textarea 
                 outlined 
                 dense 
-                height="120"
                 :error-messages="messageErrors"
                 v-model="message"
                 > 

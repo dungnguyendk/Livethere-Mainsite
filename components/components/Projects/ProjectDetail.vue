@@ -21,7 +21,7 @@
                     <div class="page__content-left">
                         <div class="page__content-left-info">
                             <div class="page__content-left-back">
-                                <nuxt-link to="/" class="btn btn--outline btn--green btn-custom">
+                                <nuxt-link to="/projects" class="btn btn--outline btn--green btn-custom">
                                     <v-icon size="16">mdi-arrow-left</v-icon>
                                     <span>Back to Result</span>
                                 </nuxt-link>
