@@ -36,10 +36,11 @@ export default {
     name: "DialogAcceptCookies",
     data() {
         return {
-            isActive: true
+            isActive: null
         }
     },
     mounted() {
+        this.isActive = true
         const acceptCookies = Cookies.get("accept_cookies")
         if (acceptCookies && acceptCookies === "1") {
             this.isActive = false
@@ -68,8 +69,18 @@ export default {
     padding: 1.5rem 0;
     z-index: 9999;
     background-color: #1d2a30;
+    transform: translateY(0);
     transform: translateY(100%);
     transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+
+    &.false {
+        transform: translateY(100%);
+        // transform: translateY(0);
+    }
+    &.active {
+        transform: translateY(0);
+        // transform: translateY(100%);
+    }
 
     p {
         margin-bottom: 0;
@@ -101,9 +112,7 @@ export default {
         align-items: center;
     }
 
-    &.active {
-        transform: translateY(0);
-    }
+    
 
     @media screen and (max-width: 1024px) {
         .section__left {
