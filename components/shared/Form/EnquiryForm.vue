@@ -1,27 +1,35 @@
 <template lang="html">
     <div class="form--enquiry">
         <h4 class="form__title">Drop us a note. We’ll be in touch with you</h4>
-        <form class="form__fields" @submit.prevent="onFormSubmit">
+        <form class="form__fields" @submit.prevent="onSubmit">
             <div class="form__field">
                 <label>Full name</label>
                 <v-text-field
-                    v-model.trim="fullName"
+                    v-model.trim="name"
                     outlined
                     dense
-                    :error-messages="fullNameErrors"
+                    :error-messages="nameErrors"
+                    hide-details
                 />
             </div>
             <div class="form__field">
                 <label>Email</label>
-                <v-text-field v-model.trim="email" outlined dense :error-messages="emailErrors" />
-            </div>
-            <div class="form__field">
-                <label>Address</label>
                 <v-text-field
-                    v-model.trim="address"
+                    v-model.trim="email"
                     outlined
                     dense
-                    :error-messages="addressErrors"
+                    :error-messages="emailErrors"
+                    hide-details
+                />
+            </div>
+            <div class="form__field">
+                <label>Phone Number</label>
+                <v-text-field
+                    v-model.trim="phoneNumber"
+                    outlined
+                    dense
+                    :error-messages="phoneNumberErrors"
+                    hide-details
                 />
             </div>
             <div class="form__field">
@@ -34,7 +42,8 @@
                     :items="countries"
                     item-text="countryName"
                     item-value="ccode"
-                    :error-messages="countryErrors"
+                    disabled
+                    hide-details
                 />
             </div>
             <div class="form__field">
@@ -51,7 +60,7 @@
             </div>
         </form>
         <div class="form__actions">
-            <v-btn class="btn btn--primary btn--green" @click="onFormSubmit">Submit</v-btn>
+            <v-btn class="btn btn--primary btn--green" @click="onSubmit">Submit</v-btn>
         </div>
     </div>
 </template>
@@ -65,18 +74,17 @@ export default {
     name: "EnquiryForm",
     mixins: [validationMixin],
     validations: {
-        fullName: { required },
+        name: { required },
         email: { required, email },
-        address: { required },
-        country: { required },
-        enquiryType: { required }
+        enquiryType: { required },
+        phoneNumber: { required }
     },
     data() {
         return {
-            fullName: "",
+            name: "",
             email: "",
-            address: "",
-            country: null,
+            country: "SGP",
+            phoneNumber: "",
             countries: countries,
             enquiryType: null,
             enquiryListing: [
@@ -99,8 +107,8 @@ export default {
         }
     },
     computed: {
-        fullNameErrors() {
-            return setFormControlErrors(this.$v.fullName, "Full name is required")
+        nameErrors() {
+            return setFormControlErrors(this.$v.name, "Full name is required")
         },
         emailErrors() {
             const errors = []
@@ -108,30 +116,41 @@ export default {
             !this.$v.email.required && errors.push("Email is required.")
             !this.$v.email.email && errors.push("Email must be valid.")
             return errors
-            // return setFormControlErrors(this.$v.email, "Email is required")
         },
 
-        addressErrors() {
-            return setFormControlErrors(this.$v.address, "Address is required")
+        phoneNumberErrors() {
+            return setFormControlErrors(this.$v.phoneNumber, "Phone number is required")
         },
-        countryErrors() {
-            return setFormControlErrors(this.$v.country, "Country is required")
-        },
+
         enquiryTypeErrors() {
             return setFormControlErrors(this.$v.enquiryType, "Enquiry Type is required")
         }
     },
     methods: {
-        onFormSubmit() {
+        async handleSendMessage() {
+            try {
+                const params = {
+                    name: this.name,
+                    email: this.email,
+                    phoneNumber: this.phoneNumber,
+                    country: this.country,
+                    enquiryType: this.enquiryType
+                }
+                const response = await this.$axios.$post("/api/contact", params)
+                if (response && response.status === 200) {
+                    await this.$store.dispatch("app/showSnackBar", "Your message has been sent!")
+                }
+                this.$v.$reset()
+            } catch (e) {}
+        },
+        onSubmit() {
             this.$v.$touch()
             if (!this.$v.$invalid) {
-                this.$store.dispatch("app/showSnackBar", "Your message has been sent!")
-                this.onResetForm()
-                this.$v.$reset()
+                this.handleSendMessage()
             }
         },
         onResetForm() {
-            this.fullName = ""
+            this.name = ""
             this.email = ""
             this.address = ""
             this.country = null
@@ -144,9 +163,8 @@ export default {
 .form--enquiry {
     position: relative;
     max-width: 62.1rem;
-    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.04), 0px 4px 8px rgba(0, 0, 0, 0.06);
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.04), 0 4px 8px rgba(0, 0, 0, 0.06);
     border-radius: 2rem;
-    padding: auto;
     margin: auto;
 
     .form__title {
@@ -173,7 +191,7 @@ export default {
         line-height: 2rem;
         display: grid;
         grid-template-columns: repeat(2, minmax(0, 1fr));
-        grid-gap: 0 2.4rem;
+        grid-gap: 1.2rem;
 
         .form__field:nth-child(5) {
             grid-row-start: 3;

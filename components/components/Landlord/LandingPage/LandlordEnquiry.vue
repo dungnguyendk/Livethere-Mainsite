@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import EnquiryForm from "~/archived/enquiry-form/index.vue"
+import EnquiryForm from "~/components/shared/Form/EnquiryForm.vue"
 
 export default {
     name: "LandlordEnquiry",
@@ -40,6 +40,7 @@ export default {
             font-size: 4rem;
             color: var(--color-heading);
             padding-bottom: 1.6rem;
+
             span {
                 font-size: 4rem;
                 color: var(--color-heading);
@@ -65,14 +66,13 @@ export default {
     .section__container {
         position: relative;
     }
+
     @media screen and(max-width: 1023px) {
         .section__content {
-            // max-width: 65%;
             h3 {
                 font-size: 3rem;
             }
         }
-       
     }
     @media screen and(max-width: 768px) {
         .section__content {
@@ -80,14 +80,12 @@ export default {
             position: relative;
             padding-top: 2.6rem;
             h3 {
-                // align-items: center;
                 font-size: 2.5rem;
             }
         }
         .section__image {
-            max-width:100%;
+            max-width: 100%;
             position: static;
-
         }
     }
     @media screen and(max-width: 600px) {
@@ -98,7 +96,7 @@ export default {
             }
         }
         .section__image {
-            max-width:100%;
+            max-width: 100%;
         }
     }
 }
