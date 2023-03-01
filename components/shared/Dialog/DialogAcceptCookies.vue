@@ -3,25 +3,27 @@
         <!-- <a class="section__close op-btn--close" @click.prevent="handleCloseDialog">
             <i class="feather icon icon-x"></i>
         </a> -->
-        <div class="section__wrapper">
-            <div class="section__left">
-                <p>
-                    Livethere uses necessary cookies to operate our website. We will also use
-                    cookies to enhance your experience with Livethere, including to show you more
-                    personalised content and tailored advertisements, if you select “Allow all
-                    cookies”.
-                    <a
-                        href="https://www.livethere.com/privacy-policy#19Cookies"
-                        target="_blank"
-                        class="font-weight-bold text-decoration-underline"
-                        >More Info</a
-                    >
-                </p>
-            </div>
-            <div class="section__right">
-                <v-btn class="btn btn--primary btn--green" @click.prevent="handleAcceptDialog">
-                    Allow all cookies
-                </v-btn>
+        <div class="container">
+            <div class="section__wrapper">
+                <div class="section__left">
+                    <p>
+                        Livethere uses necessary cookies to operate our website. We will also use
+                        cookies to enhance your experience with Livethere, including to show you more
+                        personalised content and tailored advertisements, if you select “Allow all
+                        cookies”.
+                        <a
+                            href="https://www.livethere.com/privacy-policy#19Cookies"
+                            target="_blank"
+                            class="font-weight-bold text-decoration-underline"
+                            >More Info</a
+                        >
+                    </p>
+                </div>
+                <div class="section__right">
+                    <v-btn class="btn btn--primary btn--green" @click.prevent="handleAcceptDialog">
+                        Allow all cookies
+                    </v-btn>
+                </div>
             </div>
         </div>
     </div>
@@ -63,7 +65,7 @@ export default {
     left: 0;
     width: 100%;
     height: auto;
-    padding: 1.5rem 1rem;
+    padding: 1.5rem 0;
     z-index: 9999;
     background-color: #1d2a30;
     transform: translateY(100%);
@@ -72,16 +74,19 @@ export default {
     p {
         margin-bottom: 0;
         color: white;
+        font-size: 1.6rem;
     }
 
     a {
+        font-size: 1.6rem;
         &:hover {
             color: var(--color-primary);
         }
     }
 
     .section__right {
-        padding-right: 4rem;
+        // padding-right: 4rem;
+        padding-left: 1rem;
     }
 
     .section__close {
