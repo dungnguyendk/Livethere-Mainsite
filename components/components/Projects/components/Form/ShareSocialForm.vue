@@ -62,6 +62,11 @@ export default {
             this._timerId = setTimeout(() => mouseleave(e), 1000)
             navigator.clipboard.writeText(this.linkURL);
         }
+    }, 
+    watch: {
+        item(val){
+            this.linkURL = val.linkDetails
+        }
     }
 }
 </script>

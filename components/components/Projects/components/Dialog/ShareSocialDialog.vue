@@ -45,7 +45,8 @@ export default {
     watch: {
         open(val) {
             this.openDialog = val
-        }
+        }, 
+        
     }
 };
 </script>
