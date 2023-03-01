@@ -16,7 +16,7 @@ export const httpEndpoint = {
     },
 
     enquiry: {
-        sendEnquiry: "/api/Enquiries"
+        sendEnquiry: "/api/Enquiry"
     },
     auth: {
         login: "/api/Authen",

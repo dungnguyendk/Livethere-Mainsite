@@ -96,7 +96,6 @@ export default {
             return this.data
         },
         path() {
-            console.log(this.$router.currentRoute.path)
             return this.$router.currentRoute.path
         },
         loggedIn() {
