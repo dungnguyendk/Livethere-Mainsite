@@ -12,7 +12,7 @@ export const mutations = {
     }
 }
 export const actions = {
-    async getMarketings({ commit }, payload) {
+    async getMarketings({ commit }) {
         try {
             const response = await this.$axios.$get(`${httpEndpoint.marketing.getEntries}`)
             if (response) {

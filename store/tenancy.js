@@ -29,9 +29,6 @@ export const mutations = {
     },
     setStatusResponse(state, payload) {
         state.statusResponse = payload
-    },
-    setTenancyLink(state, payload) {
-        state.tenancyLinks = payload
     }
 }
 
@@ -39,7 +36,7 @@ export const actions = {
     async getExpenses({ commit }, payload) {
         try {
             const query = payload.query ? qs.stringify(payload.query) : ""
-            console.log({ payload })
+
             const response =
                 query !== ""
                     ? await this.$axios.$get(
@@ -63,7 +60,6 @@ export const actions = {
             const response = await this.$axios.$get(
                 `${httpEndpoint.tenancies.getTenancyByInternalID}/${payload}`
             )
-            // console.log({ tenancyDetailsResponse: response })
 
             if (response) {
                 commit("setStatusResponse", true)

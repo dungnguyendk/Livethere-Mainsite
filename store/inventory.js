@@ -39,30 +39,6 @@ export const mutations = {
 }
 
 export const actions = {
-    async getUnitsByInventoryFID({ commit }, payload) {
-        try {
-            const detail = await this.$axios.$get(
-                `${httpEndpoint.inventories.getByInternalID}/${payload}`
-            )
-
-            if (detail) {
-                const response = await this.$axios.$get(
-                    `${httpEndpoint.unit.getEntries}?AssetInventoryFID=${detail.id}`
-                )
-                commit("setInternalID", detail.internalID)
-                commit("setEntriesID", detail.id)
-                if (response) {
-                    commit("setUnits", response.length ? response : [])
-                    return true
-                } else {
-                    commit("setUnits", [])
-                }
-            }
-        } catch (e) {
-            console.log({ Error: e.message })
-            commit("setUnits", [])
-        }
-    },
     async getUnitsByInventoryID({ commit }, payload) {
         try {
             const response = await this.$axios.$get(
@@ -138,7 +114,6 @@ export const actions = {
             }
         } catch (e) {
             console.log({ Error: e.message })
-
         }
     },
     async deleteUnitInventory({ commit, dispatch }, payload) {
@@ -148,8 +123,7 @@ export const actions = {
                 payload
             )
             if (response) {
-                dispatch("app/showSnackBar", "Delete unit inventory successfully", {root: true})
-
+                dispatch("app/showSnackBar", "Delete unit inventory successfully", { root: true })
             } else {
                 return false
             }

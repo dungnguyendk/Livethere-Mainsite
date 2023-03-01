@@ -9,7 +9,7 @@ export const mutations = {
     }
 }
 export const actions = {
-    async getAnalytics({ commit }, payload) {
+    async getAnalytics({ commit }) {
         try {
             const response = await this.$axios.$get(`${httpEndpoint.analytics.getEntries}`)
             if (response) {
