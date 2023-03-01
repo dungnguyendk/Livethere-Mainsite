@@ -78,13 +78,16 @@ export default {
         .section__content {
             max-width: 100%;
             position: relative;
+            padding-top: 2.6rem;
             h3 {
                 // align-items: center;
                 font-size: 2.5rem;
             }
         }
         .section__image {
-            max-width:85%;
+            max-width:100%;
+            position: static;
+
         }
     }
     @media screen and(max-width: 600px) {
