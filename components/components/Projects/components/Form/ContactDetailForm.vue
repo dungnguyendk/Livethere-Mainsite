@@ -151,8 +151,20 @@ export default {
         onFormSubmit() {
             this.$v.$touch()
             if (!this.$v.$invalid) {
-                this.errorMessages = []
+                const params = {
+                    name: this.name, 
+                    phone: this.phone, 
+                    email: this.email, 
+                    message: this.message
+                }
             }
+        }, 
+        onResetForm(){
+            this.$v.$reset()
+            this.name = ""
+            this.phone = "", 
+            this.email = "", 
+            this.message = ""
         }
     }
 }

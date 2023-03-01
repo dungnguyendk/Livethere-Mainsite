@@ -1,5 +1,5 @@
 <template lang="html">
-    <form class="form--filter-projects">
+    <form class="form--filter-projects" @submit.prevent="onSubmitForm">
         <div class="form__fields">
             <div class="form__field mb-custom-1">
                 <label>Location</label>
@@ -8,6 +8,7 @@
                     dense
                     prepend-inner-icon="icon-svg svg-location"
                     placeholder="Where do you want to live?"
+                    v-model="location"
                 >
                 </v-text-field>
             </div>
@@ -23,6 +24,7 @@
                     prepend-inner-icon="icon-svg svg-buildings"
                     append-icon="mdi-chevron-down"
                     class="form__field-select-custom"
+                    placeholder="All"
                 >
                 </v-select>
             </div>
@@ -57,11 +59,11 @@
                         @change="select_Livethere($event)"
                     >
                         <template v-slot:label>
-                            <div class="form__field-label-custom">
-                                <span>Livethere Premium</span>
-                                <img :src="require(`~/static/img/logos/logo-project.svg`)" alt="" />
-                            </div>
-                        </template>
+    <div class="form__field-label-custom">
+        <span>Livethere Premium</span>
+        <img :src="require(`~/static/img/logos/logo-project.svg`)" alt="" />
+    </div>
+</template>
                     </v-checkbox>
                 </div>
             </div>
@@ -110,34 +112,35 @@
                     v-model="rangeRentPer"
                     :min="minRentPer"
                     :max="maxRentPer"
-                    @change="changeRangeRentPer(rangeRentPer)"
                     step="500"
                 >
                     <template v-slot:prepend>
                         <v-text-field
-                        :value="rangMin"
-                            hide-details
-                            dense
-                            prefix="$"
-                            flat
-                            solo
-                            class="form__field-text-field-custom"
-                            style="width: 65px"
-                            readonly
+                         :value="rangeRentPerMin"
+                         hide-details
+                         dense
+                         prefix="$"
+                         flat
+                         solo
+                         class="form__field-text-field-custom"
+                         style="width: 65px"
+                         readonly
+                         @change="$set(rangeRentPer, 0, $event)"
                         >
                         </v-text-field>
                     </template>
                     <template v-slot:append>
                         <v-text-field
-                            :value="rangeRentPer[1]"
-                            hide-details
-                            dense
-                            prefix="$"
-                            flat
-                            solo
-                            class="form__field-text-field-custom"
-                            style="width: 65px"
-                            readonly
+                         :value="rangeRentPerMax"
+                         hide-details
+                         dense
+                         prefix="$"
+                         flat
+                         solo
+                         class="form__field-text-field-custom"
+                         style="width: 65px"
+                         readonly
+                         @change="$set(rangeRentPer, 1, $event)"
                         >
                         </v-text-field>
                     </template>
@@ -153,30 +156,32 @@
                     v-model="rangeUnitSize"
                     :min="minUnitSize"
                     :max="maxUnitSize"
+                    step="500"
                 >
                     <template v-slot:prepend>
                         <v-text-field
-                            :value="rangeUnitSize[0]"
+                            :value="rangeUnitSizeMin"
                             hide-details
                             dense
                             flat
                             solo
                             class="form__field-text-field-custom"
                             style="width: 65px"
-                            type="number"
+                        
+                            readonly
                         >
                         </v-text-field>
                     </template>
                     <template v-slot:append>
                         <v-text-field
-                            :value="rangeUnitSize[1]"
+                            :value="rangeUnitSizeMax"
                             hide-details
                             dense
                             flat
                             solo
                             class="form__field-text-field-custom"
+                            
                             style="width: 65px"
-                            type="number"
                         >
                         </v-text-field>
                     </template>
@@ -206,8 +211,8 @@
         </div>
         <div class="form__footer">
             <div class="form__btn">
-                <v-btn class="btn btn--ghost btn--red" @click="onClose()">Reset</v-btn>
-                <v-btn class="btn btn--primary btn--green" @click="onClose()">Apply</v-btn>
+                <v-btn class="btn btn--ghost btn--red" >Reset</v-btn>
+                <v-btn class="btn btn--primary btn--green" type="submit">Apply</v-btn>
             </div>
         </div>
     </form>
@@ -262,29 +267,39 @@ export default {
                     icon: "icon-svg svg-function-room"
                 }
             ],
-            propertyType: "CONDO",
             propertyTypeList: PROPERTY_TYPE,
-            bedroom: "Select",
             bedroomList: BEDROOM_TYPE,
-            bathroom: "Select",
             bathroomList: BATHROOM_TYPE,
-            minRentPer: 1000,
-            maxRentPer: 20000,
-            rangeRentPer: [8000, 15000],
-            minUnitSize: 100,
-            maxUnitSize: 10000,
-            rangeUnitSize: [4000, 10000],
+            location: "",
+            propertyType: "",
             selectAll: false,
             selectedLivethere: true,
-            selected: []
+            bedroom: "",
+            bathroom: "",
+            selected: [],
+            rangeRentPer: [8000, 15000],
+            minRentPer: 1000,
+            maxRentPer: 20000,
+            rangeUnitSize: [4000, 10000],
+            minUnitSize: 100,
+            maxUnitSize: 10000,
+            submitted: false
         }
     },
-    computed : {
-        rangMin() {
-            return this.rangeRentPer[0] ? convertNumberToCommas(this.rangeRentPer[0]) : '0'
-            // return this.rangeRentPer[0] ? 
+    computed: {
+        rangeRentPerMin() {
+            return this.rangeRentPer[0] ? convertNumberToCommas(this.rangeRentPer[0]) : "0"
         },
-    }, 
+        rangeRentPerMax() {
+            return convertNumberToCommas(this.rangeRentPer[this.rangeRentPer.length - 1])
+        },
+        rangeUnitSizeMin() {
+            return this.rangeUnitSize[0] ? convertNumberToCommas(this.rangeUnitSize[0]) : "0"
+        },
+        rangeUnitSizeMax() {
+            return convertNumberToCommas(this.rangeUnitSize[this.rangeUnitSize.length - 1])
+        }
+    },
     methods: {
         onClose() {
             this.$emit("close")
@@ -299,6 +314,34 @@ export default {
                 this.selectAll = false
             }
         },
+        onSubmitForm() {
+            this.submitted = true
+            const params = {
+                location: this.location,
+                propertyType: this.propertyType,
+                selectAll: this.selectAll,
+                selectedLivethere: this.selectedLivethere,
+                bedroom: this.bedroom,
+                bathroom: this.bathroom,
+                rangeRentPer: this.rangeRentPer, 
+                rangeUnitSize: this.rangeUnitSize, 
+                selected: this.selected
+            }
+            console.log("params: ", params)
+        },
+        onResetForm(){
+            this.$v.$reset()
+            this.location = "", 
+            this.propertyType = "", 
+            this.selectAll = false, 
+            this.selectedLivethere = false, 
+            this.bedroom = "", 
+            this.bathroom = "", 
+            this.rangeRentPer = [8000, 15000], 
+            this.rangeUnitSize = [4000, 10000], 
+            this.selected = []
+        }
+        
     }
 }
 </script>
