@@ -310,7 +310,7 @@ export default {
                             this.loading = false
                             if (response.valid) {
                                 await this.$store.commit("user/setRegisterDetails", params)
-                                await this.$router.push("/landlord/register/verify")
+                                await this.$router.push("/register/verify")
                             } else {
                                 this.errorMessages = [
                                     response.message ? response.message : MESSAGE_SERVER_ERROR

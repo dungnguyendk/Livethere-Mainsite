@@ -156,7 +156,7 @@ export default {
 
         async onLogout() {
             await this.$auth.logout().then(() => {
-                window.location.href = "/landlord/signin"
+                window.location.href = "/signin"
             })
         },
 

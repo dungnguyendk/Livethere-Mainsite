@@ -55,7 +55,7 @@ export default {
     },
     methods: {
         handleClickOpenRow(item) {
-            this.$router.push(`/landlord/tenancy/${item.internalID}`)
+            this.$router.push(`/tenancy/${item.internalID}`)
         },
         formatMoney(number) {
             if (number || number === 0) return convertNumberToCommas(number);
