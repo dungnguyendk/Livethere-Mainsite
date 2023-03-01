@@ -57,11 +57,11 @@
                         @change="select_Livethere($event)"
                     >
                         <template v-slot:label>
-    <div class="form__field-label-custom">
-        <span>Livethere Premium</span>
-        <img :src="require(`~/static/img/logos/logo-project.svg`)" alt="" />
-    </div>
-</template>
+                            <div class="form__field-label-custom">
+                                <span>Livethere Premium</span>
+                                <img :src="require(`~/static/img/logos/logo-project.svg`)" alt="" />
+                            </div>
+                        </template>
                     </v-checkbox>
                 </div>
             </div>
@@ -110,19 +110,20 @@
                     v-model="rangeRentPer"
                     :min="minRentPer"
                     :max="maxRentPer"
+                    @change="changeRangeRentPer(rangeRentPer)"
+                    step="500"
                 >
                     <template v-slot:prepend>
                         <v-text-field
-                            :value="rangeRentPer[0]"
+                        :value="rangMin"
                             hide-details
                             dense
-                            full-width
                             prefix="$"
                             flat
                             solo
                             class="form__field-text-field-custom"
                             style="width: 65px"
-                            type="number"
+                            readonly
                         >
                         </v-text-field>
                     </template>
@@ -131,13 +132,12 @@
                             :value="rangeRentPer[1]"
                             hide-details
                             dense
-                            full-width
                             prefix="$"
                             flat
                             solo
                             class="form__field-text-field-custom"
-                            type="number"
                             style="width: 65px"
+                            readonly
                         >
                         </v-text-field>
                     </template>
@@ -215,7 +215,7 @@
 
 <script>
 import { PROPERTY_TYPE, BEDROOM_TYPE, BATHROOM_TYPE } from "~/ultilities/contants/asset-inventory"
-import { convertNumberToCommas } from "~/ultilities/helpers"
+import { convertNumberToCommas, convertCommasToNumber } from "~/ultilities/helpers"
 export default {
     name: "FilterProjectForm",
     data() {
@@ -279,6 +279,12 @@ export default {
             selected: []
         }
     },
+    computed : {
+        rangMin() {
+            return this.rangeRentPer[0] ? convertNumberToCommas(this.rangeRentPer[0]) : '0'
+            // return this.rangeRentPer[0] ? 
+        },
+    }, 
     methods: {
         onClose() {
             this.$emit("close")
@@ -292,7 +298,7 @@ export default {
             if (e == false && this.selectAll == true) {
                 this.selectAll = false
             }
-        }
+        },
     }
 }
 </script>
@@ -379,13 +385,12 @@ export default {
     ::v-deep(.v-select__slot) {
         .v-label--active {
             left: -3.6rem !important;
-
         }
-        label{
+        label {
             font-weight: 500;
             font-size: 1.6rem;
             line-height: 2rem;
-            color: var(--color-title-black)
+            color: var(--color-title-black);
         }
         .v-select__selection--comma {
             font-weight: 500;
