@@ -75,7 +75,7 @@
                         :items="bedroomList"
                         item-text="text"
                         item-value="value.name"
-                        label="Select"
+                        placeholder="Select"
                         outlined
                         dense
                         attach
@@ -94,7 +94,7 @@
                         prepend-inner-icon="icon-svg svg-bathroom"
                         append-icon="mdi-chevron-down"
                         class="form__field-select-custom"
-                        label="Select"
+                        placeholder="Select"
                         :items="bathroomList"
                         item-text="text"
                         item-value="value.name"
@@ -116,31 +116,31 @@
                 >
                     <template v-slot:prepend>
                         <v-text-field
-                         :value="rangeRentPerMin"
-                         hide-details
-                         dense
-                         prefix="$"
-                         flat
-                         solo
-                         class="form__field-text-field-custom"
-                         style="width: 65px"
-                         readonly
-                         @change="$set(rangeRentPer, 0, $event)"
+                            :value="rangeRentPerMin"
+                            hide-details
+                            dense
+                            prefix="$"
+                            flat
+                            solo
+                            class="form__field-text-field-custom"
+                            style="width: 65px"
+                            readonly
+                            @change="$set(rangeRentPer, 0, $event)"
                         >
                         </v-text-field>
                     </template>
                     <template v-slot:append>
                         <v-text-field
-                         :value="rangeRentPerMax"
-                         hide-details
-                         dense
-                         prefix="$"
-                         flat
-                         solo
-                         class="form__field-text-field-custom"
-                         style="width: 65px"
-                         readonly
-                         @change="$set(rangeRentPer, 1, $event)"
+                            :value="rangeRentPerMax"
+                            hide-details
+                            dense
+                            prefix="$"
+                            flat
+                            solo
+                            class="form__field-text-field-custom"
+                            style="width: 65px"
+                            readonly
+                            @change="$set(rangeRentPer, 1, $event)"
                         >
                         </v-text-field>
                     </template>
@@ -167,7 +167,6 @@
                             solo
                             class="form__field-text-field-custom"
                             style="width: 65px"
-                        
                             readonly
                         >
                         </v-text-field>
@@ -180,7 +179,6 @@
                             flat
                             solo
                             class="form__field-text-field-custom"
-                            
                             style="width: 65px"
                         >
                         </v-text-field>
@@ -211,7 +209,7 @@
         </div>
         <div class="form__footer">
             <div class="form__btn">
-                <v-btn class="btn btn--ghost btn--red" >Reset</v-btn>
+                <v-btn class="btn btn--ghost btn--red" @click="onResetForm">Reset</v-btn>
                 <v-btn class="btn btn--primary btn--green" type="submit">Apply</v-btn>
             </div>
         </div>
@@ -291,13 +289,13 @@ export default {
             return this.rangeRentPer[0] ? convertNumberToCommas(this.rangeRentPer[0]) : "0"
         },
         rangeRentPerMax() {
-            return convertNumberToCommas(this.rangeRentPer[this.rangeRentPer.length - 1])
+            return this.rangeRentPer[this.rangeRentPer.length - 1] === this.maxRentPer ? convertNumberToCommas(this.rangeRentPer[this.rangeRentPer.length - 1]) + "+" : convertNumberToCommas(this.rangeRentPer[this.rangeRentPer.length - 1])
         },
         rangeUnitSizeMin() {
             return this.rangeUnitSize[0] ? convertNumberToCommas(this.rangeUnitSize[0]) : "0"
         },
         rangeUnitSizeMax() {
-            return convertNumberToCommas(this.rangeUnitSize[this.rangeUnitSize.length - 1])
+            return this.rangeUnitSize[this.rangeUnitSize.length - 1] === this.maxUnitSize ? convertNumberToCommas(this.rangeUnitSize[this.rangeUnitSize.length - 1]) + "+" : convertNumberToCommas(this.rangeUnitSize[this.rangeUnitSize.length - 1])
         }
     },
     methods: {
@@ -305,12 +303,12 @@ export default {
             this.$emit("close")
         },
         select_All(e) {
-            if (e == true && this.selectedLivethere == false) {
+            if (e == true && this.selectedLivethere === false) {
                 this.selectedLivethere = true
             }
         },
         select_Livethere(e) {
-            if (e == false && this.selectAll == true) {
+            if (e == false && this.selectAll === true) {
                 this.selectAll = false
             }
         },
@@ -323,25 +321,23 @@ export default {
                 selectedLivethere: this.selectedLivethere,
                 bedroom: this.bedroom,
                 bathroom: this.bathroom,
-                rangeRentPer: this.rangeRentPer, 
-                rangeUnitSize: this.rangeUnitSize, 
+                rangeRentPer: this.rangeRentPer,
+                rangeUnitSize: this.rangeUnitSize,
                 selected: this.selected
             }
             console.log("params: ", params)
         },
-        onResetForm(){
-            this.$v.$reset()
-            this.location = "", 
-            this.propertyType = "", 
-            this.selectAll = false, 
-            this.selectedLivethere = false, 
-            this.bedroom = "", 
-            this.bathroom = "", 
-            this.rangeRentPer = [8000, 15000], 
-            this.rangeUnitSize = [4000, 10000], 
-            this.selected = []
+        onResetForm() {
+            this.location = "",
+                this.propertyType = "",
+                this.selectAll = false,
+                this.selectedLivethere = false,
+                this.bedroom = "",
+                this.bathroom = "",
+                this.rangeRentPer = [8000, 15000],
+                this.rangeUnitSize = [4000, 10000],
+                this.selected = []
         }
-        
     }
 }
 </script>
@@ -463,6 +459,10 @@ export default {
                 line-height: 2rem;
                 color: var(--color-title-black);
                 padding-top: 1rem;
+               
+            }
+            input{
+                margin-right: -2rem;
             }
         }
     }
