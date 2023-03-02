@@ -38,6 +38,7 @@
                             autocomplete="off"
                             :disabledFetchingCountry="true"
                             :error-messages="phoneNumberErrors"
+                            v-on:input="(number, data) => onInputPhoneNumber(number, data)"
                         />
                     </div>
                 </v-col>
@@ -137,6 +138,7 @@ export default {
             loading: false,
             otherMessage: "",
             sent: false,
+            phoneNameCountry: "Singapore",
             bindProps: {
                 mode: "international",
                 required: false,
@@ -170,6 +172,10 @@ export default {
     },
 
     methods: {
+        onInputPhoneNumber(number, data) {
+            console.log({ number, data })
+            this.phoneNameCountry = data.country.name || "Singapore"
+        },
         async handleSendMessage() {
             if (!this.loading) {
                 this.sent = false
@@ -179,7 +185,7 @@ export default {
                         fullname: this.name,
                         email: this.email,
                         mobileNo: this.phoneNumber,
-                        mobileNoCountry: "Singapore",
+                        mobileNoCountry: this.phoneNameCountry,
                         country: "Singapore",
                         source: appSettings.siteName,
                         pageUrl: LANDLORDS_SEO_URL,
@@ -224,6 +230,7 @@ export default {
             this.email = ""
             this.phoneNumber = ""
             this.enquiryType = ""
+            this.phoneNameCountry = "Singapore"
             this.$v.$reset()
         }
     }
