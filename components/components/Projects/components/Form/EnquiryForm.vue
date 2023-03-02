@@ -83,6 +83,7 @@ export default {
         }, 
         phone: {
             required, 
+            singaporePhoneNumber
         }, 
         email: {
             required, 

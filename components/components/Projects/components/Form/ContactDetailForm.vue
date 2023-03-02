@@ -86,7 +86,8 @@ export default {
             required
         },
         phone: {
-            required
+            required, 
+            singaporePhoneNumber
         },
         email: {
             required,

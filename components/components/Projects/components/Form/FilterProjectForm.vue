@@ -319,12 +319,15 @@ export default {
                 selectedLivethere: this.selectedLivethere,
                 bedroom: this.bedroom,
                 bathroom: this.bathroom,
-                rangeRentPer: this.rangeRentPer,
-                rangeUnitSize: this.rangeUnitSize,
+                rangeRentPer: this.rangeRentPer[this.rangeRentPer.length - 1] >= this.maxRentPer ? ((Object.values(this.rangeRentPer)).shift() + ";" + "9999999999") : this.rangeRentPer,
+                rangeUnitSize: this.rangeUnitSize[this.rangeUnitSize.length - 1] >= this.maxUnitSize ? ((Object.values(this.rangeUnitSize)).shift() + ";" + "9999999999") : this.rangeUnitSize,
                 selected: this.selected
             }
             console.log("params: ", params)
             this.onClose()
+
+
+    
         },
         onResetForm() {
             ;(this.location = ""),
