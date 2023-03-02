@@ -7,29 +7,27 @@
                         <SiteLogo />
                     </div>
                     <div class="header__center">
-                        <ul class="menu--top">
-                            <a
-                                v-for="(item, index) in menus"
-                                :href="item.linkURL"
-                                :class="item.linkURL === path ? 'active' : ''"
-                                :key="index"
-                            >
+                        <ul class="menu--top" v-for="(item, index) in menus">
+                            <a :href="item.linkURL" :class="item.linkURL === path ? 'active' : ''" :key="index">
                                 {{ item.defaultName }}
                             </a>
+                        </ul>
+                        <ul class="menu--top">
+                            <a class="" @click="openContactUsDialog = true">
+                                Contact us
+                            </a>
+                            <Dialog :open="openContactUsDialog" @close="closeDialog" :actions="false" :size="sizeDialog"
+                                :title="''">
+                                <ContactUsForm @close="openContactUsDialog = false" :isContactUs="true"
+                                    v-if="openContactUsDialog" />
+                            </Dialog>
                         </ul>
                     </div>
                     <div class="header__right">
                         <template v-if="loggedIn">
                             <v-menu v-if="userInfo" offset-y>
                                 <template v-slot:activator="{ on, attrs }">
-                                    <v-btn
-                                        class="btn--account"
-                                        color="primary"
-                                        dark
-                                        v-bind="attrs"
-                                        v-on="on"
-                                        outlined
-                                    >
+                                    <v-btn class="btn--account" color="primary" dark v-bind="attrs" v-on="on" outlined>
                                         {{ userInfo.displayName }}
                                         <i class="ri-arrow-drop-down-line"></i>
                                     </v-btn>
@@ -39,10 +37,7 @@
                                         <nuxt-link to="/dashboard"> Dashboard</nuxt-link>
                                     </v-list-item>
                                     <v-list-item>
-                                        <a
-                                            href="/change-password"
-                                            @click.prevent="onChangePassword"
-                                        >
+                                        <a href="/change-password" @click.prevent="onChangePassword">
                                             Change password
                                         </a>
                                     </v-list-item>
@@ -56,8 +51,7 @@
                             <div class="header__actions">
                                 <nuxt-link to="/signin" class="header__link"> Login </nuxt-link>
                                 <nuxt-link to="/register/start" class="header__link">
-                                    Register</nuxt-link
-                                >
+                                    Register</nuxt-link>
                             </div>
                         </template>
                     </div>
@@ -77,14 +71,16 @@ import { httpEndpoint } from "~/services/https/endpoints"
 import { defaultMenu } from "~/ultilities/menus"
 import { mapState } from "vuex"
 import LandlordMobileHeader from "~/components/shared/Header/LandlordMobileHeader.vue"
+import Dialog from "~/components/elements/Dialog/Dialog.vue"
+import ContactUsForm from "~/components/shared/Header/Form/ContactUsForm.vue"
 
 export default {
     name: "LandlordHeader",
-    components: { LandlordMobileHeader, MobileHeader, SiteLogo },
+    components: { LandlordMobileHeader, MobileHeader, SiteLogo, Dialog, ContactUsForm },
     props: {
         source: {
             type: Object,
-            default: () => {}
+            default: () => { }
         }
     },
 
@@ -106,7 +102,9 @@ export default {
     data() {
         return {
             menus: defaultMenu,
-            menuID: 0
+            menuID: 0,
+            sizeDialog: "medium",
+            openContactUsDialog: false
         }
     },
     created() {
@@ -136,6 +134,9 @@ export default {
                     this.menus = response.menuItems
                 }
             }
+        },
+        closeDialog() {
+            this.openContactUsDialog = false
         }
     }
 }
@@ -148,6 +149,7 @@ export default {
     right: 0;
     z-index: 99;
 }
+
 .btn--account {
     border: none;
     box-shadow: none;
@@ -200,6 +202,8 @@ export default {
 
         &:hover,
         &:focus {
+            color: #fff;
+
             &:before {
                 visibility: visible;
                 opacity: 1;
