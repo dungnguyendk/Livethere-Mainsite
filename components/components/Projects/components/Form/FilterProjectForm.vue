@@ -431,12 +431,21 @@ export default {
             line-height: 2rem;
             color: var(--color-title-black);
         }
+        input::placeholder {
+            font-weight: 500;
+            font-size: 1.6rem;
+            line-height: 2rem;
+            color: var(--color-title-black);
+            padding-top: 1rem;
+            
+        }
         .v-select__selection--comma {
             font-weight: 500;
             font-size: 1.6rem;
             line-height: 2rem;
             color: var(--color-title-black);
         }
+        
     }
 }
 .v-text-field {
@@ -578,4 +587,5 @@ export default {
 ::-webkit-scrollbar-thumb:hover {
     background: #a2a0a0;
 }
+
 </style>
