@@ -52,13 +52,15 @@
 <script>
 import { countries } from "~/ultilities/country"
 import { validationMixin } from "vuelidate"
-import { required, email, helpers } from "vuelidate/lib/validators"
+import { email, helpers, required } from "vuelidate/lib/validators"
 import { setFormControlErrors } from "~/ultilities/form-validations"
 import { httpEndpoint } from "~/services/https/endpoints"
 import { LANDLORDS_SEO_URL } from "~/ultilities/seo-configs"
 import { appSettings } from "~/app-settings"
 import { MESSAGE_SERVER_ERROR } from "~/ultilities/error-messages"
-const singaporePhoneNumber = helpers.regex("singaporePhoneNumber", /^\+65\d{4}( ?\d{4})$/)
+
+const validPhoneNumber = helpers.regex("validPhoneNumber", /^\+(?:[0-9] ?){6,14}[0-9]$/)
+
 export default {
     name: "EnquiryForm",
     mixins: [validationMixin],
@@ -66,7 +68,7 @@ export default {
         name: { required },
         email: { required, email },
         enquiryType: { required },
-        phoneNumber: { required, singaporePhoneNumber }
+        phoneNumber: { required, validPhoneNumber }
     },
     computed: {
         nameErrors() {
@@ -76,7 +78,7 @@ export default {
             const errors = []
             if (!this.$v.email.$dirty) return errors
             !this.$v.email.required && errors.push("Email is required.")
-            !this.$v.email.email && errors.push("Email must be valid.")
+            !this.$v.email.email && errors.push("Email is invalid.")
             return errors
         },
 
@@ -84,8 +86,7 @@ export default {
             const errors = []
             if (!this.$v.email.$dirty) return errors
             !this.$v.phoneNumber.required && errors.push("Email is required.")
-            !this.$v.phoneNumber.singaporePhoneNumber &&
-                errors.push("Please enter a valid phone number.")
+            !this.$v.phoneNumber.validPhoneNumber && errors.push("Phone number is invalid.")
             return errors
         },
 
@@ -197,9 +198,11 @@ export default {
     box-shadow: 0 0 4px rgba(0, 0, 0, 0.04), 0 4px 8px rgba(0, 0, 0, 0.06);
     border-radius: 2rem;
     margin: auto;
+
     h4 {
         margin: 0;
     }
+
     .form__title {
         text-align: center;
         padding-top: 2.1rem;
@@ -208,17 +211,21 @@ export default {
         font-size: 2rem;
         line-height: 2.8rem;
     }
+
     .form__field {
         position: relative;
         top: -1.2rem;
         margin-bottom: -2.2rem;
+
         &::v-deep(.v-text-field__details) {
             padding-left: 0;
+
             .v-messages__message {
                 font-size: 1.3rem;
                 line-height: 1.2em;
             }
         }
+
         &::v-deep(.vue-tel-input-vuetify) {
             display: flex;
             grid-gap: 0.4rem;
