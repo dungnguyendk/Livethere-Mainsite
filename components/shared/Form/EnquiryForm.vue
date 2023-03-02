@@ -2,48 +2,76 @@
     <div class="form--enquiry">
         <h4 class="form__title">Drop us a note. We’ll be in touch with you</h4>
         <form class="form__fields" @submit.prevent="onSubmit">
-            <div class="form__field">
-                <label>Full name</label>
-                <v-text-field v-model.trim="name" outlined dense :error-messages="nameErrors" />
-            </div>
-            <div class="form__field">
-                <label>Email</label>
-                <v-text-field v-model.trim="email" outlined dense :error-messages="emailErrors" />
-            </div>
-            <div class="form__field">
-                <label>Phone Number</label>
-                <vue-tel-input-vuetify
-                    outlined
-                    dense
-                    v-bind="bindProps"
-                    v-model.trim="phoneNumber"
-                    label=""
-                    defaultCountry="SG"
-                    autocomplete="off"
-                    :disabledFetchingCountry="true"
-                    :error-messages="phoneNumberErrors"
-                />
-            </div>
-            <div class="form__field">
-                <label>Country</label>
-                <v-text-field v-model="country" outlined dense disabled />
-            </div>
-            <div class="form__field">
-                <label>Enquiry Type </label>
-                <v-select
-                    v-model="enquiryType"
-                    outlined
-                    dense
-                    placeholder="Please select"
-                    :items="enquiryListing"
-                    item-text="text"
-                    :error-messages="enquiryTypeErrors"
-                />
-            </div>
+            <v-row>
+                <v-col cols="6" cols-sm="12">
+                    <div class="form__field">
+                        <label>Full name</label>
+                        <v-text-field
+                            v-model.trim="name"
+                            outlined
+                            dense
+                            :error-messages="nameErrors"
+                        />
+                    </div>
+                </v-col>
+                <v-col cols="6" cols-sm="12">
+                    <div class="form__field">
+                        <label>Email</label>
+                        <v-text-field
+                            v-model.trim="email"
+                            outlined
+                            dense
+                            :error-messages="emailErrors"
+                        />
+                    </div>
+                </v-col>
+                <v-col cols="6" cols-sm="12">
+                    <div class="form__field">
+                        <label>Phone Number</label>
+                        <vue-tel-input-vuetify
+                            outlined
+                            dense
+                            v-bind="bindProps"
+                            v-model.trim="phoneNumber"
+                            label=""
+                            defaultCountry="SG"
+                            autocomplete="off"
+                            :disabledFetchingCountry="true"
+                            :error-messages="phoneNumberErrors"
+                        />
+                    </div>
+                </v-col>
+                <v-col cols="6" cols-sm="12">
+                    <div class="form__field">
+                        <label>Country</label>
+                        <v-text-field v-model="country" outlined dense disabled />
+                    </div>
+                </v-col>
+                <v-col cols="12" cols-sm="12">
+                    <div class="form__field">
+                        <label>Enquiry Type </label>
+                        <v-select
+                            v-model="enquiryType"
+                            outlined
+                            dense
+                            placeholder="Please select"
+                            :items="enquiryListing"
+                            item-text="text"
+                            :error-messages="enquiryTypeErrors"
+                        />
+                    </div>
+                </v-col>
+                <v-col v-if="showOtherMessage" cols="12" cols-sm="12">
+                    <div class="form__field">
+                        <label>Please specify</label>
+                        <v-text-field v-model="otherMessage" outlined dense />
+                    </div>
+                </v-col>
+            </v-row>
         </form>
         <div class="form__actions">
             <v-btn class="btn btn--primary btn--green" @click="onSubmit">
-                {{ loading ? "Sending..." : "Submit" }}
+                {{ loading ? "Sending..." : sent ? "Sent" : "Submit" }}
             </v-btn>
         </div>
     </div>
@@ -54,10 +82,10 @@ import { countries } from "~/ultilities/country"
 import { validationMixin } from "vuelidate"
 import { email, helpers, required } from "vuelidate/lib/validators"
 import { setFormControlErrors } from "~/ultilities/form-validations"
-import { httpEndpoint } from "~/services/https/endpoints"
 import { LANDLORDS_SEO_URL } from "~/ultilities/seo-configs"
 import { appSettings } from "~/app-settings"
 import { MESSAGE_SERVER_ERROR } from "~/ultilities/error-messages"
+import { httpEndpoint } from "~/services/https/endpoints"
 
 const validPhoneNumber = helpers.regex("validPhoneNumber", /^\+(?:[0-9] ?){6,14}[0-9]$/)
 
@@ -91,7 +119,11 @@ export default {
         },
 
         enquiryTypeErrors() {
-            return setFormControlErrors(this.$v.enquiryType, "Enquiry Type is required")
+            return setFormControlErrors(this.$v.enquiryType, "Enquiry type is required")
+        },
+
+        showOtherMessage() {
+            return this.enquiryType === "Other, please specify"
         }
     },
     data() {
@@ -103,6 +135,8 @@ export default {
             countries: countries,
             enquiryType: "",
             loading: false,
+            otherMessage: "",
+            sent: false,
             bindProps: {
                 mode: "international",
                 required: false,
@@ -117,19 +151,19 @@ export default {
             },
             enquiryListing: [
                 {
-                    text: " I am looking for rental properties"
+                    text: " I am looking to let my property"
                 },
                 {
-                    text: "I have a question to rental"
+                    text: "I want market updates on the latest rental rates"
                 },
                 {
                     text: "I want to speak to a consultant"
                 },
                 {
-                    text: "I want market updates on the  rental trends in singapore"
+                    text: "I want to find out what my property is worth"
                 },
                 {
-                    text: "I am looking for to move  to singapore soon"
+                    text: "Other, please specify"
                 }
             ]
         }
@@ -138,6 +172,7 @@ export default {
     methods: {
         async handleSendMessage() {
             if (!this.loading) {
+                this.sent = false
                 this.loading = true
                 try {
                     const params = {
@@ -149,8 +184,10 @@ export default {
                         source: appSettings.siteName,
                         pageUrl: LANDLORDS_SEO_URL,
                         pageName: appSettings.siteName,
-                        enquiryType: this.enquiryType
+                        enquiryType: this.enquiryType,
+                        message: this.showOtherMessage ? this.otherMessage : ""
                     }
+
                     const response = await this.$axios.$post(
                         httpEndpoint.enquiry.sendEnquiry,
                         params
@@ -160,6 +197,7 @@ export default {
                             this.loading = false
                         }, 2500)
                         if (response.valid) {
+                            this.sent = true
                             await this.$store.dispatch(
                                 "app/showSnackBar",
                                 response.message || "Your message has been sent!"
@@ -240,16 +278,6 @@ export default {
         font-weight: 500;
         font-size: 1.6rem;
         line-height: 2rem;
-        display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        grid-gap: 1.2rem;
-
-        .form__field:nth-child(5) {
-            grid-row-start: 3;
-            grid-row-end: 5;
-            grid-column-start: 1;
-            grid-column-end: 3;
-        }
     }
 
     .form__actions {
