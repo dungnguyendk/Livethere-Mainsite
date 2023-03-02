@@ -307,4 +307,7 @@
 			}
 		}
 	}
+	.theme--light.v-btn.v-btn--disabled {
+		color:var(--color-black) !important
+	}
 }
