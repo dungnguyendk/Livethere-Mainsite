@@ -1,15 +1,15 @@
 import { httpEndpoint } from "~/services/https/endpoints"
+
 export const state = () => ({
     analytics: null
 })
 export const mutations = {
     setAnalytics(state, payload) {
         state.analytics = payload
-        // console.log("state.analytics::", state.analytics)
     }
 }
 export const actions = {
-    async getAnalytics({ commit }, payload) {
+    async getAnalytics({ commit }) {
         try {
             const response = await this.$axios.$get(`${httpEndpoint.analytics.getEntries}`)
             if (response) {

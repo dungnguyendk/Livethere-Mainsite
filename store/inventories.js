@@ -4,8 +4,6 @@ export const state = () => ({
     inventories: [],
     inventoryDetail: null,
     typeSelect: 0,
-    snackbar: false,
-    snackbarMessage: "Your message has been sent.",
     statusResponse: true
 })
 
@@ -19,19 +17,13 @@ export const mutations = {
     setTypeSelected(state, payload) {
         state.typeSelect = payload
     },
-    setSnackbar(state, payload) {
-        state.snackbar = payload
-    },
-    setSnackbarMessage(state, payload) {
-        state.snackbarMessage = payload
-    },
     setStatusResponse(state, payload) {
         state.statusResponse = payload
     }
 }
 
 export const actions = {
-    async createInventories({ commit }, payload) {
+    async createInventories({ commit, dispatch }, payload) {
         try {
             const response = await this.$axios.$post(
                 `${httpEndpoint.inventories.createEntry}`,
@@ -39,17 +31,12 @@ export const actions = {
             )
             if (response && response !== 0) {
                 commit("setStatusResponse", true)
-                commit("setSnackbar", true)
-                commit("setSnackbarMessage", "Create new inventory success")
+                dispatch("app/showSnackBar", "Create expense successful", { root: true })
             } else {
                 commit("setStatusResponse", false)
-                commit("setSnackbar", false)
-                commit("setSnackbarMessage", "Your message has been sent.")
             }
         } catch (e) {
             commit("setStatusResponse", false)
-            commit("setSnackbar", false)
-            commit("setSnackbarMessage", "Your message has been sent.")
             console.log({ Error: e.message })
         }
     },
@@ -113,7 +100,7 @@ export const actions = {
             commit("setInventoryDetail", null)
         }
     },
-    async updateInventory({ commit }, payload) {
+    async updateInventory({ commit, dispatch }, payload) {
         try {
             const response = await this.$axios.$put(
                 `${httpEndpoint.inventories.updateEntry}`,
@@ -121,40 +108,29 @@ export const actions = {
             )
             if (response) {
                 commit("setStatusResponse", true)
-                commit("setSnackbar", true)
-                commit("setSnackbarMessage", "Update inventory success")
+                dispatch("app/showSnackBar", "Create expense successful", { root: true })
             } else {
                 commit("setStatusResponse", false)
-                commit("setSnackbar", false)
-                commit("setSnackbarMessage", "Your message has been sent.")
             }
         } catch (e) {
             console.log({ Error: e.message })
             commit("setStatusResponse", false)
-            commit("setSnackbar", false)
-            commit("setSnackbarMessage", "Your message has been sent.")
         }
     },
-    async deleteInventory({ commit }, payload) {
+    async deleteInventory({ commit, dispatch }, payload) {
         try {
             const response = await this.$axios.$delete(
                 `${httpEndpoint.inventories.deleteEntryByID}`,
                 payload
             )
             if (response) {
-                commit("setSnackbar", true)
-                commit("setSnackbarMessage", "Delete inventory success")
-            } else {
-                commit("setSnackbar", false)
-                commit("setSnackbarMessage", "Your message has been sent.")
+                dispatch("app/showSnackBar", "Create expense successful", { root: true })
             }
         } catch (e) {
             console.log({ Error: e.message })
-            commit("setSnackbar", false)
-            commit("setSnackbarMessage", "Your message has been sent.")
         }
     },
-    async putSold({ commit }, payload) {
+    async putSold({ commit, dispatch }, payload) {
         try {
             if (payload) {
                 const response = await this.$axios.$put(
@@ -162,17 +138,13 @@ export const actions = {
                     payload
                 )
                 if (response) {
-                    commit("setSnackbar", true)
-                    commit("setSnackbarMessage", "Update sold out successfully")
+                    dispatch("app/showSnackBar", "Create expense successful", { root: true })
                 } else {
-                    commit("setSnackbar", false)
-                    commit("setSnackbarMessage", "Your message has been sent.")
+                    console.log("Error")
                 }
             }
         } catch (e) {
             console.log({ Error: e.message })
-            commit("setSnackbar", false)
-            commit("setSnackbarMessage", "Your message has been sent.")
         }
     }
 }

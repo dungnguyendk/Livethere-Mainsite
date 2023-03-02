@@ -310,7 +310,7 @@ export default {
                             this.loading = false
                             if (response.valid) {
                                 await this.$store.commit("user/setRegisterDetails", params)
-                                await this.$router.push("/landlord/register/verify")
+                                await this.$router.push("/register/verify")
                             } else {
                                 this.errorMessages = [
                                     response.message ? response.message : MESSAGE_SERVER_ERROR
@@ -359,6 +359,12 @@ export default {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
         column-gap: 2rem;
+    }
+
+    @media screen and (max-width: 767px) {
+        &__input2 {
+            grid-template-columns: minmax(0, 1fr);
+        }
     }
 }
 

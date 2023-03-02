@@ -45,7 +45,7 @@ export default {
 
     methods: {
         onChangePassword() {
-            this.$router.push("/landlord/change-password")
+            this.$router.push("/change-password")
         },
         onOpenExternalSearch() {
             window.open("https://www.livethere.com/search/results?from=home")
@@ -56,7 +56,7 @@ export default {
         },
         async onLogout() {
             await this.$auth.logout().then(() => {
-                window.location.href = "/landlord/signin"
+                window.location.href = "/signin"
             })
         }
     }

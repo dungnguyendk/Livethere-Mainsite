@@ -12,11 +12,6 @@
         <Dialog title="" :open="createDialog" :actions="false" @close="onCloseDialog">
             <AddUnitInventoryForm @close="createDialog = false" v-if="createDialog" />
         </Dialog>
-        <v-snackbar v-model="snackbarActive" :timeout="2000" top right text color="green darken-4">
-            <span class="message--snackBar">
-                <i class="ri-information-line" /> {{ snackbarMessageActive }}
-            </span>
-        </v-snackbar>
     </div>
 </template>
 
@@ -24,7 +19,6 @@
 import TenancyInventoryTable from "./Table/TenancyUnitInventory/TenancyUnitInventoryTable.vue"
 import Dialog from "~/components/elements/Dialog/Dialog.vue"
 import AddUnitInventoryForm from "~/components/components/Landlord/AssetInventory/components/Form/AddUnitInventoryForm.vue"
-import { mapState } from "vuex"
 
 export default {
     name: "TenancyUnitInventory",
@@ -35,17 +29,9 @@ export default {
             default: false
         }
     },
-    computed: {
-        ...mapState({
-            snackbar: (state) => state.inventory.snackbar,
-            snackbarMessage: (state) => state.inventory.snackbarMessage
-        })
-    },
     data() {
         return {
-            createDialog: false,
-            snackbarActive: false,
-            snackbarMessageActive: "Your message has been sent."
+            createDialog: false
         }
     },
     methods: {
@@ -55,21 +41,6 @@ export default {
         onCloseDialog() {
             this.$store.commit("inventory/setInventoryUnitDetail", "")
             this.createDialog = false
-        },
-        setSnackBar() {
-            this.snackbarActive = false
-            if (this.snackbar) {
-                this.snackbarActive = this.snackbar
-                this.snackbarMessageActive = this.snackbarMessage
-                setTimeout(() => {
-                    this.$store.commit("inventory/setSnackbar", false)
-                }, 2000)
-            }
-        }
-    },
-    watch: {
-        snackbar() {
-            this.setSnackBar()
         }
     }
 }

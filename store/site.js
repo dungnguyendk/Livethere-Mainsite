@@ -4,7 +4,7 @@ export const state = () => ({
     siteDetails: null,
     publishedEntries: [],
     isUpdating: false,
-    success: false, // successfull status, use for notification
+    success: false, // successful status, use for notification
     error: false // error status, use for notification
 })
 

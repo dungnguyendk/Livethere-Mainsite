@@ -1,41 +1,32 @@
 <template lang="html">
     <div class="form--enquiry">
         <h4 class="form__title">Drop us a note. We’ll be in touch with you</h4>
-        <form class="form__fields" @submit.prevent="onFormSubmit">
+        <form class="form__fields" @submit.prevent="onSubmit">
             <div class="form__field">
                 <label>Full name</label>
-                <v-text-field
-                    v-model.trim="fullName"
-                    outlined
-                    dense
-                    :error-messages="fullNameErrors"
-                />
+                <v-text-field v-model.trim="name" outlined dense :error-messages="nameErrors" />
             </div>
             <div class="form__field">
                 <label>Email</label>
                 <v-text-field v-model.trim="email" outlined dense :error-messages="emailErrors" />
             </div>
             <div class="form__field">
-                <label>Address</label>
-                <v-text-field
-                    v-model.trim="address"
+                <label>Phone Number</label>
+                <vue-tel-input-vuetify
                     outlined
                     dense
-                    :error-messages="addressErrors"
+                    v-bind="bindProps"
+                    v-model.trim="phoneNumber"
+                    label=""
+                    defaultCountry="SG"
+                    autocomplete="off"
+                    :disabledFetchingCountry="true"
+                    :error-messages="phoneNumberErrors"
                 />
             </div>
             <div class="form__field">
                 <label>Country</label>
-                <v-select
-                    v-model="country"
-                    outlined
-                    dense
-                    placeholder="Please select"
-                    :items="countries"
-                    item-text="countryName"
-                    item-value="ccode"
-                    :error-messages="countryErrors"
-                />
+                <v-text-field v-model="country" outlined dense disabled />
             </div>
             <div class="form__field">
                 <label>Enquiry Type </label>
@@ -51,7 +42,9 @@
             </div>
         </form>
         <div class="form__actions">
-            <v-btn class="btn btn--primary btn--green" @click="onFormSubmit">Submit</v-btn>
+            <v-btn class="btn btn--primary btn--green" @click="onSubmit">
+                {{ loading ? "Sending..." : "Submit" }}
+            </v-btn>
         </div>
     </div>
 </template>
@@ -59,26 +52,68 @@
 <script>
 import { countries } from "~/ultilities/country"
 import { validationMixin } from "vuelidate"
-import { required, email } from "vuelidate/lib/validators"
+import { required, email, helpers } from "vuelidate/lib/validators"
 import { setFormControlErrors } from "~/ultilities/form-validations"
+import { httpEndpoint } from "~/services/https/endpoints"
+import { LANDLORDS_SEO_URL } from "~/ultilities/seo-configs"
+import { appSettings } from "~/app-settings"
+import { MESSAGE_SERVER_ERROR } from "~/ultilities/error-messages"
+const singaporePhoneNumber = helpers.regex("singaporePhoneNumber", /^\+65\d{4}( ?\d{4})$/)
 export default {
     name: "EnquiryForm",
     mixins: [validationMixin],
     validations: {
-        fullName: { required },
+        name: { required },
         email: { required, email },
-        address: { required },
-        country: { required },
-        enquiryType: { required }
+        enquiryType: { required },
+        phoneNumber: { required, singaporePhoneNumber }
+    },
+    computed: {
+        nameErrors() {
+            return setFormControlErrors(this.$v.name, "Full name is required")
+        },
+        emailErrors() {
+            const errors = []
+            if (!this.$v.email.$dirty) return errors
+            !this.$v.email.required && errors.push("Email is required.")
+            !this.$v.email.email && errors.push("Email must be valid.")
+            return errors
+        },
+
+        phoneNumberErrors() {
+            const errors = []
+            if (!this.$v.email.$dirty) return errors
+            !this.$v.phoneNumber.required && errors.push("Email is required.")
+            !this.$v.phoneNumber.singaporePhoneNumber &&
+                errors.push("Please enter a valid phone number.")
+            return errors
+        },
+
+        enquiryTypeErrors() {
+            return setFormControlErrors(this.$v.enquiryType, "Enquiry Type is required")
+        }
     },
     data() {
         return {
-            fullName: "",
+            name: "",
             email: "",
-            address: "",
-            country: null,
+            country: "Singapore",
+            phoneNumber: "",
             countries: countries,
-            enquiryType: null,
+            enquiryType: "",
+            loading: false,
+            bindProps: {
+                mode: "international",
+                required: false,
+                enabledCountryCode: false,
+                enabledFlags: true,
+                autocomplete: "off",
+                name: "telephone",
+                maxLen: 25,
+                inputOptions: {
+                    showDialCode: true
+                }
+            },
             enquiryListing: [
                 {
                     text: " I am looking for rental properties"
@@ -98,44 +133,59 @@ export default {
             ]
         }
     },
-    computed: {
-        fullNameErrors() {
-            return setFormControlErrors(this.$v.fullName, "Full name is required")
-        },
-        emailErrors() {
-            const errors = []
-            if (!this.$v.email.$dirty) return errors
-            !this.$v.email.required && errors.push("Email is required.")
-            !this.$v.email.email && errors.push("Email must be valid.")
-            return errors
-            // return setFormControlErrors(this.$v.email, "Email is required")
-        },
 
-        addressErrors() {
-            return setFormControlErrors(this.$v.address, "Address is required")
-        },
-        countryErrors() {
-            return setFormControlErrors(this.$v.country, "Country is required")
-        },
-        enquiryTypeErrors() {
-            return setFormControlErrors(this.$v.enquiryType, "Enquiry Type is required")
-        }
-    },
     methods: {
-        onFormSubmit() {
+        async handleSendMessage() {
+            if (!this.loading) {
+                this.loading = true
+                try {
+                    const params = {
+                        fullname: this.name,
+                        email: this.email,
+                        mobileNo: this.phoneNumber,
+                        mobileNoCountry: "Singapore",
+                        country: "Singapore",
+                        source: appSettings.siteName,
+                        pageUrl: LANDLORDS_SEO_URL,
+                        pageName: appSettings.siteName,
+                        enquiryType: this.enquiryType
+                    }
+                    const response = await this.$axios.$post(
+                        httpEndpoint.enquiry.sendEnquiry,
+                        params
+                    )
+                    if (response) {
+                        setTimeout(() => {
+                            this.loading = false
+                        }, 2500)
+                        if (response.valid) {
+                            await this.$store.dispatch(
+                                "app/showSnackBar",
+                                response.message || "Your message has been sent!"
+                            )
+                        } else {
+                            await this.$store.dispatch("app/showSnackBar", response.message)
+                        }
+                    }
+                    this.onResetForm()
+                } catch (e) {
+                    await this.$store.dispatch("app/showSnackBar", MESSAGE_SERVER_ERROR)
+                    console.log({ Error: e.message })
+                }
+            }
+        },
+        onSubmit() {
             this.$v.$touch()
             if (!this.$v.$invalid) {
-                this.$store.dispatch("app/showSnackBar", "Your message has been sent!")
-                this.onResetForm()
-                this.$v.$reset()
+                this.handleSendMessage()
             }
         },
         onResetForm() {
-            this.fullName = ""
+            this.name = ""
             this.email = ""
-            this.address = ""
-            this.country = null
+            this.phoneNumber = ""
             this.enquiryType = ""
+            this.$v.$reset()
         }
     }
 }
@@ -144,25 +194,37 @@ export default {
 .form--enquiry {
     position: relative;
     max-width: 62.1rem;
-    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.04), 0px 4px 8px rgba(0, 0, 0, 0.06);
+    box-shadow: 0 0 4px rgba(0, 0, 0, 0.04), 0 4px 8px rgba(0, 0, 0, 0.06);
     border-radius: 2rem;
-    padding: auto;
     margin: auto;
-
+    h4 {
+        margin: 0;
+    }
     .form__title {
-        // display: flex;
-        // justify-content: center;
         text-align: center;
-        // align-items: center;
         padding-top: 2.1rem;
         color: var(--color-menu);
         font-weight: 800;
         font-size: 2rem;
         line-height: 2.8rem;
     }
-
-    h4 {
-        margin: 0;
+    .form__field {
+        position: relative;
+        top: -1.2rem;
+        margin-bottom: -2.2rem;
+        &::v-deep(.v-text-field__details) {
+            padding-left: 0;
+            .v-messages__message {
+                font-size: 1.3rem;
+                line-height: 1.2em;
+            }
+        }
+        &::v-deep(.vue-tel-input-vuetify) {
+            display: flex;
+            grid-gap: 0.4rem;
+            gap: 0.4rem;
+            color: var(--color-error);
+        }
     }
 
     .form__fields {
@@ -173,7 +235,7 @@ export default {
         line-height: 2rem;
         display: grid;
         grid-template-columns: repeat(2, minmax(0, 1fr));
-        grid-gap: 0 2.4rem;
+        grid-gap: 1.2rem;
 
         .form__field:nth-child(5) {
             grid-row-start: 3;

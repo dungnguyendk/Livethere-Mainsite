@@ -1,8 +1,7 @@
 <template lang="html">
     <nuxt-link to="/">
-        <img src="/img/logos/logo.png" alt="App Logo">
+        <img src="/img/logos/logo.svg" alt="App Logo" />
     </nuxt-link>
-
 </template>
 
 <script>
@@ -12,7 +11,7 @@ export default {
         dark: {
             type: Boolean,
             default: false
-        },
-    },
+        }
+    }
 }
 </script>

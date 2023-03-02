@@ -3,51 +3,60 @@
         <!-- <a class="section__close op-btn--close" @click.prevent="handleCloseDialog">
             <i class="feather icon icon-x"></i>
         </a> -->
-        <div class="section__wrapper">
-            <div class="section__left">
-                <p>
-                    Livethere uses necessary cookies to operate our website. We will also use cookies to enhance your experience with Livethere, including to show you more personalised content and tailored advertisements, if you select “Allow all cookies”. <a href="https://www.livethere.com/privacy-policy#19Cookies" target="_blank" class="font-weight-bold text-decoration-underline">More Info</a>
-                </p>
-            </div>
-            <div class="section__right">
-                <v-btn 
-                    class="btn btn--primary btn--green" 
-                    @click.prevent="handleAcceptDialog"
-                >
-                    Allow all cookies</v-btn
-                >
+        <div class="container">
+            <div class="section__wrapper">
+                <div class="section__left">
+                    <p>
+                        Livethere uses necessary cookies to operate our website. We will also use
+                        cookies to enhance your experience with Livethere, including to show you more
+                        personalised content and tailored advertisements, if you select “Allow all
+                        cookies”.
+                        <a
+                            href="https://www.livethere.com/privacy-policy#19Cookies"
+                            target="_blank"
+                            class="font-weight-bold text-decoration-underline"
+                            >More Info</a
+                        >
+                    </p>
+                </div>
+                <div class="section__right">
+                    <v-btn class="btn btn--primary btn--green" @click.prevent="handleAcceptDialog">
+                        Allow all cookies
+                    </v-btn>
+                </div>
             </div>
         </div>
     </div>
 </template>
 
 <script>
-import Cookies from "js-cookie";
+import Cookies from "js-cookie"
 
 export default {
     name: "DialogAcceptCookies",
     data() {
         return {
-            isActive: true
-        };
+            isActive: null
+        }
     },
     mounted() {
-        const acceptCookies = Cookies.get("accept_cookies");
-        if (acceptCookies && acceptCookies == 1) {
-            this.isActive = false;
+        this.isActive = true
+        const acceptCookies = Cookies.get("accept_cookies")
+        if (acceptCookies && acceptCookies === "1") {
+            this.isActive = false
         }
     },
     methods: {
         handleCloseDialog() {
-            Cookies.set("accept_cookies", 0);
-            this.isActive = false;
+            Cookies.set("accept_cookies", 0)
+            this.isActive = false
         },
         handleAcceptDialog() {
-            Cookies.set("accept_cookies", 1);
-            this.isActive = false;
+            Cookies.set("accept_cookies", 1)
+            this.isActive = false
         }
     }
-};
+}
 </script>
 
 <style lang="scss" scoped>
@@ -57,23 +66,38 @@ export default {
     left: 0;
     width: 100%;
     height: auto;
-    padding: 1.5rem 1rem;
+    padding: 1.5rem 0;
     z-index: 9999;
     background-color: #1d2a30;
+    transform: translateY(0);
     transform: translateY(100%);
-    transition: all .25s cubic-bezier(.4,0,.2,1);
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+
+    &.false {
+        transform: translateY(100%);
+        // transform: translateY(0);
+    }
+    &.active {
+        transform: translateY(0);
+        // transform: translateY(100%);
+    }
+
     p {
         margin-bottom: 0;
         color: white;
+        font-size: 1.6rem;
     }
+
     a {
+        font-size: 1.6rem;
         &:hover {
             color: var(--color-primary);
         }
     }
 
     .section__right {
-        padding-right: 4rem;
+        // padding-right: 4rem;
+        padding-left: 1rem;
     }
 
     .section__close {
@@ -88,9 +112,7 @@ export default {
         align-items: center;
     }
 
-    &.active {
-        transform: translateY(0);
-    }
+    
 
     @media screen and (max-width: 1024px) {
         .section__left {

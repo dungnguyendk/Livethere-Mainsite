@@ -2,9 +2,9 @@ export const MEDIA = {
     mediaSelected: [],
     bowerActiveSelect: "BROWER",
     searchMedia: "",
-    listBeforeSelectFolder: [], 
-    // pictureSelected: {}
+    listBeforeSelectFolder: []
 }
+
 export const META = {
     page: 1,
     pageNumber: 1,

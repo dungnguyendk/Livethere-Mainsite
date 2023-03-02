@@ -23,10 +23,12 @@ export default function ({ $axios, redirect }, inject) {
 
     const apivo = $axios.create({
         // headers: {
-        //     common: {
-        //         Accept: "text/plain, */*"
-        //     }
-        // }
+        //     "Access-Control-Allow-Origin": "*"
+        // },
+        auth: {
+            username: "livethere",
+            password: "il0lE31Ozbu63rzfEbNUayLZeBXFaOBd"
+        }
     })
 
     // Set baseURL to something different

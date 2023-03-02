@@ -51,7 +51,6 @@ export default {
             this.$emit("close")
         },
         onSubmit() {
-            this.openDialog = false
             this.$emit("onSubmit")
         },
         selectedForm(val) {

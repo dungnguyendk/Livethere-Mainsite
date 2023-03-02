@@ -22,14 +22,11 @@ export const mutations = {
     },
     setAppDrawer(state, payload) {
         state.appDrawer = payload
-    },
-    setSidebarCollapse(state, payload) {
-        state.sidebarCollapse = payload
-    },
+    }
 }
 
 export const actions = {
-    async getUserInfo({ commit }, payload) {
+    async getUserInfo({ commit }) {
         try {
             const response = await this.$axios.$get(`${httpEndpoint.user.getLandlordUserInfo}`)
             if (response) {

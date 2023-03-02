@@ -4,7 +4,7 @@
             <div>
                 <nuxt-link
                     v-if="source.statusFID === 1"
-                    :to="`/landlord/tenancy/details/${source.internalID}`"
+                    :to="`/tenancy/details/${source.internalID}`"
                 >
                     {{ source.tenancyRefCode }}
                 </nuxt-link>
