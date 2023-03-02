@@ -1,45 +1,179 @@
 .icon-svg {
-	display: inline-block;
-	font-size: inherit;
-	text-rendering: auto;
-	-webkit-font-smoothing: antialiased;
-	-moz-osx-font-smoothing: grayscale;
-	width: 24px;
-	height: 24px;
-	mask-repeat: no-repeat;
-	-webkit-mask-repeat: no-repeat;
-	mask-position: center;
-	-webkit-mask-position: center;
-	mask-size: contain;
-	-webkit-mask-size: contain;
-	background-color: var(--color-primary);
-	transform: translate3d(0, 0, 0);
+    display: inline-block;
+    font-size: inherit;
+    text-rendering: auto;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    width: 24px;
+    height: 24px;
+    mask-repeat: no-repeat;
+    -webkit-mask-repeat: no-repeat;
+    mask-position: center;
+    -webkit-mask-position: center;
+    mask-size: contain;
+    -webkit-mask-size: contain;
+    background-color: var(--color-primary);
+    transform: translate3d(0, 0, 0);
 }
 .svg-bathroom {
-	mask-image: url("/img/icons/bathroom.svg");
+    mask-image: url("/img/icons/bathroom.svg");
 }
 .svg-bedroom {
-	mask-image: url("/img/icons/bedroom.svg");
+    mask-image: url("/img/icons/bedroom.svg");
 }
 .svg-location {
-	mask-image: url("/img/icons/location.svg");
+    mask-image: url("/img/icons/location.svg");
 }
 .svg-buildings {
-	mask-image: url("/img/icons/buildings.svg");
+    mask-image: url("/img/icons/buildings.svg");
 }
 .svg-dollar-circle {
-	mask-image: url("/img/icons/dollar-circle.svg");
+    mask-image: url("/img/icons/dollar-circle.svg");
 }
 .svg-location {
-	mask-image: url("/img/icons/location.svg");
+    mask-image: url("/img/icons/location.svg");
 }
-.svg-menu {
-	mask-image: url("/img/icons/menu.svg");
+.svg-candle {
+    mask-image: url("/img/icons/candle.svg");
 }
-.svg-close {
-	mask-image: url("/img/icons/close.svg");
-	background-color: white;
+.svg-sort {
+    mask-image: url("/img/icons/sort.svg");
 }
 .svg-map {
-	mask-image: url("/img/icons/map.svg");
+    mask-image: url("/img/icons/map.svg");
 }
+.svg-arrow-down {
+    mask-image: url("/img/icons/arrow-down.svg");
+}
+.svg-export {
+    mask-image: url("/img/icons/export.svg");
+}
+.svg-heart {
+    mask-image: url("/img/icons/heart.svg");
+}
+.svg-logo {
+    mask-image: url("/img/icons/logo-project.svg");
+}
+.svg-menu {
+    mask-image: url("/img/icons/menu.svg");
+}
+.svg-close {
+    mask-image: url("/img/icons/close.svg");
+    background-color: white;
+}
+.svg-bbq {
+    mask-image: url("/img/icons/bbq.svg");
+    background-color: var(--color-title-black);
+}
+.svg-playground {
+    mask-image: url("/img/icons/playground.svg");
+    background-color: var(--color-title-black);
+}
+.svg-pool {
+    mask-image: url("/img/icons/pool.svg");
+    background-color: var(--color-title-black);
+}
+.svg-club-house {
+    mask-image: url("/img/icons/clubhouse.svg");
+    background-color: var(--color-title-black);
+}
+.svg-gym {
+    mask-image: url("/img/icons/gym.svg");
+    background-color: var(--color-title-black);
+}
+.svg-concierge {
+    mask-image: url("/img/icons/concierge.svg");
+    background-color: var(--color-title-black);
+}
+.svg-tennis-court {
+    mask-image: url("/img/icons/tennis-court.svg");
+    background-color: var(--color-title-black);
+}
+.svg-function-room {
+    mask-image: url("/img/icons/function-room.svg");
+    background-color: var(--color-title-black);
+}
+.svg-close-circle{
+    mask-image: url("/img/icons/close-circle.svg");
+    background-color: var(--color-label);
+}
+.svg-arrow-left{
+    mask-image: url("/img/icons/arrow-left.svg");
+}
+.svg-messages{
+    mask-image: url("/img/icons/messages.svg");
+}
+.svg-call-calling{
+    mask-image: url("/img/icons/call-calling.svg");
+}
+.svg-calendar{
+    mask-image: url("/img/icons/calendar.svg");
+}
+.svg-whatsapp{
+    mask-image: url("/img/icons/whatsapp.svg");
+}
+.svg-free-wifi{
+    mask-image: url("/img/icons/free-wifi.svg");
+    background-color: var(--color-title-black);
+}
+.svg-bathtub{
+    mask-image: url("/img/icons/bathtub.svg");
+    background-color: var(--color-title-black);
+}
+.svg-spa{
+    mask-image: url("/img/icons/spa.svg");
+    background-color: var(--color-title-black);
+}
+.svg-sauna{
+    mask-image: url("/img/icons/sauna.svg");
+    background-color: var(--color-title-black);
+}
+.svg-game-room{
+    mask-image: url("/img/icons/game-room.svg");
+    background-color: var(--color-title-black);
+}
+.svg-patio{
+    mask-image: url("/img/icons/patio.svg");
+    background-color: var(--color-title-black);
+}
+.svg-taxi{
+    mask-image: url("/img/icons/taxi.svg");
+    background-color: var(--color-title-black);
+}
+.svg-pet-allowed{
+    mask-image: url("/img/icons/pet-allowed.svg");
+    background-color: var(--color-title-black);
+}
+.svg-pool-view{
+    mask-image: url("/img/icons/pool-view.svg");
+    background-color: var(--color-title-black);
+}
+.svg-jacuzzi{
+    mask-image: url("/img/icons/jacuzzi.svg");
+    background-color: var(--color-title-black);
+}
+.svg-gym{
+    mask-image: url("/img/icons/gym.svg");
+    background-color: var(--color-title-black);
+}
+.svg-yoga{
+    mask-image: url("/img/icons/yoga.svg");
+    background-color: var(--color-title-black);
+}
+.svg-gourmet-kitchen{
+    mask-image: url("/img/icons/gourmet-kitchen.svg");
+    background-color: var(--color-title-black);
+}
+.svg-restaurant{
+    mask-image: url("/img/icons/restaurant.svg");
+    background-color: var(--color-title-black);
+}
+.svg-squash-court{
+    mask-image: url("/img/icons/squash-court.svg");
+    background-color: var(--color-title-black);
+}
+.svg-social-lounge{
+    mask-image: url("/img/icons/social-lounge.svg");
+    background-color: var(--color-title-black);
+}
+

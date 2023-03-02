@@ -143,21 +143,23 @@ export default {
                         let lastVisibleItem = this.realIndex + this.params.slidesPerView
                         let slidesLength = this.slides.length - 2
                         let lastVisibleIndex = this.realIndex + this.params.slidesPerView
-                        lastVisibleIndex === Number(self.fractionForm) ? self.activeColorArrow = true : self.activeColorArrow = false
+                        lastVisibleIndex === Number(self.fractionForm)
+                            ? (self.activeColorArrow = true)
+                            : (self.activeColorArrow = false)
                     }
                 }
             },
             preNumber: 1,
             nextNumber: 3,
             fractionTo: 1,
-            fractionForm: 3, 
+            fractionForm: 3,
             activeColorArrow: false
         }
     },
     computed: {
-      swiper() {
-        return this.$refs.mySwiper.swiper
-      }
+        swiper() {
+            return this.$refs.mySwiper.swiper
+        }
     },
     mounted() {
         this.fractionForm = this.articles.length.toLocaleString("en-US", {
@@ -168,7 +170,7 @@ export default {
             minimumIntegerDigits: 2,
             useGrouping: false
         })
-    },
+    }
 }
 </script>
 
@@ -305,15 +307,15 @@ export default {
             height: 0.2rem;
             overflow: hidden;
             position: relative;
-            .section__top-scroll {
-                height: 0.2rem;
-                background-color: var(--color-primary);
-                border-radius: 10rem;
-                position: absolute;
-                z-index: 8;
-                left: 0;
-            }
         }
+    }
+    .section__top-scroll {
+        height: 0.2rem;
+        background-color: var(--color-primary);
+        border-radius: 10rem;
+        position: absolute;
+        z-index: 8;
+        left: 0;
     }
 }
 
@@ -327,7 +329,7 @@ export default {
 .article-wrapper {
     padding: 0 1rem;
 }
-.swiper-button-active{
+.swiper-button-active {
     opacity: 1;
 }
 
