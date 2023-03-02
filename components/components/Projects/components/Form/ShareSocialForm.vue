@@ -1,19 +1,54 @@
 <template>
     <form class="form--share-social">
         <div class="form__top">
-            <v-btn class="ma-1 form__btn-custom" color="#3b5998" height="48" width="48" href="https://www.facebook.com/" target="_blank">
+            <v-btn
+                class="ma-1 form__btn-custom"
+                color="#3b5998"
+                height="48"
+                width="48"
+                href="https://www.facebook.com/"
+                target="_blank"
+            >
                 <i class="ri-facebook-fill"></i>
             </v-btn>
-            <v-btn class="ma-1 form__btn-custom" color="#25d366" height="48" width="48" href="https://www.whatsapp.com/" target="_blank">
+            <v-btn
+                class="ma-1 form__btn-custom"
+                color="#25d366"
+                height="48"
+                width="48"
+                href="https://www.whatsapp.com/"
+                target="_blank"
+            >
                 <i class="ri-whatsapp-line"></i>
             </v-btn>
-            <v-btn class="ma-1 form__btn-custom" color="#00b800" height="48" width="48" href="https://line.me/en/" target="_blank">
+            <v-btn
+                class="ma-1 form__btn-custom"
+                color="#00b800"
+                height="48"
+                width="48"
+                href="https://line.me/en/"
+                target="_blank"
+            >
                 <i class="ri-line-line"></i>
             </v-btn>
-            <v-btn class="ma-1 form__btn-custom" color="#37aee2" height="48" width="48" href="https://telegram.org/" target="_blank">
+            <v-btn
+                class="ma-1 form__btn-custom"
+                color="#37aee2"
+                height="48"
+                width="48"
+                href="https://telegram.org/"
+                target="_blank"
+            >
                 <i class="ri-telegram-line"></i>
             </v-btn>
-            <v-btn class="ma-1 form__btn-custom" color="#7f7f7f" height="48" width="48" href="https://mail.google.com/mail/u/0/#inbox" target="_blank">
+            <v-btn
+                class="ma-1 form__btn-custom"
+                color="#7f7f7f"
+                height="48"
+                width="48"
+                href="https://mail.google.com/mail/u/0/#inbox"
+                target="_blank"
+            >
                 <i class="ri-mail-line"></i>
             </v-btn>
         </div>
@@ -21,16 +56,14 @@
             <label>Copy link</label>
             <v-tooltip top>
                 <template v-slot:activator="{ on, attrs }">
-                    <v-text-field
-                        outlined
-                        dense
-                        placeholder="https://www.livethere.com/listing/eden-residences-capitol-129"
-                        class="form__field-text-field-custom"
-                        v-model="linkURL"
-                        v-bind="attrs"
-                        @click="onCopyLinkURL(on, $event)"
+                    <input 
+                     type="text" 
+                     v-model="linkURL" 
+                     v-bind="attrs" 
+                     ref="linkURLCopy" 
+                     @click="onCopyLinkURL(on, $event)"
+                     class="form__field-input-custom"
                     >
-                    </v-text-field>
                 </template>
                 <span>Text Copied</span>
             </v-tooltip>
@@ -60,11 +93,15 @@ export default {
             clearTimeout(this._timerId)
             mouseenter(e)
             this._timerId = setTimeout(() => mouseleave(e), 1000)
-            navigator.clipboard.writeText(this.linkURL);
+            navigator.clipboard.writeText(this.linkURL)
+            const element = this.$refs.linkURLCopy
+            element.select()
+            element.setSelectionRange(0, 99999)
+            
         }
-    }, 
+    },
     watch: {
-        item(val){
+        item(val) {
             this.linkURL = val.linkDetails
         }
     }
@@ -81,20 +118,22 @@ export default {
     }
 }
 .form__field {
-        label {
-            font-weight: 500;
-            font-size: 1.4rem;
-            line-height: 2rem;
-            color: var(--color-label);
-            margin-bottom: 0.8rem;
-        }
+    label {
+        font-weight: 500;
+        font-size: 1.4rem;
+        line-height: 2rem;
+        color: var(--color-label);
+        margin-bottom: 0.8rem;
+        display: inline-block;
+    }
+
 }
-.form__btn-custom{
+.form__btn-custom {
     padding: 0 !important;
     min-width: 4.8rem !important;
-    i{
+    i {
         font-size: 3rem;
-        color: var(--color-white)
+        color: var(--color-white);
     }
 }
 .form__btn-custom {
@@ -105,9 +144,14 @@ export default {
         color: var(--color-white);
     }
 }
-.form__field-text-field-custom {
-    ::v-deep(.v-text-field__details) {
-        display: none;
+.form__field-input-custom{
+    display: block;
+    border: 0.1rem solid var(--border-color); 
+    border-radius: 0.4rem;
+    padding: 0.8rem;
+    width: 100%;
+    &:hover, &:active{
+        border: 0.1rem solid var(--color-primary);
     }
 }
 </style>

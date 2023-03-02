@@ -59,11 +59,11 @@
                         @change="select_Livethere($event)"
                     >
                         <template v-slot:label>
-    <div class="form__field-label-custom">
-        <span>Livethere Premium</span>
-        <img :src="require(`~/static/img/logos/logo-project.svg`)" alt="" />
-    </div>
-</template>
+                            <div class="form__field-label-custom">
+                                <span>Livethere Premium</span>
+                                <img :src="require(`~/static/img/logos/logo-project.svg`)" alt="" />
+                            </div>
+                        </template>
                     </v-checkbox>
                 </div>
             </div>
@@ -187,24 +187,18 @@
             </div>
             <div class="form__field">
                 <label>Amenities</label>
-                <v-item-group multiple v-model="selected">
-                    <v-item
-                        v-for="(amenities, index) in listAmenities"
-                        :key="index"
-                        v-slot="{ active, toggle }"
+                <v-chip-group multiple column active-class="primary--text"  v-model="selected">
+                    <v-chip  
+                     v-for="(amenities, index) in listAmenities"
+                     :key="index"
+                      label
+                      class="ma-1 form__field-tag-custom"
+                      :value="amenities.id"
                     >
-                        <v-chip
-                            :input-value="active"
-                            active-class="primary--text"
-                            label
-                            class="ma-1 form__field-tag-custom"
-                            @click="toggle"
-                        >
-                            <i :class="amenities.icon"></i>
-                            <span>{{ amenities.title }}</span>
-                        </v-chip>
-                    </v-item>
-                </v-item-group>
+                        <i :class="amenities.icon"></i>
+                        <span>{{ amenities.title }}</span>
+                    </v-chip>
+                </v-chip-group>
             </div>
         </div>
         <div class="form__footer">
@@ -289,13 +283,17 @@ export default {
             return this.rangeRentPer[0] ? convertNumberToCommas(this.rangeRentPer[0]) : "0"
         },
         rangeRentPerMax() {
-            return this.rangeRentPer[this.rangeRentPer.length - 1] === this.maxRentPer ? convertNumberToCommas(this.rangeRentPer[this.rangeRentPer.length - 1]) + "+" : convertNumberToCommas(this.rangeRentPer[this.rangeRentPer.length - 1])
+            return this.rangeRentPer[this.rangeRentPer.length - 1] === this.maxRentPer
+                ? convertNumberToCommas(this.rangeRentPer[this.rangeRentPer.length - 1]) + "+"
+                : convertNumberToCommas(this.rangeRentPer[this.rangeRentPer.length - 1])
         },
         rangeUnitSizeMin() {
             return this.rangeUnitSize[0] ? convertNumberToCommas(this.rangeUnitSize[0]) : "0"
         },
         rangeUnitSizeMax() {
-            return this.rangeUnitSize[this.rangeUnitSize.length - 1] === this.maxUnitSize ? convertNumberToCommas(this.rangeUnitSize[this.rangeUnitSize.length - 1]) + "+" : convertNumberToCommas(this.rangeUnitSize[this.rangeUnitSize.length - 1])
+            return this.rangeUnitSize[this.rangeUnitSize.length - 1] === this.maxUnitSize
+                ? convertNumberToCommas(this.rangeUnitSize[this.rangeUnitSize.length - 1]) + "+"
+                : convertNumberToCommas(this.rangeUnitSize[this.rangeUnitSize.length - 1])
         }
     },
     methods: {
@@ -326,18 +324,20 @@ export default {
                 selected: this.selected
             }
             console.log("params: ", params)
+            this.onClose()
         },
         onResetForm() {
-            this.location = "",
-                this.propertyType = "",
-                this.selectAll = false,
-                this.selectedLivethere = false,
-                this.bedroom = "",
-                this.bathroom = "",
-                this.rangeRentPer = [8000, 15000],
-                this.rangeUnitSize = [4000, 10000],
-                this.selected = []
-        }
+            ;(this.location = ""),
+                (this.propertyType = ""),
+                (this.selectAll = false),
+                (this.selectedLivethere = false),
+                (this.bedroom = ""),
+                (this.bathroom = ""),
+                (this.rangeRentPer = [8000, 15000]),
+                (this.rangeUnitSize = [4000, 10000]),
+                (this.selected = [])
+        },
+
     }
 }
 </script>
@@ -459,9 +459,8 @@ export default {
                 line-height: 2rem;
                 color: var(--color-title-black);
                 padding-top: 1rem;
-               
             }
-            input{
+            input {
                 margin-right: -2rem;
             }
         }
