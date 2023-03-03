@@ -56,6 +56,7 @@
             <v-btn class="btn btn--primary btn--green btn-custom" :loading="loading" type="submit"
                 >Verify & continue</v-btn
             >
+            
         </div>
     </form>
 </template>
@@ -118,7 +119,8 @@ export default {
                 inputOptions: {
                     showDialCode: true
                 }
-            }
+            }, 
+            snackbar: true
         }
     },
     computed: {
@@ -158,6 +160,7 @@ export default {
                     email: this.email, 
                     message: this.message
                 }
+                // this.snackbar = true
             }
         }, 
         onResetForm(){
@@ -195,6 +198,13 @@ export default {
 .form__field-tel-input-custom{
     ::v-deep(.v-input__control){
         margin-right: 0.4rem;
+    }
+}
+.snackbar-custom{
+    ::v-deep(.v-snack__content){
+        font-weight: 500; 
+        font-size: 1.4rem;
+        line-height: 2.4rem;
     }
 }
 .btn-custom {

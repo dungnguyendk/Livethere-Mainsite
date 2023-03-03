@@ -1,5 +1,5 @@
 <template>
-    <v-dialog v-model="openDialog" fullscreen>
+    <v-dialog v-model="openDialog" fullscreen persistent>
         <div class="card--dialog">
             <div class="card__header">
                 <div class="container">
@@ -25,6 +25,7 @@
                 </div>
             </div>
         </div>
+        
     </v-dialog>
 </template>
 
@@ -36,7 +37,8 @@ export default {
     components: { ConfirmDetailForm },
     data() {
         return {
-            openDialog: false
+            openDialog: false,
+            snackbar: true
         }
     },
     props: {
@@ -61,8 +63,8 @@ export default {
 
 <style lang="scss" scoped>
 .card--dialog {
-    height: 100%;
-    background-color: var(--color-white);
+    // height: 100%;
+    // background-color: var(--color-white);
     .card__header {
         background-color: var(--color-white);
         box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.04), 0px 8px 16px rgba(0, 0, 0, 0.08);

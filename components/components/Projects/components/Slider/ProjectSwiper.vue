@@ -1,7 +1,9 @@
 <template>
     <div class="swiper--project">
         <div class="swiper__top">
-            <h3>most viewed listings</h3>
+            <h3>
+                <slot />
+            </h3>
         </div>
         <div class="swiper__content">
             <swiper class="swiper swiper-item" :options="swiperOption">
@@ -205,9 +207,12 @@ export default {
                 font-weight: 500;
                 font-size: 1.6rem;
                 line-height: 2.4rem;
-                color: var(--color-title-black); 
-                
+                color: var(--color-title-black);
             }
+        }
+        .swiper__content{
+            max-width: 42rem;
+            margin: 0 auto;
         }
     }
 }

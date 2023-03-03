@@ -4,25 +4,6 @@
             <div class="section-container">
                 <div class="section__top">
                     <h3 class="section__top-title">Latest Projects</h3>
-                    <!-- <div class="section__top-left">&nbsp;</div>
-                    <h3 class="section__top-title">Latest Projects</h3>
-                    <div class="section__top-right">
-                        <div class="section__top-process">
-                            <button @click="onPreviousSlide()">
-                                <i class="ri-arrow-left-s-line"></i>
-                            </button>
-                            <div class="section__top-ruler-wrapper">
-                                <p>{{ preNumber }}</p>
-                                <div class="section__top-ruler">
-                                <div class="section__top-scroll" :style="{'width' : width + '%'}"></div>
-                                </div>
-                                <p>{{ nextNumber }}</p>
-                            </div>
-                            <button @click="onNextSlide()">
-                                <i class="ri-arrow-right-s-line"></i>
-                            </button>
-                        </div>
-                    </div> -->
                 </div>
                 <div class="section__body">
                     <swiper class="swiper swiper-item" :options="swiperOption">

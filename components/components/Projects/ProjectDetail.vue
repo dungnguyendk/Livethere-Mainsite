@@ -99,7 +99,7 @@
         </div>
         <div class="page--project-detail-second">
             <div class="container">
-                <ProjectSwiper />
+                <ProjectSwiper>{{ titleSwiper }}</ProjectSwiper>
             </div>
             <ShareSocialDialog
              :open="isOpenShareSocialDialog"
@@ -147,6 +147,7 @@ export default {
             isOpenShareSocialDialog: false,
             isOpenConfirmDetailDialog: false,
             isOpenContactDetailDialog: false,
+            titleSwiper: "most viewed listings",
             targetLinkURL: {
                 id: 1,
                 title: "Eden Residences Capitol",

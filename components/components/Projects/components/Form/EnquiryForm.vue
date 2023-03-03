@@ -55,6 +55,9 @@
                 </v-textarea>
             </div>
             <v-btn class="btn btn--primary btn--green btn-custom" type="submit" :loading="loading">Enquire Now</v-btn>
+            <v-snackbar v-model="snackbar" color="#00634F" text class="snackbar-custom">
+                Thank you for your submission, our agent has been notified and will be contacting you shortly
+            </v-snackbar>
         </div>
     </form>
 </template>
@@ -114,7 +117,9 @@ export default {
                 inputOptions: {
                     showDialCode: true
                 }
-            }
+            }, 
+            snackbar: false
+    
         }
     },
 
@@ -155,6 +160,10 @@ export default {
                     email: this.email, 
                     message: this.message
                 }
+                this.snackbar = true
+                
+            }else{
+                console.log("fail !")
             }
         }, 
         onResetForm(){
@@ -209,6 +218,17 @@ export default {
 .form__field-tel-input-custom{
     ::v-deep(.v-input__control){
         margin-right: 0.4rem;
+    }
+}
+.alert-custom{
+    height: auto;
+    margin-top: 1.2rem;
+}
+.snackbar-custom{
+    ::v-deep(.v-snack__content){
+        font-weight: 500; 
+        font-size: 1.4rem;
+        line-height: 2.4rem;
     }
 }
 .form__field {
