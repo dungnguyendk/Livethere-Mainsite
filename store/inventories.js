@@ -31,7 +31,7 @@ export const actions = {
             )
             if (response && response !== 0) {
                 commit("setStatusResponse", true)
-                dispatch("app/showSnackBar", "Create expense successful", { root: true })
+                dispatch("app/showSnackBar", "Create successful", { root: true })
             } else {
                 commit("setStatusResponse", false)
             }
@@ -108,7 +108,7 @@ export const actions = {
             )
             if (response) {
                 commit("setStatusResponse", true)
-                dispatch("app/showSnackBar", "Create expense successful", { root: true })
+                dispatch("app/showSnackBar", "Update successful", { root: true })
             } else {
                 commit("setStatusResponse", false)
             }
@@ -124,7 +124,7 @@ export const actions = {
                 payload
             )
             if (response) {
-                dispatch("app/showSnackBar", "Create expense successful", { root: true })
+                dispatch("app/showSnackBar", "Delete successful", { root: true })
             }
         } catch (e) {
             console.log({ Error: e.message })
@@ -138,7 +138,7 @@ export const actions = {
                     payload
                 )
                 if (response) {
-                    dispatch("app/showSnackBar", "Create expense successful", { root: true })
+                    dispatch("app/showSnackBar", "Update successful", { root: true })
                 } else {
                     console.log("Error")
                 }
