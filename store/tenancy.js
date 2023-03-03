@@ -215,9 +215,6 @@ export const actions = {
                 dispatch("app/showSnackBar", "The document has been deleted successfully", {
                     root: true
                 })
-                setTimeout(() => {
-                    commit("setSnackbar", false)
-                }, 2000)
             } else {
                 console.log("Error!")
             }
