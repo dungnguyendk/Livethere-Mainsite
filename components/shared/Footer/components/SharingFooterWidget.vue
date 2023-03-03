@@ -4,10 +4,10 @@
             <h3 class="widget__title">Follow us on socials</h3>
         </div>
         <div class="widget__container">
-            <a href="#" @click.prevent>
+            <a href="https://www.instagram.com/livethere.sg/" target="_blank" @click.prevent>
                 <InstagramIcon />
             </a>
-            <a href="/">
+            <a href="https://www.facebook.com/livetheresingapore/" target="_blank">
                 <FacebookIcon />
             </a>
         </div>

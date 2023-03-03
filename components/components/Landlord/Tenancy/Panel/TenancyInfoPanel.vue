@@ -18,7 +18,7 @@
             :actions="false"
             @close="onCloseCreateDialog"
         >
-            <AddTenancyInfoForm @close="onCloseCreateDialog" />
+            <AddTenancyInfoForm @close="onCloseCreateDialog" v-if="createDialog"/>
         </Dialog>
         <v-snackbar v-model="snackbarActive" :timeout="2000" top right text color="green darken-4">
             <span class="message--snackBar">

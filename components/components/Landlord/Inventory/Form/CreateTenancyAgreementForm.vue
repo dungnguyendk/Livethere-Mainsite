@@ -110,12 +110,13 @@
 
                 <v-col cols="12" sm="12" md="12">
                     <div class="form__field">
-                        <label>Tenancy Ref Code</label>
+                        <label class="required">Tenancy Ref Code</label>
                         <v-text-field
                             v-model="tenancyRefCode"
                             dense
                             outlined
                             :error-messages="tenancyRefCodeErrors"
+                          
                         />
                     </div>
                 </v-col>
@@ -156,7 +157,9 @@
         </div>
         <div class="form__actions">
             <v-btn class="btn btn--ghost btn--gray btn--sm" @click="onClose"> Cancel</v-btn>
-            <v-btn class="btn btn--primary btn--green btn--sm" type="submit"> Create</v-btn>
+            <v-btn class="btn btn--primary btn--green btn--sm" type="submit" :loading="loading">
+                Create</v-btn
+            >
         </div>
     </form>
 </template>
@@ -212,7 +215,7 @@ export default {
             return setFormControlErrors(this.$v.secureDeposit, "This field is required")
         },
         tenancyRefCodeErrors() {
-            return setFormControlErrors(this.$v.secureDeposit, "This field is required")
+            return setFormControlErrors(this.$v.tenancyRefCode, "This field is required")
         }
     },
     data() {
@@ -230,11 +233,11 @@ export default {
             secureDeposit: "",
             remark: "",
             tenancyRefCode: "",
-            submitted: false,
             isOpenSnackbar: false,
             isShowErrorMessage: false,
             errorMessages: "",
-            optionDate: "selection" // "selection" | "1-year" | "2-years"
+            optionDate: "selection", // "selection" | "1-year" | "2-years"
+            loading: false
         }
     },
     watch: {
@@ -300,7 +303,7 @@ export default {
             return this.$moment(date).format("DD-MMM-YYYY")
         },
         async submitForm() {
-            this.submitted = true
+            this.loading = true
             this.$v.$touch()
             if (!this.$v.$invalid) {
                 const params = {
@@ -339,6 +342,7 @@ export default {
                     this.$store
                         .dispatch("inventory/createTenancyAgreement", params)
                         .then((value) => {
+                            this.loading = false
                             if (value) {
                                 if (value.id !== 0) {
                                     this.$emit("openSnackbar", (this.isOpenSnackbar = true))
@@ -359,6 +363,7 @@ export default {
                     this.errorMessages = "End date should be greater than start date !"
                 }
             } else {
+                this.loading = false
                 console.error("error!")
             }
         },
@@ -376,7 +381,7 @@ export default {
             this.secureDeposit = ""
             this.remark = ""
         },
-        validateStartDateAndEndDate(start, end) {
+            validateStartDateAndEndDate(start, end) {
             const startDateFormat = this.$dayjs(this.startDate)
                 .format("YYYY-MM-DD")
                 .toString()
