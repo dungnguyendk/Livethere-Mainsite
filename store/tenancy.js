@@ -152,7 +152,9 @@ export const actions = {
                 }
             )
             if (response && response !== 0) {
+                dispatch("app/showSnackBar", "Expense successfully deleted", { root: true })
                 dispatch("getExpenses", { id: parseInt(rootState.tenancy.tenancyDetails.id) })
+
                 return true
             } else {
                 console.log("Error!")
