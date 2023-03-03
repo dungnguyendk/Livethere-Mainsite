@@ -36,7 +36,7 @@ export default {
                 },
                 {
                     url: "https://www.livethere.com/privacy-policy",
-                    label: "Privacy"
+                    label: "Privacy Policy"
                 },
                 {
                     url: "https://www.livethere.com/landlords",
@@ -59,3 +59,20 @@ export default {
     }
 }
 </script>
+<style lang="scss" scoped>
+.widget--footer {
+    .widget__title {
+        margin-top: 0.4rem;
+        font-size: 2.2rem;
+        margin-bottom: 2.5vh;
+    }
+}
+.widget--links {
+    .widget__container {
+        grid-gap: 1.2rem;
+        a {
+            // font-size: 1.4rem;
+        }
+    }
+}
+</style>
