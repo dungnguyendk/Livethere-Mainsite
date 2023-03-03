@@ -2,6 +2,7 @@ import { httpEndpoint } from "~/services/https/endpoints"
 
 export const state = () => ({
     appDrawer: false,
+    userDrawer: false,
     sidebarCollapse: false,
     token: null,
     appLoading: false,
@@ -22,7 +23,11 @@ export const mutations = {
     },
     setAppDrawer(state, payload) {
         state.appDrawer = payload
+    },
+    setUserDrawer(state, payload) {
+        state.userDrawer = payload
     }
+
 }
 
 export const actions = {

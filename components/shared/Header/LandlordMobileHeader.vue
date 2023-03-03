@@ -9,12 +9,12 @@
             <SiteLogo />
         </div>
         <div class="header__right">
-            <v-btn icon class="btn--search" elevation="0" @click.prevent="userDrawer = !userDrawer">
+            <v-btn icon class="btn--search" elevation="0" @click.prevent="handleOpenUserDrawer">
                 <i class="ri-user-line" />
             </v-btn>
         </div>
         <MobileNavigation />
-        <LandlordUserDrawer :open="userDrawer" @close="userDrawer = false" />
+        <LandlordUserDrawer  />
     </header>
 </template>
 
@@ -31,6 +31,7 @@ export default {
     computed: {
         ...mapState({
             appDrawer: (state) => state.app.appDrawer,
+            userDrawer: (state) => state.app.userDrawer,
             userInfo: (state) => state.app.userInfo
         }),
         loggedIn() {
@@ -39,7 +40,7 @@ export default {
     },
     data() {
         return {
-            userDrawer: false
+            // userDrawer: false
         }
     },
 
@@ -54,12 +55,15 @@ export default {
             this.$store.commit("app/setAppDrawer", !this.appDrawer)
             // console.log("handleOpenMenuDrawer",this.appDrawer);
         },
+        handleOpenUserDrawer(){
+            this.$store.commit("app/setUserDrawer", !this.userDrawer)
+        },
         async onLogout() {
             await this.$auth.logout().then(() => {
                 window.location.href = "/signin"
             })
         }
-    }
+    },
 }
 </script>
 
