@@ -210,7 +210,7 @@ export default {
                 color: var(--color-title-black);
             }
         }
-        .swiper__content{
+        .swiper__content {
             max-width: 42rem;
             margin: 0 auto;
         }
@@ -275,11 +275,30 @@ export default {
     .swiper-box__top {
         position: relative;
         padding: 0 1.2rem;
+    
         .swiper-box__image {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             img {
                 width: 100%;
                 object-fit: cover;
                 border-radius: 2rem;
+            }
+            &::after {
+                content: "";
+                display: block;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0, 0, 0, 0.7);
+                position: absolute;
+                top: 0;
+                left: 0;
+                border-radius: 2rem;
+                visibility: hidden;
+                opacity: 0;
+                transition: all 0.4s ease;
             }
         }
         .swiper-box__title {
@@ -294,6 +313,7 @@ export default {
             width: 85.9%;
             max-height: 7.5rem;
             box-sizing: border-box;
+            transition: all 0.05s ease;
             .swiper-box__title-link {
                 color: var(--color-white);
                 font-size: 2rem;
@@ -307,8 +327,20 @@ export default {
                 overflow: hidden;
             }
         }
-        &:hover{ 
-            background-color: blue;
+
+        &:hover {
+            .swiper-box__title {
+                visibility: hidden;
+                opacity: 0;
+
+            }
+            .swiper-box__image {
+                &::after{
+                    visibility: visible;
+                    opacity: 1;
+                    //transition-delay: 0.2s;
+                }
+            }
         }
     }
     .swiper-box__content {
@@ -345,7 +377,6 @@ export default {
             }
         }
     }
-
 }
 .swiper-button-active {
     opacity: 1;
