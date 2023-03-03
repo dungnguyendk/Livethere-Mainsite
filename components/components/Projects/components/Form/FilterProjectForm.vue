@@ -207,6 +207,7 @@
                 <v-btn class="btn btn--primary btn--green" type="submit">Apply</v-btn>
             </div>
         </div>
+
     </form>
 </template>
 
@@ -331,7 +332,7 @@ export default {
                 selected: this.selected
             }
             console.log("params: ", params)
-     
+            this.$emit("snackbar", this.snack = true)
             this.onClose()
         },
         onResetForm() {

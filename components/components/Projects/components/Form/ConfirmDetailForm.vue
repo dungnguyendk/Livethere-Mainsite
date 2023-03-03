@@ -136,7 +136,7 @@ export default {
                     showDialCode: true
                 }
             }, 
-            snackbar: true
+            snackbar: false
         }
     },
 
@@ -152,6 +152,9 @@ export default {
                     phone: this.phone, 
                     email: this.email, 
                 }
+                this.snackbar = true
+            }else{
+                console.log("fail!")
             }
         }, 
         onResetForm(){
@@ -212,6 +215,13 @@ export default {
 .form__field-tel-input-custom{
     ::v-deep(.v-input__control){
         margin-right: 0.4rem;
+    }
+}
+.snackbar-custom{
+    ::v-deep(.v-snack__content){
+        font-weight: 500; 
+        font-size: 1.4rem;
+        line-height: 2.4rem;
     }
 }
 
