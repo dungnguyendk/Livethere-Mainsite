@@ -5,11 +5,18 @@
                 <StatusIcon type="warning" />
             </template> -->
             <template slot="content">
-                <p><strong>{{ content }}</strong></p>
+                <p>
+                    <strong>{{ content }}</strong>
+                </p>
             </template>
             <template slot="actions">
-                <v-btn class="btn btn--ghost btn--gray" @click="onClose()"> Cancel</v-btn>
-                <v-btn class="btn btn--primary btn--green" @click="onSubmit()" :loading="loading">Confirm</v-btn>
+                <v-btn class="btn btn--ghost btn--gray btn--sm" @click="onClose()"> Cancel</v-btn>
+                <v-btn
+                    class="btn btn--primary btn--green btn--sm"
+                    @click="onSubmit()"
+                    :loading="loading"
+                    >Confirm
+                </v-btn>
             </template>
         </DialogContentCard>
     </v-dialog>
@@ -91,25 +98,6 @@ export default {
     .btn__upload-file {
         min-width: min-content !important;
     }
-}
-
-.dropzone--custom {
-    display: flex;
-    flex-direction: column;
-
-    i {
-        font-size: 3rem;
-        color: var(--color-primary);
-    }
-
-    span {
-        color: alpha(var(--color-gray), var(--level-3));
-        font-weight: 500;
-    }
-}
-
-.dropzone {
-    min-height: 24rem;
 }
 
 .content {
