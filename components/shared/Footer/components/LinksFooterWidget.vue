@@ -10,17 +10,27 @@
                 </nuxt-link>
             </template>-->
             <template>
-                <a v-for="(link, index) in links" :href="link.url" :key="index" target="_blank">
+                <a v-for="(link, index) in links" :href="link.url" :key="index">
                     {{ link.label }}
                 </a>
+                <a :class="openContactUsDialog ? 'active' : ''" @click="openContactUsDialog = true">
+                    Contact us
+                </a>
+                <Dialog :open="openContactUsDialog" @close="closeDialog" :actions="false" :size="sizeDialog" :title="''">
+                    <ContactUsForm @close="openContactUsDialog = false" :isContactUs="true" titleContact="Contact Us"
+                        v-if="openContactUsDialog" />
+                </Dialog>
             </template>
         </div>
     </div>
 </template>
 
 <script>
+import Dialog from "~/components/elements/Dialog/Dialog.vue"
+import ContactUsForm from "~/components/shared/Header/Form/ContactUsForm.vue"
 export default {
     name: "LinksFooterWidget",
+    components: { Dialog, ContactUsForm },
     props: {
         source: {
             type: Array,
@@ -29,6 +39,8 @@ export default {
     },
     data() {
         return {
+            sizeDialog: "medium",
+            openContactUsDialog: false,
             links: [
                 {
                     url: "https://www.livethere.com/tenants",
@@ -50,11 +62,12 @@ export default {
                     url: "https://www.livethere.com/about-us",
                     label: "About Us"
                 },
-                {
-                    url: "https://www.livethere.com/",
-                    label: "Contact Us"
-                }
             ]
+        }
+    },
+    methods: {
+        closeDialog() {
+            this.openContactUsDialog = false
         }
     }
 }

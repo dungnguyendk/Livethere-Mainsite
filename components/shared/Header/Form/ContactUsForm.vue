@@ -1,6 +1,6 @@
 <template lang="html">
     <div>
-        <h4 class="form__title">List with Livethere today</h4>
+        <h4 class="form__title">{{ titleContact }}</h4>
         <form class="form__fields" @submit.prevent="onSubmit">
             <div class="form__field">
                 <label>Full name</label>
@@ -62,6 +62,10 @@ export default {
         isContactUs: {
             type: Boolean,
             default: () => true
+        },
+        titleContact: {
+            type: String,
+            default: () => "Contact Us"
         }
     },
     computed: {
@@ -175,8 +179,7 @@ export default {
                         if (response.valid) {
                             this.sent = true
                             await this.$store.dispatch(
-                                "app/showSnackBar",
-                                response.message || "Your message has been sent!"
+                                "app/showSnackBar", "Thank you for your submission, our agent has notified and will be contacting you shortly."
                             )
                         } else {
                             await this.$store.dispatch("app/showSnackBar", response.message)

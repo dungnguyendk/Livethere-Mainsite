@@ -6,40 +6,22 @@
                 <v-col cols="6" cols-sm="12">
                     <div class="form__field">
                         <label>Full name</label>
-                        <v-text-field
-                            v-model.trim="name"
-                            outlined
-                            dense
-                            :error-messages="nameErrors"
-                        />
+                        <v-text-field v-model.trim="name" outlined dense :error-messages="nameErrors" />
                     </div>
                 </v-col>
                 <v-col cols="6" cols-sm="12">
                     <div class="form__field">
                         <label>Email</label>
-                        <v-text-field
-                            v-model.trim="email"
-                            outlined
-                            dense
-                            :error-messages="emailErrors"
-                        />
+                        <v-text-field v-model.trim="email" outlined dense :error-messages="emailErrors" />
                     </div>
                 </v-col>
                 <v-col cols="6" cols-sm="12">
                     <div class="form__field">
                         <label>Phone Number</label>
-                        <vue-tel-input-vuetify
-                            outlined
-                            dense
-                            v-bind="bindProps"
-                            v-model.trim="phoneNumber"
-                            label=""
-                            defaultCountry="SG"
-                            autocomplete="off"
-                            :disabledFetchingCountry="true"
+                        <vue-tel-input-vuetify outlined dense v-bind="bindProps" v-model.trim="phoneNumber" label=""
+                            defaultCountry="SG" autocomplete="off" :disabledFetchingCountry="true"
                             :error-messages="phoneNumberErrors"
-                            v-on:input="(number, data) => onInputPhoneNumber(number, data)"
-                        />
+                            v-on:input="(number, data) => onInputPhoneNumber(number, data)" />
                     </div>
                 </v-col>
                 <v-col cols="6" cols-sm="12">
@@ -51,15 +33,8 @@
                 <v-col cols="12" cols-sm="12">
                     <div class="form__field">
                         <label>Enquiry Type </label>
-                        <v-select
-                            v-model="enquiryType"
-                            outlined
-                            dense
-                            placeholder="Please select"
-                            :items="enquiryListing"
-                            item-text="text"
-                            :error-messages="enquiryTypeErrors"
-                        />
+                        <v-select v-model="enquiryType" outlined dense placeholder="Please select" :items="enquiryListing"
+                            item-text="text" :error-messages="enquiryTypeErrors" />
                     </div>
                 </v-col>
                 <v-col v-if="showOtherMessage" cols="12" cols-sm="12">
@@ -206,7 +181,7 @@ export default {
                             this.sent = true
                             await this.$store.dispatch(
                                 "app/showSnackBar",
-                                response.message || "Your message has been sent!"
+                                "Thank you for your submission, our agent has notified and will be contacting you shortly."
                             )
                         } else {
                             await this.$store.dispatch("app/showSnackBar", response.message)
@@ -317,16 +292,20 @@ export default {
             padding: 0 1.2rem;
         }
     }
+
     @media screen and(max-width: 600px) {
         .form__title {
             font-size: 2rem;
         }
+
         .form__fields {
             display: block;
         }
+
         label {
             font-size: 1.4rem;
         }
+
         :deep(.v-input) {
             input {
                 font-size: 1.4rem;

@@ -9,7 +9,7 @@
             <template v-if="loggedIn">
                 <v-list v-if="userInfo" class="ps-drawer__user">
                     <v-list-item>
-                        <nuxt-link to="/landlord"> Dashboard</nuxt-link>
+                        <nuxt-link to="/dashboard"> Dashboard</nuxt-link>
                     </v-list-item>
                     <v-list-item>
                         <a href="/change-password" @click.prevent="onChangePassword">
