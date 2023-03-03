@@ -209,9 +209,10 @@ export const actions = {
                     TenancyContractAgreementFID: rootState.tenancy.tenancyDetails.id,
                     FileTypeFID: payload.documentType.id
                 })
-                console.log({ documentQueries })
                 await dispatch("getTenancyDocuments", documentQueries)
-                dispatch("app/showSnackBar", "Create expense successful", { root: true })
+                dispatch("app/showSnackBar", "The document has been deleted successfully", {
+                    root: true
+                })
                 setTimeout(() => {
                     commit("setSnackbar", false)
                 }, 2000)
