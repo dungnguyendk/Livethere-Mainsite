@@ -47,7 +47,7 @@
                     <span>Floor Area (sqft):</span>
                     <strong>{{ inventoryDetails ? formatFloorArea + " sqft" : "n/a" }}</strong>
                 </p>
-                <p>
+                <p v-if="inventoryDetails.statusFID !== 3">
                     <span>Land Area (sqft):</span>
                     <strong>{{ inventoryDetails ? formatLandArea + " sqft" : "n/a" }}</strong>
                 </p>
@@ -202,8 +202,8 @@ export default {
             grid-template-columns: minmax(0, 1fr);
             grid-gap: 2.4rem;
             gap: 1.5rem;
-            }
-            .panel__column:nth-child(2) {
+        }
+        .panel__column:nth-child(2) {
             p {
                 span {
                     min-width: 13rem;
