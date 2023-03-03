@@ -30,9 +30,9 @@ export default {
     name: "HomeIntroSection",
     data() {
         return {
-            imgURLFirst: "/img/home-intro1.png",
-            imgURLSecond: "/img/home-intro2.png",
-            imgURLThird: "/img/home-text.png"
+            imgURLFirst: "/img/static/home-intro1.png",
+            imgURLSecond: "/img/static/home-intro2.png",
+            imgURLThird: "/img/static/home-text.png"
         }
     }
 }

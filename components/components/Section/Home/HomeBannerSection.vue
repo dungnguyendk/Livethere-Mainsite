@@ -37,20 +37,20 @@ export default {
         return {
             carouselBanner: 0,
             interval: 3000,
-            imgURLTextTop: "/img/home-text-top.png",
-            imgURLTextImage: "/img/home-text-bottom.png",
+            imgURLTextTop: "/img/static/home-text-top.png",
+            imgURLTextImage: "/img/static/home-text-bottom.png",
             listImageBanner: [
                 {
                     id: 1,
-                    imgURLBanner: require(`../../../../static/img/home-banner-01.png`)
+                    imgURLBanner: require(`../../../../static/img/static/home-banner-01.png`)
                 },
                 {
                     id: 2,
-                    imgURLBanner: require(`../../../../static/img/home-banner-02.png`)
+                    imgURLBanner: require(`../../../../static/img/static/home-banner-02.png`)
                 },
                 {
                     id: 3,
-                    imgURLBanner: require(`../../../../static/img/home-banner-03.png`)
+                    imgURLBanner: require(`../../../../static/img/static/home-banner-03.png`)
                 }
             ]
         }

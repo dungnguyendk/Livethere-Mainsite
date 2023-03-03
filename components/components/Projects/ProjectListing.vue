@@ -89,7 +89,7 @@ export default {
                 {
                     id: 1,
                     title: "Eden Residences Capitol",
-                    imgURL: require(`../../../static/img/project-01.png`),
+                    imgURL: require(`../../../static/img/static/project-01.png`),
                     location: "2 Sinaran Drive, Singapore 307467",
                     price: 30000,
                     totalBed: 3,
@@ -100,7 +100,7 @@ export default {
                 {
                     id: 2,
                     title: "Skypark @ Somerset",
-                    imgURL: require(`../../../static/img/project-02.png`),
+                    imgURL: require(`../../../static/img/static/project-02.png`),
                     location: "22 Saint Thomas Walk, Singapore 238107",
                     price: 18000,
                     totalBed: 4,
@@ -111,7 +111,7 @@ export default {
                 {
                     id: 3,
                     title: "Up @ Robertson Quay",
-                    imgURL: require(`../../../static/img/project-03.png`),
+                    imgURL: require(`../../../static/img/static/project-03.png`),
                     location: "92 Robertson Quay, Singapore 238260",
                     price: 56000,
                     totalBed: 8,
@@ -122,7 +122,7 @@ export default {
                 {
                     id: 4,
                     title: "The Sail @ Marina Bay",
-                    imgURL: require(`../../../static/img/project-01.png`),
+                    imgURL: require(`../../../static/img/static/project-01.png`),
                     location: "Marina Boulevard, Singapore 018987",
                     price: 15800,
                     totalBed: 5,

@@ -96,7 +96,7 @@ export default {
                 {
                     id: 1,
                     title: "Waterfront Bungalow at Ocean Drive",
-                    imgURL: require(`../../../../../static/img/listing1.png`),
+                    imgURL: require(`../../../../../static/img/static/listing1.png`),
                     imgURLIconFirst: require(`../../../../../static/img/home-icon1.png`),
                     imgURLIconSecond: require(`../../../../../static/img/home-icon2.png`),
                     imgURLIconThird: require(`../../../../../static/img/home-icon3.png`),
@@ -107,7 +107,7 @@ export default {
                 {
                     id: 2,
                     title: "Skypark @ Somerset",
-                    imgURL: require(`../../../../../static/img/listing2.png`),
+                    imgURL: require(`../../../../../static/img/static/listing2.png`),
                     imgURLIconFirst: require(`../../../../../static/img/home-icon1.png`),
                     imgURLIconSecond: require(`../../../../../static/img/home-icon2.png`),
                     imgURLIconThird: require(`../../../../../static/img/home-icon3.png`),
@@ -118,7 +118,7 @@ export default {
                 {
                     id: 3,
                     title: "Soleil @ Sinaran",
-                    imgURL: require(`../../../../../static/img/listing3.png`),
+                    imgURL: require(`../../../../../static/img/static/listing3.png`),
                     imgURLIconFirst: require(`../../../../../static/img/home-icon1.png`),
                     imgURLIconSecond: require(`../../../../../static/img/home-icon2.png`),
                     imgURLIconThird: require(`../../../../../static/img/home-icon3.png`),
@@ -129,7 +129,7 @@ export default {
                 {
                     id: 4,
                     title: "Skypark @ Somerset",
-                    imgURL: require(`../../../../../static/img/listing2.png`),
+                    imgURL: require(`../../../../../static/img/static/listing2.png`),
                     imgURLIconFirst: require(`../../../../../static/img/home-icon1.png`),
                     imgURLIconSecond: require(`../../../../../static/img/home-icon2.png`),
                     imgURLIconThird: require(`../../../../../static/img/home-icon3.png`),
@@ -140,7 +140,7 @@ export default {
                 {
                     id: 5,
                     title: "Soleil @ Sinaran",
-                    imgURL: require(`../../../../../static/img/listing3.png`),
+                    imgURL: require(`../../../../../static/img/static/listing3.png`),
                     imgURLIconFirst: require(`../../../../../static/img/home-icon1.png`),
                     imgURLIconSecond: require(`../../../../../static/img/home-icon2.png`),
                     imgURLIconThird: require(`../../../../../static/img/home-icon3.png`),
@@ -271,6 +271,7 @@ export default {
     }
 }
 .swiper-box {
+    cursor: pointer;
     .swiper-box__top {
         position: relative;
         padding: 0 1.2rem;
@@ -305,6 +306,9 @@ export default {
                 -webkit-box-orient: vertical;
                 overflow: hidden;
             }
+        }
+        &:hover{ 
+            background-color: blue;
         }
     }
     .swiper-box__content {
@@ -341,6 +345,7 @@ export default {
             }
         }
     }
+
 }
 .swiper-button-active {
     opacity: 1;

@@ -151,7 +151,7 @@ export default {
             targetLinkURL: {
                 id: 1,
                 title: "Eden Residences Capitol",
-                imgURL: require(`../../../static/img/project-01.png`),
+                imgURL: require(`../../../static/img/static/project-01.png`),
                 location: "2 Sinaran Drive, Singapore 307467",
                 price: 30000,
                 totalBed: 3,
