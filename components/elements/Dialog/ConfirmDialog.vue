@@ -1,12 +1,11 @@
 <template lang="html">
     <v-dialog v-model="openDialog" width="480" persistent>
         <DialogContentCard @close="onClose()">
-            <template slot="icon">
+            <!-- <template slot="icon">
                 <StatusIcon type="warning" />
-            </template>
+            </template> -->
             <template slot="content">
                 <p><strong>{{ content }}</strong></p>
-                <!-- <p><strong>Are you sure update this item ?</strong></p> -->
             </template>
             <template slot="actions">
                 <v-btn class="btn btn--ghost btn--gray" @click="onClose()"> Cancel</v-btn>

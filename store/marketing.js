@@ -30,9 +30,11 @@ export const actions = {
             const response = await this.$axios.$post(
                 `${httpEndpoint.marketing.postEntriesListWithUs}?inventoryID=${payload}`
             )
-            if (response) {
+            if (response.valid) {
                 commit("setStatusResponse", true)
-                dispatch("app/showSnackBar", "Create expense successful", { root: true })
+                dispatch("app/showSnackBar", response.message || "Create successful", {
+                    root: true
+                })
             } else {
                 commit("setStatusResponse", false)
             }

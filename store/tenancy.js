@@ -135,7 +135,7 @@ export const actions = {
                 dispatch("getExpenses", {
                     id: parseInt(rootState.tenancy.tenancyDetails.id)
                 })
-                dispatch("app/showSnackBar", "Create expense successful", { root: true })
+                dispatch("app/showSnackBar", "Create successful", { root: true })
             } else {
                 console.log("Error!")
             }
