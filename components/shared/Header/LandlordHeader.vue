@@ -13,13 +13,13 @@
                             </a>
                         </ul>
                         <ul class="menu--top">
-                            <a class="" @click="openContactUsDialog = true">
+                            <a :class="openContactUsDialog ? 'active' : ''" @click="openContactUsDialog = true">
                                 Contact us
                             </a>
                             <Dialog :open="openContactUsDialog" @close="closeDialog" :actions="false" :size="sizeDialog"
                                 :title="''">
                                 <ContactUsForm @close="openContactUsDialog = false" :isContactUs="true"
-                                    v-if="openContactUsDialog" />
+                                    titleContact="Contact Us" v-if="openContactUsDialog" />
                             </Dialog>
                         </ul>
                     </div>
@@ -91,9 +91,6 @@ export default {
         name() {
             return this.data
         },
-        path() {
-            return this.$router.currentRoute.path
-        },
         loggedIn() {
             return this.$auth.loggedIn
         }
@@ -101,6 +98,7 @@ export default {
 
     data() {
         return {
+            path: this.$router.currentRoute.path,
             menus: defaultMenu,
             menuID: 0,
             sizeDialog: "medium",
@@ -137,6 +135,11 @@ export default {
         },
         closeDialog() {
             this.openContactUsDialog = false
+        }
+    },
+    watch: {
+        '$route'(to, from) {
+            this.path = to.path;
         }
     }
 }

@@ -19,7 +19,7 @@
                         <Dialog :open="openContactUsDialog" @close="closeDialog" :actions="false" :size="sizeDialog"
                             :title="''">
                             <ContactUsForm @close="openContactUsDialog = false" :isContactUs="false"
-                                v-if="openContactUsDialog" />
+                                v-if="openContactUsDialog" titleContact="List with Livethere today"/>
                         </Dialog>
                     </div>
                 </div>
