@@ -15,11 +15,11 @@
                     {{ item.defaultName }}
                 </a>
             </template>
-            <a class="" @click="openContactUsDialog = true" target="_blank">
+            <a class="" @click="openContactUsDialog = true" target="_blank" @click.prevent="handleCloseDrawer()">
                 Contact us
             </a>
             <Dialog :open="openContactUsDialog" @close="closeDialog" :actions="false" :size="sizeDialog" :title="''">
-                <ContactUsForm @close="openContactUsDialog = false" :isContactUs="true" v-if="openContactUsDialog" />
+                <ContactUsForm @close="openContactUsDialog = false" :isContactUs="true" v-if="openContactUsDialog" titleContact="Contact Us" />
             </Dialog>
         </div>
     </v-navigation-drawer>
