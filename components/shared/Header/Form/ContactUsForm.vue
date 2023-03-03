@@ -226,6 +226,17 @@ h4 {
 }
 
 .form__field {
+    margin-bottom: -1.2rem;
+
+    &::v-deep(.v-text-field__details) {
+        padding-left: 0;
+
+        .v-messages__message {
+            font-size: 1.3rem;
+            line-height: 1.2em;
+        }
+    }
+
     &::v-deep(.vue-tel-input-vuetify) {
         display: flex;
         grid-gap: 0.4rem;
