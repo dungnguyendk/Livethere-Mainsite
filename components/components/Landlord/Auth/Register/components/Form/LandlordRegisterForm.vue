@@ -78,9 +78,9 @@
                     Submit
                 </v-btn>
             </div>
-            <v-btn v-if="onDevelopment" class="btn btn--outline btn--blue" @click="autoFillForm">
-                Auto fill (Development only)
-            </v-btn>
+            <!--            <v-btn v-if="onDevelopment" class="btn btn&#45;&#45;outline btn&#45;&#45;blue" @click="autoFillForm">
+                            Auto fill (Development only)
+                        </v-btn>-->
         </div>
 
         <SuccessSnackBar :open="snackBarMessage !== ''" :message="snackBarMessage" />
@@ -373,7 +373,7 @@ export default {
 
     .btn-group {
         width: 17.5rem;
-        margin: 3.2rem 0;
+        margin: 3.2rem auto;
     }
 }
 </style>
