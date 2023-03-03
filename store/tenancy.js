@@ -117,7 +117,7 @@ export const actions = {
                 payload
             )
             if (response && response !== 0) {
-                dispatch("app/showSnackBar", "Create expense successful", { root: true })
+                dispatch("app/showSnackBar", "Create tenancy info successful", { root: true })
             } else {
                 console.log("Error!")
             }
