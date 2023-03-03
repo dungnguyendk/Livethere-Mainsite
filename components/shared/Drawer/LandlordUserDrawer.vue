@@ -1,5 +1,5 @@
 <template lang="html">
-    <v-navigation-drawer class="drawer ps-drawer" v-model="open" absolute temporary>
+    <v-navigation-drawer class="drawer ps-drawer" v-model="drawer" absolute temporary>
         <div>
             <v-btn class="ps-drawer__close" @click.stop="onClose">
                 <i class="icon-svg svg-close" />
@@ -42,7 +42,7 @@ export default {
     name: "LandlordUserDrawer",
     computed: {
         ...mapState({
-            appDrawer: (state) => state.app.appDrawer,
+            userDrawer: (state) => state.app.userDrawer,
             userInfo: (state) => state.app.userInfo
         }),
         loggedIn() {
@@ -55,17 +55,34 @@ export default {
             default: false
         }
     },
+    data() {
+        return {
+            drawer: false,
+        }
+    },
     methods: {
         onClose() {
-            this.$emit("close")
+            this.$store.commit("app/setUserDrawer", !this.userDrawer)
         },
         onChangePassword() {
             this.$router.push("/change-password")
+            this.$store.commit("app/setUserDrawer", false)
         },
         async onLogout() {
             await this.$auth.logout().then(() => {
                 window.location.href = "/signin"
             })
+        }
+    },
+    created() {
+        this.drawer = this.userDrawer
+    },
+    watch: {
+        userDrawer() {
+            this.drawer = this.userDrawer
+        },
+        '$route' (to, from){
+            this.$store.commit("app/setUserDrawer", false)
         }
     }
 }

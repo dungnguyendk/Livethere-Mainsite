@@ -62,7 +62,7 @@ export default {
 
     methods: {
         onChangePassword() {
-            this.$store.commit("app/setAppDrawer", false)
+            // this.$store.commit("app/setAppDrawer", false)
             this.$router.push("/change-password")
         },
         handleCloseDrawer() {
@@ -83,6 +83,9 @@ export default {
     watch: {
         appDrawer() {
             this.drawer = this.appDrawer
+        },
+        '$route' (to, from){
+            this.$store.commit("app/setAppDrawer", false)
         }
     }
 }
