@@ -148,6 +148,9 @@ export default {
                       (i) => i.value.id === this.unitInventoryDetail.conditionTypeFID
                   ).value
                 : ""
+            this.assestInventoryFID = this.unitInventoryDetail.assestInventoryFID
+                ? this.unitInventoryDetail.assestInventoryFID
+                : 0
         }
     },
     data() {
@@ -195,7 +198,6 @@ export default {
                         itemValue: this.value ? convertCommasToNumber(this.value) : 0,
                         remark: this.remark
                     }
-                    console.log("param created: ", params);
                     this.$store
                         .dispatch("inventory/createUnitInventory", params)
                         .then((response) => {
@@ -233,7 +235,7 @@ export default {
                 try {
                     const params = {
                         id: this.sourceDetail,
-                        assestInventoryFID: this.unitInventoryDetail.assestInventoryFID,
+                        assestInventoryFID: this.assestInventoryFID,
                         conditionTypeFID: this.condition.id,
                         cultureCode: "en-SG",
                         currencyType: this.currencyType,
@@ -244,7 +246,6 @@ export default {
                         itemValue: this.value ? convertCommasToNumber(this.value) : 0,
                         remark: this.remark
                     }
-                    console.log("params Update", params);
                     this.onClose()
                     this.$store
                         .dispatch("inventory/updateUnitInventory", params)
