@@ -4,9 +4,9 @@
         <p v-if="address && address !== ''"> {{ address }}</p>
         <template v-else>
             <p>
-                Savills Singapore Agency No.: L3009688B 30 Cecil Street, #20-03 Prudential Tower,
-                Singapore 049712
+                Savills Singapore Agency No.: L3009688B 
             </p>
+            <p>30 Cecil Street, #20-03 Prudential Tower, Singapore 049712</p>
         </template>
     </div>
 </template>
@@ -25,3 +25,19 @@ export default {
     }
 }
 </script>
+<style lang="scss" scoped>
+.widget--footer {
+    display: block;
+    :deep(img) {
+        width: 20rem;
+        margin-bottom: 3rem;
+    }
+    p {
+        font-size: 1.4rem;
+        margin-bottom: 1.6rem;
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+}
+</style>
