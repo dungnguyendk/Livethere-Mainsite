@@ -6,55 +6,34 @@
             </h3>
         </div>
         <div class="swiper__content">
-            <swiper class="swiper swiper-item" :options="swiperOption">
+            <swiper class="swiper swiper-container" :options="swiperOption">
                 <swiper-slide
-                    class="swiper-box"
-                    v-for="element in popularListing"
-                    :key="element.id"
+                 v-for="(element, index) in popularListing"
+                 :key="index"
                 >
-                    <div class="swiper-box__top">
-                        <div class="swiper-box__image">
-                            <img :src="element.imgURL" alt="" />
-                        </div>
-                        <div class="swiper-box__title">
-                            <nuxt-link to="/" class="swiper-box__title-link">
-                                {{ element.title }}
-                            </nuxt-link>
-                        </div>
-                    </div>
-                    <div class="swiper-box__content">
-                        <div class="swiper-box__content-first">
-                            <img :src="element.imgURLIconFirst" alt="" />
-                            <p>{{ element.address }}</p>
-                        </div>
-                        <div class="swiper-box__content-second">
-                            <div>
-                                <img :src="element.imgURLIconSecond" alt="" />
-                                <p>{{ element.totalBed }}</p>
-                            </div>
-                            <div>
-                                <img :src="element.imgURLIconThird" alt="" />
-                                <p>{{ element.totalBath }}</p>
-                            </div>
-                        </div>
-                    </div>
+                    <SwiperCard :item="element"/>
                 </swiper-slide>
                 <div class="swiper-button-prev" slot="button-prev"></div>
                 <div class="swiper-pagination" slot="pagination"></div>
-                <!-- <div class="swiper-button-next" slot="button-next" :class="{'swiper-button-active' : activeColorArrow}"></div> -->
+                <div class="swiper-button-next" slot="button-next" :class="{'swiper-button-active' : activeColorArrow}"></div>
                 <div class="swiper-button-next" slot="button-next"></div>
             </swiper>
             <div class="swiper-fraction">
                 <span class="fraction-to">{{ this.fractionTo }}</span>
                 <span class="fraction-form">{{ this.fractionForm }}</span>
             </div>
+      
         </div>
     </div>
 </template>
 
 <script>
+import SwiperCard from '../Card/SwiperCard.vue'
 export default {
     name: "ProjectSwiper",
+    components: {
+        SwiperCard
+    },
     data() {
         const self = this
         return {
@@ -97,9 +76,6 @@ export default {
                     id: 1,
                     title: "Waterfront Bungalow at Ocean Drive",
                     imgURL: require(`../../../../../static/img/static/listing1.png`),
-                    imgURLIconFirst: require(`../../../../../static/img/home-icon1.png`),
-                    imgURLIconSecond: require(`../../../../../static/img/home-icon2.png`),
-                    imgURLIconThird: require(`../../../../../static/img/home-icon3.png`),
                     address: "Ocean Drive, Singapore 098314",
                     totalBed: 4,
                     totalBath: 4
@@ -108,9 +84,6 @@ export default {
                     id: 2,
                     title: "Skypark @ Somerset",
                     imgURL: require(`../../../../../static/img/static/listing2.png`),
-                    imgURLIconFirst: require(`../../../../../static/img/home-icon1.png`),
-                    imgURLIconSecond: require(`../../../../../static/img/home-icon2.png`),
-                    imgURLIconThird: require(`../../../../../static/img/home-icon3.png`),
                     address: "Ocean Drive, Singapore 098314",
                     totalBed: 4,
                     totalBath: 4
@@ -130,9 +103,6 @@ export default {
                     id: 4,
                     title: "Skypark @ Somerset",
                     imgURL: require(`../../../../../static/img/static/listing2.png`),
-                    imgURLIconFirst: require(`../../../../../static/img/home-icon1.png`),
-                    imgURLIconSecond: require(`../../../../../static/img/home-icon2.png`),
-                    imgURLIconThird: require(`../../../../../static/img/home-icon3.png`),
                     address: "Ocean Drive, Singapore 098314",
                     totalBed: 4,
                     totalBath: 4
@@ -141,9 +111,6 @@ export default {
                     id: 5,
                     title: "Soleil @ Sinaran",
                     imgURL: require(`../../../../../static/img/static/listing3.png`),
-                    imgURLIconFirst: require(`../../../../../static/img/home-icon1.png`),
-                    imgURLIconSecond: require(`../../../../../static/img/home-icon2.png`),
-                    imgURLIconThird: require(`../../../../../static/img/home-icon3.png`),
                     address: "Ocean Drive, Singapore 098314",
                     totalBed: 4,
                     totalBath: 4
@@ -189,7 +156,7 @@ export default {
         position: relative;
     }
     @media only screen and (max-width: 767px) {
-        .swiper-item {
+        .swiper-container {
             padding-top: 10rem;
         }
         .swiper-pagination-progressbar {
@@ -201,14 +168,6 @@ export default {
         }
         .swiper-fraction {
             top: 5.5rem;
-        }
-        .swiper-box__content-second {
-            p {
-                font-weight: 500;
-                font-size: 1.6rem;
-                line-height: 2.4rem;
-                color: var(--color-title-black);
-            }
         }
         .swiper__content {
             max-width: 42rem;
@@ -270,118 +229,11 @@ export default {
         right: 12.6rem;
     }
 }
-.swiper-box {
-    cursor: pointer;
-    .swiper-box__top {
-        position: relative;
-        padding: 0 1.2rem;
-    
-        .swiper-box__image {
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            img {
-                width: 100%;
-                object-fit: cover;
-                border-radius: 2rem;
-            }
-            &::after {
-                content: "";
-                display: block;
-                width: 100%;
-                height: 100%;
-                background-color: rgba(0, 0, 0, 0.7);
-                position: absolute;
-                top: 0;
-                left: 0;
-                border-radius: 2rem;
-                visibility: hidden;
-                opacity: 0;
-                transition: all 0.4s ease;
-            }
-        }
-        .swiper-box__title {
-            position: absolute;
-            background-color: #edb842;
-            padding: 2.2rem 1.6rem 2.5rem;
-            bottom: 2.3rem;
-            margin-bottom: 0;
-            display: flex;
-            align-items: center;
-            left: -1.2rem;
-            width: 85.9%;
-            max-height: 7.5rem;
-            box-sizing: border-box;
-            transition: all 0.05s ease;
-            .swiper-box__title-link {
-                color: var(--color-white);
-                font-size: 2rem;
-                line-height: 2.8rem;
-                text-align: left;
-                text-overflow: ellipsis;
-                display: -webkit-box;
-                -webkit-line-clamp: 2;
-                line-clamp: 2;
-                -webkit-box-orient: vertical;
-                overflow: hidden;
-            }
-        }
 
-        &:hover {
-            .swiper-box__title {
-                visibility: hidden;
-                opacity: 0;
-
-            }
-            .swiper-box__image {
-                &::after{
-                    visibility: visible;
-                    opacity: 1;
-                    //transition-delay: 0.2s;
-                }
-            }
-        }
-    }
-    .swiper-box__content {
-        padding-top: 0.9rem;
-        .swiper-box__content-first {
-            display: flex;
-            align-items: center;
-            margin-bottom: 1rem;
-            p {
-                margin-bottom: 0;
-                font-weight: 500;
-                font-size: 1.6rem;
-                line-height: 2.4rem;
-                color: var(--color-title-black);
-                padding-left: 1rem;
-            }
-        }
-        .swiper-box__content-second {
-            display: flex;
-            align-items: center;
-            div {
-                display: flex;
-                align-items: center;
-                p {
-                    margin-bottom: 0;
-                    margin-left: 0.8rem;
-                    color: var(--color-title-black);
-                }
-                img {
-                }
-                &:first-child {
-                    margin-right: 4.6rem;
-                }
-            }
-        }
-    }
-}
 .swiper-button-active {
     opacity: 1;
 }
-.swiper-item {
+.swiper-container {
     display: flex;
     justify-content: space-between;
     align-items: center;
