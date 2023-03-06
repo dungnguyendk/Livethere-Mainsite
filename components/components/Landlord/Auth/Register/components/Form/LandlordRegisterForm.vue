@@ -109,6 +109,7 @@ const complexity = helpers.regex(
     "complexity",
     /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/
 )
+const userNameRule = helpers.regex("userNameRule", /^[a-zA-Z0-9]+$/)
 
 const singaporePhoneNumber = helpers.regex("singaporePhoneNumber", /^\+65 \d{4}( ?\d{4})$/)
 
@@ -117,7 +118,7 @@ export default {
     components: { SuccessSnackBar },
     mixins: [validationMixin],
     validations: {
-        username: { required, minLength: minLength(6) },
+        username: { required, minLength: minLength(6), userNameRule },
         password: { required, complexity },
         verifiedPassword: {
             required,
@@ -133,6 +134,8 @@ export default {
             if (!this.$v.username.$dirty) return errors
             !this.$v.username.required && errors.push("Preferred Username is required")
             !this.$v.username.minLength && errors.push("Preferred Username at least 6 characters")
+            !this.$v.username.userNameRule &&
+                errors.push("Invalid Username: contains special character(s)")
             return errors
         },
         passwordErrors() {
