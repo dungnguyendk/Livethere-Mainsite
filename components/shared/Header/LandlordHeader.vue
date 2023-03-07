@@ -40,8 +40,8 @@
                         </ul>
                     </div>
                     <div class="header__right">
-                        <template v-if="loggedIn && userInfo">
-                            <v-menu offset-y>
+                        <template v-if="loggedIn">
+                            <v-menu v-if="userInfo" offset-y>
                                 <template v-slot:activator="{ on, attrs }">
                                     <v-btn
                                         class="btn--account"
@@ -73,12 +73,12 @@
                                 </v-list>
                             </v-menu>
                         </template>
-                        <template>
+                        <template v-else>
                             <div class="header__actions">
-                                <nuxt-link to="/signin" class="header__link"> Login </nuxt-link>
+                                <nuxt-link to="/signin" class="header__link"> Login</nuxt-link>
                                 <nuxt-link to="/register/start" class="header__link">
-                                    Register</nuxt-link
-                                >
+                                    Register
+                                </nuxt-link>
                             </div>
                         </template>
                     </div>
