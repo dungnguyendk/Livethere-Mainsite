@@ -11,7 +11,9 @@
                 </div>
             </div>
             <div class="card__header-title">
-                <nuxt-link to="/projects/details" class="card__header-link">{{ item.title }}</nuxt-link>
+                <nuxt-link to="/projects/details" class="card__header-link">{{
+                    item.title
+                }}</nuxt-link>
             </div>
         </div>
         <div class="card__content">
@@ -30,7 +32,6 @@
                 </div>
             </div>
         </div>
-        
     </div>
 </template>
 
@@ -50,7 +51,7 @@ export default {
     mounted() {},
 
     methods: {
-        onRouteToDetails(){
+        onRouteToDetails() {
             this.$router.push("/projects/details")
         }
     }
@@ -73,6 +74,7 @@ export default {
                 object-fit: cover;
                 border-radius: 2rem;
             }
+
         }
         .card__header-title {
             position: absolute;
@@ -86,7 +88,6 @@ export default {
             width: 85.9%;
             max-height: 7.5rem;
             box-sizing: border-box;
-            transition: all 0.4s ease-in-out;
             .card__header-link {
                 color: var(--color-white);
                 font-size: 2rem;
@@ -98,9 +99,37 @@ export default {
                 line-clamp: 2;
                 -webkit-box-orient: vertical;
                 overflow: hidden;
-                transition: all 0.1s ease-in;
             }
         }
+        &:hover,
+            &:active {
+                .card__header-image-hover {
+                    visibility: visible;
+                    opacity: 1;
+                }
+                .card__header-title {
+                    display: flex;
+                    justify-content: center;
+                    visibility: visible;
+                    opacity: 1;
+                    background: transparent;
+                    position: absolute;
+                    left: 0;
+                    right: 0;
+                    width: 100%;
+                    bottom: auto;
+                    top: 9rem;
+                    padding: 0 4.2rem;
+
+                    .card__header-link {
+                        text-align: center;
+                        margin-bottom: 5rem;
+                        font-weight: 800;
+                        font-size: 2.4rem;
+                        line-height: 3rem;
+                    }
+                }
+            }
     }
     .card__content {
         padding-top: 0.9rem;
@@ -136,37 +165,7 @@ export default {
             }
         }
     }
-    &:hover,
-    &:active {
-        .card__header-image-hover {
-            visibility: visible;
-            opacity: 1;
-        
-        }
-        .card__header-title {
-            display: flex;
-            justify-content: center;
-            visibility: visible;
-            opacity: 1;
-            background: transparent;
-            position: absolute;
-            left: 0;
-            right: 0;
-            width: 100%;
-            bottom: auto;
-            top: 9rem;
-            padding: 0 4.2rem;
-            font-weight: 800;
-            font-size: 2.4rem;
-            line-height: 3rem;
-            .card__header-link{
-            text-align: center;
-            margin-bottom: 5rem;
-        }
-        
-        }
- 
-    }
+
     @media only screen and (max-width: 767px) {
         .card__content-second {
             p {
@@ -216,7 +215,7 @@ export default {
         position: relative;
         top: 5rem;
         z-index: 8;
-    
+
         i {
             color: var(--color-white);
             font-size: 2.4rem;
