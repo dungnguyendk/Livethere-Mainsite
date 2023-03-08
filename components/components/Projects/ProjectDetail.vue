@@ -100,6 +100,7 @@
         <div class="page--project-detail-second">
             <div class="container">
                 <ProjectSwiper>{{ titleSwiper }}</ProjectSwiper>
+
             </div>
             <ShareSocialDialog
              :open="isOpenShareSocialDialog"
@@ -176,7 +177,8 @@ export default {
         },
         closeContactDetailDialog() {
             this.isOpenContactDetailDialog = false
-        }
+        }, 
+
     }
 }
 </script>
