@@ -5,12 +5,12 @@
         </div>
         <div class="form__fields">
             <v-row>
-                <v-col cols="6" cols-sm="12" >
+                <v-col cols="12" md="6"  sm="6" xs="12" >
                     <label>Full Name</label>
                     <v-text-field v-model="name" outlined dense :error-messages="nameErrors">
                     </v-text-field>
                 </v-col>
-                <v-col cols="6" cols-sm="12">
+                <v-col cols="12" md="6" sm="6" xs="12" >
                     <label>Country</label>
                     <v-select
                         v-model="countryy"
@@ -22,7 +22,7 @@
                         dense
                     />
                 </v-col>
-                <v-col cols="6" cols-sm="12">
+                <v-col cols="12" md="6" sm="6" xs="12" >
                     <label>Phone Number</label>
                     <vue-tel-input-vuetify
                         v-model.trim="phone"
@@ -40,12 +40,12 @@
                         class="form__field-tel-input-custom"
                     />
                 </v-col>
-                <v-col cols="6" cols-sm="12">
+                <v-col cols="12" md="6" sm="6" xs="12" >
                     <label>Email</label>
                     <v-text-field outlined dense v-model="email" :error-messages="emailErrors">
                     </v-text-field>
                 </v-col>
-                <v-col cols="6" cols-sm="12">
+                <v-col cols="12" md="6" sm="6" xs="12" >
                     <label>Enquiry Type</label>
                     <v-select
                         v-model="enquiryType"
@@ -58,7 +58,7 @@
                     />
                 </v-col>
 
-                <v-col cols="6" cols-sm="12">
+                <v-col cols="12" md="6" sm="6" xs="12" >
                     <label>Your Message</label>
                     <v-textarea
                         v-model="message"
