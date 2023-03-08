@@ -7,14 +7,14 @@
                     <img src="/img/Rectangle 1122.png" alt="" />
                 </div>
                 <div class="section__right">
-                    <v-expansion-panels v-model="panel">
+                    <v-expansion-panels>
                         <v-expansion-panel>
                             <v-expansion-panel-header expand-icon="ri-add-line">
                                 <!-- <template v-slot:actions>
                                     <v-icon color="primary">$expand</v-icon>
                                 </template> -->
                                 <div class="expansion">
-                                    <i class="icon-svg sgv-purpose"></i>
+                                    <img src="/img/purpose.png" alt="" />
                                     <p>Purpose</p>
                                 </div></v-expansion-panel-header
                             >
@@ -32,7 +32,7 @@
                                     <v-icon color="primary">$expand</v-icon>
                                 </template> -->
                                 <div class="expansion">
-                                    <i class="icon-svg sgv-vision"></i>
+                                    <img src="/img/vision.png" alt="" />
                                     <p>Vision</p>
                                 </div></v-expansion-panel-header
                             >
@@ -47,7 +47,7 @@
                         <v-expansion-panel>
                             <v-expansion-panel-header expand-icon="ri-add-line">
                                 <div class="expansion">
-                                    <i class="icon-svg sgv-mission"></i>
+                                    <img src="/img/mission 1.png" alt="" />
                                     <p>Mission</p>
                                 </div></v-expansion-panel-header
                             >
@@ -69,8 +69,14 @@
                 </div>
             </div>
         </div>
-        <Dialog title="" :open="connectFormDialog" :actions="false">
-            <ConnectFormServicesVue />
+        <Dialog
+            title=""
+            :open="connectFormDialog"
+            :size="sizeDialog"
+            :actions="false"
+            @close="onCloseDialog"
+        >
+            <ConnectFormServicesVue v-if="connectFormDialog" @close="connectFormDialog = false" />
         </Dialog>
         <!-- <ConnectFormServicesVue /> -->
     </div>
@@ -87,14 +93,15 @@ export default {
     },
     data() {
         return {
-            connectFormDialog: false
+            connectFormDialog: false,
+            sizeDialog: "large"
+        }
+    },
+    methods: {
+        onCloseDialog() {
+            this.connectFormDialog = false
         }
     }
-    // methods:{
-    //     onCloseDialog() {
-    //         this.connectFormDialog = false
-    //     }
-    // }
 }
 </script>
 
@@ -107,6 +114,7 @@ export default {
     padding-top: 5.4rem;
 
     h3 {
+        margin-bottom: 0;
         display: flex;
         justify-content: center;
         font-family: var(--font-primary);
@@ -117,6 +125,7 @@ export default {
     }
     .section__content {
         padding-top: 3.2rem;
+        padding-bottom: 5.4rem;
         display: grid;
         grid-template-columns: repeat(2, minmax(0, 1fr));
         grid-gap: 6.8rem;
@@ -159,13 +168,16 @@ export default {
                     .v-expansion-panel-header__icon:not(.v-expansion-panel-header__icon--disable-rotate)
                     .v-icon::before {
                     content: "\F1AF";
-                    color: var(--color-menu);
+                    color: var(--color-primary);
                 }
                 .v-icon {
                     transform: none;
                 }
                 .v-icon::before {
-                    color: var(--color-menu);
+                    color: var(--color-primary);
+                }
+                .v-expansion-panel-header {
+                    padding-left: 0 !important;
                 }
             }
         }

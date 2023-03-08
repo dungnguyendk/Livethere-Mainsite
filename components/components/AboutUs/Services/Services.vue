@@ -80,7 +80,7 @@ export default {
 
 <style lang="scss" scoped>
 .section--landing-service {
-    padding: 4.2rem 0 5.8rem;
+    padding: 4.2rem 0 3rem;
     background-color: var(--bg-color-white);
     .section__container {
         h3 {
@@ -103,23 +103,24 @@ export default {
                 padding: 2.4rem;
                 background-color: white;
                 grid-column-end: span 3;
-                .section__box-icon {
-                    margin-bottom: 1.2rem;
-                    img {
-                        width: 6rem;
-                        height: 6rem;
-                        display: block;
-                        margin: 0 auto;
-                    }
+            }
+            .section__box-icon {
+                margin-bottom: 1.2rem;
+                img {
+                    width: 6rem;
+                    height: 6rem;
+                    display: block;
+                    margin: 0 auto;
                 }
-                .section__box-text {
-                    font-weight: 500;
-                    font-size: 1.6rem;
-                    line-height: 2.4rem;
-                    color: #000000;
-                    text-align: center;
-                    margin-bottom: 0;
-                }
+            }
+            .section__box-text {
+                font-weight: 500;
+                font-size: 1.6rem;
+                line-height: 2.4rem;
+                color: #000000;
+                text-align: center;
+                margin-bottom: 0;
+                padding: 0 1.8rem;
             }
         }
         .section__box:nth-child(n + 5) {

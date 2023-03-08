@@ -1,35 +1,29 @@
 <template>
-    <form class="form--contact--services " @submit.prevent="onFormSubmit">
+    <form class="form--contact--services" @submit.prevent="onFormSubmit">
         <div class="form__top">
             <h3>Connect With Us</h3>
         </div>
         <div class="form__fields">
             <v-row>
-                <v-col cols="6" sm="12" md="6">
-                    <label>Full name</label>
-                    <v-text-field
-                        v-model="name"
-                        outlined
-                        dense
-                        hide-details
-                        :error-messages="nameErrors"
-                    />
+                <v-col cols="6" cols-sm="12" >
+                    <label>Full Name</label>
+                    <v-text-field v-model="name" outlined dense :error-messages="nameErrors">
+                    </v-text-field>
                 </v-col>
-                <v-col cols="6" sm="12" md="6">
-                    <label>country</label>
+                <v-col cols="6" cols-sm="12">
+                    <label>Country</label>
                     <v-select
-                        v-model="country"
+                        v-model="countryy"
                         :items="countries"
                         item-text="countryName"
-                        item-value="countryName"
+                        item-value="countries"
                         outlined
                         required
-                        hide-details
                         dense
                     />
                 </v-col>
-                <v-col cols="6" sm="12" md="6">
-                    <label>phone number</label>
+                <v-col cols="6" cols-sm="12">
+                    <label>Phone Number</label>
                     <vue-tel-input-vuetify
                         v-model.trim="phone"
                         :error-messages="phoneErrors"
@@ -46,12 +40,12 @@
                         class="form__field-tel-input-custom"
                     />
                 </v-col>
-                <v-col cols="6" sm="12" md="6">
-                    <label>email</label>
+                <v-col cols="6" cols-sm="12">
+                    <label>Email</label>
                     <v-text-field outlined dense v-model="email" :error-messages="emailErrors">
                     </v-text-field>
                 </v-col>
-                <v-col cols="6" sm="12" md="6">
+                <v-col cols="6" cols-sm="12">
                     <label>Enquiry Type</label>
                     <v-select
                         v-model="enquiryType"
@@ -59,25 +53,26 @@
                         placeholder="Please select"
                         outlined
                         required
-                        hide-details
                         dense
+                        :error-messages="enquiryTypeErrors"
                     />
                 </v-col>
 
-                <v-col cols="6" sm="12" md="6">
+                <v-col cols="6" cols-sm="12">
                     <label>Your Message</label>
-                    <v-text-field
+                    <v-textarea
                         v-model="message"
                         outlined
                         dense
                         hide-details
-                        :error-messages="nameErrors"
                     />
                 </v-col>
             </v-row>
 
             <div class="form__actions">
-                <v-btn class="btn btn--primary btn--green btn--sm"> Submit </v-btn>
+                <v-btn class="btn btn--primary btn--green btn--sm" @click="onSubmit()">
+                    Submit
+                </v-btn>
                 <v-btn class="btn btn--ghost btn--green btn--sm" @click="onClose()"> Cancel</v-btn>
             </div>
             <div class="form__footer">
@@ -118,15 +113,25 @@ export default {
             required,
             email
         },
-        message: {
+        enquiryType: {
+            required
+        },
+        countryy: {
             required
         }
+        // message: {
+        //     required
+        // }
     },
     data() {
         return {
             name: "",
             phone: null,
-            country: "SINGAPORE",
+            countryy: {
+                ccode: "SGP",
+                countryName: "SINGAPORE",
+                nationaly: "SINGAPOREAN"
+            },
             countries: countries,
             errorMessages: [],
             loading: false,
@@ -168,7 +173,11 @@ export default {
 
     computed: {
         nameErrors() {
-            return setFormControlErrors(this.$v.name, "Name Required")
+            const errors = []
+            if (!this.$v.name.$dirty) return errors
+            !this.$v.name.required && errors.push("Full name is required")
+            // !this.$v.name.email && errors.push(MESSAGE_INVALID_EMAIL)
+            return errors
         },
         emailErrors() {
             const errors = []
@@ -185,8 +194,19 @@ export default {
                 errors.push(MESSAGE_INVALID_SINGAPORE_PHONE_NUMBER)
             return errors
         },
-        messageErrors() {
-            return setFormControlErrors(this.$v.message, "Message Required")
+        enquiryTypeErrors() {
+            const errors = []
+            if (!this.$v.enquiryType.$dirty) return errors
+            !this.$v.enquiryType.required && errors.push("Enquiry type is required")
+            // !this.$v.name.email && errors.push(MESSAGE_INVALID_EMAIL)
+            return errors
+        },
+        countryyErrors() {
+            const errors = []
+            if (!this.$v.countryy.$dirty) return errors
+            !this.$v.countryy.required && errors.push("Country is required")
+            // !this.$v.name.email && errors.push(MESSAGE_INVALID_EMAIL)
+            return errors
         }
     },
 
@@ -194,18 +214,11 @@ export default {
         countryChanged(country) {
             this.country = "+" + country.dialCode
         },
-        onFormSubmit() {
+        onSubmit() {
             this.$v.$touch()
             if (!this.$v.$invalid) {
-                const params = {
-                    name: this.name,
-                    phone: this.phone,
-                    email: this.email,
-                    message: this.message
-                }
-                this.snackbar = true
-            } else {
-                console.log("fail !")
+                
+                console.log("hehe")
             }
         },
         onResetForm() {
@@ -213,6 +226,7 @@ export default {
             ;(this.name = ""), (this.phone = ""), (this.email = ""), (this.message = "")
         },
         onClose() {
+            //this.onResetForm()
             this.$emit("close")
         }
     }
@@ -220,7 +234,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.form--contact--services  {
+.form--contact--services {
     background-color: var(--color-white);
 
     margin-bottom: 2.4rem;
@@ -237,12 +251,18 @@ export default {
         }
     }
     .form__fields {
-        padding: 0 2.4rem 2rem;
+        // padding: 0 2.4rem 2rem;
         .btn-custom {
             margin: 0 auto;
             display: block;
             ::v-deep(.v-btn__content) {
                 font-size: 1.6rem !important;
+            }
+        }
+        &::v-deep(.v-text-field__slot) {
+            textarea {
+                // padding-right: 12px;
+                height: 20px;
             }
         }
     }
