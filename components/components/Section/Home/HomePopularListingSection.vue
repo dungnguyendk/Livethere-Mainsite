@@ -15,11 +15,16 @@ import ProjectSwiper from '../../Projects/components/Slider/ProjectSwiper.vue';
 export default {
     name: "HomePopularListingSection",
     components: {ProjectSwiper},
+
     data() {
         return {
-            titleSwiper: "popular listings"
+            titleSwiper: "popular listings", 
+        
         }
     },
+    methods: {
+
+    }
 }
 </script>
 <style lang="scss" scoped>

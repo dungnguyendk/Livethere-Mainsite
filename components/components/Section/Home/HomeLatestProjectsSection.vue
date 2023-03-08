@@ -9,7 +9,7 @@
                     <swiper class="swiper swiper-item" :options="swiperOption">
                         <swiper-slide class="swiper-box" v-for="article in articles" :key="article.id">
                             <div class="article-wrapper">
-                                <ArticleGrid :article="article"/>
+                                <ArticleGrid :article="article" class="swiper-lazy"/>
                             </div>
                         </swiper-slide>
                         <div class="swiper-button-prev" slot="button-prev"></div>
@@ -105,6 +105,8 @@ export default {
                 autoplay: false,
                 slidesPerView: 1,
                 spaceBetween: 10,
+                preloadImages: false, 
+                lazy: true, 
                 pagination: {
                     el: ".swiper-pagination",
                     type: "progressbar"
@@ -314,68 +316,6 @@ export default {
     opacity: 1;
 }
 
-// .swiper-box {
-//     width: 30.77%;2
-//     .swiper-box__top {
-//         position: relative;
-
-//         .swiper-box__image {
-//             img {
-//                 width: 100%;
-//                 object-fit: cover;
-//                 border-radius: 2rem;
-//             }
-//         }
-//         .swiper-box__title {
-//             position: absolute;
-//             background-color: #edb842;
-//             color: var(--color-white);
-//             font-size: 2rem;
-//             line-height: 2.8rem;
-//             padding: 2.2rem 1.6rem 2.5rem;
-//             bottom: 2.3rem;
-//             margin-bottom: 0;
-//             left: -1.2rem;
-//             width: 85.9%;
-//         }
-//     }
-//     .swiper-box__content {
-//         margin-top: 0.95rem;
-//         .swiper-box__content-first {
-//             display: flex;
-//             align-items: center;
-//             margin-bottom: 2.134rem;
-//             p {
-//                 margin-bottom: 0;
-//                 font-weight: 500;
-//                 font-size: 1.6rem;
-//                 line-height: 2.4rem;
-//                 color: var(--color-title-black);
-//                 margin-left: 1.25rem;
-//             }
-//         }
-//         .swiper-box__content-second {
-//             display: flex;
-//             align-items: center;
-//             div {
-//                 display: flex;
-//                 align-items: center;
-//                 p {
-//                     margin-bottom: 0;
-//                     margin-left: 1.25rem;
-//                 }
-//                 img {
-//                 }
-//                 &:first-child {
-//                     margin-right: 5.279rem;
-//                 }
-//             }
-//         }
-//     }
-//     &:nth-child(2) {
-//         margin: 0 3.8rem;
-//     }
-// }
 </style>
 
 

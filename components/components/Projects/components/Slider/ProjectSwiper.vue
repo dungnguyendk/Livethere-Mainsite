@@ -7,28 +7,29 @@
         </div>
         <div class="swiper__content">
             <swiper class="swiper swiper-container" :options="swiperOption">
-                <swiper-slide
-                 v-for="(element, index) in popularListing"
-                 :key="index"
-                >
-                    <SwiperCard :item="element"/>
+                <swiper-slide v-for="(element, index) in popularListing" :key="index">
+                    <SwiperCard :item="element" />
                 </swiper-slide>
                 <div class="swiper-button-prev" slot="button-prev"></div>
                 <div class="swiper-pagination" slot="pagination"></div>
-                <div class="swiper-button-next" slot="button-next" :class="{'swiper-button-active' : activeColorArrow}"></div>
+                <div
+                    class="swiper-button-next"
+                    slot="button-next"
+                    :class="{ 'swiper-button-active': activeColorArrow }"
+                ></div>
                 <div class="swiper-button-next" slot="button-next"></div>
             </swiper>
             <div class="swiper-fraction">
                 <span class="fraction-to">{{ this.fractionTo }}</span>
                 <span class="fraction-form">{{ this.fractionForm }}</span>
             </div>
-      
         </div>
     </div>
 </template>
 
 <script>
-import SwiperCard from '../Card/SwiperCard.vue'
+import SwiperCard from "../Card/SwiperCard.vue"
+
 export default {
     name: "ProjectSwiper",
     components: {
@@ -60,6 +61,7 @@ export default {
                         spaceBetween: 26
                     }
                 },
+
                 on: {
                     slideChange: function () {
                         let lastVisibleItem = this.realIndex + this.params.slidesPerView

@@ -1,19 +1,19 @@
 <template>
     <div class="card--swiper">
-        <div class="card__header">
+        <div class="card__header" @click="onRouteToDetails()">
             <div class="card__header-image">
                 <img :src="item.imgURL" alt="" />
                 <div class="card__header-image-hover">
-                    <h3>{{ item.title }}</h3>
                     <div class="card__header-image-circle">
                         <p>View</p>
                         <i class="ri-arrow-right-line"></i>
-                        <div class="card__header-image-line"></div>
                     </div>
                 </div>
             </div>
             <div class="card__header-title">
-                <nuxt-link to="/" class="card__header-link">{{ item.title }}</nuxt-link>
+                <nuxt-link to="/projects/details" class="card__header-link">{{
+                    item.title
+                }}</nuxt-link>
             </div>
         </div>
         <div class="card__content">
@@ -50,7 +50,11 @@ export default {
 
     mounted() {},
 
-    methods: {}
+    methods: {
+        onRouteToDetails() {
+            this.$router.push("/projects/details")
+        }
+    }
 }
 </script>
 
@@ -70,6 +74,7 @@ export default {
                 object-fit: cover;
                 border-radius: 2rem;
             }
+
         }
         .card__header-title {
             position: absolute;
@@ -83,7 +88,6 @@ export default {
             width: 85.9%;
             max-height: 7.5rem;
             box-sizing: border-box;
-            transition: all 0.01s ease-in-out;
             .card__header-link {
                 color: var(--color-white);
                 font-size: 2rem;
@@ -97,6 +101,35 @@ export default {
                 overflow: hidden;
             }
         }
+        &:hover,
+            &:active {
+                .card__header-image-hover {
+                    visibility: visible;
+                    opacity: 1;
+                }
+                .card__header-title {
+                    display: flex;
+                    justify-content: center;
+                    visibility: visible;
+                    opacity: 1;
+                    background: transparent;
+                    position: absolute;
+                    left: 0;
+                    right: 0;
+                    width: 100%;
+                    bottom: auto;
+                    top: 9rem;
+                    padding: 0 4.2rem;
+
+                    .card__header-link {
+                        text-align: center;
+                        margin-bottom: 5rem;
+                        font-weight: 800;
+                        font-size: 2.4rem;
+                        line-height: 3rem;
+                    }
+                }
+            }
     }
     .card__content {
         padding-top: 0.9rem;
@@ -132,16 +165,7 @@ export default {
             }
         }
     }
-    &:hover {
-        .card__header-image-hover {
-            visibility: visible;
-            opacity: 1;
-        }
-        .card__header-title {
-            visibility: hidden;
-            opacity: 0;
-        }
-    }
+
     @media only screen and (max-width: 767px) {
         .card__content-second {
             p {
@@ -180,14 +204,18 @@ export default {
         width: 11rem;
         height: 11rem;
         border-radius: 50%;
-        border: 0.15rem solid var(--color-white);
+        border-width: 0.01rem;
+        border-style: solid;
+        border-color: rgba(255, 255, 255, 0.6);
         display: flex;
         align-items: center;
         justify-content: center;
         flex-direction: column;
         margin: 0 auto;
         position: relative;
+        top: 5rem;
         z-index: 8;
+
         i {
             color: var(--color-white);
             font-size: 2.4rem;
@@ -199,26 +227,24 @@ export default {
             color: var(--color-white);
             margin-bottom: 0;
         }
-        &::after{
+        &::after {
             content: "";
             width: 11rem;
             height: 11rem;
-            display: inline-block;
             border-radius: 50%;
             position: absolute;
-            border-width: 0.25rem;
+            border-width: 0.1rem;
             border-style: solid;
             border-color: var(--color-white) transparent transparent;
             position: absolute;
             z-index: 10;
             animation: spin 8s linear infinite;
-          
         }
     }
 }
-@keyframes spin{
-    100%{
-        transform: rotate(360deg);
+@keyframes spin {
+    100% {
+        transform: rotate(-360deg);
     }
 }
 </style>

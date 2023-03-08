@@ -1,23 +1,15 @@
 <template>
-    <v-app>
-        <v-main class="page--projects">
-            <LandlordHeader />
-            <div class="pageWrapper">
-                <HomeSearch />
-                <ProjectListing />
-            </div>
-            <LandingFooter />
-        </v-main>
-    </v-app>
+    <main class="page--projects">
+        <HomeSearch />
+        <ProjectListing />
+    </main>
 </template>
 
 <script>
-import LandlordHeader from "~/components/shared/Header/LandlordHeader.vue"
-import LandingFooter from "~/components/shared/Footer/LandingFooter.vue"
 import ProjectListing from "~/components/components/Projects/ProjectListing.vue"
 import HomeSearch from "~/components/components/Section/Home/HomeSearch.vue"
 export default {
-    components: { LandlordHeader, LandingFooter, ProjectListing, HomeSearch },
+    components: {ProjectListing, HomeSearch },
     head: {
         title: "Livethere"
     }
@@ -25,13 +17,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.pageWrapper {
-    margin-top: 8rem;
-    min-height: calc(100vh - 20rem);
-    @media screen and(max-width: 1280px) {
-        margin-top: 6.4rem;
-    }
-}
 
 .page--projects{
     background-color: #fafafa;
