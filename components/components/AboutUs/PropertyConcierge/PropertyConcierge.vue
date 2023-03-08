@@ -161,6 +161,7 @@ export default {
             }
             .v-expansion-panel::before {
                 box-shadow: none !important;
+                // border-top:  0.8px solid #00634f;
             }
             :deep(.v-expansion-panels) {
                 .v-expansion-panel--active
@@ -169,6 +170,7 @@ export default {
                     .v-icon::before {
                     content: "\F1AF";
                     color: var(--color-primary);
+                    // border-bottom: none !important;
                 }
                 .v-icon {
                     transform: none;
@@ -178,6 +180,22 @@ export default {
                 }
                 .v-expansion-panel-header {
                     padding-left: 0 !important;
+                    
+                }
+                .v-expansion-panel--active {
+                    //border-bottom: 0 !important;
+                    border-top: 0.8px solid var(--border-color) !important;
+                    border-bottom: 0.8px solid var(--border-color) !important;
+                    border-radius: 0;                   
+                }
+                .v-expansion-panel--active:nth-child(1) {
+                    //border-bottom: 0 !important;
+                    border-top: none !important;
+                    border-bottom: 0.8px solid var(--border-color) !important;
+                    border-radius: 0;                   
+                }
+                .v-expansion-panel-content__wrap {
+                    padding: 0 2.4rem 1.6rem 0rem !important;
                 }
             }
         }
