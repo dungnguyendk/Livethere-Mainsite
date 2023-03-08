@@ -5,7 +5,7 @@
             <div class="register-benefits">
                 <div class="box--register" v-for="item in items" :key="item.id">
                     <div class="box__top">
-                        <img :src="(`~/static/img/${item.icon}.svg`)" alt="" />
+                        <img :src="`/img/${item.icon}.svg`" alt="" />
                         <span>{{ item.title }}</span>
                     </div>
                     <div class="box__content">
