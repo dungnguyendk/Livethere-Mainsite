@@ -1,5 +1,5 @@
 <template>
-    <form class="form-enquiry" @submit.prevent="onFormSubmit">
+    <form class="form--contact--services " @submit.prevent="onFormSubmit">
         <div class="form__top">
             <h3>Connect With Us</h3>
         </div>
@@ -220,7 +220,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.form-enquiry {
+.form--contact--services  {
     background-color: var(--color-white);
 
     margin-bottom: 2.4rem;

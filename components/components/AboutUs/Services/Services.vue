@@ -82,7 +82,6 @@ export default {
 .section--landing-service {
     padding: 4.2rem 0 5.8rem;
     background-color: var(--bg-color-white);
-
     .section__container {
         h3 {
             font-weight: 800;
