@@ -12,11 +12,6 @@
                 </swiper-slide>
                 <div class="swiper-button-prev" slot="button-prev"></div>
                 <div class="swiper-pagination" slot="pagination"></div>
-                <div
-                    class="swiper-button-next"
-                    slot="button-next"
-                    :class="{ 'swiper-button-active': activeColorArrow }"
-                ></div>
                 <div class="swiper-button-next" slot="button-next"></div>
             </swiper>
             <div class="swiper-fraction">
@@ -140,6 +135,7 @@ export default {
 
 <style lang="scss" scoped>
 .swiper--project {
+    padding: 0 1.2rem;
     .swiper__top {
         position: relative;
         bottom: -2.75rem;

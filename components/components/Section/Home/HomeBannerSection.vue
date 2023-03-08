@@ -120,7 +120,7 @@ export default {
 }
 .section__text-bottom {
     position: absolute;
-    bottom: 6.3rem;
+    bottom: 4rem;
     z-index: 6;
 }
 // .fade-transition {

@@ -14,7 +14,6 @@
                         </swiper-slide>
                         <div class="swiper-button-prev" slot="button-prev"></div>
                         <div class="swiper-pagination" slot="pagination"></div>
-                        <!-- <div class="swiper-button-next" slot="button-next" :class="{'swiper-button-active' : activeColorArrow}"></div> -->
                         <div class="swiper-button-next" slot="button-next"></div>
                     </swiper>
                     <div class="swiper-fraction">
@@ -137,11 +136,6 @@ export default {
             fractionTo: 1,
             fractionForm: 3,
             activeColorArrow: false
-        }
-    },
-    computed: {
-        swiper() {
-            return this.$refs.mySwiper.swiper
         }
     },
     mounted() {
