@@ -1,19 +1,25 @@
 <template>
     <v-app>
         <v-main>
-            <nuxt />
+            <LandlordHeader />
+            <div class="pageWrapper">
+                <nuxt />
+            </div>
+            <LandingFooter />
             <SuccessSnackBar :open="snackBar.show" :message="snackBar.message" />
         </v-main>
     </v-app>
 </template>
 
 <script>
+import LandlordHeader from "~/components/shared/Header/LandlordHeader.vue"
+import LandingFooter from "~/components/shared/Footer/LandingFooter.vue"
 import SuccessSnackBar from "~/components/shared/Snackbar/SuccessSnackBar.vue"
 import { mapState } from "vuex"
 import { APP_NAME, LANDLORDS_SEO_URL } from "~/ultilities/seo-configs"
 
 export default {
-    components: { SuccessSnackBar },
+    components: { SuccessSnackBar,LandlordHeader ,LandingFooter},
     layout: "default",
     computed: {
         ...mapState({
@@ -32,3 +38,12 @@ export default {
     }
 }
 </script>
+<style lang="scss" scoped>
+.pageWrapper {
+    margin-top: 8rem;
+    min-height: calc(100vh - 20rem);
+    @media screen and(max-width: 1280px) {
+        margin-top: 6.4rem;
+    }
+}
+</style>
