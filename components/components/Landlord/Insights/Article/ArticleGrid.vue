@@ -6,7 +6,8 @@
         <div class="card__body">
             <nuxt-link to="/" target="_blank">
                 <div class="card__image">
-                    <img :src="article.urlImage" alt="" />
+                    <img :src="article.urlImage" alt=""/>
+             
                 </div>
             </nuxt-link>
             <div class="card__content">

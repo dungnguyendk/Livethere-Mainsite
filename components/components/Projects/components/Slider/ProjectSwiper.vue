@@ -8,7 +8,8 @@
         <div class="swiper__content">
             <swiper class="swiper swiper-container" :options="swiperOption">
                 <swiper-slide v-for="(element, index) in popularListing" :key="index">
-                    <SwiperCard :item="element" />
+                    <SwiperCard :item="element"/>
+                    
                 </swiper-slide>
                 <div class="swiper-button-prev" slot="button-prev"></div>
                 <div class="swiper-pagination" slot="pagination"></div>
