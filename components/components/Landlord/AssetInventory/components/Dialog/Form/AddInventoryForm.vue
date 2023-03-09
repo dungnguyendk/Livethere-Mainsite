@@ -4,6 +4,7 @@
             <h3>{{ inventoryDetail?.id ? "EDIT INVENTORY" : "ADD NEW INVENTORY" }}</h3>
         </div>
         <p class="alert alert--red" v-if="!statusResponse">Something went wrong</p>
+        <p class="alert alert--note">Please provide the Postal Code first, system will auto populate your address.</p>
         <div class="form__fields">
             <div class="form__field">
                 <label>Property Type</label>
@@ -14,7 +15,8 @@
             <div class="form__field2">
                 <div class="form__field">
                     <label>Postal Code</label>
-                    <v-text-field v-model="postalCode" hide-spin-buttons outlined dense :error-messages="postalCodeErrors">
+                    <v-text-field v-model="postalCode" hide-spin-buttons outlined dense :error-messages="postalCodeErrors"
+                        @change="searchPostalCode">
                         <template v-slot:prepend-inner>
                             <v-icon @click="searchPostalCode">mdi-magnify</v-icon>
                         </template>
@@ -33,7 +35,7 @@
                 <div class="form__field" v-if="!hideLanded">
                     <label>Unit No.</label>
                     <v-text-field v-model.trim="unitNo" outlined dense :error-messages="unitNoErrors"
-                        @change="searchPostalCode" />
+                        @change="searchPostalCode" placeholder="xx-xx" />
                 </div>
                 <div class="form__field">
                     <label>No of Bedroom(s)</label>
@@ -461,7 +463,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .form__fields {
-    padding: 3.2rem 2rem 1rem 2rem;
+    padding: 2rem 2rem 1rem 2rem;
     display: grid;
     column-gap: 2.4rem;
     grid-template-columns: repeat(2, 1fr);
@@ -493,9 +495,18 @@ export default {
     }
 }
 
+.alert--note {
+    margin-bottom: 0 !important;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-title-black);
+    font-weight: 700;
+    font-size: 1.6rem;
+}
+
 @media only screen and (max-width: 768px) {
     .form__fields {
-        padding: 3.2rem 2rem 1rem 2rem;
+        padding: 2rem 2rem 1rem 2rem;
         display: grid;
         column-gap: 2.4rem;
         grid-template-columns: repeat(1, 1fr);
