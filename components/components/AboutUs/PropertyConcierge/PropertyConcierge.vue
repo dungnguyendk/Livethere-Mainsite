@@ -110,7 +110,7 @@ export default {
 //     background-color: ;
 // }
 .section--property-concierge {
-    background-color: #ffff;
+    background-color: var(--color-white);
     padding-top: 5.4rem;
 
     h3 {
@@ -159,10 +159,7 @@ export default {
                 color: var(--color-title-black);
                 margin-bottom: 0;
             }
-            .v-expansion-panel::before {
-                box-shadow: none !important;
-                // border-top:  0.8px solid #00634f;
-            }
+
             :deep(.v-expansion-panels) {
                 .v-expansion-panel--active
                     > .v-expansion-panel-header--active
@@ -178,21 +175,26 @@ export default {
                 .v-icon::before {
                     color: var(--color-primary);
                 }
+                .v-expansion-panel::before {
+                    box-shadow: none !important;
+                }
+                .v-expansion-panel:nth-child(3) {
+                    border-bottom: 0.8px solid var(--border-color) !important;
+                }
                 .v-expansion-panel-header {
                     padding-left: 0 !important;
-                    
                 }
                 .v-expansion-panel--active {
                     //border-bottom: 0 !important;
                     border-top: 0.8px solid var(--border-color) !important;
                     border-bottom: 0.8px solid var(--border-color) !important;
-                    border-radius: 0;                   
+                    border-radius: 0;
                 }
                 .v-expansion-panel--active:nth-child(1) {
                     //border-bottom: 0 !important;
                     border-top: none !important;
                     border-bottom: 0.8px solid var(--border-color) !important;
-                    border-radius: 0;                   
+                    border-radius: 0;
                 }
                 .v-expansion-panel-content__wrap {
                     padding: 0 2.4rem 1.6rem 0rem !important;
@@ -212,7 +214,7 @@ export default {
 
                 i {
                     color: var(--color-menu);
-                    border: 0.8px solid #00634f;
+                    border: 0.8px solid var(--color-primary);
                 }
                 p {
                     align-items: center;
@@ -261,7 +263,7 @@ export default {
 
                 i {
                     color: var(--color-menu);
-                    border: 0.8px solid #00634f;
+                    border: 0.8px solid var(--color-primary);
                 }
                 p {
                     align-items: center;
