@@ -499,6 +499,9 @@ export default {
     margin-bottom: 0 !important;
     align-items: center;
     justify-content: center;
+    color: var(--color-title-black);
+    font-weight: 700;
+    font-size: 1.6rem;
 }
 
 @media only screen and (max-width: 768px) {
