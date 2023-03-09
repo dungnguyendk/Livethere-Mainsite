@@ -39,7 +39,7 @@ export default {
                 {
                     id: 2,
                     imgURL: "/img/icon-2.png",
-                    text: "Assistant via Digital Platform"
+                    text: "Assistance via Digital Platform"
                 },
                 {
                     id: 3,

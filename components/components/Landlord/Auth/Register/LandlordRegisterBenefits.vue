@@ -25,7 +25,7 @@
                             <i class="ri-arrow-right-line"></i>
                         </nuxt-link>
                         <v-btn v-else class="btn btn--ghost btn--green" disabled>
-                            Comming soon
+                            Coming soon
                         </v-btn>
                     </div>
                 </div>
