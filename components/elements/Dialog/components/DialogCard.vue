@@ -138,7 +138,8 @@ export default {
     box-shadow: none;
     width: 3.2rem;
     height: 3.2rem;
-    border-radius: 50%;
+    border-radius: 50% ;
+    border: 1.5px solid var(--color-label);
     transition: all 0.4s ease;
     position: relative;
     left: 1.74rem;

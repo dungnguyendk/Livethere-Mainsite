@@ -114,13 +114,15 @@ export default {
                 }
             }
             .section__box-text {
+                min-height: 4.8rem;
+                padding: 0 !important;
                 font-weight: 500;
                 font-size: 1.6rem;
                 line-height: 2.4rem;
                 color: #000000;
                 text-align: center;
                 margin-bottom: 0;
-                padding: 0 1.8rem;
+                // padding: 0 1.8rem;
             }
         }
         .section__box:nth-child(n + 5) {

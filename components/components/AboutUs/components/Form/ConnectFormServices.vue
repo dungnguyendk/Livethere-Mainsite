@@ -1,7 +1,10 @@
 <template>
     <form class="form--contact--services" @submit.prevent="onFormSubmit">
         <div class="form__top">
-            <h3>Connect With Us</h3>
+            <button class="btn--close" @click="onClose()"><i class="ri-close-fill"></i></button>
+        </div>
+        <div class="form__title">
+            <h3>CONNECT WITH US</h3>
         </div>
         <div class="form__fields">
             <v-row>
@@ -64,15 +67,15 @@
                 </v-col>
             </v-row>
 
-            <div class="form__actions">
-                <v-btn class="btn btn--primary btn--green btn--sm" @click="onSubmit()">
-                    Submit
-                </v-btn>
-                <v-btn class="btn btn--ghost btn--green btn--sm" @click="onClose()"> Cancel</v-btn>
+            <div class="btn-group">
+                <v-btn class="btn btn--primary btn--green btn__add-file" @click="onSubmit()">
+                    Submit</v-btn
+                >
+                <span class="cancel-form" @click="onClose()"> Cancel </span>
             </div>
-            <div class="form__footer">
-                <p> Privacy Guarantee </p>
-            </div>
+        </div>
+        <div class="form__footer">
+            <p> Privacy Guarantee </p>
         </div>
     </form>
 </template>
@@ -230,12 +233,45 @@ export default {
 <style lang="scss" scoped>
 .form--contact--services {
     background-color: var(--color-white);
-
-    margin-bottom: 2.4rem;
+    // margin-bottom: 2.4rem;
     .form__top {
         text-align: center;
-        padding-bottom: 2.4rem;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        padding: 1.1rem 2.4rem 0 2.4rem;
+        .btn--close {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: none;
+            width: 3.2rem;
+            height: 3.2rem;
+            border-radius: 50%;
+            border: 1.5px solid var(--color-label);
+            position: relative;
+            left: 1.74rem;
 
+            &:hover,
+            &:focus {
+                background-color: alpha(var(--color-red), var(--level-1));
+
+                i {
+                    color: var(--color-red);
+                }
+            }
+
+            i {
+                font-size: 2rem;
+            }
+        }
+    }
+
+    .form__title {
+        display: flex;
+        padding-top: 0.12rem;
+        align-items: center;
+        justify-content: center;
         h3 {
             margin-bottom: 0;
             font-weight: 700;
@@ -244,8 +280,10 @@ export default {
             color: var(--color-title-black);
         }
     }
+
     .form__fields {
         // padding: 0 2.4rem 2rem;
+        padding: 3.5rem 4.7rem 0 4.8rem;
         .btn-custom {
             margin: 0 auto;
             display: block;
@@ -260,38 +298,54 @@ export default {
             }
         }
     }
+    .btn-group {
+        padding-top: 1.2rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        grid-gap: 2.2rem;
+
+        .btn {
+            width: 175px !important;
+            border-radius: 0.8rem !important;
+        }
+        .cancel-form {
+            color: var(--color-menu);
+            text-decoration-line: underline;
+            font-weight: 700;
+            font-size: 1.6rem;
+            line-height: 2rem;
+            cursor: pointer;
+        }
+
+        .btn--green {
+            &.v-btn--has-bg.v-btn--disabled {
+                cursor: not-allowed;
+            }
+        }
+    }
+    @media screen and (max-width: 767px) {
+        margin-bottom: 2.7rem;
+    }
     .form__footer {
-        padding-top: 5.6rem;
+        padding-top: 4rem;
         p {
             width: 100%;
+            margin-bottom: 0;
             background-color: var(--bg-color-white);
             display: flex;
             justify-content: center;
-            padding-top: 1.6rem;
+            padding: 1.6rem 0;
             font-weight: 400;
             font-size: 16px;
             line-height: 24px;
             color: var(--color-title-black);
         }
     }
-    @media screen and (max-width: 767px) {
-        margin-bottom: 2.7rem;
-    }
 }
 .form__field-tel-input-custom {
     ::v-deep(.v-input__control) {
         margin-right: 0.4rem;
-    }
-}
-.alert-custom {
-    height: auto;
-    margin-top: 1.2rem;
-}
-.snackbar-custom {
-    ::v-deep(.v-snack__content) {
-        font-weight: 500;
-        font-size: 1.4rem;
-        line-height: 2.4rem;
     }
 }
 .form__field {
@@ -317,19 +371,6 @@ export default {
     .v-input__slot {
         margin-bottom: 0.4rem;
         border: none;
-    }
-}
-.form__actions {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    grid-gap: 1.2rem;
-    gap: 1.2rem;
-    padding-top: 2.4rem;
-    padding-bottom: 1.2rem;
-
-    .btn {
-        min-width: 12rem;
     }
 }
 </style>

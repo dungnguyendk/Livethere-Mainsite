@@ -61,7 +61,7 @@
                     </v-expansion-panels>
                     <div class="btn__connect-with-us">
                         <v-btn
-                            class="btn btn--primary btn--green btn--md"
+                            class="btn btn-custom btn--primary btn--green btn--md"
                             @click="connectFormDialog = true"
                             >Connect with us</v-btn
                         >
@@ -69,15 +69,9 @@
                 </div>
             </div>
         </div>
-        <Dialog
-            title=""
-            :open="connectFormDialog"
-            :size="sizeDialog"
-            :actions="false"
-            @close="onCloseDialog"
-        >
+        <v-dialog v-model="connectFormDialog" max-width="867" persistent>
             <ConnectFormServicesVue v-if="connectFormDialog" @close="connectFormDialog = false" />
-        </Dialog>
+        </v-dialog>
         <!-- <ConnectFormServicesVue /> -->
     </div>
 </template>
@@ -129,22 +123,21 @@ export default {
         display: grid;
         grid-template-columns: repeat(2, minmax(0, 1fr));
         grid-gap: 6.8rem;
-        align-items: center;
-
+        // align-items: center;
         .section__left {
+            display: flex;
+            align-items: center;
             img {
                 border-radius: 2rem;
+                max-width: 57.4rem;
             }
         }
         .section__right {
+            padding-top: 2.4rem;
+            padding-left: 2.4rem;
             .expansion {
                 display: flex;
-                align-items: center;
-
-                i {
-                    color: var(--color-menu);
-                    border: 0.8px solid #00634f;
-                }
+                // align-items: center;
                 p {
                     align-items: center;
                     padding-left: 1.867rem;
@@ -158,6 +151,9 @@ export default {
             p {
                 color: var(--color-title-black);
                 margin-bottom: 0;
+                font-weight: 500;
+                font-size: 1.6rem;
+                line-height: 2.4rem;
             }
 
             :deep(.v-expansion-panels) {
@@ -182,27 +178,39 @@ export default {
                     border-bottom: 0.8px solid var(--border-color) !important;
                 }
                 .v-expansion-panel-header {
-                    padding-left: 0 !important;
+                    padding: 3rem 0 2.6rem !important;
+                    border-top: 0.8px solid var(--border-color) !important;
+                    // padding: 0 !important;
                 }
                 .v-expansion-panel--active {
                     //border-bottom: 0 !important;
                     border-top: 0.8px solid var(--border-color) !important;
-                    border-bottom: 0.8px solid var(--border-color) !important;
+                    // border-bottom: 0.8px solid var(--border-color) !important;
                     border-radius: 0;
                 }
                 .v-expansion-panel--active:nth-child(1) {
                     //border-bottom: 0 !important;
                     border-top: none !important;
-                    border-bottom: 0.8px solid var(--border-color) !important;
+                    // border-bottom: 0.8px solid var(--border-color) !important;
                     border-radius: 0;
                 }
+                .expansion {
+                }
                 .v-expansion-panel-content__wrap {
-                    padding: 0 2.4rem 1.6rem 0rem !important;
+                    padding: 1rem 2.4rem 0.5rem 0rem !important;
                 }
             }
         }
         .btn__connect-with-us {
             padding-top: 4rem;
+        }
+        .btn-custom {
+            display: inline-block;
+            ::v-deep(.v-btn__content) {
+                font-size: 1.6rem !important;
+                font-weight: 700 !important;
+                line-height: 20px !important;
+            }
         }
     }
     @media screen and (max-width: 768px) {
