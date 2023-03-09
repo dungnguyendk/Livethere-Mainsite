@@ -60,7 +60,7 @@ export default {
             display: flex;
             justify-content: center;
             img {
-                width: 75%;
+                width: 37.4rem;
             }
         }
     }
@@ -78,13 +78,14 @@ export default {
             }
             p {
                 font-weight: 500;
-                font-size: 1.4rem;
+                font-size: 1.6rem;
                 line-height: 1.2rem;
             }
         }
         .section__right {
             display: flex;
             justify-content: center;
+            
             
         }
     }

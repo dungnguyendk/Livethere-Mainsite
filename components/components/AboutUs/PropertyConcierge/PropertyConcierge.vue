@@ -194,8 +194,7 @@ export default {
                     // border-bottom: 0.8px solid var(--border-color) !important;
                     border-radius: 0;
                 }
-                .expansion {
-                }
+
                 .v-expansion-panel-content__wrap {
                     padding: 1rem 2.4rem 0.5rem 0rem !important;
                 }
@@ -216,6 +215,12 @@ export default {
     @media screen and (max-width: 768px) {
         .section__content {
             grid-gap: 4rem;
+
+            .section__left {
+                img {
+                    max-width: 37.4rem;
+                }
+            }
             .expansion {
                 display: flex;
                 align-items: center;
@@ -261,9 +266,13 @@ export default {
         .section__content {
             grid-gap: 4rem;
             grid-template-columns: repeat(1, minmax(0, 1fr));
+            padding-bottom: 2.4rem;
             .section__left {
                 display: flex;
                 justify-content: center;
+            }
+            .section__right {
+               padding: 0;
             }
             .expansion {
                 display: flex;

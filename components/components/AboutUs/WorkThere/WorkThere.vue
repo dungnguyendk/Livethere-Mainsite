@@ -42,7 +42,7 @@ export default {
         display: grid;
         grid-template-columns: repeat(2, minmax(0, 1fr));
         grid-gap: 6.8rem;
-        // align-items: center;
+        align-items: center;
 
         .section__left {
             img {
@@ -79,6 +79,15 @@ export default {
     .section--work-there {
         .section__content {
             grid-gap: 4rem;
+            .section__left {
+                img {
+                    max-width: 37.4rem;
+                }
+            }
+        }
+        .btn__work-there {
+            display: flex;
+            justify-content: center;
         }
     }
 }
@@ -87,6 +96,10 @@ export default {
         .section__content {
             grid-gap: 2rem;
             grid-template-columns: repeat(1, minmax(0, 1fr));
+        }
+        .btn__work-there {
+            display: flex;
+            justify-content: center;
         }
     }
 }
