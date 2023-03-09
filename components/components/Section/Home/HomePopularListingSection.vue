@@ -29,7 +29,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .section--home-popular-listing {
-    padding: 3.2rem 0;
+    padding:4.3rem 0;
     background-color: var(--bg-color-white);
 
     @media screen and (max-width: 767px) {

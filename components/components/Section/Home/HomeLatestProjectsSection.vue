@@ -153,7 +153,7 @@ export default {
 
 <style lang="scss" scoped>
 .section--home-latest-projects {
-    padding: 8rem 0;
+    padding: 6rem 0 8rem;
     @media screen and (max-width: 960px) {
         padding: 5rem 0;
     }
