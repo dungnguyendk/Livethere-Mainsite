@@ -179,19 +179,16 @@ export default {
                 }
                 .v-expansion-panel-header {
                     padding: 3rem 0 2.6rem !important;
-                    border-top: 0.8px solid var(--border-color) !important;
+                    border-top: none !important;
                     // padding: 0 !important;
                 }
                 .v-expansion-panel--active {
-                    //border-bottom: 0 !important;
                     border-top: 0.8px solid var(--border-color) !important;
-                    // border-bottom: 0.8px solid var(--border-color) !important;
+                    border-bottom: 0.8px solid var(--border-color) !important;
                     border-radius: 0;
                 }
                 .v-expansion-panel--active:nth-child(1) {
-                    //border-bottom: 0 !important;
                     border-top: none !important;
-                    // border-bottom: 0.8px solid var(--border-color) !important;
                     border-radius: 0;
                 }
 
@@ -272,7 +269,7 @@ export default {
                 justify-content: center;
             }
             .section__right {
-               padding: 0;
+                padding: 0;
             }
             .expansion {
                 display: flex;

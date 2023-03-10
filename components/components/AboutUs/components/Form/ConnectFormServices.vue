@@ -245,8 +245,8 @@ export default {
             justify-content: center;
             align-items: center;
             box-shadow: none;
-            width: 3.2rem;
-            height: 3.2rem;
+            width: 2.667rem;
+            height: 2.667rem;
             border-radius: 50%;
             border: 1.5px solid var(--color-label);
             position: relative;
