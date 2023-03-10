@@ -1,27 +1,45 @@
 <template lang="html">
     <div class="form--enquiry">
-        <h4 class="form__title">Drop us a note. We’ll be in touch with you</h4>
+        <h4 class="form__title">Drop us a note. We’ll be in touch with you!</h4>
         <form class="form__fields" @submit.prevent="onSubmit">
             <v-row>
                 <v-col cols="6" cols-sm="12">
                     <div class="form__field">
                         <label>Full name</label>
-                        <v-text-field v-model.trim="name" outlined dense :error-messages="nameErrors" />
+                        <v-text-field
+                            v-model.trim="name"
+                            outlined
+                            dense
+                            :error-messages="nameErrors"
+                        />
                     </div>
                 </v-col>
                 <v-col cols="6" cols-sm="12">
                     <div class="form__field">
                         <label>Email</label>
-                        <v-text-field v-model.trim="email" outlined dense :error-messages="emailErrors" />
+                        <v-text-field
+                            v-model.trim="email"
+                            outlined
+                            dense
+                            :error-messages="emailErrors"
+                        />
                     </div>
                 </v-col>
                 <v-col cols="6" cols-sm="12">
                     <div class="form__field">
                         <label>Phone Number</label>
-                        <vue-tel-input-vuetify outlined dense v-bind="bindProps" v-model.trim="phoneNumber" label=""
-                            defaultCountry="SG" autocomplete="off" :disabledFetchingCountry="true"
+                        <vue-tel-input-vuetify
+                            outlined
+                            dense
+                            v-bind="bindProps"
+                            v-model.trim="phoneNumber"
+                            label=""
+                            defaultCountry="SG"
+                            autocomplete="off"
+                            :disabledFetchingCountry="true"
                             :error-messages="phoneNumberErrors"
-                            v-on:input="(number, data) => onInputPhoneNumber(number, data)" />
+                            v-on:input="(number, data) => onInputPhoneNumber(number, data)"
+                        />
                     </div>
                 </v-col>
                 <v-col cols="6" cols-sm="12">
@@ -33,8 +51,15 @@
                 <v-col cols="12" cols-sm="12">
                     <div class="form__field">
                         <label>Enquiry Type </label>
-                        <v-select v-model="enquiryType" outlined dense placeholder="Please select" :items="enquiryListing"
-                            item-text="text" :error-messages="enquiryTypeErrors" />
+                        <v-select
+                            v-model="enquiryType"
+                            outlined
+                            dense
+                            placeholder="Please select"
+                            :items="enquiryListing"
+                            item-text="text"
+                            :error-messages="enquiryTypeErrors"
+                        />
                     </div>
                 </v-col>
                 <v-col v-if="showOtherMessage" cols="12" cols-sm="12">

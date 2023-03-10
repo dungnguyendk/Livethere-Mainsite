@@ -8,18 +8,34 @@
                     </div>
                     <div class="header__center">
                         <ul class="menu--top" v-for="(item, index) in menus">
-                            <a :href="item.linkURL" :class="item.linkURL === path ? 'active' : ''" :key="index">
+                            <a
+                                :href="item.linkURL"
+                                :class="item.linkURL === path ? 'active' : ''"
+                                :key="index"
+                            >
                                 {{ item.defaultName }}
                             </a>
                         </ul>
                         <ul class="menu--top">
-                            <a :class="openContactUsDialog ? 'active' : ''" @click="openContactUsDialog = true">
+                            <a
+                                :class="openContactUsDialog ? 'active' : ''"
+                                @click="openContactUsDialog = true"
+                            >
                                 Contact us
                             </a>
-                            <Dialog :open="openContactUsDialog" @close="closeDialog" :actions="false" :size="sizeDialog"
-                                :title="''">
-                                <ContactUsForm @close="openContactUsDialog = false" :isContactUs="true"
-                                    titleContact="Contact Us" v-if="openContactUsDialog" />
+                            <Dialog
+                                :open="openContactUsDialog"
+                                @close="closeDialog"
+                                :actions="false"
+                                :size="sizeDialog"
+                                :title="''"
+                            >
+                                <ContactUsForm
+                                    @close="openContactUsDialog = false"
+                                    :isContactUs="true"
+                                    titleContact="Contact Us"
+                                    v-if="openContactUsDialog"
+                                />
                             </Dialog>
                         </ul>
                     </div>
@@ -27,7 +43,14 @@
                         <template v-if="loggedIn">
                             <v-menu v-if="userInfo" offset-y>
                                 <template v-slot:activator="{ on, attrs }">
-                                    <v-btn class="btn--account" color="primary" dark v-bind="attrs" v-on="on" outlined>
+                                    <v-btn
+                                        class="btn--account"
+                                        color="primary"
+                                        dark
+                                        v-bind="attrs"
+                                        v-on="on"
+                                        outlined
+                                    >
                                         {{ userInfo.displayName }}
                                         <i class="ri-arrow-drop-down-line"></i>
                                     </v-btn>
@@ -37,7 +60,10 @@
                                         <nuxt-link to="/dashboard"> Dashboard</nuxt-link>
                                     </v-list-item>
                                     <v-list-item>
-                                        <a href="/change-password" @click.prevent="onChangePassword">
+                                        <a
+                                            href="/change-password"
+                                            @click.prevent="onChangePassword"
+                                        >
                                             Change password
                                         </a>
                                     </v-list-item>
@@ -49,9 +75,10 @@
                         </template>
                         <template v-else>
                             <div class="header__actions">
-                                <nuxt-link to="/signin" class="header__link"> Login </nuxt-link>
+                                <nuxt-link to="/signin" class="header__link"> Login</nuxt-link>
                                 <nuxt-link to="/register/start" class="header__link">
-                                    Register</nuxt-link>
+                                    Register
+                                </nuxt-link>
                             </div>
                         </template>
                     </div>
@@ -80,7 +107,7 @@ export default {
     props: {
         source: {
             type: Object,
-            default: () => { }
+            default: () => {}
         }
     },
 
@@ -138,8 +165,8 @@ export default {
         }
     },
     watch: {
-        '$route'(to, from) {
-            this.path = to.path;
+        $route(to, from) {
+            this.path = to.path
         }
     }
 }

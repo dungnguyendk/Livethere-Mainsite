@@ -226,6 +226,8 @@ h4 {
 }
 
 .form__field {
+    position: relative;
+    top: -1.2rem;
     margin-bottom: -1.2rem;
 
     &::v-deep(.v-text-field__details) {
