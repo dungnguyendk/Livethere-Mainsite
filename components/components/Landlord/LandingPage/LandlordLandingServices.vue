@@ -39,7 +39,7 @@ export default {
                 {
                     id: 2,
                     imgURL: "/img/icon-2.png",
-                    text: "Lease Expiry Notifications"
+                    text: "Lease Expiry Notification"
                 },
                 {
                     id: 3,
@@ -134,6 +134,11 @@ export default {
                     color: #000000;
                     text-align: center;
                     margin-bottom: 0;
+                }
+            }
+            .section__box:nth-child(1) {
+                .section__box-text {
+                    padding: 0 3.2rem;
                 }
             }
         }
