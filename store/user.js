@@ -17,9 +17,6 @@ export const mutations = {
 }
 
 export const actions = {
-    setRegisterDetails({ commit }, payload) {
-        commit("setRegisterDetails", payload)
-    },
     setSignInDetails({ commit }, payload) {
         commit("setSignInDetails", payload)
     }

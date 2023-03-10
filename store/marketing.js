@@ -1,26 +1,18 @@
 import { httpEndpoint } from "~/services/https/endpoints"
 export const state = () => ({
     marketings: [],
-    snackbar: false,
-    snackbarMessage: "Your message has been sent.",
     statusResponse: true
 })
 export const mutations = {
     setMarketings(state, payload) {
         state.marketings = payload
     },
-    setSnackbar(state, payload) {
-        state.snackbar = payload
-    },
-    setSnackbarMessage(state, payload) {
-        state.snackbarMessage = payload
-    },
     setStatusResponse(state, payload) {
         state.statusResponse = payload
     }
 }
 export const actions = {
-    async getMarketings({ commit }, payload) {
+    async getMarketings({ commit }) {
         try {
             const response = await this.$axios.$get(`${httpEndpoint.marketing.getEntries}`)
             if (response) {
@@ -33,24 +25,21 @@ export const actions = {
             console.log({ Error: e.message })
         }
     },
-    async putStatusListWithUs({ commit }, payload) {
+    async putStatusListWithUs({ commit, dispatch }, payload) {
         try {
             const response = await this.$axios.$post(
                 `${httpEndpoint.marketing.postEntriesListWithUs}?inventoryID=${payload}`
             )
-            if (response) {
+            if (response.valid) {
                 commit("setStatusResponse", true)
-                commit("setSnackbar", true)
-                commit("setSnackbarMessage", "Sent request success")
+                dispatch("app/showSnackBar", response.message || "Create successful", {
+                    root: true
+                })
             } else {
                 commit("setStatusResponse", false)
-                commit("setSnackbar", false)
-                commit("setSnackbarMessage", "Your message has been sent not success.")
             }
         } catch (e) {
             commit("setStatusResponse", false)
-            commit("setSnackbar", false)
-            commit("setSnackbarMessage", "Your message has been sent not success.")
             console.log({ Error: e.message })
         }
     }

@@ -1,16 +1,22 @@
 <template lang="html">
     <v-dialog v-model="openDialog" width="480" persistent>
         <DialogContentCard @close="onClose()">
-            <template slot="icon">
+            <!-- <template slot="icon">
                 <StatusIcon type="warning" />
-            </template>
+            </template> -->
             <template slot="content">
-                <p><strong>{{ content }}</strong></p>
-                <!-- <p><strong>Are you sure update this item ?</strong></p> -->
+                <p>
+                    <strong>{{ content }}</strong>
+                </p>
             </template>
             <template slot="actions">
-                <v-btn class="btn btn--ghost btn--gray" @click="onClose()"> Cancel</v-btn>
-                <v-btn class="btn btn--primary btn--green" @click="onSubmit()" :loading="loading">Confirm</v-btn>
+                <v-btn class="btn btn--ghost btn--gray btn--sm" @click="onClose()"> Cancel</v-btn>
+                <v-btn
+                    class="btn btn--primary btn--green btn--sm"
+                    @click="onSubmit()"
+                    :loading="loading"
+                    >Confirm
+                </v-btn>
             </template>
         </DialogContentCard>
     </v-dialog>
@@ -51,7 +57,6 @@ export default {
             this.$emit("close")
         },
         onSubmit() {
-            this.openDialog = false
             this.$emit("onSubmit")
         },
         selectedForm(val) {
@@ -93,25 +98,6 @@ export default {
     .btn__upload-file {
         min-width: min-content !important;
     }
-}
-
-.dropzone--custom {
-    display: flex;
-    flex-direction: column;
-
-    i {
-        font-size: 3rem;
-        color: var(--color-primary);
-    }
-
-    span {
-        color: alpha(var(--color-gray), var(--level-3));
-        font-weight: 500;
-    }
-}
-
-.dropzone {
-    min-height: 24rem;
 }
 
 .content {

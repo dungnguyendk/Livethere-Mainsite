@@ -35,7 +35,7 @@
                 <v-btn class="btn btn--primary btn--green" @click="onSubmit" :loading="loading">
                     Reset your password
                 </v-btn>
-                <nuxt-link to="/landlord/signin"> Back</nuxt-link>
+                <nuxt-link to="/signin"> Back</nuxt-link>
             </div>
         </template>
         <template v-else>
@@ -124,7 +124,7 @@ export default {
 
     methods: {
         onBack() {
-            this.$router.push("/landlord/signin")
+            this.$router.push("/signin")
         },
         // get current IP address by js
 
@@ -177,7 +177,7 @@ export default {
                         setTimeout(() => {
                             this.loading = false
                         }, 1200)
-                        await this.$router.push("/landlord/signin")
+                        await this.$router.push("/signin")
                     } else {
                         this.httpError = response.message
                         setTimeout(() => {
@@ -196,7 +196,7 @@ export default {
 
         async onLogout() {
             await this.$auth.logout().then(() => {
-                window.location.href = "/landlord/signin"
+                window.location.href = "/signin"
             })
         },
 

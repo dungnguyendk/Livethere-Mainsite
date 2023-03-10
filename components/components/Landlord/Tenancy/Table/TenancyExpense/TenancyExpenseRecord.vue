@@ -1,10 +1,6 @@
 <template lang="html">
     <tr>
         <td data-title="Date">
-            <!--            <pre>
-                                                                {{ source }}
-                                                            </pre
-                        >-->
             <p>{{ purchaseDate }} </p>
         </td>
         <td data-title="Category">

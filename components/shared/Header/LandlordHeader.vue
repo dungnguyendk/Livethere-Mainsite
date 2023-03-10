@@ -7,28 +7,63 @@
                         <SiteLogo />
                     </div>
                     <div class="header__center">
-                        <ul class="menu--top">
-                            <a v-for="(item, index) in menus" :href="item.linkURL"
-                                :class="item.linkURL === path ? 'active' : ''" :key="index">
+                        <ul class="menu--top" v-for="(item, index) in menus">
+                            <a
+                                :href="item.linkURL"
+                                :class="item.linkURL === path ? 'active' : ''"
+                                :key="index"
+                            >
                                 {{ item.defaultName }}
                             </a>
+                        </ul>
+                        <ul class="menu--top">
+                            <a
+                                :class="openContactUsDialog ? 'active' : ''"
+                                @click="openContactUsDialog = true"
+                            >
+                                Contact us
+                            </a>
+                            <Dialog
+                                :open="openContactUsDialog"
+                                @close="closeDialog"
+                                :actions="false"
+                                :size="sizeDialog"
+                                :title="''"
+                            >
+                                <ContactUsForm
+                                    @close="openContactUsDialog = false"
+                                    :isContactUs="true"
+                                    titleContact="Contact Us"
+                                    v-if="openContactUsDialog"
+                                />
+                            </Dialog>
                         </ul>
                     </div>
                     <div class="header__right">
                         <template v-if="loggedIn">
                             <v-menu v-if="userInfo" offset-y>
                                 <template v-slot:activator="{ on, attrs }">
-                                    <v-btn class="btn--account" color="primary" dark v-bind="attrs" v-on="on" outlined>
+                                    <v-btn
+                                        class="btn--account"
+                                        color="primary"
+                                        dark
+                                        v-bind="attrs"
+                                        v-on="on"
+                                        outlined
+                                    >
                                         {{ userInfo.displayName }}
                                         <i class="ri-arrow-drop-down-line"></i>
                                     </v-btn>
                                 </template>
                                 <v-list>
                                     <v-list-item>
-                                        <nuxt-link to="/landlord/dashboard"> Dashboard</nuxt-link>
+                                        <nuxt-link to="/dashboard"> Dashboard</nuxt-link>
                                     </v-list-item>
                                     <v-list-item>
-                                        <a href="/landlord/change-password" @click.prevent="onChangePassword">
+                                        <a
+                                            href="/change-password"
+                                            @click.prevent="onChangePassword"
+                                        >
                                             Change password
                                         </a>
                                     </v-list-item>
@@ -40,10 +75,10 @@
                         </template>
                         <template v-else>
                             <div class="header__actions">
-                                <nuxt-link to="/landlord/signin" class="header__link">
-                                    Login
+                                <nuxt-link to="/signin" class="header__link"> Login</nuxt-link>
+                                <nuxt-link to="/register/start" class="header__link">
+                                    Register
                                 </nuxt-link>
-                                <nuxt-link to="/register" class="header__link"> Register</nuxt-link>
                             </div>
                         </template>
                     </div>
@@ -63,14 +98,16 @@ import { httpEndpoint } from "~/services/https/endpoints"
 import { defaultMenu } from "~/ultilities/menus"
 import { mapState } from "vuex"
 import LandlordMobileHeader from "~/components/shared/Header/LandlordMobileHeader.vue"
+import Dialog from "~/components/elements/Dialog/Dialog.vue"
+import ContactUsForm from "~/components/shared/Header/Form/ContactUsForm.vue"
 
 export default {
     name: "LandlordHeader",
-    components: { LandlordMobileHeader, MobileHeader, SiteLogo },
+    components: { LandlordMobileHeader, MobileHeader, SiteLogo, Dialog, ContactUsForm },
     props: {
         source: {
             type: Object,
-            default: () => { }
+            default: () => {}
         }
     },
 
@@ -81,10 +118,6 @@ export default {
         name() {
             return this.data
         },
-        path() {
-            console.log(this.$router.currentRoute.path);
-            return this.$router.currentRoute.path
-        },
         loggedIn() {
             return this.$auth.loggedIn
         }
@@ -92,8 +125,11 @@ export default {
 
     data() {
         return {
+            path: this.$router.currentRoute.path,
             menus: defaultMenu,
-            menuID: 0
+            menuID: 0,
+            sizeDialog: "medium",
+            openContactUsDialog: false
         }
     },
     created() {
@@ -104,11 +140,11 @@ export default {
 
     methods: {
         onChangePassword() {
-            this.$router.push("/landlord/change-password")
+            this.$router.push("/change-password")
         },
         async onLogout() {
             await this.$auth.logout().then(() => {
-                window.location.href = "/landlord/signin"
+                window.location.href = "/signin"
             })
         },
 
@@ -123,6 +159,14 @@ export default {
                     this.menus = response.menuItems
                 }
             }
+        },
+        closeDialog() {
+            this.openContactUsDialog = false
+        }
+    },
+    watch: {
+        $route(to, from) {
+            this.path = to.path
         }
     }
 }
@@ -135,6 +179,7 @@ export default {
     right: 0;
     z-index: 99;
 }
+
 .btn--account {
     border: none;
     box-shadow: none;
@@ -187,6 +232,8 @@ export default {
 
         &:hover,
         &:focus {
+            color: #fff;
+
             &:before {
                 visibility: visible;
                 opacity: 1;

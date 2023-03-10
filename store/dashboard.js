@@ -1,15 +1,15 @@
 import { httpEndpoint } from "~/services/https/endpoints"
+
 export const state = () => ({
     dashBoards: null
 })
 export const mutations = {
     setDashBoards(state, payload) {
         state.dashBoards = payload
-        // console.log("state.dashBoards::", state.dashBoards)
     }
 }
 export const actions = {
-    async getDashBoards({ commit }, payload) {
+    async getDashBoards({ commit }) {
         try {
             const response = await this.$axios.$get(`${httpEndpoint.dashBoard.getEntries}`)
             if (response) {

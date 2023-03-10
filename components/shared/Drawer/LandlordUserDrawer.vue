@@ -1,5 +1,5 @@
 <template lang="html">
-    <v-navigation-drawer class="drawer ps-drawer" v-model="open" absolute temporary>
+    <v-navigation-drawer class="drawer ps-drawer" v-model="drawer" absolute temporary>
         <div>
             <v-btn class="ps-drawer__close" @click.stop="onClose">
                 <i class="icon-svg svg-close" />
@@ -9,10 +9,10 @@
             <template v-if="loggedIn">
                 <v-list v-if="userInfo" class="ps-drawer__user">
                     <v-list-item>
-                        <nuxt-link to="/landlord"> Dashboard</nuxt-link>
+                        <nuxt-link to="/dashboard"> Dashboard</nuxt-link>
                     </v-list-item>
                     <v-list-item>
-                        <a href="/landlord/change-password" @click.prevent="onChangePassword">
+                        <a href="/change-password" @click.prevent="onChangePassword">
                             Change password
                         </a>
                     </v-list-item>
@@ -24,7 +24,7 @@
             <template v-else>
                 <v-list class="ps-drawer__user">
                     <v-list-item>
-                        <nuxt-link to="/landlord/signin" class="header__link"> Login</nuxt-link>
+                        <nuxt-link to="/signin" class="header__link"> Login</nuxt-link>
                     </v-list-item>
                     <v-list-item>
                         <nuxt-link to="/register" class="header__link"> Register</nuxt-link>
@@ -42,7 +42,7 @@ export default {
     name: "LandlordUserDrawer",
     computed: {
         ...mapState({
-            appDrawer: (state) => state.app.appDrawer,
+            userDrawer: (state) => state.app.userDrawer,
             userInfo: (state) => state.app.userInfo
         }),
         loggedIn() {
@@ -55,17 +55,34 @@ export default {
             default: false
         }
     },
+    data() {
+        return {
+            drawer: false,
+        }
+    },
     methods: {
         onClose() {
-            this.$emit("close")
+            this.$store.commit("app/setUserDrawer", !this.userDrawer)
         },
         onChangePassword() {
-            this.$router.push("/landlord/change-password")
+            this.$router.push("/change-password")
+            this.$store.commit("app/setUserDrawer", false)
         },
         async onLogout() {
             await this.$auth.logout().then(() => {
-                window.location.href = "/landlord/signin"
+                window.location.href = "/signin"
             })
+        }
+    },
+    created() {
+        this.drawer = this.userDrawer
+    },
+    watch: {
+        userDrawer() {
+            this.drawer = this.userDrawer
+        },
+        '$route' (to, from){
+            this.$store.commit("app/setUserDrawer", false)
         }
     }
 }

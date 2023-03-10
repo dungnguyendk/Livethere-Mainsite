@@ -9,7 +9,7 @@ export const defaultMenu = [
     },
     {
         defaultName: "Landlords",
-        linkURL: "/landlord/dashboard"
+        linkURL: "/"
     },
     {
         defaultName: "About us",
@@ -18,9 +18,5 @@ export const defaultMenu = [
     {
         defaultName: "Search",
         linkURL: "https://www.livethere.com/search/results?from=home"
-    },
-    {
-        defaultName: "Contact us",
-        linkURL: "https://www.livethere.com/"
     }
 ]

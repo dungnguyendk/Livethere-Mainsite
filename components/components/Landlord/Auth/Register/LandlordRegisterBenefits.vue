@@ -5,7 +5,7 @@
             <div class="register-benefits">
                 <div class="box--register" v-for="item in items" :key="item.id">
                     <div class="box__top">
-                        <img :src="require(`~/static/img/${item.icon}.svg`)" alt="" />
+                        <img :src="`/img/${item.icon}.svg`" alt="" />
                         <span>{{ item.title }}</span>
                     </div>
                     <div class="box__content">
@@ -25,7 +25,7 @@
                             <i class="ri-arrow-right-line"></i>
                         </nuxt-link>
                         <v-btn v-else class="btn btn--ghost btn--green" disabled>
-                            Comming soon
+                            Coming soon
                         </v-btn>
                     </div>
                 </div>

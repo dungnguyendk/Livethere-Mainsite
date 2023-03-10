@@ -9,7 +9,7 @@
                 {{ index + 1 }}
             </div>
             <nuxt-link
-                :to="`/landlord/tenancy/${item.link}/${
+                :to="`/tenancy/${item.link}/${
                     tenancyDetails ? tenancyDetails.internalID : ''
                 }`"
             >

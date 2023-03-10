@@ -130,7 +130,10 @@ export default {
                 setTimeout(() => {
                     this.progress = 0
                     this.$emit("onUpdateDocuments", fileInfo, response.data.id)
-                    this.$store.dispatch("app/showSnackBar", "Uploaded successfully")
+                    this.$store.dispatch(
+                        "app/showSnackBar",
+                        "Your file has been successfully uploaded!"
+                    )
                 }, 2000)
             }
         }

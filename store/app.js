@@ -2,6 +2,7 @@ import { httpEndpoint } from "~/services/https/endpoints"
 
 export const state = () => ({
     appDrawer: false,
+    userDrawer: false,
     sidebarCollapse: false,
     token: null,
     appLoading: false,
@@ -23,13 +24,14 @@ export const mutations = {
     setAppDrawer(state, payload) {
         state.appDrawer = payload
     },
-    setSidebarCollapse(state, payload) {
-        state.sidebarCollapse = payload
-    },
+    setUserDrawer(state, payload) {
+        state.userDrawer = payload
+    }
+
 }
 
 export const actions = {
-    async getUserInfo({ commit }, payload) {
+    async getUserInfo({ commit }) {
         try {
             const response = await this.$axios.$get(`${httpEndpoint.user.getLandlordUserInfo}`)
             if (response) {

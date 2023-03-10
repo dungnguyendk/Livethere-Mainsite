@@ -22,7 +22,7 @@
                         <v-text-field v-model="passportNo" dense outlined :error-messages="passportNoErrors" />
                     </div>
                 </v-col>
-                <v-col cols="12" sm="12" md="6">
+                <v-col cols="12" sm="12" md="6" v-if="leasingType.name === 'Corporate'">
                     <div class="form__field">
                         <label>Company Name</label>
                         <v-text-field v-model="companyName" dense outlined :error-messages="companyNameErrors" />
@@ -134,7 +134,7 @@ export default {
                     tenancyIdentityDocNo: this.passportNo,
                     leasingTypeFID: this.leasingType.id,
                     leasingTypeDisplay: this.leasingType.name,
-                    companyName: this.companyName,
+                    companyName: this.leasingType.name === "Corporate" ? this.companyName : '',
                     remark: this.remark
                 }
                 this.$store
@@ -173,5 +173,19 @@ export default {
             min-width: 12rem;
         }
     }
+}
+
+.form__field {
+    margin-bottom: -1.2rem;
+
+    &::v-deep(.v-text-field__details) {
+        padding-left: 0;
+
+        .v-messages__message {
+            font-size: 1.3rem;
+            line-height: 1.2em;
+        }
+    }
+
 }
 </style>

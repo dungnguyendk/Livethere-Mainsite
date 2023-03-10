@@ -14,12 +14,12 @@
         <div class="footer__bottom">
             <div class="container">
                 <div class="footer__bottomLeft">
-                    <p>&copy; Copyright 2022 Savills Singapore. All rights reserved.</p>
+                    <p>&copy; Copyright 2023 Savills Singapore. All rights reserved.</p>
                 </div>
                 <div class="footer__bottomRight">
                     <p>
                         Powered by
-                        <img src="~/static/img/logos/savills_logo.svg" alt="Savills logo" />
+                        <img src="~/static/img/logos/savills_logo.png" alt="Savills logo" />
                     </p>
                 </div>
             </div>
@@ -92,18 +92,18 @@ export default {
 </script>
 <style lang="scss" scoped>
 .footer--landing {
-    background-color: #35444b;
+    background-color: #33454d;
 
     .footer__content {
         display: grid;
-        grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+        grid-template-columns: minmax(0, 1.1fr) minmax(0, 2fr);
         grid-gap: 1.2rem;
-        padding: 3rem 0;
+        padding: 13vh 0 14vh;
     }
 
     .footer__right {
         display: grid;
-        grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
         grid-gap: 1.2rem;
     }
 
@@ -129,25 +129,37 @@ export default {
             font-weight: 400;
             color: var(--color-white);
         }
+        img {
+            margin-left: 1.2rem;
+        }
     }
 
     .footer__bottom {
         background-color: #202b2f;
-        height: 5.8rem;
         display: flex;
         justify-content: center;
         align-items: center;
+        padding-top: 2vh;
+        padding-bottom: 2vh;
 
         .container {
             display: grid;
             grid-template-columns: minmax(0, 2fr) minmax(0, 1fr);
             grid-gap: 2.4rem;
+            align-items: center;
         }
     }
 
     @media screen and (max-width: 1279px) {
         .footer__content {
-            display: grid;
+            // grid-template-columns: minmax(0, 1fr);
+            // grid-gap: 4.6rem;
+            .footer__right {
+            }
+        }
+    }
+    @media screen and (max-width: 991px) {
+        .footer__content {
             grid-template-columns: minmax(0, 1fr);
             grid-gap: 4.6rem;
             .footer__right {
@@ -156,6 +168,9 @@ export default {
     }
 
     @media screen and (max-width: 767px) {
+        .footer__content {
+            padding: 5rem 0;
+        }
         .footer__right {
             display: grid;
             grid-template-columns: minmax(0, 1fr);
@@ -175,7 +190,8 @@ export default {
             }
 
             .footer__bottomRight {
-                justify-content: center;
+                justify-content: flex-start;
+
             }
 
             .container {

@@ -88,6 +88,7 @@ export default {
     .section__container {
         .section__header {
             margin-bottom: 3.6rem;
+
             .section__header-title {
                 font-weight: 800;
                 font-size: 2rem;
@@ -97,6 +98,7 @@ export default {
                 text-align: center;
                 padding: 0 24.4rem;
             }
+
             .section__header-text {
                 text-align: center;
                 font-weight: 500;
@@ -113,13 +115,16 @@ export default {
             display: grid;
             grid-template-columns: repeat(4, minmax(0, 1fr));
             grid-gap: 2.4rem;
+
             .section__box {
                 flex-wrap: wrap;
                 justify-content: center;
                 padding: 2.4rem;
                 background-color: white;
+
                 .section__box-icon {
                     margin-bottom: 1.2rem;
+
                     img {
                         width: 6rem;
                         height: 6rem;
@@ -127,6 +132,7 @@ export default {
                         margin: 0 auto;
                     }
                 }
+
                 .section__box-text {
                     font-weight: 500;
                     font-size: 1.6rem;
@@ -143,11 +149,13 @@ export default {
             }
         }
     }
+
     @media screen and (max-width: 992px) {
         .section__container {
             .section__content {
                 grid-template-columns: repeat(2, minmax(0, 1fr));
             }
+
             .section__header {
                 .section__header-text {
                     padding: 0;
@@ -162,6 +170,7 @@ export default {
         .section__container {
             .section__header {
                 margin-bottom: 3.6rem;
+
                 .section__header-title {
                     font-weight: 800;
                     font-size: 2rem;
@@ -171,6 +180,7 @@ export default {
                     text-align: center;
                     padding: 0;
                 }
+
                 .section__header-text {
                     text-align: justify;
                     font-weight: 500;
@@ -185,12 +195,15 @@ export default {
                 display: grid;
                 grid-template-columns: repeat(1, minmax(0, 1fr));
                 grid-gap: 2.4rem;
+
                 .section__box {
                     flex-wrap: wrap;
                     justify-content: center;
                     padding: 2.4rem 1.6rem;
+
                     .section__box-icon {
                         margin-bottom: 1.2rem;
+
                         img {
                             width: 6rem;
                             height: 6rem;
@@ -198,6 +211,7 @@ export default {
                             margin: 0 auto;
                         }
                     }
+
                     .section__box-text {
                         font-weight: 500;
                         font-size: 1.6rem;

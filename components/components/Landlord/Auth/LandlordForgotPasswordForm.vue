@@ -34,7 +34,7 @@
             <v-btn v-if="" class="btn btn--primary btn--green" @click="onSubmit" :loading="loading">
                 Send request
             </v-btn>
-            <nuxt-link to="/landlord/signin"> Back</nuxt-link>
+            <nuxt-link to="/signin"> Back</nuxt-link>
         </div>
         <div v-if="success" class="form__actions">
             <v-btn v-if="" class="btn btn--outline btn--green" @click="onBackToSignIn()">
@@ -84,7 +84,7 @@ export default {
     },
     methods: {
         onBackToSignIn() {
-            this.$router.push("/landlord/signin")
+            this.$router.push("/signin")
         },
 
         onInputField() {
@@ -136,7 +136,7 @@ export default {
 
         async onLogout() {
             await this.$auth.logout().then(() => {
-                window.location.href = "/landlord/signin"
+                window.location.href = "/signin"
             })
         },
 

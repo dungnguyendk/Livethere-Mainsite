@@ -10,13 +10,17 @@
                 <div class="section__right">
                     <div class="section__right-content">
                         <h3 class="section__content-title">
-                            Bump up your property’s visibility with Livethere now</h3
-                        >
+                            Bump up your property’s visibility with Livethere now</h3>
                         <p class="section__content-text">
-                            With our tailored marketing services, we’ll put you and your property
-                            high on our priority list!</p
-                        >
-                        <v-btn class="btn btn--primary btn--green">List Your Property</v-btn>
+                            With our tailored marketing services, we’ll put you and your property high on our priority list!
+                        </p>
+                        <v-btn class="btn btn--primary btn--green" @click="openContactUsDialog = true">List Your
+                            Property</v-btn>
+                        <Dialog :open="openContactUsDialog" @close="closeDialog" :actions="false" :size="sizeDialog"
+                            :title="''">
+                            <ContactUsForm @close="openContactUsDialog = false" :isContactUs="false"
+                                v-if="openContactUsDialog" titleContact="List with Livethere today"/>
+                        </Dialog>
                     </div>
                 </div>
             </div>
@@ -25,11 +29,21 @@
 </template>
 
 <script>
+import Dialog from "~/components/elements/Dialog/Dialog.vue"
+import ContactUsForm from "~/components/shared/Header/Form/ContactUsForm.vue"
 export default {
     name: "LandlordLandingCTA",
+    components: { Dialog, ContactUsForm },
     data() {
         return {
-            imgURL: "/img/landlords/landing-cta.png"
+            imgURL: "/img/landlords/landing-cta.png",
+            sizeDialog: "medium",
+            openContactUsDialog: false
+        }
+    },
+    methods: {
+        closeDialog() {
+            this.openContactUsDialog = false
         }
     }
 }
@@ -85,6 +99,7 @@ export default {
     @media screen and(max-width: 768px) {
         max-width: 42rem;
         margin: 0 auto;
+
         .section__container {
             display: block;
 

@@ -67,7 +67,7 @@ export default {
         },
         handleOpenMenuDrawer() {
             this.$store.commit("app/setAppDrawer", !this.appDrawer)
-            console.log("handleOpenMenuDrawer",this.appDrawer);
+            // console.log("handleOpenMenuDrawer",this.appDrawer);
         }
     }
 }

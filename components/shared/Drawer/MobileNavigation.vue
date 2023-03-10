@@ -7,23 +7,20 @@
         </div>
         <div class="ps-drawer__content">
             <template v-for="(item, index) in menus">
-                <nuxt-link
-                    v-if="item.defaultName === 'Landlords'"
-                    :to="item.linkURL"
-                    :class="item.linkURL === path ? 'active' : ''"
-                    :key="index"
-                >
+                <nuxt-link v-if="item.defaultName === 'Landlords'" :to="item.linkURL"
+                    :class="item.linkURL === path ? 'active' : ''" :key="index">
                     {{ item.defaultName }}
                 </nuxt-link>
-                <a
-                    v-else
-                    :href="item.linkURL"
-                    :class="item.linkURL === path ? 'active' : ''"
-                    target="_blank"
-                >
+                <a v-else :href="item.linkURL" :class="item.linkURL === path ? 'active' : ''" target="_blank">
                     {{ item.defaultName }}
                 </a>
             </template>
+            <a class="" @click="openContactUsDialog = true" target="_blank" @click.prevent="handleCloseDrawer()">
+                Contact us
+            </a>
+            <Dialog :open="openContactUsDialog" @close="closeDialog" :actions="false" :size="sizeDialog" :title="''">
+                <ContactUsForm @close="openContactUsDialog = false" :isContactUs="true" v-if="openContactUsDialog" titleContact="Contact Us" />
+            </Dialog>
         </div>
     </v-navigation-drawer>
 </template>
@@ -32,10 +29,12 @@
 import { mapState } from "vuex"
 import SiteLogo from "~/components/shared/Logo/SiteLogo.vue"
 import { defaultMenu } from "~/ultilities/menus"
+import Dialog from "~/components/elements/Dialog/Dialog.vue"
+import ContactUsForm from "~/components/shared/Header/Form/ContactUsForm.vue"
 
 export default {
     name: "MobileNavigation",
-    components: { SiteLogo },
+    components: { SiteLogo, Dialog, ContactUsForm },
     computed: {
         ...mapState({
             appDrawer: (state) => state.app.appDrawer,
@@ -55,22 +54,27 @@ export default {
         return {
             drawer: false,
             menus: defaultMenu,
-            menuID: 0
+            menuID: 0,
+            sizeDialog: "medium",
+            openContactUsDialog: false
         }
     },
 
     methods: {
         onChangePassword() {
-            this.$store.commit("app/setAppDrawer", false)
-            this.$router.push("/landlord/change-password")
+            // this.$store.commit("app/setAppDrawer", false)
+            this.$router.push("/change-password")
         },
         handleCloseDrawer() {
             this.$store.commit("app/setAppDrawer", !this.appDrawer)
         },
         async onLogout() {
             await this.$auth.logout().then(() => {
-                window.location.href = "/landlord/signin"
+                window.location.href = "/signin"
             })
+        },
+        closeDialog() {
+            this.openContactUsDialog = false
         }
     },
     created() {
@@ -79,6 +83,9 @@ export default {
     watch: {
         appDrawer() {
             this.drawer = this.appDrawer
+        },
+        '$route' (to, from){
+            this.$store.commit("app/setAppDrawer", false)
         }
     }
 }
