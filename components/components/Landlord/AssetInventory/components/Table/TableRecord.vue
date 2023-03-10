@@ -76,6 +76,14 @@
                                     <v-list-item-title>Unit Inventory</v-list-item-title>
                                 </v-list-item-content>
                             </v-list-item>
+                            <v-list-item @click="handleClickOpenRow(source.internalID)" class="list-item--custom">
+                                <v-list-item-icon>
+                                    <v-icon v-text="`ri-article-line`"></v-icon>
+                                </v-list-item-icon>
+                                <v-list-item-content>
+                                    <v-list-item-title>Tenancy</v-list-item-title>
+                                </v-list-item-content>
+                            </v-list-item>
                             <v-list-item @click="deleteDialog = true" class="list-item--custom"
                                 v-if="(statusFID === 0 || statusFID === 1) && (source.statusFID === 0 || source.statusFID === 1)">
                                 <v-list-item-icon>

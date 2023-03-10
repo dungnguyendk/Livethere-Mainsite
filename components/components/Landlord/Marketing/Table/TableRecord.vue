@@ -44,8 +44,8 @@
                 List with Us
             </v-btn>
         </td>
-        <ConfirmDialog :open="confirmListWithUs" content="Do you want list with us ?" size="large" type="full"
-            @close="confirmListWithUs = false" :loading="loading" @onSubmit="putListWithUs" />
+        <ConfirmDialog :open="confirmListWithUs" content="Do you want to list with us?"
+            size="large" type="full" @close="confirmListWithUs = false" :loading="loading" @onSubmit="putListWithUs" />
     </tr>
 </template>
 

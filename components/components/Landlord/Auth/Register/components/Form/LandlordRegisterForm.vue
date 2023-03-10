@@ -5,7 +5,7 @@
         </div>
         <div class="form__fields">
             <div class="form--register__input">
-                <label>Preferred Username</label>
+                <label class="required">Preferred Username</label>
                 <v-text-field
                     v-model.trim="username"
                     outlined
@@ -15,12 +15,17 @@
                 />
             </div>
             <div class="form--register__input">
-                <label>Contact name</label>
-                <v-text-field v-model="contactName" outlined dense />
+                <label class="required">Contact name</label>
+                <v-text-field
+                    v-model="contactName"
+                    outlined
+                    dense
+                    :error-messages="contactNameErrors"
+                />
             </div>
             <div class="form--register__input2">
                 <div class="form--register__input">
-                    <label>Password</label>
+                    <label class="required">Password</label>
                     <v-text-field
                         v-model.trim="password"
                         outlined
@@ -31,7 +36,7 @@
                     />
                 </div>
                 <div class="form--register__input">
-                    <label>Verified Password</label>
+                    <label class="required">Verified Password</label>
                     <v-text-field
                         v-model.trim="verifiedPassword"
                         outlined
@@ -44,7 +49,7 @@
             </div>
             <div class="form--register__input2">
                 <div class="form--register__input">
-                    <label>Email Address</label>
+                    <label class="required">Email Address</label>
                     <v-text-field
                         v-model.trim="email"
                         outlined
@@ -54,7 +59,13 @@
                     />
                 </div>
                 <div class="form--register__input mobile-form-control">
-                    <label>Mobile No.</label>
+                    <label>
+                        Mobile No.
+                        <span class="required"></span>
+                        <span class="form__note">
+                            (Mobile No. is required to sent OTP for each login.)
+                        </span>
+                    </label>
                     <vue-tel-input-vuetify
                         outlined
                         dense
@@ -109,6 +120,7 @@ const complexity = helpers.regex(
     "complexity",
     /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/
 )
+const userNameRule = helpers.regex("userNameRule", /^[a-zA-Z0-9]+$/)
 
 const singaporePhoneNumber = helpers.regex("singaporePhoneNumber", /^\+65 \d{4}( ?\d{4})$/)
 
@@ -117,13 +129,14 @@ export default {
     components: { SuccessSnackBar },
     mixins: [validationMixin],
     validations: {
-        username: { required, minLength: minLength(6) },
+        username: { required, minLength: minLength(6), userNameRule },
         password: { required, complexity },
         verifiedPassword: {
             required,
             sameAsPassword: sameAs("password")
         },
         email: { required, email },
+        contactName: { required },
         phone: { required, singaporePhoneNumber }
     },
     computed: {
@@ -133,6 +146,14 @@ export default {
             if (!this.$v.username.$dirty) return errors
             !this.$v.username.required && errors.push("Preferred Username is required")
             !this.$v.username.minLength && errors.push("Preferred Username at least 6 characters")
+            !this.$v.username.userNameRule &&
+                errors.push("Invalid Username: contains special character(s)")
+            return errors
+        },
+        contactNameErrors() {
+            const errors = []
+            if (!this.$v.contactName.$dirty) return errors
+            if (!this.$v.contactName.required) errors.push("Contact name is required")
             return errors
         },
         passwordErrors() {
@@ -374,6 +395,14 @@ export default {
     .btn-group {
         width: 17.5rem;
         margin: 3.2rem auto;
+    }
+}
+
+.mobile-form-control {
+    .form__note {
+        position: relative;
+        font-size: 1.1rem;
+        color: var(--color-text);
     }
 }
 </style>
