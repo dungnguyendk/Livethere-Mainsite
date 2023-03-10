@@ -1,9 +1,10 @@
 <template>
     <main class="landlord--landing">
         <LandlordEnquiry />
-        <LandlordLandingCTA />
         <LandlordLandingIntro />
         <LandlordLandingServices />
+        <LandlordLandingCTA />
+
     </main>
 </template>
 <script>

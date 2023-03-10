@@ -38,7 +38,7 @@ export default {
 <style lang="scss" scoped>
 .section--landing-cta {
     padding: 4.3rem 0;
-    background-color: var(--bg-color-white);
+    background-color: var(--bg-white);
     .section__container {
         display: flex;
         justify-content: center;

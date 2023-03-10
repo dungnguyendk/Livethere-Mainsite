@@ -34,7 +34,7 @@ export default {
                 {
                     id: 1,
                     imgURL: "/img/invest-divest.png",
-                    text: "Manage Properties Portfolio Digitally"
+                    text: "Manage Property Portfolio Digitally"
                 },
                 {
                     id: 2,
