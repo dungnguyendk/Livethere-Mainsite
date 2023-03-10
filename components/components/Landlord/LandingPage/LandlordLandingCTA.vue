@@ -13,7 +13,8 @@
                             Bump up your property’s visibility with Livethere now</h3
                         >
                         <p class="section__content-text">
-                            With our tailored marketing services, we’ll put you and your property high on our priority list!</p
+                            With our tailored marketing services, we’ll put you and your property
+                            high on our priority list!</p
                         >
                         <v-btn class="btn btn--primary btn--green">List Your Property</v-btn>
                     </div>
@@ -37,7 +38,7 @@ export default {
 <style lang="scss" scoped>
 .section--landing-cta {
     padding: 4.3rem 0;
-
+    background-color: var(--bg-color-white);
     .section__container {
         display: flex;
         justify-content: center;

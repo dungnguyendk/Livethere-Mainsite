@@ -26,7 +26,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 .section--enquiry-form {
-    background-color: var(--bg-color-white);
+    background-color: var(--bg-white);
     padding-bottom: 5.2rem;
 
     .section__content {
