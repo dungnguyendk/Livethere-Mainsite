@@ -3,13 +3,13 @@
         <div class="container">
             <div class="section__container">
                 <div class="section__header">
-                    <h3 class="section__header-title">
-                        Your Personal Property Concierge Managing All Your Property Needs
-                    </h3>
+                    <h3 class="section__header-title"
+                        >Providing you greater convenience to managing your property portfolio with
+                        access to digital tools and personal concierge</h3
+                    >
                     <p class="section__header-text">
-                        We also help you find the right tenant with ease through our expansive
-                        database as well as gain high visibility for your property with our
-                        marketing services.
+                        Finding the right match to your property is easy with our global tenant
+                        database and marketing services
                     </p>
                 </div>
                 <div class="section__content">
@@ -33,43 +33,46 @@ export default {
             listBoxes: [
                 {
                     id: 1,
-                    imgURL: "/img/icon-1.png",
-                    text: "Personal Property Concierge"
+                    imgURL: "/img/invest-divest.png",
+                    text: "Manage Property Portfolio Digitally"
                 },
                 {
                     id: 2,
                     imgURL: "/img/icon-2.png",
-                    text: "Assistance via Digital Platform"
+                    text: "Lease Expiry Notification"
                 },
                 {
                     id: 3,
-                    imgURL: "/img/tenant-database.png",
-                    text: "Good Tenant Database"
-                },
-                {
-                    id: 4,
-                    imgURL: "/img/icon-6.png",
-                    text: "Dedicated End-to-End Services"
-                },
-                {
-                    id: 5,
-                    imgURL: "/img/marketing-service.png",
-                    text: "Professional Property Marketing"
-                },
-                {
-                    id: 6,
                     imgURL: "/img/icon-5.png",
                     text: "Digital Contracts"
                 },
+
                 {
-                    id: 7,
+                    id: 4,
                     imgURL: "/img/market-trends.png",
                     text: "Latest Market Insights"
                 },
                 {
+                    id: 5,
+                    imgURL: "/img/icon-1.png",
+                    text: "Personal Property Concierge"
+                },
+                {
+                    id: 6,
+                    imgURL: "/img/marketing-service.png",
+                    text: "Professional Property Marketing"
+                },
+
+                {
+                    id: 7,
+                    imgURL: "/img/tenant-database.png",
+                    text: "Rich Tenant Database"
+                },
+
+                {
                     id: 8,
-                    imgURL: "/img/invest-divest.png",
-                    text: "Invest & Divest"
+                    imgURL: "/img/icon-6.png",
+                    text: "Dedicated End-to-End Services"
                 }
             ]
         }
@@ -93,6 +96,7 @@ export default {
                 color: var(--color-primary);
                 margin-bottom: 1.6rem;
                 text-align: center;
+                padding: 0 24.4rem;
             }
 
             .section__header-text {
@@ -103,6 +107,7 @@ export default {
                 margin-bottom: 0;
                 padding: 0 18rem;
                 color: var(--color-title-black);
+                font-style: italic;
             }
         }
 
@@ -137,6 +142,11 @@ export default {
                     margin-bottom: 0;
                 }
             }
+            .section__box:nth-child(1) {
+                .section__box-text {
+                    padding: 0 3.2rem;
+                }
+            }
         }
     }
 
@@ -168,6 +178,7 @@ export default {
                     color: var(--color-primary);
                     margin-bottom: 1.6rem;
                     text-align: center;
+                    padding: 0;
                 }
 
                 .section__header-text {
