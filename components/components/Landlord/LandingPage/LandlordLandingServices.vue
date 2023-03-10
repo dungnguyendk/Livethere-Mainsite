@@ -4,10 +4,12 @@
             <div class="section__container">
                 <div class="section__header">
                     <h3 class="section__header-title"
-                        >Your Personal Property Concierge Managing All your property needs</h3
+                        >Providing you greater convenience to managing your property portfolio with
+                        access to digital tools and personal concierge</h3
                     >
                     <p class="section__header-text">
-                        We also help you find the right tenant with ease through our expansive database as well as gain high visibility for your property with our marketing services.
+                        Finding the right match to your property is easy with our global tenant
+                        database and marketing services
                     </p>
                 </div>
                 <div class="section__content">
@@ -31,43 +33,46 @@ export default {
             listBoxes: [
                 {
                     id: 1,
-                    imgURL: "/img/icon-1.png",
-                    text: "Personal Property Concierge"
+                    imgURL: "/img/invest-divest.png",
+                    text: "Manage Properties Portfolio Digitally"
                 },
                 {
                     id: 2,
                     imgURL: "/img/icon-2.png",
-                    text: "Assistance via Digital Platform with Good Customer Service"
+                    text: "Lease Expiry Notifications"
                 },
                 {
                     id: 3,
-                    imgURL: "/img/tenant-database.png",
-                    text: "Good Tenant Database"
+                    imgURL: "/img/icon-5.png",
+                    text: "Digital Contracts"
                 },
+
                 {
                     id: 4,
-                    imgURL: "/img/icon-6.png",
-                    text: "Dedicated End-to-End Customer Support"
+                    imgURL: "/img/market-trends.png",
+                    text: "Latest Market Insights"
                 },
                 {
                     id: 5,
-                    imgURL: "/img/marketing-service.png",
-                    text: "Professional Property Marketing Services"
+                    imgURL: "/img/icon-1.png",
+                    text: "Personal Property Concierge"
                 },
                 {
                     id: 6,
-                    imgURL: "/img/icon-5.png",
-                    text: "Seamless Renting Experience & Aftercare"
+                    imgURL: "/img/marketing-service.png",
+                    text: "Professional Property Marketing"
                 },
+
                 {
                     id: 7,
-                    imgURL: "/img/market-trends.png",
-                    text: "Insights into Latest Residential Market Trends"
+                    imgURL: "/img/tenant-database.png",
+                    text: "Rich Tenant Database"
                 },
+
                 {
                     id: 8,
-                    imgURL: "/img/invest-divest.png",
-                    text: "Invest & Divest in Residential Market"
+                    imgURL: "/img/icon-6.png",
+                    text: "Dedicated End-to-End Services"
                 }
             ]
         }
@@ -90,6 +95,7 @@ export default {
                 color: var(--color-primary);
                 margin-bottom: 1.6rem;
                 text-align: center;
+                padding: 0 24.4rem;
             }
             .section__header-text {
                 text-align: center;
@@ -99,6 +105,7 @@ export default {
                 margin-bottom: 0;
                 padding: 0 18rem;
                 color: var(--color-title-black);
+                font-style: italic;
             }
         }
 
@@ -157,6 +164,7 @@ export default {
                     color: var(--color-primary);
                     margin-bottom: 1.6rem;
                     text-align: center;
+                    padding: 0;
                 }
                 .section__header-text {
                     text-align: justify;
