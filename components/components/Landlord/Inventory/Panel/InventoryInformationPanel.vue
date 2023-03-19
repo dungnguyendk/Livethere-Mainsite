@@ -47,7 +47,7 @@
                     <span>Floor Area (sqft):</span>
                     <strong>{{ inventoryDetails ? formatFloorArea : "n/a" }}</strong>
                 </p>
-                <p v-if="inventoryDetails.statusFID !== 3">
+                <p v-if="inventoryDetails.statusFID !== 3 && formatFloorArea !== '0'">
                     <span>Land Area (sqft):</span>
                     <strong>{{ inventoryDetails ? formatLandArea : "n/a" }}</strong>
                 </p>
