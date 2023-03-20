@@ -164,15 +164,15 @@ export default {
                     value: "4"
                 },
                 {
-                    text: "Maintainance",
+                    text: "Maintenance",
                     value: "5"
                 },
                 {
-                    text: "Costs Securing Tenant",
+                    text: "Costs of Securing Tenant",
                     value: "6"
                 },
                 {
-                    text: "Costs of Supervision of Management fees",
+                    text: "Costs of Supervision or Management Fees",
                     value: "7"
                 },
                 {
@@ -184,12 +184,8 @@ export default {
                     value: "9"
                 },
                 {
-                    text: "Utilities Expenses",
+                    text: "Utility Expenses",
                     value: "10"
-                },
-                {
-                    text: "Expenses incurred on properties that are not generating rental income",
-                    value: "11"
                 },
                 {
                     text: "Commision",

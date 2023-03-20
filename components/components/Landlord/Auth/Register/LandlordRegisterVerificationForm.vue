@@ -33,7 +33,7 @@
                 :loading="loading"
                 @click="handleRegister"
             >
-                Submit
+                Verify
             </v-btn>
         </div>
 

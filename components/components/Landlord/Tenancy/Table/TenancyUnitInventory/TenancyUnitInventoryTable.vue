@@ -2,7 +2,7 @@
     <table class="table--responsive table--tenancy-info">
         <thead>
             <tr>
-                <th id="description">Name</th>
+                <th id="description">Item</th>
                 <th id="quantity">Quantity</th>
                 <th id="totalValue">Amount</th>
                 <!-- <th id="conditionRemarks">Condition Remarks</th> -->
