@@ -187,7 +187,7 @@
             </div>
             <div class="form__field">
                 <label>Amenities</label>
-                <v-chip-group multiple column active-class="primary--text"  v-model="selected">
+                <v-chip-group multiple column active-class="yellow--text"  v-model="selected">
                     <v-chip  
                      v-for="(amenities, index) in listAmenities"
                      :key="index"
@@ -580,7 +580,7 @@ export default {
         }
     }
 }
-.v-application .primary--text {
+.yellow--text {
     color: var(--color-white) !important; 
     caret-color: var(--color-white) !important;
     border: 0.1rem solid var(--color-dark-yellow) !important;
