@@ -332,7 +332,7 @@ export default {
                 selected: this.selected
             }
             console.log("params: ", params)
-            this.$emit("snackbar", this.snack = true)
+            this.$emit("snackbar", (this.snack = true))
             this.onClose()
         },
         onResetForm() {
@@ -568,10 +568,32 @@ export default {
     i {
         width: 1.6rem;
     }
+    transition: all 0.25s ease;
+    &:hover {
+        background-color: var(--color-white);
+        border: 0.1rem solid var(--color-dark-yellow);
+        span {
+            color: var(--color-dark-yellow);
+        }
+        i {
+            background: var(--color-dark-yellow);
+        }
+    }
 }
-.snackbar-custom{
-    ::v-deep(.v-snack__content){
-        font-weight: 500; 
+.v-application .primary--text {
+    color: var(--color-white) !important; 
+    caret-color: var(--color-white) !important;
+    border: 0.1rem solid var(--color-dark-yellow) !important;
+    span {
+        color: var(--color-dark-yellow) !important;
+    }
+    i {
+        background: var(--color-dark-yellow) !important;
+    }
+}
+.snackbar-custom {
+    ::v-deep(.v-snack__content) {
+        font-weight: 500;
         font-size: 1.4rem;
         line-height: 2.4rem;
     }
