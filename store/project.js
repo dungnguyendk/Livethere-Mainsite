@@ -1,4 +1,5 @@
 import { httpEndpoint } from "~/services/https/endpoints"
+import { PROJECT_LISTING } from "~/ultilities/contants/dummy-data"
 
 export const state = () => ({
     popularListings: [],
@@ -56,8 +57,20 @@ export const actions = {
             }
         } catch (e) {
             console.log({Error: e.message})
-            commit("setSearchListing", [])
+            commit("setSearchListing", PROJECT_LISTING)
         }
     }, 
-    
+    async filterListing({commit}, payload){
+        try{
+            const response = await this.$axios.$post(`${httpEndpoint}`, payload)
+            if(response){
+                commit("setSearchListing", response.data)
+            }else{
+                commit("setSearchListing", [])
+            }
+        }catch(e){
+            console.log({Error: e.message})
+            commit("setSearchListing", PROJECT_LISTING)
+        }
+    }
 }

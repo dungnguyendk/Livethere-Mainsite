@@ -53,10 +53,13 @@ export default {
         margin-bottom: 0.4rem;
     }
 }
-
+.v-application .v-menu__content{
+    top: 41.2rem !important
+}
 </style>
+
 <style lang="scss">
-.v-menu__content{
-    top: 41.2rem !important;
+.v-autocomplete__content.v-menu__content{
+    margin-top: 0 !important;
 }
 </style>

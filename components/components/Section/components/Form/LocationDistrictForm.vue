@@ -8,6 +8,7 @@
                 outlined
                 dense
                 multiple
+            
             ></v-autocomplete>
         </div>
         <div class="form__footer">
@@ -54,8 +55,9 @@ export default {
     }
 }
 </style>
+
 <style lang="scss">
-.v-menu__content{
-    top: 41.2rem !important;
+.v-autocomplete__content.v-menu__content{
+    margin-top: 0 !important;
 }
 </style>

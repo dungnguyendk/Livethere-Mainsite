@@ -331,7 +331,7 @@ export default {
                         : this.rangeUnitSize,
                 selected: this.selected
             }
-            console.log("params: ", params)
+            this.$store.dispatch("project/filterListing", params)
             this.$emit("snackbar", (this.snack = true))
             this.onClose()
         },

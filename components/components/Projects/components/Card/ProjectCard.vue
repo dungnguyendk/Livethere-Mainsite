@@ -9,7 +9,7 @@
         </div>
         <div class="card__image">
             <nuxt-link to="/projects/details">
-                <img :src="project.imgURL" alt="" />
+                <img v-bind:src="require(`~/static/img/static/` + project.imgURL)" alt="" />
             </nuxt-link>
         </div>
         <div class="card__content">

@@ -1,7 +1,7 @@
 <template>
     <main class="page--projects">
-        <HomeSearch @location="onOpenLocationForm($event)" />
-        <ProjectListing />
+        <HomeSearch @location="onOpenLocationForm($event)"/>
+        <ProjectListing/>
         <Dialog 
          :open="isOpenForm" 
          @close="isOpenForm = false" size="medium" 
@@ -43,7 +43,8 @@ export default {
         onClose() {
             this.isOpenForm = false
         }
-    }
+    }, 
+    
 }
 </script>
 

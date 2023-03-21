@@ -134,7 +134,6 @@ export default {
                 bedroom: this.bedroom, 
                 propertyType: this.propertyType
             }
-            console.log("params: ", params)
             this.$store.dispatch("project/searchListing", params)
             this.$router.push("/projects")
         }
