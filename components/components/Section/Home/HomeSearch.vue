@@ -78,7 +78,7 @@
                         </v-row>
                     </v-col>
                     <v-col cols="auto">
-                        <v-btn class="btn btn--primary btn--green">Search</v-btn>
+                        <v-btn class="btn btn--primary btn--green" @click="onSearchListing()">Search</v-btn>
                     </v-col>
                 </v-row>
             </form>
@@ -93,7 +93,7 @@ export default {
     name: "HomeSearch",
     data() {
         return {
-            location: "SINGAPORE",
+            location: "",
             countries: countries,
             locationTypes: LOCATION_TYPES,
             price: "",
@@ -126,6 +126,17 @@ export default {
         }, 
         onOpenForm(e){
             this.$emit("location", e)
+        }, 
+        onSearchListing(){
+            const params = {
+                location: this.location, 
+                price: this.price, 
+                bedroom: this.bedroom, 
+                propertyType: this.propertyType
+            }
+            console.log("params: ", params)
+            this.$store.dispatch("project/searchListing", params)
+            this.$router.push("/projects")
         }
     }
 }

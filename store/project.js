@@ -1,9 +1,9 @@
-import { stat } from "fs"
 import { httpEndpoint } from "~/services/https/endpoints"
 
 export const state = () => ({
     popularListings: [],
-    latestProjects: [], 
+    searchListings: [],
+    latestProjects: [],
     statusResponse: true
 })
 
@@ -13,57 +13,51 @@ export const mutations = {
     },
     setLatestProjects(state, payload) {
         state.latestProjects = payload
-    }, 
-    setStatusResponse(state, payload){
-        state.statusResponse = payload
+    },
+    setSearchListing(state, payload){
+        state.searchListings = payload
     }
 }
 
 export const actions = {
     async getPopularListing({ commit }, payload) {
         try {
-            const response = await this.$axios.$get(
-                `${httpEndpoint}`
-            )
-            if(response){
+            const response = await this.$axios.$get(`${httpEndpoint}`)
+            if (response) {
                 commit("setPopularListings", response.length ? response : [])
-            }else{
+            } else {
                 commit("setPopularListings", [])
             }
         } catch (e) {
-            console.log({Error: e.message})
+            console.log({ Error: e.message })
             commit("setPopularListings", [])
         }
-    }, 
+    },
     async getLatestProject({ commit }, payload) {
         try {
-            const response = await this.$axios.$get(
-                `${httpEndpoint}`
-            )
-            if(response){
+            const response = await this.$axios.$get(`${httpEndpoint}`)
+            if (response) {
                 commit("setLatestProjects", response.length ? response : [])
-            }else{
+            } else {
                 commit("setLatestProjects", [])
             }
         } catch (e) {
-            console.log({Error: e.message})
+            console.log({ Error: e.message })
             commit("setLatestProjects", [])
         }
-    }, 
-    async filterProject({commit, dispatch}, payload){
-        try{
-            const response = await this.$axios.$post(
-                `${httpEndpoint}`
-            )
-            if(response && response !== 0){
-                commit("setStatusResponse", true)
-                dispatch("app/showSnackBar", "Filter success !")
-            }else{ 
-                commit("setStatusResponse", false)
+    },
+    async searchListing({ commit }, payload) {
+        try {
+            const response = await this.$axios.$post(`${httpEndpoint}`, payload)
+            if(response){
+                commit("setSearchListing", response.data)
+            }else{
+                commit("setSearchListing", [])
             }
-        }catch(e){
-            commit("setStatusResponse", false)
+        } catch (e) {
             console.log({Error: e.message})
+            commit("setSearchListing", [])
         }
-    }
+    }, 
+    
 }

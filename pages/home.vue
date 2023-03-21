@@ -33,7 +33,10 @@ import HomeCTASection from "~/components/components/Section/Home/HomeCTASection.
 import Dialog from "~/components/elements/Dialog/Dialog.vue"
 import LocationDistrictForm from "~/components/components/Section/components/Form/LocationDistrictForm.vue"
 import LocationMRTForm from "~/components/components/Section/components/Form/LocationMRTForm.vue"
-
+import { generateLandlordsSEOMetaTags } from '~/ultilities/seo-configs'
+import { httpEndpoint } from "~/services/https/endpoints"
+import { appSettings } from "~/app-settings"
+import { POPULAR_LISTING, LATEST_PROJECT } from "~/ultilities/contants/dummy-data"
 export default {
     name: "LiveThereMainSiteHome",
     components: {
@@ -50,7 +53,7 @@ export default {
     data() {
         return {
             isOpenForm: false,
-            typeForm: ""
+            typeForm: "", 
         }
     },
     methods: {
@@ -60,6 +63,34 @@ export default {
         },
         onClose() {
             this.isOpenForm = false
+            
+        }
+    }, 
+    async asyncData({app, store}){
+        app.head.meta = generateLandlordsSEOMetaTags(app.head.meta)
+        const popularListings = POPULAR_LISTING
+        const latestProjects = LATEST_PROJECT
+        try{
+            const responsePopularListing = await app.$axios.$get(`${httpEndpoint}`)
+            const responseLatestProject = await app.$axios.$get(`${httpEndpoint}`)
+            if(responsePopularListing){
+                await store.commit("project/setPopularListings", responsePopularListing.data)
+            }else {
+                await store.commit("project/setPopularListings", popularListings)
+            }
+
+            if(responseLatestProject){
+                await store.commit("project/setLatestProjects", responseLatestProject.data)
+            }else{
+                await store.commit("project/setLatestProjects", latestProjects)
+            }
+            
+        }catch(e){
+            //Dummy API URL So can't get data. Assign dummy data to swiper to show client 
+            //When API URL Updated --> You should delete 'await store.commit("project/setPopularListings", popularListing)' + 'await store.commit("project/setLatestProjects", latestProjects)' in here. Thks
+            await store.commit("project/setPopularListings", popularListings)
+            await store.commit("project/setLatestProjects", latestProjects)
+            console.log({Error: e.message})
         }
     }
 }

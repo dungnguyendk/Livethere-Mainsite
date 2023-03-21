@@ -53,4 +53,10 @@ export default {
         margin-bottom: 0.4rem;
     }
 }
+
+</style>
+<style lang="scss">
+.v-menu__content{
+    top: 41.2rem !important;
+}
 </style>
