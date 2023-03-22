@@ -205,25 +205,15 @@ export default {
 </script>
 <style lang="scss" scoped>
 .page--project-detail {
-    @media screen and (max-width: 768px) {
-        .page__content {
-            .page__content-left {
-                padding-right: 4rem;
-            }
-        }
-    }
     @media screen and (max-width: 767px) {
         .page__top {
             display: inline-block;
-            .page__top-left {
-                margin-bottom: 2.7rem;
+            .page__top-right {
+                margin-top: 2.7rem;
             }
         }
         .page__content {
             display: inline-block;
-            .page__content-left {
-                padding-right: 0;
-            }
             .page-content-left-expansion {
                 margin-bottom: 2.7rem;
             }
@@ -269,9 +259,6 @@ export default {
     grid-template-columns: 2fr 1fr;
     grid-column-gap: 2.4rem;
 
-    .page__content-left {
-        padding-right: 8.2rem;
-    }
     .page__content-right {
     }
 }
