@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import SwiperCard from "../Card/SwiperCard.vue"
+import SwiperCard from "~/components/components/Projects/components/Card/SwiperCard.vue"
 import { mapState } from "vuex"
 
 export default {

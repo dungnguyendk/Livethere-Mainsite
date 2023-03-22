@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import ConfirmDetailForm from "~/components/components/Projects/components/Form/ConfirmDetailForm"
+import ConfirmDetailForm from "~/components/components/Projects/components/Form/ConfirmDetailForm.vue"
 
 export default {
     name: "ConfirmDetailDialog",

@@ -83,7 +83,7 @@
 </template>
 
 <script>
-import ContactDetailForm from "~/components/components/Projects/components/Form/ContactDetailForm"
+import ContactDetailForm from "~/components/components/Projects/components/Form/ContactDetailForm.vue"
 export default {
     name: "ContactDetailDialog",
     components: { ContactDetailForm },

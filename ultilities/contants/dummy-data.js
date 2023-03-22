@@ -206,8 +206,7 @@ export const PROJECT_DETAILS = {
         totalBed: 4,
         totalBath: 4
     },
-    description:
-        "The centrepiece of an iconic integrated development comprising three landmarks – Stamford House, Capitol Building and Capitol Theatre. Located in the Civic District, perched above Singapore’s well-known historical street corner, the curved residential block offers a front row seat to the city’s Civic and Cultural District as well as spectacular views of Marina Bay and beyond.Eden Residences Capitol is a luxurious residential edifice that sits across the road from The City Hall MRT Interchange and is literally a stone’s throw away to Peninsula Plaza and Raffles City. Living in the Eden Residences Capitol provides an easy access to the fitness and recreational parks like that of Fort Canning Park. Residents can also enjoy the convenience of the amenities nearby such as banks, supermarket, retails outlets, restaurants and other necessities.",
+    description:"<p>The centrepiece of an iconic integrated development comprising three landmarks – Stamford House, Capitol Building and Capitol Theatre. Located in the Civic District, perched above Singapore’s well-known historical street corner, the curved residential block offers a front row seat to the city’s Civic and Cultural District as well as spectacular views of Marina Bay and beyond.</p> <p>Eden Residences Capitol is a luxurious residential edifice that sits across the road from The City Hall MRT Interchange and is literally a stone’s throw away to Peninsula Plaza and Raffles City. Living in the Eden Residences Capitol provides an easy access to the fitness and recreational parks like that of Fort Canning Park. Residents can also enjoy the convenience of the amenities nearby such as banks, supermarket, retails outlets, restaurants and other necessities.</p>",
     propertyDetails: {
         monthlyPrice: 30000,
         unitSize: 5963,

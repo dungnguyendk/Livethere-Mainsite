@@ -22,8 +22,8 @@
 import ProjectListing from "~/components/components/Projects/ProjectListing.vue"
 import HomeSearch from "~/components/components/Section/Home/HomeSearch.vue"
 import Dialog from "~/components/elements/Dialog/Dialog.vue"
-import LocationDistrictForm from "~/components/components/Section/components/Form/LocationDistrictForm"
-import LocationMRTForm from "~/components/components/Section/components/Form/LocationMRTForm"
+import LocationDistrictForm from "~/components/components/Section/components/Form/LocationDistrictForm.vue"
+import LocationMRTForm from "~/components/components/Section/components/Form/LocationMRTForm.vue"
 export default {
     components: { ProjectListing, HomeSearch, Dialog, LocationDistrictForm, LocationMRTForm },
     head: {

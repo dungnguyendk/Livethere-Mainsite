@@ -120,15 +120,15 @@
     </div>
 </template>
 <script>
-import EnquiryForm from "~/components/components/Projects/components/Form/EnquiryForm"
+import EnquiryForm from "~/components/components/Projects/components/Form/EnquiryForm.vue"
 import ContactAgentCard from "./components/Card/ContactAgentCard.vue"
-import NotiCard from "~/components/components/Projects/components/Card/NotiCard"
-import ProjectSwiper from "~/components/components/Projects/components/Slider/ProjectSwiper"
-import PanelListing from "~/components/components/Projects/components/Panel/PanelListing"
-import LightBoxListing from "./components/Box/LightBoxListing.vue"
-import ConfirmDetailDialog from "./components/Dialog/ConfirmDetailDialog.vue"
-import ContactDetailDialog from "./components/Dialog/ContactDetailDialog.vue"
-import ShareSocialDialog from "~/components/components/Projects/components/Dialog/ShareSocialDialog"
+import NotiCard from "~/components/components/Projects/components/Card/NotiCard.vue"
+import ProjectSwiper from "~/components/components/Projects/components/Slider/ProjectSwiper.vue"
+import PanelListing from "~/components/components/Projects/components/Panel/PanelListing.vue"
+import LightBoxListing from "~/components/components/Projects/components/Box/LightBoxListing.vue"
+import ConfirmDetailDialog from "~/components/components/Projects/components/Dialog/ConfirmDetailDialog.vue"
+import ContactDetailDialog from "~/components/components/Projects/components/Dialog/ContactDetailDialog.vue"
+import ShareSocialDialog from "~/components/components/Projects/components/Dialog/ShareSocialDialog.vue"
 import SuccessSnackBar from "~/components/shared/Snackbar/SuccessSnackBar.vue"
 import { convertNumberToCommas } from "~/ultilities/helpers"
 import { mapState } from "vuex"

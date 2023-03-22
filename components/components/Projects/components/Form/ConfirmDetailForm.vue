@@ -78,7 +78,7 @@ const complexity = helpers.regex(
 )
 const singaporePhoneNumber = helpers.regex("singaporePhoneNumber", /^\+65 \d{4}( ?\d{4})$/)
 export default {
-    name: "LiveThereMainSiteConfirmDetailForm",
+    name: "ConfirmDetailForm",
     mixins: [validationMixin],
     components: {SuccessSnackBar},
     validations: {

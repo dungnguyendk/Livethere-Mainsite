@@ -13,7 +13,7 @@
                     </template>
                 </v-expansion-panel-header>
                 <v-expansion-panel-content>
-                    <p>{{ details.description }}</p>
+                    <p v-html="details.description"></p>
                 </v-expansion-panel-content>
             </v-expansion-panel>
             <v-expansion-panel class="expansion-property expansion-panel-custom">

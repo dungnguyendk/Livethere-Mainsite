@@ -5,8 +5,8 @@
 </template>
 
 <script>
-import LandlordHeader from "~/components/shared/Header/LandlordHeader"
-import LandingFooter from "~/components/shared/Footer/LandingFooter"
+import LandlordHeader from "~/components/shared/Header/LandlordHeader.vue"
+import LandingFooter from "~/components/shared/Footer/LandingFooter.vue"
 import ProjectDetail from "~/components/components/Projects/ProjectDetail.vue"
 import { generateLandlordsSEOMetaTags } from '~/ultilities/seo-configs'
 import { httpEndpoint } from "~/services/https/endpoints"

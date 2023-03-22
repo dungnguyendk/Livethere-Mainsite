@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import FilterProjectForm from '../Form/FilterProjectForm.vue'
+import FilterProjectForm from '~/components/components/Projects/components/Form/FilterProjectForm.vue'
 export default {
     name: "FilterDialog",
     components: { FilterProjectForm },

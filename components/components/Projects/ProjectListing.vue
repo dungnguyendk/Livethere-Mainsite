@@ -67,11 +67,11 @@
 </template>
 
 <script>
-import ProjectCard from "./components/Card/ProjectCard.vue"
-import FilterProjectForm from "~/components/components/Projects/components/Form/FilterProjectForm"
-import ShareSocialForm from "./components/Form/ShareSocialForm.vue"
-import FilterDialog from "~/components/components/Projects/components/Dialog/FilterDialog"
-import ShareSocialDialog from "~/components/components/Projects/components/Dialog/ShareSocialDialog"
+import ProjectCard from "~/components/components/Projects/components/Card/ProjectCard.vue"
+import FilterProjectForm from "~/components/components/Projects/components/Form/FilterProjectForm.vue"
+import ShareSocialForm from "~/components/components/Projects/components/Form/ShareSocialForm.vue"
+import FilterDialog from "~/components/components/Projects/components/Dialog/FilterDialog.vue"
+import ShareSocialDialog from "~/components/components/Projects/components/Dialog/ShareSocialDialog.vue"
 import SuccessSnackBar from "~/components/shared/Snackbar/SuccessSnackBar.vue"
 import { mapState } from "vuex"
 import { state } from '~/store/analytics'
