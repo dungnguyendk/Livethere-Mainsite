@@ -33,7 +33,7 @@
                                             :src="require(`~/static/img/logos/logo-project.svg`)"
                                             alt=""
                                         />
-                                        <span>premium</span>
+                                        <span>{{ projectDetails.projectInfo.premium ? 'premium' : '' }}</span>
                                     </div>
                                     <h3 class="page__content-left-title"
                                         >{{ projectDetails.projectInfo.title }}</h3

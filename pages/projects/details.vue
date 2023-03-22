@@ -22,14 +22,14 @@ export default {
         app.head.meta = generateLandlordsSEOMetaTags(app.head.meta)
         const projectDetails = PROJECT_DETAILS
         const homeAgent = HOME_AGENT_INFO
-        const popularListings = POPULAR_LISTING
+        const mostViewedListing = POPULAR_LISTING
         const id = params.id
         try{ 
             const responseProjectDetails = await app.$axios.$get(`${httpEndpoint}`, id)
             const responseHomeAgent = await app.$axios.$get(`${httpEndpoint}`, id)
-            const responsePopularListing = await app.$axios.$get(`${httpEndpoint}`)
-            if(responsePopularListing){
-                await store.commit("project/setPopularListings", responsePopularListing.data)
+            const responseMostViewedListing = await app.$axios.$get(`${httpEndpoint}`)
+            if(responseMostViewedListing){
+                await store.commit("project/setPopularListings", responseMostViewedListing.data)
             }else {
                 await store.commit("project/setPopularListings", popularListings)
             }
@@ -47,7 +47,7 @@ export default {
             console.log({Error: e.message})
             await store.commit("project/setProjectDetails", projectDetails)
             await store.commit("project/setHomeAgent", homeAgent)
-            await store.commit("project/setPopularListings", popularListings)
+            await store.commit("project/setPopularListings", mostViewedListing)
 
         }
     }

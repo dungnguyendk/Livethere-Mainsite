@@ -201,6 +201,7 @@ export const PROJECT_DETAILS = {
     projectInfo: {
         title: "Eden Residences Capital",
         favourite: false,
+        premium: true,
         price: 30000,
         address: "1 Shenton Way, Singapore 068803",
         totalBed: 4,

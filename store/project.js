@@ -5,6 +5,7 @@ export const state = () => ({
     popularListings: [],
     searchListings: [],
     latestProjects: [],
+    mostViewedListings: [],
     homeAgent: {},
     projectDetails: {}
 })
@@ -24,6 +25,9 @@ export const mutations = {
     },
     setProjectDetails(state, payload) {
         state.projectDetails = payload
+    }, 
+    setMostViewedListings(state, payload){
+        state.mostViewedListings = payload
     }
 }
 
@@ -144,5 +148,18 @@ export const actions = {
             console.log({ Error: e.message })
             return true
         }
-    }
+    }, 
+    async getMostViewedListing({ commit }, payload) {
+        try {
+            const response = await this.$axios.$get(`${httpEndpoint}`)
+            if (response) {
+                commit("setMostViewedListings", response.length ? response : [])
+            } else {
+                commit("setMostViewedListings", [])
+            }
+        } catch (e) {
+            console.log({ Error: e.message })
+            commit("setMostViewedListings", [])
+        }
+    },
 }
