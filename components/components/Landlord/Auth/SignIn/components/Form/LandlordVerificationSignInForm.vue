@@ -143,7 +143,7 @@ export default {
                         const { jwtToken } = response.data
                         if (jwtToken) {
                             await this.$store.dispatch("app/showSnackBar", "Login successful!")
-                            window.location.href = "/landlord/dashboard"
+                            window.location.href = "/dashboard"
                         } else {
                             this.httpError = "The credentials is invalid. Please try again."
                         }

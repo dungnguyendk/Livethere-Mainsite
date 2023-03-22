@@ -82,7 +82,7 @@ export default {
     }),
     created() {
         if (this.registerDetails === null || this.registerDetails === undefined) {
-            this.$router.push("/landlord/register")
+            this.$router.push("/register")
         }
     },
     methods: {
@@ -159,7 +159,7 @@ export default {
                             await this.$store.dispatch("app/showSnackBar", response.message)
                             await this.$store.commit("user/setRegisterDetails", null)
                             setTimeout(() => {
-                                this.$router.push("/landlord/signin")
+                                this.$router.push("/signin")
                             }, 2400)
                         } else {
                             this.httpError = response.message

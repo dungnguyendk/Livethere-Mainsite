@@ -9,7 +9,7 @@ export const defaultMenu = [
     },
     {
         defaultName: "Landlords",
-        linkURL: "/landlord/dashboard"
+        linkURL: "/"
     },
     {
         defaultName: "About us",

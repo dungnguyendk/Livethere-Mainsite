@@ -1,7 +1,12 @@
 <template lang="html">
     <nav class="nav--landlord">
-        <nuxt-link v-for="(item, index) in navigation" :to="item.value" :class="handleActive(item) ? 'active' : ''"
-            @click.prevent="onSelectPanel(item)" :key="index">
+        <nuxt-link
+            v-for="(item, index) in navigation"
+            :to="item.value"
+            :class="handleActive(item) ? 'active' : ''"
+            @click.prevent="onSelectPanel(item)"
+            :key="index"
+        >
             {{ item.label }}
         </nuxt-link>
     </nav>
@@ -22,42 +27,36 @@ export default {
             navigation: [
                 {
                     label: "Dashboard",
-                    path: "/landlord/dashboard",
-                    value: "/landlord"
+                    path: "/dashboard",
+                    value: "/dashboard"
                 },
                 {
                     label: "Assets",
-                    path: "/landlord/assets",
-                    value: "/landlord/assets"
+                    path: "/assets",
+                    value: "/assets"
                 },
                 {
                     label: "Analytics",
-                    path: "/landlord/analytics",
-                    value: "/landlord/analytics"
+                    path: "/analytics",
+                    value: "/analytics"
                 },
                 {
                     label: "Marketing",
-                    path: "/landlord/marketing",
-                    value: "/landlord/marketing"
+                    path: "/marketing",
+                    value: "/marketing"
                 }
                 /*{
                     label: "Insights",
-                    path: "/landlord/insights",
-                    value: "/landlord/insights"
+                    path: "/insights",
+                    value: "/insights"
                 }*/
             ]
         }
     },
     methods: {
         handleActive(menuItem) {
-            if (this.path === menuItem.path) return true
-            // if (this.path.includes("/landlord/tenancy") && menuItem.path === "/landlord/assets")
-            //     return true
-            // if (
-            //     this.path.includes("/landlord/assets/units") &&
-            //     menuItem.path === "/landlord/assets"
-            // )
-            //     return true
+            if (this.path.includes("/tenancy") && menuItem.path === "/assets") return true
+            if (this.path.includes("/assets/units") && menuItem.path === "/assets") return true
         },
         onSelectPanel(panel) {
             this.activePanel = panel.value

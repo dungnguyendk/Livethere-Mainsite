@@ -62,14 +62,14 @@ export default {
     methods: {
         onChangePassword() {
             this.$store.commit("app/setAppDrawer", false)
-            this.$router.push("/landlord/change-password")
+            this.$router.push("/change-password")
         },
         handleCloseDrawer() {
             this.$store.commit("app/setAppDrawer", !this.appDrawer)
         },
         async onLogout() {
             await this.$auth.logout().then(() => {
-                window.location.href = "/landlord/signin"
+                window.location.href = "/signin"
             })
         }
     },

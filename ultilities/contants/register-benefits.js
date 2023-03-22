@@ -31,7 +31,7 @@ export const REGISTER_BENEFITS = [
         id: 2,
         icon: "vector",
         title: "Landlord Register Users",
-        url: "/landlord/register",
+        url: "/register",
         contents: [
             {
                 id: 1,

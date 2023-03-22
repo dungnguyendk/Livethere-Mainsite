@@ -27,7 +27,7 @@
             </div>
         </div>
         <div class="form__link">
-            <NuxtLink to="/landlord/forgot-password">Forgot password</NuxtLink>
+            <NuxtLink to="/forgot-password">Forgot password</NuxtLink>
         </div>
         <div class="form__actions">
             <v-btn class="btn btn--primary btn--green" @click="onSubmit" :loading="loading">
@@ -121,7 +121,7 @@ export default {
                     await this.$store.commit("user/setUserID", response.userID)
                     await this.$store.dispatch("user/setSignInDetails", params)
                     await this.$router.push(
-                        `/landlord/signin/verify-otp?token=${response.exchangeID}`
+                        `/signin/verify-otp?token=${response.exchangeID}`
                     )
                 } else {
                     setTimeout(() => {

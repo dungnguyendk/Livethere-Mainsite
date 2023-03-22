@@ -9,7 +9,7 @@ export const mutations = {
     }
 }
 export const actions = {
-    async getDashBoards({ commit }, payload) {
+    async getDashBoards({ commit }) {
         try {
             const response = await this.$axios.$get(`${httpEndpoint.dashBoard.getEntries}`)
             if (response) {

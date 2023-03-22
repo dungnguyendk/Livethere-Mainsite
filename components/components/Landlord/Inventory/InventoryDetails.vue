@@ -42,7 +42,7 @@ export default {
     },
     methods: {
         onBack() {
-            this.$router.push("/landlord/assets")
+            this.$router.push("/assets")
         },
         openSnackbar(e) {
             this.isOpenSnackbar = e

@@ -12,7 +12,7 @@
                         <nuxt-link to="/landlord"> Dashboard</nuxt-link>
                     </v-list-item>
                     <v-list-item>
-                        <a href="/landlord/change-password" @click.prevent="onChangePassword">
+                        <a href="/change-password" @click.prevent="onChangePassword">
                             Change password
                         </a>
                     </v-list-item>
@@ -24,7 +24,7 @@
             <template v-else>
                 <v-list class="ps-drawer__user">
                     <v-list-item>
-                        <nuxt-link to="/landlord/signin" class="header__link"> Login</nuxt-link>
+                        <nuxt-link to="/signin" class="header__link"> Login</nuxt-link>
                     </v-list-item>
                     <v-list-item>
                         <nuxt-link to="/register" class="header__link"> Register</nuxt-link>
@@ -60,11 +60,11 @@ export default {
             this.$emit("close")
         },
         onChangePassword() {
-            this.$router.push("/landlord/change-password")
+            this.$router.push("/change-password")
         },
         async onLogout() {
             await this.$auth.logout().then(() => {
-                window.location.href = "/landlord/signin"
+                window.location.href = "/signin"
             })
         }
     }
