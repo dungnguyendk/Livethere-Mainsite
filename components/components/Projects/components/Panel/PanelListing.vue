@@ -68,7 +68,7 @@
                 <v-expansion-panel-content>
                     <div class="available-from-row">
                         <i class="icon-svg svg-calendar"></i>
-                        <p>{{ details.propertyDetails.availableFrom }}</p>
+                        <p>{{ details.availableFrom }}</p>
                     </div>
                 </v-expansion-panel-content>
             </v-expansion-panel>
