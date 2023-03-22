@@ -9,10 +9,12 @@
         <td data-title="Actions">
             <div class="actions">
                 <v-btn class="btn btn--ghost btn--green btn--sm btn--withIcon" @click="onDownload">
-                    <i class="ri-download-cloud-2-line" /><p>Download</p>
+                    <i class="ri-download-cloud-2-line" />
+                    <p>Download</p>
                 </v-btn>
                 <v-btn class="btn btn--ghost btn--red btn--sm btn--withIcon" @click="onDelete">
-                    <i class="ri-delete-bin-6-line" /> <p>Remove</p>
+                    <i class="ri-delete-bin-6-line" />
+                    <p>Remove</p>
                 </v-btn>
             </div>
         </td>
@@ -20,6 +22,8 @@
 </template>
 
 <script>
+import { appMedia } from "~/app-settings"
+
 export default {
     name: "TenancyDocumentRecord",
 
@@ -45,9 +49,10 @@ export default {
                 link.href = "abc"
                 link.setAttribute("download", this.source.originalFileName)
                 document.body.appendChild(link)
-                window.open(
+                /*window.open(
                     `http://vnapi.asiaesolutions.com/publiccontentapi/api/documents/${this.source.fileID}/datas`
-                )
+                )*/
+                window.open(`${appMedia.baseURL}/api/documents/${this.source.fileID}/datas`)
             }
         }
     }
@@ -60,6 +65,7 @@ export default {
     align-items: center;
     grid-gap: 0.4rem;
     gap: 0.4rem;
+
     p {
         margin-bottom: 0;
     }
@@ -74,6 +80,7 @@ td {
     padding: 3.3rem 2.4rem;
     border-bottom: 1px solid #e5e5e5;
     margin: 0;
+
     p {
         display: flex;
         justify-content: left;
@@ -91,9 +98,11 @@ td {
         overflow: hidden;
     }
 }
+
 tr:nth-child(even) {
     background-color: #fafafa;
 }
+
 @media screen and (max-width: 1279px) {
     .actions {
         p {
@@ -102,16 +111,19 @@ tr:nth-child(even) {
         }
     }
 }
+
 @media screen and (max-width: 1023px) {
     .actions {
         display: flex;
         justify-content: center;
+
         p {
             margin-bottom: 0;
             font-size: 1.4;
         }
     }
 }
+
 @media screen and (max-width: 768px) {
     tr:nth-child(even) {
         background-color: #fafafa;
@@ -138,6 +150,7 @@ tr:nth-child(even) {
     .actions {
         display: flex;
         justify-content: flex-end;
+
         p {
             margin-bottom: 0;
             font-size: 0;

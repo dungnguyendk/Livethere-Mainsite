@@ -38,7 +38,7 @@
 
                     <v-col cols="12" sm="12" md="12">
                         <div class="form__field">
-                            <label>Remark </label>
+                            <label>Remarks </label>
                             <v-textarea v-model="remark" dense outlined />
                         </div>
                     </v-col>

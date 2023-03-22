@@ -8,7 +8,7 @@
             <div class="section__columns">
                 <div class="section__column">
                     <p>
-                        <span>Commercement Date:</span>
+                        <span>Start Date:</span>
                         <strong>{{ startDateFormatter }}</strong>
                     </p>
                     <p>
@@ -16,7 +16,7 @@
                         <strong>{{ tenancyDetails ? tenancyDetails.leasePeriod : "-" }}</strong>
                     </p>
                     <p>
-                        <span>Secure Deposit:</span>
+                        <span>Security Deposit:</span>
                         <strong>S$ {{ secureDepositFormatter }}</strong>
                     </p>
                 </div>

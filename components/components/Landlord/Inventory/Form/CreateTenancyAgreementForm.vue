@@ -116,7 +116,6 @@
                             dense
                             outlined
                             :error-messages="tenancyRefCodeErrors"
-                          
                         />
                     </div>
                 </v-col>
@@ -149,7 +148,7 @@
 
                 <v-col cols="12" sm="12" md="12">
                     <div class="form__field">
-                        <label>Remark </label>
+                        <label>Remarks </label>
                         <v-textarea v-model="remark" dense outlined />
                     </div>
                 </v-col>
@@ -158,8 +157,8 @@
         <div class="form__actions">
             <v-btn class="btn btn--ghost btn--gray btn--sm" @click="onClose"> Cancel</v-btn>
             <v-btn class="btn btn--primary btn--green btn--sm" type="submit" :loading="loading">
-                Create</v-btn
-            >
+                Create
+            </v-btn>
         </div>
     </form>
 </template>
@@ -381,7 +380,7 @@ export default {
             this.secureDeposit = ""
             this.remark = ""
         },
-            validateStartDateAndEndDate(start, end) {
+        validateStartDateAndEndDate(start, end) {
             const startDateFormat = this.$dayjs(this.startDate)
                 .format("YYYY-MM-DD")
                 .toString()
