@@ -13,7 +13,7 @@
                     </template>
                 </v-expansion-panel-header>
                 <v-expansion-panel-content>
-                    <p v-html="details.description"></p>
+                    <div v-html="details.description" class="text-custom"></div>
                 </v-expansion-panel-content>
             </v-expansion-panel>
             <v-expansion-panel class="expansion-property expansion-panel-custom">
@@ -99,37 +99,36 @@
 </template>
 
 <script>
-import { convertNumberToCommas } from '~/ultilities/helpers';
+import { convertNumberToCommas } from "~/ultilities/helpers"
 export default {
     name: "PanelListing",
     props: {
-        details:{
-            type: Object, 
+        details: {
+            type: Object,
             default: () => []
         }
     },
     computed: {
-        priceFormat(){
+        priceFormat() {
             return convertNumberToCommas(this.details.propertyDetails.monthlyPrice)
-        }, 
-        sizeFormat(){
+        },
+        sizeFormat() {
             return convertNumberToCommas(this.details.propertyDetails.unitSize)
-        }, 
-        pricePSFFormat(){
+        },
+        pricePSFFormat() {
             return convertNumberToCommas(this.details.propertyDetails.monthlyPricePSF)
-        }, 
-
+        }
     },
     data() {
         return {
-            panel: [0, 1, 2, 3], 
+            panel: [0, 1, 2, 3]
         }
-    },
+    }
 }
 </script>
 
 <style lang="scss" scoped>
-.section--listing-expansion-panel{
+.section--listing-expansion-panel {
     @media screen and (max-width: 820px) {
         .expansion-amenities-row {
             grid-template-columns: repeat(2, 1fr);
@@ -171,6 +170,14 @@ export default {
     }
     &:nth-child(4) {
         border-bottom: none;
+    }
+}
+.text-custom {
+    :deep(p) {
+        font-weight: 400;
+        font-size: 1.6rem;
+        line-height: 2.4rem;
+        color: var(--color-title-black);
     }
 }
 .expansion-property-row {
