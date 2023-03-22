@@ -159,7 +159,7 @@ export default {
               this.$store.dispatch("project/enquireUser", params).then((res)=>{
                   this.$emit("snackbar", {isShowSnackbar: true, messageSnackbar: 'Thank you for your submission, our agent has been notified and will be contacting you shortly'})
               })
-             
+              this.onResetForm()
                 
             }else{
                 console.log("fail !")
