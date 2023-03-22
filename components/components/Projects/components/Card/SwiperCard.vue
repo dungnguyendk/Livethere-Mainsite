@@ -88,6 +88,7 @@ export default {
             width: 85.9%;
             max-height: 7.5rem;
             box-sizing: border-box;
+            transition: none;
             .card__header-link {
                 color: var(--color-white);
                 font-size: 2rem;
@@ -120,6 +121,7 @@ export default {
                     bottom: auto;
                     top: 9rem;
                     padding: 0 4.2rem;
+                   
 
                     .card__header-link {
                         text-align: center;

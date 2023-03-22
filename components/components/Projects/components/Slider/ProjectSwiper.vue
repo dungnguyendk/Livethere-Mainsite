@@ -6,17 +6,13 @@
             </h3>
         </div>
         <div class="swiper__content">
-            <swiper class="swiper swiper-container" :options="swiperOption">
-                <swiper-slide v-for="(element, index) in popularListing" :key="index">
-                    <SwiperCard :item="element" />
+            <swiper class="swiper swiper-item" :options="swiperOption">
+                <swiper-slide class="swiper-box" v-for="(element, index) in popularListing" :key="index">
+                    <SwiperCard :item="element"/>
+                    
                 </swiper-slide>
                 <div class="swiper-button-prev" slot="button-prev"></div>
                 <div class="swiper-pagination" slot="pagination"></div>
-                <div
-                    class="swiper-button-next"
-                    slot="button-next"
-                    :class="{ 'swiper-button-active': activeColorArrow }"
-                ></div>
                 <div class="swiper-button-next" slot="button-next"></div>
             </swiper>
             <div class="swiper-fraction">
@@ -140,6 +136,7 @@ export default {
 
 <style lang="scss" scoped>
 .swiper--project {
+    padding: 0 1.2rem;
     .swiper__top {
         position: relative;
         bottom: -2.75rem;
@@ -158,7 +155,7 @@ export default {
         position: relative;
     }
     @media only screen and (max-width: 767px) {
-        .swiper-container {
+        .swiper-item {
             padding-top: 10rem;
         }
         .swiper-pagination-progressbar {
@@ -235,11 +232,23 @@ export default {
 .swiper-button-active {
     opacity: 1;
 }
-.swiper-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.swiper-item {
     padding-top: 6rem;
     padding-bottom: 2.6rem;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+
+    .swiper-box{
+        &:not(:nth-child(1), :nth-child(2), :nth-child(3)){
+            display: none;
+        }
+    }
+}
+.swiper-container{ 
+    .swiper-box{
+        &:not(:nth-child(1), :nth-child(2), :nth-child(3)){
+            display: inline-block;
+        }
+    }
 }
 </style>

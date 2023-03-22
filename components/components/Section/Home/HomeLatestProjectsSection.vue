@@ -9,12 +9,11 @@
                     <swiper class="swiper swiper-item" :options="swiperOption">
                         <swiper-slide class="swiper-box" v-for="article in articles" :key="article.id">
                             <div class="article-wrapper">
-                                <ArticleGrid :article="article" class="swiper-lazy"/>
+                                <ArticleGrid :article="article" />
                             </div>
                         </swiper-slide>
                         <div class="swiper-button-prev" slot="button-prev"></div>
                         <div class="swiper-pagination" slot="pagination"></div>
-                        <!-- <div class="swiper-button-next" slot="button-next" :class="{'swiper-button-active' : activeColorArrow}"></div> -->
                         <div class="swiper-button-next" slot="button-next"></div>
                     </swiper>
                     <div class="swiper-fraction">
@@ -139,11 +138,6 @@ export default {
             activeColorArrow: false
         }
     },
-    computed: {
-        swiper() {
-            return this.$refs.mySwiper.swiper
-        }
-    },
     mounted() {
         this.fractionForm = this.articles.length.toLocaleString("en-US", {
             minimumIntegerDigits: 2,
@@ -159,7 +153,7 @@ export default {
 
 <style lang="scss" scoped>
 .section--home-latest-projects {
-    padding: 8rem 0;
+    padding: 6rem 0 8rem;
     @media screen and (max-width: 960px) {
         padding: 5rem 0;
     }
@@ -303,11 +297,23 @@ export default {
 }
 
 .swiper-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
     padding-top: 6rem;
     padding-bottom: 2.6rem;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+
+    .swiper-box{
+        &:not(:nth-child(1), :nth-child(2), :nth-child(3)){
+            display: none;
+        }
+    }
+}
+.swiper-container{ 
+    .swiper-box{
+        &:not(:nth-child(1), :nth-child(2), :nth-child(3)){
+            display: inline-block;
+        }
+    }
 }
 .article-wrapper {
     padding: 0 1rem;
