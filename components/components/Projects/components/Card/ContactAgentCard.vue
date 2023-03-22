@@ -10,9 +10,9 @@
                 </v-avatar>
             </div>
             <div class="card__content-infor">
-                <h3>jocelyn choong</h3>
-                <p>Savills Singapore Pte Ltd</p>
-                <p>CEA: R044198A</p>
+                <h3>{{ info.name }}</h3>
+                <p>{{ info.firstLine }}</p>
+                <p>{{ info.secondLine }}</p>
             </div>
         </div>
         <div class="card__features">
@@ -45,6 +45,12 @@
 <script>
 export default {
     name: "ContactAgentCard",
+    props: {
+      info: {
+        type: Object, 
+        default: () => {}
+      }
+    },
     data() {
         return {
             imgURLAvatar: "https://avatars0.githubusercontent.com/u/9064066?v=4&s=460",

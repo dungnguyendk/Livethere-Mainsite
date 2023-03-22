@@ -13,23 +13,7 @@
                     </template>
                 </v-expansion-panel-header>
                 <v-expansion-panel-content>
-                    <p
-                        >The centrepiece of an iconic integrated development comprising three
-                        landmarks – Stamford House, Capitol Building and Capitol Theatre. Located in
-                        the Civic District, perched above Singapore’s well-known historical street
-                        corner, the curved residential block offers a front row seat to the city’s
-                        Civic and Cultural District as well as spectacular views of Marina Bay and
-                        beyond.</p
-                    >
-                    <p
-                        >Eden Residences Capitol is a luxurious residential edifice that sits across
-                        the road from The City Hall MRT Interchange and is literally a stone’s throw
-                        away to Peninsula Plaza and Raffles City. Living in the Eden Residences
-                        Capitol provides an easy access to the fitness and recreational parks like
-                        that of Fort Canning Park. Residents can also enjoy the convenience of the
-                        amenities nearby such as banks, supermarket, retails outlets, restaurants
-                        and other necessities.</p
-                    >
+                    <p>{{ details.description }}</p>
                 </v-expansion-panel-content>
             </v-expansion-panel>
             <v-expansion-panel class="expansion-property expansion-panel-custom">
@@ -42,35 +26,35 @@
                 <v-expansion-panel-content>
                     <div class="expansion-property-row">
                         <p>monthly price:</p>
-                        <p>S$ 30,000 </p>
+                        <p>S$ {{ priceFormat }} </p>
                     </div>
                     <div class="expansion-property-row">
                         <p>unit size:</p>
-                        <p>5,963 sqft </p>
+                        <p>{{ sizeFormat }} sqft </p>
                     </div>
                     <div class="expansion-property-row">
                         <p>monthly price PSF:</p>
-                        <p>S$ 5.03</p>
+                        <p>S$ {{ pricePSFFormat }}</p>
                     </div>
                     <div class="expansion-property-row">
                         <p>lease term:</p>
-                        <p>24 months </p>
+                        <p>{{ details.propertyDetails.leaseTerm }} months </p>
                     </div>
                     <div class="expansion-property-row">
                         <p>furnishing:</p>
-                        <p>Fully Furnished</p>
+                        <p>{{ details.propertyDetails.furnishing }}</p>
                     </div>
                     <div class="expansion-property-row">
                         <p>built year:</p>
-                        <p>2015</p>
+                        <p>{{ details.propertyDetails.builtYear }}</p>
                     </div>
                     <div class="expansion-property-row">
                         <p>tenure:</p>
-                        <p>99-year Leasehold</p>
+                        <p>{{ details.propertyDetails.tenure }}</p>
                     </div>
                     <div class="expansion-property-row">
                         <p>property type:</p>
-                        <p>Condo</p>
+                        <p>{{ details.propertyDetails.propertyType }}</p>
                     </div>
                 </v-expansion-panel-content>
             </v-expansion-panel>
@@ -84,7 +68,7 @@
                 <v-expansion-panel-content>
                     <div class="available-from-row">
                         <i class="icon-svg svg-calendar"></i>
-                        <p>2022-02-01</p>
+                        <p>{{ details.propertyDetails.availableFrom }}</p>
                     </div>
                 </v-expansion-panel-content>
             </v-expansion-panel>
@@ -99,7 +83,7 @@
                     <div class="expansion-amenities-row">
                         <div
                             class="expansion-amenities-column"
-                            v-for="(item, index) in listAmenities"
+                            v-for="(item, index) in details.facilities"
                             :key="index"
                         >
                             <div class="expansion-amenities-icon">
@@ -115,124 +99,32 @@
 </template>
 
 <script>
+import { convertNumberToCommas } from '~/ultilities/helpers';
 export default {
     name: "PanelListing",
+    props: {
+        details:{
+            type: Object, 
+            default: () => []
+        }
+    },
+    computed: {
+        priceFormat(){
+            return convertNumberToCommas(this.details.propertyDetails.monthlyPrice)
+        }, 
+        sizeFormat(){
+            return convertNumberToCommas(this.details.propertyDetails.unitSize)
+        }, 
+        pricePSFFormat(){
+            return convertNumberToCommas(this.details.propertyDetails.monthlyPricePSF)
+        }, 
+
+    },
     data() {
         return {
             panel: [0, 1, 2, 3], 
-            listAmenities: [
-                {
-                    id: 1,
-                    icon: "icon-svg svg-free-wifi",
-                    text: "free wifi"
-                },
-                {
-                    id: 2,
-                    icon: "icon-svg svg-pool",
-                    text: "pool"
-                },
-                {
-                    id: 3,
-                    icon: "icon-svg svg-bathtub",
-                    text: "bathtub"
-                },
-                {
-                    id: 4,
-                    icon: "icon-svg svg-spa",
-                    text: "spa"
-                },
-                {
-                    id: 5,
-                    icon: "icon-svg svg-sauna",
-                    text: "sauna"
-                },
-                {
-                    id: 6,
-                    icon: "icon-svg svg-bbq",
-                    text: "BBQ"
-                },
-                {
-                    id: 7,
-                    icon: "icon-svg svg-concierge",
-                    text: "concierge"
-                },
-                {
-                    id: 8,
-                    icon: "icon-svg svg-game-room",
-                    text: "games room"
-                },
-                {
-                    id: 9,
-                    icon: "icon-svg svg-tennis-court",
-                    text: "tennis-court"
-                },
-                {
-                    id: 10,
-                    icon: "icon-svg svg-patio",
-                    text: "patio"
-                },
-                {
-                    id: 11,
-                    icon: "icon-svg svg-taxi",
-                    text: "taxi"
-                },
-                {
-                    id: 12,
-                    icon: "icon-svg svg-pet-allowed",
-                    text: "pets allowed"
-                },
-                {
-                    id: 13,
-                    icon: "icon-svg svg-pool-view",
-                    text: "pool view"
-                },
-                {
-                    id: 14,
-                    icon: "icon-svg svg-jacuzzi",
-                    text: "jacuzzi"
-                },
-                {
-                    id: 15,
-                    icon: "icon-svg svg-gym",
-                    text: "gym"
-                },
-                {
-                    id: 16,
-                    icon: "icon-svg svg-yoga",
-                    text: "yoga"
-                },
-                {
-                    id: 17,
-                    icon: "icon-svg svg-gourmet-kitchen",
-                    text: "gourmet kitchen"
-                },
-                {
-                    id: 18,
-                    icon: "icon-svg svg-restaurant",
-                    text: "restaurant"
-                },
-                {
-                    id: 19,
-                    icon: "icon-svg svg-playground",
-                    text: "playground"
-                },
-                {
-                    id: 20,
-                    icon: "icon-svg svg-squash-court",
-                    text: "squash court"
-                },
-                {
-                    id: 21,
-                    icon: "icon-svg svg-social-lounge",
-                    text: "social lounge"
-                }
-            ],
         }
     },
-
-    mounted() {},
-
-    methods: {}
 }
 </script>
 

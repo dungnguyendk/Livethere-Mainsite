@@ -4,7 +4,7 @@
             <div class="container">
                 <div class="page__top">
                     <div class="page__top-left">
-                        <LightBoxListing />
+                        <LightBoxListing :images="projectDetails.listImages"/>
                     </div>
                     <div class="page__top-right">
                         <iframe
@@ -36,7 +36,7 @@
                                         <span>premium</span>
                                     </div>
                                     <h3 class="page__content-left-title"
-                                        >Eden Residences Capitol</h3
+                                        >{{ projectDetails.projectInfo.title }}</h3
                                     >
                                 </div>
                                 <div class="page__content-left-emotions">
@@ -54,43 +54,44 @@
                             </div>
                             <div class="page__content-left-content">
                                 <div class="page__content-left-price">
-                                    <h3>S$ 30,000/month</h3>
+                                    <h3>S$ {{ priceFormat }}/month</h3>
                                 </div>
                                 <div class="page__content-left-info">
                                     <div
                                         class="page__content-left-location page__content-left-icon-custom"
                                     >
                                         <i class="icon-svg svg-location"></i>
-                                        <span>1 Shenton Way, Singapore 068803</span>
+                                        <span>{{ projectDetails.projectInfo.address }}</span>
                                     </div>
                                     <div class="page__content-left-bed-bath">
                                         <div
                                             class="page__content-left-bed page__content-left-icon-custom"
                                         >
                                             <i class="icon-svg svg-bedroom"></i>
-                                            <span>5</span>
+                                            <span>{{ projectDetails.projectInfo.totalBed }}</span>
                                         </div>
                                         <div
                                             class="page__content-left-bath page__content-left-icon-custom"
                                         >
                                             <i class="icon-svg svg-bathroom"></i>
-                                            <span>10</span>
+                                            <span>{{ projectDetails.projectInfo.totalBath }}</span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div class="page-content-left-expansion">
-                            <PanelListing />
+                            <PanelListing :details="projectDetails"/>
                         </div>
                     </div>
                     <div class="page__content-right">
                         <div class="page__content-right-sticky">
                             <ContactAgentCard 
+                             :info="homeAgentInfo"
                             @openConfirm="openConfirmDetailDialog($event)" 
                             @openContact="openContactDetailDialog($event)"
                             />
-                            <EnquiryForm />
+                            <EnquiryForm @snackbar="showStatusForm($event)"/>
                             <NotiCard />
                         </div>
                     </div>
@@ -100,7 +101,6 @@
         <div class="page--project-detail-second">
             <div class="container">
                 <ProjectSwiper>{{ titleSwiper }}</ProjectSwiper>
-
             </div>
             <ShareSocialDialog
              :open="isOpenShareSocialDialog"
@@ -115,6 +115,7 @@
              :open="isOpenContactDetailDialog"
              @close="closeContactDetailDialog"
             />
+            <SuccessSnackBar :open="isShowSnackbar" :message="messageSnackbar" class="snackbar"/>
         </div>
     </div>
 </template>
@@ -128,6 +129,10 @@ import LightBoxListing from "./components/Box/LightBoxListing.vue"
 import ConfirmDetailDialog from "./components/Dialog/ConfirmDetailDialog.vue"
 import ContactDetailDialog from "./components/Dialog/ContactDetailDialog.vue"
 import ShareSocialDialog from "~/components/components/Projects/components/Dialog/ShareSocialDialog"
+import SuccessSnackBar from "~/components/shared/Snackbar/SuccessSnackBar.vue"
+import { convertNumberToCommas } from "~/ultilities/helpers"
+import { mapState } from "vuex"
+import { state } from '~/store/analytics'
 export default {
     name: "ProjectListing",
     components: {
@@ -139,7 +144,17 @@ export default {
         LightBoxListing,
         ConfirmDetailDialog,
         ContactDetailDialog,
-        ShareSocialDialog
+        ShareSocialDialog, 
+        SuccessSnackBar
+    },
+    computed: {
+        ...mapState({
+            projectDetails: (state) => state.project.projectDetails, 
+            homeAgentInfo: (state) => state.project.homeAgent
+        }), 
+        priceFormat(){
+            return convertNumberToCommas(this.projectDetails.projectInfo.price)
+        }
     },
     data() {
         return {
@@ -148,6 +163,8 @@ export default {
             isOpenShareSocialDialog: false,
             isOpenConfirmDetailDialog: false,
             isOpenContactDetailDialog: false,
+            isShowSnackbar: false, 
+            messageSnackbar: '', 
             titleSwiper: "most viewed listings",
             targetLinkURL: {
                 id: 1,
@@ -178,7 +195,11 @@ export default {
         closeContactDetailDialog() {
             this.isOpenContactDetailDialog = false
         }, 
-
+        showStatusForm(e){
+            this.isShowSnackbar = e.isShowSnackbar
+            this.messageSnackbar = e.messageSnackbar
+            
+        }
     }
 }
 </script>

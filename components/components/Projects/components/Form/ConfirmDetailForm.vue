@@ -50,16 +50,15 @@
             <v-btn class="btn btn--primary btn--green btn-custom" type="submit" :loading="loading"
                 >Verify & continue</v-btn
             >
+            <SuccessSnackBar :open="snackbar" :message="messageSnackbar"/>
         </div>
-        <v-snackbar v-model="snackbar" color="#00634F" text class="snackbar-custom">
-            Thank you for your submission, our agent has been notified and will be contacting you
-            shortly
-        </v-snackbar>
+    
     </form>
     
 </template>
 
 <script>
+import SuccessSnackBar from "~/components/shared/Snackbar/SuccessSnackBar.vue"
 import { validationMixin } from "vuelidate"
 import { required, helpers, email } from "vuelidate/lib/validators"
 import { setFormControlErrors } from "~/ultilities/form-validations"
@@ -81,6 +80,7 @@ const singaporePhoneNumber = helpers.regex("singaporePhoneNumber", /^\+65 \d{4}(
 export default {
     name: "LiveThereMainSiteConfirmDetailForm",
     mixins: [validationMixin],
+    components: {SuccessSnackBar},
     validations: {
         name: {
             required
@@ -136,7 +136,8 @@ export default {
                     showDialCode: true
                 }
             }, 
-            snackbar: false
+            snackbar: false, 
+            messageSnackbar: "",
         }
     },
 
@@ -152,7 +153,11 @@ export default {
                     phone: this.phone, 
                     email: this.email, 
                 }
-                this.snackbar = true
+                this.$store.dispatch("project/confirmDetails", params).then((res)=>{
+                    this.snackbar = res
+                    this.messageSnackbar = "Thank you for your submission, our agent has been notified and will be contacting you shortly"
+                })
+                this.onResetForm()
             }else{
                 console.log("fail!")
             }

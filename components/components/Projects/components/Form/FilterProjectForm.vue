@@ -331,8 +331,9 @@ export default {
                         : this.rangeUnitSize,
                 selected: this.selected
             }
-            this.$store.dispatch("project/filterListing", params)
-            this.$emit("snackbar", (this.snack = true))
+            this.$store.dispatch("project/filterListing", params).then((res)=>{
+                this.$emit("snackbar", {isShowSnackbar: true, messageSnackbar: 'Thank you for your submission, our agent has been notified and will be contacting you shortly'})
+            })
             this.onClose()
         },
         onResetForm() {

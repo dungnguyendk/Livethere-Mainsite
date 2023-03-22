@@ -43,7 +43,7 @@
                 </div>
                 <div class="section__body-list">
                     <ProjectCard v-for="(project, index) in listProject"
-                        :key="index" :project="project" @open="openShareSocialDialog($event)" :listProject="listProject"/>
+                        :key="index" :project="project" @open="openShareSocialDialog($event)"/>
                       
                 </div>
                 <div class="section__body-load-more">
@@ -52,17 +52,15 @@
                     <FilterDialog 
                      :open="isOpenFilterProjectDialog"
                      @close="closeFilterProjectDialog"
-                     @snackbar="openSnackbar($event)"
+                     @snackbar="showStatusForm($event)"
                     />
                     <ShareSocialDialog
                      :open="isOpenShareSocialDialog"
                      @close="closeShareSocialDialog"
                      :item="targetLinkURL"
                     />
-                    <v-snackbar v-model="snackbar" color="#00634F" text class="snackbar-custom">
-            Thank you for your submission, our agent has been notified and will be contacting you
-            shortly
-        </v-snackbar>
+                    <SuccessSnackBar :open="snackbar" :message="messageSnackbar"/>
+
             </div>
         </div>
     </section>
@@ -74,6 +72,7 @@ import FilterProjectForm from "~/components/components/Projects/components/Form/
 import ShareSocialForm from "./components/Form/ShareSocialForm.vue"
 import FilterDialog from "~/components/components/Projects/components/Dialog/FilterDialog"
 import ShareSocialDialog from "~/components/components/Projects/components/Dialog/ShareSocialDialog"
+import SuccessSnackBar from "~/components/shared/Snackbar/SuccessSnackBar.vue"
 import { mapState } from "vuex"
 import { state } from '~/store/analytics'
 export default {
@@ -83,7 +82,8 @@ export default {
         FilterProjectForm,
         ShareSocialForm,
         FilterDialog,
-        ShareSocialDialog
+        ShareSocialDialog, 
+        SuccessSnackBar
     },
     computed: {
         ...mapState({
@@ -119,7 +119,8 @@ export default {
             isOpenShareSocialDialog: false,
             selectionSort: 1,
             targetLinkURL: {},
-            snackbar: false
+            snackbar: false, 
+            messageSnackbar: ""
         }
     },
     methods: {
@@ -135,8 +136,9 @@ export default {
                 return index.id === e.id
             })
         },
-        openSnackbar(e) {
-            this.snackbar = e
+        showStatusForm(e) {
+            this.snackbar = e.isShowSnackbar
+            this.messageSnackbar = e.messageSnackbar
         }
     }
 }
@@ -161,9 +163,7 @@ export default {
             }
         }
         .section__body-load-more {
-            button {
-                padding: 2rem 0 2.8rem;
-            }
+            padding: 2rem 0 2.8rem;
         }
         .section__body-list {
             display: grid;
@@ -230,6 +230,7 @@ export default {
     }
 }
 .section__body-load-more {
+    padding: 5.8rem 0 3.8rem;
     button {
         font-weight: 700;
         font-size: 1.6rem;
@@ -239,9 +240,8 @@ export default {
         display: flex;
         justify-content: center;
         align-items: center;
-        padding: 5.8rem 0 3.8rem;
-
         width: 100%;
+        display: inline-block;
     }
 }
 .select-custom {

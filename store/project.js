@@ -1,11 +1,12 @@
 import { httpEndpoint } from "~/services/https/endpoints"
-import { PROJECT_LISTING } from "~/ultilities/contants/dummy-data"
+import { PROJECT_LISTING, HOME_AGENT_INFO, PROJECT_DETAILS } from "~/ultilities/contants/dummy-data"
 
 export const state = () => ({
     popularListings: [],
     searchListings: [],
     latestProjects: [],
-    statusResponse: true
+    homeAgent: {},
+    projectDetails: {}
 })
 
 export const mutations = {
@@ -15,8 +16,14 @@ export const mutations = {
     setLatestProjects(state, payload) {
         state.latestProjects = payload
     },
-    setSearchListing(state, payload){
+    setSearchListing(state, payload) {
         state.searchListings = payload
+    },
+    setHomeAgent(state, payload) {
+        state.homeAgent = payload
+    },
+    setProjectDetails(state, payload) {
+        state.projectDetails = payload
     }
 }
 
@@ -50,27 +57,92 @@ export const actions = {
     async searchListing({ commit }, payload) {
         try {
             const response = await this.$axios.$post(`${httpEndpoint}`, payload)
-            if(response){
+            if (response) {
                 commit("setSearchListing", response.data)
-            }else{
+            } else {
                 commit("setSearchListing", [])
             }
         } catch (e) {
-            console.log({Error: e.message})
+            console.log({ Error: e.message })
             commit("setSearchListing", PROJECT_LISTING)
         }
-    }, 
-    async filterListing({commit}, payload){
-        try{
+    },
+    async filterListing({ commit }, payload) {
+        try {
             const response = await this.$axios.$post(`${httpEndpoint}`, payload)
-            if(response){
+            if (response) {
                 commit("setSearchListing", response.data)
-            }else{
+            } else {
                 commit("setSearchListing", [])
             }
-        }catch(e){
-            console.log({Error: e.message})
+        } catch (e) {
+            console.log({ Error: e.message })
             commit("setSearchListing", PROJECT_LISTING)
+        }
+    },
+    async homeAgentInfo({ commit }, payload) {
+        try {
+            const response = await this.$axios.$post(`${httpEndpoint}`, payload)
+            if (response) {
+                commit("setHomeAgent", response.data)
+            } else {
+                commit("setHomeAgent", {})
+            }
+        } catch (e) {
+            console.log({ Error: e.message })
+            commit("setHomeAgent", HOME_AGENT_INFO)
+        }
+    },
+    async enquireUser({ commit }, payload) {
+        try {
+            const response = await this.$axios.$post(`${httpEndpoint}`, payload)
+            if (response) {
+                return true
+            } else {
+                return false
+            }
+        } catch (e) {
+            console.log({ Error: e.message })
+            return true
+        }
+    },
+    async projectDetails({ commit }, payload) {
+        try {
+            const response = await this.$axios.$post(`${httpEndpoint}`, payload)
+            if (response) {
+                commit("setProjectDetails", response.data)
+            } else {
+                commit("setProjectDetails", PROJECT_DETAILS)
+            }
+        } catch (e) {
+            console.log({ Error: e.message })
+            commit("setProjectDetails", PROJECT_DETAILS)
+        }
+    },
+    async contactDetails({ commit }, payload) {
+        try {
+            const response = await this.$axios.$post(`${httpEndpoint}`, payload)
+            if (response) {
+                return true
+            } else {
+                return false
+            }
+        } catch (e) {
+            console.log({ Error: e.message })
+            return true
+        }
+    },
+    async confirmDetails({ commit }, payload) {
+        try {
+            const response = await this.$axios.$post(`${httpEndpoint}`, payload)
+            if (response) {
+                return true
+            } else {
+                return false
+            }
+        } catch (e) {
+            console.log({ Error: e.message })
+            return true
         }
     }
 }

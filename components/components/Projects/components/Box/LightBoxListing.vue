@@ -6,17 +6,17 @@
             :key="idx"
             @click="index = idx"
             :class="{
-                'active-total-images': image.id === 4 && listImages.length > 4
+                'active-total-images': image.id === 4 && images.length > 4
             }"
         >
             <img :src="image.src" alt="" />
-            <span v-if="image.id === 4 && listImages.length > 4"
+            <span v-if="image.id === 4 && images.length > 4"
                 >+{{ totalImagesSlider }} photos</span
             >
         </div>
         <Tinybox
             v-model="index"
-            :images="listImages"
+            :images="images"
             :loop="loopCheckbox"
             :no-thumbs="!thumbsCheckbox"
         ></Tinybox>
@@ -26,50 +26,14 @@
 <script>
 export default {
     name: "LightBoxListing",
+    props: {
+        images: {
+            type: Array, 
+            default: () => []
+        }
+    },
     data() {
         return {
-            listImages: [
-                {
-                    id: 1,
-                    src: "https://picsum.photos/600/400.jpg?random="
-                },
-                {
-                    id: 2,
-                    src: "https://picsum.photos/600/400.jpg?random="
-                },
-                {
-                    id: 3,
-                    src: "https://picsum.photos/600/400.jpg?random="
-                },
-                {
-                    id: 4,
-                    src: "https://picsum.photos/600/400.jpg?random="
-                },
-                {
-                    id: 5,
-                    src: "https://picsum.photos/600/400.jpg?random="
-                },
-                {
-                    id: 6,
-                    src: "https://picsum.photos/600/400.jpg?random="
-                },
-                {
-                    id: 7,
-                    src: "https://picsum.photos/600/400.jpg?random="
-                },
-                {
-                    id: 8,
-                    src: "https://picsum.photos/600/400.jpg?random="
-                },
-                {
-                    id: 9,
-                    src: "https://picsum.photos/600/400.jpg?random="
-                },
-                {
-                    id: 10,
-                    src: "https://picsum.photos/600/400.jpg?random="
-                }
-            ], 
             index: null,
             loopCheckbox: false,
             thumbsCheckbox: true,
@@ -77,10 +41,10 @@ export default {
     }, 
     computed: {
         listImagesLimited() {
-            return this.listImages.slice(0, 4)
+            return this.images.slice(0, 4)
         },
         totalImagesSlider() {
-            return Number(this.listImages.length) - 4
+            return Number(this.images.length) - 4
         }
     }
 }
