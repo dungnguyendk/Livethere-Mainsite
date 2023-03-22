@@ -99,7 +99,8 @@
         </div>
         <div class="page--project-detail-second">
             <div class="container">
-                <ProjectSwiper />
+                <ProjectSwiper>{{ titleSwiper }}</ProjectSwiper>
+
             </div>
             <ShareSocialDialog
              :open="isOpenShareSocialDialog"
@@ -147,10 +148,11 @@ export default {
             isOpenShareSocialDialog: false,
             isOpenConfirmDetailDialog: false,
             isOpenContactDetailDialog: false,
+            titleSwiper: "most viewed listings",
             targetLinkURL: {
                 id: 1,
                 title: "Eden Residences Capitol",
-                imgURL: require(`../../../static/img/project-01.png`),
+                imgURL: require(`../../../static/img/static/project-01.png`),
                 location: "2 Sinaran Drive, Singapore 307467",
                 price: 30000,
                 totalBed: 3,
@@ -175,7 +177,8 @@ export default {
         },
         closeContactDetailDialog() {
             this.isOpenContactDetailDialog = false
-        }
+        }, 
+
     }
 }
 </script>

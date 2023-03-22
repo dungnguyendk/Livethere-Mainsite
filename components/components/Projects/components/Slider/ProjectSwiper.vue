@@ -1,45 +1,18 @@
 <template>
     <div class="swiper--project">
         <div class="swiper__top">
-            <h3>most viewed listings</h3>
+            <h3>
+                <slot />
+            </h3>
         </div>
         <div class="swiper__content">
             <swiper class="swiper swiper-item" :options="swiperOption">
-                <swiper-slide
-                    class="swiper-box"
-                    v-for="element in popularListing"
-                    :key="element.id"
-                >
-                    <div class="swiper-box__top">
-                        <div class="swiper-box__image">
-                            <img :src="element.imgURL" alt="" />
-                        </div>
-                        <div class="swiper-box__title">
-                            <nuxt-link to="/" class="swiper-box__title-link">
-                                {{ element.title }}
-                            </nuxt-link>
-                        </div>
-                    </div>
-                    <div class="swiper-box__content">
-                        <div class="swiper-box__content-first">
-                            <img :src="element.imgURLIconFirst" alt="" />
-                            <p>{{ element.address }}</p>
-                        </div>
-                        <div class="swiper-box__content-second">
-                            <div>
-                                <img :src="element.imgURLIconSecond" alt="" />
-                                <p>{{ element.totalBed }}</p>
-                            </div>
-                            <div>
-                                <img :src="element.imgURLIconThird" alt="" />
-                                <p>{{ element.totalBath }}</p>
-                            </div>
-                        </div>
-                    </div>
+                <swiper-slide class="swiper-box" v-for="(element, index) in popularListing" :key="index">
+                    <SwiperCard :item="element"/>
+                    
                 </swiper-slide>
                 <div class="swiper-button-prev" slot="button-prev"></div>
                 <div class="swiper-pagination" slot="pagination"></div>
-                <!-- <div class="swiper-button-next" slot="button-next" :class="{'swiper-button-active' : activeColorArrow}"></div> -->
                 <div class="swiper-button-next" slot="button-next"></div>
             </swiper>
             <div class="swiper-fraction">
@@ -51,8 +24,13 @@
 </template>
 
 <script>
+import SwiperCard from "../Card/SwiperCard.vue"
+
 export default {
     name: "ProjectSwiper",
+    components: {
+        SwiperCard
+    },
     data() {
         const self = this
         return {
@@ -79,6 +57,7 @@ export default {
                         spaceBetween: 26
                     }
                 },
+
                 on: {
                     slideChange: function () {
                         let lastVisibleItem = this.realIndex + this.params.slidesPerView
@@ -94,10 +73,7 @@ export default {
                 {
                     id: 1,
                     title: "Waterfront Bungalow at Ocean Drive",
-                    imgURL: require(`../../../../../static/img/listing1.png`),
-                    imgURLIconFirst: require(`../../../../../static/img/home-icon1.png`),
-                    imgURLIconSecond: require(`../../../../../static/img/home-icon2.png`),
-                    imgURLIconThird: require(`../../../../../static/img/home-icon3.png`),
+                    imgURL: require(`../../../../../static/img/static/listing1.png`),
                     address: "Ocean Drive, Singapore 098314",
                     totalBed: 4,
                     totalBath: 4
@@ -105,10 +81,7 @@ export default {
                 {
                     id: 2,
                     title: "Skypark @ Somerset",
-                    imgURL: require(`../../../../../static/img/listing2.png`),
-                    imgURLIconFirst: require(`../../../../../static/img/home-icon1.png`),
-                    imgURLIconSecond: require(`../../../../../static/img/home-icon2.png`),
-                    imgURLIconThird: require(`../../../../../static/img/home-icon3.png`),
+                    imgURL: require(`../../../../../static/img/static/listing2.png`),
                     address: "Ocean Drive, Singapore 098314",
                     totalBed: 4,
                     totalBath: 4
@@ -116,7 +89,7 @@ export default {
                 {
                     id: 3,
                     title: "Soleil @ Sinaran",
-                    imgURL: require(`../../../../../static/img/listing3.png`),
+                    imgURL: require(`../../../../../static/img/static/listing3.png`),
                     imgURLIconFirst: require(`../../../../../static/img/home-icon1.png`),
                     imgURLIconSecond: require(`../../../../../static/img/home-icon2.png`),
                     imgURLIconThird: require(`../../../../../static/img/home-icon3.png`),
@@ -127,10 +100,7 @@ export default {
                 {
                     id: 4,
                     title: "Skypark @ Somerset",
-                    imgURL: require(`../../../../../static/img/listing2.png`),
-                    imgURLIconFirst: require(`../../../../../static/img/home-icon1.png`),
-                    imgURLIconSecond: require(`../../../../../static/img/home-icon2.png`),
-                    imgURLIconThird: require(`../../../../../static/img/home-icon3.png`),
+                    imgURL: require(`../../../../../static/img/static/listing2.png`),
                     address: "Ocean Drive, Singapore 098314",
                     totalBed: 4,
                     totalBath: 4
@@ -138,10 +108,7 @@ export default {
                 {
                     id: 5,
                     title: "Soleil @ Sinaran",
-                    imgURL: require(`../../../../../static/img/listing3.png`),
-                    imgURLIconFirst: require(`../../../../../static/img/home-icon1.png`),
-                    imgURLIconSecond: require(`../../../../../static/img/home-icon2.png`),
-                    imgURLIconThird: require(`../../../../../static/img/home-icon3.png`),
+                    imgURL: require(`../../../../../static/img/static/listing3.png`),
                     address: "Ocean Drive, Singapore 098314",
                     totalBed: 4,
                     totalBath: 4
@@ -169,6 +136,7 @@ export default {
 
 <style lang="scss" scoped>
 .swiper--project {
+    padding: 0 1.2rem;
     .swiper__top {
         position: relative;
         bottom: -2.75rem;
@@ -200,14 +168,9 @@ export default {
         .swiper-fraction {
             top: 5.5rem;
         }
-        .swiper-box__content-second {
-            p {
-                font-weight: 500;
-                font-size: 1.6rem;
-                line-height: 2.4rem;
-                color: var(--color-title-black); 
-                
-            }
+        .swiper__content {
+            max-width: 42rem;
+            margin: 0 auto;
         }
     }
 }
@@ -265,86 +228,27 @@ export default {
         right: 12.6rem;
     }
 }
-.swiper-box {
-    .swiper-box__top {
-        position: relative;
-        padding: 0 1.2rem;
-        .swiper-box__image {
-            img {
-                width: 100%;
-                object-fit: cover;
-                border-radius: 2rem;
-            }
-        }
-        .swiper-box__title {
-            position: absolute;
-            background-color: #edb842;
-            padding: 2.2rem 1.6rem 2.5rem;
-            bottom: 2.3rem;
-            margin-bottom: 0;
-            display: flex;
-            align-items: center;
-            left: -1.2rem;
-            width: 85.9%;
-            max-height: 7.5rem;
-            box-sizing: border-box;
-            .swiper-box__title-link {
-                color: var(--color-white);
-                font-size: 2rem;
-                line-height: 2.8rem;
-                text-align: left;
-                text-overflow: ellipsis;
-                display: -webkit-box;
-                -webkit-line-clamp: 2;
-                line-clamp: 2;
-                -webkit-box-orient: vertical;
-                overflow: hidden;
-            }
-        }
-    }
-    .swiper-box__content {
-        padding-top: 0.9rem;
-        .swiper-box__content-first {
-            display: flex;
-            align-items: center;
-            margin-bottom: 1rem;
-            p {
-                margin-bottom: 0;
-                font-weight: 500;
-                font-size: 1.6rem;
-                line-height: 2.4rem;
-                color: var(--color-title-black);
-                padding-left: 1rem;
-            }
-        }
-        .swiper-box__content-second {
-            display: flex;
-            align-items: center;
-            div {
-                display: flex;
-                align-items: center;
-                p {
-                    margin-bottom: 0;
-                    margin-left: 0.8rem;
-                    color: var(--color-title-black);
-                }
-                img {
-                }
-                &:first-child {
-                    margin-right: 4.6rem;
-                }
-            }
-        }
-    }
-}
+
 .swiper-button-active {
     opacity: 1;
 }
 .swiper-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
     padding-top: 6rem;
     padding-bottom: 2.6rem;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+
+    .swiper-box{
+        &:not(:nth-child(1), :nth-child(2), :nth-child(3)){
+            display: none;
+        }
+    }
+}
+.swiper-container{ 
+    .swiper-box{
+        &:not(:nth-child(1), :nth-child(2), :nth-child(3)){
+            display: inline-block;
+        }
+    }
 }
 </style>

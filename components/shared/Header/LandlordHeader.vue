@@ -7,15 +7,36 @@
                         <SiteLogo />
                     </div>
                     <div class="header__center">
-                        <ul class="menu--top">
+                        <ul class="menu--top" v-for="(item, index) in menus">
                             <a
-                                v-for="(item, index) in menus"
                                 :href="item.linkURL"
                                 :class="item.linkURL === path ? 'active' : ''"
                                 :key="index"
                             >
                                 {{ item.defaultName }}
                             </a>
+                        </ul>
+                        <ul class="menu--top">
+                            <a
+                                :class="openContactUsDialog ? 'active' : ''"
+                                @click="openContactUsDialog = true"
+                            >
+                                Contact us
+                            </a>
+                            <Dialog
+                                :open="openContactUsDialog"
+                                @close="closeDialog"
+                                :actions="false"
+                                :size="sizeDialog"
+                                :title="''"
+                            >
+                                <ContactUsForm
+                                    @close="openContactUsDialog = false"
+                                    :isContactUs="true"
+                                    titleContact="Contact Us"
+                                    v-if="openContactUsDialog"
+                                />
+                            </Dialog>
                         </ul>
                     </div>
                     <div class="header__right">
@@ -54,10 +75,10 @@
                         </template>
                         <template v-else>
                             <div class="header__actions">
-                                <nuxt-link to="/signin" class="header__link"> Login </nuxt-link>
+                                <nuxt-link to="/signin" class="header__link"> Login</nuxt-link>
                                 <nuxt-link to="/register/start" class="header__link">
-                                    Register</nuxt-link
-                                >
+                                    Register
+                                </nuxt-link>
                             </div>
                         </template>
                     </div>
@@ -77,10 +98,12 @@ import { httpEndpoint } from "~/services/https/endpoints"
 import { defaultMenu } from "~/ultilities/menus"
 import { mapState } from "vuex"
 import LandlordMobileHeader from "~/components/shared/Header/LandlordMobileHeader.vue"
+import Dialog from "~/components/elements/Dialog/Dialog.vue"
+import ContactUsForm from "~/components/shared/Header/Form/ContactUsForm.vue"
 
 export default {
     name: "LandlordHeader",
-    components: { LandlordMobileHeader, MobileHeader, SiteLogo },
+    components: { LandlordMobileHeader, MobileHeader, SiteLogo, Dialog, ContactUsForm },
     props: {
         source: {
             type: Object,
@@ -95,9 +118,6 @@ export default {
         name() {
             return this.data
         },
-        path() {
-            return this.$router.currentRoute.path
-        },
         loggedIn() {
             return this.$auth.loggedIn
         }
@@ -105,11 +125,15 @@ export default {
 
     data() {
         return {
+            path: this.$router.currentRoute.path,
             menus: defaultMenu,
-            menuID: 0
+            menuID: 0,
+            sizeDialog: "medium",
+            openContactUsDialog: false
         }
     },
     created() {
+        console.log({ userInfos: this.userInfo, loggedIn: this.loggedIn })
         if (!this.userInfo && this.loggedIn) {
             this.$store.dispatch("app/getUserInfo")
         }
@@ -136,6 +160,14 @@ export default {
                     this.menus = response.menuItems
                 }
             }
+        },
+        closeDialog() {
+            this.openContactUsDialog = false
+        }
+    },
+    watch: {
+        $route(to, from) {
+            this.path = to.path
         }
     }
 }
@@ -148,6 +180,7 @@ export default {
     right: 0;
     z-index: 99;
 }
+
 .btn--account {
     border: none;
     box-shadow: none;
@@ -200,6 +233,8 @@ export default {
 
         &:hover,
         &:focus {
+            color: #fff;
+
             &:before {
                 visibility: visible;
                 opacity: 1;

@@ -36,18 +36,11 @@ export default {
     methods: {
         onDelete() {
             this.$emit("onDelete", this.source)
-            /*this.$store.dispatch("tenancy/deleteTenancyDocument", {
-                documnentID: this.source.id,
-                documentType: this.documentType
-            })*/
         },
 
         async onDownload() {
             const response = await this.$api.$get(`/api/documents/${this.source.id}/datas`)
             if (response) {
-                /*  const file = new Blob([response])
-                const fileURL = URL.createObjectURL(file)
-              */
                 const link = document.createElement("a")
                 link.href = "abc"
                 link.setAttribute("download", this.source.originalFileName)

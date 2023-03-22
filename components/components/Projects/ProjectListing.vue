@@ -52,13 +52,17 @@
                     <FilterDialog 
                      :open="isOpenFilterProjectDialog"
                      @close="closeFilterProjectDialog"
-                    
+                     @snackbar="openSnackbar($event)"
                     />
                     <ShareSocialDialog
                      :open="isOpenShareSocialDialog"
                      @close="closeShareSocialDialog"
                      :item="targetLinkURL"
                     />
+                    <v-snackbar v-model="snackbar" color="#00634F" text class="snackbar-custom">
+            Thank you for your submission, our agent has been notified and will be contacting you
+            shortly
+        </v-snackbar>
             </div>
         </div>
     </section>
@@ -69,59 +73,62 @@ import ProjectCard from "./components/Card/ProjectCard.vue"
 import FilterProjectForm from "~/components/components/Projects/components/Form/FilterProjectForm"
 import ShareSocialForm from "./components/Form/ShareSocialForm.vue"
 import FilterDialog from "~/components/components/Projects/components/Dialog/FilterDialog"
-import ShareSocialDialog from '~/components/components/Projects/components/Dialog/ShareSocialDialog'
+import ShareSocialDialog from "~/components/components/Projects/components/Dialog/ShareSocialDialog"
 export default {
     name: "ProjectListing",
-    components: { ProjectCard, FilterProjectForm, ShareSocialForm, FilterDialog, ShareSocialDialog },
+    components: {
+        ProjectCard,
+        FilterProjectForm,
+        ShareSocialForm,
+        FilterDialog,
+        ShareSocialDialog
+    },
     data() {
         return {
             listProject: [
                 {
                     id: 1,
                     title: "Eden Residences Capitol",
-                    imgURL: require(`../../../static/img/project-01.png`),
+                    imgURL: require(`../../../static/img/static/project-01.png`),
                     location: "2 Sinaran Drive, Singapore 307467",
                     price: 30000,
                     totalBed: 3,
                     totalBath: 2,
-                    activeHeart: false, 
+                    activeHeart: false,
                     linkDetails: "http://localhost:3002/projects/details/1"
                 },
                 {
                     id: 2,
                     title: "Skypark @ Somerset",
-                    imgURL: require(`../../../static/img/project-02.png`),
+                    imgURL: require(`../../../static/img/static/project-02.png`),
                     location: "22 Saint Thomas Walk, Singapore 238107",
                     price: 18000,
                     totalBed: 4,
                     totalBath: 4,
                     activeHeart: false,
                     linkDetails: "http://localhost:3002/projects/details/2"
-
                 },
                 {
                     id: 3,
                     title: "Up @ Robertson Quay",
-                    imgURL: require(`../../../static/img/project-03.png`),
+                    imgURL: require(`../../../static/img/static/project-03.png`),
                     location: "92 Robertson Quay, Singapore 238260",
                     price: 56000,
                     totalBed: 8,
                     totalBath: 10,
-                    activeHeart: false, 
+                    activeHeart: false,
                     linkDetails: "http://localhost:3002/projects/details/3"
-
                 },
                 {
                     id: 4,
                     title: "The Sail @ Marina Bay",
-                    imgURL: require(`../../../static/img/project-01.png`),
+                    imgURL: require(`../../../static/img/static/project-01.png`),
                     location: "Marina Boulevard, Singapore 018987",
                     price: 15800,
                     totalBed: 5,
                     totalBath: 9,
-                    activeHeart: false, 
+                    activeHeart: false,
                     linkDetails: "http://localhost:3002/projects/details/4"
-
                 }
             ],
             listSort: [
@@ -149,9 +156,9 @@ export default {
             isActiveMap: false,
             isOpenFilterProjectDialog: false,
             isOpenShareSocialDialog: false,
-            selectionSort: 1, 
-            targetLinkURL: {}
-            
+            selectionSort: 1,
+            targetLinkURL: {},
+            snackbar: false
         }
     },
     methods: {
@@ -163,10 +170,12 @@ export default {
         },
         openShareSocialDialog(e) {
             this.isOpenShareSocialDialog = e.open
-            this.targetLinkURL = this.listProject.find(index=>{
+            this.targetLinkURL = this.listProject.find((index) => {
                 return index.id === e.id
             })
-
+        },
+        openSnackbar(e) {
+            this.snackbar = e
         }
     }
 }
@@ -183,16 +192,15 @@ export default {
         }
     }
     @media screen and (max-width: 450px) {
-        .section__btn-style{
-            i{
-
+        .section__btn-style {
+            i {
             }
-            span{
+            span {
                 display: none;
             }
         }
-        .section__body-load-more{
-            button{
+        .section__body-load-more {
+            button {
                 padding: 2rem 0 2.8rem;
             }
         }
@@ -203,7 +211,6 @@ export default {
             padding: 2rem;
         }
     }
-
 }
 
 .section__top {
@@ -227,10 +234,9 @@ export default {
 .section__body-map {
     transition: 300ms linear;
     overflow: hidden;
-    .section__body-map-custom{
+    .section__body-map-custom {
         height: 25.6rem;
     }
-
 }
 .section__body-map--active {
     margin-bottom: 2.4rem;
@@ -291,7 +297,7 @@ export default {
         .v-input__prepend-inner {
             i {
                 width: 1.6rem;
-                background-color: var(--color-primary)
+                background-color: var(--color-primary);
             }
         }
         .v-select__selections {
@@ -306,8 +312,8 @@ export default {
             line-height: 2rem;
             color: var(--color-primary);
         }
-        fieldset{
-            border: 0.2rem solid var(--color-primary); 
+        fieldset {
+            border: 0.2rem solid var(--color-primary);
             border-radius: 0.8rem;
         }
     }
@@ -316,5 +322,12 @@ export default {
     //     border-radius: 0.8rem;
 
     // }
+}
+.snackbar-custom{
+    ::v-deep(.v-snack__content){
+        font-weight: 500; 
+        font-size: 1.4rem;
+        line-height: 2.4rem;
+    }
 }
 </style>

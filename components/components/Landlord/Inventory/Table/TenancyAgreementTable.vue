@@ -2,9 +2,9 @@
     <table class="table--responsive table--tenancy-agreement">
         <thead>
             <tr>
-                <th>Tenancy Agreement Code </th>
-                <th>Agreement Date </th>
-                <th>Contract date </th>
+                <th>Tenancy Agreement Code</th>
+                <th>Agreement Date</th>
+                <th>Contract Date</th>
                 <th>Status</th>
                 <th></th>
             </tr>
@@ -55,10 +55,12 @@ export default {
     border-width: 0px 1px 1px 1px;
     border-style: solid;
     border-color: #e5e5e5;
+
     thead {
         tr {
             position: relative;
         }
+
         th {
             padding: 1.5rem 1.8rem 1.5rem;
             background: #d97706;
@@ -71,6 +73,7 @@ export default {
         }
     }
 }
+
 @media (max-width: 767px) {
     .table--responsive tbody tr {
         margin-bottom: 0;

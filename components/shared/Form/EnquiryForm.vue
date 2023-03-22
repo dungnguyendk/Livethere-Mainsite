@@ -1,6 +1,6 @@
 <template lang="html">
     <div class="form--enquiry">
-        <h4 class="form__title">Drop us a note. We’ll be in touch with you</h4>
+        <h4 class="form__title">List Your Property With Us!</h4>
         <form class="form__fields" @submit.prevent="onSubmit">
             <v-row>
                 <v-col cols="6" cols-sm="12">
@@ -206,7 +206,7 @@ export default {
                             this.sent = true
                             await this.$store.dispatch(
                                 "app/showSnackBar",
-                                response.message || "Your message has been sent!"
+                                "Thank you for your submission, our agent has notified and will be contacting you shortly."
                             )
                         } else {
                             await this.$store.dispatch("app/showSnackBar", response.message)
@@ -317,16 +317,20 @@ export default {
             padding: 0 1.2rem;
         }
     }
+
     @media screen and(max-width: 600px) {
         .form__title {
             font-size: 2rem;
         }
+
         .form__fields {
             display: block;
         }
+
         label {
             font-size: 1.4rem;
         }
+
         :deep(.v-input) {
             input {
                 font-size: 1.4rem;

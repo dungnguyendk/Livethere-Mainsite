@@ -29,7 +29,7 @@
                         :source="item"
                         :key="index"
                         @onDeleleteSuccess="showDeleteSuccess"
-                        @open="openDeleteDialog($event)"
+                        @open="onOpenDeleteDialog(item.id)"
                     />
                 </template>
                 <template v-else>
@@ -41,6 +41,7 @@
                 </template>
             </tbody>
         </table>
+        <DeleteDialog :open="deleteDialog" @close="deleteDialog = false" @onSubmit="deleteItem" />
     </div>
 </template>
 
@@ -49,11 +50,11 @@ import { mapState } from "vuex"
 import TenancyExpenseRecord from "./TenancyExpenseRecord.vue"
 import Dialog from "~/components/elements/Dialog/Dialog"
 import CreateTenancyExpenseForm from "~/components/components/Landlord/Tenancy/Form/CreateTenancyExpenseForm"
-import SuccessSnackBar from "~/components/shared/Snackbar/SuccessSnackBar"
+import DeleteDialog from "~/components/elements/Dialog/DeleteDialog.vue"
 
 export default {
     name: "TenancyExpenseTable",
-    components: { SuccessSnackBar, CreateTenancyExpenseForm, Dialog, TenancyExpenseRecord },
+    components: { DeleteDialog, CreateTenancyExpenseForm, Dialog, TenancyExpenseRecord },
     computed: {
         ...mapState({
             expenses: (state) => state.tenancy.expenses,
@@ -62,13 +63,24 @@ export default {
     },
     data() {
         return {
-            snackBar: false,
-            snackBarMessage: "",
             sortByCategory: false,
-            sortByDate: false
+            sortByDate: false,
+            deleteDialog: false,
+            selectedIDForDelete: ""
         }
     },
     methods: {
+        onOpenDeleteDialog(id) {
+            this.selectedIDForDelete = id
+            this.deleteDialog = true
+        },
+        async deleteItem() {
+            await this.$store
+                .dispatch("tenancy/deleteTenancyExpense", this.selectedIDForDelete)
+                .then((response) => {
+                    this.deleteDialog = false
+                })
+        },
         onSortByCategory() {
             this.sortByCategory = !this.sortByCategory
             this.$store.dispatch("tenancy/getExpenses", {
@@ -92,11 +104,6 @@ export default {
         },
         showDeleteSuccess() {
             this.$store.dispatch("app/showSnackBar", "Delete expense successfully! ")
-        },
-
-        openDeleteDialog(e) {
-            this.$emit("open", { open: e.open, id: e.id })
-            console.log("target event: ", e)
         }
     }
 }

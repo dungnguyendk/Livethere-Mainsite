@@ -18,9 +18,5 @@ export const defaultMenu = [
     {
         defaultName: "Search",
         linkURL: "https://www.livethere.com/search/results?from=home"
-    },
-    {
-        defaultName: "Contact us",
-        linkURL: "https://www.livethere.com/"
     }
 ]

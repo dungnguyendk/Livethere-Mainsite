@@ -1,24 +1,11 @@
 <template lang="html">
-    <TenancyWrapper >
+    <TenancyWrapper>
         <template slot="content">
-            <!--            <pre>{{ tenancyDetails }}</pre>-->
             <TenancyUploadFilePanel
                 title="Tenancy Agreement"
                 @onUpdateDocuments="onUpdateDocuments"
             />
             <TenancyDocumentsPanel :documentType="documentType" />
-            <v-snackbar
-                v-model="openSnackBar"
-                :timeout="2000"
-                top
-                right
-                text
-                color="green darken-4"
-            >
-                <span class="message--snackBar">
-                    <i class="ri-information-line" /> {{ snackbarMessage }}
-                </span>
-            </v-snackbar>
         </template>
     </TenancyWrapper>
 </template>
@@ -39,9 +26,8 @@ export default {
     },
     computed: {
         ...mapState({
-            snackbar: (state) => state.tenancy.snackbar,
             tenancyDetails: (state) => state.tenancy.tenancyDetails,
-            snackbarMessage: (state) => state.tenancy.snackbarMessage,
+
             tenancyID: (state) => state.inventory.tenancyID
         }),
         documentType() {
@@ -59,7 +45,6 @@ export default {
         }
     },
     methods: {
-
         async onUpdateDocuments(fileInfo, fileID) {
             const params = {
                 tenancyContractAgreementFID: this.tenancyDetails.id,

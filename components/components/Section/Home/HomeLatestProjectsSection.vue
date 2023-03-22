@@ -4,36 +4,16 @@
             <div class="section-container">
                 <div class="section__top">
                     <h3 class="section__top-title">Latest Projects</h3>
-                    <!-- <div class="section__top-left">&nbsp;</div>
-                    <h3 class="section__top-title">Latest Projects</h3>
-                    <div class="section__top-right">
-                        <div class="section__top-process">
-                            <button @click="onPreviousSlide()">
-                                <i class="ri-arrow-left-s-line"></i>
-                            </button>
-                            <div class="section__top-ruler-wrapper">
-                                <p>{{ preNumber }}</p>
-                                <div class="section__top-ruler">
-                                <div class="section__top-scroll" :style="{'width' : width + '%'}"></div>
-                                </div>
-                                <p>{{ nextNumber }}</p>
-                            </div>
-                            <button @click="onNextSlide()">
-                                <i class="ri-arrow-right-s-line"></i>
-                            </button>
-                        </div>
-                    </div> -->
                 </div>
                 <div class="section__body">
                     <swiper class="swiper swiper-item" :options="swiperOption">
                         <swiper-slide class="swiper-box" v-for="article in articles" :key="article.id">
                             <div class="article-wrapper">
-                                <ArticleGrid :article="article"/>
+                                <ArticleGrid :article="article" />
                             </div>
                         </swiper-slide>
                         <div class="swiper-button-prev" slot="button-prev"></div>
                         <div class="swiper-pagination" slot="pagination"></div>
-                        <!-- <div class="swiper-button-next" slot="button-next" :class="{'swiper-button-active' : activeColorArrow}"></div> -->
                         <div class="swiper-button-next" slot="button-next"></div>
                     </swiper>
                     <div class="swiper-fraction">
@@ -124,6 +104,8 @@ export default {
                 autoplay: false,
                 slidesPerView: 1,
                 spaceBetween: 10,
+                preloadImages: false, 
+                lazy: true, 
                 pagination: {
                     el: ".swiper-pagination",
                     type: "progressbar"
@@ -156,11 +138,6 @@ export default {
             activeColorArrow: false
         }
     },
-    computed: {
-        swiper() {
-            return this.$refs.mySwiper.swiper
-        }
-    },
     mounted() {
         this.fractionForm = this.articles.length.toLocaleString("en-US", {
             minimumIntegerDigits: 2,
@@ -176,7 +153,7 @@ export default {
 
 <style lang="scss" scoped>
 .section--home-latest-projects {
-    padding: 8rem 0;
+    padding: 6rem 0 8rem;
     @media screen and (max-width: 960px) {
         padding: 5rem 0;
     }
@@ -320,11 +297,23 @@ export default {
 }
 
 .swiper-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
     padding-top: 6rem;
     padding-bottom: 2.6rem;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+
+    .swiper-box{
+        &:not(:nth-child(1), :nth-child(2), :nth-child(3)){
+            display: none;
+        }
+    }
+}
+.swiper-container{ 
+    .swiper-box{
+        &:not(:nth-child(1), :nth-child(2), :nth-child(3)){
+            display: inline-block;
+        }
+    }
 }
 .article-wrapper {
     padding: 0 1rem;
@@ -333,68 +322,6 @@ export default {
     opacity: 1;
 }
 
-// .swiper-box {
-//     width: 30.77%;2
-//     .swiper-box__top {
-//         position: relative;
-
-//         .swiper-box__image {
-//             img {
-//                 width: 100%;
-//                 object-fit: cover;
-//                 border-radius: 2rem;
-//             }
-//         }
-//         .swiper-box__title {
-//             position: absolute;
-//             background-color: #edb842;
-//             color: var(--color-white);
-//             font-size: 2rem;
-//             line-height: 2.8rem;
-//             padding: 2.2rem 1.6rem 2.5rem;
-//             bottom: 2.3rem;
-//             margin-bottom: 0;
-//             left: -1.2rem;
-//             width: 85.9%;
-//         }
-//     }
-//     .swiper-box__content {
-//         margin-top: 0.95rem;
-//         .swiper-box__content-first {
-//             display: flex;
-//             align-items: center;
-//             margin-bottom: 2.134rem;
-//             p {
-//                 margin-bottom: 0;
-//                 font-weight: 500;
-//                 font-size: 1.6rem;
-//                 line-height: 2.4rem;
-//                 color: var(--color-title-black);
-//                 margin-left: 1.25rem;
-//             }
-//         }
-//         .swiper-box__content-second {
-//             display: flex;
-//             align-items: center;
-//             div {
-//                 display: flex;
-//                 align-items: center;
-//                 p {
-//                     margin-bottom: 0;
-//                     margin-left: 1.25rem;
-//                 }
-//                 img {
-//                 }
-//                 &:first-child {
-//                     margin-right: 5.279rem;
-//                 }
-//             }
-//         }
-//     }
-//     &:nth-child(2) {
-//         margin: 0 3.8rem;
-//     }
-// }
 </style>
 
 

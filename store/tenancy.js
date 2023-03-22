@@ -117,7 +117,7 @@ export const actions = {
                 payload
             )
             if (response && response !== 0) {
-                dispatch("app/showSnackBar", "Create expense successful", { root: true })
+                dispatch("app/showSnackBar", "Create tenancy info successful", { root: true })
             } else {
                 console.log("Error!")
             }
@@ -135,7 +135,7 @@ export const actions = {
                 dispatch("getExpenses", {
                     id: parseInt(rootState.tenancy.tenancyDetails.id)
                 })
-                dispatch("app/showSnackBar", "Create expense successful", { root: true })
+                dispatch("app/showSnackBar", "Create successful", { root: true })
             } else {
                 console.log("Error!")
             }
@@ -152,7 +152,9 @@ export const actions = {
                 }
             )
             if (response && response !== 0) {
+                dispatch("app/showSnackBar", "Expense successfully deleted", { root: true })
                 dispatch("getExpenses", { id: parseInt(rootState.tenancy.tenancyDetails.id) })
+
                 return true
             } else {
                 console.log("Error!")
@@ -209,12 +211,10 @@ export const actions = {
                     TenancyContractAgreementFID: rootState.tenancy.tenancyDetails.id,
                     FileTypeFID: payload.documentType.id
                 })
-                console.log({ documentQueries })
                 await dispatch("getTenancyDocuments", documentQueries)
-                dispatch("app/showSnackBar", "Create expense successful", { root: true })
-                setTimeout(() => {
-                    commit("setSnackbar", false)
-                }, 2000)
+                dispatch("app/showSnackBar", "The document has been deleted successfully", {
+                    root: true
+                })
             } else {
                 console.log("Error!")
             }

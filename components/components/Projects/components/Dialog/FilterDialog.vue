@@ -8,7 +8,7 @@
                 </button>
             </div>
             <div class="card__content">
-                <FilterProjectForm @close="onClose"/>
+                <FilterProjectForm @close="onClose" @snackbar="openSnackbar($event)"/>
             </div>
         </div>
     </v-dialog>
@@ -21,7 +21,8 @@ export default {
     components: { FilterProjectForm },
     data() {
         return {
-            openDialog: false
+            openDialog: false, 
+            snackbar: false
         }
     },
     props: {
@@ -38,6 +39,9 @@ export default {
         onClose() {
             this.openDialog = false
             this.$emit("close")
+        }, 
+        openSnackbar(e){
+            this.$emit("snackbar", this.snackbar = e)
         }
     },
     watch: {

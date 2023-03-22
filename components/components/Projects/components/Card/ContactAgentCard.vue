@@ -47,7 +47,7 @@ export default {
     name: "ContactAgentCard",
     data() {
         return {
-            imgURLAvatar: "/img/static/contact-agent-avar.jpg",
+            imgURLAvatar: "https://avatars0.githubusercontent.com/u/9064066?v=4&s=460",
             isOpenConfirmDetailDialog: false,
             isOpenContactDetailDialog: false
         }

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html {{ HTML_ATTRS }}>
+<head {{ HEAD_ATTRS }}>
+    {{ HEAD }}
+</head>
+
+<body {{ BODY_ATTRS }}>
+{{ APP }}
+</body>
+<!-- Zoho Chatbox -->
+<script>
+    window.$zoho = window.$zoho || {};
+    window.$zoho.salesiq = window.$zoho.salesiq || {
+        widgetcode: 'e2bebf3b0c7ccf9d24329c69e89e44b8751b378c2e2a35a946dd2b978ab6a0c3',
+        values: {},
+        ready: function() {
+        },
+    };
+    const d = document;
+    let s;
+    s = d.createElement("script");
+    s.type = "text/javascript";
+    s.id = "zsiqscript";
+    s.defer = true;
+    s.src = "https://salesiq.zoho.com/widget";
+    let t;
+    t = d.getElementsByTagName("script")[0];
+    t.parentNode.insertBefore(s, t);
+</script>
+<!-- Meta Pixel Code -->
+</html>

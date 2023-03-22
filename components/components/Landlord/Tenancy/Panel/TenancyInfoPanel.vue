@@ -13,12 +13,12 @@
         </div>
         <TenancyInfoTable />
         <Dialog
-            title="Create tenancy Info"
+            title="Create Tenancy Info"
             :open="createDialog"
             :actions="false"
             @close="onCloseCreateDialog"
         >
-            <AddTenancyInfoForm @close="onCloseCreateDialog" />
+            <AddTenancyInfoForm @close="onCloseCreateDialog" v-if="createDialog" />
         </Dialog>
         <v-snackbar v-model="snackbarActive" :timeout="2000" top right text color="green darken-4">
             <span class="message--snackBar">
@@ -33,6 +33,7 @@ import TenancyInfoTable from "~/components/components/Landlord/Tenancy/Table/Ten
 import Dialog from "~/components/elements/Dialog/Dialog.vue"
 import AddTenancyInfoForm from "~/components/components/Landlord/Tenancy/Form/AddTenancyInfoForm.vue"
 import { mapState } from "vuex"
+
 export default {
     name: "TenancyInfoPanel",
     components: { TenancyInfoTable, AddTenancyInfoForm, Dialog },

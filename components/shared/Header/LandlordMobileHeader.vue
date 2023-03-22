@@ -9,12 +9,12 @@
             <SiteLogo />
         </div>
         <div class="header__right">
-            <v-btn icon class="btn--search" elevation="0" @click.prevent="userDrawer = !userDrawer">
+            <v-btn icon class="btn--search" elevation="0" @click.prevent="handleOpenUserDrawer">
                 <i class="ri-user-line" />
             </v-btn>
         </div>
         <MobileNavigation />
-        <LandlordUserDrawer :open="userDrawer" @close="userDrawer = false" />
+        <LandlordUserDrawer  />
     </header>
 </template>
 
@@ -31,6 +31,7 @@ export default {
     computed: {
         ...mapState({
             appDrawer: (state) => state.app.appDrawer,
+            userDrawer: (state) => state.app.userDrawer,
             userInfo: (state) => state.app.userInfo
         }),
         loggedIn() {
@@ -39,7 +40,7 @@ export default {
     },
     data() {
         return {
-            userDrawer: false
+            // userDrawer: false
         }
     },
 
@@ -52,14 +53,17 @@ export default {
         },
         handleOpenMenuDrawer() {
             this.$store.commit("app/setAppDrawer", !this.appDrawer)
-            console.log("handleOpenMenuDrawer",this.appDrawer);
+            // console.log("handleOpenMenuDrawer",this.appDrawer);
+        },
+        handleOpenUserDrawer(){
+            this.$store.commit("app/setUserDrawer", !this.userDrawer)
         },
         async onLogout() {
             await this.$auth.logout().then(() => {
                 window.location.href = "/signin"
             })
         }
-    }
+    },
 }
 </script>
 
@@ -195,89 +199,5 @@ position: static;
 
 .v-dialog--fullscreen {
     margin: 0;
-}
-
-.ps-drawer {
-    width: 100% !important;
-    background-color: #0b0c0c;
-    z-index: 99;
-    bottom: 0;
-    position: fixed;
-
-    .ps-drawer__close {
-        position: absolute;
-        top: 1rem;
-        right: 1rem;
-        background-color: transparent;
-        padding: 0;
-        min-width: 4.4rem;
-
-        i {
-            font-size: 3.8rem;
-            color: white;
-        }
-    }
-
-    .ps-drawer__content {
-        display: flex;
-        flex-direction: column;
-        padding-top: 4rem;
-
-        a {
-            font-size: 2rem;
-            color: white;
-            // line-height: 4.8rem;
-            padding: 1.2rem 0;
-        }
-    }
-
-    .ps-drawer__user {
-        padding: 0 1.6rem 1.6rem;
-        position: relative;
-
-        .v-list-item {
-            color: white;
-            font-size: 2rem;
-            padding: 0;
-        }
-
-        .ri-user-line {
-            font-size: 2rem;
-            margin-right: 0.8rem;
-        }
-
-        .user-header {
-            display: flex;
-            align-items: center;
-            color: white;
-            font-size: 2rem;
-            display: block;
-            padding: 0 0.8rem;
-        }
-
-        :deep(.v-list-group__header) {
-            position: absolute;
-            top: -0.6rem;
-            left: 0;
-            right: 0;
-        }
-
-        :deep(.v-list-group) {
-            .mdi.mdi-chevron-down {
-                color: white;
-                position: absolute;
-                top: 1rem;
-                right: 1rem;
-            }
-
-            a {
-                padding: 1.2rem;
-            }
-        }
-    }
-
-    .ps-drawer__bottom {
-        padding-top: 3.2rem;
-    }
 }
 </style>

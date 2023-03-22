@@ -4,15 +4,15 @@
         <div class="panel__columns">
             <div class="panel__column">
                 <p>
-                    <span>House No:</span>
+                    <span>House No.:</span>
                     <strong>{{ inventoryDetails ? inventoryDetails.hseNo : "n/a" }}</strong>
                 </p>
                 <p>
-                    <span>Unit No:</span>
+                    <span>Unit No.:</span>
                     <strong>{{ inventoryDetails ? inventoryDetails.unitNo : "n/a" }}</strong>
                 </p>
                 <p>
-                    <span>No of Bedroom(s): </span>
+                    <span>No. of Bedroom(s): </span>
                     <strong>{{
                         inventoryDetails ? inventoryDetails.bedroomTypeDisplay : "n/a"
                     }}</strong>
@@ -20,7 +20,7 @@
             </div>
             <div class="panel__column">
                 <p>
-                    <span>Street name:</span>
+                    <span>Street Name:</span>
                     <strong>{{ inventoryDetails ? inventoryDetails.streetName : "n/a" }}</strong>
                 </p>
                 <p>
@@ -45,11 +45,11 @@
                 </p>
                 <p>
                     <span>Floor Area (sqft):</span>
-                    <strong>{{ inventoryDetails ? formatFloorArea + " sqft" : "n/a" }}</strong>
+                    <strong>{{ inventoryDetails ? formatFloorArea : "n/a" }}</strong>
                 </p>
-                <p>
+                <p v-if="inventoryDetails.statusFID !== 3 && formatFloorArea !== '0'">
                     <span>Land Area (sqft):</span>
-                    <strong>{{ inventoryDetails ? formatLandArea + " sqft" : "n/a" }}</strong>
+                    <strong>{{ inventoryDetails ? formatLandArea : "n/a" }}</strong>
                 </p>
             </div>
         </div>
@@ -91,6 +91,7 @@ export default {
         grid-template-columns: repeat(3, minmax(0, 1fr));
         grid-gap: 2.4rem;
     }
+
     .panel__column {
         p {
             display: flex;
@@ -115,6 +116,7 @@ export default {
             }
         }
     }
+
     .panel__column:nth-child(1) {
         p {
             span {
@@ -122,6 +124,7 @@ export default {
             }
         }
     }
+
     .panel__column:nth-child(2) {
         p {
             span {
@@ -129,6 +132,7 @@ export default {
             }
         }
     }
+
     .panel__column:nth-child(3) {
         p {
             span {
@@ -159,15 +163,19 @@ export default {
             grid-template-columns: repeat(2, minmax(0, 1fr));
             grid-gap: 2.4rem;
             gap: 1.5rem;
+
             .panel__column {
                 p {
                     font-size: 1.4rem;
+
                     span {
                         font-size: 1.4rem;
                     }
+
                     strong {
                         font-size: 1.4rem;
                     }
+
                     &:not(:last-child) {
                         margin-bottom: 0.4rem;
                     }
@@ -202,8 +210,8 @@ export default {
             grid-template-columns: minmax(0, 1fr);
             grid-gap: 2.4rem;
             gap: 1.5rem;
-            }
-            .panel__column:nth-child(2) {
+        }
+        .panel__column:nth-child(2) {
             p {
                 span {
                     min-width: 13rem;

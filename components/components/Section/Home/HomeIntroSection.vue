@@ -30,9 +30,9 @@ export default {
     name: "HomeIntroSection",
     data() {
         return {
-            imgURLFirst: "/img/home-intro1.png",
-            imgURLSecond: "/img/home-intro2.png",
-            imgURLThird: "/img/home-text.png"
+            imgURLFirst: "/img/static/home-intro1.png",
+            imgURLSecond: "/img/static/home-intro2.png",
+            imgURLThird: "/img/static/home-text.png"
         }
     }
 }
@@ -116,6 +116,7 @@ export default {
     display: flex;
     .image-first {
         width: 100%;
+        margin: 0 1.5rem;
         img {
             object-fit: cover;
             border-radius: 2rem;
@@ -123,7 +124,7 @@ export default {
         }
     }
     .image-second {
-        margin: 7.2rem 3rem 0;
+        margin: 7rem 1.5rem 0;
         width: 100%;
         img {
             object-fit: cover;
@@ -134,10 +135,10 @@ export default {
 }
 .section__right {
     width: 45.43%;
-    padding-left: 4rem;
-    padding-top: 4rem;
+    padding-left: 5.8rem;
+    padding-top: 3.5rem;
     .section__right-image {
-        margin-bottom: 4rem;
+        margin-bottom: 4.3rem;
         img {
             object-fit: cover;
         }

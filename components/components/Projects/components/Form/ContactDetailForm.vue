@@ -56,6 +56,10 @@
             <v-btn class="btn btn--primary btn--green btn-custom" :loading="loading" type="submit"
                 >Verify & continue</v-btn
             >
+            <v-snackbar v-model="snackbar" color="#00634F" text class="snackbar-custom">
+                Thank you for your submission, our agent has been notified and will be contacting
+                you shortly
+            </v-snackbar>
         </div>
     </form>
 </template>
@@ -86,7 +90,7 @@ export default {
             required
         },
         phone: {
-            required, 
+            required,
             singaporePhoneNumber
         },
         email: {
@@ -118,7 +122,8 @@ export default {
                 inputOptions: {
                     showDialCode: true
                 }
-            }
+            },
+            snackbar: false
         }
     },
     computed: {
@@ -153,19 +158,18 @@ export default {
             this.$v.$touch()
             if (!this.$v.$invalid) {
                 const params = {
-                    name: this.name, 
-                    phone: this.phone, 
-                    email: this.email, 
+                    name: this.name,
+                    phone: this.phone,
+                    email: this.email,
                     message: this.message
                 }
+                this.snackbar = true
             }
-        }, 
-        onResetForm(){
+        },
+        onResetForm() {
             this.$v.$reset()
             this.name = ""
-            this.phone = "", 
-            this.email = "", 
-            this.message = ""
+            ;(this.phone = ""), (this.email = ""), (this.message = "")
         }
     }
 }
@@ -183,18 +187,25 @@ export default {
         text-transform: capitalize;
         margin-bottom: 0.8rem;
     }
-    ::v-deep(.v-input__control){
-        .v-input__slot{
+    ::v-deep(.v-input__control) {
+        .v-input__slot {
             margin-bottom: 1rem;
         }
     }
-    ::v-deep(.v-text-field__details){
+    ::v-deep(.v-text-field__details) {
         padding-left: 0;
     }
 }
-.form__field-tel-input-custom{
-    ::v-deep(.v-input__control){
+.form__field-tel-input-custom {
+    ::v-deep(.v-input__control) {
         margin-right: 0.4rem;
+    }
+}
+.snackbar-custom {
+    ::v-deep(.v-snack__content) {
+        font-weight: 500;
+        font-size: 1.4rem;
+        line-height: 2.4rem;
     }
 }
 .btn-custom {

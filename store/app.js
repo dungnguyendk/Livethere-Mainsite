@@ -2,6 +2,7 @@ import { httpEndpoint } from "~/services/https/endpoints"
 
 export const state = () => ({
     appDrawer: false,
+    userDrawer: false,
     sidebarCollapse: false,
     token: null,
     appLoading: false,
@@ -22,6 +23,9 @@ export const mutations = {
     },
     setAppDrawer(state, payload) {
         state.appDrawer = payload
+    },
+    setUserDrawer(state, payload) {
+        state.userDrawer = payload
     }
 }
 
@@ -29,13 +33,21 @@ export const actions = {
     async getUserInfo({ commit }) {
         try {
             const response = await this.$axios.$get(`${httpEndpoint.user.getLandlordUserInfo}`)
+
             if (response) {
                 commit("setUserInfo", response)
             } else {
                 commit("setUserInfo", null)
+                await this.$auth.logout().then(() => {
+                    window.location.href = "/signin"
+                })
+                commit("setUserInfo", null)
             }
         } catch (e) {
             commit("setUserInfo", null)
+            await this.$auth.logout().then(() => {
+                window.location.href = "/signin"
+            })
         }
     },
 

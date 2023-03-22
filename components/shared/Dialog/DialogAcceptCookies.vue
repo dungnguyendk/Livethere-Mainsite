@@ -8,15 +8,16 @@
                 <div class="section__left">
                     <p>
                         Livethere uses necessary cookies to operate our website. We will also use
-                        cookies to enhance your experience with Livethere, including to show you more
-                        personalised content and tailored advertisements, if you select “Allow all
-                        cookies”.
+                        cookies to enhance your experience with Livethere, including to show you
+                        more personalised content and tailored advertisements, if you select “Allow
+                        all cookies”.
                         <a
                             href="https://www.livethere.com/privacy-policy#19Cookies"
                             target="_blank"
                             class="font-weight-bold text-decoration-underline"
-                            >More Info</a
                         >
+                            More Info
+                        </a>
                     </p>
                 </div>
                 <div class="section__right">
@@ -47,12 +48,8 @@ export default {
         }
     },
     methods: {
-        handleCloseDialog() {
-            Cookies.set("accept_cookies", 0)
-            this.isActive = false
-        },
         handleAcceptDialog() {
-            Cookies.set("accept_cookies", 1)
+            Cookies.set("accept_cookies", 1, { expires: 7 })
             this.isActive = false
         }
     }
@@ -69,7 +66,6 @@ export default {
     padding: 1.5rem 0;
     z-index: 9999;
     background-color: #1d2a30;
-    transform: translateY(0);
     transform: translateY(100%);
     transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
 
@@ -77,6 +73,7 @@ export default {
         transform: translateY(100%);
         // transform: translateY(0);
     }
+
     &.active {
         transform: translateY(0);
         // transform: translateY(100%);
@@ -90,6 +87,7 @@ export default {
 
     a {
         font-size: 1.6rem;
+
         &:hover {
             color: var(--color-primary);
         }
@@ -111,8 +109,6 @@ export default {
         justify-content: space-between;
         align-items: center;
     }
-
-    
 
     @media screen and (max-width: 1024px) {
         .section__left {

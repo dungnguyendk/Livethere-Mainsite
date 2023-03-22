@@ -59,11 +59,11 @@
                         @change="select_Livethere($event)"
                     >
                         <template v-slot:label>
-                            <div class="form__field-label-custom">
-                                <span>Livethere Premium</span>
-                                <img :src="require(`~/static/img/logos/logo-project.svg`)" alt="" />
-                            </div>
-                        </template>
+    <div class="form__field-label-custom">
+        <span>Livethere Premium</span>
+        <img :src="require(`~/static/img/logos/logo-project.svg`)" alt="" />
+    </div>
+</template>
                     </v-checkbox>
                 </div>
             </div>
@@ -207,6 +207,7 @@
                 <v-btn class="btn btn--primary btn--green" type="submit">Apply</v-btn>
             </div>
         </div>
+
     </form>
 </template>
 
@@ -275,7 +276,8 @@ export default {
             rangeUnitSize: [4000, 10000],
             minUnitSize: 100,
             maxUnitSize: 10000,
-            submitted: false
+            submitted: false,
+            snackbar: false
         }
     },
     computed: {
@@ -319,15 +321,19 @@ export default {
                 selectedLivethere: this.selectedLivethere,
                 bedroom: this.bedroom,
                 bathroom: this.bathroom,
-                rangeRentPer: this.rangeRentPer[this.rangeRentPer.length - 1] >= this.maxRentPer ? ((Object.values(this.rangeRentPer)).shift() + ";" + "9999999999") : this.rangeRentPer,
-                rangeUnitSize: this.rangeUnitSize[this.rangeUnitSize.length - 1] >= this.maxUnitSize ? ((Object.values(this.rangeUnitSize)).shift() + ";" + "9999999999") : this.rangeUnitSize,
+                rangeRentPer:
+                    this.rangeRentPer[this.rangeRentPer.length - 1] >= this.maxRentPer
+                        ? Object.values(this.rangeRentPer).shift() + ";" + "9999999999"
+                        : this.rangeRentPer,
+                rangeUnitSize:
+                    this.rangeUnitSize[this.rangeUnitSize.length - 1] >= this.maxUnitSize
+                        ? Object.values(this.rangeUnitSize).shift() + ";" + "9999999999"
+                        : this.rangeUnitSize,
                 selected: this.selected
             }
             console.log("params: ", params)
+            this.$emit("snackbar", this.snack = true)
             this.onClose()
-
-
-    
         },
         onResetForm() {
             ;(this.location = ""),
@@ -339,8 +345,7 @@ export default {
                 (this.rangeRentPer = [8000, 15000]),
                 (this.rangeUnitSize = [4000, 10000]),
                 (this.selected = [])
-        },
-
+        }
     }
 }
 </script>
@@ -440,7 +445,6 @@ export default {
             line-height: 2rem;
             color: var(--color-title-black);
             padding-top: 1rem;
-            
         }
         .v-select__selection--comma {
             font-weight: 500;
@@ -448,7 +452,6 @@ export default {
             line-height: 2rem;
             color: var(--color-title-black);
         }
-        
     }
 }
 .v-text-field {
@@ -566,6 +569,13 @@ export default {
         width: 1.6rem;
     }
 }
+.snackbar-custom{
+    ::v-deep(.v-snack__content){
+        font-weight: 500; 
+        font-size: 1.4rem;
+        line-height: 2.4rem;
+    }
+}
 .mb-custom-1 {
     margin-bottom: 3rem;
 }
@@ -590,5 +600,4 @@ export default {
 ::-webkit-scrollbar-thumb:hover {
     background: #a2a0a0;
 }
-
 </style>

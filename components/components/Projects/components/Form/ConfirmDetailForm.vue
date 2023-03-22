@@ -51,7 +51,12 @@
                 >Verify & continue</v-btn
             >
         </div>
+        <v-snackbar v-model="snackbar" color="#00634F" text class="snackbar-custom">
+            Thank you for your submission, our agent has been notified and will be contacting you
+            shortly
+        </v-snackbar>
     </form>
+    
 </template>
 
 <script>
@@ -130,7 +135,8 @@ export default {
                 inputOptions: {
                     showDialCode: true
                 }
-            }
+            }, 
+            snackbar: false
         }
     },
 
@@ -146,6 +152,9 @@ export default {
                     phone: this.phone, 
                     email: this.email, 
                 }
+                this.snackbar = true
+            }else{
+                console.log("fail!")
             }
         }, 
         onResetForm(){
@@ -206,6 +215,13 @@ export default {
 .form__field-tel-input-custom{
     ::v-deep(.v-input__control){
         margin-right: 0.4rem;
+    }
+}
+.snackbar-custom{
+    ::v-deep(.v-snack__content){
+        font-weight: 500; 
+        font-size: 1.4rem;
+        line-height: 2.4rem;
     }
 }
 

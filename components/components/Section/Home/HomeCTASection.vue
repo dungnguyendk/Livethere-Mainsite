@@ -18,7 +18,7 @@ export default {
     name: "HomeCTASection",
     data() {
         return {
-            imgURLFirst: "/img/home-cta-bg.png"
+            imgURLFirst: "/img/static/home-cta-bg.png"
         }
     }
 }

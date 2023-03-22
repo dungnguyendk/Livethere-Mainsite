@@ -6,31 +6,54 @@
                 <v-col cols="12" sm="12" md="6">
                     <div class="form__field">
                         <label>Tenancy Name</label>
-                        <v-text-field v-model="tenancyName" dense outlined :error-messages="tenancyNameErrors" />
+                        <v-text-field
+                            v-model="tenancyName"
+                            dense
+                            outlined
+                            :error-messages="tenancyNameErrors"
+                        />
                     </div>
                 </v-col>
                 <v-col cols="12" sm="12" md="6">
                     <div class="form__field">
                         <label>Leasing Type</label>
-                        <v-select v-model="leasingType" :items="leasingTypes" item-text="text" item-value="value"
-                            placeholder="Please select" dense outlined :error-messages="leasingTypeErrors" />
+                        <v-select
+                            v-model="leasingType"
+                            :items="leasingTypes"
+                            item-text="text"
+                            item-value="value"
+                            placeholder="Please select"
+                            dense
+                            outlined
+                            :error-messages="leasingTypeErrors"
+                        />
                     </div>
                 </v-col>
                 <v-col cols="12" sm="12" md="6">
                     <div class="form__field">
                         <label>ID / Passport No.</label>
-                        <v-text-field v-model="passportNo" dense outlined :error-messages="passportNoErrors" />
+                        <v-text-field
+                            v-model="passportNo"
+                            dense
+                            outlined
+                            :error-messages="passportNoErrors"
+                        />
                     </div>
                 </v-col>
-                <v-col cols="12" sm="12" md="6">
+                <v-col cols="12" sm="12" md="6" v-if="leasingType.name === 'Corporate'">
                     <div class="form__field">
                         <label>Company Name</label>
-                        <v-text-field v-model="companyName" dense outlined :error-messages="companyNameErrors" />
+                        <v-text-field
+                            v-model="companyName"
+                            dense
+                            outlined
+                            :error-messages="companyNameErrors"
+                        />
                     </div>
                 </v-col>
                 <v-col cols="12" sm="12" md="12">
                     <div class="form__field">
-                        <label>Remark</label>
+                        <label>Remarks</label>
                         <v-textarea v-model="remark" dense outlined />
                     </div>
                 </v-col>
@@ -38,7 +61,11 @@
         </div>
         <div class="form__actions">
             <v-btn class="btn btn--ghost btn--gray btn--sm" @click="onClose">Cancel</v-btn>
-            <v-btn class="btn btn--primary btn--green btn--sm" @click="onCreateTenancyInfo" :loading="loading">Create
+            <v-btn
+                class="btn btn--primary btn--green btn--sm"
+                @click="onCreateTenancyInfo"
+                :loading="loading"
+                >Create
             </v-btn>
         </div>
     </form>
@@ -134,7 +161,7 @@ export default {
                     tenancyIdentityDocNo: this.passportNo,
                     leasingTypeFID: this.leasingType.id,
                     leasingTypeDisplay: this.leasingType.name,
-                    companyName: this.companyName,
+                    companyName: this.leasingType.name === "Corporate" ? this.companyName : "",
                     remark: this.remark
                 }
                 this.$store
@@ -171,6 +198,19 @@ export default {
 
         .btn {
             min-width: 12rem;
+        }
+    }
+}
+
+.form__field {
+    margin-bottom: -1.2rem;
+
+    &::v-deep(.v-text-field__details) {
+        padding-left: 0;
+
+        .v-messages__message {
+            font-size: 1.3rem;
+            line-height: 1.2em;
         }
     }
 }
