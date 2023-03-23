@@ -1,6 +1,6 @@
 <template lang="html">
     <div class="form--enquiry">
-        <h4 class="form__title">List Your Property With Us!</h4>
+        <h4 class="form__title">List Your Property With Us</h4>
         <form class="form__fields" @submit.prevent="onSubmit">
             <v-row>
                 <v-col cols="6" cols-sm="12">

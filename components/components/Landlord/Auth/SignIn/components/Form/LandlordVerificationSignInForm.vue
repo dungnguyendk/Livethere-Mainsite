@@ -3,8 +3,7 @@
         <h3 class="form__title"> SMS VERIFICATION </h3>
         <div class="form__instruction">
             <p>
-                SMS OTP had been sent. Please retrieved from your phone SMS message to get One Time
-                Password
+                A six-digit verification code has been sent to your registered mobile number via SMS
             </p>
         </div>
         <div class="form__input">

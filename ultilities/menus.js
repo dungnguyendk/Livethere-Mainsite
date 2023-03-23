@@ -13,7 +13,7 @@ export const defaultMenu = [
     },
     {
         defaultName: "About us",
-        linkURL: "https://www.livethere.com/about-us"
+        linkURL: "/about-us"
     },
     {
         defaultName: "Search",
