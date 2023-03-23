@@ -5,6 +5,7 @@
         </div>
         <p class="alert alert--red" v-if="!statusResponse">Something went wrong</p>
         <p class="alert alert--note">Please provide the Postal Code first, system will auto populate your address.</p>
+        <p class="alert alert--red font-weight-bold" v-if="notFound">{{ messageNotFound }}</p>
         <div class="form__fields">
             <div class="form__field">
                 <label>Property Type</label>
@@ -168,7 +169,9 @@ export default {
             purchasedDateFormatted: "",
             menu1: false,
             loading: false,
-            hideLanded: false
+            hideLanded: false,
+            notFound: false,
+            messageNotFound: ""
         }
     },
     computed: {
@@ -342,30 +345,41 @@ export default {
                     )
                     if (response) {
                         this.loading = false
-                        if (response.propertyCategory === "LANDED") {
-                            this.propertyType = this.propertyTypeList.find(
-                                (item) => item.value.name === "LANDED PROPERTY"
-                            ).value
-                            this.floorArea = response.floorAreaSqft !== 0 ? response.floorAreaSqft : ''
-                            this.landArea = response.landAreaSqft !== 0 ? response.landAreaSqft : ''
-                            this.purchasedPrice = response.consider !== 0 ? response.consider : ''
-                            this.purchasedDate = response.contractDate !== 0 ? response.contractDate : ''
+                        if (response.propertyCategory === null) {
+                            this.notFound = true
+                            if (this.unitNo) {
+                                this.messageNotFound = "Unit no not found!"
+                            } else {
+                                this.messageNotFound = "Postal code not found!"
+                            }
                         } else {
-                            response.propertyType && response.propertyType !== null ? this.propertyType = this.propertyTypeList.find(
-                                (item) => item.value.name === response.propertyType
-                            ).value : this.propertyType = ''
-                            this.floorArea = this.unitNo && response.floorAreaSqft !== 0 ? response.floorAreaSqft : ''
-                            this.landArea = this.unitNo && response.landAreaSqft !== 0 ? response.landAreaSqft : ''
-                            this.purchasedPrice = this.unitNo && response.consider !== 0 ? response.consider : ''
-                            this.purchasedDate = this.unitNo && response.contractDate !== 0 ? response.contractDate : ''
+                            if (response.propertyCategory === "LANDED") {
+                                this.propertyType = this.propertyTypeList.find(
+                                    (item) => item.value.id === 3
+                                ).value
+                                this.floorArea = response.floorAreaSqft !== 0 ? response.floorAreaSqft : ''
+                                this.landArea = response.landAreaSqft !== 0 ? response.landAreaSqft : ''
+                                this.purchasedPrice = response.consider !== 0 ? response.consider : ''
+                                this.purchasedDate = response.contractDate !== 0 ? response.contractDate : ''
+                            } else {
+                                response.propertyType && response.propertyType !== null ? this.propertyType = this.propertyTypeList.find(
+                                    (item) => item.value.id === this.checkPropertytype(response.propertyType)
+                                ).value : this.propertyType = ''
+                                this.floorArea = this.unitNo && response.floorAreaSqft !== 0 ? response.floorAreaSqft : ''
+                                this.landArea = this.unitNo && response.landAreaSqft !== 0 ? response.landAreaSqft : ''
+                                this.purchasedPrice = this.unitNo && response.consider !== 0 ? response.consider : ''
+                                this.purchasedDate = this.unitNo && response.contractDate !== 0 ? response.contractDate : ''
+                            }
+                            this.houseNo = response.houseNo
+                            this.streetName = response.streetName
+                            this.unitNo = this.unitNo ? this.unitNo : response.unitNo
+                            this.projectName = response.projectName
+                            response.tenureType && response.tenureType !== null ? this.tenure = this.tenureList.find(
+                                (item) => item.value.name === response.tenureType
+                            ).value : this.tenure = ''
+                            this.notFound = false
                         }
-                        this.houseNo = response.houseNo
-                        this.streetName = response.streetName
-                        this.unitNo = this.unitNo ? this.unitNo : response.unitNo
-                        this.projectName = response.projectName
-                        response.tenureType && response.tenureType !== null ? this.tenure = this.tenureList.find(
-                            (item) => item.value.name === response.tenureType
-                        ).value : this.tenure = ''
+
                     } else {
                         this.loading = false
                     }
@@ -420,6 +434,10 @@ export default {
 
             return this.$moment(date).format("YYYY-MM-DD")
         },
+        checkPropertytype(type) {
+            if (type === "APARTMENT" || type === "EXECUTIVE CONDO") return 2
+            return 1
+        }
     },
     watch: {
         postalCode(val) {
