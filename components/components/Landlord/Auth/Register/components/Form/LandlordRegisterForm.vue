@@ -162,7 +162,7 @@ export default {
             !this.$v.password.required && errors.push("Password is required")
             !this.$v.password.complexity &&
                 errors.push(
-                    "Password needs: at least 8 characters, 1 uppercase character, 1 number and 1 special character"
+                    "Password must contains at least 8 characters, 1 uppercase character, 1 number and 1 special character"
                 )
             return errors
         },

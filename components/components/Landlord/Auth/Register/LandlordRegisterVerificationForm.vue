@@ -18,6 +18,7 @@
                 @input="onChangeOtpInput"
             />
         </div>
+
         <v-snackbar v-model="snackbar" :color="snackbarColor" :timeout="2000">
             {{ text }}
         </v-snackbar>
@@ -34,6 +35,7 @@
             >
                 Verify
             </v-btn>
+            <p>Verification code is valid for 5 minutes</p>
         </div>
 
         <div class="form__link">
@@ -44,7 +46,7 @@
                     @click.prevent="handleResendOtp"
                     :class="`btn--resend-otp ${countdown !== 0 ? 'disabled' : ''}`"
                 >
-                    OTP Again
+                    Resend OTP
                 </a>
             </p>
             <p v-if="countdown !== 0" class="ml-2">
@@ -258,6 +260,13 @@ export default {
         display: flex;
         justify-content: center;
         align-items: center;
+        flex-flow: column wrap;
+        grid-gap: 1.2rem;
+
+        p {
+            font-size: 1.2rem;
+            font-style: italic;
+        }
 
         button {
             background: var(--color-menu);
