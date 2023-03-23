@@ -18,19 +18,6 @@
                     </v-col>
                     <v-col cols="12" md="6">
                         <div class="form__field">
-                            <label>Tels</label>
-                            <v-text-field
-                                v-model="phoneNumber"
-                                :error-messages="phoneNumberErrors"
-                                @input="$v.phoneNumber.$touch()"
-                                outlined
-                                dense
-                                hide-details
-                            />
-                        </div>
-                    </v-col>
-                    <v-col cols="12" md="6">
-                        <div class="form__field">
                             <label>Country</label>
                             <v-select
                                 v-model="country"
@@ -44,6 +31,20 @@
                             />
                         </div>
                     </v-col>
+                    <v-col cols="12" md="6">
+                        <div class="form__field">
+                            <label>Tels</label>
+                            <v-text-field
+                                v-model="phoneNumber"
+                                :error-messages="phoneNumberErrors"
+                                @input="$v.phoneNumber.$touch()"
+                                outlined
+                                dense
+                                hide-details
+                            />
+                        </div>
+                    </v-col>
+
                     <v-col cols="12" md="6">
                         <div class="form__field">
                             <label>Email</label>
