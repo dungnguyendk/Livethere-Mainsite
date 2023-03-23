@@ -11,7 +11,7 @@
             <TenancyExpenseTable />
         </div>
         <Dialog
-            title="Create Tenancy Expense"
+            title="Create Tenancy Expenses"
             :open="createDialog"
             @close="createDialog = false"
             :actions="false"

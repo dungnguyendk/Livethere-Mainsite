@@ -27,20 +27,27 @@ export const mutations = {
     setUserDrawer(state, payload) {
         state.userDrawer = payload
     }
-
 }
 
 export const actions = {
     async getUserInfo({ commit }) {
         try {
             const response = await this.$axios.$get(`${httpEndpoint.user.getLandlordUserInfo}`)
+
             if (response) {
                 commit("setUserInfo", response)
             } else {
                 commit("setUserInfo", null)
+                await this.$auth.logout().then(() => {
+                    window.location.href = "/signin"
+                })
+                commit("setUserInfo", null)
             }
         } catch (e) {
             commit("setUserInfo", null)
+            await this.$auth.logout().then(() => {
+                window.location.href = "/signin"
+            })
         }
     },
 

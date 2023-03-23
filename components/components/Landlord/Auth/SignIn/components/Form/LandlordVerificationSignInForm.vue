@@ -3,13 +3,19 @@
         <h3 class="form__title"> SMS VERIFICATION </h3>
         <div class="form__instruction">
             <p>
-                SMS OTP had been sent. Please retrieved from your phone SMS message to get One Time
-                Password
+                A six-digit verification code has been sent to your registered mobile number via SMS
             </p>
         </div>
         <div class="form__input">
-            <v-otp-input class="otp--custom" length="6" type="number" v-model="otp" :disabled="loading" @finish="onFinish"
-                @input="onChangeOtpInput" />
+            <v-otp-input
+                class="otp--custom"
+                length="6"
+                type="number"
+                v-model="otp"
+                :disabled="loading"
+                @finish="onFinish"
+                @input="onChangeOtpInput"
+            />
         </div>
         <v-snackbar v-model="snackbar" :color="snackbarColor" :timeout="2000">
             {{ text }}
@@ -19,16 +25,23 @@
             {{ httpError }}
         </p>
         <div class="form__button">
-            <v-btn class="btn btn--primary btn--green btn--submit" :loading="loading" @click="handleSignIn">
-                Submit
+            <v-btn
+                class="btn btn--primary btn--green btn--submit"
+                :loading="loading"
+                @click="handleSignIn"
+            >
+                Verify
             </v-btn>
         </div>
 
         <div class="form__link">
             <p>
                 Didn't receive code?
-                <a href="#" @click.prevent="handleResendOtp"
-                    :class="`btn--resend-otp ${countdown !== 0 ? 'disabled' : ''}`">
+                <a
+                    href="#"
+                    @click.prevent="handleResendOtp"
+                    :class="`btn--resend-otp ${countdown !== 0 ? 'disabled' : ''}`"
+                >
                     OTP Again
                 </a>
             </p>
