@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import ShareSocialForm from '../Form/ShareSocialForm.vue';
+import ShareSocialForm from '~/components/components/Projects/components/Form/ShareSocialForm.vue';
 export default {
     name: 'ShareSocialDialog',
     components: {ShareSocialForm},

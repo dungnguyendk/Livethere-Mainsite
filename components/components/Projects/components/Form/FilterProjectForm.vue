@@ -187,7 +187,7 @@
             </div>
             <div class="form__field">
                 <label>Amenities</label>
-                <v-chip-group multiple column active-class="primary--text"  v-model="selected">
+                <v-chip-group multiple column active-class="yellow--text"  v-model="selected">
                     <v-chip  
                      v-for="(amenities, index) in listAmenities"
                      :key="index"
@@ -331,8 +331,9 @@ export default {
                         : this.rangeUnitSize,
                 selected: this.selected
             }
-            console.log("params: ", params)
-            this.$emit("snackbar", this.snack = true)
+            this.$store.dispatch("project/filterListing", params).then((res)=>{
+                this.$emit("snackbar", {isShowSnackbar: true, messageSnackbar: 'Thank you for your submission, our agent has been notified and will be contacting you shortly'})
+            })
             this.onClose()
         },
         onResetForm() {
@@ -568,10 +569,32 @@ export default {
     i {
         width: 1.6rem;
     }
+    transition: all 0.25s ease;
+    &:hover {
+        background-color: var(--color-white);
+        border: 0.1rem solid var(--color-dark-yellow);
+        span {
+            color: var(--color-dark-yellow);
+        }
+        i {
+            background: var(--color-dark-yellow);
+        }
+    }
 }
-.snackbar-custom{
-    ::v-deep(.v-snack__content){
-        font-weight: 500; 
+.yellow--text {
+    color: var(--color-white) !important; 
+    caret-color: var(--color-white) !important;
+    border: 0.1rem solid var(--color-dark-yellow) !important;
+    span {
+        color: var(--color-dark-yellow) !important;
+    }
+    i {
+        background: var(--color-dark-yellow) !important;
+    }
+}
+.snackbar-custom {
+    ::v-deep(.v-snack__content) {
+        font-weight: 500;
         font-size: 1.4rem;
         line-height: 2.4rem;
     }

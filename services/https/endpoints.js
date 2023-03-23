@@ -14,7 +14,9 @@ export const httpEndpoint = {
     menus: {
         getEntryById: "api/Menu/get-by-id"
     },
-
+    projects: {
+        getEntries: "api/Menu/get-by-id"
+    },
     enquiry: {
         sendEnquiry: "/api/Enquiry"
     },
