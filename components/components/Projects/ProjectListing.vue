@@ -43,7 +43,7 @@
                 </div>
                 <div class="section__body-list">
                     <ProjectCard v-for="(project, index) in listProject"
-                        :key="index" :project="project" @open="openShareSocialDialog($event)" :listProject="listProject"/>
+                        :key="index" :project="project" @open="openShareSocialDialog($event)"/>
                       
                 </div>
                 <div class="section__body-load-more">
@@ -52,28 +52,29 @@
                     <FilterDialog 
                      :open="isOpenFilterProjectDialog"
                      @close="closeFilterProjectDialog"
-                     @snackbar="openSnackbar($event)"
+                     @snackbar="showStatusForm($event)"
                     />
                     <ShareSocialDialog
                      :open="isOpenShareSocialDialog"
                      @close="closeShareSocialDialog"
                      :item="targetLinkURL"
                     />
-                    <v-snackbar v-model="snackbar" color="#00634F" text class="snackbar-custom">
-            Thank you for your submission, our agent has been notified and will be contacting you
-            shortly
-        </v-snackbar>
+                    <SuccessSnackBar :open="snackbar" :message="messageSnackbar"/>
+
             </div>
         </div>
     </section>
 </template>
 
 <script>
-import ProjectCard from "./components/Card/ProjectCard.vue"
-import FilterProjectForm from "~/components/components/Projects/components/Form/FilterProjectForm"
-import ShareSocialForm from "./components/Form/ShareSocialForm.vue"
-import FilterDialog from "~/components/components/Projects/components/Dialog/FilterDialog"
-import ShareSocialDialog from "~/components/components/Projects/components/Dialog/ShareSocialDialog"
+import ProjectCard from "~/components/components/Projects/components/Card/ProjectCard.vue"
+import FilterProjectForm from "~/components/components/Projects/components/Form/FilterProjectForm.vue"
+import ShareSocialForm from "~/components/components/Projects/components/Form/ShareSocialForm.vue"
+import FilterDialog from "~/components/components/Projects/components/Dialog/FilterDialog.vue"
+import ShareSocialDialog from "~/components/components/Projects/components/Dialog/ShareSocialDialog.vue"
+import SuccessSnackBar from "~/components/shared/Snackbar/SuccessSnackBar.vue"
+import { mapState } from "vuex"
+import { state } from '~/store/analytics'
 export default {
     name: "ProjectListing",
     components: {
@@ -81,56 +82,16 @@ export default {
         FilterProjectForm,
         ShareSocialForm,
         FilterDialog,
-        ShareSocialDialog
+        ShareSocialDialog, 
+        SuccessSnackBar
     },
+    computed: {
+        ...mapState({
+            listProject: (state) => state.project.searchListings
+        })
+    }, 
     data() {
         return {
-            listProject: [
-                {
-                    id: 1,
-                    title: "Eden Residences Capitol",
-                    imgURL: require(`../../../static/img/static/project-01.png`),
-                    location: "2 Sinaran Drive, Singapore 307467",
-                    price: 30000,
-                    totalBed: 3,
-                    totalBath: 2,
-                    activeHeart: false,
-                    linkDetails: "http://localhost:3002/projects/details/1"
-                },
-                {
-                    id: 2,
-                    title: "Skypark @ Somerset",
-                    imgURL: require(`../../../static/img/static/project-02.png`),
-                    location: "22 Saint Thomas Walk, Singapore 238107",
-                    price: 18000,
-                    totalBed: 4,
-                    totalBath: 4,
-                    activeHeart: false,
-                    linkDetails: "http://localhost:3002/projects/details/2"
-                },
-                {
-                    id: 3,
-                    title: "Up @ Robertson Quay",
-                    imgURL: require(`../../../static/img/static/project-03.png`),
-                    location: "92 Robertson Quay, Singapore 238260",
-                    price: 56000,
-                    totalBed: 8,
-                    totalBath: 10,
-                    activeHeart: false,
-                    linkDetails: "http://localhost:3002/projects/details/3"
-                },
-                {
-                    id: 4,
-                    title: "The Sail @ Marina Bay",
-                    imgURL: require(`../../../static/img/static/project-01.png`),
-                    location: "Marina Boulevard, Singapore 018987",
-                    price: 15800,
-                    totalBed: 5,
-                    totalBath: 9,
-                    activeHeart: false,
-                    linkDetails: "http://localhost:3002/projects/details/4"
-                }
-            ],
             listSort: [
                 {
                     id: 1,
@@ -158,7 +119,8 @@ export default {
             isOpenShareSocialDialog: false,
             selectionSort: 1,
             targetLinkURL: {},
-            snackbar: false
+            snackbar: false, 
+            messageSnackbar: ""
         }
     },
     methods: {
@@ -174,8 +136,9 @@ export default {
                 return index.id === e.id
             })
         },
-        openSnackbar(e) {
-            this.snackbar = e
+        showStatusForm(e) {
+            this.snackbar = e.isShowSnackbar
+            this.messageSnackbar = e.messageSnackbar
         }
     }
 }
@@ -200,9 +163,7 @@ export default {
             }
         }
         .section__body-load-more {
-            button {
-                padding: 2rem 0 2.8rem;
-            }
+            padding: 2rem 0 2.8rem;
         }
         .section__body-list {
             display: grid;
@@ -269,6 +230,7 @@ export default {
     }
 }
 .section__body-load-more {
+    padding: 5.8rem 0 3.8rem;
     button {
         font-weight: 700;
         font-size: 1.6rem;
@@ -278,9 +240,8 @@ export default {
         display: flex;
         justify-content: center;
         align-items: center;
-        padding: 5.8rem 0 3.8rem;
-
         width: 100%;
+        display: inline-block;
     }
 }
 .select-custom {

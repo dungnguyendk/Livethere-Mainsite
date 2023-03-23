@@ -55,9 +55,6 @@
                 </v-textarea>
             </div>
             <v-btn class="btn btn--primary btn--green btn-custom" type="submit" :loading="loading">Enquire Now</v-btn>
-            <v-snackbar v-model="snackbar" color="#00634F" text class="snackbar-custom">
-                Thank you for your submission, our agent has been notified and will be contacting you shortly
-            </v-snackbar>
         </div>
     </form>
 </template>
@@ -118,7 +115,6 @@ export default {
                     showDialCode: true
                 }
             }, 
-            snackbar: false
     
         }
     },
@@ -160,7 +156,10 @@ export default {
                     email: this.email, 
                     message: this.message
                 }
-                this.snackbar = true
+              this.$store.dispatch("project/enquireUser", params).then((res)=>{
+                  this.$emit("snackbar", {isShowSnackbar: true, messageSnackbar: 'Thank you for your submission, our agent has been notified and will be contacting you shortly'})
+              })
+              this.onResetForm()
                 
             }else{
                 console.log("fail !")

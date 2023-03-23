@@ -10,13 +10,24 @@
                                     <label>Location</label>
                                     <v-select
                                         v-model="location"
-                                        :items="countries"
-                                        item-text="countryName"
-                                        item-value="countryName"
+                                        :items="locationTypes"
+                                        item-text="title"
+                                        item-value="value"
                                         required
                                         hide-details
                                         prepend-icon="icon-svg svg-location"
-                                    ></v-select>
+                                        placeholder="Search by..."
+                                        @change="onOpenForm($event)"
+                                    >
+                                        <template v-slot:item="{ item }">
+                                            <div class="border-bottom-custom">
+                                                <v-icon>{{ getItemIcon(item) }}</v-icon>
+                                                <span class="text-custom">{{
+                                                    getItemTitle(item)
+                                                }}</span>
+                                            </div>
+                                        </template>
+                                    </v-select>
                                 </div>
                             </v-col>
                             <v-col cols="12" sm="6" md="3">
@@ -67,7 +78,7 @@
                         </v-row>
                     </v-col>
                     <v-col cols="auto">
-                        <v-btn class="btn btn--primary btn--green">Search</v-btn>
+                        <v-btn class="btn btn--primary btn--green" @click="onSearchListing()">Search</v-btn>
                     </v-col>
                 </v-row>
             </form>
@@ -76,13 +87,15 @@
 </template>
 <script>
 import { countries } from "~/ultilities/country"
+import { LOCATION_TYPES } from "~/ultilities/contants/location"
 import { PROPERTY_TYPE, BEDROOM_TYPE } from "~/ultilities/contants/asset-inventory.js"
 export default {
     name: "HomeSearch",
     data() {
         return {
-            location: "SINGAPORE",
+            location: "",
             countries: countries,
+            locationTypes: LOCATION_TYPES,
             price: "",
             bedroom: "Studio",
             bedroomList: BEDROOM_TYPE,
@@ -100,8 +113,29 @@ export default {
                 {
                     value: 3,
                     text: "$15,000 - $20,000"
-                },
+                }
             ]
+        }
+    },
+    methods: {
+        getItemIcon(item) {
+            return item.icon
+        },
+        getItemTitle(item) {
+            return item.title
+        }, 
+        onOpenForm(e){
+            this.$emit("location", e)
+        }, 
+        onSearchListing(){
+            const params = {
+                location: this.location, 
+                price: this.price, 
+                bedroom: this.bedroom, 
+                propertyType: this.propertyType
+            }
+            this.$store.dispatch("project/searchListing", params)
+            this.$router.push("/projects")
         }
     }
 }
@@ -109,6 +143,34 @@ export default {
 <style lang="scss" scoped>
 .container {
     // width: 1230px;
+}
+.text-custom {
+    margin-left: 0.8rem;
+    font-weight: 500;
+    font-size: 1.6rem;
+    line-height: 2.4rem;
+    color: var(--color-title-black);
+}
+.v-list {
+    :deep(.v-list-item) {
+        &:first-child {
+            .border-bottom-custom{
+                width: 100%;
+                height: 100%;
+                position: relative;;
+                &::after{
+                    content: ""; 
+                    display: inline-block;
+                    width: 15rem;
+                    height: 0.1rem; 
+                    background: var(--border-color) ;
+                    position: absolute;
+                    bottom: -1.1rem;
+                    left: 0;
+                }
+            }
+        }
+    }
 }
 .section--search {
     position: relative;
@@ -125,13 +187,13 @@ export default {
             font-weight: 500;
             font-size: 1.4rem;
             color: var(--color-label);
-            margin-bottom: .8rem;
+            margin-bottom: 0.8rem;
         }
         :deep(.v-input) {
             border-right: 1px solid var(--border-color);
             padding-right: 1.8rem;
-            padding-top: .4rem;
-            padding-bottom: .4rem;
+            padding-top: 0.4rem;
+            padding-bottom: 0.4rem;
             margin-top: 0;
             .v-input__slot {
                 &::before {
@@ -155,37 +217,32 @@ export default {
                 //         border-right: 0;
                 //     }
                 // }
-                
             }
             @media screen and (max-width: 767px) {
                 border-right: 0;
                 border-bottom: 1px solid var(--border-color);
-                
             }
         }
         @media screen and (max-width: 1263px) {
             margin-bottom: 1.2rem;
-            
         }
         @media screen and (max-width: 960px) {
             margin-bottom: 1.2rem;
-            
         }
     }
     @media screen and (max-width: 1263px) {
         .btn--primary {
-            margin-bottom: 1.2rem
+            margin-bottom: 1.2rem;
         }
     }
     @media screen and (max-width: 960px) {
         .col-auto {
-            width: 100%
+            width: 100%;
         }
         .btn--primary {
             width: 100%;
             margin-top: 1rem;
         }
-            
-    } 
+    }
 }
 </style>

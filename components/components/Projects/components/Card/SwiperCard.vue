@@ -2,7 +2,7 @@
     <div class="card--swiper">
         <div class="card__header" @click="onRouteToDetails()">
             <div class="card__header-image">
-                <img :src="item.imgURL" alt="" />
+                <img v-bind:src="require('../../../../../static/img/static/' + item.imgURL)" alt="" />
                 <div class="card__header-image-hover">
                     <div class="card__header-image-circle">
                         <p>View</p>

@@ -9,7 +9,7 @@
         </div>
         <div class="card__image">
             <nuxt-link to="/projects/details">
-                <img :src="project.imgURL" alt="" />
+                <img v-bind:src="require(`~/static/img/static/` + project.imgURL)" alt="" />
             </nuxt-link>
         </div>
         <div class="card__content">
@@ -20,7 +20,7 @@
                         <i class="icon-svg svg-export"></i>
                     </v-btn>
                     <v-btn icon  @click="activeHeartEmotion(project.id)">
-                        <i class="ri-heart-3-line" :class="{'active-heart' : project.activeHeart}"></i>
+                        <i class="ri-heart-3-line" :class="{'active-heart' : project.favourite}"></i>
                     </v-btn>
                 </div>
             </div>
@@ -71,8 +71,6 @@ export default {
             try {
                 var project = this.listProject.find((e) => e.id === id)
                 project.activeHeart = !project.activeHeart
-               
-                
             } catch (error) {
                 console.log(error)
             }

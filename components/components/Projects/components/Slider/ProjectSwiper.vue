@@ -24,12 +24,18 @@
 </template>
 
 <script>
-import SwiperCard from "../Card/SwiperCard.vue"
+import SwiperCard from "~/components/components/Projects/components/Card/SwiperCard.vue"
+import { mapState } from "vuex"
 
 export default {
     name: "ProjectSwiper",
     components: {
         SwiperCard
+    },
+    computed: {
+        ...mapState({
+            popularListing: (state) => state.project.popularListings
+        }),
     },
     data() {
         const self = this
@@ -69,51 +75,6 @@ export default {
                     }
                 }
             },
-            popularListing: [
-                {
-                    id: 1,
-                    title: "Waterfront Bungalow at Ocean Drive",
-                    imgURL: require(`../../../../../static/img/static/listing1.png`),
-                    address: "Ocean Drive, Singapore 098314",
-                    totalBed: 4,
-                    totalBath: 4
-                },
-                {
-                    id: 2,
-                    title: "Skypark @ Somerset",
-                    imgURL: require(`../../../../../static/img/static/listing2.png`),
-                    address: "Ocean Drive, Singapore 098314",
-                    totalBed: 4,
-                    totalBath: 4
-                },
-                {
-                    id: 3,
-                    title: "Soleil @ Sinaran",
-                    imgURL: require(`../../../../../static/img/static/listing3.png`),
-                    imgURLIconFirst: require(`../../../../../static/img/home-icon1.png`),
-                    imgURLIconSecond: require(`../../../../../static/img/home-icon2.png`),
-                    imgURLIconThird: require(`../../../../../static/img/home-icon3.png`),
-                    address: "Ocean Drive, Singapore 098314",
-                    totalBed: 4,
-                    totalBath: 4
-                },
-                {
-                    id: 4,
-                    title: "Skypark @ Somerset",
-                    imgURL: require(`../../../../../static/img/static/listing2.png`),
-                    address: "Ocean Drive, Singapore 098314",
-                    totalBed: 4,
-                    totalBath: 4
-                },
-                {
-                    id: 5,
-                    title: "Soleil @ Sinaran",
-                    imgURL: require(`../../../../../static/img/static/listing3.png`),
-                    address: "Ocean Drive, Singapore 098314",
-                    totalBed: 4,
-                    totalBath: 4
-                }
-            ],
             preNumber: 1,
             nextNumber: 3,
             fractionTo: 1,
