@@ -1,27 +1,18 @@
 <template>
-    <div>
-        
-    </div>
+    <main>
+        <TermsConditions />
+    </main>
 </template>
 
 <script>
+import TermsConditions from "~/components/components/Page/TermsConditions.vue"
 export default {
+    components: {TermsConditions},
     data() {
-        return {
-            
-        };
-    },
-
-    mounted() {
-        
-    },
-
-    methods: {
-        
-    },
-};
+        return {}
+    }
+}
 </script>
 
 <style lang="scss" scoped>
-
 </style>
