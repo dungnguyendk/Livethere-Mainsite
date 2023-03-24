@@ -1,6 +1,6 @@
 <template lang="html">
     <div class="form--otp">
-        <h3 class="form__title"> SMS VERIFICATION </h3>
+        <h3 class="form__title">Enter Your Verification Code</h3>
         <div class="form__instruction">
             <p>
                 A six-digit verification code has been sent to your registered mobile number via SMS

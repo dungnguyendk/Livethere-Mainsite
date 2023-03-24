@@ -4,26 +4,27 @@ export const REGISTER_BENEFITS = [
         icon: "people",
         title: "Public Register Users",
         url: "/register/public",
+        image: "/img/landlords/register/public.svg",
         contents: [
             {
                 id: 1,
-                rule: "Allowed to store shortlisted property"
+                rule: "Store shortlisted property in the system"
             },
             {
                 id: 2,
-                rule: "Allowed to match search criteria and sent info back when new listing matches"
+                rule: "Set search criteria and receive notification when a listing matches"
             },
             {
                 id: 3,
-                rule: "Update of new market insight"
+                rule: "Receive updates on market insights"
             },
             {
                 id: 4,
-                rule: "Market reports"
+                rule: "View market reports"
             },
             {
                 id: 5,
-                rule: "Property Events and News update"
+                rule: "Get notified of upcoming property events & news updates"
             }
         ]
     },
@@ -32,34 +33,35 @@ export const REGISTER_BENEFITS = [
         icon: "vector",
         title: "Landlord Register Users",
         url: "/register",
+        image: "/img/landlords/register/landlords.svg",
         contents: [
             {
                 id: 1,
-                rule: "Have all rights of Public Users"
+                rule: "Full access to Public Registered User features"
             },
             {
                 id: 2,
-                rule: "Able to store all Assets Inventory on the system"
+                rule: "Store all assets inventory in one portal"
             },
             {
                 id: 3,
-                rule: "Able to managed the Tenants agreement and expiry within system"
+                rule: "Manage tenancy agreements and lease expiry"
             },
             {
                 id: 4,
-                rule: "Able to have overview of Assets Inventory and also expenses"
+                rule: "Get overview of assets inventory and expenses"
             },
             {
                 id: 5,
-                rule: "Able to review the rental income and rental yields and market yields"
+                rule: "Track property income, rental and market yields"
             },
             {
                 id: 6,
-                rule: "Able to check on Market value of the Assets"
+                rule: "Monitor market value of assets"
             },
             {
                 id: 7,
-                rule: "Able to view all Property Listing that they assign Savills to market for them"
+                rule: "View your property listings marketed by Savills"
             }
         ]
     },
@@ -68,27 +70,28 @@ export const REGISTER_BENEFITS = [
         icon: "tenant",
         title: "Tenant Register Users",
         url: "/tenant/register",
+        image: "/img/landlords/register/tenants.svg",
         contents: [
             {
                 id: 1,
-                rule: "Have all rights of Public Users"
+                rule: "Full access to Public Registered User features"
             },
             {
                 id: 2,
-                rule: "Able to capture all Tenancy Agreement in the portal"
+                rule: "Store all tenancy agreements in one portal"
             },
             {
                 id: 3,
-                rule: "Able to view Rental Insight"
+                rule: "View rental insights"
             },
             {
                 id: 4,
-                rule: "Able to set search criteria of requirement for autofetch Listing"
+                rule: "Receive recommended listings based on your search criteria"
             },
 
             {
                 id: 5,
-                rule: "Able to analyst current Tenancy Market Value"
+                rule: "Analyse current tenancy market value"
             }
         ]
     }
