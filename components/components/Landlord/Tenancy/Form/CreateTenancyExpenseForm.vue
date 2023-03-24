@@ -83,7 +83,9 @@
         </div>
         <div class="form__actions">
             <v-btn class="btn btn--ghost btn--gray btn--sm" @click="onClose"> Cancel</v-btn>
-            <v-btn class="btn btn--primary btn--green btn--sm" type="submit"> Create</v-btn>
+            <v-btn class="btn btn--primary btn--green btn--sm" type="submit">
+                {{ isUpdated ? "Update" : "Create" }}
+            </v-btn>
         </div>
     </form>
 </template>
@@ -112,6 +114,12 @@ export default {
             required
         }
     },
+    props: {
+        source: {
+            type: Object,
+            default: () => {}
+        }
+    },
 
     computed: {
         ...mapState({
@@ -131,6 +139,9 @@ export default {
         },
         typeErrors() {
             return setFormControlErrors(this.$v.type, "This field is required")
+        },
+        isUpdated() {
+            return this.source !== null
         }
     },
 
@@ -201,6 +212,13 @@ export default {
             remark: ""
         }
     },
+    created() {
+        if (this.isUpdated) {
+            this.assignData()
+        } else {
+            this.onResetForm()
+        }
+    },
     watch: {
         purchaseDateRaw() {
             this.purchaseDate = this.formatDate(this.purchaseDateRaw)
@@ -214,10 +232,24 @@ export default {
                     () => (this.itemPrice = convertNumberToCommas(convertCommasToNumber(val)))
                 )
             }
+        },
+        isUpdated() {
+            if (this.isUpdated) {
+                this.assignData()
+            } else {
+                this.onResetForm()
+            }
         }
     },
 
     methods: {
+        assignData() {
+            this.purchaseDate = this.formatDate(this.source.purchaseDate)
+            this.itemPrice = this.source.itemPrice
+            this.itemName = this.source.itemName
+            this.remark = this.source.remark
+            this.type = this.source.expenseTypeFID.toString()
+        },
         formatDate(date) {
             if (!date) return null
             return this.$moment(date).format("DD-MMM-YYYY")
@@ -235,28 +267,52 @@ export default {
             this.type = ""
             this.$v.$reset()
         },
+        async onUpdate() {
+            const params = {
+                id: this.source.id,
+                tenancyContractAgreementFID: this.tenancyDetails.id,
+                expenseTypeFID: parseFloat(this.type),
+                expenseTypeName: this.typeItems.find((t) => t.value === this.type).text,
+                itemName: this.itemName,
+                itemPrice: this.itemPrice ? convertCommasToNumber(this.itemPrice) : 0,
+                currencyType: this.currencyType,
+                currencyName: this.currencyName,
+                cultureCode: "en-SG",
+                purchaseDate: this.$dayjs(this.purchaseDate)
+                    .format("YYYY-MM-DD")
+                    .toString()
+                    .replace(/^-/, ""),
+                remark: this.remark
+            }
+            await this.$store.dispatch("tenancy/updateTenancyExpense", params).then(() => {
+                this.$emit("close")
+            })
+        },
 
         async submitForm() {
-            this.submitted = true
             this.$v.$touch()
 
             if (!this.$v.$invalid) {
-                const params = {
-                    tenancyContractAgreementFID: this.tenancyDetails.id,
-                    expenseTypeFID: parseFloat(this.type),
-                    expenseTypeName: this.typeItems.find((t) => t.value === this.type).text,
-                    itemName: this.itemName,
-                    itemPrice: this.itemPrice ? convertCommasToNumber(this.itemPrice) : 0,
-                    currencyType: this.currencyType,
-                    currencyName: this.currencyName,
-                    cultureCode: "en-SG",
-                    purchaseDate: this.purchaseDateRaw,
-                    remark: this.remark
+                if (!this.isUpdated) {
+                    const params = {
+                        tenancyContractAgreementFID: this.tenancyDetails.id,
+                        expenseTypeFID: parseFloat(this.type),
+                        expenseTypeName: this.typeItems.find((t) => t.value === this.type).text,
+                        itemName: this.itemName,
+                        itemPrice: this.itemPrice ? convertCommasToNumber(this.itemPrice) : 0,
+                        currencyType: this.currencyType,
+                        currencyName: this.currencyName,
+                        cultureCode: "en-SG",
+                        purchaseDate: this.purchaseDateRaw,
+                        remark: this.remark
+                    }
+                    await this.$store.dispatch("tenancy/createTenancyExpense", params).then(() => {
+                        this.$emit("close")
+                        this.onResetForm()
+                    })
+                } else {
+                    await this.onUpdate()
                 }
-                await this.$store.dispatch("tenancy/createTenancyExpense", params).then(() => {
-                    this.$emit("close")
-                    this.onResetForm()
-                })
             } else {
                 console.error("error!")
             }

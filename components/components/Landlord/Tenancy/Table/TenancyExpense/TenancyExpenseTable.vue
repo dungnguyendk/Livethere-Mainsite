@@ -30,6 +30,7 @@
                         :key="index"
                         @onDeleleteSuccess="showDeleteSuccess"
                         @open="onOpenDeleteDialog(item.id)"
+                        @onEdit="onEdit"
                     />
                 </template>
                 <template v-else>
@@ -70,6 +71,9 @@ export default {
         }
     },
     methods: {
+        onEdit(data) {
+            this.$emit("onEdit", data)
+        },
         onOpenDeleteDialog(id) {
             this.selectedIDForDelete = id
             this.deleteDialog = true

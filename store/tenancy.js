@@ -184,6 +184,24 @@ export const actions = {
             console.log({ Error: e.message })
         }
     },
+    async updateTenancyExpense({ commit, rootState, dispatch }, payload) {
+        try {
+            const response = await this.$axios.$put(
+                httpEndpoint.tenancies.expenses.createEntry,
+                payload
+            )
+            if (response && response !== 0) {
+                dispatch("getExpenses", {
+                    id: parseInt(rootState.tenancy.tenancyDetails.id)
+                })
+                dispatch("app/showSnackBar", "Update expense successful", { root: true })
+            } else {
+                console.log("Error!")
+            }
+        } catch (e) {
+            console.log({ Error: e.message })
+        }
+    },
     async deleteTenancyExpense({ commit, rootState, dispatch }, payload) {
         try {
             const response = await this.$axios.$delete(

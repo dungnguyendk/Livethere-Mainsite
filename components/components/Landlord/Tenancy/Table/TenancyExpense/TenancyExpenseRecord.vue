@@ -13,7 +13,10 @@
             <p>{{ source.currencyType === "SGD" && "S$" }} {{ price }}</p>
         </td>
         <td data-title="Action">
-            <v-btn class="btn btn--ghost btn--sm btn--red" @click="onDelete"> Delete</v-btn>
+            <div class="actions">
+                <v-btn class="btn btn--outline btn--sm btn--green" @click="onEdit">Edit</v-btn>
+                <v-btn class="btn btn--ghost btn--sm btn--red" @click="onDelete">Delete</v-btn>
+            </div>
         </td>
     </tr>
 </template>
@@ -51,11 +54,21 @@ export default {
     methods: {
         onDelete() {
             this.$emit("open", { open: (this.isOpenDeleteDialog = true), id: this.source.id })
+        },
+        onEdit() {
+            this.$emit("onEdit", this.source)
         }
     }
 }
 </script>
 <style lang="scss" scoped>
+.actions {
+    display: flex;
+    justify-content: flex-end;
+    grid-gap: 0.4rem;
+    gap: 0.4rem;
+}
+
 tr {
     position: relative;
     vertical-align: top;
@@ -86,11 +99,6 @@ td {
 td:nth-child(2) {
     padding-left: 0;
 }
-
-/*td:nth-child(4) {
-    display: flex;
-    justify-content: flex-end;
-}*/
 
 tr:nth-child(even) {
     background-color: #fafafa;

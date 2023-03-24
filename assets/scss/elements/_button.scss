@@ -10,7 +10,7 @@
 		letter-spacing: 0 !important;
 
 		.v-btn__content {
-			font-weight: 700 !important;
+			font-weight: 600 !important;
 		}
 
 		//=== Button type ===//
@@ -228,6 +228,7 @@
 			font-size: 1.4rem;
 			border-radius: 0.6rem !important;
 			overflow: hidden;
+
 		}
 	}
 
@@ -307,7 +308,8 @@
 			}
 		}
 	}
+
 	.theme--light.v-btn.v-btn--disabled {
-		color:var(--color-black) !important
+		color: var(--color-black) !important
 	}
 }
