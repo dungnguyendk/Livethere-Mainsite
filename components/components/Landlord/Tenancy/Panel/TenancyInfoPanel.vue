@@ -3,22 +3,23 @@
         <div class="section__top">
             <h3 class="top--title"> Tenancy Info </h3>
             <div class="top--button">
-                <v-btn
-                    class="btn btn--green btn--outline btn--withIcon"
-                    @click="createDialog = true"
-                >
-                    <i class="ri-add-box-line"></i> Add
+                <v-btn class="btn btn--green btn--outline btn--withIcon" @click="onCreateRecord">
+                    <i class="ri-add-box-line" /> Add
                 </v-btn>
             </div>
         </div>
-        <TenancyInfoTable />
+        <TenancyInfoTable @onEdit="onEditRecord" @onDelete="onDeleteRecord" />
         <Dialog
             title="Create Tenancy Info"
             :open="createDialog"
             :actions="false"
             @close="onCloseCreateDialog"
         >
-            <AddTenancyInfoForm @close="onCloseCreateDialog" v-if="createDialog" />
+            <AddTenancyInfoForm
+                @close="onCloseCreateDialog"
+                v-if="createDialog"
+                :source="details"
+            />
         </Dialog>
         <v-snackbar v-model="snackbarActive" :timeout="2000" top right text color="green darken-4">
             <span class="message--snackBar">
@@ -37,19 +38,21 @@ import { mapState } from "vuex"
 export default {
     name: "TenancyInfoPanel",
     components: { TenancyInfoTable, AddTenancyInfoForm, Dialog },
-    data() {
-        return {
-            createDialog: false,
-            snackbarActive: false,
-            snackbarMessageActive: "Your message has been sent."
-        }
-    },
     computed: {
         ...mapState({
             snackbar: (state) => state.tenancy.snackbar,
             snackbarMessage: (state) => state.tenancy.snackbarMessage
         })
     },
+    data() {
+        return {
+            createDialog: false,
+            snackbarActive: false,
+            snackbarMessageActive: "Your message has been sent.",
+            details: null // selected record details
+        }
+    },
+
     methods: {
         onCloseCreateDialog() {
             this.createDialog = false
@@ -64,6 +67,18 @@ export default {
                     this.$store.commit("inventories/setSnackbar", false)
                 }, 2000)
             }
+        },
+        onCreateRecord() {
+            this.details = null
+            this.createDialog = true
+        },
+        onDeleteRecord(data) {
+            console.log({ deleteData: data })
+        },
+        onEditRecord(data) {
+            console.log({ editData: data })
+            this.details = data
+            this.createDialog = true
         }
     },
     watch: {

@@ -61,11 +61,8 @@
         </div>
         <div class="form__actions">
             <v-btn class="btn btn--ghost btn--gray btn--sm" @click="onClose">Cancel</v-btn>
-            <v-btn
-                class="btn btn--primary btn--green btn--sm"
-                @click="onCreateTenancyInfo"
-                :loading="loading"
-                >Create
+            <v-btn class="btn btn--primary btn--green btn--sm" @click="onSubmit" :loading="loading">
+                {{ isUpdated ? "Update" : "Create" }}
             </v-btn>
         </div>
     </form>
@@ -74,9 +71,9 @@
 <script>
 import { validationMixin } from "vuelidate"
 import { required, requiredIf } from "vuelidate/lib/validators"
-import { setFormControlErrors } from "~/ultilities/form-validations"
-import { mapState } from "vuex"
 import qs from "qs"
+import { mapState } from "vuex"
+import { setFormControlErrors } from "~/ultilities/form-validations"
 
 export default {
     name: "AddTenancyInfoForm",
@@ -87,10 +84,42 @@ export default {
         passportNo: { required },
         companyName: {
             required: requiredIf(function () {
-                return this.leasingType.name === "Corporate"
+                if (this.isUpdated) {
+                    return this.leasingType !== null && this.leasingType.name === "Corporate"
+                } else {
+                    return this.leasingType.name === "Corporate"
+                }
             })
         }
     },
+    props: {
+        source: {
+            type: Object,
+            default: () => {}
+        }
+    },
+    computed: {
+        ...mapState({
+            tenancyDetails: (state) => state.tenancy.tenancyDetails,
+            statusResponse: (state) => state.tenancy.statusResponse
+        }),
+        tenancyNameErrors() {
+            return setFormControlErrors(this.$v.tenancyName, "This Tenancy Name is required")
+        },
+        leasingTypeErrors() {
+            return setFormControlErrors(this.$v.leasingType, "This Leasing Type is required")
+        },
+        passportNoErrors() {
+            return setFormControlErrors(this.$v.passportNo, "This ID / Passport No. is required")
+        },
+        companyNameErrors() {
+            return setFormControlErrors(this.$v.companyName, "This Company Name is required")
+        },
+        isUpdated() {
+            return this.source !== null
+        }
+    },
+
     data() {
         return {
             tenancyName: "",
@@ -117,29 +146,23 @@ export default {
             loading: false
         }
     },
-    computed: {
-        ...mapState({
-            tenancyDetails: (state) => state.tenancy.tenancyDetails,
-            statusResponse: (state) => state.tenancy.statusResponse
-        }),
-        tenancyNameErrors() {
-            return setFormControlErrors(this.$v.tenancyName, "This Tenancy Name is required")
-        },
-        leasingTypeErrors() {
-            return setFormControlErrors(this.$v.leasingType, "This Leasing Type is required")
-        },
-        passportNoErrors() {
-            return setFormControlErrors(this.$v.passportNo, "This ID / Passport No. is required")
-        },
-        companyNameErrors() {
-            return setFormControlErrors(this.$v.companyName, "This Company Name is required")
+    created() {
+        if (this.isUpdated) {
+            this.tenancyName = this.source.tenancyName
+            this.leasingType = this.leasingTypes.find(
+                (type) => type.value.id === this.source.leasingTypeFID
+            )
+                ? this.leasingTypes.find((type) => type.value.id === this.source.leasingTypeFID)
+                      .value
+                : null
+            this.passportNo = this.source.tenancyIdentityDocNo
+                ? this.source.tenancyIdentityDocNo
+                : ""
+            this.companyName = this.source.companyName
+            this.remark = this.source.remark
         }
     },
-
     methods: {
-        onFormSubmit() {
-            this.loading = true
-        },
         onClose() {
             this.$emit("close")
         },
@@ -151,35 +174,72 @@ export default {
             this.companyName = ""
             this.remark = ""
         },
-        onCreateTenancyInfo() {
-            this.onFormSubmit()
-            this.$v.$touch()
-            if (!this.$v.$invalid) {
-                const params = {
-                    tenancyContractAgreementFID: this.tenancyDetails.id,
-                    tenancyName: this.tenancyName,
-                    tenancyIdentityDocNo: this.passportNo,
-                    leasingTypeFID: this.leasingType.id,
-                    leasingTypeDisplay: this.leasingType.name,
-                    companyName: this.leasingType.name === "Corporate" ? this.companyName : "",
-                    remark: this.remark
-                }
-                this.$store
-                    .dispatch("tenancy/createTenancyTenantInfos", params)
-                    .then(() => {
-                        const paramAgreementFID = qs.stringify({
-                            TenancyContractAgreementFID: this.tenancyDetails.id
-                        })
-                        this.$store.dispatch("tenancy/getTenancyInfosById", paramAgreementFID)
+        async onUpdate() {
+            const params = {
+                id: this.source.id,
+                tenancyContractAgreementFID: this.tenancyDetails.id,
+                tenancyName: this.tenancyName,
+                tenancyIdentityDocNo: this.passportNo,
+                leasingTypeFID: this.leasingType.id,
+                leasingTypeDisplay: this.leasingType.name,
+                companyName: this.leasingType.name === "Corporate" ? this.companyName : "",
+                remark: this.remark
+            }
+            await this.$store
+                .dispatch("tenancy/updateTenancyInfo", params)
+                .then(() => {
+                    const paramAgreementFID = qs.stringify({
+                        TenancyContractAgreementFID: this.tenancyDetails.id
                     })
-                    .then(() => {
-                        this.loading = false
-                        this.onResetForm()
+                    this.$store.dispatch("tenancy/getTenancyInfosById", paramAgreementFID)
+                })
+                .then(() => {
+                    this.loading = false
+                    this.onResetForm()
 
-                        if (this.statusResponse) {
-                            this.onClose()
-                        }
+                    if (this.statusResponse) {
+                        this.onClose()
+                    }
+                })
+        },
+
+        onCreateTenancyInfo() {
+            const params = {
+                tenancyContractAgreementFID: this.tenancyDetails.id,
+                tenancyName: this.tenancyName,
+                tenancyIdentityDocNo: this.passportNo,
+                leasingTypeFID: this.leasingType.id,
+                leasingTypeDisplay: this.leasingType.name,
+                companyName: this.leasingType.name === "Corporate" ? this.companyName : "",
+                remark: this.remark
+            }
+            this.$store
+                .dispatch("tenancy/createTenancyTenantInfos", params)
+                .then(() => {
+                    const paramAgreementFID = qs.stringify({
+                        TenancyContractAgreementFID: this.tenancyDetails.id
                     })
+                    this.$store.dispatch("tenancy/getTenancyInfosById", paramAgreementFID)
+                })
+                .then(() => {
+                    this.loading = false
+                    this.onResetForm()
+
+                    if (this.statusResponse) {
+                        this.onClose()
+                    }
+                })
+        },
+        async onSubmit() {
+            this.loading = true
+            await this.$v.$touch()
+            console.log({ isUpdated: this.isUpdated })
+            if (!this.$v.$invalid) {
+                if (this.isUpdated) {
+                    await this.onUpdate()
+                } else {
+                    await this.onCreateTenancyInfo()
+                }
             } else {
                 this.loading = false
             }
