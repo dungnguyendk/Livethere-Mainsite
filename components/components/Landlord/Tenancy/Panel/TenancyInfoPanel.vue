@@ -10,7 +10,7 @@
         </div>
         <TenancyInfoTable @onEdit="onEditRecord" @onDelete="onDeleteRecord" />
         <Dialog
-            title="Create Tenancy Info"
+            :title="details !== null ? 'Update Tenancy Info' : 'Create Tenancy Info'"
             :open="createDialog"
             :actions="false"
             @close="onCloseCreateDialog"
