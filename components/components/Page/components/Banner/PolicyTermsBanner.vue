@@ -34,7 +34,6 @@ export default {
 .banner--policy-terms {
     height: 25.4rem;
     margin-top: -0.5rem;
-    margin-bottom: 4.8rem;
     .banner__container {
         display: flex;
         justify-content: center;
