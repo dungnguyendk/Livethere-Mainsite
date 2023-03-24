@@ -233,7 +233,6 @@ export default {
         async onSubmit() {
             this.loading = true
             await this.$v.$touch()
-            console.log({ isUpdated: this.isUpdated })
             if (!this.$v.$invalid) {
                 if (this.isUpdated) {
                     await this.onUpdate()

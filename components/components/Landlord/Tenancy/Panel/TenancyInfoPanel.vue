@@ -21,11 +21,12 @@
                 :source="details"
             />
         </Dialog>
-        <v-snackbar v-model="snackbarActive" :timeout="2000" top right text color="green darken-4">
-            <span class="message--snackBar">
-                <i class="ri-information-line" /> {{ snackbarMessageActive }}
-            </span>
-        </v-snackbar>
+        <DeleteDialog
+            :open="deleteDialog"
+            :actions="false"
+            @close="deleteDialog = false"
+            @onSubmit="handleDelete"
+        />
     </div>
 </template>
 
@@ -33,22 +34,22 @@
 import TenancyInfoTable from "~/components/components/Landlord/Tenancy/Table/TenancyInfo/TenancyInfoTable.vue"
 import Dialog from "~/components/elements/Dialog/Dialog.vue"
 import AddTenancyInfoForm from "~/components/components/Landlord/Tenancy/Form/AddTenancyInfoForm.vue"
+import DeleteDialog from "~/components/elements/Dialog/DeleteDialog.vue"
+import qs from "qs"
 import { mapState } from "vuex"
 
 export default {
     name: "TenancyInfoPanel",
-    components: { TenancyInfoTable, AddTenancyInfoForm, Dialog },
+    components: { DeleteDialog, TenancyInfoTable, AddTenancyInfoForm, Dialog },
     computed: {
         ...mapState({
-            snackbar: (state) => state.tenancy.snackbar,
-            snackbarMessage: (state) => state.tenancy.snackbarMessage
+            tenancyDetails: (state) => state.tenancy.tenancyDetails
         })
     },
     data() {
         return {
             createDialog: false,
-            snackbarActive: false,
-            snackbarMessageActive: "Your message has been sent.",
+            deleteDialog: false,
             details: null // selected record details
         }
     },
@@ -58,32 +59,34 @@ export default {
             this.createDialog = false
             this.$store.commit("tenancy/setStatusResponse", true)
         },
-        setSnackBar() {
-            this.snackbarActive = false
-            if (this.snackbar) {
-                this.snackbarActive = this.snackbar
-                this.snackbarMessageActive = this.snackbarMessage
-                setTimeout(() => {
-                    this.$store.commit("inventories/setSnackbar", false)
-                }, 2000)
-            }
-        },
+
         onCreateRecord() {
             this.details = null
             this.createDialog = true
         },
         onDeleteRecord(data) {
-            console.log({ deleteData: data })
+            this.details = data
+            this.deleteDialog = true
+        },
+        async handleDelete() {
+            await this.$store
+                .dispatch("tenancy/deleteTenancyInfo", this.details.id)
+                .then(() => {
+                    const paramAgreementFID = qs.stringify({
+                        TenancyContractAgreementFID: this.tenancyDetails.id
+                    })
+                    this.$store.dispatch("tenancy/getTenancyInfosById", paramAgreementFID)
+                })
+                .then(() => {
+                    if (this.statusResponse) {
+                        this.onClose()
+                    }
+                })
+            this.deleteDialog = false
         },
         onEditRecord(data) {
-            console.log({ editData: data })
             this.details = data
             this.createDialog = true
-        }
-    },
-    watch: {
-        snackbar() {
-            this.setSnackBar()
         }
     }
 }

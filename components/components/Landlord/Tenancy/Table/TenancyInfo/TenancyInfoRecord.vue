@@ -17,9 +17,9 @@
                 <v-btn class="btn btn--outline btn--sm btn--green" @click.prevent="onEdit">
                     Edit
                 </v-btn>
-                <v-btn class="btn btn--primary btn--sm btn--red" @click.prevent="onDelete">
-                    Delete</v-btn
-                >
+                <v-btn class="btn btn--ghost btn--sm btn--red" @click.prevent="onDelete">
+                    Delete
+                </v-btn>
             </div>
         </td>
     </tr>

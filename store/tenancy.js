@@ -144,6 +144,27 @@ export const actions = {
             console.log({ Error: e.message })
         }
     },
+    async deleteTenancyInfo({ commit, dispatch }, payload) {
+        try {
+            const response = await this.$axios.$delete(
+                `${httpEndpoint.tenancies.createTenancyInfosEntry}`,
+                {
+                    data: {
+                        id: payload
+                    }
+                }
+            )
+            if (response && response !== 0) {
+                dispatch("app/showSnackBar", "Seleted tenancy information was deleted.", {
+                    root: true
+                })
+            } else {
+                console.log("Error!")
+            }
+        } catch (e) {
+            console.log({ Error: e.message })
+        }
+    },
 
     async createTenancyExpense({ commit, rootState, dispatch }, payload) {
         try {
