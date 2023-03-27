@@ -730,12 +730,12 @@ export const TERMS_CONDITIONS = {
                does not constitute a solicitation to person outside the United Kingdom
                and must not be acted upon by such persons.</p
            >
-           <ol>
-               <li>
+     
+            
                    <h5
-                       >Disclaimer- Overseas Real Estate Investment</h5
+                       >1.1 Disclaimer- Overseas Real Estate Investment</h5
                    >
-               </li>
+            
                <p
                    >All forms of investments carry risks, including the risk of losing
                    all of the invested amount. Such activities may not be suitable for
@@ -744,7 +744,7 @@ export const TERMS_CONDITIONS = {
                    are advised to do the necessary checks and research on the
                    investment beforehand.</p
                >
-           </ol>
+      
        </li>
        <hr />
        <li>
