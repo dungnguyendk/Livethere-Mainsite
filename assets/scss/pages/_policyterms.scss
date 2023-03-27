@@ -94,6 +94,7 @@
         color: var(--color-menu);
         &:hover{ 
             text-decoration: underline;
+            color: var(--color-menu);
         }
     }
 }
