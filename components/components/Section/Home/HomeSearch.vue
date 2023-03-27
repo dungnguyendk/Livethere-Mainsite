@@ -33,16 +33,69 @@
                             <v-col cols="12" sm="6" md="3">
                                 <div class="form__field">
                                     <label>Price</label>
-                                    <v-select
-                                        v-model="price"
-                                        :items="priceList"
-                                        item-text="text"
-                                        item-value="value"
-                                        required
-                                        hide-details
-                                        prepend-icon="icon-svg svg-dollar-circle"
-                                        placeholder="Select"
-                                    ></v-select>
+                                    <v-menu
+                                        ref="menu"
+                                        :close-on-content-click="false"
+                                        v-model="menu"
+                                        transition="scale-transition"
+                                        offset-y
+                                        min-width="350px"
+                                    >
+                                        <template v-slot:activator="{ on, attrs }">
+                                            <v-text-field
+                                                v-model="price"
+                                                placeholder="Select"
+                                                prepend-icon="icon-svg svg-dollar-circle"
+                                                readonly
+                                                v-bind="attrs"
+                                                v-on="on"
+                                            ></v-text-field>
+                                        </template>
+                                        <v-card class="v-card--range">
+                                            <v-card-title>Rent Per Month ($S)</v-card-title>
+                                            <v-card-text>
+                                                <v-range-slider
+                                                    v-model="rangePrice"
+                                                    :min="minPrice"
+                                                    :max="maxPrice"
+                                                    @change="updatePrice"
+                                                    thumb-color="#f7f7f9"
+                                                    track-fill-color="#EDB842"
+                                                    track-color="#E5E5E5"
+                                                    step="500"
+                                                >
+                                                    <template v-slot:prepend>
+                                                        <v-text-field
+                                                            :value="rangePriceMin"
+                                                            hide-details
+                                                            dense
+                                                            prefix="$"
+                                                            flat
+                                                            solo
+                                                            style="width: 65px"
+                                                            readonly
+                                                            @change="$set(rangePrice, 0, $event)"
+                                                        >
+                                                        </v-text-field>
+                                                    </template>
+                                                    <template v-slot:append>
+                                                        <v-text-field
+                                                            :value="rangePriceMax"
+                                                            hide-details
+                                                            dense
+                                                            prefix="$"
+                                                            flat
+                                                            solo
+                                                            style="width: 65px"
+                                                            readonly
+                                                            @change="$set(rangePrice, 1, $event)"
+                                                        >
+                                                        </v-text-field>
+                                                    </template>
+                                                </v-range-slider>
+                                            </v-card-text>
+                                        </v-card>
+                                    </v-menu>
                                 </div>
                             </v-col>
                             <v-col cols="12" sm="6" md="3">
@@ -78,7 +131,9 @@
                         </v-row>
                     </v-col>
                     <v-col cols="auto">
-                        <v-btn class="btn btn--primary btn--green" @click="onSearchListing()">Search</v-btn>
+                        <v-btn class="btn btn--primary btn--green" @click="onSearchListing()"
+                            >Search</v-btn
+                        >
                     </v-col>
                 </v-row>
             </form>
@@ -89,6 +144,7 @@
 import { countries } from "~/ultilities/country"
 import { LOCATION_TYPES } from "~/ultilities/contants/location"
 import { PROPERTY_TYPE, BEDROOM_TYPE } from "~/ultilities/contants/asset-inventory.js"
+import { convertNumberToCommas } from "~/ultilities/helpers"
 export default {
     name: "HomeSearch",
     data() {
@@ -96,26 +152,34 @@ export default {
             location: "",
             countries: countries,
             locationTypes: LOCATION_TYPES,
-            price: "",
             bedroom: "Studio",
             bedroomList: BEDROOM_TYPE,
             propertyTypeList: PROPERTY_TYPE,
             propertyType: "",
-            priceList: [
-                {
-                    value: 1,
-                    text: "$1,000 - $7,000"
-                },
-                {
-                    value: 2,
-                    text: "$7,000 - $15,000"
-                },
-                {
-                    value: 3,
-                    text: "$15,000 - $20,000"
-                }
-            ]
+            menu: false,
+            price: "",
+            rangePrice: [1000, 20000],
+            minPrice: 1000,
+            maxPrice: 20000
         }
+    },
+    computed: {
+        rangePriceMin() {
+            return this.rangePrice[0] ? convertNumberToCommas(this.rangePrice[0]) : "0"
+        },
+        rangePriceMax() {
+            return this.rangePrice[this.rangePrice.length - 1] === this.maxPrice
+                ? convertNumberToCommas(this.rangePrice[this.rangePrice.length - 1]) + "+"
+                : convertNumberToCommas(this.rangePrice[this.rangePrice.length - 1])
+        },
+        // rangeUnitSizeMin() {
+        //     return this.rangeUnitSize[0] ? convertNumberToCommas(this.rangeUnitSize[0]) : "0"
+        // },
+        // rangeUnitSizeMax() {
+        //     return this.rangeUnitSize[this.rangeUnitSize.length - 1] === this.maxUnitSize
+        //         ? convertNumberToCommas(this.rangeUnitSize[this.rangeUnitSize.length - 1]) + "+"
+        //         : convertNumberToCommas(this.rangeUnitSize[this.rangeUnitSize.length - 1])
+        // }
     },
     methods: {
         getItemIcon(item) {
@@ -123,19 +187,22 @@ export default {
         },
         getItemTitle(item) {
             return item.title
-        }, 
-        onOpenForm(e){
+        },
+        onOpenForm(e) {
             this.$emit("location", e)
-        }, 
-        onSearchListing(){
+        },
+        onSearchListing() {
             const params = {
-                location: this.location, 
-                price: this.price, 
-                bedroom: this.bedroom, 
+                location: this.location,
+                price: this.price,
+                bedroom: this.bedroom,
                 propertyType: this.propertyType
             }
             this.$store.dispatch("project/searchListing", params)
             this.$router.push("/projects")
+        },
+        updatePrice() {
+            this.price = this.rangePrice[0] + " - " + this.rangePrice[1]
         }
     }
 }
@@ -154,16 +221,16 @@ export default {
 .v-list {
     :deep(.v-list-item) {
         &:first-child {
-            .border-bottom-custom{
+            .border-bottom-custom {
                 width: 100%;
                 height: 100%;
-                position: relative;;
-                &::after{
-                    content: ""; 
+                position: relative;
+                &::after {
+                    content: "";
                     display: inline-block;
                     width: 15rem;
-                    height: 0.1rem; 
-                    background: var(--border-color) ;
+                    height: 0.1rem;
+                    background: var(--border-color);
                     position: absolute;
                     bottom: -1.1rem;
                     left: 0;
@@ -243,6 +310,16 @@ export default {
             width: 100%;
             margin-top: 1rem;
         }
+    }
+}
+.v-card--range {
+    .v-card__title {font-size: 1.4rem;}
+    .v-card__text {
+        padding-left: 0;
+        padding-right: 0;
+    }
+    :v-deep(.v-input--is-readonly){
+        
     }
 }
 </style>
