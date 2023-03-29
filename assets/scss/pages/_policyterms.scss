@@ -6,8 +6,7 @@
         font-size: 2rem;
         line-height: 2.8rem;
         color: var(--color-menu);
-        display: inline-block;
-        margin-bottom: 1.6rem;
+        display: contents;
     }
 
     ol {
@@ -16,6 +15,7 @@
         padding-left: 0 !important;
         > li {
             margin-bottom: 2.4rem;
+            position: relative;
             &::before {
                 font-size: 2rem;
                 font-weight: 800;
@@ -24,10 +24,9 @@
                 counter-increment: title;
                 content: counters(title, ".") ". ";
             }
-
         }
     }
-    li{
+    li {
         font-weight: 400;
         font-size: 1.6rem;
         line-height: 2.4rem;
@@ -37,11 +36,9 @@
         padding-left: 5rem !important;
         margin-bottom: 2.4rem;
         list-style-type: disc !important;
-
     }
     ol > li {
         ol li {
-            padding: 0;
             padding-left: 5rem;
             position: relative;
             color: var(--color-title-black);
@@ -57,19 +54,23 @@
                 margin-right: 2.6rem;
             }
             p {
-                font-weight: 400; 
+                font-weight: 400;
                 margin-bottom: 2.4rem;
+                padding-top: 0;
             }
             ul {
+                padding-top: 0;
                 padding-left: 2rem;
                 margin-top: 1.2rem;
                 list-style-type: disc;
                 margin-bottom: 2.4rem;
             }
         }
+        ol, ul, p{
+            padding-top: 1.6rem;
+        }
         ol li > ul li {
             padding-left: 0;
-
         }
     }
 
@@ -92,9 +93,25 @@
         font-weight: 700;
         font-size: 1.6rem;
         color: var(--color-menu);
-        &:hover{ 
+        &:hover {
             text-decoration: underline;
             color: var(--color-menu);
+        }
+    }
+    @media screen and(max-width: 767px) {
+        ul {
+            padding-left: 0.6rem !important;
+
+        }
+
+        ol > li {
+            ol li {
+                padding-left: 4rem;
+                ul {
+                    padding-left: 1rem !important;
+
+                }
+            }
         }
     }
 }

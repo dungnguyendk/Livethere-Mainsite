@@ -40,55 +40,53 @@ export default {
         align-items: center;
         position: relative;
         height: 100%;
-        .banner__background-image {
-            position: absolute;
-            height: 100%;
+    }
+    .banner__overlay {
+        position: absolute;
+        background-color: #000000;
+        opacity: 0.55;
+        width: 100%;
+        height: 100%;
+    }
+    .banner__background-image {
+        position: absolute;
+        height: 100%;
+        width: 100%;
+        img {
+            object-fit: cover;
             width: 100%;
-            img {
-                object-fit: cover;
-                width: 100%;
-                height: 100%;
-            }
-        }
-        .banner__overlay {
-            position: absolute;
-            background-color: #000000;
-            opacity: 0.55;
-            width: 100%;
             height: 100%;
         }
+    }
+    .banner__content {
+        position: absolute;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+    .banner__content-title {
+        font-weight: 900;
+        font-size: 2.8rem;
+        line-height: 3.8rem;
+        text-align: center;
+        color: var(--color-white);
+        margin-bottom: 3.3rem;
+        text-transform: capitalize;
+    }
+    @media screen and (max-width: 768px) {
         .banner__content {
             position: absolute;
             display: flex;
             flex-direction: column;
             justify-content: center;
-            .banner__content-title {
-                font-weight: 900;
-                font-size: 2.8rem;
-                line-height: 3.8rem;
-                text-align: center;
-                color: var(--color-white);
-                margin-bottom: 3.3rem;
-                text-transform: capitalize;
-            }
         }
-    }
-    @media screen and (max-width: 768px) {
-        .banner__container {
-            .banner__content {
-                position: absolute;
-                display: flex;
-                flex-direction: column;
-                justify-content: center;
-                .banner__content-title {
-                    font-weight: 900;
-                    font-size: 1.8rem;
-                    line-height: 2.8rem;
-                    text-align: center;
-                    color: var(--color-white);
-                    margin-bottom: 3.3rem;
-                }
-            }
+        .banner__content-title {
+            font-weight: 900;
+            font-size: 1.8rem;
+            line-height: 2.8rem;
+            text-align: center;
+            color: var(--color-white);
+            margin-bottom: 3.3rem;
         }
     }
 }
