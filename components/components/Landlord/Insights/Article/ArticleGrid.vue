@@ -1,17 +1,21 @@
 <template>
     <div class="card--article-grid">
         <div class="card__header">
-            <nuxt-link to="" class="card__title"> {{ article.title }} </nuxt-link>
+            <nuxt-link to="" class="card__title"> {{ article.buildingName }} </nuxt-link>
         </div>
         <div class="card__body">
             <nuxt-link to="/" target="_blank">
                 <div class="card__image">
-                    <img :src="article.urlImage" alt=""/>
-             
+                    <template v-if="article.images">
+                        <img :src="article.images" alt="" />
+                    </template>
+                    <template v-else>
+                        <img src="https://fakeimg.pl/362x384/?text=No%20Image" alt="" />
+                    </template>
                 </div>
             </nuxt-link>
             <div class="card__content">
-                <p>{{ article.content }}</p>
+                <p>{{ article.buildingAddress }}</p>
                 <a class="card__button">Read More</a>
             </div>
         </div>

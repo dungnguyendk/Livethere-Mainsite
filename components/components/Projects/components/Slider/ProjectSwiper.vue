@@ -5,7 +5,7 @@
                 <slot />
             </h3>
         </div>
-        <div class="swiper__content">
+        <div class="swiper__content" v-if="popularListing">
             <swiper class="swiper swiper-item" :options="swiperOption">
                 <swiper-slide class="swiper-box" v-for="(element, index) in popularListing" :key="index">
                     <SwiperCard :item="element"/>

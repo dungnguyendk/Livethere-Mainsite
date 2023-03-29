@@ -1,42 +1,53 @@
 <template>
     <div class="card--project">
         <div class="card__header">
-            <div class="card__header-logo">
-                <img :src="require(`~/static/img/logos/logo-project.svg`)" alt="" />
+            <div class="card__header-logo" v-if="project.livethereChecked">
+                <img src="~/static/img/logos/logo-project.svg" alt="" />
+                <!-- <img :src="require(`~/static/img/logos/logo-project.svg`)" alt=""> -->
                 <span>premium</span>
             </div>
-            <nuxt-link to="/projects/details" class="card__header-title">{{ project.title }}</nuxt-link>
+            <nuxt-link to="/projects/details" class="card__header-title">{{
+                project.buildingName
+            }}</nuxt-link>
         </div>
         <div class="card__image">
             <nuxt-link to="/projects/details">
-                <img v-bind:src="require(`~/static/img/static/` + project.imgURL)" alt="" />
+                <template v-if="project.images">
+                    <img :src="project.images" alt="" />
+                </template>
+                <template v-else>
+                    <img src="https://fakeimg.pl/362x384/?text=No%20Image" alt="" />
+                </template>
             </nuxt-link>
         </div>
         <div class="card__content">
             <div class="card__content-fee">
-                <h3 class="card__content-price">S$ {{ project.price }}/month</h3>
+                <h3 class="card__content-price">S$ {{ project.rentPrice }}/month</h3>
                 <div class="card__content-emotions">
                     <v-btn icon @click="openShareSocialDialog(project.id)">
                         <i class="icon-svg svg-export"></i>
                     </v-btn>
-                    <v-btn icon  @click="activeHeartEmotion(project.id)">
-                        <i class="ri-heart-3-line" :class="{'active-heart' : project.favourite}"></i>
+                    <v-btn icon @click="activeHeartEmotion(project.id)">
+                        <i
+                            class="ri-heart-3-line"
+                            :class="{ 'active-heart': project.favourite }"
+                        ></i>
                     </v-btn>
                 </div>
             </div>
             <div class="card__content-infor">
                 <div class="card__content-location card__content-style">
                     <i class="icon-svg svg-location"></i>
-                    <span>{{ project.location }}</span>
+                    <span>{{ project.buildingAddress }}</span>
                 </div>
                 <div class="card__content-bed-bath">
                     <div class="card__content-bed card__content-style">
                         <i class="icon-svg svg-bedroom"></i>
-                        <span>{{ project.totalBed }}</span>
+                        <span>{{ project.bedrooms }}</span>
                     </div>
                     <div class="card__content-bath card__content-style">
                         <i class="icon-svg svg-bathroom"></i>
-                        <span>{{ project.totalBath }}</span>
+                        <span>{{ project.bathrooms }}</span>
                     </div>
                 </div>
             </div>
@@ -45,8 +56,10 @@
 </template>
 
 <script>
+import LogoProject from "~/static/img/logos/logo-project.svg"
 export default {
     name: "ProjectCard",
+    components: {LogoProject},
     props: {
         project: {
             type: Object,
@@ -59,8 +72,8 @@ export default {
     },
     data() {
         return {
-            isOpenShareSocialDialog: false, 
-            isActiveItemEmotion: 1, 
+            isOpenShareSocialDialog: false,
+            isActiveItemEmotion: 1
         }
     },
     methods: {
@@ -75,10 +88,8 @@ export default {
                 console.log(error)
             }
         }
-    }, 
-    watch: {
-        
-    }
+    },
+    watch: {}
 }
 </script>
 
@@ -93,6 +104,7 @@ export default {
     align-items: center;
 
     padding: 1rem 2.9rem 0.8rem;
+    min-height: 7.8rem;
     .card__header-logo {
         display: flex;
         justify-content: center;
@@ -141,29 +153,29 @@ export default {
         align-items: center;
         justify-content: space-between;
         margin-bottom: 1rem;
-        .card__content-price {
-            font-weight: 800;
-            font-size: 2.2rem;
-            line-height: 2.6rem;
-            color: #edb842;
-            margin-bottom: 0;
-        }
-        .card__content-emotions {
+    }
+    .card__content-price {
+        font-weight: 800;
+        font-size: 2.2rem;
+        line-height: 2.6rem;
+        color: #edb842;
+        margin-bottom: 0;
+    }
+    .card__content-emotions {
+        display: flex;
+        align-items: center;
+        button {
             display: flex;
             align-items: center;
-            button {
-                display: flex;
-                align-items: center;
+            i {
+                width: 2.4rem;
+                font-size: 2.4rem;
+                color: var(--color-label);
+            }
+            &:first-child {
+                margin-right: 1.6rem;
                 i {
-                    width: 2.4rem;
-                    font-size: 2.4rem;
-                    color: var(--color-label);
-                }
-                &:first-child {
-                    margin-right: 1.6rem;
-                    i {
-                        background-color: var(--color-label);
-                    }
+                    background-color: var(--color-label);
                 }
             }
         }
@@ -176,10 +188,10 @@ export default {
     .card__content-bed-bath {
         display: flex;
         align-items: center;
+    }
 
-        .card__content-bed {
-            margin-right: 4.6rem;
-        }
+    .card__content-bed {
+        margin-right: 4.6rem;
     }
 }
 .card__content-style {
@@ -200,9 +212,9 @@ export default {
     }
 }
 .active-heart {
-    &::before{
+    &::before {
         content: "\EE0A";
-        color: var(--color-primary)
+        color: var(--color-primary);
     }
 }
 </style>

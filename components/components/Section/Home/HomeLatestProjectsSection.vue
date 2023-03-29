@@ -1,5 +1,5 @@
 <template lang="html">
-    <section class="section--home-latest-projects">
+    <section class="section--home-latest-projects" v-if="articles">
         <div class="container">
             <div class="section-container">
                 <div class="section__top">

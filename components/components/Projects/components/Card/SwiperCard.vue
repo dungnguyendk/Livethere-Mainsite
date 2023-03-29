@@ -2,7 +2,12 @@
     <div class="card--swiper">
         <div class="card__header" @click="onRouteToDetails()">
             <div class="card__header-image">
-                <img v-bind:src="require('../../../../../static/img/static/' + item.imgURL)" alt="" />
+                <template v-if="item.images">
+                    <img :src="item.images" alt="" />
+                </template>
+                <template v-else>
+                    <img src="https://fakeimg.pl/362x384/?text=No%20Image" alt="" />
+                </template>
                 <div class="card__header-image-hover">
                     <div class="card__header-image-circle">
                         <p>View</p>
@@ -12,23 +17,23 @@
             </div>
             <div class="card__header-title">
                 <nuxt-link to="/projects/details" class="card__header-link">{{
-                    item.title
+                    item.buildingName
                 }}</nuxt-link>
             </div>
         </div>
         <div class="card__content">
             <div class="card__content-first">
-                <img src="../../../../../static/img/home-icon1.png" alt="" />
-                <p>{{ item.address }}</p>
+                <img src="~/static/img/home-icon1.png" alt="" />
+                <p>{{ item.buildingAddress }}</p>
             </div>
             <div class="card__content-second">
                 <div>
-                    <img src="../../../../../static/img/home-icon2.png" alt="" />
-                    <p>{{ item.totalBed }}</p>
+                    <img src="~/static/img/home-icon2.png" alt="" />
+                    <p>{{ item.bedrooms }}</p>
                 </div>
                 <div>
-                    <img src="../../../../../static/img/home-icon3.png" alt="" />
-                    <p>{{ item.totalBath }}</p>
+                    <img src="~/static/img/home-icon3.png" alt="" />
+                    <p>{{ item.bathrooms }}</p>
                 </div>
             </div>
         </div>

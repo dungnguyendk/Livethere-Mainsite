@@ -14,9 +14,7 @@ export const httpEndpoint = {
     menus: {
         getEntryById: "api/Menu/get-by-id"
     },
-    projects: {
-        getEntries: "api/Menu/get-by-id"
-    },
+    
     enquiry: {
         sendEnquiry: "/api/Enquiry"
     },
@@ -89,5 +87,9 @@ export const httpEndpoint = {
     marketing: {
         getEntries: "api/marketing",
         postEntriesListWithUs: "api/marketing/list-with-us"
-    }
+    },
+    projects: {
+        getListings: "api/listings",
+        getPopularListing: "api/popular-listings"
+    },
 }

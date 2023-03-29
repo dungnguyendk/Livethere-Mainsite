@@ -24,10 +24,17 @@ import HomeSearch from "~/components/components/Section/Home/HomeSearch.vue"
 import Dialog from "~/components/elements/Dialog/Dialog.vue"
 import LocationDistrictForm from "~/components/components/Section/components/Form/LocationDistrictForm.vue"
 import LocationMRTForm from "~/components/components/Section/components/Form/LocationMRTForm.vue"
+import { mapState } from "vuex"
 export default {
     components: { ProjectListing, HomeSearch, Dialog, LocationDistrictForm, LocationMRTForm },
     head: {
         title: "Livethere"
+    },
+    computed: {
+        ...mapState({
+            searchListings: (state) => state.project.searchListings,
+            paramsSearch: (state) => state.project.paramsSearch,
+        })
     },
     data() {
         return {
@@ -49,6 +56,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
 .page--projects {
     background-color: #fafafa;
 }

@@ -7,7 +7,8 @@ export const state = () => ({
     latestProjects: [],
     mostViewedListings: [],
     homeAgent: {},
-    projectDetails: {}
+    projectDetails: {},
+    paramsSearch: null,
 })
 
 export const mutations = {
@@ -28,6 +29,9 @@ export const mutations = {
     }, 
     setMostViewedListings(state, payload){
         state.mostViewedListings = payload
+    },
+    setParamsSearch(state, payload){
+        state.paramsSearch = payload
     }
 }
 
@@ -60,7 +64,7 @@ export const actions = {
     },
     async searchListing({ commit }, payload) {
         try {
-            const response = await this.$axios.$post(`${httpEndpoint}`, payload)
+            const response = await this.$axios.$get(`${httpEndpoint.projects.getListings}?${payload}`)
             if (response) {
                 commit("setSearchListing", response.data)
             } else {

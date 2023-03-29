@@ -17,30 +17,21 @@ export const STATUS_DROPDOWN = [
     }
 ]
 export const PROPERTY_TYPE = [
-    // {
-    //     id: 0,
-    //     value: "None"
-    // },
     {
-        value: {
-            id: 1,
-            name: "CONDO"
-        },
+        text: "All",
+        value: 0
+    },
+    {
+        value: 1,
         text: "Condo"
     },
     {
-        value: {
-            id: 2,
-            name: "APARTMENT"
-        },
-        text: "Apartment"
+            value: 2,
+        text: "Landed"
     },
     {
-        value: {
-            id: 3,
-            name: "LANDED PROPERTY"
-        },
-        text: "Landed Property"
+            value: 3,
+        text: "HDB"
     }
 ]
 
