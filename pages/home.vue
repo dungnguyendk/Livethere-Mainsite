@@ -1,21 +1,11 @@
 <template>
     <main>
         <HomeBannerSection />
-        <HomeSearch @location="onOpenLocationForm($event)" />
+        <HomeSearch />
         <HomeIntroSection />
         <HomePopularListingSection />
         <HomeLatestProjectsSection />
         <HomeCTASection />
-        <Dialog
-            :open="isOpenForm"
-            @close="isOpenForm = false"
-            size="medium"
-            :title="'Search By District'"
-            :actions="false"
-        >
-            
-            <LocationDistrictForm @close="isOpenForm = false" />
-        </Dialog>
     </main>
 </template>
 
@@ -42,25 +32,14 @@ export default {
         HomePopularListingSection,
         HomeLatestProjectsSection,
         HomeCTASection,
-        Dialog,
-        LocationMRTForm,
-        LocationDistrictForm
     },
     data() {
         return {
-            isOpenForm: false,
-            typeForm: "", 
+           
         }
     },
     methods: {
-        onOpenLocationForm(e) {
-            this.isOpenForm = true
-            this.typeForm = e
-        },
-        onClose() {
-            this.isOpenForm = false
-            
-        }
+       
     }, 
     async asyncData({app, store}){
         app.head.meta = generateLandlordsSEOMetaTags(app.head.meta)

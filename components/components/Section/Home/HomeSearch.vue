@@ -196,10 +196,23 @@
                 </v-row>
             </form>
         </div>
+        <Dialog
+            :open="isOpenDialogDistrict"
+            @close="isOpenDialogDistrict = false"
+            size="large"
+            :title="'Search By District'"
+            :actions="false"
+            :customClass="true"
+        >
+            <LocationDistrictForm @close="isOpenDialogDistrict = false" />
+        </Dialog>
     </section>
+    
 </template>
 <script>
-import { countries } from "~/ultilities/country"
+import Dialog from "~/components/elements/Dialog/Dialog.vue"
+import LocationDistrictForm from "~/components/components/Section/components/Form/LocationDistrictForm.vue"
+import LocationMRTForm from "~/components/components/Section/components/Form/LocationMRTForm.vue"
 import { LOCATION_TYPES } from "~/ultilities/contants/location"
 import { PROPERTY_TYPE, BEDROOM_TYPE } from "~/ultilities/contants/asset-inventory.js"
 import { convertNumberToCommas } from "~/ultilities/helpers"
@@ -207,10 +220,15 @@ import { mapState } from "vuex"
 import qs from "qs"
 export default {
     name: "HomeSearch",
+    components: {
+        Dialog,
+        LocationMRTForm,
+        LocationDistrictForm
+    },
     data() {
         return {
+            isOpenDialogDistrict: false,
             location: "",
-            countries: countries,
             locationTypes: LOCATION_TYPES,
             propertyTypeList: PROPERTY_TYPE,
             propertyType: "All",
@@ -383,7 +401,11 @@ export default {
             return item.title
         },
         onOpenForm(e) {
-            this.$emit("location", e)
+            console.log("object",e);
+            // this.$emit("location", e)
+            if(e === "DISTRICT"){
+                this.isOpenDialogDistrict = true
+            }
         },
         onSearchListing() {
             // console.log("onSearchListing rangePrice", this.rentPerMonth)
@@ -412,6 +434,12 @@ export default {
                 })
             // this.$router.push(`/projects?${params}`)
             // this.$router.push("/projects")
+        },
+        onOpenLocationForm(e) {
+            this.isOpenDialogDistrict = true
+        },
+        onClose() {
+            this.isOpenDialogDistrict = false
         }
     },
     watch: {
@@ -568,4 +596,5 @@ export default {
         left: 0.2rem;
     }
 }
+
 </style>
