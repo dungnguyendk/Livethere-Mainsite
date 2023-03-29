@@ -1,0 +1,121 @@
+.page__wrapper {
+    margin: 4.8rem 0 8.8rem;
+    h4,
+    h5 {
+        font-weight: 800;
+        font-size: 2rem;
+        line-height: 2.8rem;
+        color: var(--color-menu);
+        display: contents;
+        margin-bottom: 1.6rem;
+        &::after{
+            content: ""; 
+            width: 100%;
+            height: 1.6rem;
+            display: block;
+        }
+    }
+
+    ol {
+        counter-reset: title;
+        list-style-type: none;
+        padding-left: 0 !important;
+        > li {
+            margin-bottom: 2.4rem;
+            position: relative;
+            &::before {
+                font-size: 2rem;
+                font-weight: 800;
+                line-height: 2.8rem;
+                color: var(--color-menu);
+                counter-increment: title;
+                content: counters(title, ".") ". ";
+            }
+        }
+    }
+    li {
+        font-weight: 400;
+        font-size: 1.6rem;
+        line-height: 2.4rem;
+        color: var(--color-title-black);
+
+    }
+    ul {
+        padding-left: 5rem !important;
+        margin-bottom: 2.4rem;
+        list-style-type: disc !important;
+    }
+    ol > li {
+        ol li {
+            padding: 0;
+            padding-left: 5rem;
+            position: relative;
+            color: var(--color-title-black);
+            &::before {
+                position: absolute;
+                top: 0;
+                left: 0;
+                font-weight: 700;
+                font-size: 1.6rem;
+                line-height: 2.4rem;
+                color: var(--color-title-black);
+                display: inline;
+                margin-right: 2.6rem;
+            }
+            p {
+                font-weight: 400;
+                margin-bottom: 2.4rem;
+            }
+            ul {
+                padding-left: 2rem;
+                margin-top: 1.2rem;
+                list-style-type: disc;
+                margin-bottom: 2.4rem;
+            }
+        }
+        ol li > ul li {
+            padding-left: 0;
+        }
+    }
+
+    hr {
+        margin: 3.2rem 0;
+    }
+    p {
+        font-weight: 500;
+        font-size: 1.6rem;
+        line-height: 2.4rem;
+        color: var(--color-title-black);
+        margin-bottom: 2.4rem !important;
+    }
+    strong {
+        font-weight: bold;
+        font-size: 1.6rem;
+        color: var(--color-black);
+    }
+    a {
+        font-weight: 700;
+        font-size: 1.6rem;
+        color: var(--color-menu);
+        &:hover {
+            text-decoration: underline;
+            color: var(--color-menu);
+        }
+    }
+    @media screen and(max-width: 767px) {
+        ul {
+            padding-left: 0.6rem !important;
+
+        }
+
+        ol > li {
+            ol li {
+                padding-left: 4rem;
+                ul {
+                    padding-left: 1rem !important;
+
+                }
+            }
+        }
+    }
+}

@@ -5,7 +5,9 @@
                 <img :src="require(`~/static/img/logos/logo-project.svg`)" alt="" />
                 <span>premium</span>
             </div>
-            <nuxt-link to="/projects/details" class="card__header-title">{{ project.title }}</nuxt-link>
+            <nuxt-link to="/projects/details" class="card__header-title">{{
+                project.title
+            }}</nuxt-link>
         </div>
         <div class="card__image">
             <nuxt-link to="/projects/details">
@@ -19,8 +21,11 @@
                     <v-btn icon @click="openShareSocialDialog(project.id)">
                         <i class="icon-svg svg-export"></i>
                     </v-btn>
-                    <v-btn icon  @click="activeHeartEmotion(project.id)">
-                        <i class="ri-heart-3-line" :class="{'active-heart' : project.favourite}"></i>
+                    <v-btn icon @click="activeHeartEmotion(project.id)">
+                        <i
+                            class="ri-heart-3-line"
+                            :class="{ 'active-heart': project.favourite }"
+                        ></i>
                     </v-btn>
                 </div>
             </div>
@@ -59,8 +64,8 @@ export default {
     },
     data() {
         return {
-            isOpenShareSocialDialog: false, 
-            isActiveItemEmotion: 1, 
+            isOpenShareSocialDialog: false,
+            isActiveItemEmotion: 1
         }
     },
     methods: {
@@ -75,10 +80,8 @@ export default {
                 console.log(error)
             }
         }
-    }, 
-    watch: {
-        
-    }
+    },
+    watch: {}
 }
 </script>
 
@@ -97,17 +100,17 @@ export default {
         display: flex;
         justify-content: center;
         flex-direction: column;
-        img {
-            width: fit-content;
-            margin: 0 auto 0.2rem;
-        }
-        span {
-            font-weight: 800;
-            font-size: 1rem;
-            line-height: 1.4rem;
-            color: var(--color-primary);
-            text-transform: uppercase;
-        }
+    }
+    img {
+        width: fit-content;
+        margin: 0 auto 0.2rem;
+    }
+    span {
+        font-weight: 800;
+        font-size: 1rem;
+        line-height: 1.4rem;
+        color: var(--color-primary);
+        text-transform: uppercase;
     }
     .card__header-title {
         color: var(--color-title-black);
@@ -141,30 +144,30 @@ export default {
         align-items: center;
         justify-content: space-between;
         margin-bottom: 1rem;
-        .card__content-price {
-            font-weight: 800;
-            font-size: 2.2rem;
-            line-height: 2.6rem;
-            color: #edb842;
-            margin-bottom: 0;
+    }
+    .card__content-price {
+        font-weight: 800;
+        font-size: 2.2rem;
+        line-height: 2.6rem;
+        color: #edb842;
+        margin-bottom: 0;
+    }
+    .card__content-emotions {
+        display: flex;
+        align-items: center;
+    }
+    button {
+        display: flex;
+        align-items: center;
+        i {
+            width: 2.4rem;
+            font-size: 2.4rem;
+            color: var(--color-label);
         }
-        .card__content-emotions {
-            display: flex;
-            align-items: center;
-            button {
-                display: flex;
-                align-items: center;
-                i {
-                    width: 2.4rem;
-                    font-size: 2.4rem;
-                    color: var(--color-label);
-                }
-                &:first-child {
-                    margin-right: 1.6rem;
-                    i {
-                        background-color: var(--color-label);
-                    }
-                }
+        &:first-child {
+            margin-right: 1.6rem;
+            i {
+                background-color: var(--color-label);
             }
         }
     }
@@ -176,10 +179,9 @@ export default {
     .card__content-bed-bath {
         display: flex;
         align-items: center;
-
-        .card__content-bed {
-            margin-right: 4.6rem;
-        }
+    }
+    .card__content-bed {
+        margin-right: 4.6rem;
     }
 }
 .card__content-style {
@@ -200,9 +202,9 @@ export default {
     }
 }
 .active-heart {
-    &::before{
+    &::before {
         content: "\EE0A";
-        color: var(--color-primary)
+        color: var(--color-primary);
     }
 }
 </style>
