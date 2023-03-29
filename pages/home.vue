@@ -10,15 +10,11 @@
             :open="isOpenForm"
             @close="isOpenForm = false"
             size="medium"
-            :title="typeForm === 'MRT' ? 'Search By MRT' : 'Search By District'"
+            :title="'Search By District'"
             :actions="false"
         >
-            <template v-if="typeForm === 'MRT'">
-                <LocationMRTForm @close="isOpenForm = false" />
-            </template>
-            <template v-else>
-                <LocationDistrictForm @close="isOpenForm = false" />
-            </template>
+            
+            <LocationDistrictForm @close="isOpenForm = false" />
         </Dialog>
     </main>
 </template>
@@ -35,8 +31,8 @@ import LocationDistrictForm from "~/components/components/Section/components/For
 import LocationMRTForm from "~/components/components/Section/components/Form/LocationMRTForm.vue"
 import { generateLandlordsSEOMetaTags } from '~/ultilities/seo-configs'
 import { httpEndpoint } from "~/services/https/endpoints"
-import { appSettings } from "~/app-settings"
-import { POPULAR_LISTING, LATEST_PROJECT } from "~/ultilities/contants/dummy-data"
+import { appSettings, projectSettings } from "~/app-settings"
+// import { POPULAR_LISTING, LATEST_PROJECT } from "~/ultilities/contants/dummy-data"
 export default {
     name: "LiveThereMainSiteHome",
     components: {
@@ -68,28 +64,27 @@ export default {
     }, 
     async asyncData({app, store}){
         app.head.meta = generateLandlordsSEOMetaTags(app.head.meta)
-        const popularListings = POPULAR_LISTING
-        const latestProjects = LATEST_PROJECT
         try{
-            const responsePopularListing = await app.$axios.$get(`${httpEndpoint}`)
-            const responseLatestProject = await app.$axios.$get(`${httpEndpoint}`)
+            const responsePopularListing = await app.$axios.$get(`${httpEndpoint.projects.getPopularListing}`)
+            // const responsePopularListing = await app.$axios.$get(`http://vnapi.asiaesolutions.com/cmspublic/${httpEndpoint.projects.getPopularListing}`)
+
+            const responseLatestProject = await app.$axios.$get(`${httpEndpoint.projects.getListings}?page=1&perPage=10`)
+            // this.$router.push(`/home?${params}`)
+            // console.log("responsePopularListing :", responsePopularListing) ;
+            // console.log("responseLatestProject :", responseLatestProject);
             if(responsePopularListing){
-                await store.commit("project/setPopularListings", responsePopularListing.data)
+                await store.commit("project/setPopularListings", responsePopularListing)
             }else {
-                await store.commit("project/setPopularListings", popularListings)
+                await store.commit("project/setPopularListings", [])
             }
 
             if(responseLatestProject){
                 await store.commit("project/setLatestProjects", responseLatestProject.data)
             }else{
-                await store.commit("project/setLatestProjects", latestProjects)
+                await store.commit("project/setLatestProjects", [])
             }
             
         }catch(e){
-            //Dummy API URL So can't get data. Assign dummy data to swiper to show client 
-            //When API URL Updated --> You should delete 'await store.commit("project/setPopularListings", popularListing)' + 'await store.commit("project/setLatestProjects", latestProjects)' in here. Thks
-            await store.commit("project/setPopularListings", popularListings)
-            await store.commit("project/setLatestProjects", latestProjects)
             console.log({Error: e.message})
         }
     }
