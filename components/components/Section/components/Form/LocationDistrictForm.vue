@@ -9,6 +9,7 @@
                     placeholder="Search district"
                     append-icon="ri-search-line"
                     hide-details
+                    @change="keySearch(search)"
                 />
                 
             </div>
@@ -22,13 +23,13 @@
             </div>
         </div>
         <div class="form__fields">
-            <div class="form__field" v-for="item in listStation" :key="item.value">
-                <v-checkbox
-                    :v-model="item.value"
-                    :label="item.text"
-                    hide-details
-                ></v-checkbox>
-            </div>
+                <div class="form__field" v-for="item in DISTRICT_LISTING" :key="item.value">
+                    <v-checkbox
+                        :v-model="item.value"
+                        :label="item.text"
+                        hide-details
+                    ></v-checkbox>
+                </div>
         </div>
        
         <div class="form__footer">
@@ -50,14 +51,32 @@ export default {
 
     data() {
         return {
+            search: "",
             stations: [], 
             listStation: DISTRICT_LISTING
         }
     },
+    computed: {
+    // filteredDistricts() {
+    //   return DISTRICT_LISTING.filter((district) =>
+    //     district.text.toLowerCase().includes(this.search.toLowerCase())
+    //   );
+    // },
+  },
     methods: {
         onClose(){
             this.$emit('close');
+        },
+        onReset(){
+
+        },
+        selectDistrict(district) {
+        // do something with the selected district
+        },
+        keySearch(val){
+            console.log("keySearch",val);
         }
+
     },
 };
 </script>
