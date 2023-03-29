@@ -8,7 +8,8 @@ export const state = () => ({
     internalID: {},
     entriesID: {},
     listTenancyAgreements: null,
-    tenancyID: ""
+    tenancyID: "",
+    tenancyAgreementDetail: null
 })
 
 export const mutations = {
@@ -35,6 +36,9 @@ export const mutations = {
     },
     setTenancyID(state, payload) {
         state.tenancyID = payload
+    },
+    setTenancyAgreementDetail(state, payload) {
+        state.tenancyAgreementDetail = payload
     }
 }
 
@@ -188,7 +192,7 @@ export const actions = {
     async suspendContractAgreement({ commit, dispatch, state }, payload) {
         try {
             const response = await this.$axios.$put(
-                `${httpEndpoint.tenancyAgreements.updateEntry}`,
+                `${httpEndpoint.tenancyAgreements.putSuspendEntry}`,
                 payload
             )
 
@@ -219,6 +223,80 @@ export const actions = {
         } catch (e) {
             console.log({ Error: e.message })
             commit("setListTenancyAgreements", null)
+        }
+    },
+    async deleteTenancyContract({ commit, dispatch, state, rootState }, payload) {
+        try {
+            const response = await this.$axios.$delete(
+                `${httpEndpoint.tenancyAgreements.deleteContractEntry}`,
+                {
+                    data: {
+                        id: payload
+                    }
+                }
+            )
+            if (response) {
+                dispatch("app/showSnackBar", "Selected tenancy information was deleted.", {
+                    root: true
+                })
+                await dispatch(
+                    "inventory/getListTenancyAgreements",
+                    rootState.inventory.inventoryDetails.id,
+                    { root: true }
+                )
+            } else {
+                console.log("Error!")
+            }
+        } catch (e) {
+            console.log({ Error: e.message })
+        }
+    },
+    async getTenancyContractById({ commit }, payload) {
+        try {
+            const response = await this.$axios.$get(
+                `${httpEndpoint.tenancyAgreements.getByID}/${payload}`
+            )
+            if (response) {
+                commit("setTenancyAgreementDetail", response)
+            } else {
+                commit("setTenancyAgreementDetail", null)
+            }
+        } catch (e) {
+            commit("setTenancyAgreementDetail", null)
+            console.log({ Error: e.message })
+        }
+    },
+    async updateTenancyAgreement({ commit, dispatch }, payload) {
+        try {
+            const responseMain = await this.$axios.$put(
+                `${httpEndpoint.tenancyAgreements.updateEntry}`,
+                payload
+            )
+            if (responseMain) {
+                if (responseMain.id !== 0) {
+                    dispatch(
+                        "app/showSnackBar",
+                        responseMain.responseMessage || "Create contract success",
+                        { root: true }
+                    )
+                    const responseSub = await this.$axios.$get(
+                        `${httpEndpoint.tenancyAgreements.getEntries}?AssestInventoryFID=${payload.assestInventoryFID}`
+                    )
+
+                    if (responseSub) {
+                        commit("setListTenancyAgreements", responseSub)
+                    }
+                    return responseMain
+                } else {
+                    console.log({ Error: responseMain.responseMessage })
+                    return responseMain
+                }
+            } else {
+                return null
+            }
+        } catch (e) {
+            console.log({ Error: e.message })
+            return null
         }
     }
 }
