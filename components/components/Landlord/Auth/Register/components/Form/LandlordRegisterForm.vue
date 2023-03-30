@@ -36,7 +36,7 @@
                     />
                 </div>
                 <div class="form--register__input">
-                    <label class="required">Verified Password</label>
+                    <label class="required">Verify Password</label>
                     <v-text-field
                         v-model.trim="verifiedPassword"
                         outlined
