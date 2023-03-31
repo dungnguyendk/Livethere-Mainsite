@@ -216,8 +216,9 @@
         <v-dialog 
             v-model="isOpenDialogMrt"
             width="90%" 
+            content-class="dialog--mrt"
         >
-            <LocationMRTForm @close="isOpenDialogMrt = false" :listStation="linesMrt"  />
+            <LocationMRTForm @close="isOpenDialogMrt = false" @getMrt="getMrt"  />
         </v-dialog>
 
     </section>
@@ -439,6 +440,11 @@ export default {
             this.districts = this.locationSearch
             // console.log("locationSearch",this.locationSearch);
         },
+        getMrt(params){
+            this.locationSearch = params.join(';')
+            this.searchMRT = this.locationSearch
+            console.log("this.mrt: ",this.searchMRT);
+        },
         openLocationSearch(val){
             console.log("openLocationSearch val",val)
             // this.locationSearch = ""
@@ -447,7 +453,7 @@ export default {
             if(val === "Mrt"){
                 if(this.category === "Mrt"){
                     this.districts = ""
-                    
+                    this.locationSearch = this.searchMRT ? this.searchMRT : ""
                 }else {
                 }
                 this.isOpenDialogMrt = true
@@ -455,6 +461,7 @@ export default {
             }else {
                 if(this.category === "District"){
                     this.searchMRT = ""
+                    this.locationSearch = this.districts ? this.districts : ""
                 }else {
                 }
                 this.isOpenDialogDistrict = true
@@ -477,9 +484,12 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.container {
-    // width: 1230px;
+.v-dialog__content {
+    :deep(.dialog--mrt) {
+    height: 90%;
 }
+}
+
 .text-custom {
     margin-left: 0.8rem;
     font-weight: 500;

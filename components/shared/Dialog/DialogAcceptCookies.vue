@@ -11,13 +11,13 @@
                         cookies to enhance your experience with Livethere, including to show you
                         more personalised content and tailored advertisements, if you select “Allow
                         all cookies”.
-                        <a
-                            href="https://www.livethere.com/privacy-policy#19Cookies"
+                        <nuxt-link
+                            to="/privacy-policy#19Cookies"
                             target="_blank"
                             class="font-weight-bold text-decoration-underline"
                         >
                             More Info
-                        </a>
+                        </nuxt-link>
                     </p>
                 </div>
                 <div class="section__right">
