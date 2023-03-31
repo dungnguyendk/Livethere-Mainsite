@@ -156,48 +156,7 @@ export const HOME_AGENT_INFO = {
 }
 
 export const PROJECT_DETAILS = {
-    listImages: [
-        {
-            id: 1,
-            src: "https://picsum.photos/600/400.jpg?random=1"
-        },
-        {
-            id: 2,
-            src: "https://picsum.photos/600/400.jpg?random=2"
-        },
-        {
-            id: 3,
-            src: "https://picsum.photos/600/400.jpg?random=3"
-        },
-        {
-            id: 4,
-            src: "https://picsum.photos/600/400.jpg?random=4"
-        },
-        {
-            id: 5,
-            src: "https://picsum.photos/600/400.jpg?random=5"
-        },
-        {
-            id: 6,
-            src: "https://picsum.photos/600/400.jpg?random=6"
-        },
-        {
-            id: 7,
-            src: "https://picsum.photos/600/400.jpg?random=7"
-        },
-        {
-            id: 8,
-            src: "https://picsum.photos/600/400.jpg?random=8"
-        },
-        {
-            id: 9,
-            src: "https://picsum.photos/600/400.jpg?random=9"
-        },
-        {
-            id: 10,
-            src: "https://picsum.photos/600/400.jpg?random=10"
-        }
-    ],
+
     projectInfo: {
         title: "Eden Residences Capital",
         favourite: false,
@@ -219,111 +178,155 @@ export const PROJECT_DETAILS = {
         propertyType: "Condo"
     },
     availableFrom: "2022-02-01",
-    facilities: [
-        {
-            id: 1,
-            icon: "icon-svg svg-free-wifi",
-            text: "free wifi"
-        },
-        {
-            id: 2,
-            icon: "icon-svg svg-pool",
-            text: "pool"
-        },
-        {
-            id: 3,
-            icon: "icon-svg svg-bathtub",
-            text: "bathtub"
-        },
-        {
-            id: 4,
-            icon: "icon-svg svg-spa",
-            text: "spa"
-        },
-        {
-            id: 5,
-            icon: "icon-svg svg-sauna",
-            text: "sauna"
-        },
-        {
-            id: 6,
-            icon: "icon-svg svg-bbq",
-            text: "BBQ"
-        },
-        {
-            id: 7,
-            icon: "icon-svg svg-concierge",
-            text: "concierge"
-        },
-        {
-            id: 8,
-            icon: "icon-svg svg-game-room",
-            text: "games room"
-        },
-        {
-            id: 9,
-            icon: "icon-svg svg-tennis-court",
-            text: "tennis-court"
-        },
-        {
-            id: 10,
-            icon: "icon-svg svg-patio",
-            text: "patio"
-        },
-        {
-            id: 11,
-            icon: "icon-svg svg-taxi",
-            text: "taxi"
-        },
-        {
-            id: 12,
-            icon: "icon-svg svg-pet-allowed",
-            text: "pets allowed"
-        },
-        {
-            id: 13,
-            icon: "icon-svg svg-pool-view",
-            text: "pool view"
-        },
-        {
-            id: 14,
-            icon: "icon-svg svg-jacuzzi",
-            text: "jacuzzi"
-        },
-        {
-            id: 15,
-            icon: "icon-svg svg-gym",
-            text: "gym"
-        },
-        {
-            id: 16,
-            icon: "icon-svg svg-yoga",
-            text: "yoga"
-        },
-        {
-            id: 17,
-            icon: "icon-svg svg-gourmet-kitchen",
-            text: "gourmet kitchen"
-        },
-        {
-            id: 18,
-            icon: "icon-svg svg-restaurant",
-            text: "restaurant"
-        },
-        {
-            id: 19,
-            icon: "icon-svg svg-playground",
-            text: "playground"
-        },
-        {
-            id: 20,
-            icon: "icon-svg svg-squash-court",
-            text: "squash court"
-        },
-        {
-            id: 21,
-            icon: "icon-svg svg-social-lounge",
-            text: "social lounge"
-        }
-    ]
 }
+
+export const FACILITIES = [
+    {
+        id: 1,
+        icon: "icon-svg svg-free-wifi",
+        text: "free wifi"
+    },
+    {
+        id: 2,
+        icon: "icon-svg svg-pool",
+        text: "pool"
+    },
+    {
+        id: 3,
+        icon: "icon-svg svg-bathtub",
+        text: "bathtub"
+    },
+    {
+        id: 4,
+        icon: "icon-svg svg-spa",
+        text: "spa"
+    },
+    {
+        id: 5,
+        icon: "icon-svg svg-sauna",
+        text: "sauna"
+    },
+    {
+        id: 6,
+        icon: "icon-svg svg-bbq",
+        text: "BBQ"
+    },
+    {
+        id: 7,
+        icon: "icon-svg svg-concierge",
+        text: "concierge"
+    },
+    {
+        id: 8,
+        icon: "icon-svg svg-game-room",
+        text: "games room"
+    },
+    {
+        id: 9,
+        icon: "icon-svg svg-tennis-court",
+        text: "tennis-court"
+    },
+    {
+        id: 10,
+        icon: "icon-svg svg-patio",
+        text: "patio"
+    },
+    {
+        id: 11,
+        icon: "icon-svg svg-taxi",
+        text: "taxi"
+    },
+    {
+        id: 12,
+        icon: "icon-svg svg-pet-allowed",
+        text: "pets allowed"
+    },
+    {
+        id: 13,
+        icon: "icon-svg svg-pool-view",
+        text: "pool view"
+    },
+    {
+        id: 14,
+        icon: "icon-svg svg-jacuzzi",
+        text: "jacuzzi"
+    },
+    {
+        id: 15,
+        icon: "icon-svg svg-gym",
+        text: "gym"
+    },
+    {
+        id: 16,
+        icon: "icon-svg svg-yoga",
+        text: "yoga"
+    },
+    {
+        id: 17,
+        icon: "icon-svg svg-gourmet-kitchen",
+        text: "gourmet kitchen"
+    },
+    {
+        id: 18,
+        icon: "icon-svg svg-restaurant",
+        text: "restaurant"
+    },
+    {
+        id: 19,
+        icon: "icon-svg svg-playground",
+        text: "playground"
+    },
+    {
+        id: 20,
+        icon: "icon-svg svg-squash-court",
+        text: "squash court"
+    },
+    {
+        id: 21,
+        icon: "icon-svg svg-social-lounge",
+        text: "social lounge"
+    }
+]
+
+export const LISTIMAGE =  [
+    {
+        id: 1,
+        src: "https://picsum.photos/600/400.jpg?random=1"
+    },
+    {
+        id: 2,
+        src: "https://picsum.photos/600/400.jpg?random=2"
+    },
+    {
+        id: 3,
+        src: "https://picsum.photos/600/400.jpg?random=3"
+    },
+    {
+        id: 4,
+        src: "https://picsum.photos/600/400.jpg?random=4"
+    },
+    {
+        id: 5,
+        src: "https://picsum.photos/600/400.jpg?random=5"
+    },
+    {
+        id: 6,
+        src: "https://picsum.photos/600/400.jpg?random=6"
+    },
+    {
+        id: 7,
+        src: "https://picsum.photos/600/400.jpg?random=7"
+    },
+    {
+        id: 8,
+        src: "https://picsum.photos/600/400.jpg?random=8"
+    },
+    {
+        id: 9,
+        src: "https://picsum.photos/600/400.jpg?random=9"
+    },
+    {
+        id: 10,
+        src: "https://picsum.photos/600/400.jpg?random=10"
+    }
+]

@@ -38,23 +38,23 @@
                     </div>
                     <div class="expansion-property-row">
                         <p>lease term:</p>
-                        <p>{{ details.propertyDetails.leaseTerm }} months </p>
+                        <p>{{ details.leaseTerm }} months </p>
                     </div>
                     <div class="expansion-property-row">
                         <p>furnishing:</p>
-                        <p>{{ details.propertyDetails.furnishing }}</p>
+                        <p>{{ details.unitFurnishingType }}</p>
                     </div>
                     <div class="expansion-property-row">
                         <p>built year:</p>
-                        <p>{{ details.propertyDetails.builtYear }}</p>
+                        <p>{{ details.buildingYear }}</p>
                     </div>
                     <div class="expansion-property-row">
                         <p>tenure:</p>
-                        <p>{{ details.propertyDetails.tenure }}</p>
+                        <p>{{ details.tenure }}</p>
                     </div>
                     <div class="expansion-property-row">
                         <p>property type:</p>
-                        <p>{{ details.propertyDetails.propertyType }}</p>
+                        <p>{{ details.propertyType }}</p>
                     </div>
                 </v-expansion-panel-content>
             </v-expansion-panel>
@@ -68,7 +68,7 @@
                 <v-expansion-panel-content>
                     <div class="available-from-row">
                         <i class="icon-svg svg-calendar"></i>
-                        <p>{{ details.availableFrom }}</p>
+                        <p>{{ details.publishedDate }}</p>
                     </div>
                 </v-expansion-panel-content>
             </v-expansion-panel>
@@ -83,7 +83,7 @@
                     <div class="expansion-amenities-row">
                         <div
                             class="expansion-amenities-column"
-                            v-for="(item, index) in details.facilities"
+                            v-for="(item, index) in FACILITIES"
                             :key="index"
                         >
                             <div class="expansion-amenities-icon">
@@ -100,6 +100,7 @@
 
 <script>
 import { convertNumberToCommas } from "~/ultilities/helpers"
+import {FACILITIES} from '~/ultilities/contants/dummy-data'
 export default {
     name: "PanelListing",
     props: {
@@ -110,18 +111,20 @@ export default {
     },
     computed: {
         priceFormat() {
-            return convertNumberToCommas(this.details.propertyDetails.monthlyPrice)
+            return convertNumberToCommas(this.details.rentPrice)
         },
         sizeFormat() {
-            return convertNumberToCommas(this.details.propertyDetails.unitSize)
+            let unitSize = this.details.unitSize?.replace(" Sqft","")
+            return convertNumberToCommas(unitSize)
         },
         pricePSFFormat() {
-            return convertNumberToCommas(this.details.propertyDetails.monthlyPricePSF)
+            return convertNumberToCommas(this.details.rentPerPsf)
         }
     },
     data() {
         return {
-            panel: [0, 1, 2, 3]
+            panel: [0, 1, 2, 3],
+            FACILITIES,
         }
     }
 }

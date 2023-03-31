@@ -37,7 +37,8 @@ export default {
         { src: "~plugins/phone-input.js", ssr: false },
         { src: "~plugins/vue-awesome-swiper.js", ssr: true, mode: "client" },
         { src: "~plugins/dayjs.js", ssr: false }, 
-        { src: "~plugins/vue-tiny-box.js", ssr: false}
+        { src: "~plugins/vue-tiny-box.js", ssr: false},
+        { src: '~plugins/leaflet.js', ssr: false, mode: "client" }
     ],
 
     buildModules: [
@@ -60,7 +61,7 @@ export default {
         scss: "./assets/scss/env.scss"
     },
 
-    modules: ["cookie-universal-nuxt", "@nuxtjs/axios", "vue2-editor/nuxt", "@nuxtjs/auth-next"],
+    modules: ["cookie-universal-nuxt", "@nuxtjs/axios", "vue2-editor/nuxt", "@nuxtjs/auth-next","nuxt-leaflet"],
 
     axios: {
         baseURL: appSettings.baseURL
