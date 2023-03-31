@@ -60,7 +60,7 @@
                         />
                     </div>
                     <div class="section__body-load-more">
-                        <button>Load more</button>
+                        <button @click="$emit('loadMore')">Load more</button>
                     </div>
                 </template>
                 <template v-else>
@@ -111,7 +111,15 @@ export default {
     computed: {
         ...mapState({
             searchListings: (state) => state.project.searchListings
-        })
+        }),
+        selectionSort: {
+            get() {
+                return this.$store.state.project.paramsSearch.sortBy || 'Relevant'
+            },
+            set(val) {
+                this.$store.commit('project/setParamsSearch', {...this.$store.state.project.paramsSearch, sortBy: val})
+            }
+        }
     },
     data() {
         return {
@@ -140,7 +148,6 @@ export default {
             isActiveMap: false,
             isOpenFilterProjectDialog: false,
             isOpenShareSocialDialog: false,
-            selectionSort: 1,
             targetLinkURL: {},
             snackbar: false,
             messageSnackbar: ""

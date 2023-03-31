@@ -96,7 +96,9 @@ export const actions = {
     },
     async searchListing({ commit }, payload) {
         try {
-            const response = await this.$apiCmsPublic.$get(`${httpEndpoint.projects.getListings}?${payload}`)
+            const response = await this.$apiCmsPublic.$get(`${httpEndpoint.projects.getListings}`,{
+                params: payload
+            })
             if (response) {
                 commit("setSearchListing", response.data)
             } else {

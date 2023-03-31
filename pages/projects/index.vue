@@ -1,7 +1,7 @@
 <template>
     <main class="page--projects">
         <HomeSearch @location="onOpenLocationForm($event)"/>
-        <ProjectListing/>
+        <ProjectListing @loadMore="handleLoadMore"/>
         <Dialog 
          :open="isOpenForm" 
          @close="isOpenForm = false" size="medium" 
@@ -49,8 +49,19 @@ export default {
         },
         onClose() {
             this.isOpenForm = false
+        },
+        async handleLoadMore() {
+            console.log(this.$route.query)
+            console.log({...this.$route.query,perPage: + 10})
+            // {...this.$route.query,...{perPage: Number(this.$store.state.project.paramsSearch.perPage) + 10} }
+            await this.$store.dispatch('project/searchListing',{...this.$route.query,...{perPage: Number(this.$store.state.project.paramsSearch.perPage) + 10}})
         }
-    }, 
+    },
+
+    async asyncData({query, store}) {
+        await store.commit("project/setParamsSearch", query)
+        await store.dispatch('project/searchListing',query)
+    }
     
 }
 </script>
