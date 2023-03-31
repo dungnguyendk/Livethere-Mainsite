@@ -62,8 +62,12 @@
                                     :items="listStation"
                                     selectable
                                     activatable
+                                    return-object
                                     open-on-click
                                     class="tree--station"
+                                    :activate-on-click="true"
+                                    :node-key="'id'"
+                                    @node-click="onEnableLine"
                                 >
                                     <template v-slot:prepend="{ item, open }">
                                         <template v-if="item.children && item.children.length">
@@ -90,10 +94,7 @@
                         </div>
                     </div>
                     <div class="mrt__map">
-                        <panZoom
-                        >
-                            <MrtSingapore />
-                        </panZoom>
+                        <MrtSingapore />
                     </div>
                 </div>
             </div>
@@ -132,11 +133,6 @@ export default {
             selectedStations: [],
             filterStations: [],
             searchStations: [],
-            optionsSvgPanZoom : {
-                zoomScaleSensitivity: 0.2,
-        minZoom: 0.5,
-        maxZoom: 2
-            }
         }
     },
     computed: {
@@ -150,21 +146,14 @@ export default {
     mounted() {
         this.convertListStation()
         this.convertFilteredStations()
-        console.log("this.filterStations: ,", this.filterStations.length)
-        const panzoom = new this.$options.components.panZoom({
-      propsData: {
-        // Các props của panZoom component
-      },
-    });
-
-    // Gán instance này vào một biến để có thể sử dụng được sau này
-    this.panzoom = panzoom;
-
-    // Thêm instance này vào phần tử của component
-    this.panzoom.$mount();
-    this.$el.appendChild(this.panzoom.$el);
+        // console.log("this.filterStations: ,", this.filterStations.length)
+       
     },
     methods: {
+        onEnableLine(node){
+            const classLine = ['.i','.j','.x','.y','.t','.u','.o','.p','.f','.g','.r','.s','.ac','.ad','.ab','.ag'];
+            console.log("selectedStations. ",node.id);
+        },
         onClose() {
             this.$emit("close")
         },
@@ -219,10 +208,7 @@ export default {
             this.onClose()
         }
     },
-    destroyed() {
-    // Hủy bỏ instance của panZoom component
-    this.panzoom.$destroy();
-  },
+    
 }
 </script>
 

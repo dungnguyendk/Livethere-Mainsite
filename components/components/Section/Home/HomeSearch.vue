@@ -146,32 +146,6 @@
                                                     tick-size="6"
                                                     hide-details
                                                 >
-                                                    <!-- <template v-slot:prepend>
-                                                        <v-text-field
-                                                            :value="rangeBedroomMin"
-                                                            hide-details
-                                                            dense
-                                                            flat
-                                                            solo
-                                                            style="width: 40px"
-                                                            readonly
-                                                            @change="$set(rangeBedroom, 0, $event)"
-                                                        >
-                                                        </v-text-field>
-                                                    </template>
-                                                    <template v-slot:append>
-                                                        <v-text-field
-                                                            :value="rangeBedroom[1]"
-                                                            hide-details
-                                                            dense
-                                                            flat
-                                                            solo
-                                                            style="width: 40px"
-                                                            readonly
-                                                            @change="$set(rangeBedroom, 1, $event)"
-                                                        >
-                                                        </v-text-field>
-                                                    </template> -->
                                                 </v-range-slider>
                                             </v-card-text>
                                         </v-card>

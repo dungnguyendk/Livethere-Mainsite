@@ -52,4 +52,6 @@ export default function ({ $axios, redirect }, inject) {
     inject("api", api)
     // Inject to context as $apivo
     inject("apivo", apivo)
+    // Inject to context as $apiCmsPublic
+    inject("apiCmsPublic", apiCmsPublic)
 }

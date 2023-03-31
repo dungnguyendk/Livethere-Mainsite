@@ -2,9 +2,6 @@
     <main>
         <HomeBannerSection />
         <HomeSearch />
-        <panZoom>
-            <img src="https://picsum.photos/2000/3000" alt="">
-        </panZoom>
         <HomeIntroSection />
         <HomePopularListingSection />
         <HomeLatestProjectsSection />
