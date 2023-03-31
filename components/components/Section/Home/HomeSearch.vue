@@ -8,26 +8,33 @@
                             <v-col cols="12" sm="6" md="3">
                                 <div class="form__field">
                                     <label>Location</label>
-                                    <v-select
-                                        v-model="location"
-                                        :items="locationTypes"
-                                        item-text="text"
-                                        item-value="value"
-                                        required
-                                        hide-details
-                                        prepend-icon="icon-svg svg-location"
-                                        placeholder="Search by..."
-                                        @change="onOpenForm($event)"
-                                    >
-                                        <template v-slot:item="{ item }">
-                                            <div class="border-bottom-custom">
-                                                <v-icon>{{ getItemIcon(item) }}</v-icon>
-                                                <span class="text-custom">{{
-                                                    getItemTitle(item)
-                                                }}</span>
-                                            </div>
+                                    <v-menu offset-y>
+                                        <template v-slot:activator="{ on, attrs }">
+                                            <v-text-field
+                                                v-model="locationSearch"
+                                                placeholder="Where do you want to live?"
+                                                prepend-icon="icon-svg svg-location"
+                                                hide-details
+                                                v-bind="attrs"
+                                                v-on="on"
+                                                @input="keySearch(locationSearch)"
+                                            />
                                         </template>
-                                    </v-select>
+                                        <v-list class="list-location">
+                                            <v-list-item  @click="openLocationSearch('Mrt')">
+                                                <v-list-item-icon>
+                                                    <i data-v-6ff87bcf="" aria-hidden="true" class="v-icon icon-svg svg-train"></i>
+                                                </v-list-item-icon>
+                                                <v-list-item-title >Search by MRT</v-list-item-title>
+                                            </v-list-item>
+                                            <v-list-item @click="openLocationSearch('District')">
+                                                <v-list-item-icon>
+                                                    <i data-v-6ff87bcf="" aria-hidden="true" class="v-icon icon-svg svg-target"></i>
+                                                </v-list-item-icon>
+                                                <v-list-item-title>Search by District</v-list-item-title>
+                                            </v-list-item>
+                                        </v-list>
+                                    </v-menu>
                                 </div>
                             </v-col>
                             <v-col cols="12" sm="6" md="3">
@@ -196,22 +203,47 @@
                 </v-row>
             </form>
         </div>
+        <Dialog
+            :open="isOpenDialogDistrict"
+            @close="isOpenDialogDistrict = false"
+            size="large"
+            :title="'Search By District'"
+            :actions="false"
+            :customClass="true"
+        >
+            <LocationDistrictForm @close="isOpenDialogDistrict = false" @getDistricts="getDistricts" />
+        </Dialog>
+        <v-dialog 
+            v-model="isOpenDialogMrt"
+            width="90%" 
+            content-class="dialog--mrt"
+        >
+            <LocationMRTForm @close="isOpenDialogMrt = false" @getMrt="getMrt"  />
+        </v-dialog>
+
     </section>
 </template>
 <script>
-import { countries } from "~/ultilities/country"
-import { LOCATION_TYPES } from "~/ultilities/contants/location"
+import Dialog from "~/components/elements/Dialog/Dialog.vue"
+import LocationDistrictForm from "~/components/components/Section/components/Form/LocationDistrictForm.vue"
+import LocationMRTForm from "~/components/components/Section/components/Form/LocationMRTForm.vue"
 import { PROPERTY_TYPE, BEDROOM_TYPE } from "~/ultilities/contants/asset-inventory.js"
 import { convertNumberToCommas } from "~/ultilities/helpers"
 import { mapState } from "vuex"
 import qs from "qs"
 export default {
     name: "HomeSearch",
+    components: {
+        Dialog,
+        LocationMRTForm,
+        LocationDistrictForm
+    },
     data() {
         return {
+            isOpenDialogDistrict: false,
+            isOpenDialogMrt:false,
             location: "",
-            countries: countries,
-            locationTypes: LOCATION_TYPES,
+            locationSearch: "",
             propertyTypeList: PROPERTY_TYPE,
             propertyType: "All",
             menuRange: false,
@@ -228,34 +260,28 @@ export default {
             rangePriceMin: "",
             rangePriceMax: "",
             rentPerMonth: "",
-            bedRooms: ""
+            bedRooms: "",
+            category: "Distritct",
+            districts: "",
+            searchMRT : "",
+
         }
     },
     computed: {
         ...mapState({
-            paramsSearch: (state) => state.project.paramsSearch
+            paramsSearch: (state) => state.project.paramsSearch,
+            linesMrt: (state) => state.project.linesMrt
         }),
         rangeBedroomMin() {
             return this.rangeBedroom[0] === 0 ? "Studio" : this.rangeBedroom[0]
         }
-        // rangeUnitSizeMin() {
-        //     return this.rangeUnitSize[0] ? convertNumberToCommas(this.rangeUnitSize[0]) : "0"
-        // },
-        // rangeUnitSizeMax() {
-        //     return this.rangeUnitSize[this.rangeUnitSize.length - 1] === this.maxUnitSize
-        //         ? convertNumberToCommas(this.rangeUnitSize[this.rangeUnitSize.length - 1]) + "+"
-        //         : convertNumberToCommas(this.rangeUnitSize[this.rangeUnitSize.length - 1])
-        // }
     },
     created() {
         this.onFillExistingSearch()
         this.updatePrice()
         this.updateBedroom()
-        
     },
-    mounted() {
-        
-    },
+    mounted() {},
     methods: {
         updatePrice() {
             this.rangePriceMin = convertNumberToCommas(this.rangePrice[0])
@@ -274,7 +300,7 @@ export default {
             } else if (this.rangePrice[0] === this.maxPrice) {
                 this.price = `Min $${convertNumberToCommas(this.rangePrice[0])}`
                 this.rentPerMonth = `${this.rangePrice[0]};-1`
-            }else if (this.rangePrice[0] === this.minPrice) {
+            } else if (this.rangePrice[0] === this.minPrice) {
                 this.price = `Max $${convertNumberToCommas(this.rangePrice[1])}`
                 this.rentPerMonth = `${this.rangePrice[0]};${this.rangePrice[1]}`
             } else {
@@ -312,16 +338,19 @@ export default {
                 this.perPage = this.paramsSearch.perPage
                 this.search = this.paramsSearch.search
                 this.sortBy = this.paramsSearch.sortBy
-                this.districts = this.paramsSearch.districts
+                this.locationSearch = this.paramsSearch.districts
                 this.category = this.paramsSearch.category
                 this.amenities = this.paramsSearch.amenities
                 // this.rangeBedroom = this.paramsSearch.bathRooms
                 const tempBedrooms = this.paramsSearch.bathRooms.split(";").map(Number)
                 if (tempBedrooms.includes(-1)) {
-                    if ( tempBedrooms[0] === this.minBedroom && tempBedrooms[1] === this.maxBedroom) {
+                    if (
+                        tempBedrooms[0] === this.minBedroom &&
+                        tempBedrooms[1] === this.maxBedroom
+                    ) {
                         this.bedroom = "Bedroom"
                         this.bedRooms = "0;-1"
-                    }else {
+                    } else {
                         this.rangeBedroom = [tempBedrooms[0], this.maxBedroom]
                         this.bedroom = tempBedrooms[0] + " - " + this.maxBedroom
                         this.bedRooms = tempBedrooms[0] + ";-1"
@@ -330,14 +359,12 @@ export default {
                     if (tempBedrooms[0] === this.minBedroom) {
                         this.bedroom = "Studio" + " - " + tempBedrooms[1]
                         this.bedRooms = tempBedrooms[0] + ";" + tempBedrooms[1]
-                    }else {
+                    } else {
                         this.bedroom = tempBedrooms[0] + " - " + tempBedrooms[1]
                         this.bedRooms = tempBedrooms[0] + ";" + tempBedrooms[1]
                     }
-                    
                 }
                 const tempPrices = this.paramsSearch.rentPerMonth.split(";").map(Number)
-                console.log("tempPrices", tempPrices)
                 if (tempPrices.includes(-1)) {
                     if (tempPrices[0] === this.minPrice && tempPrices[1] === this.maxPrice) {
                         this.price = "Price"
@@ -359,7 +386,7 @@ export default {
                         this.rangePriceMin = "0"
                         this.rentPerMonth = `0;1000`
                         this.rangePrice = [this.minPrice, this.minPrice]
-                    }else if (tempPrices[0] === this.minPrice){
+                    } else if (tempPrices[0] === this.minPrice) {
                         this.price = `Max $${convertNumberToCommas(this.tempPrices[1])}`
                         this.rentPerMonth = `${this.rangePrice[0]};${this.rangePrice[1]}`
                         this.rangePrice = [this.minPrice, tempPrices[1]]
@@ -376,17 +403,12 @@ export default {
                 // console.log("tempPrices this.rentPerMonth ", this.rentPerMonth)
             }
         },
-        getItemIcon(item) {
-            return item.icon
-        },
-        getItemTitle(item) {
-            return item.title
-        },
-        onOpenForm(e) {
-            this.$emit("location", e)
-        },
         onSearchListing() {
-            // console.log("onSearchListing rangePrice", this.rentPerMonth)
+            console.log("onSearchListing this.locationSearch", this.locationSearch)
+            // if(this.category === "District"){
+            //     this.districts = this.locationSearch
+            // }else this.districts = ""
+            console.log("this.districts",this.districts);
             const params = {
                 page: 1,
                 perPage: 10,
@@ -397,12 +419,14 @@ export default {
                 amenities: "",
                 search: "",
                 sortBy: "Relevant",
-                districts: "",
-                category: "",
+                category: this.category,
+                districts: this.districts,
+                mrt: this.searchMRT,
                 origin: "",
-                handleSearch: ""
+                handleSearch: "",
+                unitSize: 100
             }
-            // console.log("onSearchListing params", params)
+            console.log("onSearchListing params", params)
             // console.log("onSearchListing params stringify", qs.stringify(params, { encode: false }))
             this.$store
                 .dispatch("project/searchListing", qs.stringify(params, { encode: false }))
@@ -410,15 +434,49 @@ export default {
                     this.$store.commit("project/setParamsSearch", params)
                     this.$router.push(`/projects?${qs.stringify(params, { encode: false })}`)
                 })
-            // this.$router.push(`/projects?${params}`)
-            // this.$router.push("/projects")
+        },
+        getDistricts(params){
+            this.locationSearch = params.join(';')
+            this.districts = this.locationSearch
+            // console.log("locationSearch",this.locationSearch);
+        },
+        getMrt(params){
+            this.locationSearch = params.join(';')
+            this.searchMRT = this.locationSearch
+            console.log("this.mrt: ",this.searchMRT);
+        },
+        openLocationSearch(val){
+            console.log("openLocationSearch val",val)
+            // this.locationSearch = ""
+            this.category = val
+            console.log("openLocationSearch this.category",this.category)
+            if(val === "Mrt"){
+                if(this.category === "Mrt"){
+                    this.districts = ""
+                    this.locationSearch = this.searchMRT ? this.searchMRT : ""
+                }else {
+                }
+                this.isOpenDialogMrt = true
+
+            }else {
+                if(this.category === "District"){
+                    this.searchMRT = ""
+                    this.locationSearch = this.districts ? this.districts : ""
+                }else {
+                }
+                this.isOpenDialogDistrict = true
+            }
+        },
+        keySearch(val){
+            this.category = 
+            console.log("keySearch val",val);
         }
     },
     watch: {
         rangePrice(val) {
             this.rangePriceMin = convertNumberToCommas(this.rangePrice[0])
             this.rangePriceMax = convertNumberToCommas(this.rangePrice[1])
-        },
+        }
         // paramsSearch() {
         //     this.onFillExistingSearch()
         // }
@@ -426,9 +484,12 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
-.container {
-    // width: 1230px;
+.v-dialog__content {
+    :deep(.dialog--mrt) {
+    height: 90%;
 }
+}
+
 .text-custom {
     margin-left: 0.8rem;
     font-weight: 500;
@@ -436,24 +497,29 @@ export default {
     line-height: 2.4rem;
     color: var(--color-title-black);
 }
-.v-list {
-    :deep(.v-list-item) {
-        &:first-child {
-            .border-bottom-custom {
-                width: 100%;
-                height: 100%;
-                position: relative;
-                &::after {
-                    content: "";
-                    display: inline-block;
-                    width: 15rem;
-                    height: 0.1rem;
-                    background: var(--border-color);
-                    position: absolute;
-                    bottom: -1.1rem;
-                    left: 0;
-                }
-            }
+.list-location {
+    padding: 0;
+    .v-list-item__icon {
+        margin-right: .8rem;
+        margin-top: 1.4rem;
+        margin-bottom: 1.4rem;
+    }
+    .v-list-item__title {
+        font-size: 1.6rem;
+        color: var(--color-title-black);
+    }
+    .v-list-item {
+        position: relative;
+        &:first-child::after{
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 1.6rem;
+            right: 1.6rem;
+            height: 1px;
+            min-height: 1px;
+            top: auto;
+            background-color: var(--border-color);
         }
     }
 }
@@ -567,5 +633,9 @@ export default {
         top: 1rem;
         left: 0.2rem;
     }
+}
+::placeholder {
+    font-size: 1.6rem;
+    color: var(--color-title-black);
 }
 </style>

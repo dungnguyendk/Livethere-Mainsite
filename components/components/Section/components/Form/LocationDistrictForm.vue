@@ -1,52 +1,145 @@
 <template>
     <form class="form--district">
-        <div class="form__field">
-            <label>Select Line or Train Station</label>
-            <v-autocomplete
-                v-model="stations"
-                :items="listStation"
-                outlined
-                dense
-                multiple
-            
-            ></v-autocomplete>
+        <div class="form__header">
+            <div class="form__field">
+                <v-text-field
+                    v-model="search"
+                    outlined
+                    dense
+                    placeholder="Search district"
+                    append-icon="ri-search-line"
+                    hide-details
+                    @input="keySearch(search)"
+                />
+            </div>
+            <div class="form__field">
+                <v-checkbox
+                    v-model="checkboxAll"
+                    label="All Districts"
+                    hide-details
+                    class="mt-1"
+                    @change="onCheckAll()"
+                ></v-checkbox>
+            </div>
         </div>
+        <div class="form__fields">
+            <v-list v-if="this.listStation.length > 0">
+                <v-list-item-group v-model="districtChecked" multiple @change="onCheckItem()">
+                    <template v-for="item in listStation">
+                        <v-list-item :key="item.value" :value="item.text">
+                            <template v-slot:default="{ active }">
+                                <v-list-item-action>
+                                    <v-checkbox :input-value="active"></v-checkbox>
+                                </v-list-item-action>
+                                <v-list-item-content>
+                                    <v-list-item-title v-text="item.text"></v-list-item-title>
+                                </v-list-item-content>
+                            </template>
+                        </v-list-item>
+                    </template>
+                </v-list-item-group>
+            </v-list>
+            <template v-else>
+                <div class="no-result"> Not found </div>
+            </template>
+        </div>
+
         <div class="form__footer">
             <div class="form__actions">
-                <v-btn class="btn btn--primary btn--gray" @click="onClose">Cancel</v-btn>
-                <v-btn class="btn btn--primary btn--green ml-1" @click="onClose">Submit</v-btn>
+                <v-btn class="btn btn--outline btn--red" text @click="onReset">Reset</v-btn>
+            </div>
+            <div class="form__actions">
+                <v-btn class="btn btn--outline btn--green" @click="onClose">Cancel</v-btn>
+                <v-btn class="btn btn--primary btn--green ms-3" @click="onSubmit">Submit</v-btn>
             </div>
         </div>
     </form>
 </template>
 
 <script>
+import { DISTRICT_LISTING } from "~/ultilities/contants/district"
 export default {
-    name: 'LocationDistrictForm',
+    name: "LocationDistrictForm",
 
     data() {
         return {
-            stations: [], 
-            listStation: ['East-West Line', 'North-South Line', 'North-East Line', 'Circle Line', 
-            'Downtown Line', 
-        ], 
+            checkboxAll: false,
+            search: "",
+            districtChecked: [],
+            districtCheckedText: [],
+            stations: [],
+            listStation: DISTRICT_LISTING
         }
+    },
+    computed: {
     },
     methods: {
-        onClose(){
-            this.$emit('close');
+        onClose() {
+            this.$emit("close")
+        },
+        onReset() {
+            // console.log("districtChecked",this.districtChecked)
+            this.districtChecked = []
+            this.search = ""
+            this.checkboxAll = false
+            this.listStation = DISTRICT_LISTING
+        },
+        onCheckAll() {
+            if (this.checkboxAll) {
+                this.districtChecked = this.listStation.map((item) => item.value)
+            } else {
+                this.districtChecked = []
+            }
+        },
+        onCheckItem() {
+            const totalItems = this.listStation.length
+            const checkedItems = this.districtChecked.length
+            this.checkboxAll = checkedItems === totalItems
+        },
+        keySearch(val) {
+            this.listStation = DISTRICT_LISTING.filter((item) => {
+                return item.text.toLowerCase().includes(val.toLowerCase())
+            })
+        },
+        onSubmit(){
+            // console.log("onsubmit this.districtChecked",this.districtChecked);
+            this.$emit("getDistricts",this.districtChecked)
+            this.onClose()
         }
     },
-};
+    watch: {
+        // checkboxAll(val){
+        //     console.log("watch checkboxAlla",val)
+        // }
+    }
+}
 </script>
 
 <style lang="scss" scoped>
-.form__actions{
+.form--district {
+    padding-left: 3rem;
+    padding-right: 3rem;
+    padding-bottom: 3rem;
+}
+.form__footer {
+    padding-top: 2.4rem;
+    position: relative;
+    &::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -5.2rem;
+        right: -5.2rem;
+        height: 1px;
+        background-color: var(--border-color);
+    }
+}
+.form__actions {
     display: flex;
     justify-content: flex-end;
 }
-.form__field{
-    label{
+.form__field {
+    label {
         font-weight: 500;
         font-size: 1.6rem;
         line-height: 2rem;
@@ -54,10 +147,63 @@ export default {
         margin-bottom: 0.4rem;
     }
 }
-</style>
+.v-list-item-group {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-row-gap: 0.4rem;
+    .v-list-item__title {
+        font-size: 1.6rem;
+        white-space: normal;
+    }
+    .v-list-item--active {
+        &::before {
+            opacity: 0;
+        }
+    }
+    .v-list-item {
+        padding-left: 0;
+    }
+    .v-list-item__action {
+        margin-right: 0.8rem;
+    }
+}
+.form__fields {
+    padding-bottom: 2.4rem;
+    max-height: 50vh;
+    min-height: 50vh;
+    overflow: auto;
+}
+.form__header {
+    display: flex;
+    justify-content: space-between;
+    align-content: center;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 1.6rem;
+}
 
-<style lang="scss">
-.v-autocomplete__content.v-menu__content{
-    margin-top: 0 !important;
+.form__footer {
+    display: flex;
+    justify-content: space-between;
+    align-content: center;
+}
+::-webkit-scrollbar {
+    width: 0.5rem;
+}
+
+::-webkit-scrollbar-track {
+    border-radius: 1rem;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #bfbfbf;
+    border-radius: 1rem;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #a2a0a0;
+}
+.no-result {
+    text-align: center;
+    font-size: 1.8rem;
+    padding: 3.2rem;
 }
 </style>

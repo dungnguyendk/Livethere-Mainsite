@@ -1,21 +1,11 @@
 <template>
     <main>
         <HomeBannerSection />
-        <HomeSearch @location="onOpenLocationForm($event)" />
+        <HomeSearch />
         <HomeIntroSection />
         <HomePopularListingSection />
         <HomeLatestProjectsSection />
         <HomeCTASection />
-        <Dialog
-            :open="isOpenForm"
-            @close="isOpenForm = false"
-            size="medium"
-            :title="'Search By District'"
-            :actions="false"
-        >
-            
-            <LocationDistrictForm @close="isOpenForm = false" />
-        </Dialog>
     </main>
 </template>
 
@@ -42,48 +32,19 @@ export default {
         HomePopularListingSection,
         HomeLatestProjectsSection,
         HomeCTASection,
-        Dialog,
-        LocationMRTForm,
-        LocationDistrictForm
     },
     data() {
         return {
-            isOpenForm: false,
-            typeForm: "", 
+           
         }
     },
     methods: {
-        onOpenLocationForm(e) {
-            this.isOpenForm = true
-            this.typeForm = e
-        },
-        onClose() {
-            this.isOpenForm = false
-            
-        }
+       
     }, 
     async asyncData({app, store}){
         app.head.meta = generateLandlordsSEOMetaTags(app.head.meta)
         try{
-            const responsePopularListing = await app.$axios.$get(`${httpEndpoint.projects.getPopularListing}`)
-            // const responsePopularListing = await app.$axios.$get(`http://vnapi.asiaesolutions.com/cmspublic/${httpEndpoint.projects.getPopularListing}`)
-
-            const responseLatestProject = await app.$axios.$get(`${httpEndpoint.projects.getListings}?page=1&perPage=10`)
-            // this.$router.push(`/home?${params}`)
-            // console.log("responsePopularListing :", responsePopularListing) ;
-            // console.log("responseLatestProject :", responseLatestProject);
-            if(responsePopularListing){
-                await store.commit("project/setPopularListings", responsePopularListing)
-            }else {
-                await store.commit("project/setPopularListings", [])
-            }
-
-            if(responseLatestProject){
-                await store.commit("project/setLatestProjects", responseLatestProject.data)
-            }else{
-                await store.commit("project/setLatestProjects", [])
-            }
-            
+            await store.dispatch("project/getHomePage")
         }catch(e){
             console.log({Error: e.message})
         }

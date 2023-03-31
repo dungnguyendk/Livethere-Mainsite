@@ -89,6 +89,7 @@ export const httpEndpoint = {
         postEntriesListWithUs: "api/marketing/list-with-us"
     },
     projects: {
+        linesMrt: "api/mrt-lines",
         getListings: "api/listings",
         getPopularListing: "api/popular-listings"
     },
