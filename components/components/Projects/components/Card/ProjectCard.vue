@@ -6,12 +6,12 @@
                 <!-- <img :src="require(`~/static/img/logos/logo-project.svg`)" alt=""> -->
                 <span>premium</span>
             </div>
-            <nuxt-link to="/projects/details" class="card__header-title">{{
+            <nuxt-link :to="`/projects-detail/${project.slug}`" class="card__header-title">{{
                 project.buildingName
             }}</nuxt-link>
         </div>
         <div class="card__image">
-            <nuxt-link to="/projects/details">
+            <nuxt-link :to="`/projects-detail/${project.slug}`">
                 <template v-if="project.images">
                     <img :src="project.images" alt="" />
                 </template>

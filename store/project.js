@@ -9,6 +9,7 @@ export const state = () => ({
     homeAgent: {},
     projectDetails: {},
     paramsSearch: null,
+    linesMrt: [],
 })
 
 export const mutations = {
@@ -32,10 +33,41 @@ export const mutations = {
     },
     setParamsSearch(state, payload){
         state.paramsSearch = payload
+    },
+    setLinesMrt(state, payload){
+        state.linesMrt = payload
     }
 }
 
 export const actions = {
+    async getHomePage({ commit }, payload) {
+        try {
+            const responsePopularListing = await this.$axios.$get(`${httpEndpoint.projects.getPopularListing}`)
+            // const responsePopularListing = await this.$axios.$get(`http://vnapi.asiaesolutions.com/cmspublic/${httpEndpoint.projects.getPopularListing}`)
+            if(responsePopularListing){
+                commit("setPopularListings", responsePopularListing)
+            }else {
+                commit("setPopularListings", [])
+            }
+
+            const responseLatestProject = await this.$axios.$get(`${httpEndpoint.projects.getListings}?page=1&perPage=10`)
+            if(responseLatestProject){
+                commit("setLatestProjects", responseLatestProject.data)
+            }else{
+                commit("setLatestProjects", [])
+            }
+
+            const responseMrtLine = await this.$axios.$get(`${httpEndpoint.projects.linesMrt}`)
+            if(responseMrtLine){
+                commit("setLinesMrt", responseMrtLine)
+            }else{
+                commit("setLinesMrt", [])
+            }
+
+        } catch (e) {
+            console.log({ Error: e.message })
+        }
+    },
     async getPopularListing({ commit }, payload) {
         try {
             const response = await this.$axios.$get(`${httpEndpoint}`)

@@ -44,25 +44,7 @@ export default {
     async asyncData({app, store}){
         app.head.meta = generateLandlordsSEOMetaTags(app.head.meta)
         try{
-            const responsePopularListing = await app.$axios.$get(`${httpEndpoint.projects.getPopularListing}`)
-            // const responsePopularListing = await app.$axios.$get(`http://vnapi.asiaesolutions.com/cmspublic/${httpEndpoint.projects.getPopularListing}`)
-
-            const responseLatestProject = await app.$axios.$get(`${httpEndpoint.projects.getListings}?page=1&perPage=10`)
-            // this.$router.push(`/home?${params}`)
-            // console.log("responsePopularListing :", responsePopularListing) ;
-            // console.log("responseLatestProject :", responseLatestProject);
-            if(responsePopularListing){
-                await store.commit("project/setPopularListings", responsePopularListing)
-            }else {
-                await store.commit("project/setPopularListings", [])
-            }
-
-            if(responseLatestProject){
-                await store.commit("project/setLatestProjects", responseLatestProject.data)
-            }else{
-                await store.commit("project/setLatestProjects", [])
-            }
-            
+            await store.dispatch("project/getHomePage")
         }catch(e){
             console.log({Error: e.message})
         }

@@ -22,6 +22,7 @@
                         dense
                         prepend-inner-icon="icon-svg svg-sort"
                         append-icon="mdi-chevron-down"
+                        
                     >
                     </v-select>
                     <v-btn
@@ -118,22 +119,22 @@ export default {
                 {
                     id: 1,
                     title: "Newest",
-                    value: 1
+                    value: "Newest"
                 },
                 {
                     id: 2,
                     title: "Relevant",
-                    value: 2
+                    value: "Relevant"
                 },
                 {
                     id: 3,
                     title: "Lowest Price",
-                    value: 3
+                    value: "Lowest"
                 },
                 {
                     id: 4,
                     title: "Highest Price",
-                    value: 4
+                    value: "Highest"
                 }
             ],
             isActiveMap: false,
