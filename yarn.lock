@@ -6338,9 +6338,9 @@ pako@~1.0.5:
   resolved "https://registry.npmjs.org/pako/-/pako-1.0.11.tgz"
   integrity sha512-4hLB8Py4zZce5s4yd9XzopqwVv/yGNhV1Bl8NTmCq1763HeK2+EwVTv+leGeL13Dnh2wfbqowVPXCIO0z4taYw==
 
-panzoom@^9.4.1:
+panzoom@^9.4.0:
   version "9.4.3"
-  resolved "https://registry.npmjs.org/panzoom/-/panzoom-9.4.3.tgz"
+  resolved "https://registry.yarnpkg.com/panzoom/-/panzoom-9.4.3.tgz#195c4031bb643f2e6c42f1de0ca87cc10e224042"
   integrity sha512-xaxCpElcRbQsUtIdwlrZA90P90+BHip4Vda2BC8MEb4tkI05PmR6cKECdqUCZ85ZvBHjpI9htJrZBxV5Gp/q/w==
   dependencies:
     amator "^1.1.0"
@@ -9081,12 +9081,12 @@ vue-no-ssr@^1.1.1:
   resolved "https://registry.npmjs.org/vue-no-ssr/-/vue-no-ssr-1.1.1.tgz"
   integrity sha512-ZMjqRpWabMPqPc7gIrG0Nw6vRf1+itwf0Itft7LbMXs2g3Zs/NFmevjZGN1x7K3Q95GmIjWbQZTVerxiBxI+0g==
 
-vue-panzoom@^1.1.3:
-  version "1.1.6"
-  resolved "https://registry.yarnpkg.com/vue-panzoom/-/vue-panzoom-1.1.6.tgz#e5211ec36946e4f2f6e17244643129c6d4464b56"
-  integrity sha512-yEE60C/gnc5NGL6YBD++CErD820va7fkBJE5dCWZZzXX2aMGklj/UKmtqu1u5xDkuOIjnGUr412LNHwOOE711w==
+vue-panzoom@1.1.3:
+  version "1.1.3"
+  resolved "https://registry.yarnpkg.com/vue-panzoom/-/vue-panzoom-1.1.3.tgz#5d1caae505e066bb899bcc4da2d6d6875a1d8e2c"
+  integrity sha512-iGiTo76HR5hCQd8xob+qZW/3T0pLHs3jZab4MiWSbeo71MIOPikCw1Xr6+kmCUzpde0Nx4oiDmG+fOpuX9j8xQ==
   dependencies:
-    panzoom "^9.4.1"
+    panzoom "^9.4.0"
 
 vue-router@^3.5.1:
   version "3.5.4"

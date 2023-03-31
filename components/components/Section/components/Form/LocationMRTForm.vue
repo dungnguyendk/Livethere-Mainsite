@@ -62,12 +62,8 @@
                                     :items="listStation"
                                     selectable
                                     activatable
-                                    return-object
                                     open-on-click
                                     class="tree--station"
-                                    :activate-on-click="true"
-                                    :node-key="'id'"
-                                    @node-click="onEnableLine"
                                 >
                                     <template v-slot:prepend="{ item, open }">
                                         <template v-if="item.children && item.children.length">
@@ -94,7 +90,9 @@
                         </div>
                     </div>
                     <div class="mrt__map">
-                        <MrtSingapore />
+                        <panZoom>
+                            <MrtSingapore />
+                        </panZoom>
                     </div>
                 </div>
             </div>
@@ -117,11 +115,12 @@
 
 <script>
 import MrtSingapore from "~/components/shared/Icon/MrtSingapore.vue"
+import { blurLine, resetColor } from "~/ultilities/mrt"
 import { mapState } from "vuex"
 export default {
     name: "LocationMRTForm",
     components: {
-        MrtSingapore,
+        MrtSingapore
     },
 
     data() {
@@ -133,6 +132,7 @@ export default {
             selectedStations: [],
             filterStations: [],
             searchStations: [],
+            activeNode: []
         }
     },
     computed: {
@@ -146,14 +146,46 @@ export default {
     mounted() {
         this.convertListStation()
         this.convertFilteredStations()
-        // console.log("this.filterStations: ,", this.filterStations.length)
-       
+        console.log("this.listStation: ,", this.listStation)
     },
     methods: {
-        onEnableLine(node){
-            const classLine = ['.i','.j','.x','.y','.t','.u','.o','.p','.f','.g','.r','.s','.ac','.ad','.ab','.ag'];
-            console.log("selectedStations. ",node.id);
+        onEnableLine(item) {
+            const classLine = [
+                ".i",
+                ".j",
+                ".x",
+                ".y",
+                ".t",
+                ".u",
+                ".o",
+                ".p",
+                ".f",
+                ".g",
+                ".r",
+                ".s",
+                ".ac",
+                ".ad",
+                ".ab",
+                ".ag"
+            ]
+            const key = item && item[0] ? item[0].id : ""
+            console.log("selectedStations. ", item)
+            console.log("selectedStations. ", key)
+            if (key === "EW") {
+                const elements = this.$el.querySelectorAll(".i, .j")
+                    for (let i = 0; i < elements.length; i++) {
+                        elements[i].style.fill = "#00953b"
+                    }
+                    classLine.splice(classLine.indexOf(".i"), 1)
+                    classLine.splice(classLine.indexOf(".j"), 1)
+            }
+            if (classLine.length < 16) {
+                blurLine(classLine.join(","))
+            } else {
+                resetColor()
+            }
         },
+        
         onClose() {
             this.$emit("close")
         },
@@ -179,7 +211,8 @@ export default {
                     name: `${station.stationCode} ${station.stationName}`,
                     stationColor: station.stationColor,
                     latitude: station.latitude,
-                    longitude: station.longitude
+                    longitude: station.longitude,
+                    parentID: line.lineCode,
                 }))
             }))
         },
@@ -208,7 +241,12 @@ export default {
             this.onClose()
         }
     },
-    
+    watch: {
+        selectedStations(val) {
+            this.onEnableLine(val)
+            // console.log("selectedStations", this.selectedStations)
+        }
+    }
 }
 </script>
 
@@ -277,6 +315,7 @@ export default {
         flex-basis: 0;
         flex-grow: 1;
         max-width: 100%;
+        overflow: hidden;
         svg {
             max-width: 100%;
             max-height: 100%;
