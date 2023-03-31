@@ -4,17 +4,12 @@
             <div class="container">
                 <div class="page__top">
                     <div class="page__top-left">
-                        <LightBoxListing :images="projectDetails.listImages"/>
+                        <LightBoxListing :images="listImage"/>
                     </div>
                     <div class="page__top-right">
-                        <iframe
-                            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.107901410066!2d106.71887761533426!3d10.803047261654479!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x317529f8273eaed5%3A0x27fe58a754c470b0!2zQ8O0bmcgdHkgQ-G7lSBwaOG6p24gxJDhuqd1IFTGsCBYw6J5IEThu7FuZyBCY29ucw!5e0!3m2!1sen!2s!4v1676437005731!5m2!1sen!2s"
-                            style="border: 0"
-                            allowfullscreen=""
-                            loading="lazy"
-                            referrerpolicy="no-referrer-when-downgrade"
-                        >
-                        </iframe>
+                        <client-only>
+                            <Map :listlat-log="[location]" :center="location" />
+                        </client-only>
                     </div>
                 </div>
                 <div class="page__content">
@@ -33,10 +28,10 @@
                                             :src="require(`~/static/img/logos/logo-project.svg`)"
                                             alt=""
                                         />
-                                        <span>{{ projectDetails.projectInfo.premium ? 'premium' : '' }}</span>
+                                        <span>{{ projectDetails.projectInfo?.premium ? 'premium' : '' }}</span>
                                     </div>
                                     <h3 class="page__content-left-title"
-                                        >{{ projectDetails.projectInfo.title }}</h3
+                                        >{{ projectDetails.buildingName }}</h3
                                     >
                                 </div>
                                 <div class="page__content-left-emotions">
@@ -61,20 +56,20 @@
                                         class="page__content-left-location page__content-left-icon-custom"
                                     >
                                         <i class="icon-svg svg-location"></i>
-                                        <span>{{ projectDetails.projectInfo.address }}</span>
+                                        <span>{{ projectDetails.buildingAddress }}</span>
                                     </div>
                                     <div class="page__content-left-bed-bath">
                                         <div
                                             class="page__content-left-bed page__content-left-icon-custom"
                                         >
                                             <i class="icon-svg svg-bedroom"></i>
-                                            <span>{{ projectDetails.projectInfo.totalBed }}</span>
+                                            <span>{{ projectDetails.bedRoom }}</span>
                                         </div>
                                         <div
                                             class="page__content-left-bath page__content-left-icon-custom"
                                         >
                                             <i class="icon-svg svg-bathroom"></i>
-                                            <span>{{ projectDetails.projectInfo.totalBath }}</span>
+                                            <span>{{ projectDetails.bathRoom }}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -86,9 +81,9 @@
                     </div>
                     <div class="page__content-right">
                         <div class="page__content-right-sticky">
-                            <ContactAgentCard 
-                             :info="homeAgentInfo"
-                            @openConfirm="openConfirmDetailDialog($event)" 
+                            <ContactAgentCard
+                             :info="projectDetails.primaryAgent"
+                            @openConfirm="openConfirmDetailDialog($event)"
                             @openContact="openContactDetailDialog($event)"
                             />
                             <EnquiryForm @snackbar="showStatusForm($event)"/>
@@ -130,9 +125,9 @@ import ConfirmDetailDialog from "~/components/components/Projects/components/Dia
 import ContactDetailDialog from "~/components/components/Projects/components/Dialog/ContactDetailDialog.vue"
 import ShareSocialDialog from "~/components/components/Projects/components/Dialog/ShareSocialDialog.vue"
 import SuccessSnackBar from "~/components/shared/Snackbar/SuccessSnackBar.vue"
+import {LISTIMAGE} from "~/ultilities/contants/dummy-data"
 import { convertNumberToCommas } from "~/ultilities/helpers"
 import { mapState } from "vuex"
-import { state } from '~/store/analytics'
 export default {
     name: "ProjectListing",
     components: {
@@ -145,19 +140,32 @@ export default {
         ConfirmDetailDialog,
         ContactDetailDialog,
         ShareSocialDialog, 
-        SuccessSnackBar
+        SuccessSnackBar,
+        Map: () => {if (typeof window !== 'undefined') return import("~/components/elements/Map/Map.vue")}
     },
     computed: {
         ...mapState({
-            projectDetails: (state) => state.project.projectDetails, 
-            homeAgentInfo: (state) => state.project.homeAgent
+            projectDetails: (state) => state.project.projectDetails
         }), 
         priceFormat(){
-            return convertNumberToCommas(this.projectDetails.projectInfo.price)
+            return convertNumberToCommas(this.projectDetails.rentPrice)
+        },
+        listImage() {
+            let img = []
+
+            return img.concat(this.projectDetails.images?.propertyCoverImages,
+                this.projectDetails.images?.propertyImages,
+                this.projectDetails.images?.propertyFloorPlanImages,
+                this.projectDetails.images?.propertyLocationMap)
+        },
+        location() {
+            let checkLagLogValue = Object.values(Object.values(this.projectDetails.location)).every((item) => item !== null)
+            return checkLagLogValue ? Object.values(this.projectDetails.location) : []
         }
     },
     data() {
         return {
+            LISTIMAGE,
             imageURL: "/img/banner/topbannertwo.jpg",
             activeHeart: false,
             isOpenShareSocialDialog: false,
@@ -247,6 +255,7 @@ export default {
     .page__top-left {
     }
     .page__top-right {
+        z-index: 1;
         iframe {
             height: 100%;
             border-radius: 2rem;

@@ -10,9 +10,9 @@
                 </v-avatar>
             </div>
             <div class="card__content-infor">
-                <h3>{{ info.name }}</h3>
-                <p>{{ info.firstLine }}</p>
-                <p>{{ info.secondLine }}</p>
+                <h3>{{ info.businessName }}</h3>
+                <p>{{ info.companyName }}</p>
+                <p>{{ info.cea }}</p>
             </div>
         </div>
         <div class="card__features">
@@ -23,7 +23,7 @@
             >
                 <i class="icon-svg svg-messages"></i>
             </v-btn>
-            <v-btn class="btn btn--outline btn--green btn-custom" href="tel://+65 97663322">
+            <v-btn class="btn btn--outline btn--green btn-custom" :href="`tel:${info.phoneNumber}`">
                 <i class="icon-svg svg-call-calling"></i>
             </v-btn>
             <v-btn

@@ -6,11 +6,11 @@
             :key="idx"
             @click="index = idx"
             :class="{
-                'active-total-images': image.id === 4 && images.length > 4
+                'active-total-images': idx === 4 && images.length > 4
             }"
         >
-            <img :src="image.src" alt="" />
-            <span v-if="image.id === 4 && images.length > 4"
+            <img :src="image" alt="" />
+            <span v-if="idx === 4 && images.length > 4"
                 >+{{ totalImagesSlider }} photos</span
             >
         </div>
