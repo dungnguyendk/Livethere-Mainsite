@@ -390,24 +390,22 @@ export default {
                 livethereChecked: true,
                 rentPerMonth: this.rentPerMonth,
                 bathRooms: this.bedRooms,
-                amenities: "",
                 search: "",
                 sortBy: "Relevant",
-                category: this.category,
+                category: "D01",
                 districts: this.districts,
                 mrt: this.searchMRT,
-                origin: "",
-                handleSearch: "",
-                unitSize: 100
+                unitSize: ''
             }
             console.log("onSearchListing params", params)
             // console.log("onSearchListing params stringify", qs.stringify(params, { encode: false }))
-            this.$store
-                .dispatch("project/searchListing", qs.stringify(params, { encode: false }))
-                .then(() => {
-                    this.$store.commit("project/setParamsSearch", params)
-                    this.$router.push(`/projects?${qs.stringify(params, { encode: false })}`)
-                })
+            // this.$store
+            //     .dispatch("project/searchListing", qs.stringify(params, { encode: false }))
+            //     .then(() => {
+            //
+            //     })
+            this.$store.commit("project/setParamsSearch", params)
+            this.$router.push(`/projects?${qs.stringify(params, { encode: false })}`)
         },
         getDistricts(params){
             this.locationSearch = params.join(';')
