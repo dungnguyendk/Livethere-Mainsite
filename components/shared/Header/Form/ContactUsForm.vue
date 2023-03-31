@@ -31,8 +31,8 @@
                     {{ loading ? "Sending..." : "Submit" }}
                 </v-btn>
                 <div class="form__field terms-policy">
-                    <a href="https://www.livethere.com/terms-n-conditions">Terms and Conditions</a> & <a
-                        href="https://www.livethere.com/privacy-policy">Privacy Policy.</a>
+                    <nuxt-link to="/terms-conditions">Terms and Conditions</nuxt-link> & <nuxt-link
+                    to="/privacy-policy">Privacy Policy.</nuxt-link>
                 </div>
             </div>
         </form>

@@ -6,13 +6,8 @@
                 <!-- <img :src="require(`~/static/img/logos/logo-project.svg`)" alt=""> -->
                 <span>premium</span>
             </div>
-<<<<<<< HEAD
             <nuxt-link :to="`/projects-detail/${project.slug}`" class="card__header-title">{{
                 project.buildingName
-=======
-            <nuxt-link to="/projects/details" class="card__header-title">{{
-                project.title
->>>>>>> e5be2fa04867c7480ceb2a57e7f432e1a95b22a7
             }}</nuxt-link>
         </div>
         <div class="card__image">
@@ -169,7 +164,6 @@ export default {
     .card__content-emotions {
         display: flex;
         align-items: center;
-<<<<<<< HEAD
         button {
             display: flex;
             align-items: center;
@@ -183,21 +177,6 @@ export default {
                 i {
                     background-color: var(--color-label);
                 }
-=======
-    }
-    button {
-        display: flex;
-        align-items: center;
-        i {
-            width: 2.4rem;
-            font-size: 2.4rem;
-            color: var(--color-label);
-        }
-        &:first-child {
-            margin-right: 1.6rem;
-            i {
-                background-color: var(--color-label);
->>>>>>> e5be2fa04867c7480ceb2a57e7f432e1a95b22a7
             }
         }
     }
@@ -210,10 +189,6 @@ export default {
         display: flex;
         align-items: center;
     }
-<<<<<<< HEAD
-
-=======
->>>>>>> e5be2fa04867c7480ceb2a57e7f432e1a95b22a7
     .card__content-bed {
         margin-right: 4.6rem;
     }

@@ -47,7 +47,7 @@ export default {
                     label: "Tenants"
                 },
                 {
-                    url: "https://www.livethere.com/privacy-policy",
+                    url: "/privacy-policy",
                     label: "Privacy Policy"
                 },
                 {
@@ -55,11 +55,11 @@ export default {
                     label: "Landlords"
                 },
                 {
-                    url: "https://www.livethere.com/terms-n-conditions",
+                    url: "/terms-conditions",
                     label: "Terms & Conditions"
                 },
                 {
-                    url: "https://www.livethere.com/about-us",
+                    url: "/about-us",
                     label: "About Us"
                 },
             ]

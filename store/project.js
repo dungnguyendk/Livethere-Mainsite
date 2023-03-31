@@ -42,22 +42,22 @@ export const mutations = {
 export const actions = {
     async getHomePage({ commit }, payload) {
         try {
-            const responsePopularListing = await this.$axios.$get(`${httpEndpoint.projects.getPopularListing}`)
-            // const responsePopularListing = await this.$axios.$get(`http://vnapi.asiaesolutions.com/cmspublic/${httpEndpoint.projects.getPopularListing}`)
+            const responsePopularListing = await this.$apiCmsPublic.$get(`${httpEndpoint.projects.getPopularListing}`)
+            // const responsePopularListing = await this.$apiCmsPublic.$get(`http://vnapi.asiaesolutions.com/cmspublic/${httpEndpoint.projects.getPopularListing}`)
             if(responsePopularListing){
                 commit("setPopularListings", responsePopularListing)
             }else {
                 commit("setPopularListings", [])
             }
 
-            const responseLatestProject = await this.$axios.$get(`${httpEndpoint.projects.getListings}?page=1&perPage=10`)
+            const responseLatestProject = await this.$apiCmsPublic.$get(`${httpEndpoint.projects.getListings}?page=1&perPage=10`)
             if(responseLatestProject){
                 commit("setLatestProjects", responseLatestProject.data)
             }else{
                 commit("setLatestProjects", [])
             }
 
-            const responseMrtLine = await this.$axios.$get(`${httpEndpoint.projects.linesMrt}`)
+            const responseMrtLine = await this.$apiCmsPublic.$get(`${httpEndpoint.projects.linesMrt}`)
             if(responseMrtLine){
                 commit("setLinesMrt", responseMrtLine)
             }else{
@@ -70,7 +70,7 @@ export const actions = {
     },
     async getPopularListing({ commit }, payload) {
         try {
-            const response = await this.$axios.$get(`${httpEndpoint}`)
+            const response = await this.$apiCmsPublic.$get(`${httpEndpoint}`)
             if (response) {
                 commit("setPopularListings", response.length ? response : [])
             } else {
@@ -83,7 +83,7 @@ export const actions = {
     },
     async getLatestProject({ commit }, payload) {
         try {
-            const response = await this.$axios.$get(`${httpEndpoint}`)
+            const response = await this.$apiCmsPublic.$get(`${httpEndpoint}`)
             if (response) {
                 commit("setLatestProjects", response.length ? response : [])
             } else {
@@ -96,7 +96,7 @@ export const actions = {
     },
     async searchListing({ commit }, payload) {
         try {
-            const response = await this.$axios.$get(`${httpEndpoint.projects.getListings}?${payload}`)
+            const response = await this.$apiCmsPublic.$get(`${httpEndpoint.projects.getListings}?${payload}`)
             if (response) {
                 commit("setSearchListing", response.data)
             } else {
@@ -109,7 +109,7 @@ export const actions = {
     },
     async filterListing({ commit }, payload) {
         try {
-            const response = await this.$axios.$post(`${httpEndpoint}`, payload)
+            const response = await this.$apiCmsPublic.$post(`${httpEndpoint}`, payload)
             if (response) {
                 commit("setSearchListing", response.data)
             } else {
@@ -122,7 +122,7 @@ export const actions = {
     },
     async homeAgentInfo({ commit }, payload) {
         try {
-            const response = await this.$axios.$post(`${httpEndpoint}`, payload)
+            const response = await this.$apiCmsPublic.$post(`${httpEndpoint}`, payload)
             if (response) {
                 commit("setHomeAgent", response.data)
             } else {
@@ -135,7 +135,7 @@ export const actions = {
     },
     async enquireUser({ commit }, payload) {
         try {
-            const response = await this.$axios.$post(`${httpEndpoint}`, payload)
+            const response = await this.$apiCmsPublic.$post(`${httpEndpoint}`, payload)
             if (response) {
                 return true
             } else {
@@ -148,7 +148,7 @@ export const actions = {
     },
     async projectDetails({ commit }, payload) {
         try {
-            const response = await this.$axios.$post(`${httpEndpoint}`, payload)
+            const response = await this.$apiCmsPublic.$post(`${httpEndpoint}`, payload)
             if (response) {
                 commit("setProjectDetails", response.data)
             } else {
@@ -161,7 +161,7 @@ export const actions = {
     },
     async contactDetails({ commit }, payload) {
         try {
-            const response = await this.$axios.$post(`${httpEndpoint}`, payload)
+            const response = await this.$apiCmsPublic.$post(`${httpEndpoint}`, payload)
             if (response) {
                 return true
             } else {
@@ -174,7 +174,7 @@ export const actions = {
     },
     async confirmDetails({ commit }, payload) {
         try {
-            const response = await this.$axios.$post(`${httpEndpoint}`, payload)
+            const response = await this.$apiCmsPublic.$post(`${httpEndpoint}`, payload)
             if (response) {
                 return true
             } else {
@@ -187,7 +187,7 @@ export const actions = {
     }, 
     async getMostViewedListing({ commit }, payload) {
         try {
-            const response = await this.$axios.$get(`${httpEndpoint}`)
+            const response = await this.$apiCmsPublic.$get(`${httpEndpoint}`)
             if (response) {
                 commit("setMostViewedListings", response.length ? response : [])
             } else {

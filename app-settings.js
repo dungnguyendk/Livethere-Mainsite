@@ -4,8 +4,9 @@ const settings = [
         media_url: "http://vnapi.asiaesolutions.com/publiccontentapi",
         postal_url: "https://apivo.aestechgroup.com/aespostal",
         mediaURLPath: "http://vnapi.asiaesolutions.com/content",
-        // landlord: "http://vnapi.asiaesolutions.com/erppublicapi",
-        landlord: "http://vnapi.asiaesolutions.com/cmspublic",
+        landlord: "http://vnapi.asiaesolutions.com/erppublicapi",
+        // landlord: "http://vnapi.asiaesolutions.com/cmspublic",
+
         projects: "http://vnapi.asiaesolutions.com/cmspublic",
 
     },

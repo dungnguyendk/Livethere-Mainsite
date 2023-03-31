@@ -1,7 +1,7 @@
 export const defaultMenu = [
     {
         defaultName: "Home",
-        linkURL: "https://www.livethere.com/"
+        linkURL: "/home"
     },
     {
         defaultName: "Tenants",

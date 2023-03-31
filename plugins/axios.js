@@ -1,4 +1,4 @@
-import { appMedia, appVo } from "~/app-settings"
+import { appMedia, appVo, projectSettings } from "~/app-settings"
 export default function ({ $axios, redirect }, inject) {
     $axios.onRequest((config) => {
         console.log("Making request to " + config.url)
@@ -31,10 +31,22 @@ export default function ({ $axios, redirect }, inject) {
         }
     })
 
+    const apiCmsPublic = $axios.create({
+        headers: {
+            common: {
+                Accept: "text/plain, */*"
+            },
+            LMApiKey: "YWljb2tleW5heW1vaWR1b2N0cnV5Y2FwdmFvZGF5"
+        }
+    })
+
     // Set baseURL to something different
     api.setBaseURL(`${appMedia.baseURL}`)
     // Set baseURL to something different
     apivo.setBaseURL(`${appVo.baseURL}`)
+
+    // Set baseURL to something different
+    apiCmsPublic.setBaseURL(`${projectSettings.baseURL}`)
 
     // Inject to context as $api
     inject("api", api)

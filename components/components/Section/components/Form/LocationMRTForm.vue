@@ -90,14 +90,10 @@
                         </div>
                     </div>
                     <div class="mrt__map">
-                        <SvgPanZoom
-                            :zoomEnabled="true"
-                            :controlIconsEnabled="true"
-                            :fit="false"
-                            :center="true"
+                        <panZoom
                         >
                             <MrtSingapore />
-                        </SvgPanZoom>
+                        </panZoom>
                     </div>
                 </div>
             </div>
@@ -135,7 +131,12 @@ export default {
             cbFutureLines: false,
             selectedStations: [],
             filterStations: [],
-            searchStations: []
+            searchStations: [],
+            optionsSvgPanZoom : {
+                zoomScaleSensitivity: 0.2,
+        minZoom: 0.5,
+        maxZoom: 2
+            }
         }
     },
     computed: {
@@ -150,6 +151,18 @@ export default {
         this.convertListStation()
         this.convertFilteredStations()
         console.log("this.filterStations: ,", this.filterStations.length)
+        const panzoom = new this.$options.components.panZoom({
+      propsData: {
+        // Các props của panZoom component
+      },
+    });
+
+    // Gán instance này vào một biến để có thể sử dụng được sau này
+    this.panzoom = panzoom;
+
+    // Thêm instance này vào phần tử của component
+    this.panzoom.$mount();
+    this.$el.appendChild(this.panzoom.$el);
     },
     methods: {
         onClose() {
@@ -205,7 +218,11 @@ export default {
             this.$emit("getMrt", this.selectedStations)
             this.onClose()
         }
-    }
+    },
+    destroyed() {
+    // Hủy bỏ instance của panZoom component
+    this.panzoom.$destroy();
+  },
 }
 </script>
 
