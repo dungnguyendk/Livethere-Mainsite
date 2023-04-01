@@ -1,117 +1,121 @@
 <template lang="html">
     <div class="page--project-detail">
-        <div class="page--project-detail-first">
-            <div class="container">
-                <div class="page__top">
-                    <div class="page__top-left">
-                        <LightBoxListing :images="listImage"/>
+        <template v-if="projectDetails">
+            <div class="page--project-detail-first">
+                <div class="container">
+                    <div class="page__top">
+                        <div class="page__top-left">
+                            <LightBoxListing :images="listImage"/>
+                        </div>
+                        <div class="page__top-right">
+                            <client-only>
+                                <Map :listlat-log="[location]" :center="location" />
+                            </client-only>
+                        </div>
                     </div>
-                    <div class="page__top-right">
-                        <client-only>
-                            <Map :listlat-log="[location]" :center="location" />
-                        </client-only>
-                    </div>
-                </div>
-                <div class="page__content">
-                    <div class="page__content-left">
-                        <div class="page__content-left-info">
-                            <div class="page__content-left-back">
-                                <v-btn to="" class="btn btn--outline btn--green btn-custom" @click="$router.go(-1)">
-                                    <v-icon size="16">mdi-arrow-left</v-icon>
-                                    <span>Back to Result</span>
-                                </v-btn>
-                            </div>
-                            <div class="page__content-left-header">
-                                <div class="page__content-left-iconic">
-                                    <div class="page__content-left-logo">
-                                        <img
-                                            :src="require(`~/static/img/logos/logo-project.svg`)"
-                                            alt=""
-                                        />
-                                        <span>{{ projectDetails.projectInfo?.premium ? 'premium' : '' }}</span>
-                                    </div>
-                                    <h3 class="page__content-left-title"
-                                        >{{ projectDetails.buildingName }}</h3
-                                    >
-                                </div>
-                                <div class="page__content-left-emotions">
-                                    <v-btn icon @click="isOpenShareSocialDialog = true">
-                                        <i class="icon-svg svg-export"></i>
+                    <div class="page__content">
+                        <div class="page__content-left">
+                            <div class="page__content-left-info">
+                                <div class="page__content-left-back">
+                                    <v-btn to="" class="btn btn--outline btn--green btn-custom" @click="$router.go(-1)">
+                                        <v-icon size="16">mdi-arrow-left</v-icon>
+                                        <span>Back to Result</span>
                                     </v-btn>
+                                </div>
+                                <div class="page__content-left-header">
+                                    <div class="page__content-left-iconic">
+                                        <div class="page__content-left-logo">
+                                            <img
+                                                :src="require(`~/static/img/logos/logo-project.svg`)"
+                                                alt=""
+                                            />
+                                            <span>{{ projectDetails.projectInfo?.premium ? 'premium' : '' }}</span>
+                                        </div>
+                                        <h3 class="page__content-left-title"
+                                            >{{ projectDetails.buildingName }}</h3
+                                        >
+                                    </div>
+                                    <div class="page__content-left-emotions">
+                                        <v-btn icon @click="isOpenShareSocialDialog = true">
+                                            <i class="icon-svg svg-export"></i>
+                                        </v-btn>
 
-                                    <v-btn icon @click="activeHeart = !activeHeart">
-                                        <i
-                                            class="ri-heart-3-line"
-                                            :class="{ 'active-heart': activeHeart }"
-                                        ></i>
-                                    </v-btn>
-                                </div>
-                            </div>
-                            <div class="page__content-left-content">
-                                <div class="page__content-left-price">
-                                    <h3>S$ {{ priceFormat }}/month</h3>
-                                </div>
-                                <div class="page__content-left-info">
-                                    <div
-                                        class="page__content-left-location page__content-left-icon-custom"
-                                    >
-                                        <i class="icon-svg svg-location"></i>
-                                        <span>{{ projectDetails.buildingAddress }}</span>
-                                    </div>
-                                    <div class="page__content-left-bed-bath">
-                                        <div
-                                            class="page__content-left-bed page__content-left-icon-custom"
-                                        >
-                                            <i class="icon-svg svg-bedroom"></i>
-                                            <span>{{ projectDetails.bedRoom }}</span>
-                                        </div>
-                                        <div
-                                            class="page__content-left-bath page__content-left-icon-custom"
-                                        >
-                                            <i class="icon-svg svg-bathroom"></i>
-                                            <span>{{ projectDetails.bathRoom }}</span>
-                                        </div>
+                                        <v-btn icon @click="activeHeart = !activeHeart">
+                                            <i
+                                                class="ri-heart-3-line"
+                                                :class="{ 'active-heart': activeHeart }"
+                                            ></i>
+                                        </v-btn>
                                     </div>
                                 </div>
+                                <div class="page__content-left-content">
+                                    <div class="page__content-left-price">
+                                        <h3>S$ {{ priceFormat }}/month</h3>
+                                    </div>
+                                    <div class="page__content-left-info">
+                                        <div
+                                            class="page__content-left-location page__content-left-icon-custom"
+                                        >
+                                            <i class="icon-svg svg-location"></i>
+                                            <span>{{ projectDetails.buildingAddress }}</span>
+                                        </div>
+                                        <div class="page__content-left-bed-bath">
+                                            <div
+                                                class="page__content-left-bed page__content-left-icon-custom"
+                                            >
+                                                <i class="icon-svg svg-bedroom"></i>
+                                                <span>{{ projectDetails.bedRoom }}</span>
+                                            </div>
+                                            <div
+                                                class="page__content-left-bath page__content-left-icon-custom"
+                                            >
+                                                <i class="icon-svg svg-bathroom"></i>
+                                                <span>{{ projectDetails.bathRoom }}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="page-content-left-expansion">
+                                <PanelListing :details="projectDetails"/>
                             </div>
                         </div>
-                        <div class="page-content-left-expansion">
-                            <PanelListing :details="projectDetails"/>
-                        </div>
-                    </div>
-                    <div class="page__content-right">
-                        <div class="page__content-right-sticky">
-                            <ContactAgentCard
-                             :info="projectDetails.primaryAgent"
-                            @openConfirm="openConfirmDetailDialog($event)"
-                            @openContact="openContactDetailDialog($event)"
-                            />
-                            <EnquiryForm @snackbar="showStatusForm($event)"/>
-                            <NotiCard />
+                        <div class="page__content-right">
+                            <div class="page__content-right-sticky">
+                                <ContactAgentCard
+                                :info="projectDetails.primaryAgent"
+                                @openConfirm="openConfirmDetailDialog($event)"
+                                @openContact="openContactDetailDialog($event)"
+                                />
+                                <EnquiryForm @snackbar="showStatusForm($event)"/>
+                                <NotiCard />
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="page--project-detail-second">
-            <div class="container">
-                <ProjectSwiper>{{ titleSwiper }}</ProjectSwiper>
+            <div class="page--project-detail-second">
+                <div class="container">
+                    <ProjectSwiper>{{ titleSwiper }}</ProjectSwiper>
+                </div>
+                <ShareSocialDialog
+                :open="isOpenShareSocialDialog"
+                @close="closeShareSocialDialog"
+                :item="targetLinkURL"
+                />
+                <ConfirmDetailDialog 
+                :open="isOpenConfirmDetailDialog"
+                @close="closeConfirmDetailDialog"
+                />
+                <ContactDetailDialog
+                :open="isOpenContactDetailDialog"
+                @close="closeContactDetailDialog"
+                />
             </div>
-            <ShareSocialDialog
-             :open="isOpenShareSocialDialog"
-             @close="closeShareSocialDialog"
-             :item="targetLinkURL"
-            />
-            <ConfirmDetailDialog 
-             :open="isOpenConfirmDetailDialog"
-             @close="closeConfirmDetailDialog"
-            />
-            <ContactDetailDialog
-             :open="isOpenContactDetailDialog"
-             @close="closeContactDetailDialog"
-            />
-            <SuccessSnackBar :open="isShowSnackbar" :message="messageSnackbar" class="snackbar"/>
-        </div>
+        </template>
+        <template v-else>
+            <error/>
+        </template>
     </div>
 </template>
 <script>
@@ -124,12 +128,11 @@ import LightBoxListing from "~/components/components/Projects/components/Box/Lig
 import ConfirmDetailDialog from "~/components/components/Projects/components/Dialog/ConfirmDetailDialog.vue"
 import ContactDetailDialog from "~/components/components/Projects/components/Dialog/ContactDetailDialog.vue"
 import ShareSocialDialog from "~/components/components/Projects/components/Dialog/ShareSocialDialog.vue"
-import SuccessSnackBar from "~/components/shared/Snackbar/SuccessSnackBar.vue"
-import {LISTIMAGE} from "~/ultilities/contants/dummy-data"
+import error from "~/layouts/error.vue"
 import { convertNumberToCommas } from "~/ultilities/helpers"
 import { mapState } from "vuex"
 export default {
-    name: "ProjectListing",
+    name: "ProjectDetail",
     components: {
         EnquiryForm,
         ContactAgentCard,
@@ -140,7 +143,7 @@ export default {
         ConfirmDetailDialog,
         ContactDetailDialog,
         ShareSocialDialog, 
-        SuccessSnackBar,
+        error,
         Map: () => {if (typeof window !== 'undefined') return import("~/components/elements/Map/Map.vue")}
     },
     computed: {
@@ -165,7 +168,6 @@ export default {
     },
     data() {
         return {
-            LISTIMAGE,
             imageURL: "/img/banner/topbannertwo.jpg",
             activeHeart: false,
             isOpenShareSocialDialog: false,

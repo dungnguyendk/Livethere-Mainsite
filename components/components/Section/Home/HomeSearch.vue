@@ -201,7 +201,7 @@
 import Dialog from "~/components/elements/Dialog/Dialog.vue"
 import LocationDistrictForm from "~/components/components/Section/components/Form/LocationDistrictForm.vue"
 import LocationMRTForm from "~/components/components/Section/components/Form/LocationMRTForm.vue"
-import { PROPERTY_TYPE, BEDROOM_TYPE } from "~/ultilities/contants/asset-inventory.js"
+import { PROPERTY_TYPE } from "~/ultilities/contants/asset-inventory.js"
 import { convertNumberToCommas } from "~/ultilities/helpers"
 import { mapState } from "vuex"
 import qs from "qs"
@@ -216,7 +216,6 @@ export default {
         return {
             isOpenDialogDistrict: false,
             isOpenDialogMrt:false,
-            location: "",
             locationSearch: "",
             propertyTypeList: PROPERTY_TYPE,
             propertyType: "All",
@@ -235,7 +234,7 @@ export default {
             rangePriceMax: "",
             rentPerMonth: "",
             bedRooms: "",
-            category: "Distritct",
+            category: "District",
             districts: "",
             searchMRT : "",
 
@@ -361,7 +360,7 @@ export default {
                         this.rentPerMonth = `0;1000`
                         this.rangePrice = [this.minPrice, this.minPrice]
                     } else if (tempPrices[0] === this.minPrice) {
-                        this.price = `Max $${convertNumberToCommas(this.tempPrices[1])}`
+                        this.price = `Max $${convertNumberToCommas(tempPrices[1])}`
                         this.rentPerMonth = `${this.rangePrice[0]};${this.rangePrice[1]}`
                         this.rangePrice = [this.minPrice, tempPrices[1]]
                     } else {
@@ -378,11 +377,11 @@ export default {
             }
         },
         onSearchListing() {
-            console.log("onSearchListing this.locationSearch", this.locationSearch)
+            // console.log("onSearchListing this.locationSearch", this.locationSearch)
             // if(this.category === "District"){
             //     this.districts = this.locationSearch
             // }else this.districts = ""
-            console.log("this.districts",this.districts);
+            // console.log("this.districts",this.districts);
             const params = {
                 page: 1,
                 perPage: 10,
@@ -392,20 +391,29 @@ export default {
                 bathRooms: this.bedRooms,
                 search: "",
                 sortBy: "Relevant",
-                category: "D01",
+                category: this.category,
                 districts: this.districts,
                 mrt: this.searchMRT,
                 unitSize: ''
             }
-            console.log("onSearchListing params", params)
-            // console.log("onSearchListing params stringify", qs.stringify(params, { encode: false }))
-            // this.$store
-            //     .dispatch("project/searchListing", qs.stringify(params, { encode: false }))
-            //     .then(() => {
-            //
-            //     })
-            this.$store.commit("project/setParamsSearch", params)
-            this.$router.push(`/projects?${qs.stringify(params, { encode: false })}`)
+            const paramsStringify = qs.stringify(params, { encode: false })
+            // console.log("onSearchListing params", params)
+            // console.log("onSearchListing params stringify", paramsStringify)
+            if(this.paramsSearch){
+                // console.log("check paramsSearch", this.paramsSearch);
+                  this.$store
+                .dispatch("project/searchListing", paramsStringify)
+                .then(() => {
+                    this.$store.commit("project/setParamsSearch", params)
+                    this.$router.push(`/projects?${paramsStringify}`)
+                })
+            }else {
+                this.$store.commit("project/setParamsSearch", params)
+                    this.$router.push(`/projects?${paramsStringify}`)
+            }
+           
+
+                
         },
         getDistricts(params){
             this.locationSearch = params.join(';')

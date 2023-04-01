@@ -3,10 +3,9 @@ import { PROJECT_LISTING, HOME_AGENT_INFO, PROJECT_DETAILS } from "~/ultilities/
 
 export const state = () => ({
     popularListings: [],
-    searchListings: [],
+    searchListings: {},
     latestProjects: [],
     mostViewedListings: [],
-    homeAgent: {},
     projectDetails: {},
     paramsSearch: null,
     linesMrt: [],
@@ -21,9 +20,6 @@ export const mutations = {
     },
     setSearchListing(state, payload) {
         state.searchListings = payload
-    },
-    setHomeAgent(state, payload) {
-        state.homeAgent = payload
     },
     setProjectDetails(state, payload) {
         state.projectDetails = payload
@@ -96,43 +92,29 @@ export const actions = {
     },
     async searchListing({ commit }, payload) {
         try {
-            const response = await this.$apiCmsPublic.$get(`${httpEndpoint.projects.getListings}`,{
-                params: payload
-            })
+            // const response = await this.$apiCmsPublic.$get(`${httpEndpoint.projects.getListings}`,{
+            //     params: payload
+            // })
+            const response = await this.$apiCmsPublic.$get(`${httpEndpoint.projects.getListings}?${payload}`)
             if (response) {
-                commit("setSearchListing", response.data)
+                commit("setSearchListing", response)
             } else {
-                commit("setSearchListing", [])
+                commit("setSearchListing", {})
             }
         } catch (e) {
             console.log({ Error: e.message })
-            commit("setSearchListing", PROJECT_LISTING)
         }
     },
     async filterListing({ commit }, payload) {
         try {
             const response = await this.$apiCmsPublic.$post(`${httpEndpoint}`, payload)
             if (response) {
-                commit("setSearchListing", response.data)
+                commit("setSearchListing", response)
             } else {
-                commit("setSearchListing", [])
+                commit("setSearchListing", {})
             }
         } catch (e) {
             console.log({ Error: e.message })
-            commit("setSearchListing", PROJECT_LISTING)
-        }
-    },
-    async homeAgentInfo({ commit }, payload) {
-        try {
-            const response = await this.$apiCmsPublic.$post(`${httpEndpoint}`, payload)
-            if (response) {
-                commit("setHomeAgent", response.data)
-            } else {
-                commit("setHomeAgent", {})
-            }
-        } catch (e) {
-            console.log({ Error: e.message })
-            commit("setHomeAgent", HOME_AGENT_INFO)
         }
     },
     async enquireUser({ commit }, payload) {

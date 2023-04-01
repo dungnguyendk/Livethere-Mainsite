@@ -22,7 +22,7 @@
                         dense
                         prepend-inner-icon="icon-svg svg-sort"
                         append-icon="mdi-chevron-down"
-                        
+                        @change="onSortListing()"
                     >
                     </v-select>
                     <v-btn
@@ -50,17 +50,19 @@
                         class="section__body-map-custom"
                     ></iframe>
                 </div>
-                <template v-if="searchListings && searchListings.length > 0">
+                <template v-if="searchListings && searchListings.data.length > 0">
                     <div class="section__body-list">
                         <ProjectCard
-                            v-for="(project, index) in searchListings"
+                            v-for="(project, index) in searchListings.data"
                             :key="index"
                             :project="project"
                             @open="openShareSocialDialog($event)"
                         />
                     </div>
-                    <div class="section__body-load-more">
-                        <button @click="$emit('loadMore')">Load more</button>
+                    <div class="section__body-load-more" >
+                        <template v-if="searchListings.pageCount > 1">
+                            <button @click="$emit('loadMore')">Load more</button>
+                        </template>
                     </div>
                 </template>
                 <template v-else>
@@ -76,7 +78,6 @@
                 <FilterDialog
                     :open="isOpenFilterProjectDialog"
                     @close="closeFilterProjectDialog"
-                    @snackbar="showStatusForm($event)"
                 />
                 <ShareSocialDialog
                     :open="isOpenShareSocialDialog"
@@ -98,6 +99,7 @@ import ShareSocialDialog from "~/components/components/Projects/components/Dialo
 import SuccessSnackBar from "~/components/shared/Snackbar/SuccessSnackBar.vue"
 import { mapState } from "vuex"
 import { state } from "~/store/analytics"
+import qs from "qs"
 export default {
     name: "ProjectListing",
     components: {
@@ -110,14 +112,16 @@ export default {
     },
     computed: {
         ...mapState({
-            searchListings: (state) => state.project.searchListings
+            searchListings: (state) => state.project.searchListings,
+            paramsSearch: (state) => state.project.paramsSearch,
+
         }),
         selectionSort: {
             get() {
-                return this.$store.state.project.paramsSearch.sortBy || 'Relevant'
+                return this.paramsSearch.sortBy || 'Relevant'
             },
             set(val) {
-                this.$store.commit('project/setParamsSearch', {...this.$store.state.project.paramsSearch, sortBy: val})
+                this.$store.commit('project/setParamsSearch', {...this.paramsSearch, sortBy: val})
             }
         }
     },
@@ -162,15 +166,24 @@ export default {
         },
         openShareSocialDialog(e) {
             this.isOpenShareSocialDialog = e.open
-            this.targetLinkURL = this.searchListings.find((index) => {
+            this.targetLinkURL = this.searchListings.data.find((index) => {
                 return index.id === e.id
             })
         },
         showStatusForm(e) {
             this.snackbar = e.isShowSnackbar
             this.messageSnackbar = e.messageSnackbar
-        }
-    }
+        },
+        async onSortListing(){
+            const queryStringify = qs.stringify(this.paramsSearch, { encode: false })
+            try{
+                await this.$store.dispatch('project/searchListing',queryStringify)
+            }catch(e){
+                console.log({Error: e.message})
+            }
+        },
+    },
+    
 }
 </script>
 <style lang="scss" scoped>

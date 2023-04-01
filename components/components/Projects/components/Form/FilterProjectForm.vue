@@ -3,14 +3,43 @@
         <div class="form__fields">
             <div class="form__field mb-custom-1">
                 <label>Location</label>
-                <v-text-field
-                    outlined
-                    dense
-                    prepend-inner-icon="icon-svg svg-location"
-                    placeholder="Where do you want to live?"
-                    v-model="location"
-                >
-                </v-text-field>
+                <v-menu offset-y>
+                    <template v-slot:activator="{ on, attrs }">
+                        <v-text-field
+                            v-model="locationSearch"
+                            placeholder="Where do you want to live?"
+                            hide-details
+                            outlined
+                            dense
+                            prepend-inner-icon="icon-svg svg-location"
+                            v-bind="attrs"
+                            v-on="on"
+                            @input="keySearch(locationSearch)"
+                        />
+                    </template>
+                    <v-list class="list-location">
+                        <v-list-item @click="openLocationSearch('Mrt')">
+                            <v-list-item-icon>
+                                <i
+                                    data-v-6ff87bcf=""
+                                    aria-hidden="true"
+                                    class="v-icon icon-svg svg-train"
+                                ></i>
+                            </v-list-item-icon>
+                            <v-list-item-title>Search by MRT</v-list-item-title>
+                        </v-list-item>
+                        <v-list-item @click="openLocationSearch('District')">
+                            <v-list-item-icon>
+                                <i
+                                    data-v-6ff87bcf=""
+                                    aria-hidden="true"
+                                    class="v-icon icon-svg svg-target"
+                                ></i>
+                            </v-list-item-icon>
+                            <v-list-item-title>Search by District</v-list-item-title>
+                        </v-list-item>
+                    </v-list>
+                </v-menu>
             </div>
             <div class="form__field mb-custom-2">
                 <label>Property Type</label>
@@ -59,11 +88,11 @@
                         @change="select_Livethere($event)"
                     >
                         <template v-slot:label>
-    <div class="form__field-label-custom">
-        <span>Livethere Premium</span>
-        <img :src="require(`~/static/img/logos/logo-project.svg`)" alt="" />
-    </div>
-</template>
+                            <div class="form__field-label-custom">
+                                <span>Livethere Premium</span>
+                                <img :src="require(`~/static/img/logos/logo-project.svg`)" alt="" />
+                            </div>
+                        </template>
                     </v-checkbox>
                 </div>
             </div>
@@ -187,13 +216,13 @@
             </div>
             <div class="form__field">
                 <label>Amenities</label>
-                <v-chip-group multiple column active-class="yellow--text"  v-model="selected">
-                    <v-chip  
-                     v-for="(amenities, index) in listAmenities"
-                     :key="index"
-                      label
-                      class="ma-1 form__field-tag-custom"
-                      :value="amenities.id"
+                <v-chip-group multiple column active-class="yellow--text" v-model="selected">
+                    <v-chip
+                        v-for="(amenities, index) in listAmenities"
+                        :key="index"
+                        label
+                        class="ma-1 form__field-tag-custom"
+                        :value="amenities.id"
                     >
                         <i :class="amenities.icon"></i>
                         <span>{{ amenities.title }}</span>
@@ -207,17 +236,43 @@
                 <v-btn class="btn btn--primary btn--green" type="submit">Apply</v-btn>
             </div>
         </div>
-
+        <Dialog
+            :open="isOpenDialogDistrict"
+            @close="isOpenDialogDistrict = false"
+            size="large"
+            :title="'Search By District'"
+            :actions="false"
+            :customClass="true"
+        >
+            <LocationDistrictForm @close="isOpenDialogDistrict = false" @getDistricts="getDistricts" />
+        </Dialog>
+        <v-dialog 
+            v-model="isOpenDialogMrt"
+            width="90%" 
+            content-class="dialog--mrt"
+        >
+            <LocationMRTForm @close="isOpenDialogMrt = false" @getMrt="getMrt"  />
+        </v-dialog>
     </form>
 </template>
 
 <script>
+import Dialog from "~/components/elements/Dialog/Dialog.vue"
 import { PROPERTY_TYPE, BEDROOM_TYPE, BATHROOM_TYPE } from "~/ultilities/contants/asset-inventory"
+import LocationDistrictForm from "~/components/components/Section/components/Form/LocationDistrictForm.vue"
+import LocationMRTForm from "~/components/components/Section/components/Form/LocationMRTForm.vue"
 import { convertNumberToCommas, convertCommasToNumber } from "~/ultilities/helpers"
+import { mapState } from "vuex"
 export default {
     name: "FilterProjectForm",
+    components: {
+        LocationMRTForm,
+        LocationDistrictForm
+    },
     data() {
         return {
+            isOpenDialogDistrict: false,
+            isOpenDialogMrt:false,
             listAmenities: [
                 {
                     id: 1,
@@ -263,24 +318,26 @@ export default {
             propertyTypeList: PROPERTY_TYPE,
             bedroomList: BEDROOM_TYPE,
             bathroomList: BATHROOM_TYPE,
-            location: "",
+            locationSearch: "",
             propertyType: "",
             selectAll: false,
             selectedLivethere: true,
             bedroom: "",
             bathroom: "",
             selected: [],
-            rangeRentPer: [8000, 15000],
+            rangeRentPer: [1000, 20000],
             minRentPer: 1000,
             maxRentPer: 20000,
-            rangeUnitSize: [4000, 10000],
+            rangeUnitSize: [100, 10000],
             minUnitSize: 100,
             maxUnitSize: 10000,
-            submitted: false,
-            snackbar: false
+            submitted: false
         }
     },
     computed: {
+        ...mapState({
+            paramsSearch: (state) => state.project.paramsSearch
+        }),
         rangeRentPerMin() {
             return this.rangeRentPer[0] ? convertNumberToCommas(this.rangeRentPer[0]) : "0"
         },
@@ -315,7 +372,7 @@ export default {
         onSubmitForm() {
             this.submitted = true
             const params = {
-                location: this.location,
+                locationSearch: this.locationSearch,
                 propertyType: this.propertyType,
                 selectAll: this.selectAll,
                 selectedLivethere: this.selectedLivethere,
@@ -331,13 +388,11 @@ export default {
                         : this.rangeUnitSize,
                 selected: this.selected
             }
-            this.$store.dispatch("project/filterListing", params).then((res)=>{
-                this.$emit("snackbar", {isShowSnackbar: true, messageSnackbar: 'Thank you for your submission, our agent has been notified and will be contacting you shortly'})
-            })
+            this.$store.dispatch("project/filterListing", params).then((res) => {})
             this.onClose()
         },
         onResetForm() {
-            ;(this.location = ""),
+            ;(this.locationSearch = ""),
                 (this.propertyType = ""),
                 (this.selectAll = false),
                 (this.selectedLivethere = false),
@@ -346,6 +401,40 @@ export default {
                 (this.rangeRentPer = [8000, 15000]),
                 (this.rangeUnitSize = [4000, 10000]),
                 (this.selected = [])
+        },
+        keySearch(val) {
+            this.category = console.log("keySearch val", val)
+        },
+        openLocationSearch(val) {
+            console.log("openLocationSearch val", val)
+            // this.locationSearch = ""
+            this.category = val
+            console.log("openLocationSearch this.category", this.category)
+            if (val === "Mrt") {
+                if (this.category === "Mrt") {
+                    this.districts = ""
+                    this.locationSearch = this.searchMRT ? this.searchMRT : ""
+                } else {
+                }
+                this.isOpenDialogMrt = true
+            } else {
+                if (this.category === "District") {
+                    this.searchMRT = ""
+                    this.locationSearch = this.districts ? this.districts : ""
+                } else {
+                }
+                this.isOpenDialogDistrict = true
+            }
+        },
+        getDistricts(params) {
+            this.locationSearch = params.join(";")
+            this.districts = this.locationSearch
+            // console.log("locationSearch",this.locationSearch);
+        },
+        getMrt(params) {
+            this.locationSearch = params.join(";")
+            this.searchMRT = this.locationSearch
+            console.log("this.mrt: ", this.searchMRT)
         }
     }
 }
@@ -582,7 +671,7 @@ export default {
     }
 }
 .yellow--text {
-    color: var(--color-white) !important; 
+    color: var(--color-white) !important;
     caret-color: var(--color-white) !important;
     border: 0.1rem solid var(--color-dark-yellow) !important;
     span {

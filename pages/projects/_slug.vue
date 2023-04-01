@@ -1,7 +1,6 @@
 <template>
     <main>
         <ProjectDetail/>
-        <img src="map" alt="">
     </main>
 </template>
 
@@ -12,7 +11,6 @@ import ProjectDetail from "~/components/components/Projects/ProjectDetail.vue"
 import { generateLandlordsSEOMetaTags } from '~/ultilities/seo-configs'
 import { httpEndpoint } from "~/services/https/endpoints"
 import { appSettings } from "~/app-settings"
-import { PROJECT_DETAILS, HOME_AGENT_INFO,  POPULAR_LISTING } from "~/ultilities/contants/dummy-data"
 export default {
     name: "LiveThereMainSiteDetails",
     components: { LandlordHeader, LandingFooter, ProjectDetail },
@@ -22,15 +20,25 @@ export default {
     async asyncData({app, params, store}){
 
         app.head.meta = generateLandlordsSEOMetaTags(app.head.meta)
-        const projectDetails = PROJECT_DETAILS
-        const homeAgent = HOME_AGENT_INFO
-        const mostViewedListing = POPULAR_LISTING
         const id = params.slug
+        // console.log("asyncData",id);
         try{
-            const responseProjectDetails = await app.$axios.$get(`${httpEndpoint.projects.getListings}/${id}`)
-            await store.commit("project/setHomeAgent", homeAgent)
-            await store.commit("project/setPopularListings", mostViewedListing)
-            await store.commit("project/setProjectDetails", responseProjectDetails)
+            const responseProjectDetails = await app.$apiCmsPublic.$get(`${httpEndpoint.projects.getListings}/${id}`)
+            const responseMostViewListing = await app.$apiCmsPublic.$get(`${httpEndpoint.projects.getMostViewListing}`)
+            // await store.commit("project/setHomeAgent", homeAgent)
+            // await store.commit("project/setPopularListings", mostViewedListing)
+            
+
+            if(responseProjectDetails){
+                await store.commit("project/setProjectDetails", responseProjectDetails)
+            }else {
+                await store.commit("project/setProjectDetails", {})
+            }
+            if(responseMostViewListing){
+                await store.commit("project/setMostViewedListings", responseMostViewListing)
+            }else {
+                await store.commit("project/setMostViewedListings", [])
+            }
             // const responseHomeAgent = await app.$axios.$get(`${httpEndpoint}`, id)
             // const responseMostViewedListing = await app.$axios.$get(`${httpEndpoint}`)
             // if(responseMostViewedListing){
@@ -50,10 +58,6 @@ export default {
             // }
         }catch(e){
             console.log({Error: e.message})
-            await store.commit("project/setProjectDetails", projectDetails)
-            await store.commit("project/setHomeAgent", homeAgent)
-            await store.commit("project/setPopularListings", mostViewedListing)
-
         }
     }
 }

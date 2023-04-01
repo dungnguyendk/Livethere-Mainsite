@@ -25,6 +25,7 @@ import Dialog from "~/components/elements/Dialog/Dialog.vue"
 import LocationDistrictForm from "~/components/components/Section/components/Form/LocationDistrictForm.vue"
 import LocationMRTForm from "~/components/components/Section/components/Form/LocationMRTForm.vue"
 import { mapState } from "vuex"
+import qs from "qs"
 export default {
     components: { ProjectListing, HomeSearch, Dialog, LocationDistrictForm, LocationMRTForm },
     head: {
@@ -51,16 +52,31 @@ export default {
             this.isOpenForm = false
         },
         async handleLoadMore() {
-            console.log(this.$route.query)
-            console.log({...this.$route.query,perPage: + 10})
-            // {...this.$route.query,...{perPage: Number(this.$store.state.project.paramsSearch.perPage) + 10} }
-            await this.$store.dispatch('project/searchListing',{...this.$route.query,...{perPage: Number(this.$store.state.project.paramsSearch.perPage) + 10}})
+            // console.log("handleLoadMore")
+            // console.log({...this.paramsSearch,perPage: + 10})
+            const newPerPage = {...this.paramsSearch,...{perPage: Number(this.paramsSearch.perPage) + 10}}
+            const queryStringify = qs.stringify(newPerPage, { encode: false })
+            this.$router.push(`/projects?${queryStringify}`)
+            // {...queryStringify,...{perPage: Number(this.$store.state.project.paramsSearch.perPage) + 10} }
+            
+            try{
+                await this.$store.dispatch('project/searchListing',queryStringify)
+            }catch(e){
+                console.log({Error: e.message})
+            }
         }
     },
 
     async asyncData({query, store}) {
-        await store.commit("project/setParamsSearch", query)
-        await store.dispatch('project/searchListing',query)
+        try{
+            const queryStringify = qs.stringify(query, { encode: false })
+            await store.commit("project/setParamsSearch", query)
+            await store.dispatch('project/searchListing',queryStringify)
+        }catch(e){
+            console.log({Error: e.message})
+        }
+        
+        
     }
     
 }
