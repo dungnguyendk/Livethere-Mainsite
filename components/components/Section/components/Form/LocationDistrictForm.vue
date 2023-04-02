@@ -26,7 +26,7 @@
             <v-list v-if="this.listStation.length > 0">
                 <v-list-item-group v-model="districtChecked" multiple @change="onCheckItem()">
                     <template v-for="item in listStation">
-                        <v-list-item :key="item.value" :value="item.text">
+                        <v-list-item :key="item.value" :value="item.value">
                             <template v-slot:default="{ active }">
                                 <v-list-item-action>
                                     <v-checkbox :input-value="active"></v-checkbox>
@@ -58,6 +58,7 @@
 
 <script>
 import { DISTRICT_LISTING } from "~/ultilities/contants/district"
+import { mapState } from "vuex"
 export default {
     name: "LocationDistrictForm",
 
@@ -72,10 +73,21 @@ export default {
         }
     },
     computed: {
+        ...mapState({
+            paramsSearch: (state) => state.project.paramsSearch,
+        })
     },
+    created(){
+        this.onFillExistingDistrict()
+    },  
     methods: {
         onClose() {
             this.$emit("close")
+        },
+        onFillExistingDistrict(){
+            if (this.paramsSearch){
+                this.districtChecked = this.paramsSearch.districts ? this.paramsSearch.districts.split(";") : []
+            }
         },
         onReset() {
             // console.log("districtChecked",this.districtChecked)

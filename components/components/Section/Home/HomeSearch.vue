@@ -229,7 +229,7 @@ export default {
             rangeBedroom: [0, 5],
             minBedroom: 0,
             maxBedroom: 5,
-            listBedroom: ["Studio", "1", "2", "3", "4", "5"],
+            listBedroom: ["Studio", "1", "2", "3", "4", "5+"],
             rangePriceMin: "",
             rangePriceMax: "",
             rentPerMonth: "",
@@ -245,14 +245,11 @@ export default {
             paramsSearch: (state) => state.project.paramsSearch,
             linesMrt: (state) => state.project.linesMrt
         }),
-        rangeBedroomMin() {
-            return this.rangeBedroom[0] === 0 ? "Studio" : this.rangeBedroom[0]
-        }
     },
     created() {
-        this.onFillExistingSearch()
         this.updatePrice()
         this.updateBedroom()
+        this.onFillExistingSearch() 
     },
     mounted() {},
     methods: {
@@ -261,12 +258,14 @@ export default {
             this.rangePriceMax = convertNumberToCommas(this.rangePrice[1])
             if (this.rangePrice[0] === this.minPrice && this.rangePrice[1] === this.maxPrice) {
                 this.price = "Price"
+                this.rangePriceMax = `${convertNumberToCommas(this.rangePrice[1])}+`
                 this.rentPerMonth = `${this.minPrice};-1`
             } else if (this.rangePrice[1] === this.minPrice) {
                 this.price = `$0 - $${convertNumberToCommas(this.rangePrice[1])}`
                 this.rangePriceMin = "0"
                 this.rentPerMonth = `0;1000`
             } else if (this.rangePrice[1] === this.maxPrice) {
+                
                 this.price = `Min $${convertNumberToCommas(this.rangePrice[0])}`
                 this.rangePriceMax = `${convertNumberToCommas(this.rangePrice[1])}+`
                 this.rentPerMonth = `${this.rangePrice[0]};-1`
@@ -290,13 +289,21 @@ export default {
             ) {
                 this.bedroom = "Bedroom"
                 this.bedRooms = "0;-1"
+            }else if (this.rangeBedroom[0] === this.maxBedroom) {
+                this.rangeBedroom = [this.maxBedroom - 1,this.maxBedroom]
+                this.bedRooms = this.rangeBedroom[0] + ";-1"
+                this.bedroom = this.rangeBedroom[0] + " - " + this.rangeBedroom[1]
+            }else if (this.rangeBedroom[1] === this.minBedroom) {
+                this.rangeBedroom = [this.minBedroom,this.minBedroom + 1]
+                this.bedRooms = this.rangeBedroom[0] + ";" + this.rangeBedroom[1]
+                this.bedroom = "Studio" + " - " + this.rangeBedroom[1]
             } else if (this.rangeBedroom[1] === this.maxBedroom) {
                 this.bedroom = this.rangeBedroom[0] + " - " + this.maxBedroom
                 this.bedRooms = this.rangeBedroom[0] + ";-1"
             } else if (this.rangeBedroom[0] === this.minBedroom) {
                 this.bedroom = "Studio" + " - " + this.rangeBedroom[1]
                 this.bedRooms = this.rangeBedroom[0] + ";" + this.rangeBedroom[1]
-            } else {
+            }  else {
                 this.bedroom = this.rangeBedroom[0] + " - " + this.rangeBedroom[1]
                 this.bedRooms = this.rangeBedroom[0] + ";" + this.rangeBedroom[1]
             }
@@ -311,18 +318,22 @@ export default {
                 this.perPage = this.paramsSearch.perPage
                 this.search = this.paramsSearch.search
                 this.sortBy = this.paramsSearch.sortBy
-                this.locationSearch = this.paramsSearch.districts
                 this.category = this.paramsSearch.category
                 this.amenities = this.paramsSearch.amenities
-                // this.rangeBedroom = this.paramsSearch.bathRooms
-                const tempBedrooms = this.paramsSearch.bathRooms.split(";").map(Number)
+                if(this.paramsSearch.category === "Mrt"){
+                    this.locationSearch = this.paramsSearch.mrt
+                }else if(this.paramsSearch.category === "District"){
+                    this.locationSearch = this.paramsSearch.districts
+                }
+                // this.rangeBedroom = this.paramsSearch.bedRooms
+                const tempBedrooms = this.paramsSearch.bedRooms ? this.paramsSearch.bedRooms.split(";").map(Number) : [this.minBedroom, this.maxBedroom]
                 if (tempBedrooms.includes(-1)) {
                     if (
-                        tempBedrooms[0] === this.minBedroom &&
-                        tempBedrooms[1] === this.maxBedroom
+                        tempBedrooms[0] === this.minBedroom
                     ) {
                         this.bedroom = "Bedroom"
                         this.bedRooms = "0;-1"
+                        this.rangeBedroom = [tempBedrooms[0],this.maxBedroom]
                     } else {
                         this.rangeBedroom = [tempBedrooms[0], this.maxBedroom]
                         this.bedroom = tempBedrooms[0] + " - " + this.maxBedroom
@@ -332,14 +343,17 @@ export default {
                     if (tempBedrooms[0] === this.minBedroom) {
                         this.bedroom = "Studio" + " - " + tempBedrooms[1]
                         this.bedRooms = tempBedrooms[0] + ";" + tempBedrooms[1]
+                        this.rangeBedroom = [tempBedrooms[0],tempBedrooms[1]]
                     } else {
                         this.bedroom = tempBedrooms[0] + " - " + tempBedrooms[1]
                         this.bedRooms = tempBedrooms[0] + ";" + tempBedrooms[1]
+                        this.rangeBedroom = [tempBedrooms[0],tempBedrooms[1]]
                     }
                 }
-                const tempPrices = this.paramsSearch.rentPerMonth.split(";").map(Number)
+                const tempPrices = this.paramsSearch.rentPerMonth ? this.paramsSearch.rentPerMonth.split(";").map(Number) : [this.minPrice, this.maxPrice]
                 if (tempPrices.includes(-1)) {
-                    if (tempPrices[0] === this.minPrice && tempPrices[1] === this.maxPrice) {
+                    this.rangePriceMax = `${convertNumberToCommas(this.maxPrice)}+`
+                    if (tempPrices[0] === this.minPrice) {
                         this.price = "Price"
                         this.rangePrice = [this.minPrice, this.maxPrice]
                         this.rentPerMonth = this.minPrice + ";" + "-1"
@@ -368,7 +382,7 @@ export default {
                             tempPrices[0]
                         )} - $${convertNumberToCommas(tempPrices[1])}`
                         this.rentPerMonth = `${tempPrices[0]};${tempPrices[1]}`
-                        this.rangePrice = [this.minPrice, this.maxPrice]
+                        this.rangePrice = [tempPrices[0], tempPrices[1]]
                     }
                 }
                 // console.log("tempPrices this.price ", this.price)
@@ -383,18 +397,20 @@ export default {
             // }else this.districts = ""
             // console.log("this.districts",this.districts);
             const params = {
-                page: 1,
-                perPage: 10,
+                
                 propertyType: this.propertyType,
                 livethereChecked: true,
                 rentPerMonth: this.rentPerMonth,
-                bathRooms: this.bedRooms,
+                bedRooms: this.bedRooms,
+                bathRooms: "0;-1",
                 search: "",
                 sortBy: "Relevant",
                 category: this.category,
                 districts: this.districts,
                 mrt: this.searchMRT,
-                unitSize: ''
+                unitSize: "100;-1",
+                page: 1,
+                perPage: 10,
             }
             const paramsStringify = qs.stringify(params, { encode: false })
             // console.log("onSearchListing params", params)
@@ -409,21 +425,25 @@ export default {
                 })
             }else {
                 this.$store.commit("project/setParamsSearch", params)
-                    this.$router.push(`/projects?${paramsStringify}`)
+                this.$router.push(`/projects?${paramsStringify}`)
             }
            
 
                 
         },
         getDistricts(params){
-            this.locationSearch = params.join(';')
-            this.districts = this.locationSearch
+            if(params){
+                this.locationSearch = params.join(';')
+                this.districts = this.locationSearch
+            }
             // console.log("locationSearch",this.locationSearch);
         },
         getMrt(params){
-            this.locationSearch = params.join(';')
-            this.searchMRT = this.locationSearch
-            console.log("this.mrt: ",this.searchMRT);
+            if(params){
+                this.locationSearch = params.join(';')
+                this.searchMRT = this.locationSearch
+            }
+            // console.log("this.mrt: ",this.searchMRT);
         },
         openLocationSearch(val){
             console.log("openLocationSearch val",val)
@@ -455,11 +475,11 @@ export default {
     watch: {
         rangePrice(val) {
             this.rangePriceMin = convertNumberToCommas(this.rangePrice[0])
-            this.rangePriceMax = convertNumberToCommas(this.rangePrice[1])
+            this.rangePriceMax = this.rangePrice[1] === this.maxPrice ? `${convertNumberToCommas(this.rangePrice[1])}+` : convertNumberToCommas(this.rangePrice[1])
+        },
+        paramsSearch() {
+            this.onFillExistingSearch()
         }
-        // paramsSearch() {
-        //     this.onFillExistingSearch()
-        // }
     }
 }
 </script>

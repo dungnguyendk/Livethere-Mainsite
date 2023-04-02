@@ -3,7 +3,7 @@
         <div class="card--dialog">
             <div class="card__header">
                 <h4>Search by MRT</h4>
-                <button class="btn--close" @click="onClose()">
+                <button class="btn--close" @click.prevent="onClose()">
                     <i class="ri-close-fill" />
                 </button>
             </div>
@@ -36,8 +36,8 @@
                                     <v-list-item-group v-model="selectedStations" multiple>
                                         <template v-for="item in searchStations">
                                             <v-list-item
-                                                :key="item.stationName"
-                                                :value="item.stationName"
+                                                :key="item.stationCode"
+                                                :value="item.stationCode"
                                             >
                                                 <template v-slot:default="{ active }">
                                                     <v-list-item-action>
@@ -102,7 +102,9 @@
                         <v-btn class="btn btn--outline btn--red" text @click="onReset">Reset</v-btn>
                     </div>
                     <div class="form__actions">
-                        <v-btn class="btn btn--outline btn--green" @click="onClose">Cancel</v-btn>
+                        <v-btn class="btn btn--outline btn--green" @click.prevent="onClose"
+                            >Cancel</v-btn
+                        >
                         <v-btn class="btn btn--primary btn--green ms-3" @click="onSubmit"
                             >Submit</v-btn
                         >
@@ -132,64 +134,34 @@ export default {
             selectedStations: [],
             filterStations: [],
             searchStations: [],
-            activeNode: []
+            activeNode: [],
+            selectedIds: []
         }
     },
     computed: {
         ...mapState({
-            linesMrt: (state) => state.project.linesMrt
+            linesMrt: (state) => state.project.linesMrt,
+            paramsSearch: (state) => state.project.paramsSearch,
         })
     },
     created() {
         // this.listStation = this.linesMrt
     },
     mounted() {
+        this.onFillExistingMrt()
         this.convertListStation()
         this.convertFilteredStations()
-        console.log("this.listStation: ,", this.listStation)
+        // console.log("convertListStation this.listStation: ,", this.listStation)
     },
     methods: {
-        onEnableLine(item) {
-            const classLine = [
-                ".i",
-                ".j",
-                ".x",
-                ".y",
-                ".t",
-                ".u",
-                ".o",
-                ".p",
-                ".f",
-                ".g",
-                ".r",
-                ".s",
-                ".ac",
-                ".ad",
-                ".ab",
-                ".ag"
-            ]
-            const key = item && item[0] ? item[0].id : ""
-            console.log("selectedStations. ", item)
-            console.log("selectedStations. ", key)
-            if (key === "EW") {
-                const elements = this.$el.querySelectorAll(".i, .j")
-                    for (let i = 0; i < elements.length; i++) {
-                        elements[i].style.fill = "#00953b"
-                    }
-                    classLine.splice(classLine.indexOf(".i"), 1)
-                    classLine.splice(classLine.indexOf(".j"), 1)
-            }
-            if (classLine.length < 16) {
-                blurLine(classLine.join(","))
-            } else {
-                resetColor()
-            }
-        },
-        
         onClose() {
             this.$emit("close")
         },
-        onCheckFutureLines() {},
+        onFillExistingMrt(){
+            if (this.paramsSearch){
+                this.selectedStations = this.paramsSearch.mrt ? this.paramsSearch.mrt.split(";") : []
+            }
+        },
         keySearch(val) {
             this.searchStations = this.filterStations.filter((item) => {
                 return item.stationName.toLowerCase().includes(val.toLowerCase())
@@ -207,12 +179,12 @@ export default {
                 id: line.lineCode,
                 lineColor: line.lineColor,
                 children: line.stations.map((station) => ({
-                    id: `${station.stationCode} ${station.stationName}`,
+                    id: station.stationCode,
                     name: `${station.stationCode} ${station.stationName}`,
                     stationColor: station.stationColor,
                     latitude: station.latitude,
                     longitude: station.longitude,
-                    parentID: line.lineCode,
+                    parentID: line.lineCode
                 }))
             }))
         },
@@ -236,15 +208,115 @@ export default {
 
         onSubmit() {
             // const selectedStations = this.listStation
-            console.log(this.selectedStations)
+            // console.log(this.selectedStations)
             this.$emit("getMrt", this.selectedStations)
             this.onClose()
-        }
+        },
+        onEnableLine(item) {
+            const classLine = [
+                ".i",
+                ".j",
+                ".x",
+                ".y",
+                ".t",
+                ".u",
+                ".o",
+                ".p",
+                ".f",
+                ".g",
+                ".r",
+                ".s",
+                ".ac",
+                ".ad",
+                ".ab",
+                ".ag"
+            ]
+            const selectedNodes = document.querySelectorAll(".v-treeview-node--selected")
+            const selectedIds = []
+            selectedNodes.forEach((node) => {
+                if (node.classList.contains("v-treeview-node--selected")) {
+                    const tagEl = node.querySelector(".tree--station__tag")
+                    if (tagEl) {
+                        selectedIds.push(tagEl.textContent.trim())
+                    }
+                }
+            })
+            if (selectedIds) {
+                selectedIds.forEach((keyItem) => {
+                    if (keyItem === "EW") {
+                        const elements = this.$el.querySelectorAll(".i, .j")
+                        elements.forEach((element) => {
+                            element.style.fill = "#00953b"
+                        })
+                        classLine.splice(classLine.indexOf(".i"), 1)
+                        classLine.splice(classLine.indexOf(".j"), 1)
+                    }
+                    if (keyItem === "NS") {
+                        const elements = this.$el.querySelectorAll(".x, .y")
+                        elements.forEach((element) => {
+                            element.style.fill = "#e1251b"
+                        })
+                        classLine.splice(classLine.indexOf(".x"), 1)
+                        classLine.splice(classLine.indexOf(".y"), 1)
+                    }
+                    if (keyItem === "NE") {
+                        const elements = this.$el.querySelectorAll(".t, .u")
+                        elements.forEach((element) => {
+                            element.style.fill = "#9e28b5"
+                        })
+                        classLine.splice(classLine.indexOf(".t"), 1)
+                        classLine.splice(classLine.indexOf(".u"), 1)
+                    }
+                    if (keyItem === "CC") {
+                        const elements = this.$el.querySelectorAll(".o, .p")
+                        elements.forEach((element) => {
+                            element.style.fill = "#ff9e18"
+                        })
+                        classLine.splice(classLine.indexOf(".o"), 1)
+                        classLine.splice(classLine.indexOf(".p"), 1)
+                    }
+                    if (keyItem === "DT") {
+                        const elements = this.$el.querySelectorAll(".f, .g")
+                        elements.forEach((element) => {
+                            element.style.fill = "#0055b8"
+                        })
+                        classLine.splice(classLine.indexOf(".f"), 1)
+                        classLine.splice(classLine.indexOf(".g"), 1)
+                    }
+                    if (keyItem === "TE") {
+                        const elements = this.$el.querySelectorAll(".r, .s")
+                        elements.forEach((element) => {
+                            element.style.fill = "#9d5918"
+                        })
+                        classLine.splice(classLine.indexOf(".r"), 1)
+                        classLine.splice(classLine.indexOf(".s"), 1)
+                    }
+                    if (!["EW", "NS", "NE", "QC", "DT", "TE"].includes(keyItem)) {
+                        const elements = this.$el.querySelectorAll(".ac, .ad")
+                        elements.forEach((element) => {
+                            element.style.fill = "#718472"
+                        })
+                        classLine.splice(classLine.indexOf(".ac"), 1)
+                        classLine.splice(classLine.indexOf(".ad"), 1)
+                    }
+                })
+            }
+
+            if (classLine.length < 16) {
+                blurLine(classLine.join(","))
+            } else {
+                resetColor()
+            }
+        },
     },
     watch: {
         selectedStations(val) {
-            this.onEnableLine(val)
+            setTimeout(() => {
+                this.onEnableLine(val)
+            },300)
+            // this.initiallyOpen = val
             // console.log("selectedStations", this.selectedStations)
+            
         }
     }
 }
@@ -286,6 +358,9 @@ export default {
         color: var(--color-dark-yellow) !important;
         caret-color: var(--color-dark-yellow) !important;
     }
+    ::v-deep(.v-treeview-node__level) {
+        width: 15px;
+    }
     .tree--station__arrow {
         position: absolute;
         top: 50%;
@@ -323,7 +398,7 @@ export default {
     }
 }
 .form--mrt {
-    height: 100%;
+    height: 90vh;
     .form__footer {
         display: flex;
         justify-content: space-between;

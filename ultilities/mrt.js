@@ -1,8 +1,9 @@
 export function blurLine(classLine) {
-    let elements = document.querySelectorAll(classLine)
-    elements.forEach(function (element) {
-        element.setAttribute("fill", "#ddd")
-    })
+    const  elements = document.querySelectorAll(classLine)
+    // console.log("blurLine elements",elements);
+    elements.forEach((element) => {
+        element.style.fill = "#ddd"
+      });
 }
 
 export function resetColor() {
@@ -29,3 +30,4 @@ export function resetColor() {
         }
     });
 }
+
