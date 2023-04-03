@@ -20,20 +20,26 @@
                                                 @input="keySearch(locationSearch)"
                                             />
                                         </template>
-                                        <v-list class="list-location">
-                                            <v-list-item  @click="openLocationSearch('Mrt')">
-                                                <v-list-item-icon>
-                                                    <i data-v-6ff87bcf="" aria-hidden="true" class="v-icon icon-svg svg-train"></i>
-                                                </v-list-item-icon>
-                                                <v-list-item-title >Search by MRT</v-list-item-title>
-                                            </v-list-item>
-                                            <v-list-item @click="openLocationSearch('District')">
-                                                <v-list-item-icon>
-                                                    <i data-v-6ff87bcf="" aria-hidden="true" class="v-icon icon-svg svg-target"></i>
-                                                </v-list-item-icon>
-                                                <v-list-item-title>Search by District</v-list-item-title>
-                                            </v-list-item>
-                                        </v-list>
+                                        <template>
+                                            <v-list class="list-location">
+                                                <v-list-item v-for="(item, index) in listAmenities" :key="index" class="list-amenities" @click="selectAmenity(item)">
+                                                    <v-list-item-title >{{ item.name }}</v-list-item-title>
+                                                    <v-list-item-subtitle>{{ item.category }}</v-list-item-subtitle>
+                                                </v-list-item>
+                                                <v-list-item  @click="openLocationSearch('Mrt')">
+                                                    <v-list-item-icon>
+                                                        <i data-v-6ff87bcf="" aria-hidden="true" class="v-icon icon-svg svg-train"></i>
+                                                    </v-list-item-icon>
+                                                    <v-list-item-title >Search by MRT</v-list-item-title>
+                                                </v-list-item>
+                                                <v-list-item @click="openLocationSearch('District')">
+                                                    <v-list-item-icon>
+                                                        <i data-v-6ff87bcf="" aria-hidden="true" class="v-icon icon-svg svg-target"></i>
+                                                    </v-list-item-icon>
+                                                    <v-list-item-title>Search by District</v-list-item-title>
+                                                </v-list-item>
+                                            </v-list>
+                                        </template>
                                     </v-menu>
                                 </div>
                             </v-col>
@@ -204,7 +210,9 @@ import LocationMRTForm from "~/components/components/Section/components/Form/Loc
 import { PROPERTY_TYPE } from "~/ultilities/contants/asset-inventory.js"
 import { convertNumberToCommas } from "~/ultilities/helpers"
 import { mapState } from "vuex"
+import { httpEndpoint } from "~/services/https/endpoints"
 import qs from "qs"
+import _ from "lodash"
 export default {
     name: "HomeSearch",
     components: {
@@ -237,6 +245,7 @@ export default {
             category: "District",
             districts: "",
             searchMRT : "",
+            listAmenities: [],
 
         }
     },
@@ -403,7 +412,7 @@ export default {
                 rentPerMonth: this.rentPerMonth,
                 bedRooms: this.bedRooms,
                 bathRooms: "0;-1",
-                search: "",
+                search: this.locationSearch,
                 sortBy: "Relevant",
                 category: this.category,
                 districts: this.districts,
@@ -448,6 +457,7 @@ export default {
         openLocationSearch(val){
             console.log("openLocationSearch val",val)
             // this.locationSearch = ""
+            this.listAmenities = []
             this.category = val
             console.log("openLocationSearch this.category",this.category)
             if(val === "Mrt"){
@@ -467,10 +477,25 @@ export default {
                 this.isOpenDialogDistrict = true
             }
         },
-        keySearch(val){
-            this.category = 
-            console.log("keySearch val",val);
-        }
+        selectAmenity(item){
+            console.log("selectAmenity",item);
+            this.category = item.category
+            this.locationSearch = item.name
+            // this.listAmenities = []
+        },
+        keySearch: _.debounce(async function (payload){
+            try {
+                const response = await this.$apiCmsPublic.$get(`${httpEndpoint.projects.getAmenities}?name=${payload}`)
+                // console.log("keySearch ;",response, response.length);
+                if(response.length > 0){
+                    this.listAmenities = response
+                }else {
+                    this.listAmenities = []
+                }
+            } catch (e) {
+                console.log({ Error: e.message })
+            }
+        }, 200),
     },
     watch: {
         rangePrice(val) {
@@ -484,6 +509,21 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+.list-amenities {
+    cursor: pointer;
+    .v-list-item__title {
+        font-size: 1.6rem;
+        color: var(--color-title-black);
+        font-weight: 500;
+    }
+    .v-list-item__subtitle {
+        font-size: 1.4rem;
+        flex: 0 0 10rem;
+        width: 10rem;
+        max-width: 100%;
+        text-align: right;
+    }
+}
 .v-dialog__content {
     :deep(.dialog--mrt) {
     height: 90%;
@@ -508,19 +548,19 @@ export default {
         font-size: 1.6rem;
         color: var(--color-title-black);
     }
-    .v-list-item {
+    .v-list-item[role="menuitem"] {
         position: relative;
-        &:first-child::after{
-            content: "";
-            position: absolute;
-            bottom: 0;
-            left: 1.6rem;
-            right: 1.6rem;
-            height: 1px;
-            min-height: 1px;
-            top: auto;
-            background-color: var(--border-color);
-        }
+        // &:first-child::after{
+        //     content: "";
+        //     position: absolute;
+        //     bottom: 0;
+        //     left: 1.6rem;
+        //     right: 1.6rem;
+        //     height: 1px;
+        //     min-height: 1px;
+        //     top: auto;
+        //     background-color: var(--border-color);
+        // }
     }
 }
 .section--search {

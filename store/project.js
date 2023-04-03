@@ -39,7 +39,6 @@ export const actions = {
     async getHomePage({ commit }, payload) {
         try {
             const responsePopularListing = await this.$apiCmsPublic.$get(`${httpEndpoint.projects.getPopularListing}`)
-            // const responsePopularListing = await this.$apiCmsPublic.$get(`http://vnapi.asiaesolutions.com/cmspublic/${httpEndpoint.projects.getPopularListing}`)
             if(responsePopularListing){
                 commit("setPopularListings", responsePopularListing)
             }else {

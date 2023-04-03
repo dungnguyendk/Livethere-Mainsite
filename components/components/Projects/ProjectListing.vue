@@ -35,20 +35,16 @@
                 </div>
             </div>
             <div class="section__body">
+                
                 <div
                     class="section__body-map"
                     :class="
                         isActiveMap ? 'section__body-map--active' : 'section__body-map--disabled'
                     "
                 >
-                    <iframe
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.107901410066!2d106.71887761533426!3d10.803047261654479!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x317529f8273eaed5%3A0x27fe58a754c470b0!2zQ8O0bmcgdHkgQ-G7lSBwaOG6p24gxJDhuqd1IFTGsCBYw6J5IEThu7FuZyBCY29ucw!5e0!3m2!1sen!2s!4v1676437005731!5m2!1sen!2s"
-                        style="border: 0"
-                        allowfullscreen=""
-                        loading="lazy"
-                        referrerpolicy="no-referrer-when-downgrade"
-                        class="section__body-map-custom"
-                    ></iframe>
+                <client-only>
+                    <Map  />
+                </client-only>
                 </div>
                 <template v-if="searchListings && searchListings.data.length > 0">
                     <div class="section__body-list">
@@ -59,7 +55,7 @@
                             @open="openShareSocialDialog($event)"
                         />
                     </div>
-                    <div class="section__body-load-more" >
+                    <div class="section__body-load-more">
                         <template v-if="searchListings.pageCount > 1">
                             <button @click="$emit('loadMore')">Load more</button>
                         </template>
@@ -75,16 +71,12 @@
                     </div>
                 </template>
 
-                <FilterDialog
-                    :open="isOpenFilterProjectDialog"
-                    @close="closeFilterProjectDialog"
-                />
+                <FilterDialog :open="isOpenFilterProjectDialog" @close="closeFilterProjectDialog" />
                 <ShareSocialDialog
                     :open="isOpenShareSocialDialog"
                     @close="closeShareSocialDialog"
                     :item="targetLinkURL"
                 />
-                <SuccessSnackBar :open="snackbar" :message="messageSnackbar" />
             </div>
         </div>
     </section>
@@ -96,7 +88,6 @@ import FilterProjectForm from "~/components/components/Projects/components/Form/
 import ShareSocialForm from "~/components/components/Projects/components/Form/ShareSocialForm.vue"
 import FilterDialog from "~/components/components/Projects/components/Dialog/FilterDialog.vue"
 import ShareSocialDialog from "~/components/components/Projects/components/Dialog/ShareSocialDialog.vue"
-import SuccessSnackBar from "~/components/shared/Snackbar/SuccessSnackBar.vue"
 import { mapState } from "vuex"
 import { state } from "~/store/analytics"
 import qs from "qs"
@@ -108,21 +99,25 @@ export default {
         ShareSocialForm,
         FilterDialog,
         ShareSocialDialog,
-        SuccessSnackBar
+        Map: () => {
+            if (typeof window !== "undefined") return import("~/components/shared/Map/MapMultiMarker.vue")
+        }
     },
     computed: {
         ...mapState({
             searchListings: (state) => state.project.searchListings,
-            paramsSearch: (state) => state.project.paramsSearch,
-
+            paramsSearch: (state) => state.project.paramsSearch
         }),
         selectionSort: {
             get() {
-                return this.paramsSearch.sortBy || 'Relevant'
+                return this.paramsSearch.sortBy || "Relevant"
             },
             set(val) {
-                this.$store.commit('project/setParamsSearch', {...this.paramsSearch, sortBy: val})
+                this.$store.commit("project/setParamsSearch", { ...this.paramsSearch, sortBy: val })
             }
+        },
+        location() {
+            return this.searchListings.data.map(({location}) => [location.lat, location.lon])
         }
     },
     data() {
@@ -157,6 +152,9 @@ export default {
             messageSnackbar: ""
         }
     },
+    created() {
+        console.log("location", this.location)
+    },
     methods: {
         closeFilterProjectDialog() {
             this.isOpenFilterProjectDialog = false
@@ -174,16 +172,15 @@ export default {
             this.snackbar = e.isShowSnackbar
             this.messageSnackbar = e.messageSnackbar
         },
-        async onSortListing(){
+        async onSortListing() {
             const queryStringify = qs.stringify(this.paramsSearch, { encode: false })
-            try{
-                await this.$store.dispatch('project/searchListing',queryStringify)
-            }catch(e){
-                console.log({Error: e.message})
+            try {
+                await this.$store.dispatch("project/searchListing", queryStringify)
+            } catch (e) {
+                console.log({ Error: e.message })
             }
-        },
-    },
-    
+        }
+    }
 }
 </script>
 <style lang="scss" scoped>

@@ -43,8 +43,8 @@ export default {
         }
     },
     created(){
-        console.log("Map listlatLog",this.listlatLog);
-        console.log("Map center",this.center);
+        // console.log("Map listlatLog",this.listlatLog);
+        // console.log("Map center",this.center);
     },
     data: function() {
         return {

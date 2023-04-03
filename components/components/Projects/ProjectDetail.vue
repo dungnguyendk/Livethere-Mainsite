@@ -144,7 +144,7 @@ export default {
         ContactDetailDialog,
         ShareSocialDialog, 
         error,
-        Map: () => {if (typeof window !== 'undefined') return import("~/components/elements/Map/Map.vue")}
+        Map: () => {if (typeof window !== 'undefined') return import("~/components/shared/Map/Map.vue")}
     },
     computed: {
         ...mapState({
@@ -165,6 +165,9 @@ export default {
             let checkLagLogValue = Object.values(Object.values(this.projectDetails.location)).every((item) => item !== null)
             return checkLagLogValue ? Object.values(this.projectDetails.location) : []
         }
+    },
+    created(){
+        console.log("location",this.location);
     },
     data() {
         return {

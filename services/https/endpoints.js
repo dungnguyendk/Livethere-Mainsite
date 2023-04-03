@@ -93,6 +93,7 @@ export const httpEndpoint = {
         getListings: "api/listings",
         getPopularListing: "api/popular-listings",
         getMostViewListing: "api/most-viewed-listings",
+        getAmenities: "api/amenities",
 
     },
 }
