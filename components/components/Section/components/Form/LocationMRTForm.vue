@@ -89,7 +89,7 @@
                             </template>
                         </div>
                     </div>
-                    <div class="mrt__map">
+                    <div class="mrt__map" id="svg-container">
                         <panZoom>
                             <MrtSingapore />
                         </panZoom>
@@ -134,14 +134,14 @@ export default {
             selectedStations: [],
             filterStations: [],
             searchStations: [],
-            activeNode: [],
-            selectedIds: []
+            stationListHighlighted: [],
+            stationListChecked: []
         }
     },
     computed: {
         ...mapState({
             linesMrt: (state) => state.project.linesMrt,
-            paramsSearch: (state) => state.project.paramsSearch,
+            paramsSearch: (state) => state.project.paramsSearch
         })
     },
     created() {
@@ -151,15 +151,19 @@ export default {
         this.onFillExistingMrt()
         this.convertListStation()
         this.convertFilteredStations()
+        this.mrtMenuHighlight()
         // console.log("convertListStation this.listStation: ,", this.listStation)
     },
     methods: {
+        onCheckFutureLines() {},
         onClose() {
             this.$emit("close")
         },
-        onFillExistingMrt(){
-            if (this.paramsSearch){
-                this.selectedStations = this.paramsSearch.mrt ? this.paramsSearch.mrt.split(";") : []
+        onFillExistingMrt() {
+            if (this.paramsSearch) {
+                this.selectedStations = this.paramsSearch.mrt
+                    ? this.paramsSearch.mrt.split(";")
+                    : []
             }
         },
         keySearch(val) {
@@ -171,6 +175,8 @@ export default {
             this.futureLines = false
             this.selectedStations = []
             this.searchStation = ""
+            this.stationListHighlighted = []
+            this.stationListChecked = []
             // this.stations = [],
         },
         convertListStation() {
@@ -291,6 +297,7 @@ export default {
                         classLine.splice(classLine.indexOf(".r"), 1)
                         classLine.splice(classLine.indexOf(".s"), 1)
                     }
+                    
                     if (!["EW", "NS", "NE", "QC", "DT", "TE"].includes(keyItem)) {
                         const elements = this.$el.querySelectorAll(".ac, .ad")
                         elements.forEach((element) => {
@@ -308,15 +315,98 @@ export default {
                 resetColor()
             }
         },
+        mrtMenuHighlight() {
+            const svgContainer = document.getElementById("svg-container")
+            const gs = svgContainer.getElementsByTagName("g")
+            for (let i = 0; i < gs.length; i++) {
+                gs[i].addEventListener("click", () => {
+                    const mrtStationId = gs[i].getAttribute("id")
+                    // console.log("mrtStationId",mrtStationId);
+                    // check is MRT code
+                    if (/^[A-Z]{2}\d{1,2}(_[A-Z0-9]+)?(_[A-Z0-9]+)?$/.test(mrtStationId)) {
+                        let mrtStationCode = mrtStationId.replaceAll("_", "/")
+                        // console.log("is MRT code",mrtStationCode);
+                        // highlighting
+                        if (this.stationListHighlighted.includes(mrtStationId)) {
+                            // Set normal
+                            document.querySelector(`#${mrtStationId}`).style.stroke = ""
+
+                            // remove list in highlight map
+                            let idxH = this.stationListHighlighted.indexOf(mrtStationId)
+                            this.stationListHighlighted.splice(idxH, 1)
+
+                            // remove list in menu and uncheck
+                            let idxS = this.stationListChecked.indexOf(mrtStationCode)
+                            this.stationListChecked.splice(idxS, 1)
+                            console.log(
+                                "Xóa khỏi danh sách checked ở menu và uncheck",
+                                this.stationListChecked
+                            )
+                            this.selectedStations = this.stationListChecked
+                        } else {
+                            // console.log("selected mrtStationCode",mrtStationCode)
+                            // console.log("selected mrtStationId", mrtStationId)
+                            // Highlight map
+                            document.querySelector(`#${mrtStationId}`).style.stroke = "currentColor"
+
+                            // add list checked in menu
+                            if (!this.stationListChecked.includes(mrtStationCode)) {
+                                this.stationListChecked.push(mrtStationCode)
+                                console.log(
+                                    "Thêm vào danh sách checked ở menu và checked",
+                                    this.stationListChecked
+                                )
+                                this.selectedStations = this.stationListChecked
+                            }
+                            // add list highlighted map
+                            if (!this.stationListHighlighted.includes(mrtStationId))
+                                this.stationListHighlighted.push(mrtStationId)
+                        }
+                    }
+                })
+            }
+        },
+        mrtMapHighlight(stationChecked) {
+            let stationListToHighlight = []
+            
+            
+            // Chuyển đổi mrt code sang id mỗi trạm trên map
+            stationChecked.forEach(function (mrtCode) {
+                let stationIdOnMap = mrtCode.replaceAll("/", "_")
+                stationListToHighlight.push(stationIdOnMap)
+            })
+            this.stationListChecked = stationChecked 
+            // console.log("this.stationListHighlighted :",this.stationListHighlighted)
+            // console.log("this.stationListChecked :",this.stationListChecked)
+            // console.log("stationListToHighlight",stationListToHighlight)
+            
+            // Kiểm tra và xóa những trạm đã bỏ check
+            for (let i = this.stationListHighlighted.length - 1; i >= 0; i--) {
+                if (!stationListToHighlight.includes(this.stationListHighlighted[i])) {
+                    document.querySelector(
+                        `g[id='${this.stationListHighlighted[i]}']`
+                    ).style.stroke = ""
+                    this.stationListHighlighted.splice(i, 1)
+                }
+            }
+
+            // Xử lý checked những trạm còn lại
+            stationListToHighlight.forEach((stationId) => {
+                document.querySelector(`g[id='${stationId}']`).style.stroke = "currentColor"
+                if (!this.stationListHighlighted.includes(stationId)) {
+                    this.stationListHighlighted.push(stationId)
+                }
+            })
+        }
     },
     watch: {
         selectedStations(val) {
             setTimeout(() => {
                 this.onEnableLine(val)
-            },300)
+            }, 300)
             // this.initiallyOpen = val
-            // console.log("selectedStations", this.selectedStations)
-            
+            // console.log("selectedStations", val)
+            this.mrtMapHighlight(val)
         }
     }
 }
