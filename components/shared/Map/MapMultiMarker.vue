@@ -1,5 +1,5 @@
 <template>
-    <l-map ref="map" style="height: 350px" :zoom="zoom" :center="center">
+    <l-map ref="map" style="height: 100%;width: 100%" :zoom="zoom" :center="center">
         <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
         <l-marker
             v-for="(marker, index) in listlatLog"

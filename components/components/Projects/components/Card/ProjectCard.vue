@@ -78,6 +78,7 @@ export default {
     },
     methods: {
         openShareSocialDialog(id) {
+            // console.log("id",id);
             this.$emit("open", { id: id, open: (this.isOpenShareSocialDialog = true) })
         },
         activeHeartEmotion(id) {

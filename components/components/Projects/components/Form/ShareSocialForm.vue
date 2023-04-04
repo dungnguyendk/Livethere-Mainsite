@@ -56,14 +56,14 @@
             <label>Copy link</label>
             <v-tooltip top>
                 <template v-slot:activator="{ on, attrs }">
-                    <input 
-                     type="text" 
-                     v-model="linkURL" 
-                     v-bind="attrs" 
-                     ref="linkURLCopy" 
-                     @click="onCopyLinkURL(on, $event)"
-                     class="form__field-input-custom"
-                    >
+                    <input
+                        type="text"
+                        v-model="linkURL"
+                        v-bind="attrs"
+                        ref="linkURLCopy"
+                        @click="onCopyLinkURL(on, $event)"
+                        class="form__field-input-custom"
+                    />
                 </template>
                 <span>Text Copied</span>
             </v-tooltip>
@@ -80,9 +80,19 @@ export default {
             default: () => {}
         }
     },
+    computed: {
+        linkURL: {
+            get() {
+                return this.item?.slug
+            },
+            set(value) {
+                this.item.slug = value
+            }
+        }
+    },
     data() {
         return {
-            linkURL: this.item.linkDetails
+            // linkURL: this.item.slug
         }
     },
     beforeDestroy() {
@@ -97,7 +107,6 @@ export default {
             const element = this.$refs.linkURLCopy
             element.select()
             element.setSelectionRange(0, 99999)
-            
         }
     },
     watch: {
@@ -126,7 +135,6 @@ export default {
         margin-bottom: 0.8rem;
         display: inline-block;
     }
-
 }
 .form__btn-custom {
     padding: 0 !important;
@@ -144,13 +152,14 @@ export default {
         color: var(--color-white);
     }
 }
-.form__field-input-custom{
+.form__field-input-custom {
     display: block;
-    border: 0.1rem solid var(--border-color); 
+    border: 0.1rem solid var(--border-color);
     border-radius: 0.4rem;
     padding: 0.8rem;
     width: 100%;
-    &:hover, &:active{
+    &:hover,
+    &:active {
         border: 0.1rem solid var(--color-primary);
     }
 }

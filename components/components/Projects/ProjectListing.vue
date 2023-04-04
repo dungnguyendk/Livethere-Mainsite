@@ -151,8 +151,6 @@ export default {
             isOpenFilterProjectDialog: false,
             isOpenShareSocialDialog: false,
             targetLinkURL: {},
-            snackbar: false,
-            messageSnackbar: ""
         }
     },
     created() {
@@ -166,14 +164,15 @@ export default {
             this.isOpenShareSocialDialog = false
         },
         openShareSocialDialog(e) {
+            console.log("openShareSocialDialog e",e);
             this.isOpenShareSocialDialog = e.open
             this.targetLinkURL = this.searchListings.data.find((index) => {
                 return index.id === e.id
             })
+            console.log("this.targetLinkURL :",this.targetLinkURL);
         },
         showStatusForm(e) {
-            this.snackbar = e.isShowSnackbar
-            this.messageSnackbar = e.messageSnackbar
+            
         },
         async onSortListing() {
             const queryStringify = qs.stringify(this.paramsSearch, { encode: false })
@@ -243,6 +242,8 @@ export default {
 .section__body-map {
     transition: 300ms linear;
     overflow: hidden;
+    position: relative;
+    z-index: 1;
     .section__body-map-custom {
         height: 25.6rem;
     }
@@ -332,11 +333,5 @@ export default {
 
     // }
 }
-.snackbar-custom {
-    ::v-deep(.v-snack__content) {
-        font-weight: 500;
-        font-size: 1.4rem;
-        line-height: 2.4rem;
-    }
-}
+
 </style>
