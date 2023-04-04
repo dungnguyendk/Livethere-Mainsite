@@ -1,8 +1,8 @@
 <template>
-    <l-map style="height: 350px" :zoom="zoom" :center="center">
+    <l-map ref="map" style="height: 350px" :zoom="zoom" :center="center">
         <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
         <l-marker
-            v-for="(marker, index) in markers"
+            v-for="(marker, index) in listlatLog"
             :key="index"
             :lat-lng="marker.latLng"
         ></l-marker>
@@ -11,40 +11,47 @@
 
 <script>
 import { latLng } from "leaflet"
+import { latLngBounds } from "leaflet/src/geo/LatLngBounds"
 import { LMap, LTileLayer, LMarker, LIcon } from "vue2-leaflet"
 
 export default {
     name: "Map",
-        
-    computed: {
-        getCenter() {
-            if (this.center.length > 0) return latLng(this.center)
-            return latLng([1.29027, 103.851959])
+    props: {
+        listlatLog: {
+            type: Array,
+            default: () => []
+        },
+    },
+    components: {
+        LMap,
+        LTileLayer,
+        LMarker,
+        LIcon
+    },
+    computed: {},
+
+    data: function () {
+        return {
+            url: "http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", //get map,
+            center: L.latLng(1.29027, 103.851959),
+            zoom: 15,
+            attribution: '&copy; OpenStreetMap contributors',
         }
     },
     created() {
-        // console.log("Map listlatLog",this.listlatLog);
+        // console.log("Map listlatLog", this.listlatLog)
         // console.log("Map center",this.center);
     },
-    data() {
-        return {
-            zoom: 13,
-            center: L.latLng(45.5, -73.6),
-            url: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-            attribution: "&copy; OpenStreetMap contributors",
-            markers: [
-                { latLng: [45.5, -73.6] },
-                { latLng: [45.6, -73.7] },
-                { latLng: [45.4, -73.5] }
-            ]
-        }
+    mounted() {
+        // Wait for the map to load before getting the bounds
+        this.$nextTick(() => {
+            const map = this.$refs.map.mapObject
+            const bounds = L.latLngBounds(this.listlatLog.map((m) => m.latLng))
+            map.fitBounds(bounds)
+            this.center = bounds.getCenter()
+        })
     }
 }
 </script>
 
-<style lang="scss" scoped>
-.map {
-    height: 500px;
-    width: 500px;
-}
-</style>
+<style lang="scss" scoped></style>

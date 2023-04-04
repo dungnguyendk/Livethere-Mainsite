@@ -167,7 +167,6 @@ export default {
         }
     },
     created(){
-        console.log("location",this.location);
     },
     data() {
         return {

@@ -35,16 +35,16 @@
                 </div>
             </div>
             <div class="section__body">
-                
                 <div
                     class="section__body-map"
                     :class="
                         isActiveMap ? 'section__body-map--active' : 'section__body-map--disabled'
                     "
                 >
-                <client-only>
-                    <Map  />
-                </client-only>
+                    <client-only>
+                        <MapMultiMarker :listlat-log="location" />
+                        <!-- <Map :listlat-log="location" :center="location" /> -->
+                    </client-only>
                 </div>
                 <template v-if="searchListings && searchListings.data.length > 0">
                     <div class="section__body-list">
@@ -99,8 +99,9 @@ export default {
         ShareSocialForm,
         FilterDialog,
         ShareSocialDialog,
-        Map: () => {
-            if (typeof window !== "undefined") return import("~/components/shared/Map/MapMultiMarker.vue")
+        MapMultiMarker: () => {
+            if (typeof window !== "undefined")
+                return import("~/components/shared/Map/MapMultiMarker.vue")
         }
     },
     computed: {
@@ -117,7 +118,9 @@ export default {
             }
         },
         location() {
-            return this.searchListings.data.map(({location}) => [location.lat, location.lon])
+            return this.searchListings.data.map((item) => ({
+                latLng: [parseFloat(item.location.lat), parseFloat(item.location.lon)]
+            }))
         }
     },
     data() {
@@ -153,7 +156,7 @@ export default {
         }
     },
     created() {
-        console.log("location", this.location)
+        // console.log("location", this.location)
     },
     methods: {
         closeFilterProjectDialog() {
