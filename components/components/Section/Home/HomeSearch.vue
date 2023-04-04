@@ -20,20 +20,26 @@
                                                 @input="keySearch(locationSearch)"
                                             />
                                         </template>
-                                        <v-list class="list-location">
-                                            <v-list-item  @click="openLocationSearch('Mrt')">
-                                                <v-list-item-icon>
-                                                    <i data-v-6ff87bcf="" aria-hidden="true" class="v-icon icon-svg svg-train"></i>
-                                                </v-list-item-icon>
-                                                <v-list-item-title >Search by MRT</v-list-item-title>
-                                            </v-list-item>
-                                            <v-list-item @click="openLocationSearch('District')">
-                                                <v-list-item-icon>
-                                                    <i data-v-6ff87bcf="" aria-hidden="true" class="v-icon icon-svg svg-target"></i>
-                                                </v-list-item-icon>
-                                                <v-list-item-title>Search by District</v-list-item-title>
-                                            </v-list-item>
-                                        </v-list>
+                                        <template>
+                                            <v-list class="list-location">
+                                                <v-list-item v-for="(item, index) in listAmenities" :key="index" class="list-amenities" @click="selectAmenity(item)">
+                                                    <v-list-item-title >{{ item.name }}</v-list-item-title>
+                                                    <v-list-item-subtitle>{{ item.category }}</v-list-item-subtitle>
+                                                </v-list-item>
+                                                <v-list-item  @click="openLocationSearch('Mrt')">
+                                                    <v-list-item-icon>
+                                                        <i data-v-6ff87bcf="" aria-hidden="true" class="v-icon icon-svg svg-train"></i>
+                                                    </v-list-item-icon>
+                                                    <v-list-item-title >Search by MRT</v-list-item-title>
+                                                </v-list-item>
+                                                <v-list-item @click="openLocationSearch('District')">
+                                                    <v-list-item-icon>
+                                                        <i data-v-6ff87bcf="" aria-hidden="true" class="v-icon icon-svg svg-target"></i>
+                                                    </v-list-item-icon>
+                                                    <v-list-item-title>Search by District</v-list-item-title>
+                                                </v-list-item>
+                                            </v-list>
+                                        </template>
                                     </v-menu>
                                 </div>
                             </v-col>
@@ -201,10 +207,12 @@
 import Dialog from "~/components/elements/Dialog/Dialog.vue"
 import LocationDistrictForm from "~/components/components/Section/components/Form/LocationDistrictForm.vue"
 import LocationMRTForm from "~/components/components/Section/components/Form/LocationMRTForm.vue"
-import { PROPERTY_TYPE, BEDROOM_TYPE } from "~/ultilities/contants/asset-inventory.js"
+import { PROPERTY_TYPE } from "~/ultilities/contants/asset-inventory.js"
 import { convertNumberToCommas } from "~/ultilities/helpers"
 import { mapState } from "vuex"
+import { httpEndpoint } from "~/services/https/endpoints"
 import qs from "qs"
+import _ from "lodash"
 export default {
     name: "HomeSearch",
     components: {
@@ -216,7 +224,6 @@ export default {
         return {
             isOpenDialogDistrict: false,
             isOpenDialogMrt:false,
-            location: "",
             locationSearch: "",
             propertyTypeList: PROPERTY_TYPE,
             propertyType: "All",
@@ -230,14 +237,15 @@ export default {
             rangeBedroom: [0, 5],
             minBedroom: 0,
             maxBedroom: 5,
-            listBedroom: ["Studio", "1", "2", "3", "4", "5"],
+            listBedroom: ["Studio", "1", "2", "3", "4", "5+"],
             rangePriceMin: "",
             rangePriceMax: "",
             rentPerMonth: "",
             bedRooms: "",
-            category: "Distritct",
+            category: "District",
             districts: "",
             searchMRT : "",
+            listAmenities: [],
 
         }
     },
@@ -246,14 +254,11 @@ export default {
             paramsSearch: (state) => state.project.paramsSearch,
             linesMrt: (state) => state.project.linesMrt
         }),
-        rangeBedroomMin() {
-            return this.rangeBedroom[0] === 0 ? "Studio" : this.rangeBedroom[0]
-        }
     },
     created() {
-        this.onFillExistingSearch()
         this.updatePrice()
         this.updateBedroom()
+        this.onFillExistingSearch() 
     },
     mounted() {},
     methods: {
@@ -262,12 +267,14 @@ export default {
             this.rangePriceMax = convertNumberToCommas(this.rangePrice[1])
             if (this.rangePrice[0] === this.minPrice && this.rangePrice[1] === this.maxPrice) {
                 this.price = "Price"
+                this.rangePriceMax = `${convertNumberToCommas(this.rangePrice[1])}+`
                 this.rentPerMonth = `${this.minPrice};-1`
             } else if (this.rangePrice[1] === this.minPrice) {
                 this.price = `$0 - $${convertNumberToCommas(this.rangePrice[1])}`
                 this.rangePriceMin = "0"
                 this.rentPerMonth = `0;1000`
             } else if (this.rangePrice[1] === this.maxPrice) {
+                
                 this.price = `Min $${convertNumberToCommas(this.rangePrice[0])}`
                 this.rangePriceMax = `${convertNumberToCommas(this.rangePrice[1])}+`
                 this.rentPerMonth = `${this.rangePrice[0]};-1`
@@ -291,13 +298,21 @@ export default {
             ) {
                 this.bedroom = "Bedroom"
                 this.bedRooms = "0;-1"
+            }else if (this.rangeBedroom[0] === this.maxBedroom) {
+                this.rangeBedroom = [this.maxBedroom - 1,this.maxBedroom]
+                this.bedRooms = this.rangeBedroom[0] + ";-1"
+                this.bedroom = this.rangeBedroom[0] + " - " + this.rangeBedroom[1]
+            }else if (this.rangeBedroom[1] === this.minBedroom) {
+                this.rangeBedroom = [this.minBedroom,this.minBedroom + 1]
+                this.bedRooms = this.rangeBedroom[0] + ";" + this.rangeBedroom[1]
+                this.bedroom = "Studio" + " - " + this.rangeBedroom[1]
             } else if (this.rangeBedroom[1] === this.maxBedroom) {
                 this.bedroom = this.rangeBedroom[0] + " - " + this.maxBedroom
                 this.bedRooms = this.rangeBedroom[0] + ";-1"
             } else if (this.rangeBedroom[0] === this.minBedroom) {
                 this.bedroom = "Studio" + " - " + this.rangeBedroom[1]
                 this.bedRooms = this.rangeBedroom[0] + ";" + this.rangeBedroom[1]
-            } else {
+            }  else {
                 this.bedroom = this.rangeBedroom[0] + " - " + this.rangeBedroom[1]
                 this.bedRooms = this.rangeBedroom[0] + ";" + this.rangeBedroom[1]
             }
@@ -312,18 +327,22 @@ export default {
                 this.perPage = this.paramsSearch.perPage
                 this.search = this.paramsSearch.search
                 this.sortBy = this.paramsSearch.sortBy
-                this.locationSearch = this.paramsSearch.districts
                 this.category = this.paramsSearch.category
                 this.amenities = this.paramsSearch.amenities
-                // this.rangeBedroom = this.paramsSearch.bathRooms
-                const tempBedrooms = this.paramsSearch.bathRooms.split(";").map(Number)
+                if(this.paramsSearch.category === "Mrt"){
+                    this.locationSearch = this.paramsSearch.mrt
+                }else if(this.paramsSearch.category === "District"){
+                    this.locationSearch = this.paramsSearch.districts
+                }
+                // this.rangeBedroom = this.paramsSearch.bedRooms
+                const tempBedrooms = this.paramsSearch.bedRooms ? this.paramsSearch.bedRooms.split(";").map(Number) : [this.minBedroom, this.maxBedroom]
                 if (tempBedrooms.includes(-1)) {
                     if (
-                        tempBedrooms[0] === this.minBedroom &&
-                        tempBedrooms[1] === this.maxBedroom
+                        tempBedrooms[0] === this.minBedroom
                     ) {
                         this.bedroom = "Bedroom"
                         this.bedRooms = "0;-1"
+                        this.rangeBedroom = [tempBedrooms[0],this.maxBedroom]
                     } else {
                         this.rangeBedroom = [tempBedrooms[0], this.maxBedroom]
                         this.bedroom = tempBedrooms[0] + " - " + this.maxBedroom
@@ -333,14 +352,17 @@ export default {
                     if (tempBedrooms[0] === this.minBedroom) {
                         this.bedroom = "Studio" + " - " + tempBedrooms[1]
                         this.bedRooms = tempBedrooms[0] + ";" + tempBedrooms[1]
+                        this.rangeBedroom = [tempBedrooms[0],tempBedrooms[1]]
                     } else {
                         this.bedroom = tempBedrooms[0] + " - " + tempBedrooms[1]
                         this.bedRooms = tempBedrooms[0] + ";" + tempBedrooms[1]
+                        this.rangeBedroom = [tempBedrooms[0],tempBedrooms[1]]
                     }
                 }
-                const tempPrices = this.paramsSearch.rentPerMonth.split(";").map(Number)
+                const tempPrices = this.paramsSearch.rentPerMonth ? this.paramsSearch.rentPerMonth.split(";").map(Number) : [this.minPrice, this.maxPrice]
                 if (tempPrices.includes(-1)) {
-                    if (tempPrices[0] === this.minPrice && tempPrices[1] === this.maxPrice) {
+                    this.rangePriceMax = `${convertNumberToCommas(this.maxPrice)}+`
+                    if (tempPrices[0] === this.minPrice) {
                         this.price = "Price"
                         this.rangePrice = [this.minPrice, this.maxPrice]
                         this.rentPerMonth = this.minPrice + ";" + "-1"
@@ -361,7 +383,7 @@ export default {
                         this.rentPerMonth = `0;1000`
                         this.rangePrice = [this.minPrice, this.minPrice]
                     } else if (tempPrices[0] === this.minPrice) {
-                        this.price = `Max $${convertNumberToCommas(this.tempPrices[1])}`
+                        this.price = `Max $${convertNumberToCommas(tempPrices[1])}`
                         this.rentPerMonth = `${this.rangePrice[0]};${this.rangePrice[1]}`
                         this.rangePrice = [this.minPrice, tempPrices[1]]
                     } else {
@@ -369,7 +391,7 @@ export default {
                             tempPrices[0]
                         )} - $${convertNumberToCommas(tempPrices[1])}`
                         this.rentPerMonth = `${tempPrices[0]};${tempPrices[1]}`
-                        this.rangePrice = [this.minPrice, this.maxPrice]
+                        this.rangePrice = [tempPrices[0], tempPrices[1]]
                     }
                 }
                 // console.log("tempPrices this.price ", this.price)
@@ -378,48 +400,64 @@ export default {
             }
         },
         onSearchListing() {
-            console.log("onSearchListing this.locationSearch", this.locationSearch)
+            // console.log("onSearchListing this.locationSearch", this.locationSearch)
             // if(this.category === "District"){
             //     this.districts = this.locationSearch
             // }else this.districts = ""
-            console.log("this.districts",this.districts);
+            // console.log("this.districts",this.districts);
             const params = {
-                page: 1,
-                perPage: 10,
+                
                 propertyType: this.propertyType,
                 livethereChecked: true,
                 rentPerMonth: this.rentPerMonth,
-                bathRooms: this.bedRooms,
-                search: "",
+                bedRooms: this.bedRooms,
+                bathRooms: "0;-1",
+                search: this.locationSearch,
                 sortBy: "Relevant",
-                category: "D01",
+                category: this.category,
                 districts: this.districts,
                 mrt: this.searchMRT,
-                unitSize: ''
+                unitSize: "100;-1",
+                page: 1,
+                perPage: 10,
             }
-            console.log("onSearchListing params", params)
-            // console.log("onSearchListing params stringify", qs.stringify(params, { encode: false }))
-            // this.$store
-            //     .dispatch("project/searchListing", qs.stringify(params, { encode: false }))
-            //     .then(() => {
-            //
-            //     })
-            this.$store.commit("project/setParamsSearch", params)
-            this.$router.push(`/projects?${qs.stringify(params, { encode: false })}`)
+            const paramsStringify = qs.stringify(params, { encode: false })
+            // console.log("onSearchListing params", params)
+            // console.log("onSearchListing params stringify", paramsStringify)
+            if(this.paramsSearch){
+                // console.log("check paramsSearch", this.paramsSearch);
+                  this.$store
+                .dispatch("project/searchListing", paramsStringify)
+                .then(() => {
+                    this.$store.commit("project/setParamsSearch", params)
+                    this.$router.push(`/projects?${paramsStringify}`)
+                })
+            }else {
+                this.$store.commit("project/setParamsSearch", params)
+                this.$router.push(`/projects?${paramsStringify}`)
+            }
+           
+
+                
         },
         getDistricts(params){
-            this.locationSearch = params.join(';')
-            this.districts = this.locationSearch
+            if(params){
+                this.locationSearch = params.join(';')
+                this.districts = this.locationSearch
+            }
             // console.log("locationSearch",this.locationSearch);
         },
         getMrt(params){
-            this.locationSearch = params.join(';')
-            this.searchMRT = this.locationSearch
-            console.log("this.mrt: ",this.searchMRT);
+            if(params){
+                this.locationSearch = params.join(';')
+                this.searchMRT = this.locationSearch
+            }
+            // console.log("this.mrt: ",this.searchMRT);
         },
         openLocationSearch(val){
             console.log("openLocationSearch val",val)
             // this.locationSearch = ""
+            this.listAmenities = []
             this.category = val
             console.log("openLocationSearch this.category",this.category)
             if(val === "Mrt"){
@@ -439,23 +477,53 @@ export default {
                 this.isOpenDialogDistrict = true
             }
         },
-        keySearch(val){
-            this.category = 
-            console.log("keySearch val",val);
-        }
+        selectAmenity(item){
+            console.log("selectAmenity",item);
+            this.category = item.category
+            this.locationSearch = item.name
+            // this.listAmenities = []
+        },
+        keySearch: _.debounce(async function (payload){
+            try {
+                const response = await this.$apiCmsPublic.$get(`${httpEndpoint.projects.getAmenities}?name=${payload}`)
+                // console.log("keySearch ;",response, response.length);
+                if(response.length > 0){
+                    this.listAmenities = response
+                }else {
+                    this.listAmenities = []
+                }
+            } catch (e) {
+                console.log({ Error: e.message })
+            }
+        }, 200),
     },
     watch: {
         rangePrice(val) {
             this.rangePriceMin = convertNumberToCommas(this.rangePrice[0])
-            this.rangePriceMax = convertNumberToCommas(this.rangePrice[1])
+            this.rangePriceMax = this.rangePrice[1] === this.maxPrice ? `${convertNumberToCommas(this.rangePrice[1])}+` : convertNumberToCommas(this.rangePrice[1])
+        },
+        paramsSearch() {
+            this.onFillExistingSearch()
         }
-        // paramsSearch() {
-        //     this.onFillExistingSearch()
-        // }
     }
 }
 </script>
 <style lang="scss" scoped>
+.list-amenities {
+    cursor: pointer;
+    .v-list-item__title {
+        font-size: 1.6rem;
+        color: var(--color-title-black);
+        font-weight: 500;
+    }
+    .v-list-item__subtitle {
+        font-size: 1.4rem;
+        flex: 0 0 10rem;
+        width: 10rem;
+        max-width: 100%;
+        text-align: right;
+    }
+}
 .v-dialog__content {
     :deep(.dialog--mrt) {
     height: 90%;
@@ -480,19 +548,19 @@ export default {
         font-size: 1.6rem;
         color: var(--color-title-black);
     }
-    .v-list-item {
+    .v-list-item[role="menuitem"] {
         position: relative;
-        &:first-child::after{
-            content: "";
-            position: absolute;
-            bottom: 0;
-            left: 1.6rem;
-            right: 1.6rem;
-            height: 1px;
-            min-height: 1px;
-            top: auto;
-            background-color: var(--border-color);
-        }
+        // &:first-child::after{
+        //     content: "";
+        //     position: absolute;
+        //     bottom: 0;
+        //     left: 1.6rem;
+        //     right: 1.6rem;
+        //     height: 1px;
+        //     min-height: 1px;
+        //     top: auto;
+        //     background-color: var(--border-color);
+        // }
     }
 }
 .section--search {

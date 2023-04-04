@@ -3,7 +3,7 @@
         <div class="card--dialog">
             <div class="card__header">
                 <h4>Search by MRT</h4>
-                <button class="btn--close" @click="onClose()">
+                <button class="btn--close" @click.prevent="onClose()">
                     <i class="ri-close-fill" />
                 </button>
             </div>
@@ -36,8 +36,8 @@
                                     <v-list-item-group v-model="selectedStations" multiple>
                                         <template v-for="item in searchStations">
                                             <v-list-item
-                                                :key="item.stationName"
-                                                :value="item.stationName"
+                                                :key="item.stationCode"
+                                                :value="item.stationCode"
                                             >
                                                 <template v-slot:default="{ active }">
                                                     <v-list-item-action>
@@ -62,12 +62,8 @@
                                     :items="listStation"
                                     selectable
                                     activatable
-                                    return-object
                                     open-on-click
                                     class="tree--station"
-                                    :activate-on-click="true"
-                                    :node-key="'id'"
-                                    @node-click="onEnableLine"
                                 >
                                     <template v-slot:prepend="{ item, open }">
                                         <template v-if="item.children && item.children.length">
@@ -93,8 +89,10 @@
                             </template>
                         </div>
                     </div>
-                    <div class="mrt__map">
-                        <MrtSingapore />
+                    <div class="mrt__map" id="svg-container">
+                        <panZoom>
+                            <MrtSingapore />
+                        </panZoom>
                     </div>
                 </div>
             </div>
@@ -104,7 +102,9 @@
                         <v-btn class="btn btn--outline btn--red" text @click="onReset">Reset</v-btn>
                     </div>
                     <div class="form__actions">
-                        <v-btn class="btn btn--outline btn--green" @click="onClose">Cancel</v-btn>
+                        <v-btn class="btn btn--outline btn--green" @click.prevent="onClose"
+                            >Cancel</v-btn
+                        >
                         <v-btn class="btn btn--primary btn--green ms-3" @click="onSubmit"
                             >Submit</v-btn
                         >
@@ -117,11 +117,12 @@
 
 <script>
 import MrtSingapore from "~/components/shared/Icon/MrtSingapore.vue"
+import { blurLine, resetColor } from "~/ultilities/mrt"
 import { mapState } from "vuex"
 export default {
     name: "LocationMRTForm",
     components: {
-        MrtSingapore,
+        MrtSingapore
     },
 
     data() {
@@ -133,31 +134,38 @@ export default {
             selectedStations: [],
             filterStations: [],
             searchStations: [],
+            stationListHighlighted: [],
+            stationListChecked: []
         }
     },
     computed: {
         ...mapState({
-            linesMrt: (state) => state.project.linesMrt
+            linesMrt: (state) => state.project.linesMrt,
+            paramsSearch: (state) => state.project.paramsSearch
         })
     },
     created() {
         // this.listStation = this.linesMrt
     },
     mounted() {
+        this.onFillExistingMrt()
         this.convertListStation()
         this.convertFilteredStations()
-        // console.log("this.filterStations: ,", this.filterStations.length)
-       
+        this.mrtMenuHighlight()
+        // console.log("convertListStation this.listStation: ,", this.listStation)
     },
     methods: {
-        onEnableLine(node){
-            const classLine = ['.i','.j','.x','.y','.t','.u','.o','.p','.f','.g','.r','.s','.ac','.ad','.ab','.ag'];
-            console.log("selectedStations. ",node.id);
-        },
+        onCheckFutureLines() {},
         onClose() {
             this.$emit("close")
         },
-        onCheckFutureLines() {},
+        onFillExistingMrt() {
+            if (this.paramsSearch) {
+                this.selectedStations = this.paramsSearch.mrt
+                    ? this.paramsSearch.mrt.split(";")
+                    : []
+            }
+        },
         keySearch(val) {
             this.searchStations = this.filterStations.filter((item) => {
                 return item.stationName.toLowerCase().includes(val.toLowerCase())
@@ -167,6 +175,8 @@ export default {
             this.futureLines = false
             this.selectedStations = []
             this.searchStation = ""
+            this.stationListHighlighted = []
+            this.stationListChecked = []
             // this.stations = [],
         },
         convertListStation() {
@@ -175,11 +185,12 @@ export default {
                 id: line.lineCode,
                 lineColor: line.lineColor,
                 children: line.stations.map((station) => ({
-                    id: `${station.stationCode} ${station.stationName}`,
+                    id: station.stationCode,
                     name: `${station.stationCode} ${station.stationName}`,
                     stationColor: station.stationColor,
                     latitude: station.latitude,
-                    longitude: station.longitude
+                    longitude: station.longitude,
+                    parentID: line.lineCode
                 }))
             }))
         },
@@ -203,12 +214,225 @@ export default {
 
         onSubmit() {
             // const selectedStations = this.listStation
-            console.log(this.selectedStations)
+            // console.log(this.selectedStations)
             this.$emit("getMrt", this.selectedStations)
             this.onClose()
+        },
+        onEnableLine(item) {
+            const classLine = [
+                ".i",
+                ".j",
+                ".x",
+                ".y",
+                ".t",
+                ".u",
+                ".o",
+                ".p",
+                ".f",
+                ".g",
+                ".r",
+                ".s",
+                ".ac",
+                ".ad",
+                ".ab",
+                ".ag"
+            ]
+            const selectedNodes = document.querySelectorAll(".v-treeview-node--selected")
+            const selectedIds = []
+            selectedNodes.forEach((node) => {
+                if (node.classList.contains("v-treeview-node--selected")) {
+                    const tagEl = node.querySelector(".tree--station__tag")
+                    if (tagEl) {
+                        selectedIds.push(tagEl.textContent.trim())
+                    }
+                }
+            })
+            if (selectedIds) {
+                selectedIds.forEach((keyItem) => {
+                    if (keyItem === "EW") {
+                        const elementsIds = document.querySelectorAll(`[id^=${keyItem}]`)
+                        elementsIds.forEach((element) => {
+                            element.style.stroke = "none"
+                        })
+                        console.log("keyItem, ", keyItem)
+                        const elements = this.$el.querySelectorAll(".i, .j")
+                        elements.forEach((element) => {
+                            element.style.fill = "#00953b"
+                        })
+                        classLine.splice(classLine.indexOf(".i"), 1)
+                        classLine.splice(classLine.indexOf(".j"), 1)
+                    }
+                    if (keyItem === "NS") {
+                        const elementsIds = document.querySelectorAll(`[id^=${keyItem}]`)
+                        elementsIds.forEach((element) => {
+                            element.style.stroke = "none"
+                        })
+                        const elements = this.$el.querySelectorAll(".x, .y")
+                        elements.forEach((element) => {
+                            element.style.fill = "#e1251b"
+                        })
+                        classLine.splice(classLine.indexOf(".x"), 1)
+                        classLine.splice(classLine.indexOf(".y"), 1)
+                    }
+                    if (keyItem === "NE") {
+                        const elementsIds = document.querySelectorAll(`[id^=${keyItem}]`)
+                        elementsIds.forEach((element) => {
+                            element.style.stroke = "none"
+                        })
+                        const elements = this.$el.querySelectorAll(".t, .u")
+                        elements.forEach((element) => {
+                            element.style.fill = "#9e28b5"
+                        })
+                        classLine.splice(classLine.indexOf(".t"), 1)
+                        classLine.splice(classLine.indexOf(".u"), 1)
+                    }
+                    if (keyItem === "CC") {
+                        const elementsIds = document.querySelectorAll(`[id^=${keyItem}]`)
+                        elementsIds.forEach((element) => {
+                            element.style.stroke = "none"
+                        })
+                        const elements = this.$el.querySelectorAll(".o, .p")
+                        elements.forEach((element) => {
+                            element.style.fill = "#ff9e18"
+                        })
+                        classLine.splice(classLine.indexOf(".o"), 1)
+                        classLine.splice(classLine.indexOf(".p"), 1)
+                    }
+                    if (keyItem === "DT") {
+                        const elementsIds = document.querySelectorAll(`[id^=${keyItem}]`)
+                        elementsIds.forEach((element) => {
+                            element.style.stroke = "none"
+                        })
+                        const elements = this.$el.querySelectorAll(".f, .g")
+                        elements.forEach((element) => {
+                            element.style.fill = "#0055b8"
+                        })
+                        classLine.splice(classLine.indexOf(".f"), 1)
+                        classLine.splice(classLine.indexOf(".g"), 1)
+                    }
+                    if (keyItem === "TE") {
+                        const elementsIds = document.querySelectorAll(`[id^=${keyItem}]`)
+                        elementsIds.forEach((element) => {
+                            element.style.stroke = "none"
+                        })
+                        const elements = this.$el.querySelectorAll(".r, .s")
+                        elements.forEach((element) => {
+                            element.style.fill = "#9d5918"
+                        })
+                        classLine.splice(classLine.indexOf(".r"), 1)
+                        classLine.splice(classLine.indexOf(".s"), 1)
+                    }
+
+                    if (!["EW", "NS", "NE", "QC", "DT", "TE"].includes(keyItem)) {
+                        const elements = this.$el.querySelectorAll(".ac, .ad")
+                        elements.forEach((element) => {
+                            element.style.fill = "#718472"
+                        })
+                        classLine.splice(classLine.indexOf(".ac"), 1)
+                        classLine.splice(classLine.indexOf(".ad"), 1)
+                    }
+                })
+            }
+
+            if (classLine.length < 16) {
+                blurLine(classLine.join(","))
+            } else {
+                resetColor()
+            }
+        },
+        mrtMenuHighlight() {
+            const svgContainer = document.getElementById("svg-container")
+            const gs = svgContainer.getElementsByTagName("g")
+            for (let i = 0; i < gs.length; i++) {
+                gs[i].addEventListener("click", () => {
+                    const mrtStationId = gs[i].getAttribute("id")
+                    // console.log("mrtStationId",mrtStationId);
+                    // check is MRT code
+                    if (/^[A-Z]{2}\d{1,2}(_[A-Z0-9]+)?(_[A-Z0-9]+)?$/.test(mrtStationId)) {
+                        let mrtStationCode = mrtStationId.replaceAll("_", "/")
+                        // console.log("is MRT code",mrtStationCode);
+                        // highlighting
+                        if (this.stationListHighlighted.includes(mrtStationId)) {
+                            // Set normal
+                            document.querySelector(`#${mrtStationId}`).style.stroke = ""
+
+                            // remove list in highlight map
+                            let idxH = this.stationListHighlighted.indexOf(mrtStationId)
+                            this.stationListHighlighted.splice(idxH, 1)
+
+                            // remove list in menu and uncheck
+                            let idxS = this.stationListChecked.indexOf(mrtStationCode)
+                            this.stationListChecked.splice(idxS, 1)
+                            this.selectedStations = this.stationListChecked
+                        } else {
+                            // console.log("selected mrtStationCode",mrtStationCode)
+                            // console.log("selected mrtStationId", mrtStationId)
+                            // Highlight map
+                            document.querySelector(`#${mrtStationId}`).style.stroke = "currentColor"
+
+                            // add list checked in menu
+                            if (!this.stationListChecked.includes(mrtStationCode)) {
+                                this.stationListChecked.push(mrtStationCode)
+                                
+                                this.selectedStations = this.stationListChecked
+                            }
+                            // add list highlighted map
+                            if (!this.stationListHighlighted.includes(mrtStationId))
+                                this.stationListHighlighted.push(mrtStationId)
+                        }
+                    }
+                })
+            }
+        },
+        mrtMapHighlight(stationChecked) {
+            let stationListToHighlight = []
+
+            // Convert Mrt to code station
+            stationChecked.forEach(function (mrtCode) {
+                let stationIdOnMap = mrtCode.replaceAll("/", "_")
+                stationListToHighlight.push(stationIdOnMap)
+            })
+            this.stationListChecked = stationChecked
+            // console.log("this.stationListHighlighted :",this.stationListHighlighted)
+            // console.log("this.stationListChecked :",this.stationListChecked)
+            // console.log("stationListToHighlight",stationListToHighlight)
+
+            // Check and remove stations uncheck
+            for (let i = this.stationListHighlighted.length - 1; i >= 0; i--) {
+                if (!stationListToHighlight.includes(this.stationListHighlighted[i])) {
+                    const stationElement = document.querySelector(
+                        `g[id='${this.stationListHighlighted[i]}']`
+                    )
+                    if (stationElement) {
+                        stationElement.style.stroke = ""
+                    }
+                    this.stationListHighlighted.splice(i, 1)
+                }
+            }
+
+            // Check stations
+            stationListToHighlight.forEach((stationId) => {
+                // document.querySelector(`g[id='${stationId}']`).style.stroke = "currentColor"
+                const stationElement = document.querySelector(`g[id='${stationId}']`)
+                if (stationElement) {
+                    stationElement.style.stroke = "currentColor"
+                }
+                if (!this.stationListHighlighted.includes(stationId)) {
+                    this.stationListHighlighted.push(stationId)
+                }
+            })
         }
     },
-    
+    watch: {
+        selectedStations(val) {
+            setTimeout(() => {
+                this.onEnableLine(val)
+            }, 300)
+            // this.initiallyOpen = val
+            // console.log("selectedStations", val)
+            this.mrtMapHighlight(val)
+        }
+    }
 }
 </script>
 
@@ -248,6 +472,9 @@ export default {
         color: var(--color-dark-yellow) !important;
         caret-color: var(--color-dark-yellow) !important;
     }
+    ::v-deep(.v-treeview-node__level) {
+        width: 15px;
+    }
     .tree--station__arrow {
         position: absolute;
         top: 50%;
@@ -277,6 +504,7 @@ export default {
         flex-basis: 0;
         flex-grow: 1;
         max-width: 100%;
+        overflow: hidden;
         svg {
             max-width: 100%;
             max-height: 100%;
@@ -284,7 +512,7 @@ export default {
     }
 }
 .form--mrt {
-    height: 100%;
+    height: 90vh;
     .form__footer {
         display: flex;
         justify-content: space-between;

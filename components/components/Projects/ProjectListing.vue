@@ -22,7 +22,7 @@
                         dense
                         prepend-inner-icon="icon-svg svg-sort"
                         append-icon="mdi-chevron-down"
-                        
+                        @change="onSortListing()"
                     >
                     </v-select>
                     <v-btn
@@ -41,26 +41,24 @@
                         isActiveMap ? 'section__body-map--active' : 'section__body-map--disabled'
                     "
                 >
-                    <iframe
-                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3919.107901410066!2d106.71887761533426!3d10.803047261654479!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x317529f8273eaed5%3A0x27fe58a754c470b0!2zQ8O0bmcgdHkgQ-G7lSBwaOG6p24gxJDhuqd1IFTGsCBYw6J5IEThu7FuZyBCY29ucw!5e0!3m2!1sen!2s!4v1676437005731!5m2!1sen!2s"
-                        style="border: 0"
-                        allowfullscreen=""
-                        loading="lazy"
-                        referrerpolicy="no-referrer-when-downgrade"
-                        class="section__body-map-custom"
-                    ></iframe>
+                    <client-only>
+                        <MapMultiMarker :listlat-log="location" />
+                        <!-- <Map :listlat-log="location" :center="location" /> -->
+                    </client-only>
                 </div>
-                <template v-if="searchListings && searchListings.length > 0">
+                <template v-if="searchListings && searchListings.data.length > 0">
                     <div class="section__body-list">
                         <ProjectCard
-                            v-for="(project, index) in searchListings"
+                            v-for="(project, index) in searchListings.data"
                             :key="index"
                             :project="project"
                             @open="openShareSocialDialog($event)"
                         />
                     </div>
                     <div class="section__body-load-more">
-                        <button @click="$emit('loadMore')">Load more</button>
+                        <template v-if="searchListings.pageCount > 1">
+                            <button @click="$emit('loadMore')">Load more</button>
+                        </template>
                     </div>
                 </template>
                 <template v-else>
@@ -73,17 +71,12 @@
                     </div>
                 </template>
 
-                <FilterDialog
-                    :open="isOpenFilterProjectDialog"
-                    @close="closeFilterProjectDialog"
-                    @snackbar="showStatusForm($event)"
-                />
+                <FilterDialog :open="isOpenFilterProjectDialog" @close="closeFilterProjectDialog" />
                 <ShareSocialDialog
                     :open="isOpenShareSocialDialog"
                     @close="closeShareSocialDialog"
                     :item="targetLinkURL"
                 />
-                <SuccessSnackBar :open="snackbar" :message="messageSnackbar" />
             </div>
         </div>
     </section>
@@ -95,9 +88,9 @@ import FilterProjectForm from "~/components/components/Projects/components/Form/
 import ShareSocialForm from "~/components/components/Projects/components/Form/ShareSocialForm.vue"
 import FilterDialog from "~/components/components/Projects/components/Dialog/FilterDialog.vue"
 import ShareSocialDialog from "~/components/components/Projects/components/Dialog/ShareSocialDialog.vue"
-import SuccessSnackBar from "~/components/shared/Snackbar/SuccessSnackBar.vue"
 import { mapState } from "vuex"
 import { state } from "~/store/analytics"
+import qs from "qs"
 export default {
     name: "ProjectListing",
     components: {
@@ -106,19 +99,28 @@ export default {
         ShareSocialForm,
         FilterDialog,
         ShareSocialDialog,
-        SuccessSnackBar
+        MapMultiMarker: () => {
+            if (typeof window !== "undefined")
+                return import("~/components/shared/Map/MapMultiMarker.vue")
+        }
     },
     computed: {
         ...mapState({
-            searchListings: (state) => state.project.searchListings
+            searchListings: (state) => state.project.searchListings,
+            paramsSearch: (state) => state.project.paramsSearch
         }),
         selectionSort: {
             get() {
-                return this.$store.state.project.paramsSearch.sortBy || 'Relevant'
+                return this.paramsSearch.sortBy || "Relevant"
             },
             set(val) {
-                this.$store.commit('project/setParamsSearch', {...this.$store.state.project.paramsSearch, sortBy: val})
+                this.$store.commit("project/setParamsSearch", { ...this.paramsSearch, sortBy: val })
             }
+        },
+        location() {
+            return this.searchListings.data.map((item) => ({
+                latLng: [parseFloat(item.location.lat), parseFloat(item.location.lon)]
+            }))
         }
     },
     data() {
@@ -149,9 +151,11 @@ export default {
             isOpenFilterProjectDialog: false,
             isOpenShareSocialDialog: false,
             targetLinkURL: {},
-            snackbar: false,
-            messageSnackbar: ""
+            
         }
+    },
+    created() {
+        // console.log("location", this.location)
     },
     methods: {
         closeFilterProjectDialog() {
@@ -162,13 +166,20 @@ export default {
         },
         openShareSocialDialog(e) {
             this.isOpenShareSocialDialog = e.open
-            this.targetLinkURL = this.searchListings.find((index) => {
+            this.targetLinkURL = this.searchListings.data.find((index) => {
                 return index.id === e.id
             })
         },
         showStatusForm(e) {
-            this.snackbar = e.isShowSnackbar
-            this.messageSnackbar = e.messageSnackbar
+            
+        },
+        async onSortListing() {
+            const queryStringify = qs.stringify(this.paramsSearch, { encode: false })
+            try {
+                await this.$store.dispatch("project/searchListing", queryStringify)
+            } catch (e) {
+                console.log({ Error: e.message })
+            }
         }
     }
 }
@@ -230,6 +241,8 @@ export default {
 .section__body-map {
     transition: 300ms linear;
     overflow: hidden;
+    position: relative;
+    z-index: 1;
     .section__body-map-custom {
         height: 25.6rem;
     }
@@ -319,11 +332,5 @@ export default {
 
     // }
 }
-.snackbar-custom {
-    ::v-deep(.v-snack__content) {
-        font-weight: 500;
-        font-size: 1.4rem;
-        line-height: 2.4rem;
-    }
-}
+
 </style>

@@ -1,7 +1,11 @@
 <template>
     <div style="width:100%; height: 100%;">
             <l-map  :zoom="zoom" :center="getCenter">
-                    <l-marker v-if="item.length > 0 && Array.isArray(item)" :lat-lng="item" v-for="(item,index) in listlatLog" :key="index">
+                    <l-marker 
+                        v-if="item.length > 0 && Array.isArray(item)" 
+                        :lat-lng="item" 
+                        v-for="(item,index) in listlatLog" 
+                        :key="index">
                     </l-marker>
                 <l-tile-layer :url="url"></l-tile-layer>
             </l-map>
@@ -43,8 +47,8 @@ export default {
         }
     },
     created(){
-        console.log("Map listlatLog",this.listlatLog);
-        console.log("Map center",this.center);
+        // console.log("Map listlatLog",this.listlatLog);
+        // console.log("Map center",this.center);
     },
     data: function() {
         return {

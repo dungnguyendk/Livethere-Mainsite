@@ -3,14 +3,43 @@
         <div class="form__fields">
             <div class="form__field mb-custom-1">
                 <label>Location</label>
-                <v-text-field
-                    outlined
-                    dense
-                    prepend-inner-icon="icon-svg svg-location"
-                    placeholder="Where do you want to live?"
-                    v-model="location"
-                >
-                </v-text-field>
+                <v-menu offset-y>
+                    <template v-slot:activator="{ on, attrs }">
+                        <v-text-field
+                            v-model="locationSearch"
+                            placeholder="Where do you want to live?"
+                            hide-details
+                            outlined
+                            dense
+                            prepend-inner-icon="icon-svg svg-location"
+                            v-bind="attrs"
+                            v-on="on"
+                            @input="keySearch(locationSearch)"
+                        />
+                    </template>
+                    <v-list class="list-location">
+                        <v-list-item @click="openLocationSearch('Mrt')">
+                            <v-list-item-icon>
+                                <i
+                                    data-v-6ff87bcf=""
+                                    aria-hidden="true"
+                                    class="v-icon icon-svg svg-train"
+                                ></i>
+                            </v-list-item-icon>
+                            <v-list-item-title>Search by MRT</v-list-item-title>
+                        </v-list-item>
+                        <v-list-item @click="openLocationSearch('District')">
+                            <v-list-item-icon>
+                                <i
+                                    data-v-6ff87bcf=""
+                                    aria-hidden="true"
+                                    class="v-icon icon-svg svg-target"
+                                ></i>
+                            </v-list-item-icon>
+                            <v-list-item-title>Search by District</v-list-item-title>
+                        </v-list-item>
+                    </v-list>
+                </v-menu>
             </div>
             <div class="form__field mb-custom-2">
                 <label>Property Type</label>
@@ -55,51 +84,108 @@
                         color="#EDB842"
                         hide-details
                         class="form__field-checkbox-custom"
-                        v-model="selectedLivethere"
+                        v-model="livethereChecked"
                         @change="select_Livethere($event)"
                     >
                         <template v-slot:label>
-    <div class="form__field-label-custom">
-        <span>Livethere Premium</span>
-        <img :src="require(`~/static/img/logos/logo-project.svg`)" alt="" />
-    </div>
-</template>
+                            <div class="form__field-label-custom">
+                                <span>Livethere Premium</span>
+                                <img :src="require(`~/static/img/logos/logo-project.svg`)" alt="" />
+                            </div>
+                        </template>
                     </v-checkbox>
                 </div>
             </div>
             <div class="form__field2 mb-custom-1">
                 <div class="form__field">
                     <label>Bedrooms</label>
-                    <v-select
-                        v-model="bedroom"
-                        :items="bedroomList"
-                        item-text="text"
-                        item-value="value.name"
-                        placeholder="Select"
-                        outlined
-                        dense
-                        attach
-                        prepend-inner-icon="icon-svg svg-bedroom"
-                        append-icon="mdi-chevron-down"
-                        class="form__field-select-custom"
+                    <v-menu
+                        ref="menuBedroom"
+                        :close-on-content-click="false"
+                        v-model="menuBedroom"
+                        transition="scale-transition"
+                        offset-y
+                        min-width="350px"
                     >
-                    </v-select>
+                        <template v-slot:activator="{ on, attrs }">
+                            <v-text-field
+                                v-model="bedroom"
+                                placeholder="Select"
+                                prepend-inner-icon="icon-svg svg-bedroom"
+                                readonly
+                                outlined
+                                dense
+                                v-bind="attrs"
+                                v-on="on"
+                                hide-details
+                            ></v-text-field>
+                        </template>
+                        <v-card class="v-card--range">
+                            <v-card-title>Bedrooms</v-card-title>
+                            <v-card-text>
+                                <v-range-slider
+                                    v-model="rangeBedroom"
+                                    :min="minBedroom"
+                                    :max="maxBedroom"
+                                    @change="updateBedroom"
+                                    thumb-color="#f7f7f9"
+                                    track-fill-color="#EDB842"
+                                    track-color="#E5E5E5"
+                                    step="1"
+                                    :tick-labels="listBedroom"
+                                    ticks="always"
+                                    tick-size="6"
+                                    hide-details
+                                >
+                                </v-range-slider>
+                            </v-card-text>
+                        </v-card>
+                    </v-menu>
                 </div>
                 <div class="form__field">
                     <label>Bathrooms</label>
-                    <v-select
-                        v-model="bathroom"
-                        dense
-                        outlined
-                        prepend-inner-icon="icon-svg svg-bathroom"
-                        append-icon="mdi-chevron-down"
-                        class="form__field-select-custom"
-                        placeholder="Select"
-                        :items="bathroomList"
-                        item-text="text"
-                        item-value="value.name"
+                    <v-menu
+                        ref="menuBathroom"
+                        :close-on-content-click="false"
+                        v-model="menuBathroom"
+                        transition="scale-transition"
+                        offset-y
+                        min-width="350px"
                     >
-                    </v-select>
+                        <template v-slot:activator="{ on, attrs }">
+                            <v-text-field
+                                v-model="bathroom"
+                                placeholder="Select"
+                                prepend-inner-icon="icon-svg svg-bathroom"
+                                readonly
+                                outlined
+                                dense
+                                v-bind="attrs"
+                                v-on="on"
+                                hide-details
+                            ></v-text-field>
+                        </template>
+                        <v-card class="v-card--range">
+                            <v-card-title>Bathrooms</v-card-title>
+                            <v-card-text>
+                                <v-range-slider
+                                    v-model="rangeBathroom"
+                                    :min="minBathroom"
+                                    :max="maxBathroom"
+                                    @change="updateBathroom"
+                                    thumb-color="#f7f7f9"
+                                    track-fill-color="#EDB842"
+                                    track-color="#E5E5E5"
+                                    step="1"
+                                    :tick-labels="listBathroom"
+                                    ticks="always"
+                                    tick-size="6"
+                                    hide-details
+                                >
+                                </v-range-slider>
+                            </v-card-text>
+                        </v-card>
+                    </v-menu>
                 </div>
             </div>
             <div class="form__field mb-custom-1">
@@ -109,14 +195,15 @@
                     track-fill-color="#EDB842"
                     track-color="#E5E5E5"
                     class="form__field-range-custom"
-                    v-model="rangeRentPer"
-                    :min="minRentPer"
-                    :max="maxRentPer"
+                    v-model="rangePrice"
+                    :min="minPrice"
+                    :max="maxPrice"
                     step="500"
+                    @change="updatePrice"
                 >
                     <template v-slot:prepend>
                         <v-text-field
-                            :value="rangeRentPerMin"
+                            :value="rangePriceMin"
                             hide-details
                             dense
                             prefix="$"
@@ -125,22 +212,22 @@
                             class="form__field-text-field-custom"
                             style="width: 65px"
                             readonly
-                            @change="$set(rangeRentPer, 0, $event)"
+                            @change="$set(rangePrice, 0, $event)"
                         >
                         </v-text-field>
                     </template>
                     <template v-slot:append>
                         <v-text-field
-                            :value="rangeRentPerMax"
+                            :value="rangePriceMax"
                             hide-details
                             dense
                             prefix="$"
                             flat
                             solo
-                            class="form__field-text-field-custom"
+                            class="form__field-text-field-custom text-right"
                             style="width: 65px"
                             readonly
-                            @change="$set(rangeRentPer, 1, $event)"
+                            @change="$set(rangePrice, 1, $event)"
                         >
                         </v-text-field>
                     </template>
@@ -154,9 +241,10 @@
                     track-color="#E5E5E5"
                     class="form__field-range-custom"
                     v-model="rangeUnitSize"
-                    :min="minUnitSize"
-                    :max="maxUnitSize"
+                    :min="minUnit"
+                    :max="maxUnit"
                     step="500"
+                    @change="updateUnit"
                 >
                     <template v-slot:prepend>
                         <v-text-field
@@ -178,7 +266,7 @@
                             dense
                             flat
                             solo
-                            class="form__field-text-field-custom"
+                            class="form__field-text-field-custom text-right"
                             style="width: 65px"
                         >
                         </v-text-field>
@@ -187,13 +275,13 @@
             </div>
             <div class="form__field">
                 <label>Amenities</label>
-                <v-chip-group multiple column active-class="yellow--text"  v-model="selected">
-                    <v-chip  
-                     v-for="(amenities, index) in listAmenities"
-                     :key="index"
-                      label
-                      class="ma-1 form__field-tag-custom"
-                      :value="amenities.id"
+                <v-chip-group multiple column active-class="yellow--text" v-model="amenities">
+                    <v-chip
+                        v-for="(amenities, index) in listAmenities"
+                        :key="index"
+                        label
+                        class="ma-1 form__field-tag-custom"
+                        :value="amenities.title"
                     >
                         <i :class="amenities.icon"></i>
                         <span>{{ amenities.title }}</span>
@@ -207,17 +295,44 @@
                 <v-btn class="btn btn--primary btn--green" type="submit">Apply</v-btn>
             </div>
         </div>
-
+        <Dialog
+            :open="isOpenDialogDistrict"
+            @close="isOpenDialogDistrict = false"
+            size="large"
+            :title="'Search By District'"
+            :actions="false"
+            :customClass="true"
+        >
+            <LocationDistrictForm
+                @close="isOpenDialogDistrict = false"
+                @getDistricts="getDistricts"
+            />
+        </Dialog>
+        <v-dialog v-model="isOpenDialogMrt" width="90%" content-class="dialog--mrt">
+            <LocationMRTForm @close="isOpenDialogMrt = false" @getMrt="getMrt" />
+        </v-dialog>
     </form>
 </template>
 
 <script>
+import Dialog from "~/components/elements/Dialog/Dialog.vue"
 import { PROPERTY_TYPE, BEDROOM_TYPE, BATHROOM_TYPE } from "~/ultilities/contants/asset-inventory"
-import { convertNumberToCommas, convertCommasToNumber } from "~/ultilities/helpers"
+import LocationDistrictForm from "~/components/components/Section/components/Form/LocationDistrictForm.vue"
+import LocationMRTForm from "~/components/components/Section/components/Form/LocationMRTForm.vue"
+import { convertNumberToCommas } from "~/ultilities/helpers"
+import { mapState } from "vuex"
+import qs from "qs"
 export default {
     name: "FilterProjectForm",
+    components: {
+        Dialog,
+        LocationMRTForm,
+        LocationDistrictForm
+    },
     data() {
         return {
+            isOpenDialogDistrict: false,
+            isOpenDialogMrt: false,
             listAmenities: [
                 {
                     id: 1,
@@ -263,48 +378,279 @@ export default {
             propertyTypeList: PROPERTY_TYPE,
             bedroomList: BEDROOM_TYPE,
             bathroomList: BATHROOM_TYPE,
-            location: "",
+            locationSearch: "",
             propertyType: "",
             selectAll: false,
-            selectedLivethere: true,
+            livethereChecked: true,
             bedroom: "",
+            bedRooms: "",
+            menuBedroom: "",
+            rangeBedroom: [0, 5],
+            minBedroom: 0,
+            maxBedroom: 5,
+            listBedroom: ["Studio", "1", "2", "3", "4", "5+"],
             bathroom: "",
-            selected: [],
-            rangeRentPer: [8000, 15000],
-            minRentPer: 1000,
-            maxRentPer: 20000,
-            rangeUnitSize: [4000, 10000],
-            minUnitSize: 100,
-            maxUnitSize: 10000,
-            submitted: false,
-            snackbar: false
+            bathRooms: "",
+            menuBathroom: "",
+            rangeBathroom: [0, 5],
+            minBathroom: 0,
+            maxBathroom: 5,
+            listBathroom: ["0", "1", "2", "3", "4", "5+"],
+            amenities: [],
+            rangePrice: [1000, 20000],
+            rangePriceMin: "",
+            rangePriceMax: "",
+            rentPerMonth: "",
+            minPrice: 1000,
+            maxPrice: 20000,
+            rangeUnitSize: [100, 10000],
+            rangeUnitSizeMin: "",
+            rangeUnitSizeMax: "",
+            unitSize: "100,-1",
+            minUnit: 100,
+            maxUnit: 10000,
+            submitted: false
         }
     },
     computed: {
-        rangeRentPerMin() {
-            return this.rangeRentPer[0] ? convertNumberToCommas(this.rangeRentPer[0]) : "0"
-        },
-        rangeRentPerMax() {
-            return this.rangeRentPer[this.rangeRentPer.length - 1] === this.maxRentPer
-                ? convertNumberToCommas(this.rangeRentPer[this.rangeRentPer.length - 1]) + "+"
-                : convertNumberToCommas(this.rangeRentPer[this.rangeRentPer.length - 1])
-        },
-        rangeUnitSizeMin() {
-            return this.rangeUnitSize[0] ? convertNumberToCommas(this.rangeUnitSize[0]) : "0"
-        },
-        rangeUnitSizeMax() {
-            return this.rangeUnitSize[this.rangeUnitSize.length - 1] === this.maxUnitSize
-                ? convertNumberToCommas(this.rangeUnitSize[this.rangeUnitSize.length - 1]) + "+"
-                : convertNumberToCommas(this.rangeUnitSize[this.rangeUnitSize.length - 1])
-        }
+        ...mapState({
+            paramsSearch: (state) => state.project.paramsSearch
+        }),
+    },
+    created() {
+        this.onFillExistingSearch()
     },
     methods: {
+        updatePrice() {
+            this.rangePriceMin = convertNumberToCommas(this.rangePrice[0])
+            this.rangePriceMax = convertNumberToCommas(this.rangePrice[1])
+            if (this.rangePrice[0] === this.minPrice && this.rangePrice[1] === this.maxPrice) {
+                this.rentPerMonth = `${this.minPrice};-1`
+                this.rangePriceMax = `${convertNumberToCommas(this.rangePrice[1])}+`
+            } else if (this.rangePrice[1] === this.minPrice) {
+                this.rangePriceMin = "0"
+                this.rentPerMonth = `0;1000`
+            } else if (this.rangePrice[1] === this.maxPrice) {
+                this.rangePriceMax = `${convertNumberToCommas(this.rangePrice[1])}+`
+                this.rentPerMonth = `${this.rangePrice[0]};-1`
+            } else if (this.rangePrice[0] === this.maxPrice) {
+                this.rentPerMonth = `${this.rangePrice[0]};-1`
+            } else if (this.rangePrice[0] === this.minPrice) {
+                this.rentPerMonth = `${this.rangePrice[0]};${this.rangePrice[1]}`
+            } else {
+                this.rentPerMonth = `${this.rangePrice[0]};${this.rangePrice[1]}`
+            }
+        },
+        updateUnit(){
+            this.rangeUnitSizeMin = convertNumberToCommas(this.rangeUnitSize[0])
+            this.rangeUnitSizeMax = convertNumberToCommas(this.rangeUnitSize[1])
+            if (this.rangeUnitSize[0] === this.minUnit && this.rangeUnitSize[1] === this.maxUnit) {
+                this.unitSize = `${this.minUnit};-1`
+                this.rangeUnitSizeMax = `${convertNumberToCommas(this.maxUnit)}+`
+            } else if (this.rangeUnitSize[1] < 990) {
+                this.minUnit = 0
+                this.rangeUnitSizeMin = 0
+                this.rangeUnitSizeMax = 1000
+                this.unitSize = `0;1000`
+                this.rangeUnitSize = [0,900]
+            } else if (this.rangeUnitSize[1] === this.maxUnit) {
+                this.rangeUnitSizeMax = `${convertNumberToCommas(this.rangeUnitSize[1])}+`
+                this.unitSize = `${this.rangeUnitSize[0]};-1`
+            } else if (this.rangeUnitSize[0] === this.maxUnit) {
+                this.unitSize = `${this.rangeUnitSize[0]};-1`
+            } else if (this.rangeUnitSize[0] === this.minUnit) {
+                this.unitSize = `${this.rangeUnitSize[0]};${this.rangeUnitSize[1]}`
+            } else {
+                this.unitSize = `${this.rangeUnitSize[0]};${this.rangeUnitSize[1]}`
+                this.minUnit = 100
+            }
+        },
+        updateBedroom() {
+            if (
+                this.rangeBedroom[0] === this.minBedroom &&
+                this.rangeBedroom[1] === this.maxBedroom
+            ) {
+                this.bedroom = "Bedroom"
+                this.bedRooms = "0;-1"
+            }else if (this.rangeBedroom[0] === this.maxBedroom) {
+                this.rangeBedroom = [this.maxBedroom - 1,this.maxBedroom]
+                this.bedRooms = this.rangeBedroom[0] + ";-1"
+                this.bedroom = this.rangeBedroom[0] + " - " + this.rangeBedroom[1]
+            }else if (this.rangeBedroom[1] === this.minBedroom) {
+                this.rangeBedroom = [this.minBedroom,this.minBedroom + 1]
+                this.bedRooms = this.rangeBedroom[0] + ";" + this.rangeBedroom[1]
+                this.bedroom = "Studio" + " - " + this.rangeBedroom[1]
+            } else if (this.rangeBedroom[1] === this.maxBedroom) {
+                this.bedroom = this.rangeBedroom[0] + " - " + this.maxBedroom
+                this.bedRooms = this.rangeBedroom[0] + ";-1"
+            } else if (this.rangeBedroom[0] === this.minBedroom) {
+                this.bedroom = "Studio" + " - " + this.rangeBedroom[1]
+                this.bedRooms = this.rangeBedroom[0] + ";" + this.rangeBedroom[1]
+            }  else {
+                this.bedroom = this.rangeBedroom[0] + " - " + this.rangeBedroom[1]
+                this.bedRooms = this.rangeBedroom[0] + ";" + this.rangeBedroom[1]
+            }
+        },
+        updateBathroom() {
+            if (
+                this.rangeBathroom[0] === this.minBathroom &&
+                this.rangeBathroom[1] === this.maxBathroom
+            ) {
+                this.bathroom = "Bathroom"
+                this.bathRooms = "0;-1"
+            }else if (this.rangeBathroom[0] === this.maxBathroom) {
+                this.rangeBathroom = [this.maxBathroom - 1,this.maxBathroom]
+                this.bathRooms = this.rangeBathroom[0] + ";-1"
+                this.bathroom = this.rangeBathroom[0] + " - " + this.rangeBathroom[1]
+            }else if (this.rangeBathroom[1] === this.minBathroom) {
+                this.rangeBathroom = [this.minBathroom,this.minBathroom + 1]
+                this.bathRooms = this.rangeBathroom[0] + ";" + this.rangeBathroom[1]
+                this.bathroom = this.rangeBathroom[0] + " - " + this.rangeBathroom[1]
+            } else if (this.rangeBathroom[1] === this.maxBathroom) {
+                this.Bathroom = this.rangeBathroom[0] + " - " + this.maxBathroom
+                this.bathRooms = this.rangeBathroom[0] + ";-1"
+                this.bathroom = this.rangeBathroom[0] + " - " + this.rangeBathroom[1]
+                console.log("bathRooms",this.bathRooms);
+            } else {
+                this.Bathroom = this.rangeBathroom[0] + " - " + this.rangeBathroom[1]
+                this.bathRooms = this.rangeBathroom[0] + ";" + this.rangeBathroom[1]
+                this.bathroom = this.rangeBathroom[0] + " - " + this.rangeBathroom[1]
+                // console.log("else",);
+            }
+        },
         onClose() {
             this.$emit("close")
         },
+        onFillExistingSearch() {
+            if (this.paramsSearch) {
+                this.propertyType = this.paramsSearch.propertyType
+                this.handleSearch = this.paramsSearch.handleSearch
+                this.livethereChecked = this.paramsSearch.livethereChecked
+                this.origin = this.paramsSearch.origin
+                this.page = this.paramsSearch.page
+                this.perPage = this.paramsSearch.perPage
+                this.search = this.paramsSearch.search
+                this.sortBy = this.paramsSearch.sortBy
+                this.category = this.paramsSearch.category
+                this.amenities = this.paramsSearch.amenities ? this.paramsSearch.amenities.split(";").map(item => item.trim()) : []
+                if (this.paramsSearch.category === "Mrt") {
+                    this.locationSearch = this.paramsSearch.mrt
+                } else if (this.paramsSearch.category === "District") {
+                    this.locationSearch = this.paramsSearch.districts
+                }
+                // this.rangeBedroom = this.paramsSearch.bathRooms
+                const tempBedrooms = this.paramsSearch.bedRooms ? this.paramsSearch.bedRooms.split(";").map(Number) : [this.minBedroom, this.maxBedroom]
+                if (tempBedrooms.includes(-1)) {
+                    if (
+                        tempBedrooms[0] === this.minBedroom
+                    ) {
+                        this.bedroom = "Bedroom"
+                        this.bedRooms = "0;-1"
+                        this.rangeBedroom = [tempBedrooms[0],this.maxBedroom]
+                    } else {
+                        this.rangeBedroom = [tempBedrooms[0], this.maxBedroom]
+                        this.bedroom = tempBedrooms[0] + " - " + this.maxBedroom
+                        this.bedRooms = tempBedrooms[0] + ";-1"
+                    }
+                } else {
+                    if (tempBedrooms[0] === this.minBedroom) {
+                        this.bedroom = "Studio" + " - " + tempBedrooms[1]
+                        this.bedRooms = tempBedrooms[0] + ";" + tempBedrooms[1]
+                        this.rangeBedroom = [tempBedrooms[0],tempBedrooms[1]]
+                    } else {
+                        this.bedroom = tempBedrooms[0] + " - " + tempBedrooms[1]
+                        this.bedRooms = tempBedrooms[0] + ";" + tempBedrooms[1]
+                        this.rangeBedroom = [tempBedrooms[0],tempBedrooms[1]]
+                    }
+                }
+
+                const tempBathrooms = this.paramsSearch.bathRooms
+                    ? this.paramsSearch.bathRooms.split(";").map(Number)
+                    : [this.minBathroom, this.maxBathroom]
+                if (tempBathrooms.includes(-1)) {
+                    if (
+                        tempBathrooms[0] === this.minBathroom
+                    ) {
+                        this.bathroom = "Bathroom"
+                        this.bathRooms = "0;-1"
+                        this.rangeBathroom = [tempBathrooms[0], this.maxBathroom]
+                    } else {
+                        this.rangeBathroom = [tempBathrooms[0], this.maxBathroom]
+                        this.bathroom = tempBathrooms[0] + " - " + this.maxBathroom
+                        this.bathRooms = tempBathrooms[0] + ";-1"
+                    }
+                } else {
+                    this.bathroom = tempBathrooms[0] + " - " + tempBathrooms[1]
+                    this.bathRooms = tempBathrooms[0] + ";" + tempBathrooms[1]
+                    this.rangeBathroom = [tempBathrooms[0], tempBathrooms[1]]
+                }
+                const tempPrices = this.paramsSearch.rentPerMonth
+                    ? this.paramsSearch.rentPerMonth.split(";").map(Number)
+                    : [this.minPrice, this.maxPrice]
+                // console.log("tempPrices",tempPrices);
+                if (tempPrices.includes(-1)) {
+                    this.rangePriceMax = `${convertNumberToCommas(this.maxPrice)}+`
+                    if (tempPrices[0] === this.minPrice) {
+                        this.rangePrice = [this.minPrice, this.maxPrice]
+                        this.rentPerMonth = this.minPrice + ";" + "-1"
+                    } else if (tempPrices[0] === this.maxPrice) {
+                        this.rentPerMonth = `${tempPrices[0]};-1`
+                        this.rangePrice = [tempPrices[0], this.maxPrice]
+                    } else {
+                        this.rangePriceMax = `${convertNumberToCommas(this.rangePriceMax)}+`
+                        this.rentPerMonth = `${tempPrices[0]};-1`
+                        this.rangePrice = [tempPrices[0], this.maxPrice]
+                    }
+                } else {
+                    if (tempPrices[1] === this.minPrice) {
+                        this.rangePriceMin = "0"
+                        this.rentPerMonth = `0;1000`
+                        this.rangePrice = [this.minPrice, this.minPrice]
+                    } else if (tempPrices[0] === this.minPrice) {
+                        this.rentPerMonth = `${this.rangePrice[0]};${this.rangePrice[1]}`
+                        this.rangePrice = [this.minPrice, tempPrices[1]]
+                    } else {
+                        this.rentPerMonth = `${tempPrices[0]};${tempPrices[1]}`
+                        this.rangePrice = [tempPrices[0], tempPrices[1]]
+                    }
+                }
+
+                const tempUnitSize = this.paramsSearch.unitSize
+                    ? this.paramsSearch.unitSize.split(";").map(Number)
+                    : [this.minUnit, this.maxUnit]
+                // console.log("tempUnitSize",tempUnitSize);
+                if (tempUnitSize.includes(-1)) {
+                    this.rangeUnitSizeMax = `${convertNumberToCommas(this.maxUnit)}+`
+                    if (tempUnitSize[0] === this.minUnit && tempUnitSize[1] === this.maxUnit) {
+                        this.rangeUnitSize = [this.minUnit, this.maxUnit]
+                        this.unitSize = this.minUnit + ";" + "-1"
+                    } else if (tempUnitSize[0] === this.maxUnit) {
+                        this.unitSize = `${tempUnitSize[0]};-1`
+                        this.rangeUnitSize = [tempUnitSize[0], this.maxUnit]
+                    } else {
+                        this.rangeUnitSizeMax = `${convertNumberToCommas(this.rangeUnitSizeMax)}+`
+                        this.unitSize = `${tempUnitSize[0]};-1`
+                        this.rangeUnitSize = [tempUnitSize[0], this.maxUnit]
+                    }
+                } else {
+                    if (tempUnitSize[1] === this.minUnit) {
+                        this.rangeUnitSizeMin = "0"
+                        this.unitSize = `0;1000`
+                        this.rangeUnitSize = [this.minUnit, this.minUnit]
+                    } else if (tempUnitSize[0] === this.minUnit) {
+                        this.unitSize = `${this.rangeUnitSize[0]};${this.rangeUnitSize[1]}`
+                        this.rangeUnitSize = [this.minUnit, tempUnitSize[1]]
+                    } else {
+                        this.unitSize = `${tempUnitSize[0]};${tempUnitSize[1]}`
+                        this.rangeUnitSize = [tempUnitSize[0], tempUnitSize[1]]
+                    }
+                }
+               
+            }
+        },
         select_All(e) {
-            if (e == true && this.selectedLivethere === false) {
-                this.selectedLivethere = true
+            if (e == true && this.livethereChecked === false) {
+                this.livethereChecked = true
             }
         },
         select_Livethere(e) {
@@ -315,37 +661,95 @@ export default {
         onSubmitForm() {
             this.submitted = true
             const params = {
-                location: this.location,
                 propertyType: this.propertyType,
-                selectAll: this.selectAll,
-                selectedLivethere: this.selectedLivethere,
-                bedroom: this.bedroom,
-                bathroom: this.bathroom,
-                rangeRentPer:
-                    this.rangeRentPer[this.rangeRentPer.length - 1] >= this.maxRentPer
-                        ? Object.values(this.rangeRentPer).shift() + ";" + "9999999999"
-                        : this.rangeRentPer,
-                rangeUnitSize:
-                    this.rangeUnitSize[this.rangeUnitSize.length - 1] >= this.maxUnitSize
-                        ? Object.values(this.rangeUnitSize).shift() + ";" + "9999999999"
-                        : this.rangeUnitSize,
-                selected: this.selected
+                livethereChecked: this.livethereChecked,
+                rentPerMonth: this.rentPerMonth,
+                bedRooms: this.bedRooms,
+                bathRooms: this.bathRooms,
+                unitSize: this.unitSize,
+                amenities: this.amenities.join(';'),
+                livethereCheckedAll: this.selectAll,
+                search: this.paramsSearch.search ? this.paramsSearch.search : "",
+                sortBy: this.paramsSearch.sortBy ? this.paramsSearch.sortBy : "Relevant",
+                category: this.category,
+                districts: this.districts,
+                mrt: this.mrt,
+                page: this.paramsSearch.page ? this.paramsSearch.page : 1,
+                perPage: this.paramsSearch.perPage ? this.paramsSearch.perPage : 10,
             }
-            this.$store.dispatch("project/filterListing", params).then((res)=>{
-                this.$emit("snackbar", {isShowSnackbar: true, messageSnackbar: 'Thank you for your submission, our agent has been notified and will be contacting you shortly'})
-            })
+            const paramsStringify = qs.stringify(params, { encode: false })
+            console.log("onSearchListing params", params)
+            console.log("onSearchListing params stringify", paramsStringify)
+            this.$store
+                .dispatch("project/searchListing", paramsStringify)
+                .then(() => {
+                    this.$store.commit("project/setParamsSearch", params)
+                    this.$router.push(`/projects?${paramsStringify}`)
+                })
+            // this.$store.dispatch("project/filterListing", params).then((res) => {})
             this.onClose()
         },
         onResetForm() {
-            ;(this.location = ""),
-                (this.propertyType = ""),
+            ;(this.locationSearch = ""),
+                (this.propertyType = "All"),
                 (this.selectAll = false),
-                (this.selectedLivethere = false),
-                (this.bedroom = ""),
-                (this.bathroom = ""),
-                (this.rangeRentPer = [8000, 15000]),
-                (this.rangeUnitSize = [4000, 10000]),
-                (this.selected = [])
+                (this.livethereChecked = true),
+                (this.rangeBedroom = [0,5]),
+                (this.bedroom = "Bedrooms"),
+                (this.rangeBathroom = [0,5]),
+                (this.bathroom = "Bathrooms"),
+                (this.rangePrice = [1000, 20000]),
+                (this.rangeUnitSize = [100, 10000]),
+                (this.amenities = [])
+        },
+        keySearch(val) {
+            this.category = console.log("keySearch val", val)
+        },
+        openLocationSearch(val) {
+            console.log("openLocationSearch val", val)
+            // this.locationSearch = ""
+            this.category = val
+            console.log("openLocationSearch this.category", this.category)
+            if (val === "Mrt") {
+                if (this.category === "Mrt") {
+                    this.districts = ""
+                    this.locationSearch = this.searchMRT ? this.searchMRT : ""
+                } else {
+                }
+                this.isOpenDialogMrt = true
+            } else {
+                if (this.category === "District") {
+                    this.searchMRT = ""
+                    this.locationSearch = this.districts ? this.districts : ""
+                } else {
+                }
+                this.isOpenDialogDistrict = true
+            }
+        },
+        getDistricts(params) {
+            this.locationSearch = params.join(";")
+            this.districts = this.locationSearch
+            // console.log("locationSearch",this.locationSearch);
+        },
+        getMrt(params) {
+            this.locationSearch = params.join(";")
+            this.searchMRT = this.locationSearch
+            console.log("this.mrt: ", this.searchMRT)
+        }
+    },
+    watch: {
+        rangePrice(val) {
+            this.rangePriceMin = convertNumberToCommas(this.rangePrice[0])
+            this.rangePriceMax = this.rangePrice[1] === this.maxPrice ? `${convertNumberToCommas(this.rangePrice[1])}+` : convertNumberToCommas(this.rangePrice[1])
+        },
+        rangeUnitSize(val) {
+            this.rangeUnitSizeMin = convertNumberToCommas(this.rangeUnitSize[0])
+            this.rangeUnitSizeMax = this.rangeUnitSize[1] === this.maxUnit ? `${convertNumberToCommas(this.rangeUnitSize[1])}+` : convertNumberToCommas(this.rangeUnitSize[1])
+
+            // this.rangeUnitSizeMax = convertNumberToCommas(this.rangeUnitSize[1])
+        },
+        paramsSearch() {
+            this.onFillExistingSearch()
         }
     }
 }
@@ -491,6 +895,13 @@ export default {
             background-color: transparent !important;
         }
     }
+    &.text-right {
+        ::v-deep(.v-input__control) {
+            input {
+                text-align: right;
+            }
+        }
+    }
 }
 .form__field-label-custom {
     span {
@@ -559,6 +970,7 @@ export default {
 }
 
 .form__field-tag-custom {
+    border: 0.1rem solid transparent;
     span {
         font-weight: 500;
         font-size: 1.6rem;
@@ -582,7 +994,7 @@ export default {
     }
 }
 .yellow--text {
-    color: var(--color-white) !important; 
+    color: var(--color-white) !important;
     caret-color: var(--color-white) !important;
     border: 0.1rem solid var(--color-dark-yellow) !important;
     span {
@@ -622,5 +1034,50 @@ export default {
 }
 ::-webkit-scrollbar-thumb:hover {
     background: #a2a0a0;
+}
+.v-card--range {
+    .v-card__title {
+        font-size: 1.4rem;
+    }
+    .v-card__text {
+        // padding-left: 0;
+        // padding-right: 0;
+    }
+
+    .v-input {
+        align-items: center;
+    }
+    ::v-deep(.v-slider__thumb) {
+        cursor: pointer;
+        background-color: alpha(var(--color-primary), 1) !important;
+        border-color: alpha(var(--color-primary), 1) !important;
+        // currentColor : --color-primary
+        &::before {
+            background-color: alpha(var(--color-primary), 0.8) !important;
+            width: 1.6rem;
+            height: 1.6rem;
+            top: -0.2rem;
+            left: -0.2rem;
+        }
+        &::after {
+            width: 1.6rem;
+            height: 1.6rem;
+        }
+    }
+    ::v-deep(.v-slider__tick) {
+        width: 0.4rem !important;
+        height: 0.4rem !important;
+        border-radius: 50%;
+        background-color: alpha(var(--color-primary), 0.5) !important;
+        top: -1px !important;
+    }
+    ::v-deep(.v-slider__tick-label) {
+        top: 1rem;
+        left: 0.2rem;
+    }
+}
+::placeholder {
+    font-size: 1.6rem;
+    color: var(--color-title-black);
 }
 </style>

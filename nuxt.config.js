@@ -38,7 +38,8 @@ export default {
         { src: "~plugins/vue-awesome-swiper.js", ssr: true, mode: "client" },
         { src: "~plugins/dayjs.js", ssr: false }, 
         { src: "~plugins/vue-tiny-box.js", ssr: false},
-        { src: '~plugins/leaflet.js', ssr: false, mode: "client" }
+        { src: '~plugins/leaflet.js', ssr: false, mode: "client" },
+        { src: '~plugins/vue-panzoom'}
     ],
 
     buildModules: [

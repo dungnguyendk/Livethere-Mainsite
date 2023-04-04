@@ -93,6 +93,9 @@ export const httpEndpoint = {
     projects: {
         linesMrt: "api/mrt-lines",
         getListings: "api/listings",
-        getPopularListing: "api/popular-listings"
+        getPopularListing: "api/popular-listings",
+        getMostViewListing: "api/most-viewed-listings",
+        getAmenities: "api/amenities",
+
     },
 }

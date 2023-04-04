@@ -56,14 +56,14 @@
             <label>Copy link</label>
             <v-tooltip top>
                 <template v-slot:activator="{ on, attrs }">
-                    <input 
-                     type="text" 
-                     v-model="linkURL" 
-                     v-bind="attrs" 
-                     ref="linkURLCopy" 
-                     @click="onCopyLinkURL(on, $event)"
-                     class="form__field-input-custom"
-                    >
+                    <input
+                        type="text"
+                        v-model="linkURL"
+                        v-bind="attrs"
+                        ref="linkURLCopy"
+                        @click="onCopyLinkURL(on, $event)"
+                        class="form__field-input-custom"
+                    />
                 </template>
                 <span>Text Copied</span>
             </v-tooltip>
@@ -72,6 +72,7 @@
 </template>
 
 <script>
+import { mapState } from "vuex"
 export default {
     name: "ShareSocialForm",
     props: {
@@ -80,10 +81,26 @@ export default {
             default: () => {}
         }
     },
+    computed: {
+        ...mapState({
+            projectDetails: (state) => state.project.projectDetails
+        }), 
+        
+       
+    },
     data() {
         return {
-            linkURL: this.item.linkDetails
+            linkURL: "",
+            baseUrl : "",
         }
+    },
+    created(){
+       
+    },
+    mounted(){
+        this.getBaseUrl()
+        this.checkDetail()
+
     },
     beforeDestroy() {
         clearTimeout(this._timerId)
@@ -97,12 +114,27 @@ export default {
             const element = this.$refs.linkURLCopy
             element.select()
             element.setSelectionRange(0, 99999)
+        },
+        getBaseUrl(){
+            const url = new URL(window.location.href);
+            this.baseUrl = `${url.origin}${url.pathname}`;
+            this.linkURL = `${this.baseUrl}/${this.item?.slug}`
+        },
+        checkDetail(){
+            if(!this.item || !this.item.id){
+                if(this.projectDetails && this.projectDetails.id){
+                this.getBaseUrl()
+                    this.linkURL = this.baseUrl
+                }else {
+                    console.log("else");
+                }
+            }
             
         }
     },
     watch: {
         item(val) {
-            this.linkURL = val.linkDetails
+            this.getBaseUrl()
         }
     }
 }
@@ -126,7 +158,6 @@ export default {
         margin-bottom: 0.8rem;
         display: inline-block;
     }
-
 }
 .form__btn-custom {
     padding: 0 !important;
@@ -144,13 +175,14 @@ export default {
         color: var(--color-white);
     }
 }
-.form__field-input-custom{
+.form__field-input-custom {
     display: block;
-    border: 0.1rem solid var(--border-color); 
+    border: 0.1rem solid var(--border-color);
     border-radius: 0.4rem;
     padding: 0.8rem;
     width: 100%;
-    &:hover, &:active{
+    &:hover,
+    &:active {
         border: 0.1rem solid var(--color-primary);
     }
 }
