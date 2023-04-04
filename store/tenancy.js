@@ -110,6 +110,7 @@ export const actions = {
             commit("setTenancyInfosById", [])
         }
     },
+
     async createTenancyTenantInfos({ commit, dispatch }, payload) {
         try {
             const response = await this.$axios.$post(
@@ -125,6 +126,46 @@ export const actions = {
             console.log({ Error: e.message })
         }
     },
+
+    async updateTenancyInfo({ commit, dispatch }, payload) {
+        try {
+            const response = await this.$axios.$put(
+                `${httpEndpoint.tenancies.createTenancyInfosEntry}`,
+                payload
+            )
+            if (response && response !== 0) {
+                dispatch("app/showSnackBar", "The update of tenancy information was successful.", {
+                    root: true
+                })
+            } else {
+                console.log("Error!")
+            }
+        } catch (e) {
+            console.log({ Error: e.message })
+        }
+    },
+    async deleteTenancyInfo({ commit, dispatch }, payload) {
+        try {
+            const response = await this.$axios.$delete(
+                `${httpEndpoint.tenancies.createTenancyInfosEntry}`,
+                {
+                    data: {
+                        id: payload
+                    }
+                }
+            )
+            if (response && response !== 0) {
+                dispatch("app/showSnackBar", "Seleted tenancy information was deleted.", {
+                    root: true
+                })
+            } else {
+                console.log("Error!")
+            }
+        } catch (e) {
+            console.log({ Error: e.message })
+        }
+    },
+
     async createTenancyExpense({ commit, rootState, dispatch }, payload) {
         try {
             const response = await this.$axios.$post(
@@ -136,6 +177,24 @@ export const actions = {
                     id: parseInt(rootState.tenancy.tenancyDetails.id)
                 })
                 dispatch("app/showSnackBar", "Create successful", { root: true })
+            } else {
+                console.log("Error!")
+            }
+        } catch (e) {
+            console.log({ Error: e.message })
+        }
+    },
+    async updateTenancyExpense({ commit, rootState, dispatch }, payload) {
+        try {
+            const response = await this.$axios.$put(
+                httpEndpoint.tenancies.expenses.createEntry,
+                payload
+            )
+            if (response && response !== 0) {
+                dispatch("getExpenses", {
+                    id: parseInt(rootState.tenancy.tenancyDetails.id)
+                })
+                dispatch("app/showSnackBar", "Update expense successful", { root: true })
             } else {
                 console.log("Error!")
             }

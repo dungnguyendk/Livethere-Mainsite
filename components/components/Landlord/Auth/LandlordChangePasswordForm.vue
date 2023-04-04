@@ -1,6 +1,6 @@
 <template lang="html">
     <form class="form--signin">
-        <h3 class="form__title"> Change password </h3>
+        <h3 class="form__title"> Change Password </h3>
         <div class="form__fields">
             <p v-if="httpError !== '' && !loading" class="alert alert--red">
                 {{ httpError }}
@@ -18,7 +18,7 @@
                 />
             </div>
             <div class="form__field">
-                <label class="required">Password</label>
+                <label class="required">New Password</label>
                 <v-text-field
                     v-model="password"
                     type="password"
@@ -29,7 +29,7 @@
                 />
             </div>
             <div class="form__field">
-                <label class="required">Confirm password</label>
+                <label class="required">Confirm New Password</label>
                 <v-text-field
                     v-model="confirmPassword"
                     type="password"
@@ -43,7 +43,7 @@
 
         <div class="form__actions">
             <v-btn class="btn btn--primary btn--green" @click="onSubmit" :loading="loading">
-                Change password
+                Change Password
             </v-btn>
             <nuxt-link to="/landlord"> Back</nuxt-link>
         </div>
@@ -96,7 +96,7 @@ export default {
             !this.$v.password.required && errors.push("This field is required.")
             !this.$v.password.complexity &&
                 errors.push(
-                    "Password needs: at least 8 characters, 1 uppercase character, 1 number and 1 special character"
+                    "Password must contains at least 8 characters, 1 uppercase character, 1 number and 1 special character"
                 )
             !this.$v.password.notSameOldPassword &&
                 errors.push("New password must be different from old password.")

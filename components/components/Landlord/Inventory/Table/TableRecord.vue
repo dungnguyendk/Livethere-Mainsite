@@ -2,10 +2,7 @@
     <tr>
         <td data-title="Tenancy Agreement Code">
             <div>
-                <nuxt-link
-                    v-if="source.statusFID === 1"
-                    :to="`/tenancy/details/${source.internalID}`"
-                >
+                <nuxt-link v-if="source.statusFID === 1" :to="`/tenancy/details/${source.internalID}`">
                     {{ source.tenancyRefCode }}
                 </nuxt-link>
                 <p v-else>
@@ -26,40 +23,54 @@
             </div>
         </td>
         <td data-title="End Date">
-            <v-btn
-                v-if="source.statusFID === 1"
-                class="btn btn--sm btn--ghost btn--red"
-                @click="suspendDialog = true"
-            >
-                Suspend
-            </v-btn>
-            <Dialog
-                title=""
-                size="small"
-                :open="suspendDialog"
-                @close="suspendDialog = false"
-                :actions="false"
-            >
-                <SuspendAgreementForm :contractID="source.id" @close="suspendDialog = false" />
-            </Dialog>
+            <div class="table--action">
+                <div>
+                    <v-btn class="btn btn--outline btn--sm btn--green min-width--btn"
+                        @click.prevent="handleClickEditDialog">
+                        Edit
+                    </v-btn>
+                    <v-btn v-if="source.statusFID === 1" class="btn btn--sm btn--ghost btn--red min-width--btn"
+                        @click="suspendDialog = true">
+                        Suspend
+                    </v-btn>
+                </div>
+                <v-btn class="btn btn--ghost btn--sm btn--red min-width--btn" @click.prevent="deleteDialog = true">
+                    Delete
+                </v-btn>
+            </div>
         </td>
+        <Dialog title="" size="small" :open="suspendDialog" @close="suspendDialog = false" :actions="false">
+            <SuspendAgreementForm :contractID="source.id" @close="suspendDialog = false" />
+        </Dialog>
+        <DeleteDialog :open="deleteDialog" :actions="false" @close="deleteDialog = false" @onSubmit="handleDelete" />
+        <Dialog title="Edit Tenancy Agreement" :open="editDialog" @close="editDialog = false" :actions="false">
+            <template v-slot:content>
+                <CreateTenancyAgreementForm @close="editDialog = false" :sourceDetail="tenancyAgreementDetail"
+                    v-if="editDialog" />
+            </template>
+        </Dialog>
     </tr>
 </template>
 
 <script>
 import Dialog from "~/components/elements/Dialog/Dialog.vue"
 import SuspendAgreementForm from "~/components/components/Landlord/Inventory/Form/SuspendAgreementForm"
-
+import DeleteDialog from "~/components/elements/Dialog/DeleteDialog.vue"
+import CreateTenancyAgreementForm from "~/components/components/Landlord/Inventory/Form/CreateTenancyAgreementForm.vue"
+import { mapState } from "vuex"
 export default {
     name: "TableRecord",
-    components: { SuspendAgreementForm, Dialog },
+    components: { SuspendAgreementForm, Dialog, DeleteDialog, CreateTenancyAgreementForm },
     props: {
         source: {
             type: Object,
-            default: () => {}
+            default: () => null
         }
     },
     computed: {
+        ...mapState({
+            tenancyAgreementDetail: (state) => state.inventory.tenancyAgreementDetail
+        }),
         formatStartDate() {
             return this.$dayjs(this.source.startDate).format("DD-MMM-YYYY")
         },
@@ -72,9 +83,23 @@ export default {
     },
     data() {
         return {
-            suspendDialog: false
+            suspendDialog: false,
+            deleteDialog: false,
+            editDialog: false
         }
-    }
+    },
+    methods: {
+        handleDelete() {
+            this.$store.dispatch("inventory/deleteTenancyContract", this.source.id).then(() => {
+                this.deleteDialog = false
+            })
+        },
+        handleClickEditDialog() {
+            this.$store.dispatch("inventory/getTenancyContractById", this.source.id).then(() => {
+                this.editDialog = true
+            })
+        }
+    },
 }
 </script>
 <style lang="scss" scoped>
@@ -129,10 +154,22 @@ td {
     }
 }
 
+.table--action {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1rem;
+}
+
+.min-width--btn {
+    min-width: 9.2rem !important;
+}
+
 @media screen and (max-width: 768px) {
     tr:nth-child(even) {
         background: #fafafa;
     }
+
     td[data-title] {
         display: grid;
         justify-content: space-between;
@@ -143,6 +180,7 @@ td {
         border: none;
         padding: 1.6rem;
         border-top: none;
+
         p {
             font-size: 1.4rem;
         }

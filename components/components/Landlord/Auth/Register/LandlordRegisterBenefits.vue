@@ -5,7 +5,7 @@
             <div class="register-benefits">
                 <div class="box--register" v-for="item in items" :key="item.id">
                     <div class="box__top">
-                        <img :src="`/img/${item.icon}.svg`" alt="" />
+                        <img :src="item.image" alt="" />
                         <span>{{ item.title }}</span>
                     </div>
                     <div class="box__content">
@@ -81,7 +81,7 @@ export default {
     padding: 1.2rem 0;
 
     img {
-        height: 4.4rem;
+        height: 3.6rem;
         margin-right: 0.8rem;
     }
 

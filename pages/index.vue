@@ -4,7 +4,6 @@
         <LandlordLandingIntro />
         <LandlordLandingServices />
         <LandlordLandingCTA />
-
     </main>
 </template>
 <script>
@@ -24,7 +23,7 @@ export default {
         LandlordLandingCTA
     },
     head: {
-        title: `Landlords | ${appSettings.siteName}`
+        title: `Landlord Portal  | ${appSettings.siteName}`
     },
 
     async asyncData({ app }) {
