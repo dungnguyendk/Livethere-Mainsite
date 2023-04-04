@@ -12,6 +12,16 @@
         <td data-title="Company Name">
             <p>{{ source.companyName ? source.companyName : "-" }}</p>
         </td>
+        <td data-title="Company Name">
+            <div>
+                <v-btn class="btn btn--outline btn--sm btn--green" @click.prevent="onEdit">
+                    Edit
+                </v-btn>
+                <v-btn class="btn btn--ghost btn--sm btn--red" @click.prevent="onDelete">
+                    Delete
+                </v-btn>
+            </div>
+        </td>
     </tr>
 </template>
 
@@ -21,7 +31,15 @@ export default {
     props: {
         source: {
             type: Object,
-            default: () => { }
+            default: () => {}
+        }
+    },
+    methods: {
+        onDelete() {
+            this.$emit("onDelete", this.source)
+        },
+        onEdit() {
+            this.$emit("onEdit", this.source)
         }
     }
 }
@@ -72,9 +90,8 @@ tr:nth-child(even) {
         text-align: right;
         grid-template-columns: 1fr 1fr;
         grid-gap: 3rem;
-        border: none;
         padding: 1.6rem;
-        border-top: none;
+        border-style: none;
 
         &:before {
             content: attr(data-title);

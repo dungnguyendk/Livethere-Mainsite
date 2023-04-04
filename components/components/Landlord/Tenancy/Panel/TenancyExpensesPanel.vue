@@ -8,16 +8,16 @@
             </v-btn>
         </div>
         <div class="panel__container">
-            <TenancyExpenseTable />
+            <TenancyExpenseTable @onEdit="onEdit" />
         </div>
         <Dialog
-            title="Create Tenancy Expenses"
+            :title="details ? 'Update Tenancy Expense' : 'Create Tenancy Expenses'"
             :open="createDialog"
-            @close="createDialog = false"
+            @close="onCloseDialog"
             :actions="false"
         >
             <template slot="content">
-                <CreateTenancyExpenseForm @close="createDialog = false" />
+                <CreateTenancyExpenseForm @close="onCloseDialog" :source="details" />
             </template>
         </Dialog>
     </div>
@@ -36,7 +36,18 @@ export default {
         return {
             createDialog: false,
             isOpenDeleteDialog: false,
-            idItem: 0
+            idItem: 0,
+            details: null
+        }
+    },
+    methods: {
+        onEdit(data) {
+            this.details = data
+            this.createDialog = true
+        },
+        onCloseDialog() {
+            this.createDialog = false
+            this.details = null
         }
     }
 }

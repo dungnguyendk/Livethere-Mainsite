@@ -1,14 +1,18 @@
 <template lang="html">
-    <tr :class="`table--record ${source.id !== selectedId && selectedId !== -1 ? 'unSelected' : ''}`">
+    <tr
+        :class="`table--record ${
+            source.id !== selectedId && selectedId !== -1 ? 'unSelected' : ''
+        }`"
+    >
         <td data-label="Property Name">
             <span class="first-child" @click="handleClickOpenRow(source.id)">
                 {{ source.propertyType === 3 ? source.propertyName : source.projectName }}
             </span>
         </td>
         <td data-label="Unit No.">
-            {{ source.unitNo ? source.unitNo : '-' }}
+            {{ source.unitNo ? source.unitNo : "-" }}
         </td>
-        <td data-label="Purchase Date">
+        <td data-label="Purchase Date" class="purchase-date">
             {{ purchasedDateFormat }}
         </td>
         <td data-label="Purchase Price">
@@ -30,9 +34,18 @@
         <td data-label="Est. Capital Gain" class="td-custom">
             <v-tooltip bottom v-if="source.estimatedCapitalGain">
                 <template v-slot:activator="{ on, attrs }">
-                    <div v-bind="attrs" v-on="on"
-                        :class="`growth growth--${source.estimatedCapitalGainRate < 0 ? 'red' : 'green'}`">
-                        <i :class="`ri-arrow-${source.estimatedCapitalGainRate < 0 ? 'down' : 'up'}-s-fill`"></i>
+                    <div
+                        v-bind="attrs"
+                        v-on="on"
+                        :class="`growth growth--${
+                            source.estimatedCapitalGainRate < 0 ? 'red' : 'green'
+                        }`"
+                    >
+                        <i
+                            :class="`ri-arrow-${
+                                source.estimatedCapitalGainRate < 0 ? 'down' : 'up'
+                            }-s-fill`"
+                        ></i>
                         <span class="percent">{{ source.estimatedCapitalGainRate }}%</span>
                     </div>
                 </template>
@@ -51,13 +64,12 @@
         <td data-label="Monthly Rental">
             {{ monthlyRentalFormat }}
         </td>
-        <td data-label="Gross Rental Yield">
-            {{ rentalYieldFormat }} %
-        </td>
+        <td data-label="Gross Rental Yield"> {{ rentalYieldFormat }} %</td>
     </tr>
 </template>
 <script>
 import { convertNumberToCommas } from "~/ultilities/helpers"
+
 export default {
     name: "AssetAnalyticsTableRecord",
     props: {
@@ -75,19 +87,27 @@ export default {
     },
     computed: {
         purchasedDateFormat() {
-            return this.source.purchasedDate ? this.formatDate(this.source.purchasedDate) : '-'
+            return this.source.purchasedDate ? this.formatDate(this.source.purchasedDate) : "-"
         },
         purchasedPriceFormat() {
-            return this.source.purchasedPrice ? `S$ ${convertNumberToCommas(this.source.purchasedPrice)}` : '-'
+            return this.source.purchasedPrice
+                ? `S$ ${convertNumberToCommas(this.source.purchasedPrice)}`
+                : "-"
         },
         currentEstimatedValueFormat() {
-            return this.source.currentEstimatedValue ? `S$ ${convertNumberToCommas(this.source.currentEstimatedValue)}` : '-'
+            return this.source.currentEstimatedValue
+                ? `S$ ${convertNumberToCommas(this.source.currentEstimatedValue)}`
+                : "-"
         },
         estimatedCapitalGainFormat() {
-            return this.source.estimatedCapitalGain ? `S$ ${convertNumberToCommas(this.source.estimatedCapitalGain)}` : '-'
+            return this.source.estimatedCapitalGain
+                ? `S$ ${convertNumberToCommas(this.source.estimatedCapitalGain)}`
+                : "-"
         },
         monthlyRentalFormat() {
-            return this.source.monthlyRental ? `S$ ${convertNumberToCommas(this.source.monthlyRental)}` : '-'
+            return this.source.monthlyRental
+                ? `S$ ${convertNumberToCommas(this.source.monthlyRental)}`
+                : "-"
         },
         rentalYieldFormat() {
             return this.source.rentalYield ? this.source.rentalYield.toFixed(2) : 0
@@ -101,11 +121,15 @@ export default {
             if (!date) return null
 
             return this.$moment(date).format("DD-MMM-YYYY")
-        },
+        }
     }
 }
 </script>
 <style lang="scss" scoped>
+.purchase-date {
+    white-space: nowrap;
+}
+
 .table--record {
     td {
         text-align: center;
@@ -160,11 +184,11 @@ export default {
     }
 
     &--red {
-        color: #FF4A55;
+        color: #ff4a55;
     }
 
     &--green {
-        color: #27A857;
+        color: #27a857;
     }
 }
 </style>

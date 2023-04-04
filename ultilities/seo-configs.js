@@ -2,7 +2,8 @@ export const APP_NAME = "Livethere"
 export const LANDLORDS_SEO_URL = "https://landlords.livethere.com"
 export const LANDLORDS_SEO_METADATA = {
     title: "Landlords",
-    description: "Livethere is a landlords website",
+    description:
+        "The digital platform that helps you manage, track and optimise your property portfolio's performance",
     imageURL: "",
     url: LANDLORDS_SEO_URL
 }

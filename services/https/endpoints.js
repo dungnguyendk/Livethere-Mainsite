@@ -75,6 +75,8 @@ export const httpEndpoint = {
         getEntries: "/api/tenancy-contract-agreements",
         createEntry: "/api/tenancy-contract-agreements",
         updateEntry: "/api/tenancy-contract-agreements",
+        putSuspendEntry: "/api/tenancy-contract-agreements/suspend",
+        deleteContractEntry: "/api/tenancy-contract-agreements",
         deleteEntry: "/api/tenancy-documents"
     },
     documents: "api/documents",

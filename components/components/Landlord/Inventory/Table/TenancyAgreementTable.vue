@@ -1,31 +1,27 @@
 <template lang="html">
-    <table class="table--responsive table--tenancy-agreement">
-        <thead>
-            <tr>
-                <th>Tenancy Agreement Code</th>
-                <th>Agreement Date</th>
-                <th>Contract Date</th>
-                <th>Status</th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            <template v-if="listTenancyAgreements && listTenancyAgreements.length > 0">
-                <TableRecord
-                    v-for="(item, index) in listTenancyAgreements"
-                    :source="item"
-                    :key="index"
-                />
-            </template>
-            <template v-else>
+    <div>
+        <table class="table--responsive table--tenancy-agreement">
+            <thead>
                 <tr>
-                    <td colspan="4">
+                    <th>Tenancy Agreement Code</th>
+                    <th>Agreement Date</th>
+                    <th>Contract Date</th>
+                    <th>Status</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                <template v-if="listTenancyAgreements && listTenancyAgreements.length > 0">
+                    <TableRecord v-for="(item, index) in listTenancyAgreements" :source="item" :key="item.id" />
+                </template>
+                <tr v-else>
+                    <td colspan="5">
                         <p class="empty">No record found.</p>
                     </td>
                 </tr>
-            </template>
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+    </div>
 </template>
 
 <script>
@@ -79,6 +75,7 @@ export default {
         margin-bottom: 0;
         border-top: 1px solid #e5e5e5;
     }
+
     .table--tenancy-agreement {
         display: flex;
         justify-content: center;
@@ -91,18 +88,23 @@ export default {
         bottom: 0;
         border: none;
     }
+
     table {
         width: 100%;
     }
+
     tr td {
         display: block;
     }
+
     th {
         font-size: 1.4rem;
     }
+
     tbody {
         display: block;
     }
+
     thead {
         display: none;
     }

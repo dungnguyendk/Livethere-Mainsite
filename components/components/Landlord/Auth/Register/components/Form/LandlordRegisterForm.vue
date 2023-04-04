@@ -36,7 +36,7 @@
                     />
                 </div>
                 <div class="form--register__input">
-                    <label class="required">Verified Password</label>
+                    <label class="required">Verify Password</label>
                     <v-text-field
                         v-model.trim="verifiedPassword"
                         outlined
@@ -162,7 +162,7 @@ export default {
             !this.$v.password.required && errors.push("Password is required")
             !this.$v.password.complexity &&
                 errors.push(
-                    "Password needs: at least 8 characters, 1 uppercase character, 1 number and 1 special character"
+                    "Password must contains at least 8 characters, 1 uppercase character, 1 number and 1 special character"
                 )
             return errors
         },
