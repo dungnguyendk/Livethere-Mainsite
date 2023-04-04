@@ -27,7 +27,7 @@ const settings = [
         projects: "http://vnapi.asiaesolutions.com/cmspublic",
     }
 ]
-export const CURRENT_ENV = "develop"
+export const CURRENT_ENV = "beta"
 export const currentSettings = settings.find((item) => item.env === CURRENT_ENV)
 export const appSettings = {
     baseURL: currentSettings.landlord,

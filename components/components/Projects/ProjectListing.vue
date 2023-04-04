@@ -151,6 +151,7 @@ export default {
             isOpenFilterProjectDialog: false,
             isOpenShareSocialDialog: false,
             targetLinkURL: {},
+            
         }
     },
     created() {
@@ -164,12 +165,10 @@ export default {
             this.isOpenShareSocialDialog = false
         },
         openShareSocialDialog(e) {
-            console.log("openShareSocialDialog e",e);
             this.isOpenShareSocialDialog = e.open
             this.targetLinkURL = this.searchListings.data.find((index) => {
                 return index.id === e.id
             })
-            console.log("this.targetLinkURL :",this.targetLinkURL);
         },
         showStatusForm(e) {
             

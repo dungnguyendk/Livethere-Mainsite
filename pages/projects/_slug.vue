@@ -20,15 +20,15 @@ export default {
     async asyncData({app, params, store}){
 
         app.head.meta = generateLandlordsSEOMetaTags(app.head.meta)
-        const id = params.slug
-        // console.log("asyncData",id);
+        const slug = params.slug
+        // console.log("asyncData",slug);
         try{
-            const responseProjectDetails = await app.$apiCmsPublic.$get(`${httpEndpoint.projects.getListings}/${id}`)
+            const responseProjectDetails = await app.$apiCmsPublic.$get(`${httpEndpoint.projects.getListings}/${slug}`)
             const responseMostViewListing = await app.$apiCmsPublic.$get(`${httpEndpoint.projects.getMostViewListing}`)
             // await store.commit("project/setHomeAgent", homeAgent)
             // await store.commit("project/setPopularListings", mostViewedListing)
             
-
+            // console.log("responseProjectDetails",responseProjectDetails);
             if(responseProjectDetails){
                 await store.commit("project/setProjectDetails", responseProjectDetails)
             }else {

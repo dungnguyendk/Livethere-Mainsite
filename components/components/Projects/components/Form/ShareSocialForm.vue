@@ -72,6 +72,7 @@
 </template>
 
 <script>
+import { mapState } from "vuex"
 export default {
     name: "ShareSocialForm",
     props: {
@@ -81,19 +82,25 @@ export default {
         }
     },
     computed: {
-        linkURL: {
-            get() {
-                return this.item?.slug
-            },
-            set(value) {
-                this.item.slug = value
-            }
-        }
+        ...mapState({
+            projectDetails: (state) => state.project.projectDetails
+        }), 
+        
+       
     },
     data() {
         return {
-            // linkURL: this.item.slug
+            linkURL: "",
+            baseUrl : "",
         }
+    },
+    created(){
+       
+    },
+    mounted(){
+        this.getBaseUrl()
+        this.checkDetail()
+
     },
     beforeDestroy() {
         clearTimeout(this._timerId)
@@ -107,11 +114,27 @@ export default {
             const element = this.$refs.linkURLCopy
             element.select()
             element.setSelectionRange(0, 99999)
+        },
+        getBaseUrl(){
+            const url = new URL(window.location.href);
+            this.baseUrl = `${url.origin}${url.pathname}`;
+            this.linkURL = `${this.baseUrl}/${this.item?.slug}`
+        },
+        checkDetail(){
+            if(!this.item || !this.item.id){
+                if(this.projectDetails && this.projectDetails.id){
+                this.getBaseUrl()
+                    this.linkURL = this.baseUrl
+                }else {
+                    console.log("else");
+                }
+            }
+            
         }
     },
     watch: {
         item(val) {
-            this.linkURL = val.linkDetails
+            this.getBaseUrl()
         }
     }
 }
