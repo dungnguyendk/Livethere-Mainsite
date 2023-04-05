@@ -6,7 +6,7 @@
                 color="#3b5998"
                 height="48"
                 width="48"
-                href="https://www.facebook.com/"
+                :href="`https://www.facebook.com/sharer/sharer.php?u=${linkURL}`"
                 target="_blank"
             >
                 <i class="ri-facebook-fill"></i>
@@ -16,7 +16,7 @@
                 color="#25d366"
                 height="48"
                 width="48"
-                href="https://www.whatsapp.com/"
+                :href="`https://wa.me/?text=${linkURL}`"
                 target="_blank"
             >
                 <i class="ri-whatsapp-line"></i>
@@ -26,7 +26,7 @@
                 color="#00b800"
                 height="48"
                 width="48"
-                href="https://line.me/en/"
+                :href="`https://social-plugins.line.me/lineit/share?url=${linkURL}`"
                 target="_blank"
             >
                 <i class="ri-line-line"></i>
@@ -36,7 +36,7 @@
                 color="#37aee2"
                 height="48"
                 width="48"
-                href="https://telegram.org/"
+                :href="`https://t.me/share/url?url=${linkURL}`"
                 target="_blank"
             >
                 <i class="ri-telegram-line"></i>
@@ -46,7 +46,7 @@
                 color="#7f7f7f"
                 height="48"
                 width="48"
-                href="https://mail.google.com/mail/u/0/#inbox"
+                :href="`mailto:?body=${linkURL}`"
                 target="_blank"
             >
                 <i class="ri-mail-line"></i>

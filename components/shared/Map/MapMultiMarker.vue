@@ -1,5 +1,5 @@
 <template>
-    <l-map ref="map" style="height: 100%;width: 100%" :zoom="zoom" :center="center">
+    <l-map ref="map" @ready="doSomethingOnReady" style="height: 25.6rem" :zoom="zoom" :center="center">
         <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
         <l-marker
             v-for="(marker, index) in listlatLog"
@@ -10,12 +10,10 @@
 </template>
 
 <script>
-import { latLng } from "leaflet"
-import { latLngBounds } from "leaflet/src/geo/LatLngBounds"
+import L from "leaflet"
 import { LMap, LTileLayer, LMarker, LIcon } from "vue2-leaflet"
-
 export default {
-    name: "Map",
+    name: "MultiMap",
     props: {
         listlatLog: {
             type: Array,
@@ -34,8 +32,9 @@ export default {
         return {
             url: "http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", //get map,
             center: L.latLng(1.29027, 103.851959),
-            zoom: 15,
+            zoom: 2,
             attribution: '&copy; OpenStreetMap contributors',
+            bounds: null
         }
     },
     created() {
@@ -50,8 +49,14 @@ export default {
             map.fitBounds(bounds)
             this.center = bounds.getCenter()
         })
+    },
+    methods: {
+        doSomethingOnReady() {
+            this.$refs.map.mapObject.invalidateSize()
+        },
     }
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+</style>

@@ -1,15 +1,13 @@
 <template>
-    <div style="width:100%; height: 100%;">
-            <l-map  :zoom="zoom" :center="getCenter">
-                    <l-marker v-if="item.length > 0 && Array.isArray(item)" :lat-lng="item" v-for="(item,index) in listlatLog" :key="index">
-                    </l-marker>
-                <l-tile-layer :url="url"></l-tile-layer>
-            </l-map>
-    </div>
+        <l-map ref="map" class="map" @ready="doSomethingOnReady" :zoom="zoom" :center="center">
+            <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
+            <l-marker v-if="item.length > 0 && Array.isArray(item)" :lat-lng="item" v-for="(item,index) in listlatLog" :key="index">
+            </l-marker>
+        </l-map>
 </template>
 
 <script>
-import {latLng} from "leaflet"
+import L, {latLng} from "leaflet"
 import {
     LMap, LTileLayer, LMarker,LIcon,
 } from 'vue2-leaflet';
@@ -25,10 +23,6 @@ export default {
           type: Number,
           default: 15
       },
-      center: {
-          type: Array,
-          default: () => []
-      }
     },
     components: {
         LMap,
@@ -36,20 +30,27 @@ export default {
         LMarker,
         LIcon
     },
-    computed: {
-        getCenter() {
-            if (this.center.length > 0) return latLng(this.center)
-                return latLng([1.290270,103.851959])
-        }
-    },
-    created(){
-        console.log("Map listlatLog",this.listlatLog);
-        console.log("Map center",this.center);
+    mounted() {
+        // Wait for the map to load before getting the bounds
+        this.$nextTick(() => {
+            const map = this.$refs.map.mapObject
+            const bounds = L.latLngBounds(this.listlatLog.map(item => item))
+            map.fitBounds(bounds)
+            this.center = bounds.getCenter()
+        })
     },
     data: function() {
         return {
             url: "http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", //get map,
+            attribution: '&copy; OpenStreetMap contributors',
+            center: latLng([1.290270,103.851959])
         };
+    },
+    methods: {
+        doSomethingOnReady() {
+            this.$refs.map.mapObject.invalidateSize()
+            this.$refs.map.mapObject._onResize()
+        },
     }
 }
 </script>
@@ -57,6 +58,6 @@ export default {
 <style lang="scss" scoped>
 .map {
     height: 500px;
-    width: 500px;
+    width: 100%;
 }
 </style>
