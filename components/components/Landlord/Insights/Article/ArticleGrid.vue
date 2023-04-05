@@ -1,10 +1,10 @@
 <template>
     <div class="card--article-grid">
         <div class="card__header">
-            <nuxt-link to="" class="card__title"> {{ article.buildingName }} </nuxt-link>
+            <nuxt-link :to="`/projects/${article.slug}`" class="card__title"> {{ article.buildingName }} </nuxt-link>
         </div>
         <div class="card__body">
-            <nuxt-link to="/" target="_blank">
+            <nuxt-link :to="`/projects/${article.slug}`" target="_blank">
                 <div class="card__image">
                     <template v-if="article.images">
                         <img :src="article.images" alt="" />
@@ -16,7 +16,7 @@
             </nuxt-link>
             <div class="card__content">
                 <p>{{ article.buildingAddress }}</p>
-                <a class="card__button">Read More</a>
+                <nuxt-link :to="`/projects/${article.slug}`" class="card__button">Read More</nuxt-link>
             </div>
         </div>
     </div>

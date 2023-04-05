@@ -16,7 +16,7 @@
                     <img :src="project.images" alt="" />
                 </template>
                 <template v-else>
-                    <img src="https://fakeimg.pl/362x384/?text=No%20Image" alt="" />
+                    <img src="https://fakeimg.pl/574x320/?text=No%20Image" alt="" />
                 </template>
             </nuxt-link>
         </div>

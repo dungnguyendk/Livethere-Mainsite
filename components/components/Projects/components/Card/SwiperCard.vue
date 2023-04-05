@@ -1,6 +1,6 @@
 <template>
     <div class="card--swiper">
-        <div class="card__header" @click="onRouteToDetails()">
+        <div class="card__header" @click="onRouteToDetails(item)">
             <div class="card__header-image">
                 <template v-if="item.images">
                     <img :src="item.images" alt="" />
@@ -16,7 +16,7 @@
                 </div>
             </div>
             <div class="card__header-title">
-                <nuxt-link to="/projects/details" class="card__header-link">{{
+                <nuxt-link :to="`/projects/${item.slug}`" class="card__header-link">{{
                     item.buildingName
                 }}</nuxt-link>
             </div>
@@ -56,8 +56,8 @@ export default {
     mounted() {},
 
     methods: {
-        onRouteToDetails() {
-            this.$router.push("/projects/details")
+        onRouteToDetails(item) {
+            this.$router.push(`/projects/${item.slug}`)
         }
     }
 }
