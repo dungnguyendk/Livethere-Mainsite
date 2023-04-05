@@ -9,7 +9,7 @@
                         </div>
                         <div class="page__top-right">
                             <client-only>
-                                <Map :listlat-log="[location]" :center="location" />
+                                <Map :listlat-log="[location]"/>
                             </client-only>
                         </div>
                     </div>
@@ -144,7 +144,7 @@ export default {
         ContactDetailDialog,
         ShareSocialDialog, 
         error,
-        Map: () => {if (typeof window !== 'undefined') return import("~/components/shared/Map/Map.vue")}
+        Map: () => {if (typeof window !== 'undefined') return import("~/components/elements/Map/Map.vue")}
     },
     computed: {
         ...mapState({
@@ -162,6 +162,9 @@ export default {
                 this.projectDetails.images?.propertyLocationMap)
         },
         location() {
+                // return Object.keys(this.projectDetails.location).map(item =>({
+                //     latLng: [parseFloat(this.projectDetails.location[item]), parseFloat(this.projectDetails.location[item])]
+                // }))
             let checkLagLogValue = Object.values(Object.values(this.projectDetails.location)).every((item) => item !== null)
             return checkLagLogValue ? Object.values(this.projectDetails.location) : []
         }
@@ -250,11 +253,11 @@ export default {
     }
     .page__top-right {
         z-index: 1;
-        iframe {
-            height: 100%;
-            border-radius: 2rem;
-            width: 100%;
-        }
+        //iframe {
+        //    height: 100%;
+        //    border-radius: 2rem;
+        //    width: 100%;
+        //}
     }
 }
 .page__content {
