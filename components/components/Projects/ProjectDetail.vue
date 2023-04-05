@@ -212,9 +212,10 @@ export default {
 .page--project-detail {
     @media screen and (max-width: 767px) {
         .page__top {
-            display: inline-block;
+            display: block;
             .page__top-right {
                 margin-top: 2.7rem;
+                z-index: 1;
             }
         }
         .page__content {
@@ -253,11 +254,6 @@ export default {
     }
     .page__top-right {
         z-index: 1;
-        //iframe {
-        //    height: 100%;
-        //    border-radius: 2rem;
-        //    width: 100%;
-        //}
     }
 }
 .page__content {

@@ -57,7 +57,15 @@ export default {
 
 <style lang="scss" scoped>
 .map {
-    height: 500px;
+    height: 54.7rem;
     width: 100%;
+    z-index: 1;
+    @media screen and (max-width: 1024px) {
+        height: 46.3rem;
+    }
+
+    @media screen and (max-width: 768px) {
+        height: 34.2rem;
+    }
 }
 </style>
