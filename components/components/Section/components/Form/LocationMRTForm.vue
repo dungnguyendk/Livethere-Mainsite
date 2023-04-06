@@ -9,7 +9,9 @@
             </div>
             <div class="card__content">
                 <div class="mrt__search-content">
-                    <div class="mrt__sidebar">
+                    <div
+                        :class="[isShowSearchBarMobile ? 'd-block' : 'mobile-none', 'mrt__sidebar']"
+                    >
                         <div class="form__field border-bottom">
                             <v-checkbox
                                 v-model="cbFutureLines"
@@ -62,6 +64,7 @@
                                     :items="listStation"
                                     selectable
                                     activatable
+                                    :open.sync="openTree"
                                     open-on-click
                                     class="tree--station"
                                 >
@@ -89,10 +92,39 @@
                             </template>
                         </div>
                     </div>
-                    <div class="mrt__map" id="svg-container">
+                    <div
+                        :class="[isShowSearchBarMobile ? 'mobile-none' : 'd-block', 'mrt__map']"
+                        id="svg-container"
+                    >
                         <panZoom>
                             <MrtSingapore />
                         </panZoom>
+                    </div>
+                    <div class="mrt__tabs-mobile">
+                        <div class="tabs__container">
+                            <div
+                                v-for="tab in listStation"
+                                :key="tab.id"
+                                :class="[
+                                    isShowSearchBarMobile ? 'mobile-none' : 'd-block',
+                                    'tabs__item'
+                                ]"
+                                :style="{ backgroundColor: tab.lineColor }"
+                                @click="handleSelectStation(tab)"
+                            >
+                                {{ tab.id }}
+                            </div>
+                            <v-btn
+                                :class="[
+                                    isShowSearchBarMobile ? 'd-block' : 'mobile-none',
+                                    'btn btn--primary btn--green'
+                                ]"
+                                style="margin-left: auto; margin-right: 2.4rem"
+                                @click.prevent="isShowSearchBarMobile = false"
+                            >
+                                Apply
+                            </v-btn>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -135,7 +167,9 @@ export default {
             filterStations: [],
             searchStations: [],
             stationListHighlighted: [],
-            stationListChecked: []
+            stationListChecked: [],
+            isShowSearchBarMobile: false,
+            openTree: []
         }
     },
     computed: {
@@ -155,6 +189,10 @@ export default {
         // console.log("convertListStation this.listStation: ,", this.listStation)
     },
     methods: {
+        handleSelectStation(tab) {
+            this.isShowSearchBarMobile = true
+            this.openTree = [tab.id]
+        },
         onCheckFutureLines() {},
         onClose() {
             this.$emit("close")
@@ -373,7 +411,7 @@ export default {
                             // add list checked in menu
                             if (!this.stationListChecked.includes(mrtStationCode)) {
                                 this.stationListChecked.push(mrtStationCode)
-                                
+
                                 this.selectedStations = this.stationListChecked
                             }
                             // add list highlighted map
@@ -493,31 +531,93 @@ export default {
 }
 .mrt__search-content {
     display: flex;
+    flex-wrap: nowrap;
     height: 100%;
+
+    @media screen and (max-width: 767px) {
+        flex-wrap: wrap;
+    }
+
     .mrt__sidebar {
         flex: 0 0 40rem;
-        max-width: 40rem;
+        width: 40rem;
         background-color: var(--bg-color-white);
         padding: 0 2.4rem;
+
+        @media screen and (max-width: 767px) {
+            flex: 1;
+        }
     }
     .mrt__map {
-        flex-basis: 0;
-        flex-grow: 1;
-        max-width: 100%;
         overflow: hidden;
+
+        @media screen and (max-width: 767px) {
+            height: 100%;
+        }
+
         svg {
             max-width: 100%;
             max-height: 100%;
         }
     }
 }
+.mrt__tabs-mobile {
+    display: none;
+
+    @media screen and (max-width: 767px) {
+        display: block;
+        position: absolute;
+        width: 100%;
+        left: 0;
+        bottom: 6.7rem;
+    }
+
+    .tabs {
+        &__container {
+            display: flex;
+            padding: 1.2rem 0;
+            background-color: white;
+            overflow: auto;
+
+            &::-webkit-scrollbar {
+                height: 0.5rem;
+            }
+        }
+
+        &__item {
+            padding: 0.8rem 1.6rem;
+            border-radius: 0.8rem;
+            min-width: 7rem;
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: white;
+            background-color: var(--color-primary);
+            margin: 0 0.4rem;
+        }
+    }
+}
+.mobile-none {
+    @media screen and (max-width: 767px) {
+        display: none;
+    }
+}
 .form--mrt {
     height: 90vh;
+
+    @media screen and (max-width: 767px) {
+        height: 100%;
+    }
+
     .form__footer {
         display: flex;
         justify-content: space-between;
         padding: 2.4rem 2.4rem 3.2rem;
         border-top: 1px solid var(--border-color);
+
+        @media screen and (max-width: 767px) {
+            padding: 1.2rem 2.4rem;
+        }
     }
 }
 .card--dialog {
@@ -531,8 +631,17 @@ export default {
         position: relative;
         display: flex;
         flex-shrink: 0;
+
+        @media screen and (max-width: 767px) {
+            padding-bottom: 0;
+        }
+
         h4 {
             font-size: 2.4rem;
+
+            @media screen and (max-width: 767px) {
+                font-size: 1.8rem;
+            }
         }
     }
     .card__content {

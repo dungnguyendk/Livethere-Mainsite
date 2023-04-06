@@ -214,8 +214,8 @@ export default {
         .section__body-list {
             display: grid;
             grid-template-columns: repeat(1, minmax(0, 1fr));
-            grid-gap: 4.8rem;
-            padding: 2rem;
+            grid-gap: 3rem;
+            padding: 1rem;
         }
     }
 }
