@@ -36,7 +36,7 @@
                     </div>
                     <template v-if="isShowArticleOrForm">
                         <div class="card__content-article">
-                            <ContactDetailForm />
+                            <ContactDetailForm @onClose="onClose" />
                         </div>
                     </template>
                     <template v-else>

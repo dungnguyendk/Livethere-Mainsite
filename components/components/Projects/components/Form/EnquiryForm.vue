@@ -154,10 +154,13 @@ export default {
                     name: this.name, 
                     phone: this.phone, 
                     email: this.email, 
-                    message: this.message
+                    message: this.message,
+                    listingId: this.$store.state.project.projectDetails.id
                 }
               this.$store.dispatch("project/enquireUser", params).then((res)=>{
-                  this.$emit("snackbar", {isShowSnackbar: true, messageSnackbar: 'Thank you for your submission, our agent has been notified and will be contacting you shortly'})
+                  if (res) {
+                      this.$emit("snackbar", {isShowSnackbar: true, messageSnackbar: 'Thank you for your submission, our agent has been notified and will be contacting you shortly'})
+                  }
               })
               this.onResetForm()
                 

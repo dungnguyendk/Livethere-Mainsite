@@ -158,6 +158,7 @@ export default {
                     this.messageSnackbar = "Thank you for your submission, our agent has been notified and will be contacting you shortly"
                 })
                 this.onResetForm()
+                this.$emit('onClose')
             }else{
                 console.log("fail!")
             }

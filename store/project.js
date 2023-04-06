@@ -118,8 +118,9 @@ export const actions = {
     },
     async enquireUser({ commit }, payload) {
         try {
-            const response = await this.$apiCmsPublic.$post(`${httpEndpoint}`, payload)
-            if (response) {
+            const response = await this.$apiCmsPublic.$post(`${httpEndpoint.projects.postEnquiries}`, payload)
+
+            if (response.succeeded) {
                 return true
             } else {
                 return false
