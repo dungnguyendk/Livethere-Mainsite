@@ -10,10 +10,10 @@
 </template>
 
 <script>
-import L from "leaflet"
-import { LMap, LTileLayer, LMarker, LIcon } from "vue2-leaflet"
+import L  from "leaflet"
+import { LMap, LTileLayer, LMarker, LIcon, latLngBounds } from "vue2-leaflet"
 export default {
-    name: "MultiMap",
+    name: "MapMultiMarker",
     props: {
         listlatLog: {
             type: Array,

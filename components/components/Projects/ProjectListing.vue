@@ -36,6 +36,7 @@
             </div>
             <div class="section__body">
                 <div
+                    v-if="searchListings && searchListings.data.length > 0"
                     class="section__body-map"
                     :class="
                         isActiveMap ? 'section__body-map--active' : 'section__body-map--disabled'
