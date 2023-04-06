@@ -79,7 +79,7 @@ export default {
     },
     created(){
         this.onFillExistingDistrict()
-    },  
+    },
     methods: {
         onClose() {
             this.$emit("close")
@@ -132,6 +132,10 @@ export default {
     padding-left: 3rem;
     padding-right: 3rem;
     padding-bottom: 3rem;
+
+    @media screen and (max-width: 767px) {
+        padding: 0;
+    }
 }
 .form__footer {
     padding-top: 2.4rem;
@@ -144,11 +148,27 @@ export default {
         right: -5.2rem;
         height: 1px;
         background-color: var(--border-color);
+
+        @media screen and (max-width: 767px) {
+            left: 0;
+            right: 0;
+            width: 100%;
+        }
+    }
+    @media screen and (max-width: 767px) {
+        padding-top: 1.6rem;
+        padding-bottom: 0.4rem;
     }
 }
 .form__actions {
     display: flex;
     justify-content: flex-end;
+
+    button {
+        @media screen and (max-width: 767px) {
+            height: 3.6rem !important;
+        }
+    }
 }
 .form__field {
     label {
@@ -158,14 +178,28 @@ export default {
         color: var(--color-label);
         margin-bottom: 0.4rem;
     }
+    :deep(.v-label) {
+        @media screen and (max-width: 767px) {
+            font-size: 1.2rem !important;
+        }
+    }
 }
 .v-list-item-group {
     display: grid;
     grid-template-columns: repeat(2, minmax(0, 1fr));
     grid-row-gap: 0.4rem;
+
+    @media screen and (max-width: 767px) {
+        grid-template-columns: repeat(1, minmax(0, 1fr));
+    }
+
     .v-list-item__title {
         font-size: 1.6rem;
         white-space: normal;
+
+        @media screen and (max-width: 767px) {
+            font-size: 1.2rem;
+        }
     }
     .v-list-item--active {
         &::before {
@@ -191,6 +225,10 @@ export default {
     align-content: center;
     border-bottom: 1px solid var(--border-color);
     padding-bottom: 1.6rem;
+
+    @media screen and (max-width: 767px) {
+        display: block;
+    }
 }
 
 .form__footer {
