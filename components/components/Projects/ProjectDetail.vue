@@ -96,7 +96,7 @@
             </div>
             <div class="page--project-detail-second">
                 <div class="container">
-                    <ProjectSwiper>{{ titleSwiper }}</ProjectSwiper>
+                    <ProjectSwiper :typeLing="typeLing">{{ titleSwiper }}</ProjectSwiper>
                 </div>
                 <ShareSocialDialog
                 :open="isOpenShareSocialDialog"
@@ -181,7 +181,8 @@ export default {
             isShowSnackbar: false, 
             messageSnackbar: '', 
             titleSwiper: "most viewed listings",
-            targetLinkURL: {}
+            targetLinkURL: {},
+            typeLing: "mostViewLing"
         }
     },
     methods: {
