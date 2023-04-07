@@ -96,7 +96,7 @@ export default {
     },
     computed: {
         nameErrors() {
-            return setFormControlErrors(this.$v.name, "Name Required")
+            return setFormControlErrors(this.$v.name, "Name is Required")
         },
         emailErrors() {
             const errors = []
