@@ -127,7 +127,7 @@ export const actions = {
             }
         } catch (e) {
             console.log({ Error: e.message })
-            return true
+            return false
         }
     },
     async projectDetails({ commit }, payload) {

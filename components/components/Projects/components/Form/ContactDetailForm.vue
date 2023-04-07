@@ -159,14 +159,19 @@ export default {
             if (!this.$v.$invalid) {
                 const params = {
                     name: this.name,
-                    phone: this.phone,
+                    phoneNumber: this.phone,
                     email: this.email,
-                    message: this.message
+                    message: this.message,
+                    EnquiryType: 'ScheduleVisit',
+                    pageUrl: window.location.href,
+                    Country: '',
+                    phoneCountry: this.country,
+                    listingId: this.$store.state.project.projectDetails.id
                 }
-                this.$store.dispatch("project/contactDetails", params).then((res) => {
-                    this.snackbar = res
-                    this.messageSnackbar =
-                        "Thank you for your submission, our agent has been notified and will be contacting you shortly"
+                this.$store.dispatch("project/enquireUser", params).then((res) => {
+                    if (res) {
+                        this.$store.dispatch("app/showSnackBar","Thank you for your submission, our agent has been notified and will be contacting you shortly")
+                    }
                 })
                 this.onResetForm()
                 this.$emit('onClose')

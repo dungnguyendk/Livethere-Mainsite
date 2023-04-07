@@ -151,11 +151,15 @@ export default {
             this.$v.$touch()
             if(!this.$v.$invalid){
                 const params = {
-                    name: this.name, 
-                    phone: this.phone, 
+                    name: this.name,
+                    PhoneNumber: this.phone,
                     email: this.email, 
                     message: this.message,
-                    listingId: this.$store.state.project.projectDetails.id
+                    listingId: this.$store.state.project.projectDetails.id,
+                    EnquiryType: 'Enquiry',
+                    pageUrl: window.location.href,
+                    Country: '',
+                    phoneCountry: this.country,
                 }
               this.$store.dispatch("project/enquireUser", params).then((res)=>{
                   if (res) {
