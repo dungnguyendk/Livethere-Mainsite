@@ -5,9 +5,9 @@
                {{ title }}
             </h3>
         </div>
-        <div class="swiper__content" v-if="popularListing.length > 0">
+        <div class="swiper__content" v-if="latestProjects.length > 0">
             <swiper class="swiper swiper-item" :options="swiperOption">
-                <swiper-slide class="swiper-box" v-for="(element, index) in popularListing" :key="index">
+                <swiper-slide class="swiper-box" v-for="(element, index) in latestProjects" :key="index">
                     <!-- <pre>
                         <code>
                             {{ element }}
@@ -33,20 +33,24 @@ import SwiperCard from "~/components/components/Projects/components/Card/SwiperC
 import { mapState } from "vuex"
 
 export default {
-    name: "ProjectSwiper",
+    name: "ProjectDetailSwiper",
     components: {
         SwiperCard
     },
     props:{
         title:{
             type: String,
-            default: "Project Swiper",
+            default: "Project D",
         }
     },
     computed: {
         ...mapState({
-            popularListing: (state) => state.project.popularListings
+            popularListing: (state) => state.project.popularListings,
+            latestProjects: (state) => state.project.latestProjects
         }),
+        // currentSlugId(){
+        //     return this.popularListing.id;
+        // }
     },
     data() {
         const self = this
@@ -90,7 +94,7 @@ export default {
             nextNumber: 3,
             fractionTo: 1,
             fractionForm: 3,
-            activeColorArrow: false
+            activeColorArrow: false,
         }
     },
     mounted() {
@@ -102,7 +106,12 @@ export default {
             minimumIntegerDigits: 2,
             useGrouping: false
         })
+        
+    },
+    created(){
+        console.log("Created",this.popularListing)
     }
+   
 }
 </script>
 

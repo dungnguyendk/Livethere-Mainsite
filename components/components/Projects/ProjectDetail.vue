@@ -5,7 +5,7 @@
                 <div class="container">
                     <div class="page__top">
                         <div class="page__top-left">
-                            <LightBoxListing :images="listImage"/>
+                            <LightBoxListing :images="listImage" />
                         </div>
                         <div class="page__top-right">
                             <client-only>
@@ -17,7 +17,11 @@
                         <div class="page__content-left">
                             <div class="page__content-left-info">
                                 <div class="page__content-left-back">
-                                    <v-btn to="" class="btn btn--outline btn--green btn-custom" @click="$router.go(-1)">
+                                    <v-btn
+                                        to=""
+                                        class="btn btn--outline btn--green btn-custom"
+                                        @click="$router.go(-1)"
+                                    >
                                         <v-icon size="16">mdi-arrow-left</v-icon>
                                         <span>Back to Result</span>
                                     </v-btn>
@@ -26,14 +30,18 @@
                                     <div class="page__content-left-iconic">
                                         <div class="page__content-left-logo">
                                             <img
-                                                :src="require(`~/static/img/logos/logo-project.svg`)"
+                                                :src="
+                                                    require(`~/static/img/logos/logo-project.svg`)
+                                                "
                                                 alt=""
                                             />
-                                            <span>{{ projectDetails.projectInfo?.premium ? 'premium' : '' }}</span>
+                                            <span>{{
+                                                projectDetails.projectInfo?.premium ? "premium" : ""
+                                            }}</span>
                                         </div>
-                                        <h3 class="page__content-left-title"
-                                            >{{ projectDetails.buildingName }}</h3
-                                        >
+                                        <h3 class="page__content-left-title">{{
+                                            projectDetails.buildingName
+                                        }}</h3>
                                     </div>
                                     <div class="page__content-left-emotions">
                                         <v-btn icon @click="isOpenShareSocialDialog = true">
@@ -77,17 +85,17 @@
                                 </div>
                             </div>
                             <div class="page-content-left-expansion">
-                                <PanelListing :details="projectDetails"/>
+                                <PanelListing :details="projectDetails" />
                             </div>
                         </div>
                         <div class="page__content-right">
                             <div class="page__content-right-sticky">
                                 <ContactAgentCard
-                                :info="projectDetails.primaryAgent"
-                                @openConfirm="openConfirmDetailDialog($event)"
-                                @openContact="openContactDetailDialog($event)"
+                                    :info="projectDetails.primaryAgent"
+                                    @openConfirm="openConfirmDetailDialog($event)"
+                                    @openContact="openContactDetailDialog($event)"
                                 />
-                                <EnquiryForm @snackbar="showStatusForm($event)"/>
+                                <EnquiryForm @snackbar="showStatusForm($event)" />
                                 <NotiCard />
                             </div>
                         </div>
@@ -96,25 +104,25 @@
             </div>
             <div class="page--project-detail-second">
                 <div class="container">
-                    <ProjectSwiper>{{ titleSwiper }}</ProjectSwiper>
+                    <ProjectDetailSwiper :title="'most viewed listings'" />
                 </div>
                 <ShareSocialDialog
-                :open="isOpenShareSocialDialog"
-                @close="closeShareSocialDialog"
-                :item="targetLinkURL"
+                    :open="isOpenShareSocialDialog"
+                    @close="closeShareSocialDialog"
+                    :item="targetLinkURL"
                 />
-                <ConfirmDetailDialog 
-                :open="isOpenConfirmDetailDialog"
-                @close="closeConfirmDetailDialog"
+                <ConfirmDetailDialog
+                    :open="isOpenConfirmDetailDialog"
+                    @close="closeConfirmDetailDialog"
                 />
                 <ContactDetailDialog
-                :open="isOpenContactDetailDialog"
-                @close="closeContactDetailDialog"
+                    :open="isOpenContactDetailDialog"
+                    @close="closeContactDetailDialog"
                 />
             </div>
         </template>
         <template v-else>
-            <error/>
+            <error />
         </template>
     </div>
 </template>
@@ -122,7 +130,7 @@
 import EnquiryForm from "~/components/components/Projects/components/Form/EnquiryForm.vue"
 import ContactAgentCard from "./components/Card/ContactAgentCard.vue"
 import NotiCard from "~/components/components/Projects/components/Card/NotiCard.vue"
-import ProjectSwiper from "~/components/components/Projects/components/Slider/ProjectSwiper.vue"
+import ProjectDetailSwiper from "~/components/components/Projects/components/Slider/ProjectDetailSwiper.vue"
 import PanelListing from "~/components/components/Projects/components/Panel/PanelListing.vue"
 import LightBoxListing from "~/components/components/Projects/components/Box/LightBoxListing.vue"
 import ConfirmDetailDialog from "~/components/components/Projects/components/Dialog/ConfirmDetailDialog.vue"
@@ -137,36 +145,43 @@ export default {
         EnquiryForm,
         ContactAgentCard,
         NotiCard,
-        ProjectSwiper,
+        ProjectDetailSwiper,
         PanelListing,
         LightBoxListing,
         ConfirmDetailDialog,
         ContactDetailDialog,
-        ShareSocialDialog, 
+        ShareSocialDialog,
         error,
-        Map: () => {if (typeof window !== 'undefined') return import("~/components/shared/Map/Map.vue")}
+        Map: () => {
+            if (typeof window !== "undefined") return import("~/components/shared/Map/Map.vue")
+        }
     },
     computed: {
         ...mapState({
             projectDetails: (state) => state.project.projectDetails
-        }), 
-        priceFormat(){
+        }),
+        priceFormat() {
             return convertNumberToCommas(this.projectDetails.rentPrice)
         },
         listImage() {
             let img = []
 
-            return img.concat(this.projectDetails.images?.propertyCoverImages,
+            return img.concat(
+                this.projectDetails.images?.propertyCoverImages,
                 this.projectDetails.images?.propertyImages,
                 this.projectDetails.images?.propertyFloorPlanImages,
-                this.projectDetails.images?.propertyLocationMap)
+                this.projectDetails.images?.propertyLocationMap
+            )
         },
         location() {
-            let checkLagLogValue = Object.values(Object.values(this.projectDetails.location)).every((item) => item !== null)
+            let checkLagLogValue = Object.values(Object.values(this.projectDetails.location)).every(
+                (item) => item !== null
+            )
             return checkLagLogValue ? Object.values(this.projectDetails.location) : []
         }
     },
-    created(){
+    created() {
+        // console.log("this.route.params", this.$route.params.slug)
     },
     data() {
         return {
@@ -175,8 +190,8 @@ export default {
             isOpenShareSocialDialog: false,
             isOpenConfirmDetailDialog: false,
             isOpenContactDetailDialog: false,
-            isShowSnackbar: false, 
-            messageSnackbar: '', 
+            isShowSnackbar: false,
+            messageSnackbar: "",
             titleSwiper: "most viewed listings",
             targetLinkURL: {}
         }
@@ -196,11 +211,10 @@ export default {
         },
         closeContactDetailDialog() {
             this.isOpenContactDetailDialog = false
-        }, 
-        showStatusForm(e){
+        },
+        showStatusForm(e) {
             this.isShowSnackbar = e.isShowSnackbar
             this.messageSnackbar = e.messageSnackbar
-            
         }
     }
 }
