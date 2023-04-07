@@ -7,9 +7,9 @@
 </template>
 
 <script>
-import L, {latLng} from "leaflet"
+import L, {latLng } from "leaflet"
 import {
-    LMap, LTileLayer, LMarker,LIcon,
+    LMap, LTileLayer, LMarker,LIcon, LatLngBounds
 } from 'vue2-leaflet';
 
 export default {
