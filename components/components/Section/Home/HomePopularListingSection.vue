@@ -11,7 +11,7 @@
 </template>
 
 <script>
-import ProjectSwiper from '../../Projects/components/Slider/ProjectSwiper.vue';
+import ProjectSwiper from '~/components/components/Projects/components/Slider/ProjectSwiper.vue'
 export default {
     name: "HomePopularListingSection",
     components: {ProjectSwiper},

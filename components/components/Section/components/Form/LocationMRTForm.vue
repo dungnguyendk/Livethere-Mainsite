@@ -371,13 +371,13 @@ export default {
                         elements.forEach((element) => {
                             element.style.fill = "#718472"
                         })
+                        console.log("elements",elements);
                         classLine.splice(classLine.indexOf(".ac"), 1)
                         classLine.splice(classLine.indexOf(".ad"), 1)
                     }
                 })
             }
-            console.log("classLine done :",classLine);
-            console.log("classLine.length :",classLine.length);
+            console.log("classLine",classLine);
             if (classLine.length < 16 && classLine.length > 0) {
                 blurLine(classLine.join(","))
             } else {
