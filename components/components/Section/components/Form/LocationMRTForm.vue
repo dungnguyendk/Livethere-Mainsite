@@ -271,11 +271,7 @@ export default {
                 ".r",
                 ".s",
                 ".ac",
-                ".ad",
-                ".ab",
-                ".bp",
-                ".sk",
-                ".pg"
+                ".ad"
             ]
             const selectedNodes = document.querySelectorAll(".v-treeview-node--selected")
             const selectedIds = []
@@ -368,7 +364,7 @@ export default {
                     }
                 })
             }
-            if (classLine.length < 16 && classLine.length > 0) {
+            if (classLine.length < 14 && classLine.length > 0) {
                 blurLine(classLine.join(","))
             } else {
                 resetColor()
