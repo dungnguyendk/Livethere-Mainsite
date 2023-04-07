@@ -299,8 +299,7 @@ export default {
                         })
                         classLine.splice(classLine.indexOf(".i"), 1)
                         classLine.splice(classLine.indexOf(".j"), 1)
-                    }
-                    if (keyItem === "NS") {
+                    } else if (keyItem === "NS") {
                         const elementsIds = document.querySelectorAll(`[id^=${keyItem}]`)
                         elementsIds.forEach((element) => {
                             element.style.stroke = "none"
@@ -311,8 +310,7 @@ export default {
                         })
                         classLine.splice(classLine.indexOf(".x"), 1)
                         classLine.splice(classLine.indexOf(".y"), 1)
-                    }
-                    if (keyItem === "NE") {
+                    } else if (keyItem === "NE") {
                         const elementsIds = document.querySelectorAll(`[id^=${keyItem}]`)
                         elementsIds.forEach((element) => {
                             element.style.stroke = "none"
@@ -323,8 +321,7 @@ export default {
                         })
                         classLine.splice(classLine.indexOf(".t"), 1)
                         classLine.splice(classLine.indexOf(".u"), 1)
-                    }
-                    if (keyItem === "CC") {
+                    } else if (keyItem === "CC") {
                         const elementsIds = document.querySelectorAll(`[id^=${keyItem}]`)
                         elementsIds.forEach((element) => {
                             element.style.stroke = "none"
@@ -335,8 +332,7 @@ export default {
                         })
                         classLine.splice(classLine.indexOf(".o"), 1)
                         classLine.splice(classLine.indexOf(".p"), 1)
-                    }
-                    if (keyItem === "DT") {
+                    } else if (keyItem === "DT") {
                         const elementsIds = document.querySelectorAll(`[id^=${keyItem}]`)
                         elementsIds.forEach((element) => {
                             element.style.stroke = "none"
@@ -347,8 +343,7 @@ export default {
                         })
                         classLine.splice(classLine.indexOf(".f"), 1)
                         classLine.splice(classLine.indexOf(".g"), 1)
-                    }
-                    if (keyItem === "TE") {
+                    } else if (keyItem === "TE") {
                         const elementsIds = document.querySelectorAll(`[id^=${keyItem}]`)
                         elementsIds.forEach((element) => {
                             element.style.stroke = "none"
@@ -359,15 +354,15 @@ export default {
                         })
                         classLine.splice(classLine.indexOf(".r"), 1)
                         classLine.splice(classLine.indexOf(".s"), 1)
-                    }
-
-                    if (!["EW", "NS", "NE", "QC", "DT", "TE"].includes(keyItem)) {
+                    } else {
                         const elements = this.$el.querySelectorAll(".ac, .ad")
                         elements.forEach((element) => {
                             element.style.fill = "#718472"
                         })
-                        classLine.splice(classLine.indexOf(".ac"), 1)
-                        classLine.splice(classLine.indexOf(".ad"), 1)
+                        if (classLine.indexOf(".ac") > -1 && classLine.indexOf(".ad") > -1) {
+                            classLine.splice(classLine.indexOf(".ac"), 1)
+                            classLine.splice(classLine.indexOf(".ad"), 1)
+                        }
                     }
                 })
             }

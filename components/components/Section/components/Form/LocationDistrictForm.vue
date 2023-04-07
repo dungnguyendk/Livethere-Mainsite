@@ -136,6 +136,10 @@ export default {
     @media screen and (max-width: 767px) {
         padding: 0;
     }
+
+    :deep(.v-input--selection-controls__ripple) {
+        display: none;
+    }
 }
 .form__footer {
     padding-top: 2.4rem;

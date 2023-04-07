@@ -21,7 +21,7 @@ export default {
     components: { FilterProjectForm },
     data() {
         return {
-            openDialog: false, 
+            openDialog: false,
             snackbar: false
         }
     },
@@ -39,7 +39,7 @@ export default {
         onClose() {
             this.openDialog = false
             this.$emit("close")
-        }, 
+        },
         openSnackbar(e){
             this.$emit("snackbar", this.snackbar = e)
         }
@@ -52,31 +52,57 @@ export default {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .card--dialog {
     background: var(--color-white);
     border-radius: 2rem;
     .card__header {
         padding: 1.5rem 1.9rem 2rem;
         display: flex;
- 
-        button{
-            i{
-                width: 3.2rem; 
+
+        @media screen and (max-width: 767px) {
+            align-items: center;
+        }
+
+        button {
+            i {
+                width: 3.2rem;
                 height: 3.2rem;
             }
         }
-        h4{
+        h4 {
             text-align: center;
             margin-bottom: 0;
             width: 100%;
             padding-left: 3.2rem;
             margin-top: 2rem;
-        
+
+            @media screen and (max-width: 767px) {
+                font-size: 1.8rem;
+                margin-top: 0;
+                padding-left: 0;
+            }
         }
     }
-    .card__content{
-        
+    .card__content {
+        :deep(.form--filter-projects) {
+            @media screen and (max-width: 767px) {
+                .form__fields {
+                    padding: 0 2.4rem 2.4rem;
+                }
+                .form__footer {
+                    padding: 1.6rem 2.4rem;
+                }
+                .v-input--checkbox {
+                    .v-label {
+                        .form__field-label-custom {
+                            display: flex;
+                            align-items: center;
+                        }
+                    }
+                }
+            }
+        }
     }
 }
 </style>
