@@ -96,6 +96,6 @@ export const httpEndpoint = {
         getPopularListing: "api/popular-listings",
         getMostViewListing: "api/most-viewed-listings",
         getAmenities: "api/amenities",
-
+        postEnquiries: 'api/enquiries'
     },
 }

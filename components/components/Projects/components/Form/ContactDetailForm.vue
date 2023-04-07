@@ -128,7 +128,7 @@ export default {
     },
     computed: {
         nameErrors() {
-            return setFormControlErrors(this.$v.name, "Name Required")
+            return setFormControlErrors(this.$v.name, "Name is Required")
         },
         emailErrors() {
             const errors = []
@@ -146,7 +146,7 @@ export default {
             return errors
         },
         messageErrors() {
-            return setFormControlErrors(this.$v.message, "Message Required")
+            return setFormControlErrors(this.$v.message, "Message is Required")
         }
     },
 
@@ -169,6 +169,7 @@ export default {
                         "Thank you for your submission, our agent has been notified and will be contacting you shortly"
                 })
                 this.onResetForm()
+                this.$emit('onClose')
             }
         },
         onResetForm() {

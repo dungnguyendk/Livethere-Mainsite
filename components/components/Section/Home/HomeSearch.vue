@@ -258,7 +258,7 @@ export default {
     created() {
         this.updatePrice()
         this.updateBedroom()
-        this.onFillExistingSearch() 
+        this.onFillExistingSearch()
     },
     mounted() {},
     methods: {
@@ -526,8 +526,8 @@ export default {
 }
 .v-dialog__content {
     :deep(.dialog--mrt) {
-    height: 90%;
-}
+        height: 90%;
+    }
 }
 
 .text-custom {
@@ -540,7 +540,7 @@ export default {
 .list-location {
     padding: 0;
     .v-list-item__icon {
-        margin-right: .8rem;
+        margin-right: 0.8rem;
         margin-top: 1.4rem;
         margin-bottom: 1.4rem;
     }
