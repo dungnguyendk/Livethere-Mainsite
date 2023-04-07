@@ -46,8 +46,10 @@ export default {
         this.$nextTick(() => {
             const map = this.$refs.map.mapObject
             const bounds = L.latLngBounds(this.listlatLog.map((m) => m.latLng))
-            map.fitBounds(bounds)
-            this.center = bounds.getCenter()
+            if(bounds._northEast && bounds._southWest) {
+                map.fitBounds(bounds)
+                this.center = bounds.getCenter()
+            }
         })
     },
     methods: {
