@@ -104,7 +104,7 @@
             </div>
             <div class="page--project-detail-second">
                 <div class="container">
-                    <ProjectDetailSwiper :title="'most viewed listings'" />
+                    <ProjectSwiper :Listing="this.listMostListing" :title="'most viewed listings'" />
                 </div>
                 <ShareSocialDialog
                     :open="isOpenShareSocialDialog"
@@ -130,7 +130,7 @@
 import EnquiryForm from "~/components/components/Projects/components/Form/EnquiryForm.vue"
 import ContactAgentCard from "./components/Card/ContactAgentCard.vue"
 import NotiCard from "~/components/components/Projects/components/Card/NotiCard.vue"
-import ProjectDetailSwiper from "~/components/components/Projects/components/Slider/ProjectDetailSwiper.vue"
+import ProjectSwiper from "~/components/components/Projects/components/Slider/ProjectSwiper.vue"
 import PanelListing from "~/components/components/Projects/components/Panel/PanelListing.vue"
 import LightBoxListing from "~/components/components/Projects/components/Box/LightBoxListing.vue"
 import ConfirmDetailDialog from "~/components/components/Projects/components/Dialog/ConfirmDetailDialog.vue"
@@ -145,7 +145,7 @@ export default {
         EnquiryForm,
         ContactAgentCard,
         NotiCard,
-        ProjectDetailSwiper,
+        ProjectSwiper,
         PanelListing,
         LightBoxListing,
         ConfirmDetailDialog,
@@ -156,7 +156,8 @@ export default {
     },
     computed: {
         ...mapState({
-            projectDetails: (state) => state.project.projectDetails
+            projectDetails: (state) => state.project.projectDetails,
+            mostViewedListings: (state) => state.project.mostViewedListings,
         }),
         priceFormat() {
             return convertNumberToCommas(this.projectDetails.rentPrice)
@@ -181,6 +182,7 @@ export default {
     },
     created() {
         // console.log("this.route.params", this.$route.params.slug)
+        this.getMostListing()
     },
     data() {
         return {
@@ -192,7 +194,9 @@ export default {
             isShowSnackbar: false,
             messageSnackbar: "",
             titleSwiper: "most viewed listings",
-            targetLinkURL: {}
+            targetLinkURL: {},
+            listMostListing: []
+                        
         }
     },
     methods: {
@@ -214,6 +218,9 @@ export default {
         showStatusForm(e) {
             this.isShowSnackbar = e.isShowSnackbar
             this.messageSnackbar = e.messageSnackbar
+        },
+        getMostListing(){
+            this.listMostListing = this.mostViewedListings.filter(listing => listing.id !== this.projectDetails.id);
         }
     }
 }

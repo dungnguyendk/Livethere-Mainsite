@@ -27,12 +27,8 @@ export default {
         try{ 
             const responseProjectDetails = await app.$axios.$get(`${httpEndpoint}`, id)
             const responseHomeAgent = await app.$axios.$get(`${httpEndpoint}`, id)
-            const responseMostViewedListing = await app.$axios.$get(`${httpEndpoint}`)
-            if(responseMostViewedListing){
-                await store.commit("project/setPopularListings", responseMostViewedListing.data)
-            }else {
-                await store.commit("project/setPopularListings", popularListings)
-            }
+            await store.dispatch('project/getMostViewedListing')
+            
             if(responseProjectDetails){
                 await store.commit("project/setProjectDetails", responseProjectDetails.data)
             }else{
