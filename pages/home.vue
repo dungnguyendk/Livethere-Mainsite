@@ -44,7 +44,11 @@ export default {
     async asyncData({app, store}){
         app.head.meta = generateLandlordsSEOMetaTags(app.head.meta)
         try{
+            // const params = 10;
             await store.dispatch("project/getHomePage")
+            await store.dispatch("project/getLatestProject",10)
+
+            
         }catch(e){
             console.log({Error: e.message})
         }

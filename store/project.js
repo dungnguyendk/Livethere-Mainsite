@@ -44,14 +44,6 @@ export const actions = {
             }else {
                 commit("setPopularListings", [])
             }
-
-            const responseLatestProject = await this.$apiCmsPublic.$get(`${httpEndpoint.projects.getListings}?page=1&perPage=10`)
-            if(responseLatestProject){
-                commit("setLatestProjects", responseLatestProject.data)
-            }else{
-                commit("setLatestProjects", [])
-            }
-
             const responseMrtLine = await this.$apiCmsPublic.$get(`${httpEndpoint.projects.linesMrt}`)
             if(responseMrtLine){
                 commit("setLinesMrt", responseMrtLine)
@@ -78,7 +70,7 @@ export const actions = {
     },
     async getLatestProject({ commit }, payload) {
         try {
-            const response = await this.$apiCmsPublic.$get(`${httpEndpoint}`)
+            const response = await this.$apiCmsPublic.$get(`${httpEndpoint.projects.getEntries}/${payload}`)
             if (response) {
                 commit("setLatestProjects", response.length ? response : [])
             } else {
@@ -95,6 +87,22 @@ export const actions = {
             //     params: payload
             // })
             const response = await this.$apiCmsPublic.$get(`${httpEndpoint.projects.getListings}?${payload}`)
+            if (response) {
+                commit("setSearchListing", response)
+            } else {
+                commit("setSearchListing", {})
+            }
+        } catch (e) {
+            console.log({ Error: e.message })
+        }
+    },
+    async searchProjectListing({ commit }, payload) {
+        try {
+            // const response = await this.$apiCmsPublic.$get(`${httpEndpoint.projects.getListings}`,{
+            //     params: payload
+            // })
+            const response = await this.$apiCmsPublic.$get(`${httpEndpoint.projects.getProjectListings}?projectId=${payload}&PageNumber=${1}&PageSize=${10}?`)
+           console.log("adshfsahd", response);
             if (response) {
                 commit("setSearchListing", response)
             } else {
@@ -171,7 +179,7 @@ export const actions = {
     }, 
     async getMostViewedListing({ commit }, payload) {
         try {
-            const response = await this.$apiCmsPublic.$get(`${httpEndpoint}`)
+            const response = await this.$apiCmsPublic.$get(`${httpEndpoint.projects.getMostViewListing}`)
             if (response) {
                 commit("setMostViewedListings", response.length ? response : [])
             } else {

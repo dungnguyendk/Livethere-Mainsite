@@ -31,7 +31,7 @@
                     {{ loading ? "Sending..." : "Submit" }}
                 </v-btn>
                 <div class="form__field terms-policy">
-                    <nuxt-link to="/terms-conditions">Terms and Conditions</nuxt-link> & <nuxt-link
+                    <nuxt-link to="/terms-n-conditions">Terms and Conditions</nuxt-link> & <nuxt-link
                     to="/privacy-policy">Privacy Policy.</nuxt-link>
                 </div>
             </div>

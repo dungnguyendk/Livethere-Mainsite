@@ -55,7 +55,7 @@ export default {
                     label: "Landlords"
                 },
                 {
-                    url: "/terms-conditions",
+                    url: "/terms-n-conditions",
                     label: "Terms & Conditions"
                 },
                 {
