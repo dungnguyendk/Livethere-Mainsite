@@ -13,7 +13,7 @@
                     </template>
                 </v-expansion-panel-header>
                 <v-expansion-panel-content>
-                    <div v-html="details.description" class="text-custom"></div>
+                    <div v-html="details ? details.description : 'No content found'" class="text-custom"></div>
                 </v-expansion-panel-content>
             </v-expansion-panel>
             <v-expansion-panel class="expansion-property expansion-panel-custom">
@@ -26,35 +26,35 @@
                 <v-expansion-panel-content>
                     <div class="expansion-property-row">
                         <p>monthly price:</p>
-                        <p>S$ {{ priceFormat }} </p>
+                        <p>S$ {{ projectDetails ? priceFormat : 0 }} </p>
                     </div>
                     <div class="expansion-property-row">
                         <p>unit size:</p>
-                        <p>{{ sizeFormat }} sqft </p>
+                        <p>{{ projectDetails ? sizeFormat : 0 }} sqft </p>
                     </div>
                     <div class="expansion-property-row">
                         <p>monthly price PSF:</p>
-                        <p>S$ {{ pricePSFFormat }}</p>
+                        <p>S$ {{ projectDetails ? pricePSFFormat : 0 }}</p>
                     </div>
                     <div class="expansion-property-row">
                         <p>lease term:</p>
-                        <p>{{ details.leaseTerm }} months </p>
+                        <p>{{ projectDetails ? details.leaseTerm : 0 }} months </p>
                     </div>
                     <div class="expansion-property-row">
                         <p>furnishing:</p>
-                        <p>{{ details.unitFurnishingType }}</p>
+                        <p>{{ projectDetails ? details.unitFurnishingType : "" }}</p>
                     </div>
                     <div class="expansion-property-row">
                         <p>built year:</p>
-                        <p>{{ details.buildingYear }}</p>
+                        <p>{{ projectDetails ? details.buildingYear : 0 }}</p>
                     </div>
                     <div class="expansion-property-row">
                         <p>tenure:</p>
-                        <p>{{ details.tenure }}</p>
+                        <p>{{ projectDetails ? details.tenure : "" }}</p>
                     </div>
                     <div class="expansion-property-row">
                         <p>property type:</p>
-                        <p>{{ details.propertyType }}</p>
+                        <p>{{ projectDetails ? details.propertyType : 0 }}</p>
                     </div>
                 </v-expansion-panel-content>
             </v-expansion-panel>
@@ -68,29 +68,33 @@
                 <v-expansion-panel-content>
                     <div class="available-from-row">
                         <i class="icon-svg svg-calendar"></i>
-                        <p>{{ details.publishedDate }}</p>
+                        <p>{{ details ? details.publishedDate : "" }}</p>
                     </div>
                 </v-expansion-panel-content>
             </v-expansion-panel>
             <v-expansion-panel class="expansion-amenities expansion-panel-custom">
                 <v-expansion-panel-header expand-icon="mdi-menu-down">
-                    Amenities
+                    Facilities
                     <template v-slot:actions>
                         <v-icon color="primary"> $expand </v-icon>
                     </template>
                 </v-expansion-panel-header>
                 <v-expansion-panel-content>
                     <div class="expansion-amenities-row">
-                        <div
-                            class="expansion-amenities-column"
-                            v-for="(item, index) in FACILITIES"
-                            :key="index"
-                        >
-                            <div class="expansion-amenities-icon">
-                                <i :class="item.icon"></i>
-                                <p>{{ item.text }}</p>
+                        <template v-if="facilities.length > 0">
+                            <div
+                                class="expansion-amenities-column"
+                                v-for="(item, index) in facilities"
+                                :key="index"
+                            >
+                                <div> </div>
+                                <div class="expansion-amenities-icon">
+                                    <div v-html="item.svg"></div>
+                                    <p>{{ item.label }}</p>
+                                </div>
                             </div>
-                        </div>
+                        </template>
+                        <div v-else> </div>
                     </div>
                 </v-expansion-panel-content>
             </v-expansion-panel>
@@ -100,7 +104,8 @@
 
 <script>
 import { convertNumberToCommas } from "~/ultilities/helpers"
-import {FACILITIES} from '~/ultilities/contants/dummy-data'
+// import { FACILITIES } from "~/ultilities/contants/dummy-data"
+import { mapState } from "vuex"
 export default {
     name: "PanelListing",
     props: {
@@ -110,21 +115,29 @@ export default {
         }
     },
     computed: {
+        ...mapState({
+            projectDetails: (state) => state.project.projectDetails
+        }),
         priceFormat() {
             return convertNumberToCommas(this.details.rentPrice)
         },
         sizeFormat() {
-            let unitSize = this.details.unitSize?.replace(" Sqft","")
+            let unitSize = this.details.unitSize?.replace(" Sqft", "")
             return convertNumberToCommas(unitSize)
         },
         pricePSFFormat() {
             return convertNumberToCommas(this.details.rentPerPsf)
         }
     },
+
+    created() {
+        this.facilities = this.projectDetails.facilities
+        // console.log("this.projectDetails.facilities", this.facilities)
+    },
     data() {
         return {
             panel: [0, 1, 2, 3],
-            FACILITIES,
+            facilities: []
         }
     }
 }
