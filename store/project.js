@@ -171,7 +171,7 @@ export const actions = {
     }, 
     async getMostViewedListing({ commit }, payload) {
         try {
-            const response = await this.$apiCmsPublic.$get(`${httpEndpoint}`)
+            const response = await this.$apiCmsPublic.$get(`${httpEndpoint.projects.getMostViewListing}`)
             if (response) {
                 commit("setMostViewedListings", response.length ? response : [])
             } else {

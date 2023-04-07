@@ -2,7 +2,7 @@
     <section class="section--home-popular-listing">
         <div class="container">
             <div class="section__container">
-                <ProjectSwiper :title="'Popular Listing'" />
+                <ProjectSwiper :Listing="this.popularListing" :title="'Popular Listing'" />
             </div>
         </div>
     </section>
@@ -10,9 +10,22 @@
 
 <script>
 import ProjectSwiper from '~/components/components/Projects/components/Slider/ProjectSwiper.vue'
+import { mapState } from "vuex"
 export default {
     name: "HomePopularListingSection",
     components: { ProjectSwiper },
+    data(){
+        return  {
+            typeListing: "popularListing"
+        }
+    },
+    computed: {
+        ...mapState({
+            popularListing: (state) => state.project.popularListings
+        }),
+    },
+    created(){
+    },
     methods: {}
 }
 </script>
