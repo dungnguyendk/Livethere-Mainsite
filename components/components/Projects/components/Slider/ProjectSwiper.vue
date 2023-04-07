@@ -2,12 +2,17 @@
     <div class="swiper--project">
         <div class="swiper__top">
             <h3>
-                <slot />
+               {{ title }}
             </h3>
         </div>
-        <div class="swiper__content" v-if="popularListing">
+        <div class="swiper__content" v-if="Listing.length > 0">
             <swiper class="swiper swiper-item" :options="swiperOption">
-                <swiper-slide class="swiper-box" v-for="(element, index) in popularListing" :key="index">
+                <swiper-slide class="swiper-box" v-for="(element, index) in Listing" :key="index">
+                    <!-- <pre>
+                        <code>
+                            {{ element }}
+                        </code>
+                    </pre> -->
                     <SwiperCard :item="element"/>
                     
                 </swiper-slide>
@@ -32,10 +37,18 @@ export default {
     components: {
         SwiperCard
     },
+    props:{
+        title:{
+            type: String,
+            default: "Project Swiper",
+        },
+        Listing: {
+            type: Array,
+            default: () => [] ,
+        }
+    },
     computed: {
-        ...mapState({
-            popularListing: (state) => state.project.popularListings
-        }),
+       
     },
     data() {
         const self = this
@@ -82,8 +95,11 @@ export default {
             activeColorArrow: false
         }
     },
+    created(){
+        // console.log("this Listing", this.Listing);
+    },
     mounted() {
-        this.fractionForm = this.popularListing.length.toLocaleString("en-US", {
+        this.fractionForm = this.Listing.length.toLocaleString("en-US", {
             minimumIntegerDigits: 2,
             useGrouping: false
         })

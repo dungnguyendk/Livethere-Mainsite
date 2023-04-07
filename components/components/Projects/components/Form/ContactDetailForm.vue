@@ -128,7 +128,7 @@ export default {
     },
     computed: {
         nameErrors() {
-            return setFormControlErrors(this.$v.name, "Name Required")
+            return setFormControlErrors(this.$v.name, "Name is Required")
         },
         emailErrors() {
             const errors = []
@@ -146,7 +146,7 @@ export default {
             return errors
         },
         messageErrors() {
-            return setFormControlErrors(this.$v.message, "Message Required")
+            return setFormControlErrors(this.$v.message, "Message is Required")
         }
     },
 

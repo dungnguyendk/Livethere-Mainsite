@@ -2,40 +2,40 @@
     <section class="section--home-popular-listing">
         <div class="container">
             <div class="section__container">
-                <ProjectSwiper>
-                    {{ titleSwiper }}
-                </ProjectSwiper>
+                <ProjectSwiper :Listing="this.popularListing" :title="'Popular Listing'" />
             </div>
         </div>
     </section>
 </template>
 
 <script>
-import ProjectSwiper from '../../Projects/components/Slider/ProjectSwiper.vue';
+import ProjectSwiper from '~/components/components/Projects/components/Slider/ProjectSwiper.vue'
+import { mapState } from "vuex"
 export default {
     name: "HomePopularListingSection",
-    components: {ProjectSwiper},
-
-    data() {
-        return {
-            titleSwiper: "popular listings", 
-        
+    components: { ProjectSwiper },
+    data(){
+        return  {
+            typeListing: "popularListing"
         }
     },
-    methods: {
-
-    }
+    computed: {
+        ...mapState({
+            popularListing: (state) => state.project.popularListings
+        }),
+    },
+    created(){
+    },
+    methods: {}
 }
 </script>
 <style lang="scss" scoped>
 .section--home-popular-listing {
-    padding:4.3rem 0;
+    padding: 4.3rem 0;
     background-color: var(--bg-color-white);
 
     @media screen and (max-width: 767px) {
         padding: 3.2rem 0;
     }
 }
-
-
 </style>

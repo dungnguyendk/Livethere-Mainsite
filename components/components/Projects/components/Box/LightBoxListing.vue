@@ -9,7 +9,7 @@
                 'active-total-images': idx === 4 && images.length > 4
             }"
         >
-            <img :src="image" alt="" />
+            <img :src="image ? image : 'https://fakeimg.pl/688x387/?text=No%20Image'" alt="" />
             <span v-if="idx === 4 && images.length > 4"
                 >+{{ totalImagesSlider }} photos</span
             >
@@ -60,11 +60,14 @@ export default {
         cursor: pointer;
 
         &:nth-child(1) {
+            
             grid-column-start: 1;
             grid-column-end: 4;
             grid-row-start: 1;
             grid-row-end: 2;
             img {
+                // position: absolute;
+                // z-index: 1;
                 height: auto;
                 border-radius: 2rem 2rem 0 0;
                 width: 100%;

@@ -2,8 +2,8 @@
     <div class="card--swiper">
         <div class="card__header" @click="onRouteToDetails(item)">
             <div class="card__header-image">
-                <template v-if="item.images">
-                    <img :src="item.images" alt="" />
+                <template v-if="item.thumbnail">
+                    <img :src="item.thumbnail" alt="" />
                 </template>
                 <template v-else>
                     <img src="https://fakeimg.pl/362x384/?text=No%20Image" alt="" />
@@ -53,13 +53,16 @@ export default {
         return {}
     },
 
-    mounted() {},
+    mounted() {
+        // console.log("this.router",item );
+    },
 
     methods: {
         onRouteToDetails(item) {
             this.$router.push(`/projects/${item.slug}`)
         }
     }
+    
 }
 </script>
 
@@ -70,16 +73,22 @@ export default {
         position: relative;
         padding: 0 1.2rem;
         .card__header-image {
+            padding-bottom: 105.8%;
             position: relative;
             display: flex;
             align-items: center;
             justify-content: center;
             img {
+                position: absolute;
+                z-index: 1;
+                top: 0;
+                left: 0;
+                height: 100%;
+                max-width: 100%;
                 width: 100%;
                 object-fit: cover;
                 border-radius: 2rem;
             }
-
         }
         .card__header-title {
             position: absolute;
@@ -87,6 +96,7 @@ export default {
             padding: 2.2rem 1.6rem 2.5rem;
             bottom: 2.3rem;
             margin-bottom: 0;
+            z-index: 1;
             display: flex;
             align-items: center;
             left: -1.2rem;
@@ -108,43 +118,50 @@ export default {
             }
         }
         &:hover,
-            &:active {
-                .card__header-image-hover {
-                    visibility: visible;
-                    opacity: 1;
-                }
-                .card__header-title {
-                    display: flex;
-                    justify-content: center;
-                    visibility: visible;
-                    opacity: 1;
-                    background: transparent;
-                    position: absolute;
-                    left: 0;
-                    right: 0;
-                    width: 100%;
-                    bottom: auto;
-                    top: 9rem;
-                    padding: 0 4.2rem;
-                   
+        &:active {
+            .card__header-image-hover {
+                z-index: 5;
+                // position: relative;
+                visibility: visible;
+                opacity: 1;
+                // img{
+                //     visibility: hidden;
+                // }
+            }
+            .card__header-title {
+                display: flex;
+                justify-content: center;
+                visibility: visible;
+                opacity: 1;
+                background: transparent;
+                position: absolute;
+                z-index: 6;
+                left: 0;
+                right: 0;
+                width: 100%;
+                bottom: auto;
+                top: 9rem;
+                padding: 0 4.2rem;
 
-                    .card__header-link {
-                        text-align: center;
-                        margin-bottom: 5rem;
-                        font-weight: 800;
-                        font-size: 2.4rem;
-                        line-height: 3rem;
-                    }
+                .card__header-link {
+                    text-align: center;
+                    margin-bottom: 5rem;
+                    font-weight: 800;
+                    font-size: 2.4rem;
+                    line-height: 3rem;
                 }
             }
+        }
     }
     .card__content {
+        cursor: default;
         padding-top: 0.9rem;
         .card__content-first {
             display: flex;
             align-items: center;
             margin-bottom: 1rem;
             p {
+               
                 margin-bottom: 0;
                 font-weight: 500;
                 font-size: 1.6rem;
