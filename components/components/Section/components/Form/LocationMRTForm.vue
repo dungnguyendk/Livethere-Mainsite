@@ -273,7 +273,9 @@ export default {
                 ".ac",
                 ".ad",
                 ".ab",
-                ".ag"
+                ".bp",
+                ".sk",
+                ".pg",
             ]
             const selectedNodes = document.querySelectorAll(".v-treeview-node--selected")
             const selectedIds = []
@@ -329,12 +331,15 @@ export default {
                         elementsIds.forEach((element) => {
                             element.style.stroke = "none"
                         })
+                        
                         const elements = this.$el.querySelectorAll(".o, .p")
                         elements.forEach((element) => {
                             element.style.fill = "#ff9e18"
                         })
+                        
                         classLine.splice(classLine.indexOf(".o"), 1)
                         classLine.splice(classLine.indexOf(".p"), 1)
+                        
                     }
                     if (keyItem === "DT") {
                         const elementsIds = document.querySelectorAll(`[id^=${keyItem}]`)
@@ -361,7 +366,7 @@ export default {
                         classLine.splice(classLine.indexOf(".s"), 1)
                     }
 
-                    if (!["EW", "NS", "NE", "QC", "DT", "TE"].includes(keyItem)) {
+                    if (!["EW", "NS", "NE", "CC", "DT", "TE"].includes(keyItem)) {
                         const elements = this.$el.querySelectorAll(".ac, .ad")
                         elements.forEach((element) => {
                             element.style.fill = "#718472"
@@ -371,8 +376,9 @@ export default {
                     }
                 })
             }
-
-            if (classLine.length < 16) {
+            console.log("classLine done :",classLine);
+            console.log("classLine.length :",classLine.length);
+            if (classLine.length < 16 && classLine.length > 0) {
                 blurLine(classLine.join(","))
             } else {
                 resetColor()
