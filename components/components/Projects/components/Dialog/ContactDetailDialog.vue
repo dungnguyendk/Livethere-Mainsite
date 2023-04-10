@@ -26,8 +26,8 @@
                     <div class="card__content-box-info">
                         <div class="card__content-box" @click="onClose">
                             <div class="card__content-box-text">
-                                <h3>eden residences capitol</h3>
-                                <p>11 Stamford Road, Singapore 178884</p>
+                                <h3>{{projectDetail.buildingName}}</h3>
+                                <p>{{ projectDetail.buildingAddress }}</p>
                             </div>
                             <div class="card__content-box-image">
                                 <img src="https://picsum.photos/600/400.jpg?random=" alt="" />
@@ -85,6 +85,9 @@
 
 <script>
 import ContactDetailForm from "~/components/components/Projects/components/Form/ContactDetailForm.vue"
+
+import {mapState} from "vuex";
+
 export default {
     name: "ContactDetailDialog",
     components: { ContactDetailForm },
@@ -99,6 +102,11 @@ export default {
             type: Boolean,
             default: false
         }
+    },
+    computed: {
+        ...mapState({
+            projectDetail: state => state.project.projectDetails
+        }),
     },
     methods: {
         onClose() {

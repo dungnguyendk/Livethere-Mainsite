@@ -17,7 +17,7 @@
                         <v-avatar size="50">
                             <img src="https://picsum.photos/600/400.jpg?random=" alt="" />
                         </v-avatar>
-                        <p>wu chin whee</p>
+                        <p>{{projectDetail.primaryAgent?.businessName}}</p>
                     </div>
                     <div class="card__content-form">
                         <ConfirmDetailForm @onClose="onClose" />
@@ -31,6 +31,7 @@
 
 <script>
 import ConfirmDetailForm from "~/components/components/Projects/components/Form/ConfirmDetailForm.vue"
+import {mapState} from "vuex";
 
 export default {
     name: "ConfirmDetailDialog",
@@ -46,6 +47,11 @@ export default {
             type: Boolean,
             default: false
         }
+    },
+    computed: {
+        ...mapState({
+            projectDetail: state => state.project.projectDetails
+        }),
     },
     methods: {
         onClose() {
