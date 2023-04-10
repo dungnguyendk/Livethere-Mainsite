@@ -18,7 +18,7 @@
         <div class="card__features">
             <v-btn
                 class="btn btn--outline btn--green btn-custom"
-                href="sms:/+65 97663322?body=I Would like to check the availability for Suites @ Central, 57B Devonshire Road, Singapore 239899, https://www.livethere.com/listing/suites-at-central-227."
+                :href="`sms:/+65 ${info?.phoneNumber}?body=I Would like to check the availability for ${projectDetail.buildingName}, ${projectDetail.buildingAddress}, ${getUrl}.`"
                 target="_blank"
             >
                 <i class="icon-svg svg-messages"></i>
@@ -43,6 +43,8 @@
 </template>
 
 <script>
+import {mapState} from "vuex";
+
 export default {
     name: "ContactAgentCard",
     props: {
@@ -56,6 +58,17 @@ export default {
             imgURLAvatar: "https://avatars0.githubusercontent.com/u/9064066?v=4&s=460",
             isOpenConfirmDetailDialog: false,
             isOpenContactDetailDialog: false
+        }
+    },
+    computed: {
+        ...mapState({
+            projectDetail: state => state.project.projectDetails
+        }),
+
+        getUrl() {
+            if (process.client) {
+                return window.location.href
+            }
         }
     },
     methods: {
