@@ -419,7 +419,7 @@ export default {
                 mrt: this.searchMRT,
                 unitSize: "100;-1",
                 page: 1,
-                perPage: 10,
+                perPage: 4,
             }
             const paramsStringify = qs.stringify(params, { encode: false })
             // console.log("onSearchListing params", params)

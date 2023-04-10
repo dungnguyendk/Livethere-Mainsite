@@ -56,7 +56,7 @@ export default {
         async handleLoadMore() {
             // console.log("handleLoadMore")
             // console.log({...this.paramsSearch,perPage: + 10})
-            const newPerPage = {...this.paramsSearch,...{perPage: Number(this.paramsSearch.perPage) + 10}}
+            const newPerPage = {...this.paramsSearch,...{perPage: Number(this.paramsSearch.perPage) + 4}}
             const queryStringify = qs.stringify(newPerPage, { encode: false })
             this.$router.push(`/projects?${queryStringify}`)
             // {...queryStringify,...{perPage: Number(this.$store.state.project.paramsSearch.perPage) + 10} }
