@@ -1,13 +1,15 @@
 <template>
     <div class="card--article-grid">
         <div class="card__header">
-            <nuxt-link to="" class="card__title"> {{ article.buildingName }} </nuxt-link>
+            <nuxt-link :to="`/projects/${article.slug}`" class="card__title">
+                {{ article.projectName }}
+            </nuxt-link>
         </div>
         <div class="card__body">
-            <nuxt-link to="/" target="_blank">
+            <nuxt-link :to="`/projects/${article.slug}`" target="_blank">
                 <div class="card__image">
-                    <template v-if="article.images">
-                        <img :src="article.images" alt="" />
+                    <template v-if="article.thumbnail">
+                        <img :src="article.thumbnail" alt="" />
                     </template>
                     <template v-else>
                         <img src="https://fakeimg.pl/362x384/?text=No%20Image" alt="" />
@@ -15,14 +17,18 @@
                 </div>
             </nuxt-link>
             <div class="card__content">
-                <p>{{ article.buildingAddress }}</p>
-                <a class="card__button">Read More</a>
+                <p>{{ article.description }}</p>
+                <a @click="onSearch(article)" class="card__button"> Read More</a>
             </div>
         </div>
     </div>
 </template>
 
 <script>
+import { mapState } from "vuex"
+import qs from "qs"
+import { httpEndpoint } from "~/services/https/endpoints"
+
 export default {
     name: "ArticleGrid",
     props: {
@@ -33,6 +39,34 @@ export default {
     },
     data() {
         return {}
+    },
+    computed: {
+        ...mapState({
+            // projectDetails: (state) => state.project.lastestProjects
+        })
+    },
+    created() {
+        // console.log("ArticleGrid created", this.article.id)
+    },
+    methods: {
+        async onSearch(article) {
+            // console.log(article.id)
+            const params = article.id
+            // console.log("params: ", params)
+            const response = await this.$apiCmsPublic.$get(
+                `${
+                    httpEndpoint.projects.getProjectListings
+                }?projectId=${article.id}&PageNumber=${1}&PageSize=${10}`
+            )
+            console.log("response: ", response.data);
+            if(response?.data){
+                this.$router.push(`/projects?${article.projectName}&PageNumber=${1}&PageSize=${10}`)
+            }
+          
+            // this.$store.dispatch("project/searchProjectListing", 10)
+
+            // this.$emit("Seach", article)
+        }
     }
 }
 </script>
@@ -106,6 +140,7 @@ export default {
                 min-height: 4.8rem;
             }
             .card__button {
+                cursor: pointer;
                 text-decoration: underline;
                 font-weight: 700;
                 font-size: 1.6rem;

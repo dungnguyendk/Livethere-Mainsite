@@ -20,7 +20,7 @@
                         <p>wu chin whee</p>
                     </div>
                     <div class="card__content-form">
-                        <ConfirmDetailForm />
+                        <ConfirmDetailForm @onClose="onClose" />
                     </div>
                 </div>
             </div>

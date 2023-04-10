@@ -6,7 +6,7 @@
                 color="#3b5998"
                 height="48"
                 width="48"
-                href="https://www.facebook.com/"
+                :href="`https://www.facebook.com/sharer/sharer.php?u=${linkURL}`"
                 target="_blank"
             >
                 <i class="ri-facebook-fill"></i>
@@ -16,7 +16,7 @@
                 color="#25d366"
                 height="48"
                 width="48"
-                href="https://www.whatsapp.com/"
+                :href="`https://wa.me/?text=${linkURL}`"
                 target="_blank"
             >
                 <i class="ri-whatsapp-line"></i>
@@ -26,7 +26,7 @@
                 color="#00b800"
                 height="48"
                 width="48"
-                href="https://line.me/en/"
+                :href="`https://social-plugins.line.me/lineit/share?url=${linkURL}`"
                 target="_blank"
             >
                 <i class="ri-line-line"></i>
@@ -36,7 +36,7 @@
                 color="#37aee2"
                 height="48"
                 width="48"
-                href="https://telegram.org/"
+                :href="`https://t.me/share/url?url=${linkURL}`"
                 target="_blank"
             >
                 <i class="ri-telegram-line"></i>
@@ -46,7 +46,7 @@
                 color="#7f7f7f"
                 height="48"
                 width="48"
-                href="https://mail.google.com/mail/u/0/#inbox"
+                :href="`mailto:?body=${linkURL}`"
                 target="_blank"
             >
                 <i class="ri-mail-line"></i>
@@ -72,6 +72,7 @@
 </template>
 
 <script>
+import { mapState } from "vuex"
 export default {
     name: "ShareSocialForm",
     props: {
@@ -81,19 +82,25 @@ export default {
         }
     },
     computed: {
-        linkURL: {
-            get() {
-                return this.item?.slug
-            },
-            set(value) {
-                this.item.slug = value
-            }
-        }
+        ...mapState({
+            projectDetails: (state) => state.project.projectDetails
+        }), 
+        
+       
     },
     data() {
         return {
-            // linkURL: this.item.slug
+            linkURL: "",
+            baseUrl : "",
         }
+    },
+    created(){
+       
+    },
+    mounted(){
+        this.getBaseUrl()
+        this.checkDetail()
+
     },
     beforeDestroy() {
         clearTimeout(this._timerId)
@@ -107,11 +114,27 @@ export default {
             const element = this.$refs.linkURLCopy
             element.select()
             element.setSelectionRange(0, 99999)
+        },
+        getBaseUrl(){
+            const url = new URL(window.location.href);
+            this.baseUrl = `${url.origin}${url.pathname}`;
+            this.linkURL = `${this.baseUrl}/${this.item?.slug}`
+        },
+        checkDetail(){
+            if(!this.item || !this.item.id){
+                if(this.projectDetails && this.projectDetails.id){
+                this.getBaseUrl()
+                    this.linkURL = this.baseUrl
+                }else {
+                    console.log("else");
+                }
+            }
+            
         }
     },
     watch: {
         item(val) {
-            this.linkURL = val.linkDetails
+            this.getBaseUrl()
         }
     }
 }

@@ -9,7 +9,9 @@
             </div>
             <div class="card__content">
                 <div class="mrt__search-content">
-                    <div class="mrt__sidebar">
+                    <div
+                        :class="[isShowSearchBarMobile ? 'd-block' : 'mobile-none', 'mrt__sidebar']"
+                    >
                         <div class="form__field border-bottom">
                             <v-checkbox
                                 v-model="cbFutureLines"
@@ -62,6 +64,7 @@
                                     :items="listStation"
                                     selectable
                                     activatable
+                                    :open.sync="openTree"
                                     open-on-click
                                     class="tree--station"
                                 >
@@ -89,10 +92,39 @@
                             </template>
                         </div>
                     </div>
-                    <div class="mrt__map" id="svg-container">
+                    <div
+                        :class="[isShowSearchBarMobile ? 'mobile-none' : 'd-block', 'mrt__map']"
+                        id="svg-container"
+                    >
                         <panZoom>
                             <MrtSingapore />
                         </panZoom>
+                    </div>
+                    <div class="mrt__tabs-mobile">
+                        <div class="tabs__container">
+                            <div
+                                v-for="tab in listStation"
+                                :key="tab.id"
+                                :class="[
+                                    isShowSearchBarMobile ? 'mobile-none' : 'd-block',
+                                    'tabs__item'
+                                ]"
+                                :style="{ backgroundColor: tab.lineColor }"
+                                @click="handleSelectStation(tab)"
+                            >
+                                {{ tab.id }}
+                            </div>
+                            <v-btn
+                                :class="[
+                                    isShowSearchBarMobile ? 'd-block' : 'mobile-none',
+                                    'btn btn--primary btn--green'
+                                ]"
+                                style="margin-left: auto; margin-right: 2.4rem"
+                                @click.prevent="isShowSearchBarMobile = false"
+                            >
+                                Apply
+                            </v-btn>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -135,7 +167,9 @@ export default {
             filterStations: [],
             searchStations: [],
             stationListHighlighted: [],
-            stationListChecked: []
+            stationListChecked: [],
+            isShowSearchBarMobile: false,
+            openTree: []
         }
     },
     computed: {
@@ -155,6 +189,10 @@ export default {
         // console.log("convertListStation this.listStation: ,", this.listStation)
     },
     methods: {
+        handleSelectStation(tab) {
+            this.isShowSearchBarMobile = true
+            this.openTree = [tab.id]
+        },
         onCheckFutureLines() {},
         onClose() {
             this.$emit("close")
@@ -233,9 +271,7 @@ export default {
                 ".r",
                 ".s",
                 ".ac",
-                ".ad",
-                ".ab",
-                ".ag"
+                ".ad"
             ]
             const selectedNodes = document.querySelectorAll(".v-treeview-node--selected")
             const selectedIds = []
@@ -250,66 +286,85 @@ export default {
             if (selectedIds) {
                 selectedIds.forEach((keyItem) => {
                     if (keyItem === "EW") {
+                        const elementsIds = document.querySelectorAll(`[id^=${keyItem}]`)
+                        elementsIds.forEach((element) => {
+                            element.style.stroke = "none"
+                        })
+                        console.log("keyItem, ", keyItem)
                         const elements = this.$el.querySelectorAll(".i, .j")
                         elements.forEach((element) => {
                             element.style.fill = "#00953b"
                         })
                         classLine.splice(classLine.indexOf(".i"), 1)
                         classLine.splice(classLine.indexOf(".j"), 1)
-                    }
-                    if (keyItem === "NS") {
+                    } else if (keyItem === "NS") {
+                        const elementsIds = document.querySelectorAll(`[id^=${keyItem}]`)
+                        elementsIds.forEach((element) => {
+                            element.style.stroke = "none"
+                        })
                         const elements = this.$el.querySelectorAll(".x, .y")
                         elements.forEach((element) => {
                             element.style.fill = "#e1251b"
                         })
                         classLine.splice(classLine.indexOf(".x"), 1)
                         classLine.splice(classLine.indexOf(".y"), 1)
-                    }
-                    if (keyItem === "NE") {
+                    } else if (keyItem === "NE") {
+                        const elementsIds = document.querySelectorAll(`[id^=${keyItem}]`)
+                        elementsIds.forEach((element) => {
+                            element.style.stroke = "none"
+                        })
                         const elements = this.$el.querySelectorAll(".t, .u")
                         elements.forEach((element) => {
                             element.style.fill = "#9e28b5"
                         })
                         classLine.splice(classLine.indexOf(".t"), 1)
                         classLine.splice(classLine.indexOf(".u"), 1)
-                    }
-                    if (keyItem === "CC") {
+                    } else if (keyItem === "CC") {
+                        const elementsIds = document.querySelectorAll(`[id^=${keyItem}]`)
+                        elementsIds.forEach((element) => {
+                            element.style.stroke = "none"
+                        })
                         const elements = this.$el.querySelectorAll(".o, .p")
                         elements.forEach((element) => {
                             element.style.fill = "#ff9e18"
                         })
                         classLine.splice(classLine.indexOf(".o"), 1)
                         classLine.splice(classLine.indexOf(".p"), 1)
-                    }
-                    if (keyItem === "DT") {
+                    } else if (keyItem === "DT") {
+                        const elementsIds = document.querySelectorAll(`[id^=${keyItem}]`)
+                        elementsIds.forEach((element) => {
+                            element.style.stroke = "none"
+                        })
                         const elements = this.$el.querySelectorAll(".f, .g")
                         elements.forEach((element) => {
                             element.style.fill = "#0055b8"
                         })
                         classLine.splice(classLine.indexOf(".f"), 1)
                         classLine.splice(classLine.indexOf(".g"), 1)
-                    }
-                    if (keyItem === "TE") {
+                    } else if (keyItem === "TE") {
+                        const elementsIds = document.querySelectorAll(`[id^=${keyItem}]`)
+                        elementsIds.forEach((element) => {
+                            element.style.stroke = "none"
+                        })
                         const elements = this.$el.querySelectorAll(".r, .s")
                         elements.forEach((element) => {
                             element.style.fill = "#9d5918"
                         })
                         classLine.splice(classLine.indexOf(".r"), 1)
                         classLine.splice(classLine.indexOf(".s"), 1)
-                    }
-                    
-                    if (!["EW", "NS", "NE", "QC", "DT", "TE"].includes(keyItem)) {
+                    } else {
                         const elements = this.$el.querySelectorAll(".ac, .ad")
                         elements.forEach((element) => {
                             element.style.fill = "#718472"
                         })
-                        classLine.splice(classLine.indexOf(".ac"), 1)
-                        classLine.splice(classLine.indexOf(".ad"), 1)
+                        if (classLine.indexOf(".ac") > -1 && classLine.indexOf(".ad") > -1) {
+                            classLine.splice(classLine.indexOf(".ac"), 1)
+                            classLine.splice(classLine.indexOf(".ad"), 1)
+                        }
                     }
                 })
             }
-
-            if (classLine.length < 16) {
+            if (classLine.length < 14 && classLine.length > 0) {
                 blurLine(classLine.join(","))
             } else {
                 resetColor()
@@ -338,10 +393,6 @@ export default {
                             // remove list in menu and uncheck
                             let idxS = this.stationListChecked.indexOf(mrtStationCode)
                             this.stationListChecked.splice(idxS, 1)
-                            console.log(
-                                "Xóa khỏi danh sách checked ở menu và uncheck",
-                                this.stationListChecked
-                            )
                             this.selectedStations = this.stationListChecked
                         } else {
                             // console.log("selected mrtStationCode",mrtStationCode)
@@ -352,10 +403,7 @@ export default {
                             // add list checked in menu
                             if (!this.stationListChecked.includes(mrtStationCode)) {
                                 this.stationListChecked.push(mrtStationCode)
-                                console.log(
-                                    "Thêm vào danh sách checked ở menu và checked",
-                                    this.stationListChecked
-                                )
+
                                 this.selectedStations = this.stationListChecked
                             }
                             // add list highlighted map
@@ -368,31 +416,37 @@ export default {
         },
         mrtMapHighlight(stationChecked) {
             let stationListToHighlight = []
-            
-            
-            // Chuyển đổi mrt code sang id mỗi trạm trên map
+
+            // Convert Mrt to code station
             stationChecked.forEach(function (mrtCode) {
                 let stationIdOnMap = mrtCode.replaceAll("/", "_")
                 stationListToHighlight.push(stationIdOnMap)
             })
-            this.stationListChecked = stationChecked 
+            this.stationListChecked = stationChecked
             // console.log("this.stationListHighlighted :",this.stationListHighlighted)
             // console.log("this.stationListChecked :",this.stationListChecked)
             // console.log("stationListToHighlight",stationListToHighlight)
-            
-            // Kiểm tra và xóa những trạm đã bỏ check
+
+            // Check and remove stations uncheck
             for (let i = this.stationListHighlighted.length - 1; i >= 0; i--) {
                 if (!stationListToHighlight.includes(this.stationListHighlighted[i])) {
-                    document.querySelector(
+                    const stationElement = document.querySelector(
                         `g[id='${this.stationListHighlighted[i]}']`
-                    ).style.stroke = ""
+                    )
+                    if (stationElement) {
+                        stationElement.style.stroke = ""
+                    }
                     this.stationListHighlighted.splice(i, 1)
                 }
             }
 
-            // Xử lý checked những trạm còn lại
+            // Check stations
             stationListToHighlight.forEach((stationId) => {
-                document.querySelector(`g[id='${stationId}']`).style.stroke = "currentColor"
+                // document.querySelector(`g[id='${stationId}']`).style.stroke = "currentColor"
+                const stationElement = document.querySelector(`g[id='${stationId}']`)
+                if (stationElement) {
+                    stationElement.style.stroke = "currentColor"
+                }
                 if (!this.stationListHighlighted.includes(stationId)) {
                     this.stationListHighlighted.push(stationId)
                 }
@@ -469,31 +523,93 @@ export default {
 }
 .mrt__search-content {
     display: flex;
+    flex-wrap: nowrap;
     height: 100%;
+
+    @media screen and (max-width: 767px) {
+        flex-wrap: wrap;
+    }
+
     .mrt__sidebar {
         flex: 0 0 40rem;
-        max-width: 40rem;
+        width: 40rem;
         background-color: var(--bg-color-white);
         padding: 0 2.4rem;
+
+        @media screen and (max-width: 767px) {
+            flex: 1;
+        }
     }
     .mrt__map {
-        flex-basis: 0;
-        flex-grow: 1;
-        max-width: 100%;
         overflow: hidden;
+
+        @media screen and (max-width: 767px) {
+            height: 100%;
+        }
+
         svg {
             max-width: 100%;
             max-height: 100%;
         }
     }
 }
+.mrt__tabs-mobile {
+    display: none;
+
+    @media screen and (max-width: 767px) {
+        display: block;
+        position: absolute;
+        width: 100%;
+        left: 0;
+        bottom: 6.7rem;
+    }
+
+    .tabs {
+        &__container {
+            display: flex;
+            padding: 1.2rem 0;
+            background-color: white;
+            overflow: auto;
+
+            &::-webkit-scrollbar {
+                height: 0.5rem;
+            }
+        }
+
+        &__item {
+            padding: 0.8rem 1.6rem;
+            border-radius: 0.8rem;
+            min-width: 7rem;
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: white;
+            background-color: var(--color-primary);
+            margin: 0 0.4rem;
+        }
+    }
+}
+.mobile-none {
+    @media screen and (max-width: 767px) {
+        display: none;
+    }
+}
 .form--mrt {
     height: 90vh;
+
+    @media screen and (max-width: 767px) {
+        height: 100%;
+    }
+
     .form__footer {
         display: flex;
         justify-content: space-between;
         padding: 2.4rem 2.4rem 3.2rem;
         border-top: 1px solid var(--border-color);
+
+        @media screen and (max-width: 767px) {
+            padding: 1.2rem 2.4rem;
+        }
     }
 }
 .card--dialog {
@@ -507,8 +623,17 @@ export default {
         position: relative;
         display: flex;
         flex-shrink: 0;
+
+        @media screen and (max-width: 767px) {
+            padding-bottom: 0;
+        }
+
         h4 {
             font-size: 2.4rem;
+
+            @media screen and (max-width: 767px) {
+                font-size: 1.8rem;
+            }
         }
     }
     .card__content {

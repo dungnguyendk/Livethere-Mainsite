@@ -16,7 +16,7 @@
                     <img :src="project.images" alt="" />
                 </template>
                 <template v-else>
-                    <img src="https://fakeimg.pl/362x384/?text=No%20Image" alt="" />
+                    <img src="https://fakeimg.pl/574x320/?text=No%20Image" alt="" />
                 </template>
             </nuxt-link>
         </div>
@@ -37,7 +37,7 @@
             </div>
             <div class="card__content-infor">
                 <div class="card__content-location card__content-style">
-                    <i class="icon-svg svg-location"></i>
+                    <i class="icon-svg svg-location align-self-start"></i>
                     <span>{{ project.buildingAddress }}</span>
                 </div>
                 <div class="card__content-bed-bath">
@@ -199,6 +199,7 @@ export default {
     align-items: center;
 
     i {
+        flex: 0 0 3.2rem;
         width: 3.2rem;
         height: 3.2rem;
         background-color: #edb842;

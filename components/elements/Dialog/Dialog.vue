@@ -105,8 +105,18 @@ export default {
             padding-top: 3.2rem;
             padding-bottom: 2.4rem;
             position: relative;
+
+            @media screen and (max-width: 767px) {
+                padding-top: 2.4rem;
+                padding-bottom: 0.4rem;
+            }
+
             h4 {
                 font-size: 2.4rem;
+
+                @media screen and (max-width: 767px) {
+                    font-size: 1.8rem;
+                }
             }
         }
         .btn--close {

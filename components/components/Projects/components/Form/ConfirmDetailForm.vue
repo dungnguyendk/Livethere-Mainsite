@@ -72,6 +72,7 @@ import {
     MESSAGE_SERVER_ERROR,
     MESSAGE_USERNAME_EXISTS
 } from "~/ultilities/error-messages"
+import {mapState} from "vuex"
 const complexity = helpers.regex(
     "complexity",
     /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/
@@ -95,8 +96,12 @@ export default {
         }
     },
     computed: {
+        ...mapState({
+            projectDetail: (state) => state.project.projectDetails
+        }),
+
         nameErrors() {
-            return setFormControlErrors(this.$v.name, "Name Required")
+            return setFormControlErrors(this.$v.name, "Name is Required")
         },
         emailErrors() {
             const errors = []
@@ -149,15 +154,28 @@ export default {
             this.$v.$touch()
             if (!this.$v.$invalid) {
                 const params = {
-                    name: this.name, 
-                    phone: this.phone, 
-                    email: this.email, 
+                    name: this.name,
+                    phoneNumber: this.phone,
+                    email: this.email,
+                    message: "",
+                    EnquiryType: 'WhatsappEnquiry',
+                    pageUrl: window.location.href,
+                    Country: '',
+                    phoneCountry: this.country,
+                    listingId: this.projectDetail.id
                 }
-                this.$store.dispatch("project/confirmDetails", params).then((res)=>{
-                    this.snackbar = res
-                    this.messageSnackbar = "Thank you for your submission, our agent has been notified and will be contacting you shortly"
+                this.$store.dispatch("project/enquireUser", params).then((res)=>{
+                    console.log(res)
+                    if (res) {
+                        window.open(
+                            `https://api.whatsapp.com/send?phone=+65 ${this.projectDetail.primaryAgent.phoneNumber}
+                            &text=Hey ${this.projectDetail.primaryAgent.businessName}!${params.message}, I Would like to check the availability for ${this.projectDetail.buildingName}, ${this.projectDetail.buildingAddress}
+                            ,${window.location.href} Thank you! Regards ${params.name} ${params.email}`
+                            ,'_blank')
+                    }
                 })
                 this.onResetForm()
+                this.$emit('onClose')
             }else{
                 console.log("fail!")
             }

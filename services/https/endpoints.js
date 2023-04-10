@@ -90,12 +90,15 @@ export const httpEndpoint = {
         getEntries: "api/marketing",
         postEntriesListWithUs: "api/marketing/list-with-us"
     },
+
     projects: {
         linesMrt: "api/mrt-lines",
         getListings: "api/listings",
+        getProjectListings: "api/projects/listings",
         getPopularListing: "api/popular-listings",
         getMostViewListing: "api/most-viewed-listings",
         getAmenities: "api/amenities",
-
+        postEnquiries: 'api/enquiries',
+        getEntries:'api/projects'
     },
 }

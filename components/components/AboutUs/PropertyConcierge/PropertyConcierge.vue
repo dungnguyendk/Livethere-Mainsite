@@ -7,7 +7,7 @@
                     <img src="/img/Rectangle 1122.png" alt="" />
                 </div>
                 <div class="section__right">
-                    <v-expansion-panels>
+                    <v-expansion-panels v-model="properties">
                         <v-expansion-panel>
                             <v-expansion-panel-header expand-icon="ri-add-line">
                                 <!-- <template v-slot:actions>
@@ -88,7 +88,8 @@ export default {
     data() {
         return {
             connectFormDialog: false,
-            sizeDialog: "large"
+            sizeDialog: "large",
+            properties: [0],
         }
     },
     methods: {

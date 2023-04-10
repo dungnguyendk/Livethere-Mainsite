@@ -36,7 +36,7 @@
                     </div>
                     <template v-if="isShowArticleOrForm">
                         <div class="card__content-article">
-                            <ContactDetailForm />
+                            <ContactDetailForm @onClose="onClose" />
                         </div>
                     </template>
                     <template v-else>
@@ -47,6 +47,12 @@
                                 inspection date and time.</p
                             >
                             <div class="card__content-article-check">
+                                <v-checkbox
+                                    color="#00634F"
+                                    hide-details
+                                    class="v-checkbox-custom"
+                                />
+                                <span>Request a remote viewing</span>
                                 <v-tooltip top>
                                     <template v-slot:activator="{ on, attrs }">
                                         <div
@@ -54,12 +60,7 @@
                                             v-on="on"
                                             class="card__content-article-info"
                                         >
-                                            <v-checkbox
-                                                color="#00634F"
-                                                hide-details
-                                                class="v-checkbox-custom"
-                                            />
-                                            <span>Request a remote viewing</span>
+
                                             <v-icon size="25">mdi-information-outline</v-icon>
                                         </div>
                                     </template>
@@ -126,7 +127,7 @@ export default {
             display: flex;
             align-items: center;
             justify-content: flex-start;
-            padding: 2.7rem 2.4rem;
+            padding: 2.7rem 0;
             h3 {
                 font-weight: 700;
                 font-size: 1.76rem;
@@ -201,20 +202,23 @@ export default {
         margin-bottom: 0;
     }
     .card__content-article-check {
-        display: inline-block;
+        display: flex;
+        align-items: center;
+
+        span {
+            font-weight: 500;
+            font-size: 1.6rem;
+            line-height: 3rem;
+            color: var(--color-title-black);
+            margin-right: 0.5rem;
+        }
     }
 }
 .card__content-article-info {
     margin: 2.7rem 0;
     display: flex;
     align-items: center;
-    span {
-        font-weight: 500;
-        font-size: 1.6rem;
-        line-height: 3rem;
-        color: var(--color-title-black);
-        margin-right: 0.5rem;
-    }
+    order: 3;
 }
 .v-checkbox-custom {
     margin-top: 0;

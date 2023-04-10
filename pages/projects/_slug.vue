@@ -20,42 +20,16 @@ export default {
     async asyncData({app, params, store}){
 
         app.head.meta = generateLandlordsSEOMetaTags(app.head.meta)
-        const id = params.slug
-        // console.log("asyncData",id);
+        const slug = params.slug
+        // console.log("asyncData",slug);
         try{
-            const responseProjectDetails = await app.$apiCmsPublic.$get(`${httpEndpoint.projects.getListings}/${id}`)
-            const responseMostViewListing = await app.$apiCmsPublic.$get(`${httpEndpoint.projects.getMostViewListing}`)
-            // await store.commit("project/setHomeAgent", homeAgent)
-            // await store.commit("project/setPopularListings", mostViewedListing)
-            
-
+            await store.dispatch('project/getMostViewedListing')
+            const responseProjectDetails = await app.$apiCmsPublic.$get(`${httpEndpoint.projects.getListings}/${slug}`)
             if(responseProjectDetails){
                 await store.commit("project/setProjectDetails", responseProjectDetails)
             }else {
                 await store.commit("project/setProjectDetails", {})
             }
-            if(responseMostViewListing){
-                await store.commit("project/setMostViewedListings", responseMostViewListing)
-            }else {
-                await store.commit("project/setMostViewedListings", [])
-            }
-            // const responseHomeAgent = await app.$axios.$get(`${httpEndpoint}`, id)
-            // const responseMostViewedListing = await app.$axios.$get(`${httpEndpoint}`)
-            // if(responseMostViewedListing){
-            //     await store.commit("project/setPopularListings", responseMostViewedListing.data)
-            // }else {
-            //     await store.commit("project/setPopularListings", popularListings)
-            // }
-            // if(responseProjectDetails){
-            //     await store.commit("project/setProjectDetails", responseProjectDetails.data)
-            // }else{
-            //     await store.commit("project/setProjectDetails", projectDetails)
-            // }
-            // if(responseHomeAgent){
-            //     await store.commit("project/setHomeAgent", responseHomeAgent.data)
-            // }else{
-            //     await store.commit("project/setHomeAgent", homeAgent)
-            // }
         }catch(e){
             console.log({Error: e.message})
         }

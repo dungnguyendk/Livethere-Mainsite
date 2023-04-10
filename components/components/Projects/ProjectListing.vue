@@ -36,6 +36,7 @@
             </div>
             <div class="section__body">
                 <div
+                    v-if="searchListings && searchListings.data.length > 0"
                     class="section__body-map"
                     :class="
                         isActiveMap ? 'section__body-map--active' : 'section__body-map--disabled'
@@ -151,6 +152,7 @@ export default {
             isOpenFilterProjectDialog: false,
             isOpenShareSocialDialog: false,
             targetLinkURL: {},
+            
         }
     },
     created() {
@@ -164,12 +166,10 @@ export default {
             this.isOpenShareSocialDialog = false
         },
         openShareSocialDialog(e) {
-            console.log("openShareSocialDialog e",e);
             this.isOpenShareSocialDialog = e.open
             this.targetLinkURL = this.searchListings.data.find((index) => {
                 return index.id === e.id
             })
-            console.log("this.targetLinkURL :",this.targetLinkURL);
         },
         showStatusForm(e) {
             
@@ -215,8 +215,8 @@ export default {
         .section__body-list {
             display: grid;
             grid-template-columns: repeat(1, minmax(0, 1fr));
-            grid-gap: 4.8rem;
-            padding: 2rem;
+            grid-gap: 3rem;
+            padding: 1rem;
         }
     }
 }
