@@ -17,6 +17,6 @@ export const defaultMenu = [
     },
     {
         defaultName: "Search",
-        linkURL: "https://www.livethere.com/search/results?from=home"
+        linkURL: "/projects?page=1&perPage=10"
     }
 ]

@@ -272,17 +272,17 @@
                 </v-range-slider>
             </div>
             <div class="form__field">
-                <label>Amenities</label>
-                <v-chip-group multiple column active-class="yellow--text" v-model="amenities">
+                <label>Facilities </label>
+                <v-chip-group multiple column active-class="yellow--text" v-model="facilities">
                     <v-chip
-                        v-for="(amenities, index) in listItemAmenities"
+                        v-for="(facility, index) in listFacilities"
                         :key="index"
                         label
                         class="ma-1 form__field-tag-custom"
-                        :value="amenities.title"
+                        :value="facility.title"
                     >
-                        <i :class="amenities.icon"></i>
-                        <span>{{ amenities.title }}</span>
+                        <i :class="facility.icon"></i>
+                        <span>{{ facility.title }}</span>
                     </v-chip>
                 </v-chip-group>
             </div>
@@ -333,7 +333,7 @@ export default {
         return {
             isOpenDialogDistrict: false,
             isOpenDialogMrt: false,
-            listItemAmenities: [
+            listFacilities: [
                 {
                     id: 1,
                     title: "BBQ",
@@ -396,7 +396,7 @@ export default {
             minBathroom: 0,
             maxBathroom: 5,
             listBathroom: ["0", "1", "2", "3", "4", "5+"],
-            amenities: [],
+            facilities: [],
             rangePrice: [1000, 20000],
             rangePriceMin: "",
             rangePriceMax: "",
@@ -413,6 +413,7 @@ export default {
             category: "",
             districts: "",
             searchMRT : "",
+            searchKey: "",
             listAmenities: [],
         }
     },
@@ -533,10 +534,10 @@ export default {
                 this.origin = this.paramsSearch.origin
                 this.page = this.paramsSearch.page
                 this.perPage = this.paramsSearch.perPage
-                this.search = this.paramsSearch.search
+                this.searchKey = this.paramsSearch.search
                 this.sortBy = this.paramsSearch.sortBy
                 this.category = this.paramsSearch.category
-                this.amenities = this.paramsSearch.amenities ? this.paramsSearch.amenities.split(";").map(item => item.trim()) : []
+                this.facilities = this.paramsSearch.facilities ? this.paramsSearch.facilities.split(";").map(item => item.trim()) : []
                 if (this.paramsSearch.category === "Mrt") {
                     this.locationSearch = this.paramsSearch.mrt
                 } else if (this.paramsSearch.category === "District") {
@@ -673,8 +674,8 @@ export default {
                 bedRooms: this.bedRooms,
                 bathRooms: this.bathRooms,
                 unitSize: this.unitSize,
-                amenities: this.amenities.join(';'),
-                search: this.locationSearch,
+                facilities: this.facilities.join(';'),
+                search: this.searchKey,
                 sortBy: this.paramsSearch.sortBy ? this.paramsSearch.sortBy : "Relevant",
                 category: this.category,
                 districts: this.districts,
@@ -683,8 +684,8 @@ export default {
                 perPage: this.paramsSearch.perPage ? this.paramsSearch.perPage : 10,
             }
             const paramsStringify = qs.stringify(params, { encode: false })
-            console.log("onSearchListing params", params)
-            console.log("onSearchListing params stringify", paramsStringify)
+            // console.log("onSearchListing params", params)
+            // console.log("onSearchListing params stringify", paramsStringify)
             this.$store
                 .dispatch("project/searchListing", paramsStringify)
                 .then(() => {
@@ -698,6 +699,7 @@ export default {
             ;(this.locationSearch = ""),
             (this.category = ""),
             (this.search = ""),
+            (this.searchKey = ""),
                 (this.propertyType = "All"),
                 (this.selectAll = false),
                 (this.livethereChecked = true),
@@ -707,12 +709,15 @@ export default {
                 (this.bathroom = "Bathrooms"),
                 (this.rangePrice = [1000, 20000]),
                 (this.rangeUnitSize = [100, 10000]),
-                (this.amenities = [])
+                (this.facilities = [])
         },
         selectAmenity(item){
             console.log("selectAmenity",item);
             this.category = item.category
             this.locationSearch = item.name
+            this.searchKey = item.name
+            this.searchMRT = ""
+            this.districts = ""
             // this.listAmenities = []
         },
         keySearch: _.debounce(async function (payload){
@@ -732,6 +737,7 @@ export default {
             console.log("openLocationSearch val",val)
             // this.locationSearch = ""
             this.listAmenities = []
+            this.searchKey = ""
             this.category = val
             console.log("openLocationSearch this.category",this.category)
             if(val === "Mrt"){
@@ -754,12 +760,13 @@ export default {
         getDistricts(params) {
             this.locationSearch = params.join(";")
             this.districts = this.locationSearch
+            this.searchKey = ""
             // console.log("locationSearch",this.locationSearch);
         },
         getMrt(params) {
             this.locationSearch = params.join(";")
             this.searchMRT = this.locationSearch
-            console.log("this.mrt: ", this.searchMRT)
+            this.searchKey = ""
         }
     },
     watch: {

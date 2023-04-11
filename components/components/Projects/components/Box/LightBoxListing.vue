@@ -10,7 +10,7 @@
                     'active-total-images': idx === 4 && images.length > 4
                 }"
             >
-                <img :src="image ? image : 'https://fakeimg.pl/688x387/?text=No%20Image'" alt="" />
+                <img :src="image ? image : 'https://fakeimg.pl/764x547/?text=No%20Image'" alt="" @error="setDefaultImage"  />
                 <span v-if="idx === 4 && images.length > 4">+{{ totalImagesSlider }} photos</span>
             </div>
             <Tinybox
@@ -39,7 +39,8 @@ export default {
         return {
             index: null,
             loopCheckbox: false,
-            thumbsCheckbox: true
+            thumbsCheckbox: true,
+            defaultImage: "https://fakeimg.pl/764x547/?text=No%20Image",
         }
     },
     computed: {
@@ -51,8 +52,16 @@ export default {
         }
     },
     created() {
-        console.log("listImagesLimited", this.listImagesLimited)
+        // console.log("listImagesLimited", this.listImagesLimited)
+    },
+    methods: {
+    setDefaultImage(event) {
+        console.log("setDefaultImage event",event);
+      event.target.src = this.defaultImage;
     }
+  }
+
+    
 }
 </script>
 

@@ -1,7 +1,7 @@
 <template>
     <main class="page--projects">
         <HomeSearch @location="onOpenLocationForm($event)" />
-        <ProjectListing @loadMore="handleLoadMore" />
+        <ProjectListing @loadMore="handleLoadMore" :isLoading="isLoading" />
         <Dialog
             :open="isOpenForm"
             @close="isOpenForm = false"
@@ -44,7 +44,8 @@ export default {
     data() {
         return {
             isOpenForm: false,
-            typeForm: ""
+            typeForm: "",
+            isLoading: false,
         }
     },
     methods: {
@@ -56,7 +57,7 @@ export default {
             this.isOpenForm = false
         },
         async handleLoadMore() {
-            // console.log("handleLoadMore")
+            this.isLoading = true            // console.log("handleLoadMore")
             // console.log({...this.paramsSearch,perPage: + 10})
             const newPerPage = {
                 ...this.paramsSearch,
@@ -68,7 +69,10 @@ export default {
             // {...queryStringify,...{perPage: Number(this.$store.state.project.paramsSearch.perPage) + 10} }
 
             try {
-                await this.$store.dispatch("project/searchListing", queryStringify)
+                await this.$store.dispatch("project/searchListing", queryStringify).then((res) => {
+                    console.log(res);
+                    this.isLoading = !res
+                })
                 await this.$store.commit("project/setParamsSearch", newPerPage)
             } catch (e) {
                 console.log({ Error: e.message })

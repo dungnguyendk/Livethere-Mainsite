@@ -245,6 +245,7 @@ export default {
             category: "",
             districts: "",
             searchMRT : "",
+            searchKey: "",
             listAmenities: [],
         }
     },
@@ -413,7 +414,7 @@ export default {
                 rentPerMonth: this.rentPerMonth,
                 bedRooms: this.bedRooms,
                 bathRooms: "0;-1",
-                search: this.locationSearch,
+                search: this.searchKey,
                 sortBy: "Relevant",
                 category: this.category,
                 districts: this.districts,
@@ -421,7 +422,7 @@ export default {
                 unitSize: "100;-1",
                 page: 1,
                 perPage: 4,
-                projectId: 5,
+                projectId: null,
             }
             const paramsStringify = qs.stringify(params, { encode: false })
             // console.log("onSearchListing params", params)
@@ -449,6 +450,7 @@ export default {
             if(params){
                 this.locationSearch = params.join(';')
                 this.districts = this.locationSearch
+                this.searchKey = ""
             }
             // console.log("locationSearch",this.locationSearch);
         },
@@ -456,6 +458,7 @@ export default {
             if(params){
                 this.locationSearch = params.join(';')
                 this.searchMRT = this.locationSearch
+                this.searchKey = ""
             }
             // console.log("this.mrt: ",this.searchMRT);
         },
@@ -486,6 +489,9 @@ export default {
             // console.log("selectAmenity",item);
             this.category = item.category
             this.locationSearch = item.name
+            this.searchKey = item.name
+            this.searchMRT = ""
+            this.districts = ""
             // this.listAmenities = []
             // console.log("selectAmenitycategory ",this.category);
         },

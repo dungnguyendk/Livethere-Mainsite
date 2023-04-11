@@ -61,6 +61,21 @@
                             <button @click="$emit('loadMore')">Load more</button>
                         </template>
                     </div>
+                    <template v-if="isLoading">
+                        <div class="section__body-list pb-5">
+                            <div class="card--project">
+                                <v-skeleton-loader
+                                    type="list-item-avatar , image, list-item-three-line"
+                                ></v-skeleton-loader>
+                            </div>
+                            <div class="card--project">
+                                <v-skeleton-loader
+                                    class="card--project"
+                                    type="list-item-avatar , image, list-item-three-line"
+                                ></v-skeleton-loader>
+                            </div>
+                        </div>
+                    </template>
                 </template>
                 <template v-else>
                     <div class="no-result">
@@ -103,6 +118,12 @@ export default {
         MapMultiMarker: () => {
             if (typeof window !== "undefined")
                 return import("~/components/shared/Map/MapMultiMarker.vue")
+        }
+    },
+    props: {
+        isLoading : {
+            type: Boolean,
+            default: false,
         }
     },
     computed: {
@@ -152,7 +173,6 @@ export default {
             isOpenFilterProjectDialog: false,
             isOpenShareSocialDialog: false,
             targetLinkURL: {},
-            
         }
     },
     created() {
@@ -171,14 +191,11 @@ export default {
                 return index.id === e.id
             })
         },
-        showStatusForm(e) {
-            
-        },
+        showStatusForm(e) {},
         async onSortListing() {
-
             const queryStringify = qs.stringify(this.paramsSearch, { encode: false })
             try {
-                // 
+                //
                 await this.$store.dispatch("project/searchListing", queryStringify)
             } catch (e) {
                 console.log({ Error: e.message })
@@ -188,6 +205,12 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+.card--project {
+    background-color: var(--color-white);
+    box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.04), 0px 4px 8px rgba(0, 0, 0, 0.06);
+    border-radius: 2rem;
+    overflow: hidden;
+}
 .no-result {
     min-height: 65vh;
     text-align: center;
@@ -335,5 +358,4 @@ export default {
 
     // }
 }
-
 </style>
