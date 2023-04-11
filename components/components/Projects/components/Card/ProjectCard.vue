@@ -12,8 +12,8 @@
         </div>
         <div class="card__image">
             <nuxt-link :to="`/projects/${project.slug}`">
-                <template v-if="project.images">
-                    <img :src="project.images" alt="" />
+                <template v-if="project.thumbnail">
+                    <img :src="project.thumbnail" alt="" />
                 </template>
                 <template v-else>
                     <img src="https://fakeimg.pl/574x320/?text=No%20Image" alt="" />
@@ -142,8 +142,25 @@ export default {
     }
 }
 .card__image {
+    position: relative;
+    position: relative;
+  height: 0;
+  width: 100%;
+  padding-bottom: 55.7%;
+  a {
+    position: static;
+  }
+    // &::before {
+    //     content: "";
+    //     display: inline-block;
+        
+    // }
     img {
+        position: absolute;
+        top: 0;
+        left: 0;
         width: 100%;
+        height: 100%;
         object-fit: cover;
     }
 }

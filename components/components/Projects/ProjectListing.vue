@@ -112,7 +112,7 @@ export default {
         }),
         selectionSort: {
             get() {
-                return this.paramsSearch.sortBy || "Relevant"
+                return this.paramsSearch?.sortBy || "Relevant"
             },
             set(val) {
                 this.$store.commit("project/setParamsSearch", { ...this.paramsSearch, sortBy: val })
@@ -175,8 +175,10 @@ export default {
             
         },
         async onSortListing() {
+
             const queryStringify = qs.stringify(this.paramsSearch, { encode: false })
             try {
+                // 
                 await this.$store.dispatch("project/searchListing", queryStringify)
             } catch (e) {
                 console.log({ Error: e.message })

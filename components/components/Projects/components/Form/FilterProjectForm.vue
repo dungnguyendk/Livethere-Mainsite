@@ -17,28 +17,26 @@
                             @input="keySearch(locationSearch)"
                         />
                     </template>
-                    <v-list class="list-location">
-                        <v-list-item @click="openLocationSearch('Mrt')">
-                            <v-list-item-icon>
-                                <i
-                                    data-v-6ff87bcf=""
-                                    aria-hidden="true"
-                                    class="v-icon icon-svg svg-train"
-                                ></i>
-                            </v-list-item-icon>
-                            <v-list-item-title>Search by MRT</v-list-item-title>
-                        </v-list-item>
-                        <v-list-item @click="openLocationSearch('District')">
-                            <v-list-item-icon>
-                                <i
-                                    data-v-6ff87bcf=""
-                                    aria-hidden="true"
-                                    class="v-icon icon-svg svg-target"
-                                ></i>
-                            </v-list-item-icon>
-                            <v-list-item-title>Search by District</v-list-item-title>
-                        </v-list-item>
-                    </v-list>
+                    <template>
+                        <v-list class="list-location">
+                            <v-list-item v-for="(item, index) in listAmenities" :key="index" class="list-amenities" @click="selectAmenity(item)">
+                                <v-list-item-title >{{ item.name }}</v-list-item-title>
+                                <v-list-item-subtitle>{{ item.category }}</v-list-item-subtitle>
+                            </v-list-item>
+                            <v-list-item  @click="openLocationSearch('Mrt')">
+                                <v-list-item-icon>
+                                    <i data-v-6ff87bcf="" aria-hidden="true" class="v-icon icon-svg svg-train"></i>
+                                </v-list-item-icon>
+                                <v-list-item-title >Search by MRT</v-list-item-title>
+                            </v-list-item>
+                            <v-list-item @click="openLocationSearch('District')">
+                                <v-list-item-icon>
+                                    <i data-v-6ff87bcf="" aria-hidden="true" class="v-icon icon-svg svg-target"></i>
+                                </v-list-item-icon>
+                                <v-list-item-title>Search by District</v-list-item-title>
+                            </v-list-item>
+                        </v-list>
+                    </template>
                 </v-menu>
             </div>
             <div class="form__field mb-custom-2">
@@ -277,7 +275,7 @@
                 <label>Amenities</label>
                 <v-chip-group multiple column active-class="yellow--text" v-model="amenities">
                     <v-chip
-                        v-for="(amenities, index) in listAmenities"
+                        v-for="(amenities, index) in listItemAmenities"
                         :key="index"
                         label
                         class="ma-1 form__field-tag-custom"
@@ -316,12 +314,14 @@
 
 <script>
 import Dialog from "~/components/elements/Dialog/Dialog.vue"
-import { PROPERTY_TYPE, BEDROOM_TYPE, BATHROOM_TYPE } from "~/ultilities/contants/asset-inventory"
 import LocationDistrictForm from "~/components/components/Section/components/Form/LocationDistrictForm.vue"
 import LocationMRTForm from "~/components/components/Section/components/Form/LocationMRTForm.vue"
+import { PROPERTY_TYPE, BEDROOM_TYPE, BATHROOM_TYPE } from "~/ultilities/contants/asset-inventory"
 import { convertNumberToCommas } from "~/ultilities/helpers"
 import { mapState } from "vuex"
+import { httpEndpoint } from "~/services/https/endpoints"
 import qs from "qs"
+import _ from "lodash"
 export default {
     name: "FilterProjectForm",
     components: {
@@ -333,7 +333,7 @@ export default {
         return {
             isOpenDialogDistrict: false,
             isOpenDialogMrt: false,
-            listAmenities: [
+            listItemAmenities: [
                 {
                     id: 1,
                     title: "BBQ",
@@ -409,7 +409,11 @@ export default {
             unitSize: "100,-1",
             minUnit: 100,
             maxUnit: 10000,
-            submitted: false
+            submitted: false,
+            category: "",
+            districts: "",
+            searchMRT : "",
+            listAmenities: [],
         }
     },
     computed: {
@@ -537,6 +541,8 @@ export default {
                     this.locationSearch = this.paramsSearch.mrt
                 } else if (this.paramsSearch.category === "District") {
                     this.locationSearch = this.paramsSearch.districts
+                }else {
+                    this.locationSearch = this.paramsSearch.search
                 }
                 // this.rangeBedroom = this.paramsSearch.bathRooms
                 const tempBedrooms = this.paramsSearch.bedRooms ? this.paramsSearch.bedRooms.split(";").map(Number) : [this.minBedroom, this.maxBedroom]
@@ -662,18 +668,17 @@ export default {
             this.submitted = true
             const params = {
                 propertyType: this.propertyType,
-                livethereChecked: this.livethereChecked,
+                livethereChecked: !this.selectAll,
                 rentPerMonth: this.rentPerMonth,
                 bedRooms: this.bedRooms,
                 bathRooms: this.bathRooms,
                 unitSize: this.unitSize,
                 amenities: this.amenities.join(';'),
-                livethereCheckedAll: this.selectAll,
-                search: this.paramsSearch.search ? this.paramsSearch.search : "",
+                search: this.locationSearch,
                 sortBy: this.paramsSearch.sortBy ? this.paramsSearch.sortBy : "Relevant",
                 category: this.category,
                 districts: this.districts,
-                mrt: this.mrt,
+                mrt: this.searchMRT,
                 page: this.paramsSearch.page ? this.paramsSearch.page : 1,
                 perPage: this.paramsSearch.perPage ? this.paramsSearch.perPage : 10,
             }
@@ -691,6 +696,8 @@ export default {
         },
         onResetForm() {
             ;(this.locationSearch = ""),
+            (this.category = ""),
+            (this.search = ""),
                 (this.propertyType = "All"),
                 (this.selectAll = false),
                 (this.livethereChecked = true),
@@ -702,26 +709,44 @@ export default {
                 (this.rangeUnitSize = [100, 10000]),
                 (this.amenities = [])
         },
-        keySearch(val) {
-            this.category = console.log("keySearch val", val)
+        selectAmenity(item){
+            console.log("selectAmenity",item);
+            this.category = item.category
+            this.locationSearch = item.name
+            // this.listAmenities = []
         },
-        openLocationSearch(val) {
-            console.log("openLocationSearch val", val)
+        keySearch: _.debounce(async function (payload){
+            try {
+                const response = await this.$apiCmsPublic.$get(`${httpEndpoint.projects.getAmenities}?name=${payload}`)
+                // console.log("keySearch ;",response, response.length);
+                if(response.length > 0){
+                    this.listAmenities = response
+                }else {
+                    this.listAmenities = []
+                }
+            } catch (e) {
+                console.log({ Error: e.message })
+            }
+        }, 200),
+        openLocationSearch(val){
+            console.log("openLocationSearch val",val)
             // this.locationSearch = ""
+            this.listAmenities = []
             this.category = val
-            console.log("openLocationSearch this.category", this.category)
-            if (val === "Mrt") {
-                if (this.category === "Mrt") {
+            console.log("openLocationSearch this.category",this.category)
+            if(val === "Mrt"){
+                if(this.category === "Mrt"){
                     this.districts = ""
                     this.locationSearch = this.searchMRT ? this.searchMRT : ""
-                } else {
+                }else {
                 }
                 this.isOpenDialogMrt = true
-            } else {
-                if (this.category === "District") {
+
+            }else {
+                if(this.category === "District"){
                     this.searchMRT = ""
                     this.locationSearch = this.districts ? this.districts : ""
-                } else {
+                }else {
                 }
                 this.isOpenDialogDistrict = true
             }
@@ -755,6 +780,47 @@ export default {
 }
 </script>
 <style lang="scss" scoped>
+.list-location {
+    padding: 0;
+    .v-list-item__icon {
+        margin-right: 0.8rem;
+        margin-top: 1.4rem;
+        margin-bottom: 1.4rem;
+    }
+    .v-list-item__title {
+        font-size: 1.6rem;
+        color: var(--color-title-black);
+    }
+    .v-list-item[role="menuitem"] {
+        position: relative;
+        // &:first-child::after{
+        //     content: "";
+        //     position: absolute;
+        //     bottom: 0;
+        //     left: 1.6rem;
+        //     right: 1.6rem;
+        //     height: 1px;
+        //     min-height: 1px;
+        //     top: auto;
+        //     background-color: var(--border-color);
+        // }
+    }
+}
+.list-amenities {
+    cursor: pointer;
+    .v-list-item__title {
+        font-size: 1.6rem;
+        color: var(--color-title-black);
+        font-weight: 500;
+    }
+    .v-list-item__subtitle {
+        font-size: 1.4rem;
+        flex: 0 0 10rem;
+        width: 10rem;
+        max-width: 100%;
+        text-align: right;
+    }
+}
 .form--filter-projects {
     background-color: var(--color-white);
     ::v-deep(.v-input__slot) {

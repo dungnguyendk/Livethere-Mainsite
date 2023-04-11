@@ -7,7 +7,24 @@ export const state = () => ({
     latestProjects: [],
     mostViewedListings: [],
     projectDetails: {},
-    paramsSearch: null,
+    paramsSearch: {
+        amenities:"",
+        bathRooms:"0;-1",
+        bedRooms:"0;-1",
+        category:"",
+        districts:"",
+        livethereChecked:"true",
+        mrt:"",
+        page: 1,
+        perPage: 4,
+        propertyType:"All",
+        rentPerMonth:"1000;-1",
+        search:"",
+        sortBy:"Relevant",
+        unitSize:"100;-1",
+        projectId: "",
+
+    },
     linesMrt: [],
 })
 
@@ -32,7 +49,7 @@ export const mutations = {
     },
     setLinesMrt(state, payload){
         state.linesMrt = payload
-    }
+    },
 }
 
 export const actions = {
@@ -89,20 +106,19 @@ export const actions = {
             const response = await this.$apiCmsPublic.$get(`${httpEndpoint.projects.getListings}?${payload}`)
             if (response) {
                 commit("setSearchListing", response)
+                return true
             } else {
                 commit("setSearchListing", {})
+                return false
             }
         } catch (e) {
             console.log({ Error: e.message })
+            return false
         }
     },
     async searchProjectListing({ commit }, payload) {
         try {
-            // const response = await this.$apiCmsPublic.$get(`${httpEndpoint.projects.getListings}`,{
-            //     params: payload
-            // })
-            const response = await this.$apiCmsPublic.$get(`${httpEndpoint.projects.getProjectListings}?projectId=${payload}&PageNumber=${1}&PageSize=${10}?`)
-           console.log("adshfsahd", response);
+            const response = await this.$apiCmsPublic.$get(`${httpEndpoint.projects.getProjectListings}?${payload}`)
             if (response) {
                 commit("setSearchListing", response)
             } else {

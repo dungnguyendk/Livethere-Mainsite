@@ -242,11 +242,10 @@ export default {
             rangePriceMax: "",
             rentPerMonth: "",
             bedRooms: "",
-            category: "District",
+            category: "",
             districts: "",
             searchMRT : "",
             listAmenities: [],
-
         }
     },
     computed: {
@@ -333,6 +332,8 @@ export default {
                     this.locationSearch = this.paramsSearch.mrt
                 }else if(this.paramsSearch.category === "District"){
                     this.locationSearch = this.paramsSearch.districts
+                }else {
+                    this.locationSearch = this.paramsSearch.search
                 }
                 // this.rangeBedroom = this.paramsSearch.bedRooms
                 const tempBedrooms = this.paramsSearch.bedRooms ? this.paramsSearch.bedRooms.split(";").map(Number) : [this.minBedroom, this.maxBedroom]
@@ -405,8 +406,8 @@ export default {
             //     this.districts = this.locationSearch
             // }else this.districts = ""
             // console.log("this.districts",this.districts);
+            console.log("onSearchListing category ",this.category);
             const params = {
-                
                 propertyType: this.propertyType,
                 livethereChecked: true,
                 rentPerMonth: this.rentPerMonth,
@@ -420,6 +421,7 @@ export default {
                 unitSize: "100;-1",
                 page: 1,
                 perPage: 4,
+                projectId: "5",
             }
             const paramsStringify = qs.stringify(params, { encode: false })
             // console.log("onSearchListing params", params)
@@ -428,9 +430,12 @@ export default {
                 // console.log("check paramsSearch", this.paramsSearch);
                   this.$store
                 .dispatch("project/searchListing", paramsStringify)
-                .then(() => {
-                    this.$store.commit("project/setParamsSearch", params)
-                    this.$router.push(`/projects?${paramsStringify}`)
+                .then((res) => {
+                    if(res){
+                        this.$store.commit("project/setParamsSearch", params)
+                        this.$router.push(`/projects?${paramsStringify}`)
+                    }
+                    
                 })
             }else {
                 this.$store.commit("project/setParamsSearch", params)
@@ -478,10 +483,11 @@ export default {
             }
         },
         selectAmenity(item){
-            console.log("selectAmenity",item);
+            // console.log("selectAmenity",item);
             this.category = item.category
             this.locationSearch = item.name
             // this.listAmenities = []
+            // console.log("selectAmenitycategory ",this.category);
         },
         keySearch: _.debounce(async function (payload){
             try {

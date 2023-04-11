@@ -162,8 +162,11 @@ export default {
                     phoneCountry: this.country,
                 }
               this.$store.dispatch("project/enquireUser", params).then((res)=>{
+                    console.log("onFormSubmit dispatch enquireUser",res);
                   if (res) {
-                      this.$emit("snackbar", {isShowSnackbar: true, messageSnackbar: 'Thank you for your submission, our agent has been notified and will be contacting you shortly'})
+                      this.$store.dispatch(
+                                "app/showSnackBar","Thank you for your submission, our agent has been notified and will be contacting you shortly"
+                            )
                   }
               })
               this.onResetForm()
@@ -173,11 +176,11 @@ export default {
             }
         }, 
         onResetForm(){
-            this.$v.$reset()
             this.name = "", 
-            this.phone = "", 
+            this.phone = "+65", 
             this.email = "", 
             this.message = ""
+            this.$v.$reset()
         }
     }
 }

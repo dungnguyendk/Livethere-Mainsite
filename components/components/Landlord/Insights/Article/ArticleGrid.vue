@@ -1,23 +1,21 @@
 <template>
     <div class="card--article-grid">
         <div class="card__header">
-            <nuxt-link :to="`/projects/${article.slug}`" class="card__title">
+            <h3 @click="onSearch(article)" class="card__title">
                 {{ article.projectName }}
-            </nuxt-link>
+            </h3>
         </div>
         <div class="card__body">
-            <nuxt-link :to="`/projects/${article.slug}`" target="_blank">
-                <div class="card__image">
-                    <template v-if="article.thumbnail">
-                        <img :src="article.thumbnail" alt="" />
-                    </template>
-                    <template v-else>
-                        <img src="https://fakeimg.pl/362x384/?text=No%20Image" alt="" />
-                    </template>
-                </div>
-            </nuxt-link>
+            <div class="card__image" @click="onSearch(article)">
+                <template v-if="article.thumbnail">
+                    <img :src="article.thumbnail" alt="" />
+                </template>
+                <template v-else>
+                    <img src="https://fakeimg.pl/374x200/?text=No%20Image" alt="" />
+                </template>
+            </div>
             <div class="card__content">
-                <p>{{ article.description }}</p>
+                <div class="card__content--desc" v-html="article.description"></div>
                 <a @click="onSearch(article)" class="card__button"> Read More</a>
             </div>
         </div>
@@ -42,7 +40,7 @@ export default {
     },
     computed: {
         ...mapState({
-            // projectDetails: (state) => state.project.lastestProjects
+            paramsSearch: (state) => state.project.paramsSearch,
         })
     },
     created() {
@@ -51,16 +49,19 @@ export default {
     methods: {
         async onSearch(article) {
             // console.log(article.id)
-            const params = article.id
-            // console.log("params: ", params)
-            const response = await this.$apiCmsPublic.$get(
-                `${
-                    httpEndpoint.projects.getProjectListings
-                }?projectId=${article.id}&PageNumber=${1}&PageSize=${10}`
-            )
-            console.log("response: ", response.data);
+            const newParamsSearch = {
+                ...this.paramsSearch,
+                ...{ projectId: article.id }
+            }
+            const newParamsSearchStringify = qs.stringify(newParamsSearch, { encode: false })
+            console.log("response:params", newParamsSearch);
+            console.log("response:paramsStringify", newParamsSearchStringify);
+            const response = await this.$apiCmsPublic.$get(`${httpEndpoint.projects.getProjectListings}?${newParamsSearchStringify}`)
+            console.log("response: ", response);
             if(response?.data){
-                this.$router.push(`/projects?${article.projectName}&PageNumber=${1}&PageSize=${10}`)
+                // this.$store.commit("project/setParamsSearch", params)
+                this.$store.commit("project/setSearchListing",response)
+                this.$router.push(`/projects?${paramsStringify}`)
             }
           
             // this.$store.dispatch("project/searchProjectListing", 10)
@@ -99,6 +100,7 @@ export default {
             line-clamp: 2;
             overflow: hidden;
             -webkit-box-orient: vertical;
+            cursor: pointer;
             &:hover {
                 color: var(--color-primary);
             }
@@ -110,6 +112,7 @@ export default {
             width: 100%;
             position: relative;
             padding-bottom: 53.4%;
+            cursor: pointer;
 
             img {
                 position: absolute;
@@ -120,11 +123,12 @@ export default {
                 height: 100%;
                 max-width: 100%;
                 object-fit: cover;
+                object-fit: contain;
             }
         }
         .card__content {
             padding: 1.4rem 1.6rem 2.2rem;
-            p {
+            .card__content--desc {
                 font-weight: 400;
                 font-size: 1.8rem;
                 line-height: 2.4rem;
@@ -138,6 +142,13 @@ export default {
                 overflow: hidden;
                 margin-bottom: 2.2rem;
                 min-height: 4.8rem;
+                ::v-deep(*) {
+                    margin-bottom: 0;
+                    font-weight: 400;
+                    font-size: 1.8rem;
+                    color: var(--color-black);
+                    line-height: 2.4rem;
+                }
             }
             .card__button {
                 cursor: pointer;
