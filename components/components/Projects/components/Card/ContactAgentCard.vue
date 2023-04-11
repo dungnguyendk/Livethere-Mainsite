@@ -6,7 +6,12 @@
         <div class="card__content">
             <div class="card__content-avatar">
                 <v-avatar size="64">
-                    <img :src="imgURLAvatar" alt="" />
+                    <template v-if="info.avatarUrl">
+                        <img :src="info.avatarUrl" alt="" />
+                    </template>
+                    <template>
+                        <img :src="require(`~/static/img/agent_placeholder.png`)" alt="" />
+                    </template>
                 </v-avatar>
             </div>
             <div class="card__content-infor">
@@ -23,7 +28,10 @@
             >
                 <i class="icon-svg svg-messages"></i>
             </v-btn>
-            <v-btn class="btn btn--outline btn--green btn-custom" :href="`tel:${info?.phoneNumber}`">
+            <v-btn
+                class="btn btn--outline btn--green btn-custom"
+                :href="`tel:${info?.phoneNumber}`"
+            >
                 <i class="icon-svg svg-call-calling"></i>
             </v-btn>
             <v-btn
@@ -43,26 +51,25 @@
 </template>
 
 <script>
-import {mapState} from "vuex";
+import { mapState } from "vuex"
 
 export default {
     name: "ContactAgentCard",
     props: {
-      info: {
-        type: Object, 
-        default: () => {}
-      }
+        info: {
+            type: Object,
+            default: () => {}
+        }
     },
     data() {
         return {
-            imgURLAvatar: "https://avatars0.githubusercontent.com/u/9064066?v=4&s=460",
             isOpenConfirmDetailDialog: false,
             isOpenContactDetailDialog: false
         }
     },
     computed: {
         ...mapState({
-            projectDetail: state => state.project.projectDetails
+            projectDetail: (state) => state.project.projectDetails
         }),
 
         getUrl() {

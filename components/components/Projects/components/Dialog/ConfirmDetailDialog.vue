@@ -15,7 +15,12 @@
                 <div class="container">
                     <div class="card__content-user-info">
                         <v-avatar size="50">
-                            <img src="https://picsum.photos/600/400.jpg?random=" alt="" />
+                            <template v-if="projectDetail.primaryAgent.avatarUrl">
+                                <img :src="projectDetail.primaryAgent.avatarUrl" alt="" />
+                            </template>
+                            <template>
+                                <img :src="require(`~/static/img/agent_placeholder.png`)" alt="" />
+                            </template>
                         </v-avatar>
                         <p>{{projectDetail.primaryAgent?.businessName}}</p>
                     </div>

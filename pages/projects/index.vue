@@ -62,7 +62,7 @@ export default {
                 ...this.paramsSearch,
                 ...{ perPage: Number(this.paramsSearch.perPage) + 4 }
             }
-            console.log("newPerPage", newPerPage)
+            // console.log("newPerPage", newPerPage)
             const queryStringify = qs.stringify(newPerPage, { encode: false })
             this.$router.push(`/projects?${queryStringify}`)
             // {...queryStringify,...{perPage: Number(this.$store.state.project.paramsSearch.perPage) + 10} }
@@ -92,15 +92,8 @@ export default {
             } else {
                 store.commit("project/setLinesMrt", [])
             }
-            if(query && query.projectId){
-                await store.dispatch("project/searchProjectListing", queryStringify)
-                await store.commit("project/setParamsSearch", query)
-                
-            }else {
-                await store.commit("project/setParamsSearch", query)
-                await store.dispatch("project/searchListing", queryStringify)
-                
-            }
+            await store.commit("project/setParamsSearch", query)
+            await store.dispatch("project/searchListing", queryStringify)
             
         } catch (e) {
             console.log({ Error: e.message })

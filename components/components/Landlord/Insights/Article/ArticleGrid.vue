@@ -51,22 +51,20 @@ export default {
             // console.log(article.id)
             const newParamsSearch = {
                 ...this.paramsSearch,
-                ...{ projectId: article.id }
+                ...{ projectId: Number(article.id) }
             }
             const newParamsSearchStringify = qs.stringify(newParamsSearch, { encode: false })
             console.log("response:params", newParamsSearch);
             console.log("response:paramsStringify", newParamsSearchStringify);
-            const response = await this.$apiCmsPublic.$get(`${httpEndpoint.projects.getProjectListings}?${newParamsSearchStringify}`)
+            const response = await this.$apiCmsPublic.$get(`${httpEndpoint.projects.getListings}?${newParamsSearchStringify}`)
             console.log("response: ", response);
             if(response?.data){
                 // this.$store.commit("project/setParamsSearch", params)
                 this.$store.commit("project/setSearchListing",response)
-                this.$router.push(`/projects?${paramsStringify}`)
+                this.$router.push(`/projects?${newParamsSearchStringify}`)
             }
           
-            // this.$store.dispatch("project/searchProjectListing", 10)
 
-            // this.$emit("Seach", article)
         }
     }
 }

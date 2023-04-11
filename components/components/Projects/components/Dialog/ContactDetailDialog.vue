@@ -30,7 +30,12 @@
                                 <p>{{ projectDetail.buildingAddress }}</p>
                             </div>
                             <div class="card__content-box-image">
-                                <img src="https://picsum.photos/600/400.jpg?random=" alt="" />
+                                <template v-if="projectDetail.images.propertyCoverImages && projectDetail.images.propertyCoverImages.length > 0">
+                                    <img :src="projectDetail.images.propertyCoverImages[0]" alt="">
+                                </template>
+                                <template v-else>
+                                    <img src="https://fakeimg.pl/70x45/?text=No%20img" alt="">
+                                </template>
                             </div>
                         </div>
                     </div>

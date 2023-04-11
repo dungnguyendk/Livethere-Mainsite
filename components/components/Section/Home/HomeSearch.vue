@@ -421,7 +421,7 @@ export default {
                 unitSize: "100;-1",
                 page: 1,
                 perPage: 4,
-                projectId: "5",
+                projectId: 5,
             }
             const paramsStringify = qs.stringify(params, { encode: false })
             // console.log("onSearchListing params", params)

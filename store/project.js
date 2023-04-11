@@ -22,7 +22,7 @@ export const state = () => ({
         search:"",
         sortBy:"Relevant",
         unitSize:"100;-1",
-        projectId: "",
+        projectId: null,
 
     },
     linesMrt: [],
@@ -114,18 +114,6 @@ export const actions = {
         } catch (e) {
             console.log({ Error: e.message })
             return false
-        }
-    },
-    async searchProjectListing({ commit }, payload) {
-        try {
-            const response = await this.$apiCmsPublic.$get(`${httpEndpoint.projects.getProjectListings}?${payload}`)
-            if (response) {
-                commit("setSearchListing", response)
-            } else {
-                commit("setSearchListing", {})
-            }
-        } catch (e) {
-            console.log({ Error: e.message })
         }
     },
     async filterListing({ commit }, payload) {
