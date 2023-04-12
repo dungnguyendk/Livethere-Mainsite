@@ -410,7 +410,7 @@ export default {
             console.log("onSearchListing category ",this.category);
             const params = {
                 propertyType: this.propertyType,
-                livethereChecked: true,
+                livethereChecked: this.paramsSearch.livethereChecked,
                 rentPerMonth: this.rentPerMonth,
                 bedRooms: this.bedRooms,
                 bathRooms: "0;-1",
@@ -423,6 +423,7 @@ export default {
                 page: 1,
                 perPage: 4,
                 projectId: null,
+                selectAll : this.paramsSearch.selectAll
             }
             const paramsStringify = qs.stringify(params, { encode: false })
             // console.log("onSearchListing params", params)

@@ -59,7 +59,7 @@
 import LogoProject from "~/static/img/logos/logo-project.svg"
 export default {
     name: "ProjectCard",
-    components: {LogoProject},
+    components: { LogoProject },
     props: {
         project: {
             type: Object,
@@ -144,16 +144,16 @@ export default {
 .card__image {
     position: relative;
     position: relative;
-  height: 0;
-  width: 100%;
-  padding-bottom: 55.7%;
-  a {
-    position: static;
-  }
+    height: 0;
+    width: 100%;
+    padding-bottom: 55.7%;
+    a {
+        position: static;
+    }
     // &::before {
     //     content: "";
     //     display: inline-block;
-        
+
     // }
     img {
         position: absolute;
@@ -162,6 +162,7 @@ export default {
         width: 100%;
         height: 100%;
         object-fit: cover;
+        // object-fit: contain;
     }
 }
 .card__content {

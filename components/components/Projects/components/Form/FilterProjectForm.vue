@@ -316,7 +316,7 @@
 import Dialog from "~/components/elements/Dialog/Dialog.vue"
 import LocationDistrictForm from "~/components/components/Section/components/Form/LocationDistrictForm.vue"
 import LocationMRTForm from "~/components/components/Section/components/Form/LocationMRTForm.vue"
-import { PROPERTY_TYPE, BEDROOM_TYPE, BATHROOM_TYPE } from "~/ultilities/contants/asset-inventory"
+import { PROPERTY_TYPE } from "~/ultilities/contants/asset-inventory"
 import { convertNumberToCommas } from "~/ultilities/helpers"
 import { mapState } from "vuex"
 import { httpEndpoint } from "~/services/https/endpoints"
@@ -376,8 +376,6 @@ export default {
                 }
             ],
             propertyTypeList: PROPERTY_TYPE,
-            bedroomList: BEDROOM_TYPE,
-            bathroomList: BATHROOM_TYPE,
             locationSearch: "",
             propertyType: "",
             selectAll: false,
@@ -409,7 +407,6 @@ export default {
             unitSize: "100,-1",
             minUnit: 100,
             maxUnit: 10000,
-            submitted: false,
             category: "",
             districts: "",
             searchMRT : "",
@@ -530,11 +527,14 @@ export default {
             if (this.paramsSearch) {
                 this.propertyType = this.paramsSearch.propertyType
                 this.handleSearch = this.paramsSearch.handleSearch
-                this.livethereChecked = this.paramsSearch.livethereChecked
+                this.livethereChecked = true
+                this.selectAll = true ? this.paramsSearch.selectAll === "true" || this.paramsSearch.selectAll === true : false
                 this.origin = this.paramsSearch.origin
                 this.page = this.paramsSearch.page
                 this.perPage = this.paramsSearch.perPage
                 this.searchKey = this.paramsSearch.search
+                this.searchMRT = this.paramsSearch.mrt
+                this.districts = this.paramsSearch.districts
                 this.sortBy = this.paramsSearch.sortBy
                 this.category = this.paramsSearch.category
                 this.facilities = this.paramsSearch.facilities ? this.paramsSearch.facilities.split(";").map(item => item.trim()) : []
@@ -666,10 +666,10 @@ export default {
             }
         },
         onSubmitForm() {
-            this.submitted = true
             const params = {
                 propertyType: this.propertyType,
                 livethereChecked: !this.selectAll,
+                selectAll : this.selectAll,
                 rentPerMonth: this.rentPerMonth,
                 bedRooms: this.bedRooms,
                 bathRooms: this.bathRooms,
