@@ -24,10 +24,6 @@ export default {
             type: Array,
             default: () => []
         },
-        zoom: {
-            type: Number,
-            default: 13
-        },
         titleTooltip: {
             type: String,
             default: () => ""
@@ -56,6 +52,7 @@ export default {
             url: "http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", //get map,
             attribution: "&copy; OpenStreetMap contributors",
             center: latLng([1.29027, 103.851959]),
+            zoom: 12,
             icon: L.icon({
                 iconUrl: require("~/static/img/icons/marker_icon.svg"),
                 iconSize: [32, 45],

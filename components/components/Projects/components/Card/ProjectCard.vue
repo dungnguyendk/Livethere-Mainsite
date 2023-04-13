@@ -27,10 +27,10 @@
                     <v-btn icon @click="openShareSocialDialog(project.id)">
                         <i class="icon-svg svg-export"></i>
                     </v-btn>
-                    <v-btn icon @click="activeHeartEmotion(project.id)">
+                    <v-btn icon @click="activeHeartEmotion()">
                         <i
                             class="ri-heart-3-line"
-                            :class="{ 'active-heart': project.favourite }"
+                            :class="{ 'active-heart': this.activeHeart }"
                         ></i>
                     </v-btn>
                 </div>
@@ -52,15 +52,18 @@
                 </div>
             </div>
         </div>
+        <LoginDialog :open="isOpenDialogLogin" @close="isOpenDialogLogin = false" />
     </div>
 </template>
 
 <script>
+import LoginDialog from "~/components/elements/Dialog/LoginDialog.vue"
 import LogoProject from "~/static/img/logos/logo-project.svg"
 import { convertNumberToCommas } from "~/ultilities/helpers"
+import { mapState } from "vuex"
 export default {
     name: "ProjectCard",
-    components: { LogoProject },
+    components: { LogoProject, LoginDialog },
     props: {
         project: {
             type: Object,
@@ -72,14 +75,20 @@ export default {
         }
     },
     computed: {
+        ...mapState({}),
         priceFormat() {
             return convertNumberToCommas(this.project.rentPrice)
         },
+        loggedIn() {
+            return this.$auth.loggedIn
+        }
     },
     data() {
         return {
             isOpenShareSocialDialog: false,
-            isActiveItemEmotion: 1
+            isActiveItemEmotion: 1,
+            activeHeart: false,
+            isOpenDialogLogin: false
         }
     },
     methods: {
@@ -87,13 +96,10 @@ export default {
             // console.log("id",id);
             this.$emit("open", { id: id, open: (this.isOpenShareSocialDialog = true) })
         },
-        activeHeartEmotion(id) {
-            try {
-                var project = this.listProject.find((e) => e.id === id)
-                project.activeHeart = !project.activeHeart
-            } catch (error) {
-                console.log(error)
-            }
+        activeHeartEmotion() {
+            if(this.loggedIn){
+                this.activeHeart = !this.activeHeart 
+            }else this.isOpenDialogLogin = true
         }
     },
     watch: {}

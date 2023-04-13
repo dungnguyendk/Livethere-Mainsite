@@ -15,7 +15,7 @@
                 <div class="container">
                     <div class="card__content-user-info">
                         <v-avatar size="50">
-                            <template v-if="projectDetail.primaryAgent.avatarUrl">
+                            <template v-if="projectDetail.primaryAgent && projectDetail.primaryAgent.avatarUrl">
                                 <img :src="projectDetail.primaryAgent.avatarUrl" alt="" />
                             </template>
                             <template>

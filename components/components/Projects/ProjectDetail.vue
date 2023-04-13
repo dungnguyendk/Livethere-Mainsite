@@ -48,10 +48,10 @@
                                             <i class="icon-svg svg-export"></i>
                                         </v-btn>
 
-                                        <v-btn icon @click="activeHeart = !activeHeart">
+                                        <v-btn icon @click="activeHeartEmotion()">
                                             <i
                                                 class="ri-heart-3-line"
-                                                :class="{ 'active-heart': activeHeart }"
+                                                :class="{ 'active-heart': this.activeHeart }"
                                             ></i>
                                         </v-btn>
                                     </div>
@@ -124,6 +124,7 @@
         <template v-else>
             <error />
         </template>
+        <LoginDialog :open="isOpenDialogLogin" @close="isOpenDialogLogin = false" />
     </div>
 </template>
 <script>
@@ -136,6 +137,7 @@ import LightBoxListing from "~/components/components/Projects/components/Box/Lig
 import ConfirmDetailDialog from "~/components/components/Projects/components/Dialog/ConfirmDetailDialog.vue"
 import ContactDetailDialog from "~/components/components/Projects/components/Dialog/ContactDetailDialog.vue"
 import ShareSocialDialog from "~/components/components/Projects/components/Dialog/ShareSocialDialog.vue"
+import LoginDialog from "~/components/elements/Dialog/LoginDialog.vue"
 import error from "~/layouts/error.vue"
 import { convertNumberToCommas } from "~/ultilities/helpers"
 import { mapState } from "vuex"
@@ -151,6 +153,7 @@ export default {
         ConfirmDetailDialog,
         ContactDetailDialog,
         ShareSocialDialog,
+        LoginDialog,
         error,
         Map: () => {if (typeof window !== 'undefined') return import("~/components/elements/Map/Map.vue")}
     },
@@ -198,7 +201,8 @@ export default {
             messageSnackbar: "",
             titleSwiper: "most viewed listings",
             targetLinkURL: {},
-            listMostListing: []
+            listMostListing: [],
+            isOpenDialogLogin: false
                         
         }
     },
@@ -224,20 +228,32 @@ export default {
         },
         getMostListing(){
             this.listMostListing = this.mostViewedListings.filter(listing => listing.id !== this.projectDetails.id);
+        },
+        activeHeartEmotion() {
+            if(this.loggedIn){
+                this.activeHeart = !this.activeHeart 
+            }else this.isOpenDialogLogin = true
         }
     }
 }
 </script>
 <style lang="scss" scoped>
 .page--project-detail {
+    .page__top-right {
+        > * {
+            height: 100%;
+            border-radius: 2rem;
+        }
+    }
     @media screen and (max-width: 767px) {
         .page__top {
             display: block;
-            .page__top-right {
+            
+        }
+        .page__top-right {
                 margin-top: 2.7rem;
                 z-index: 1;
             }
-        }
         .page__content {
             display: inline-block;
             .page-content-left-expansion {

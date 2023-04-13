@@ -6,7 +6,7 @@
         <div class="card__content">
             <div class="card__content-avatar">
                 <v-avatar size="64">
-                    <template v-if="info.avatarUrl">
+                    <template v-if="info && info.avatarUrl">
                         <img :src="info.avatarUrl" alt="" />
                     </template>
                     <template>

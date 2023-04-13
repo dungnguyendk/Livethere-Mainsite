@@ -71,6 +71,8 @@ export default {
     grid-template-columns: repeat(3, minmax(0, 1fr));
     column-gap: 0.8rem;
     row-gap: 0.8rem;
+    border-radius: 2rem;
+    overflow: hidden;
     .section__listing-image-column {
         cursor: pointer;
 
@@ -83,21 +85,12 @@ export default {
                 // position: absolute;
                 // z-index: 1;
                 height: auto;
-                border-radius: 2rem 2rem 0 0;
                 width: 100%;
                 object-fit: cover;
             }
         }
-        &:nth-child(2) {
-            img {
-                border-radius: 0 0 0 2rem;
-            }
-        }
-        &:nth-child(4) {
-            img {
-                border-radius: 0 0 2rem 0;
-            }
-        }
+        
+       
     }
     .section__listing-image-column:not(:nth-child(1)) {
         width: 100%;
