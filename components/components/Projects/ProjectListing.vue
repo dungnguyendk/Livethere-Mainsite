@@ -43,7 +43,7 @@
                     "
                 >
                     <client-only>
-                        <MapMultiMarker :listlat-log="location" />
+                        <MapMultiMarker :listlat-log="location" :objectLocation="objectLocation" />
                         <!-- <Map :listlat-log="location" :center="location" /> -->
                     </client-only>
                 </div>
@@ -117,7 +117,7 @@ export default {
         ShareSocialDialog,
         MapMultiMarker: () => {
             if (typeof window !== "undefined")
-                return import("~/components/shared/Map/MapMultiMarker.vue")
+                return import("~/components/elements/Map/MapMultiMarker.vue")
         }
     },
     props: {
@@ -143,6 +143,9 @@ export default {
             return this.searchListings.data.map((item) => ({
                 latLng: [parseFloat(item.location.lat), parseFloat(item.location.lon)]
             }))
+        },
+        objectLocation(){
+            return this.searchListings.data
         }
     },
     data() {

@@ -9,7 +9,7 @@
                         </div>
                         <div class="page__top-right">
                             <client-only>
-                                <Map :listlat-log="[location]"/>
+                                <Map :listlat-log="[location]" :titleTooltip="titleTooltip" />
                             </client-only>
                         </div>
                     </div>
@@ -178,6 +178,9 @@ export default {
                 // }))
             let checkLagLogValue = Object.values(Object.values(this.projectDetails.location)).every((item) => item !== null)
             return checkLagLogValue ? Object.values(this.projectDetails.location) : []
+        },
+        titleTooltip(){
+            return this.projectDetails.buildingName
         }
     },
     created() {

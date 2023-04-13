@@ -22,7 +22,7 @@
         </div>
         <div class="card__content">
             <div class="card__content-fee">
-                <h3 class="card__content-price">S$ {{ project.rentPrice }}/month</h3>
+                <h3 class="card__content-price">S$ {{ priceFormat }}/month</h3>
                 <div class="card__content-emotions">
                     <v-btn icon @click="openShareSocialDialog(project.id)">
                         <i class="icon-svg svg-export"></i>
@@ -57,6 +57,7 @@
 
 <script>
 import LogoProject from "~/static/img/logos/logo-project.svg"
+import { convertNumberToCommas } from "~/ultilities/helpers"
 export default {
     name: "ProjectCard",
     components: { LogoProject },
@@ -69,6 +70,11 @@ export default {
             type: Array,
             default: () => []
         }
+    },
+    computed: {
+        priceFormat() {
+            return convertNumberToCommas(this.project.rentPrice)
+        },
     },
     data() {
         return {
