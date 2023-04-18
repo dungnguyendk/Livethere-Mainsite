@@ -89,8 +89,8 @@
                             >
                                 <div> </div>
                                 <div class="expansion-amenities-icon">
-                                    <div v-html="item.svg"></div>
-                                    <p>{{ item.label }}</p>
+                                    <div class="amenities-icon" v-html="item.svg"></div>
+                                    <p class="amenities-label">{{ item.label }}</p>
                                 </div>
                             </div>
                         </template>
@@ -234,6 +234,9 @@ export default {
     display: flex;
     align-items: center;
     margin-bottom: 1.7rem;
+    .amenities-icon {
+        min-width: 2.4rem;
+    }
     p {
         margin-bottom: 0;
         font-weight: 400;
