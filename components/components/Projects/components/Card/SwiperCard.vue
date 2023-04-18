@@ -23,16 +23,16 @@
         </div>
         <div class="card__content">
             <div class="card__content-first">
-                <img src="~/static/img/home-icon1.png" alt="" />
+                <i class="icon-svg svg-location align-self-start"></i>
                 <p>{{ item.buildingAddress }}</p>
             </div>
             <div class="card__content-second">
                 <div>
-                    <img src="~/static/img/home-icon2.png" alt="" />
+                    <i class="icon-svg svg-bedroom"></i>
                     <p>{{ item.bedrooms }}</p>
                 </div>
                 <div>
-                    <img src="~/static/img/home-icon3.png" alt="" />
+                    <i class="icon-svg svg-bathroom"></i>
                     <p>{{ item.bathrooms }}</p>
                 </div>
             </div>
@@ -93,7 +93,7 @@ export default {
         }
         .card__header-title {
             position: absolute;
-            background-color: #edb842;
+            background-color: var(--color-dark-yellow);
             padding: 2.2rem 1.6rem 2.5rem;
             bottom: 2.3rem;
             margin-bottom: 0;
@@ -189,6 +189,12 @@ export default {
                 }
             }
         }
+    }
+    .icon-svg {
+        flex: 0 0 3.2rem;
+        width: 3.2rem;
+        height: 3.2rem;
+        background-color: var(--color-dark-yellow);
     }
 
     @media only screen and (max-width: 767px) {

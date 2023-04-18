@@ -189,7 +189,7 @@ export default {
         font-weight: 800;
         font-size: 2.2rem;
         line-height: 2.6rem;
-        color: #edb842;
+        color: var(--color-dark-yellow);
         margin-bottom: 0;
     }
     .card__content-emotions {
@@ -232,7 +232,7 @@ export default {
         flex: 0 0 3.2rem;
         width: 3.2rem;
         height: 3.2rem;
-        background-color: #edb842;
+        background-color: var(--color-dark-yellow);
     }
     span {
         font-weight: 500;

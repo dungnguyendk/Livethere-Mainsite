@@ -33,7 +33,7 @@ export default {
             font-weight: 700;
             font-size: 1.6rem;
             line-height: 2.4rem;
-            color: #edb842;
+            color: var(--color-dark-yellow);
             margin-bottom: 1rem;
       
         }
@@ -43,7 +43,7 @@ export default {
             font-weight: 400;
             font-size: 1.6rem;
             line-height: 2.4rem;
-            color: #edb842;
+            color: var(--color-dark-yellow);
             margin-bottom: 0;
 
         }

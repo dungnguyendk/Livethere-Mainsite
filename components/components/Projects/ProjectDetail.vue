@@ -408,7 +408,7 @@ export default {
             font-weight: 800;
             font-size: 2rem;
             line-height: 2.6rem;
-            color: #edb842;
+            color: var(--color-dark-yellow);
             margin-bottom: 0;
         }
     }
@@ -435,7 +435,7 @@ export default {
     i {
         width: 2.4rem;
         height: 2.4rem;
-        background-color: #edb842;
+        background-color: var(--color-dark-yellow);
     }
     span {
         font-weight: 500;
