@@ -51,13 +51,13 @@ export default {
             // console.log(article.id)
             const newParamsSearch = {
                 ...this.paramsSearch,
-                ...{ projectId: Number(article.id) }
+                ...{ projectId: Number(article.id), livethereChecked : false }
             }
             const newParamsSearchStringify = qs.stringify(newParamsSearch, { encode: false })
-            console.log("response:params", newParamsSearch);
-            console.log("response:paramsStringify", newParamsSearchStringify);
+            // console.log("response:params", newParamsSearch);
+            // console.log("response:paramsStringify", newParamsSearchStringify);
             const response = await this.$apiCmsPublic.$get(`${httpEndpoint.projects.getListings}?${newParamsSearchStringify}`)
-            console.log("response: ", response);
+            // console.log("response: ", response);
             if(response?.data){
                 // this.$store.commit("project/setParamsSearch", params)
                 this.$store.commit("project/setSearchListing",response)
@@ -99,6 +99,7 @@ export default {
             overflow: hidden;
             -webkit-box-orient: vertical;
             cursor: pointer;
+            margin-bottom: 0;
             &:hover {
                 color: var(--color-primary);
             }

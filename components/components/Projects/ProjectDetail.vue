@@ -184,7 +184,10 @@ export default {
         },
         titleTooltip(){
             return this.projectDetails.buildingName
-        }
+        },
+        loggedIn() {
+            return this.$auth.loggedIn
+        },
     },
     created() {
         // console.log("this.route.params", this.$route.params.slug)

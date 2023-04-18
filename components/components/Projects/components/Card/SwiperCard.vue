@@ -142,7 +142,7 @@ export default {
                 width: 100%;
                 bottom: auto;
                 top: 9rem;
-                padding: 0 4.2rem;
+                padding: 0 2.2rem;
 
                 .card__header-link {
                     text-align: center;

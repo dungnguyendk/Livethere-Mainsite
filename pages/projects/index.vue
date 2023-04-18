@@ -28,11 +28,12 @@ import LocationMRTForm from "~/components/components/Section/components/Form/Loc
 import { mapState } from "vuex"
 import { generateLandlordsSEOMetaTags } from "~/ultilities/seo-configs"
 import { httpEndpoint } from "~/services/https/endpoints"
+import { appSettings } from "~/app-settings"
 import qs from "qs"
 export default {
     components: { ProjectListing, HomeSearch, Dialog, LocationDistrictForm, LocationMRTForm },
     head: {
-        title: "Livethere"
+        title: `Livethere | ${appSettings.siteName}`
     },
     computed: {
         ...mapState({

@@ -11,11 +11,30 @@ import ProjectDetail from "~/components/components/Projects/ProjectDetail.vue"
 import { generateLandlordsSEOMetaTags } from '~/ultilities/seo-configs'
 import { httpEndpoint } from "~/services/https/endpoints"
 import { appSettings } from "~/app-settings"
+import { mapState } from "vuex"
 export default {
     name: "LiveThereMainSiteDetails",
     components: { LandlordHeader, LandingFooter, ProjectDetail },
-    head: {
-        title: "Livethere"
+
+    head() {
+        return {
+            title: `${this.titlePage} | ${appSettings.siteName}`
+        }
+    },
+    // head: {
+    //     title: `${titlePage} | ${appSettings.siteName}`
+    // },
+    computed: {
+        ...mapState({
+            projectDetails: (state) => state.project.projectDetails,
+        }),
+        titlePage(){
+            return  this.projectDetails.buildingName
+        }
+    },
+    data() {
+        return {
+        }
     },
     async asyncData({app, params, store}){
 

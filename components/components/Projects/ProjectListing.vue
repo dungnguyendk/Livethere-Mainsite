@@ -200,6 +200,7 @@ export default {
             try {
                 //
                 await this.$store.dispatch("project/searchListing", queryStringify)
+                this.$router.push(`/projects?${queryStringify}`)
             } catch (e) {
                 console.log({ Error: e.message })
             }
