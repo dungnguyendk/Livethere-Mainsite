@@ -42,17 +42,7 @@ export default {
             default: () => {}
         }
     },
-    data() {
-        return {
-            // firstText: "all vectors",
-            // secondText: "",
-            // firstLink: null,
-            // secondLink: null,
-            // button: null,
-            // buttonBgColor: "",
-            // image: ""
-        }
-    },
+
     computed: {
         rawJSON() {
             return this.source ? this.source.details : []
@@ -63,7 +53,6 @@ export default {
         },
         firstLink() {
             const linkData = JSON.parse(getMetadataByFieldName(this.rawJSON, "first_link"))
-            // console.log("this.getLinkByFieldName", this.getLink(linkData))
             return this.getLink(linkData)
         },
         secondText() {
@@ -84,62 +73,8 @@ export default {
             return getImageURLByFieldName(this.rawJSON, "background_image")
         }
     },
-    created() {
-        // const rawJSON = this.source ? this.source.details : []
-        // if (rawJSON.length > 0) {
-        //     this.firstText = getStringByFieldName(rawJSON, "first_text")
-        //         ? getStringByFieldName(rawJSON, "first_text")
-        //         : ""
-        //     if (getMetadataByFieldName(rawJSON, "first_link") !== "") {
-        //         this.renderFirstLinkData(JSON.parse(getMetadataByFieldName(rawJSON, "first_link")))
-        //     }
-        //     this.secondText = getStringByFieldName(rawJSON, "second_text")
-        //     if (getMetadataByFieldName(rawJSON, "second_link") !== "") {
-        //         this.renderSecondLinkData(
-        //             JSON.parse(getMetadataByFieldName(rawJSON, "second_link"))
-        //         )
-        //     }
-        //     if (getMetadataByFieldName(rawJSON, "button") !== "") {
-        //         this.renderThirdLinkData(JSON.parse(getMetadataByFieldName(rawJSON, "button")))
-        //     }
-        //     this.buttonBgColor = getStringByFieldName(rawJSON, "button_background_color")
-        //     this.image = getImageURLByFieldName(rawJSON, "background_image")
-        // }
-    },
+
     methods: {
-        // renderFirstLinkData(linkData) {
-        //     if (linkData.linkInfo) {
-        //         this.firstLink = {
-        //             label: linkData.linkInfo.label,
-        //             url: linkData.linkInfo.url,
-        //             openNewTab: linkData.linkInfo.openNewTab
-        //         }
-        //     } else {
-        //         this.firstLink = null
-        //     }
-        // },
-        // renderSecondLinkData(linkData) {
-        //     if (linkData.linkInfo) {
-        //         this.secondLink = {
-        //             label: linkData.linkInfo.label,
-        //             url: linkData.linkInfo.url,
-        //             openNewTab: linkData.linkInfo.openNewTab
-        //         }
-        //     } else {
-        //         this.secondLink = null
-        //     }
-        // },
-        // renderThirdLinkData(linkData) {
-        //     if (linkData.linkInfo) {
-        //         this.button = {
-        //             label: linkData.linkInfo.label,
-        //             url: linkData.linkInfo.url,
-        //             openNewTab: linkData.linkInfo.openNewTab
-        //         }
-        //     } else {
-        //         this.button = null
-        //     }
-        // }
         getLink(linkData) {
             if (linkData && linkData.linkInfo) {
                 return {

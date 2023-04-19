@@ -133,10 +133,10 @@ export default {
         }
     },
     created() {
-        console.log({ userInfos: this.userInfo, loggedIn: this.loggedIn })
+        /*console.log({ userInfos: this.userInfo, loggedIn: this.loggedIn })
         if (!this.userInfo && this.loggedIn) {
             this.$store.dispatch("app/getUserInfo")
-        }
+        }*/
     },
 
     methods: {

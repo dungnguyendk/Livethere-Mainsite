@@ -2,10 +2,10 @@
     <main>
         <HomeBannerSection v-if="topBanner" :source="topBanner" />
         <HomeSearch />
-        <HomeIntroSection />
+        <HomeIntroSection v-if="mainSiteIntroduction" :source="mainSiteIntroduction" />
         <HomePopularListingSection />
         <HomeLatestProjectsSection />
-        <HomeCTASection />
+        <HomeCTASection v-if="mainSiteCta" :source="mainSiteCta" />
     </main>
 </template>
 
@@ -41,6 +41,16 @@ export default {
         topBanner() {
             return this.sections.length > 0
                 ? this.sections.find((section) => section.slug === "mainsite-top-banner")
+                : null
+        },
+        mainSiteIntroduction() {
+            return this.sections.length > 0
+                ? this.sections.find((section) => section.slug === "mainsite-introduction")
+                : null
+        },
+        mainSiteCta() {
+            return this.sections.length > 0
+                ? this.sections.find((section) => section.slug === "mainsite-call-to-action")
                 : null
         }
     },

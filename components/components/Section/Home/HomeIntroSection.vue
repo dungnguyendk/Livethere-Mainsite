@@ -1,29 +1,19 @@
 <template lang="html">
-    <section class="section--home-intro">
+    <section v-if="source" class="section--home-intro">
         <div class="container">
             <div class="section__container">
                 <div class="section__left">
                     <div class="image-first">
-                        <img :src="imgURLFirst" alt="" />
+                        <img :src="firstImageURL" alt="" />
                     </div>
                     <div class="image-second">
-                        <img :src="imgURLSecond" alt="" />
+                        <img :src="secondImageURL" alt="" />
                     </div>
                 </div>
                 <div class="section__right">
-                    <h3 class="section__right-title">Rent in Singapore</h3>
-                    <h4 class="section__right-subtitle">Cost guide to renting a room or home</h4>
-                    <div class="section__right-content">
-                        <p
-                            >Trust our agents to get you the best lease as we turn your space into
-                            extra income.</p
-                        >
-                        <p
-                            >We care to find you good and reliable ten-ants who will keep your
-                            property well-maintained. Because at Ohmyhome, we’re always by your
-                            side, always on your side.</p
-                        >
-                    </div>
+                    <h3 class="section__right-title">{{ primaryHeading }}</h3>
+                    <h4 class="section__right-subtitle">{{ secondaryHeading }}</h4>
+                    <div class="section__right-content" v-html="description"> </div>
                 </div>
             </div>
         </div>
@@ -31,8 +21,42 @@
 </template>
 
 <script>
+import { getImageURLByFieldName, getStringByFieldName } from "~/ultilities/fieldHelper"
+
 export default {
     name: "HomeIntroSection",
+    props: {
+        source: {
+            type: Object,
+            default: () => {}
+        }
+    },
+    computed: {
+        rawJSON() {
+            return this.source ? this.source.details : []
+        },
+        primaryHeading() {
+            return getStringByFieldName(this.rawJSON, "primary_heading") ?? "Primary heading"
+        },
+        secondaryHeading() {
+            return getStringByFieldName(this.rawJSON, "second_heading") ?? "Secondary heading"
+        },
+        description() {
+            return getStringByFieldName(this.rawJSON, "description") ?? "Description"
+        },
+        firstImageURL() {
+            return (
+                getImageURLByFieldName(this.rawJSON, "first_image") ??
+                "https://placehold.co/300x400"
+            )
+        },
+        secondImageURL() {
+            return (
+                getImageURLByFieldName(this.rawJSON, "second_image") ??
+                "https://placehold.co/300x400"
+            )
+        }
+    },
     data() {
         return {
             imgURLFirst: "/img/static/home-intro1.png",
@@ -51,8 +75,6 @@ export default {
         justify-content: center;
         align-items: center;
     }
-
-    
 }
 .section__left {
     width: 54.57%;
@@ -87,7 +109,7 @@ export default {
         }
     }
     .section__right-title {
-        font-family: 'Almonde' ,"Nunito", sans-serif;
+        font-family: "Almonde", "Nunito", sans-serif;
         font-weight: 400;
         color: var(--color-primary);
         font-size: 6.2rem;
@@ -154,5 +176,4 @@ export default {
         }
     }
 }
-
 </style>
