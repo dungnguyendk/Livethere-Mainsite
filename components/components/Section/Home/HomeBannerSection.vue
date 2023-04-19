@@ -24,7 +24,8 @@
                 <img :src="imgURLTextTop" alt="" />
             </div>
             <div class="section__text-bottom">
-                <img :src="imgURLTextImage" alt="" />
+                <!-- <img :src="imgURLTextImage" alt="" /> -->
+                <strong>Experience</strong>vibrant city life
             </div>
         </div>
     </section>
@@ -73,21 +74,22 @@ export default {
         height: 100%;
         width: 100%;
     }
-    @media screen and (max-width: 768px) {
-        .section__text-top {
-            position: absolute;
-            opacity: 0.4;
-            margin: 0 auto;
-            top: 3.5rem;
-            width: 60%;
-        }
-        .section__text-bottom {
-            position: absolute;
-            bottom: 6.3rem;
-            width: 60%;
-        }
-    }
+    
+    
 
+}
+.section__text-bottom {
+    font-size: 3.2rem;
+    color: white;
+    font-weight: 800;
+    display: inline-flex;
+    align-items: center;
+    strong {
+        font-family: 'Almonde' ,"Nunito", sans-serif;
+        font-size: 7rem;
+        font-weight: 400;
+        margin-right: 1.2rem;
+    }
 }
 .section__background-image {
     height: 100%;
@@ -120,7 +122,7 @@ export default {
 }
 .section__text-bottom {
     position: absolute;
-    bottom: 4rem;
+    bottom: 2rem;
     z-index: 6;
 }
 // .fade-transition {
@@ -165,6 +167,23 @@ export default {
     .carousel-transition-leave-to {
         transform: none !important;
         opacity: 0 !important;
+    }
+}
+@media screen and (max-width: 768px) {
+    .section__text-top {
+        position: absolute;
+        opacity: 0.4;
+        margin: 0 auto;
+        top: 3.5rem;
+        right: 0;
+        width: 60%;
+    }
+    .section__text-bottom {
+        position: absolute;
+        font-size: 2.2rem;
+        strong {
+            font-size: 4.4rem;
+        }
     }
 }
 </style>

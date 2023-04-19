@@ -1,0 +1,12 @@
+@font-face {
+    font-family: 'Almonde';
+    src: url('AlmondeRegular.eot');
+    src: url('AlmondeRegular.eot?#iefix') format('embedded-opentype'),
+        url('AlmondeRegular.woff2') format('woff2'),
+        url('AlmondeRegular.woff') format('woff'),
+        url('AlmondeRegular.svg#AlmondeRegular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+

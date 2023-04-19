@@ -53,7 +53,7 @@ export default {
     margin-top: 8rem;
     min-height: calc(100vh - 20rem);
     @media screen and(max-width: 1280px) {
-        margin-top: 6.4rem;
+        margin-top: 6rem;
     }
 }
 </style>
