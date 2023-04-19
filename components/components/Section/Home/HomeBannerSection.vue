@@ -11,9 +11,9 @@
                     :touchless="true"
                 >
                     <v-carousel-item
-                        v-for="image in listImageBanner"
-                        :key="image.id"
-                        :src="image.imgURLBanner"
+                        v-for="(item, index) in bannerImages"
+                        :key="index"
+                        :src="item.image"
                         reverse-transition="fade-transition"
                         transition="carousel-transition"
                     />
@@ -24,11 +24,11 @@
                 <img :src="imgURLTextTop" alt="" />
             </div>
             <div class="section__text-bottom">
-                <img :src="imgURLTextImage" alt="" />
+                <strong>{{ sloganHeading }}</strong> {{ sloganText }}
             </div>
         </div>
     </section>
-    <section v-else class="section--home-banner">
+    <!--    <section v-else class="section&#45;&#45;home-banner">
         <div class="section__container">
             <div class="section__background-image">
                 <v-carousel
@@ -53,11 +53,11 @@
                 <img :src="imgURLTextTop" alt="" />
             </div>
             <div class="section__text-bottom">
-                <!-- <img :src="imgURLTextImage" alt="" /> -->
-                <strong>Experience</strong>vibrant city life
+                <strong>{{ sloganHeading }}</strong
+                >{{ sloganText }}
             </div>
         </div>
-    </section>
+    </section>-->
 </template>
 <script>
 import { getImageURLByFieldName, getStringByFieldName } from "~/ultilities/fieldHelper"
@@ -70,28 +70,34 @@ export default {
             default: () => {}
         }
     },
+
     computed: {
         rawJSON() {
             return this.source ? this.source.details : []
         },
-        images() {
-            if (this.rawJSON.length > 0) {
-                const serviceValueArr = this.rawJSON.find((s) => s.fieldName === "features")
+        sloganHeading() {
+            return getStringByFieldName(this.rawJSON, "slogan_heading") ?? "Experience"
+        },
+        sloganText() {
+            return getStringByFieldName(this.rawJSON, "slogan_text") ?? "vibrant city life"
+        },
 
-                if (serviceValueArr) {
-                    if (serviceValueArr.fieldValue !== "") {
-                        const servicesItemsRaw = JSON.parse(serviceValueArr.fieldValue)
-                        this.services = servicesItemsRaw.map((item) => {
-                            return {
-                                title: getStringByFieldName(item.fields, "name"),
-                                image: getImageURLByFieldName(item.fields, "icon"),
-                                description: getStringByFieldName(item.fields, "description")
-                            }
-                        })
-                    }
+        bannerImages() {
+            if (this.rawJSON.length > 0) {
+                const banners = this.rawJSON.find((s) => s.fieldName === "banners")
+
+                if (banners?.fieldValue) {
+                    const raw = JSON.parse(banners.fieldValue)
+                    return raw.map(({ fields }) => ({
+                        link: getStringByFieldName(fields, "banner_link"),
+                        image: getImageURLByFieldName(fields, "banner_image")
+                    }))
                 }
             }
         }
+    },
+    created() {
+        console.log({ bannerImages: this.bannerImages })
     },
     data() {
         return {
@@ -131,11 +137,8 @@ export default {
         height: 100%;
         width: 100%;
     }
-
-
-
-
 }
+
 .section__text-bottom {
     font-size: 3.2rem;
     color: white;
@@ -143,7 +146,7 @@ export default {
     display: inline-flex;
     align-items: center;
     strong {
-        font-family: 'Almonde' ,"Nunito", sans-serif;
+        font-family: "Almonde", "Nunito", sans-serif;
         font-size: 7rem;
         font-weight: 400;
         margin-right: 1.2rem;
