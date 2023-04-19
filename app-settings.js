@@ -5,8 +5,6 @@ const settings = [
         postal_url: "https://apivo.aestechgroup.com/aespostal",
         mediaURLPath: "http://vnapi.asiaesolutions.com/content",
         landlord: "http://vnapi.asiaesolutions.com/erppublicapi",
-        // landlord: "http://vnapi.asiaesolutions.com/cmspublic",
-
         projects: "http://vnapi.asiaesolutions.com/cmspublic"
     },
     {
@@ -15,7 +13,7 @@ const settings = [
         postal_url: "https://apivo.aestechgroup.com/aespostal",
         mediaURLPath: "https://livethereapi.asiaesolutions.com/content/asset/",
         landlord: "https://livethereapi.asiaesolutions.com/erppublic",
-        projects: "http://vnapi.asiaesolutions.com/cmspublic"
+        projects: "https://livethereapi.asiaesolutions.com/cmspublic"
     },
     {
         env: "production",
@@ -23,7 +21,7 @@ const settings = [
         postal_url: "https://apivo.aestechgroup.com/aespostal",
         mediaURLPath: "https://api.livethere.com/content/asset/", // need update
         landlord: "https://api.livethere.com/landlord",
-        projects: "http://vnapi.asiaesolutions.com/cmspublic"
+        projects: "https://livethereapi.asiaesolutions.com/cmspublic"
     }
 ]
 export const CURRENT_ENV = "beta"

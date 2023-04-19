@@ -9,7 +9,7 @@
                         </div>
                         <div class="page__top-right">
                             <client-only>
-                                <Map :listlat-log="[location]" :titleTooltip="titleTooltip" />
+                                <Map v-if="location" :listlat-log="[location]" :titleTooltip="titleTooltip" />
                             </client-only>
                         </div>
                     </div>
@@ -179,8 +179,19 @@ export default {
                 // return Object.keys(this.projectDetails.location).map(item =>({
                 //     latLng: [parseFloat(this.projectDetails.location[item]), parseFloat(this.projectDetails.location[item])]
                 // }))
-            let checkLagLogValue = Object.values(Object.values(this.projectDetails.location)).every((item) => item !== null)
+            let checkLagLogValue = this.projectDetails.location ? Object.values(Object.values(this.projectDetails.location)).every((item) => item !== null) : null
             return checkLagLogValue ? Object.values(this.projectDetails.location) : []
+
+            // .map((item) => {
+            //         if (item.location && item.location.lat && item.location.lon) {
+            //             return {
+            //                 latLng: [parseFloat(item.location.lat), parseFloat(item.location.lon)]
+            //             }
+            //         } else {
+            //             return null
+            //         }
+            //     })
+            //     .filter((item) => item !== null)
         },
         titleTooltip(){
             return this.projectDetails.buildingName
@@ -190,7 +201,7 @@ export default {
         },
     },
     created() {
-        // console.log("this.route.params", this.$route.params.slug)
+        console.log("this.route.params", this.location)
         this.getMostListing()
     },
     data() {
