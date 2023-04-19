@@ -1,7 +1,7 @@
 <template>
     <v-app>
         <v-main>
-            <LandlordHeader />
+            <MainSiteHeader :source="mainSiteHeader" />
             <div class="pageWrapper">
                 <nuxt />
             </div>
@@ -12,14 +12,14 @@
 </template>
 
 <script>
-import LandlordHeader from "~/components/shared/Header/LandlordHeader.vue"
 import LandingFooter from "~/components/shared/Footer/LandingFooter.vue"
 import SuccessSnackBar from "~/components/shared/Snackbar/SuccessSnackBar.vue"
 import { mapState } from "vuex"
 import { APP_NAME, LANDLORDS_SEO_URL } from "~/ultilities/seo-configs"
+import MainSiteHeader from "~/components/shared/Header/MainSiteHeader.vue"
 
 export default {
-    components: { SuccessSnackBar, LandlordHeader, LandingFooter },
+    components: { MainSiteHeader, SuccessSnackBar, LandingFooter },
     layout: "default",
     computed: {
         ...mapState({
@@ -31,10 +31,14 @@ export default {
             const path = this.$route.path
             return [{ rel: "canonical", href: `${LANDLORDS_SEO_URL}${path}` }]
         },
-
         mainSiteFooter() {
             return this.sections.length > 0
                 ? this.sections.find((section) => section.slug === "mainsite-footer")
+                : null
+        },
+        mainSiteHeader() {
+            return this.sections.length > 0
+                ? this.sections.find((section) => section.slug === "mainsite-header")
                 : null
         }
     },

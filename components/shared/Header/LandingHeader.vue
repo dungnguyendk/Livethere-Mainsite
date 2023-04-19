@@ -8,14 +8,15 @@
                     </div>
                     <div class="header__center">
                         <ul class="menu--top">
-                            <nuxt-link
-                                v-for="(item, index) in menus"
-                                :to="`/${item.linkURL}`"
-                                :class="item.linkURL === path ? 'active' : ''"
-                                :key="index"
-                            >
-                                {{ item.defaultName }}
-                            </nuxt-link>
+                            <MenuItem v-for="(item, index) in menus" :source="item" :key="index" />
+                            <!--                            <nuxt-link
+                                                            v-for="(item, index) in menus"
+                                                            :to="`/${item.linkURL}`"
+                                                            :class="item.linkURL === path ? 'active' : ''"
+                                                            :key="index"
+                                                        >
+                                                            {{ item.defaultName }}
+                                                        </nuxt-link>-->
                         </ul>
                     </div>
                     <div class="header__right">
@@ -35,10 +36,11 @@ import SiteLogo from "~/components/shared/Logo/SiteLogo.vue"
 import MobileHeader from "~/components/shared/Header/MobileHeader.vue"
 import { httpEndpoint } from "~/services/https/endpoints"
 import { defaultMenu } from "~/ultilities/menus"
+import MenuItem from "~/components/shared/Header/components/Menu/MenuItem.vue"
 
 export default {
     name: "LandingHeader",
-    components: { MobileHeader, SiteLogo },
+    components: { MenuItem, MobileHeader, SiteLogo },
     props: {
         source: {
             type: Object,
@@ -60,23 +62,25 @@ export default {
             menuID: 0
         }
     },
-    mounted() {
-        console.log({ pathName: this.$router })
-        //this.getData()
-    },
-    methods: {
-        // each section has different getData() method
 
+    methods: {
         async getData() {
-            const menuData = this.source.details.find((item) => item.fieldName === "menu")
-            const rawMenuID = menuData !== "" ? JSON.parse(menuData.fieldValue)[0] : 0
-            if (rawMenuID && rawMenuID !== 0) {
-                const response = await this.$axios.$get(
-                    `${httpEndpoint.menus.getEntryById}?id=${rawMenuID}&LanguageId=1`
-                )
-                console.log({ response })
-                if (response) {
-                    this.menus = response.menuItems
+            if (this.source && this.source.details) {
+                const menuData = this.source.details.find((item) => item.fieldName === "menu")
+                if (menuData) {
+                    const rawMenuID = menuData !== "" ? JSON.parse(menuData.fieldValue)[0] : 0
+                    if (rawMenuID && rawMenuID !== 0) {
+                        try {
+                            const response = await this.$axios.$get(
+                                `${httpEndpoint.menus.getEntryById}?id=${rawMenuID}&LanguageId=1`
+                            )
+                            if (response) {
+                                this.menus = response.menuItems
+                            }
+                        } catch (e) {
+                            this.menus = []
+                        }
+                    }
                 }
             }
         }
@@ -91,6 +95,7 @@ export default {
     right: 0;
     z-index: 99;
 }
+
 .menu--top {
     display: flex;
     justify-content: center;

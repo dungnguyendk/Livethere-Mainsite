@@ -96,19 +96,23 @@ export default {
         // each section has different getData() method
         async getData() {
             if (this.source && this.source.details) {
-                const menuData = this.source.details
-                    .filter((item) => item.fieldName === "menu")
-                    .find((m) => m.fieldValue !== "")
-                //console.log({ menuData, raw: JSON.parse(menuData.fieldValue)[0] })
-                const rawMenuID = menuData !== "" ? JSON.parse(menuData.fieldValue)[0] : 0
-                if (rawMenuID && rawMenuID !== 0) {
-                    const response = await this.$apiCmsPublic.$get(
-                        `${httpEndpoint.menus.getEntryById}?id=${rawMenuID}&LanguageId=1`
-                    )
-                    console.log({ menuResponse: response })
-                    if (response) {
-                        this.menus = response.menuItems
+                try {
+                    const menuData = this.source.details
+                        .filter((item) => item.fieldName === "menu")
+                        .find((m) => m.fieldValue !== "")
+                    //console.log({ menuData, raw: JSON.parse(menuData.fieldValue)[0] })
+                    const rawMenuID = menuData !== "" ? JSON.parse(menuData.fieldValue)[0] : 0
+                    if (rawMenuID && rawMenuID !== 0) {
+                        const response = await this.$apiCmsPublic.$get(
+                            `${httpEndpoint.menus.getEntryById}?id=${rawMenuID}&LanguageId=1`
+                        )
+                        console.log({ menuResponse: response })
+                        if (response) {
+                            this.menus = response.menuItems
+                        }
                     }
+                } catch (e) {
+                    this.menus = []
                 }
             }
         }
