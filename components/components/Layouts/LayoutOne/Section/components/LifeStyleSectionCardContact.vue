@@ -21,11 +21,16 @@
         <div class="card__bottom">
             <a
                 class="card__icon"
-                :href="`sms:/+${infoAgent.agentPhone ? infoAgent.agentPhone : ''}??body=I Would like to check the availability for ${getTitle} ${getUrl}`"
+                :href="`sms:/+${
+                    infoAgent.agentPhone ? infoAgent.agentPhone : ''
+                }??body=I Would like to check the availability for ${getTitle} ${getUrl}`"
             >
                 <img src="~/static/img/life-style-section/messages.png" alt="" />
             </a>
-            <a :href="`tel://+${infoAgent.agentPhone ? infoAgent.agentPhone : ''}`" class="card__icon">
+            <a
+                :href="`tel://+${infoAgent.agentPhone ? infoAgent.agentPhone : ''}`"
+                class="card__icon"
+            >
                 <img src="~/static/img/life-style-section/call-calling.png" alt="" />
             </a>
             <button class="card__icon" @click="isOpenContactDetailDialog = true">
@@ -43,6 +48,7 @@
 <script>
 import ConfirmDetailDialog from "~/components/components/Section/components/Dialog/ConfirmDetailDialog.vue"
 import ContactDetailDialog from "~/components/components/Section/components/Dialog/ContactDetailDialog.vue"
+
 export default {
     name: "LifeStyleSectionCardContact",
     components: {
@@ -63,13 +69,13 @@ export default {
     },
     computed: {
         getTitle() {
-            if(process.client) {
-                return document.title.slice(0,document.title.indexOf('|'))
+            if (process.client) {
+                return document.title.slice(0, document.title.indexOf("|"))
             }
         },
 
         getUrl() {
-            if(process.client) {
+            if (process.client) {
                 return window.location.href
             }
         }
@@ -108,11 +114,13 @@ export default {
 
     .content__avatar {
         margin-bottom: 1.6rem;
+
         img {
             border-radius: 1.6rem;
             width: 10rem;
             height: auto;
         }
+
         i {
             font-size: 10rem;
             color: var(--color-gray);
@@ -134,9 +142,15 @@ export default {
         color: var(--color-text-back);
     }
 }
+
 .card__top {
     margin-bottom: 0.8rem;
+    background-color: #f7ebe380;
+    -webkit-border-radius: 2rem;
+    -moz-border-radius: 2rem;
+    border-radius: 2rem;
 }
+
 .card__bottom {
     // display: grid;
     // grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -148,6 +162,7 @@ export default {
     @media screen and (max-width: 1024px) {
         grid-column-gap: 2.4rem;
     }
+
     .card__icon {
         flex: 0 0 8rem;
         width: 8rem;
@@ -157,13 +172,16 @@ export default {
         align-items: center;
         justify-content: center;
         border-radius: 8px;
+
         &:hover {
             background-color: var(--color-menu);
+
             img {
                 filter: brightness(0) saturate(100%) invert(100%) sepia(100%) saturate(20%)
                     hue-rotate(325deg) brightness(104%) contrast(106%);
             }
         }
+
         @media screen and (max-width: 425px) {
             flex: 0 0 5.4rem;
             width: 5.4rem;
