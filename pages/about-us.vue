@@ -6,6 +6,7 @@
 
 <script>
 import AboutUsVue from "~/components/components/AboutUs/AboutUs.vue"
+
 export default {
     layout: "landlord",
     components: {
@@ -15,7 +16,7 @@ export default {
 </script>
 
 <style>
-.about-us{
+.about-us {
     background-color: var(--bg-color-white);
 }
 </style>
