@@ -55,6 +55,7 @@ export default {
     img {
         width: 100%;
     }
+
     &:before {
         content: "";
         position: absolute;

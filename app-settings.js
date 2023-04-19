@@ -15,7 +15,7 @@ const settings = [
         postal_url: "https://apivo.aestechgroup.com/aespostal",
         mediaURLPath: "https://livethereapi.asiaesolutions.com/content/asset/",
         landlord: "https://livethereapi.asiaesolutions.com/erppublic",
-        projects: "http://vnapi.asiaesolutions.com/cmspublic"
+        projects: "https://livethereapi.asiaesolutions.com/cmspublic"
     },
     {
         env: "production",

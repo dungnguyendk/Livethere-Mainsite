@@ -9,12 +9,13 @@ export const httpEndpoint = {
     },
 
     pages: {
-        getEntryBySlug: "api/Page/get-by-slug"
+        getEntryBySlug: "api/page/get-by-slug",
+        getById: "api/page/get-by-id"
     },
     menus: {
         getEntryById: "api/Menu/get-by-id"
     },
-    
+
     enquiry: {
         sendEnquiry: "/api/Enquiry"
     },
@@ -98,7 +99,7 @@ export const httpEndpoint = {
         getPopularListing: "api/popular-listings",
         getMostViewListing: "api/most-viewed-listings",
         getAmenities: "api/amenities",
-        postEnquiries: 'api/enquiries',
-        getEntries:'api/projects'
-    },
+        postEnquiries: "api/enquiries",
+        getEntries: "api/projects"
+    }
 }

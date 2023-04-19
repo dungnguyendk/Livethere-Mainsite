@@ -29,9 +29,10 @@ export const mutations = {
 export const actions = {
     async getPageDetails({ commit }, payload) {
         try {
-            const response = await this.$axios.$get(
+            const response = await this.$apiCmsPublic.$get(
                 `${httpEndpoint.pages.getEntryBySlug}?${payload}`
             )
+            console.log({ payload, response })
             if (response) {
                 const { sectionMappings } = response
                 commit("setPageDetails", response)
@@ -72,6 +73,7 @@ export const actions = {
             return null
         }
     },
+
     async getHomepageDetails({ commit }, payload) {
         try {
             const response = await this.$axios.$get(`${httpEndpoint.pages.getById}?${payload}`)
@@ -115,4 +117,20 @@ export const actions = {
             return null
         }
     }
+
+    /*async getMainSiteBySlug({ commit, rootState, dispatch }) {
+        try {
+            await dispatch("getCurrentSite", ACTIVE_SITE_FID).then(async () => {
+                const homepageFID = rootState.page.site.defaultHomePageFID
+                if (homepageFID) {
+                    const params = qs.stringify({ Id: homepageFID, LanguageId: 1 })
+
+                    await dispatch("getHomepageDetails", params)
+                }
+            })
+        } catch (e) {
+            console.log({ Error: e.message })
+            return null
+        }
+    }*/
 }

@@ -1,6 +1,6 @@
 <template>
     <main>
-        <HomeBannerSection />
+        <HomeBannerSection v-if="topBanner" :source="topBanner" />
         <HomeSearch />
         <HomeIntroSection />
         <HomePopularListingSection />
@@ -18,10 +18,14 @@ import HomeLatestProjectsSection from "~/components/components/Section/Home/Home
 import HomeCTASection from "~/components/components/Section/Home/HomeCTASection.vue"
 import { generateLandlordsSEOMetaTags } from "~/ultilities/seo-configs"
 import { appSettings } from "~/app-settings"
+import qs from "qs"
+import { mapState } from "vuex"
+import LandingHeader from "~/components/shared/Header/LandingHeader.vue"
 
 export default {
     name: "LiveThereMainSiteHome",
     components: {
+        LandingHeader,
         HomeBannerSection,
         HomeSearch,
         HomeIntroSection,
@@ -29,6 +33,18 @@ export default {
         HomeLatestProjectsSection,
         HomeCTASection
     },
+    computed: {
+        ...mapState({
+            pageDetails: (state) => state.page.pageDetails,
+            sections: (state) => state.page.sections
+        }),
+        topBanner() {
+            return this.sections.length > 0
+                ? this.sections.find((section) => section.slug === "mainsite-top-banner")
+                : null
+        }
+    },
+
     head() {
         return {
             title: `${appSettings.siteName}`
@@ -39,8 +55,15 @@ export default {
         app.head.meta = generateLandlordsSEOMetaTags(app.head.meta)
         try {
             // const params = 10;
+            const pageParams = qs.stringify({
+                SiteId: 1,
+                LanguageId: 1,
+                Slug: "mainsite"
+            })
+            await store.dispatch("page/getPageDetails", pageParams)
             await store.dispatch("project/getHomePage")
             await store.dispatch("project/getLatestProject", 10)
+            //
         } catch (e) {
             console.log({ Error: e.message })
         }
