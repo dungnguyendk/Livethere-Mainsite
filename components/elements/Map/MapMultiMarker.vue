@@ -9,6 +9,7 @@
         <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
 
         <l-marker
+            v-if="marker.latLng.length > 0 && Array.isArray(marker.latLng)"
             v-for="(marker, index) in listlatLog"
             :key="index"
             :lat-lng="marker.latLng"

@@ -27,7 +27,7 @@ export default {
         ]
     },
 
-    css: ["~/static/fonts/remixIcon/remixicon.css", "~/assets/scss/index.scss"],
+    css: ["~/static/fonts/remixIcon/remixicon.css","~/static/fonts/Almonde/Almonde.css", "~/assets/scss/index.scss"],
 
     plugins: [
         { src: "~plugins/vueliate.js", ssr: false },

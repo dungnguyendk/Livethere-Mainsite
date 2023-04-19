@@ -26,6 +26,7 @@
                     >
                     </v-select>
                     <v-btn
+                        v-if="location.length > 0"
                         class="section__btn-map btn btn--outline btn--green section__btn-style"
                         @click="isActiveMap = !isActiveMap"
                     >
@@ -121,9 +122,9 @@ export default {
         }
     },
     props: {
-        isLoading : {
+        isLoading: {
             type: Boolean,
-            default: false,
+            default: false
         }
     },
     computed: {
@@ -140,11 +141,19 @@ export default {
             }
         },
         location() {
-            return this.searchListings.data.map((item) => ({
-                latLng: [parseFloat(item.location.lat), parseFloat(item.location.lon)]
-            }))
+            return this.searchListings.data
+                .map((item) => {
+                    if (item.location && item.location.lat && item.location.lon) {
+                        return {
+                            latLng: [parseFloat(item.location.lat), parseFloat(item.location.lon)]
+                        }
+                    } else {
+                        return null
+                    }
+                })
+                .filter((item) => item !== null)
         },
-        objectLocation(){
+        objectLocation() {
             return this.searchListings.data
         }
     },
@@ -175,7 +184,7 @@ export default {
             isActiveMap: false,
             isOpenFilterProjectDialog: false,
             isOpenShareSocialDialog: false,
-            targetLinkURL: {},
+            targetLinkURL: {}
         }
     },
     created() {
