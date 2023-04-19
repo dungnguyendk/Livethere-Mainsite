@@ -88,5 +88,20 @@ export default {
             text-align: center;
         }
     }
+    &:nth-child(2) {
+        .box__topContainer {
+            background-color: #00634f !important;
+        }
+    }
+    &:nth-child(3) {
+        .box__topContainer {
+            background-color: #d89889 !important;
+        }
+    }
+    &:nth-child(4) {
+        .box__topContainer {
+            background-color: #dfc6ff !important;
+        }
+    }
 }
 </style>

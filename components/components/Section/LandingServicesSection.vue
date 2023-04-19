@@ -8,11 +8,12 @@
                 <div class="container">
                     <div v-if="services.length > 0" class="section__items">
                         <SectionService
-                            v-for="service in services"
+                            v-for="(service, index) in services"
                             :color="service.color"
                             :title="service.title"
                             :desc="service.description"
                             :image="service.image"
+                            :key="service.index"
                         />
                     </div>
                     <p v-else class="empty"> No services found. </p>
@@ -23,7 +24,6 @@
 </template>
 
 <script>
-import { mapState } from "vuex"
 import SectionService from "~/components/components/Section/components/SectionService.vue"
 import { getImageURLByFieldName, getStringByFieldName } from "~/ultilities/fieldHelper"
 
@@ -49,18 +49,19 @@ export default {
                 getStringByFieldName(rawJSON, "title") !== ""
                     ? getStringByFieldName(rawJSON, "title")
                     : "Untitled"
-            const serviceValueArr = rawJSON.find((s) => s.fieldName === "services")
+            const serviceValueArr = rawJSON.find((s) => s.fieldName === "features")
 
             if (serviceValueArr) {
-                const servicesItemsRaw = JSON.parse(serviceValueArr.fieldValue)
-                this.services = servicesItemsRaw.map((item) => {
-                    return {
-                        title: getStringByFieldName(item.fields, "title"),
-                        color: getStringByFieldName(item.fields, "color"),
-                        image: getImageURLByFieldName(item.fields, "image"),
-                        description: getStringByFieldName(item.fields, "description")
-                    }
-                })
+                if (serviceValueArr.fieldValue !== "") {
+                    const servicesItemsRaw = JSON.parse(serviceValueArr.fieldValue)
+                    this.services = servicesItemsRaw.map((item) => {
+                        return {
+                            title: getStringByFieldName(item.fields, "name"),
+                            image: getImageURLByFieldName(item.fields, "icon"),
+                            description: getStringByFieldName(item.fields, "description")
+                        }
+                    })
+                }
             }
         }
     }
