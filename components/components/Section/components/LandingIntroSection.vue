@@ -2,27 +2,34 @@
     <div v-if="source" class="section--landing section--landing-intro" id="landing-intro">
         <div class="container">
             <div class="section__top">
-                <nav v-if="menus" class="nav--intro">
+                <nav
+                    v-if="menus"
+                    class="nav--intro"
+                    :class="{ 'nav-fixed': isFixed }"
+                    ref="navIntro"
+                    id="nav--intro"
+                >
                     <a
                         v-for="(item, index) in menus"
                         :key="index"
                         @click.prevent
                         class="btn--nav"
-                        :href="item.section ? `#${item.section}` : ''"
-                        v-smooth-scroll="{ duration: 80, offset: 0 }"
+                        :class="{ active: index === activeIndex }"
+                        :href="item.link ? `${item.link}` : ''"
+                        v-smooth-scroll="{ duration: 80, offset: checkHeight, updateHistory: false }"
+                        :ref="item.link"
                     >
                         {{ item.text }}
                     </a>
                 </nav>
             </div>
-            <div class="section__container">
+            <div class="section__container" ref="content">
                 <div class="section__content">
                     <div class="section__left">
                         <img v-if="image !== ''" :src="image" alt="" />
                     </div>
                     <div class="section__right">
-                        <div v-if="description !== ''" class="section__desc" v-html="description">
-                        </div>
+                        <div v-if="content !== ''" class="section__desc" v-html="content"> </div>
                         <p v-else>No data found</p>
                     </div>
                 </div>
@@ -33,6 +40,7 @@
 
 <script>
 import { getImageURLByFieldName, getStringByFieldName } from "~/ultilities/fieldHelper"
+import StickyNav from "~/components/shared/nav/StickyNav.vue"
 import { httpEndpoint } from "~/services/https/endpoints"
 
 export default {
@@ -74,8 +82,20 @@ export default {
             ],
             image: "",
             features: [],
-            description: "",
-            menus: []
+            content: "",
+            menus: [],
+            isFixed: false,
+            activeIndex: -1,
+            scrollPositions: []
+        }
+    },
+
+    computed: {
+        checkHeight() {
+            if (process.client) {
+                if(window.matchMedia("(min-width: 1280px)").matches) return -80
+                return -64
+            }
         }
     },
 
@@ -84,22 +104,63 @@ export default {
 
         if (rawJSON.length > 0) {
             this.image = getImageURLByFieldName(rawJSON, "image")
-            //console.log({ image: this.image })
-            this.description = getStringByFieldName(rawJSON, "description")
-
+            this.content = getStringByFieldName(rawJSON, "content")
             const menuArr = rawJSON.find((s) => s.fieldName === "menu")
-
             if (menuArr !== null) {
-                const menuRaw = JSON.parse(menuArr.fieldValue)
-                //console.log({ menu: menuRaw })
-                this.menus = menuRaw.map((item) => {
-                    return {
-                        text: getStringByFieldName(item.fields, "Text"),
-                        section: getStringByFieldName(item.fields, "section")
+                if (menuArr.fieldValue !== "") {
+                    const menuRaw = JSON.parse(menuArr.fieldValue)
+                    if (menuRaw.length > 0) {
+                        this.menus = menuRaw.map((item) => {
+                            return {
+                                text: getStringByFieldName(item.fields, "menu_text"),
+                                link: getStringByFieldName(item.fields, "menu_link")
+                            }
+                        })
                     }
-                })
+                }
+            }
+        }
+    },
 
-                //console.log({ menus: this.menus })
+    mounted() {
+        this.handleScroll()
+    },
+
+    methods: {
+        handleScroll() {
+            const contentEl = document.getElementById("nav--intro")
+            if (contentEl) {
+                // const positionNav =
+                //     contentEl.getBoundingClientRect().top +
+                //     window.pageYOffset +
+                //     contentEl.offsetHeight
+                const refs = this.menus.map((item) => item.link)
+                for (let i = 0; i < refs.length; i++) {
+                    const el = document.getElementById(refs[i].substring(1))
+                    // console.log("el",el);
+                    if(el){
+                        const pos = el.getBoundingClientRect().top + window.pageYOffset - 150
+                        this.scrollPositions.push(pos)
+                    }
+                    
+                }
+
+                window.addEventListener("scroll", () => {
+                    const contentRect = window.pageYOffset
+                    const activeIndex = this.scrollPositions.findIndex(
+                        (pos, index) =>
+                            pos <= contentRect &&
+                            (this.scrollPositions[index + 1] > contentRect ||
+                                index === this.scrollPositions.length - 1)
+                    )
+                    this.activeIndex = activeIndex
+                    // Add fixed nav--intro
+                    // if (contentRect > positionNav) {
+                    //     this.isFixed = true
+                    // } else {
+                    //     this.isFixed = false
+                    // }
+                })
             }
         }
     }
@@ -159,6 +220,15 @@ export default {
         flex-flow: row wrap;
     }
 }
+.nav-fixed {
+    position: fixed;
+    top: -4.4rem;
+    left: 0;
+    right: 0;
+    background-color: #f7ebe3;
+    z-index: 99;
+    padding-top: 44px;
+}
 
 .section--landing-intro {
     position: relative;
@@ -182,6 +252,13 @@ export default {
         display: flex;
         flex-flow: column wrap;
         justify-content: center;
+    }
+    .section__top {
+        // position: sticky;
+        // top: 0;
+        // left: 0;
+        // background-color: #f7ebe3;
+        // z-index: 99;
     }
 
     @media screen and (max-width: 991px) {

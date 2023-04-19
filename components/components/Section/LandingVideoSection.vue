@@ -2,7 +2,7 @@
     <div
         v-if="source"
         class="section--landing section--youtube-video withBgColor"
-        id="landing-videos"
+        id="campaign-video"
     >
         <div class="container">
             <div class="section__top">
@@ -48,8 +48,8 @@ export default {
     created() {
         const rawJSON = this.source ? this.source.details : []
         if (rawJSON.length > 0) {
-            this.title = getStringByFieldName(rawJSON, "title")
-            this.url = getStringByFieldName(rawJSON, "url")
+            this.title = getStringByFieldName(rawJSON, "section_heading")
+            this.url = getStringByFieldName(rawJSON, "video_url")
         }
     }
 }

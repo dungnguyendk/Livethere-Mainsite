@@ -1,5 +1,5 @@
 <template lang="html">
-    <div v-if="source" class="section--landing section--youtube-video" id="landing-top-banner">
+    <div v-if="source" class="section--landing section--youtube-video" id="campaign-banner">
         <div class="banner">
             <img :src="imageURL" :alt="title" />
             <div class="banner__container">
@@ -39,7 +39,7 @@ export default {
     created() {
         const rawJSON = this.source ? this.source.details : []
         if (rawJSON.length > 0) {
-            this.imageURL = getImageURLByFieldName(rawJSON, "image")
+            this.imageURL = getImageURLByFieldName(rawJSON, "background_image")
             this.description = getStringByFieldName(rawJSON, "description")
             this.title = getStringByFieldName(rawJSON, "title")
         }
@@ -50,9 +50,20 @@ export default {
 <style lang="scss" scoped>
 .banner {
     position: relative;
+    z-index: 9;
 
     img {
         width: 100%;
+    }
+    &:before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(#000, 0.24);
+        z-index: 10;
     }
 
     .banner__container {
@@ -62,6 +73,7 @@ export default {
         transform: translate(-50%, -50%);
         width: 100%;
         max-width: calc(100% - 20%);
+        z-index: 99;
     }
 
     .banner__content {
@@ -86,8 +98,8 @@ export default {
     }
 
     @media screen and (max-width: 479px) {
-        background-color: #fff;
         .banner__container {
+            background-color: var(--color-white);
             position: relative;
             top: 0;
             left: 0;

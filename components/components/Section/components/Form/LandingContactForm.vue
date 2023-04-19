@@ -12,7 +12,18 @@
                                 @input="$v.name.$touch()"
                                 outlined
                                 dense
-                                hide-details
+                            />
+                        </div>
+                    </v-col>
+                    <v-col cols="12" md="6">
+                        <div class="form__field">
+                            <label>Tels</label>
+                            <v-text-field
+                                v-model="phoneNumber"
+                                :error-messages="phoneNumberErrors"
+                                @input="$v.phoneNumber.$touch()"
+                                outlined
+                                dense
                             />
                         </div>
                     </v-col>
@@ -26,25 +37,10 @@
                                 item-value="countryName"
                                 outlined
                                 required
-                                hide-details
                                 dense
                             />
                         </div>
                     </v-col>
-                    <v-col cols="12" md="6">
-                        <div class="form__field">
-                            <label>Tels</label>
-                            <v-text-field
-                                v-model="phoneNumber"
-                                :error-messages="phoneNumberErrors"
-                                @input="$v.phoneNumber.$touch()"
-                                outlined
-                                dense
-                                hide-details
-                            />
-                        </div>
-                    </v-col>
-
                     <v-col cols="12" md="6">
                         <div class="form__field">
                             <label>Email</label>
@@ -54,7 +50,6 @@
                                 @input="$v.email.$touch()"
                                 outlined
                                 dense
-                                hide-details
                             />
                         </div>
                     </v-col>
@@ -64,10 +59,11 @@
                             <v-select
                                 v-model="enquiryType"
                                 :items="enquiryListing"
+                                :error-messages="enquiryErrors"
+                                @input="$v.enquiryType.$touch()"
                                 placeholder="Please select"
                                 outlined
                                 required
-                                hide-details
                                 dense
                             />
                         </div>
@@ -91,35 +87,50 @@
 <script>
 import { validationMixin } from "vuelidate"
 import { setFormControlErrors } from "~/ultilities/form-validations"
-import { required } from "vuelidate/lib/validators"
+import { required,email,helpers } from "vuelidate/lib/validators"
 import { countries } from "~/ultilities/country"
 import { httpEndpoint } from "~/services/https/endpoints"
-
+import {
+    MESSAGE_INVALID_EMAIL,
+    MESSAGE_INVALID_SINGAPORE_PHONE_NUMBER,
+    MESSAGE_REQUIRED_EMAIL,
+    MESSAGE_REQUIRED_PHONE_NUMBER,
+} from "~/ultilities/error-messages"
+const singaporePhoneNumber = helpers.regex("singaporePhoneNumber", /^\+65 \d{4}( ?\d{4})$/)
 export default {
     name: "LandingContactForm",
     mixins: [validationMixin],
     computed: {
         nameErrors() {
-            return setFormControlErrors(this.$v.name)
+            return setFormControlErrors(this.$v.name, "Full name is required")
         },
         phoneNumberErrors() {
-            return setFormControlErrors(this.$v.name)
+            const errors = []
+            if (!this.$v.phoneNumber.$dirty) return errors
+            !this.$v.phoneNumber.required && errors.push(MESSAGE_REQUIRED_PHONE_NUMBER)
+            !this.$v.phoneNumber.singaporePhoneNumber &&
+            errors.push(MESSAGE_INVALID_SINGAPORE_PHONE_NUMBER)
+            return errors
         },
 
         emailErrors() {
-            return setFormControlErrors(this.$v.email)
+            const errors = []
+            if (!this.$v.email.$dirty) return errors
+            !this.$v.email.required && errors.push(MESSAGE_REQUIRED_EMAIL)
+            !this.$v.email.email && errors.push(MESSAGE_INVALID_EMAIL)
+            return errors
         },
 
         enquiryErrors() {
-            return setFormControlErrors(this.$v.email)
+            return setFormControlErrors(this.$v.enquiryType, "Enquiry Type is required")
         }
     },
 
     validations() {
         return {
             name: { required },
-            phoneNumber: { required },
-            email: { required },
+            phoneNumber: { required, singaporePhoneNumber},
+            email: { required,email },
             enquiryType: { required }
         }
     },
@@ -160,24 +171,35 @@ export default {
                 console.log("fail")
             } else {
                 const params = {
-                    firstName: this.name,
-                    lastName: this.name,
-                    phoneNumber: this.phoneNumber,
+                    fullname: this.name,
+                    mobileNo: this.phoneNumber,
                     email: this.email,
-                    message: this.enquiryType
+                    enquiryType: this.enquiryType,
+                    country: this.country,
+                    pageUrl: window.location.href,
+                    pageName: document.title,
+                    MobileNoCountry: '+65',
+                    message: "Help Me Find My Ideal Home",
+                    source: "livethere"
                 }
-                const response = await this.$axios.$post(httpEndpoint.enquiry.sendEnquiry, params)
-                if (response && response !== 0) {
-                    this.snackbar = true
-                    this.snackbarMessage = "Your message has been sent."
-                    this.name = ""
-                    this.lastName = ""
-                    this.phoneNumber = ""
-                    this.enquiryType = ""
-                    this.country = "SINGAPORE"
-                    this.$v.$reset()
-                } else {
+                try {
+                    const response = await this.$landlordApi.$post(httpEndpoint.enquiry.sendEnquiry, params)
+                    if (response.valid) {
+                        this.snackbar = true
+                        this.snackbarMessage = "Your message has been sent."
+                        this.name = ""
+                        this.email = ""
+                        this.phoneNumber = ""
+                        this.enquiryType = ""
+                        this.country = "SINGAPORE"
+                        this.$v.$reset()
+                    } else {
                 }
+                } catch (e) {
+                    console.log({ Error: e.message })
+                    return false
+                }
+                
             }
         }
     }
