@@ -48,6 +48,7 @@ export default {
                 ? this.sections.find((section) => section.slug === "mainsite-introduction")
                 : null
         },
+
         mainSiteCta() {
             return this.sections.length > 0
                 ? this.sections.find((section) => section.slug === "mainsite-call-to-action")

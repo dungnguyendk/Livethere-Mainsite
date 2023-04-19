@@ -13,7 +13,7 @@ export const httpEndpoint = {
         getById: "api/page/get-by-id"
     },
     menus: {
-        getEntryById: "api/Menu/get-by-id"
+        getEntryById: "api/menu/get-by-id"
     },
 
     enquiry: {

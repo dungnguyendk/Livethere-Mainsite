@@ -96,9 +96,6 @@ export default {
             }
         }
     },
-    created() {
-        console.log({ bannerImages: this.bannerImages })
-    },
     data() {
         return {
             carouselBanner: 0,
@@ -145,6 +142,7 @@ export default {
     font-weight: 800;
     display: inline-flex;
     align-items: center;
+
     strong {
         font-family: "Almonde", "Nunito", sans-serif;
         font-size: 7rem;
@@ -243,6 +241,7 @@ export default {
         opacity: 0 !important;
     }
 }
+
 @media screen and (max-width: 768px) {
     .section__text-top {
         position: absolute;
@@ -255,6 +254,7 @@ export default {
     .section__text-bottom {
         position: absolute;
         font-size: 2.2rem;
+
         strong {
             font-size: 4.4rem;
         }

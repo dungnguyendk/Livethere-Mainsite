@@ -1,26 +1,48 @@
 <template lang="html">
     <div class="widget widget--footer widget--links">
         <div class="widget__top">
-            <h3 class="widget__title">About livethere</h3>
+            <h3 class="widget__title">{{ heading }}</h3>
         </div>
         <div class="widget__container">
-            <!--            <template v-if="source">
-                <nuxt-link v-for="(item, index) in source" :to="`/${item.linkURL}`">
+            <template v-for="(item, index) in source">
+                <nuxt-link
+                    v-if="item.linkType === 'internal'"
+                    :to="`/${item.linkURL}`"
+                    :key="index"
+                >
                     {{ item.defaultName }}
                 </nuxt-link>
-            </template>-->
-            <template>
-                <a v-for="(link, index) in links" :href="link.url" :key="index">
-                    {{ link.label }}
+                <a
+                    :href="item.linkURL"
+                    :target="item.linkOpenNewTab ? '_blank' : '_self'"
+                    v-else
+                    :key="index"
+                >
+                    {{ item.defaultName }}
                 </a>
-                <a :class="openContactUsDialog ? 'active' : ''" @click="openContactUsDialog = true">
-                    Contact us
-                </a>
-                <Dialog :open="openContactUsDialog" @close="closeDialog" :actions="false" :size="sizeDialog" :title="''">
-                    <ContactUsForm @close="openContactUsDialog = false" :isContactUs="true" titleContact="Contact Us"
-                        v-if="openContactUsDialog" />
-                </Dialog>
             </template>
+            <!--            <template>
+                            <a v-for="(link, index) in links" :href="link.url" :key="index">
+                                {{ link.label }}
+                            </a>
+                            <a :class="openContactUsDialog ? 'active' : ''" @click="openContactUsDialog = true">
+                                Contact us
+                            </a>
+                            <Dialog
+                                :open="openContactUsDialog"
+                                @close="closeDialog"
+                                :actions="false"
+                                :size="sizeDialog"
+                                :title="''"
+                            >
+                                <ContactUsForm
+                                    @close="openContactUsDialog = false"
+                                    :isContactUs="true"
+                                    titleContact="Contact Us"
+                                    v-if="openContactUsDialog"
+                                />
+                            </Dialog>
+                        </template>-->
         </div>
     </div>
 </template>
@@ -28,6 +50,7 @@
 <script>
 import Dialog from "~/components/elements/Dialog/Dialog.vue"
 import ContactUsForm from "~/components/shared/Header/Form/ContactUsForm.vue"
+
 export default {
     name: "LinksFooterWidget",
     components: { Dialog, ContactUsForm },
@@ -35,6 +58,10 @@ export default {
         source: {
             type: Array,
             default: () => []
+        },
+        heading: {
+            type: String,
+            default: "About livethere"
         }
     },
     data() {
@@ -61,7 +88,7 @@ export default {
                 {
                     url: "/about-us",
                     label: "About Us"
-                },
+                }
             ]
         }
     },
@@ -80,9 +107,11 @@ export default {
         margin-bottom: 2.5vh;
     }
 }
+
 .widget--links {
     .widget__container {
         grid-gap: 1.2rem;
+
         a {
             // font-size: 1.4rem;
         }

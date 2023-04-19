@@ -1,20 +1,23 @@
 <template lang="html">
-    <footer class="footer--landing">
+    <footer v-if="source" class="footer--landing">
         <div class="container">
             <div class="footer__content">
                 <div class="footer__left">
-                    <InformationFooterWidget />
+                    <InformationFooterWidget :address="address" :agency-no="agencyNo" />
                 </div>
                 <div class="footer__right">
-                    <LinksFooterWidget  />
-                    <SharingFooterWidget />
+                    <LinksFooterWidget :source="menus" :heading="menuHeading" />
+                    <SharingFooterWidget
+                        :facebook-link="facebookLink"
+                        :instagram-link="instagramLink"
+                    />
                 </div>
             </div>
         </div>
         <div class="footer__bottom">
             <div class="container">
                 <div class="footer__bottomLeft">
-                    <p>&copy; Copyright 2023 Savills Singapore. All rights reserved.</p>
+                    <p>{{ copyrightText }}</p>
                 </div>
                 <div class="footer__bottomRight">
                     <p>
@@ -35,7 +38,7 @@ import InformationFooterWidget from "~/components/shared/Footer/components/Infor
 import LinksFooterWidget from "~/components/shared/Footer/components/LinksFooterWidget.vue"
 import SharingFooterWidget from "~/components/shared/Footer/components/SharingFooterWidget.vue"
 import { httpEndpoint } from "~/services/https/endpoints"
-import { getImageURLByFieldName, getStringByFieldName } from "~/ultilities/fieldHelper"
+import { getStringByFieldName } from "~/ultilities/fieldHelper"
 
 export default {
     name: "LandingFooter",
@@ -60,30 +63,52 @@ export default {
             menuID: 0
         }
     },
+    computed: {
+        rawJSON() {
+            return this.source ? this.source.details : []
+        },
+        menuHeading() {
+            return getStringByFieldName(this.rawJSON, "menu_headings") ?? "About livethere"
+        },
+        facebookLink() {
+            return getStringByFieldName(this.rawJSON, "facebook_link")
+        },
+        instagramLink() {
+            return getStringByFieldName(this.rawJSON, "instagram_link")
+        },
+        copyrightText() {
+            return (
+                getStringByFieldName(this.rawJSON, "copyright_text") ??
+                "&copy; Copyright 2023 Savills Singapore. All rights reserved."
+            )
+        },
+        address() {
+            return getStringByFieldName(this.rawJSON, "address")
+        },
+        agencyNo() {
+            return getStringByFieldName(this.rawJSON, "agency_no")
+        }
+    },
     created() {
-        //this.getData()
+        this.getData()
     },
     methods: {
         // each section has different getData() method
-
         async getData() {
-            const rawJSON = this.source ? this.source.details : []
-            this.imageURL = getImageURLByFieldName(rawJSON, "image")
-            this.description = getStringByFieldName(rawJSON, "description")
-            this.title = getStringByFieldName(rawJSON, "title")
+            if (this.source && this.source.details) {
+                const menuData = this.source.details
+                    .filter((item) => item.fieldName === "menu")
+                    .find((m) => m.fieldValue !== "")
 
-            const menuData = this.source.details
-                .filter((item) => item.fieldName === "menu")
-                .find((m) => m.fieldValue !== "")
-            const rawMenuID = menuData !== "" ? JSON.parse(menuData.fieldValue)[0] : 0
-
-            if (rawMenuID && rawMenuID !== 0) {
-                const response = await this.$axios.$get(
-                    `${httpEndpoint.menus.getEntryById}?id=${rawMenuID}&LanguageId=1`
-                )
-                if (response) {
-                    this.menus = response.menuItems
-                    console.log({ menus: this.menus })
+                const rawMenuID = menuData !== "" ? JSON.parse(menuData.fieldValue)[0] : 0
+                if (rawMenuID && rawMenuID !== 0) {
+                    const response = await this.$cmsPublicAPI.$get(
+                        `${httpEndpoint.menus.getEntryById}?id=${rawMenuID}&LanguageId=1`
+                    )
+                    console.log({ menuResponse: response })
+                    if (response) {
+                        this.menus = response.menuItems
+                    }
                 }
             }
         }
@@ -129,6 +154,7 @@ export default {
             font-weight: 400;
             color: var(--color-white);
         }
+
         img {
             margin-left: 1.2rem;
         }
@@ -162,6 +188,7 @@ export default {
         .footer__content {
             grid-template-columns: minmax(0, 1fr);
             grid-gap: 4.6rem;
+
             .footer__right {
             }
         }
@@ -191,7 +218,6 @@ export default {
 
             .footer__bottomRight {
                 justify-content: flex-start;
-
             }
 
             .container {

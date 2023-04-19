@@ -1,12 +1,14 @@
 <template lang="html">
     <div class="widget widget--footer widget--about">
         <SiteLogo />
-        <p v-if="address && address !== ''"> {{ address }}</p>
-        <template v-else>
-            <p>
-                Savills Singapore Agency No.: L3009688B 
-            </p>
+
+        <template v-if="address === '' && agencyNo === ''">
+            <p> Savills Singapore Agency No.: L3009688B </p>
             <p>30 Cecil Street, #20-03 Prudential Tower, Singapore 049712</p>
+        </template>
+        <template v-else>
+            <p>{{ agencyNo }}</p>
+            <p>{{ address }}</p>
         </template>
     </div>
 </template>
@@ -20,7 +22,11 @@ export default {
     props: {
         address: {
             type: String,
-            default: ''
+            default: ""
+        },
+        agencyNo: {
+            type: String,
+            default: ""
         }
     }
 }
@@ -28,13 +34,16 @@ export default {
 <style lang="scss" scoped>
 .widget--footer {
     display: block;
+
     :deep(img) {
         width: 20rem;
         margin-bottom: 3rem;
     }
+
     p {
         font-size: 1.4rem;
         margin-bottom: 1.6rem;
+
         &:last-child {
             margin-bottom: 0;
         }
