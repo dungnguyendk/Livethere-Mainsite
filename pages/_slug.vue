@@ -24,8 +24,9 @@ export default {
         })
     },
     head() {
+        const pageTitle = this.pageDetails && this.pageDetails.defaultName ? this.pageDetails.defaultName : '';
         return {
-            title: `${this.pageDetails.defaultName} | ${appSettings.siteName}`
+            title: `${pageTitle} | ${appSettings.siteName}`
         }
     },
 

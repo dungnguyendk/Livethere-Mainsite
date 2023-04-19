@@ -659,10 +659,16 @@ export default {
             if (e == true && this.livethereChecked === false) {
                 this.livethereChecked = true
             }
+            if(e == false){
+                this.livethereChecked = true
+            }
         },
         select_Livethere(e) {
             if (e == false && this.selectAll === true) {
                 this.selectAll = false
+            }
+            if(e == false){
+                this.selectAll = true
             }
         },
         onSubmitForm() {
@@ -722,6 +728,10 @@ export default {
         },
         keySearch: _.debounce(async function (payload){
             try {
+                this.searchKey = payload
+                this.category = ""
+                this.districts = ""
+                this.mrt = ""
                 const response = await this.$apiCmsPublic.$get(`${httpEndpoint.projects.getAmenities}?name=${payload}`)
                 // console.log("keySearch ;",response, response.length);
                 if(response.length > 0){
@@ -734,12 +744,10 @@ export default {
             }
         }, 200),
         openLocationSearch(val){
-            console.log("openLocationSearch val",val)
             // this.locationSearch = ""
             this.listAmenities = []
             this.searchKey = ""
             this.category = val
-            console.log("openLocationSearch this.category",this.category)
             if(val === "Mrt"){
                 if(this.category === "Mrt"){
                     this.districts = ""
@@ -760,13 +768,13 @@ export default {
         getDistricts(params) {
             this.locationSearch = params.join(";")
             this.districts = this.locationSearch
-            this.searchKey = ""
+            this.searchKey = this.search = ""
             // console.log("locationSearch",this.locationSearch);
         },
         getMrt(params) {
             this.locationSearch = params.join(";")
             this.searchMRT = this.locationSearch
-            this.searchKey = ""
+            this.searchKey = this.search = ""
         }
     },
     watch: {

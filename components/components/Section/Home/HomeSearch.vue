@@ -451,7 +451,7 @@ export default {
             if(params){
                 this.locationSearch = params.join(';')
                 this.districts = this.locationSearch
-                this.searchKey = ""
+                this.searchKey = this.search = ""
             }
             // console.log("locationSearch",this.locationSearch);
         },
@@ -459,7 +459,7 @@ export default {
             if(params){
                 this.locationSearch = params.join(';')
                 this.searchMRT = this.locationSearch
-                this.searchKey = ""
+                this.searchKey = this.search = ""
             }
             // console.log("this.mrt: ",this.searchMRT);
         },
@@ -498,6 +498,9 @@ export default {
         },
         keySearch: _.debounce(async function (payload){
             try {
+                this.searchKey = payload
+                this.category = ""
+                this.mrt = ""
                 const response = await this.$apiCmsPublic.$get(`${httpEndpoint.projects.getAmenities}?name=${payload}`)
                 // console.log("keySearch ;",response, response.length);
                 if(response.length > 0){

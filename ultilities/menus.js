@@ -1,7 +1,7 @@
 export const defaultMenu = [
     {
         defaultName: "Home",
-        linkURL: "/home"
+        linkURL: "/"
     },
     {
         defaultName: "Tenants",
