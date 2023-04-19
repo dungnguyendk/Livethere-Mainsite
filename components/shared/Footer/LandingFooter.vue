@@ -99,10 +99,10 @@ export default {
                 const menuData = this.source.details
                     .filter((item) => item.fieldName === "menu")
                     .find((m) => m.fieldValue !== "")
-
+                //console.log({ menuData, raw: JSON.parse(menuData.fieldValue)[0] })
                 const rawMenuID = menuData !== "" ? JSON.parse(menuData.fieldValue)[0] : 0
                 if (rawMenuID && rawMenuID !== 0) {
-                    const response = await this.$cmsPublicAPI.$get(
+                    const response = await this.$apiCmsPublic.$get(
                         `${httpEndpoint.menus.getEntryById}?id=${rawMenuID}&LanguageId=1`
                     )
                     console.log({ menuResponse: response })
