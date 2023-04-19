@@ -5,9 +5,9 @@
             <div class="section__container">
                 <div class="section__left">
                     <LifeStyleExpanTow v-if="features.length > 0" :source="features" />
-                    <pre>
-                        <code>{{ agentInfo }}</code>
-                    </pre>
+                    <!--                    <pre>
+                                            <code>{{ agentInfo }}</code>
+                                        </pre>-->
                 </div>
                 <div class="section__right">
                     <LifeStyleSectionCardContact :infoAgent="agentInfo" />

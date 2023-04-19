@@ -152,10 +152,6 @@ export default {
 }
 
 .card__bottom {
-    // display: grid;
-    // grid-template-columns: repeat(4, minmax(0, 1fr));
-    // grid-column-gap: 1.6rem;
-    // justify-content: space-between;
     display: flex;
     justify-content: space-between;
 
