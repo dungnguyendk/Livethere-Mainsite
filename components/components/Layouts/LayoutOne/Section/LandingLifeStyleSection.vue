@@ -1,13 +1,13 @@
 <template>
     <div v-if="source" class="section--life-style" id="life-style">
         <div class="container">
-            <h4 class="section__header">Life Style</h4>
+            <h4 class="section__header">{{ sectionTitle }}</h4>
             <div class="section__container">
                 <div class="section__left">
                     <LifeStyleExpanTow v-if="features.length > 0" :source="features" />
                 </div>
                 <div class="section__right">
-                    <LifeStyleSectionCardContact :infoAgent="infoAgent" />
+                    <LifeStyleSectionCardContact :infoAgent="agentInfo" />
                 </div>
             </div>
         </div>
@@ -36,33 +36,46 @@ export default {
         return {
             imageURL: "/img/banner/topbanner.jpg",
             title: "Untitled",
-            features: [],
-            
+            cachedFeatures: null,
             infoAgent: {
                 agentHeading: "",
                 agentName: "",
                 agentImage: "",
                 agentPosition: "",
                 agentPhone: "",
-                agentMessage: "",
+                agentMessage: ""
             }
         }
     },
-    created() {
-        const rawJSON = this.source ? this.source.details : []
-        if (rawJSON.length > 0) {
-            this.infoAgent.agentHeading = getStringByFieldName(rawJSON, "agent_heading")
-            this.infoAgent.agentName = getStringByFieldName(rawJSON, "agent_name")
-            this.infoAgent.agentImage = getImageURLByFieldName(rawJSON, "agent_image")
-            this.infoAgent.agentPosition = getStringByFieldName(rawJSON, "agent_position")
-            this.infoAgent.agentPhone = getStringByFieldName(rawJSON, "agent_phone")
-            this.infoAgent.agentMessage = getStringByFieldName(rawJSON, "agent_message")
-            const features = rawJSON.find((s) => s.fieldName === "features")
+
+    computed: {
+        sectionDetails() {
+            return this.source ? this.source.details : []
+        },
+        sectionTitle() {
+            return getStringByFieldName(this.sectionDetails, "section_title")
+        },
+        agentHeading() {
+            return getStringByFieldName(this.sectionDetails, "agent_heading")
+        },
+        agentName() {
+            return getStringByFieldName(this.sectionDetails, "agent_name")
+        },
+        agentImage() {
+            return getImageURLByFieldName(this.sectionDetails, "agent_image")
+        },
+        agentPosition() {
+            return getStringByFieldName(this.sectionDetails, "agent_position")
+        },
+        agentPhone() {
+            return getStringByFieldName(this.sectionDetails, "agent_phone")
+        },
+        features() {
+            const features = this.sectionDetails.find((s) => s.fieldName === "features")
             if (features) {
                 if (features.fieldValue !== "") {
                     const featuresRaw = JSON.parse(features.fieldValue)
-
-                    this.features = featuresRaw.map((item) => {
+                    return featuresRaw.map((item) => {
                         return {
                             heading: getStringByFieldName(item.fields, "feature_heading"),
                             content: getStringByFieldName(item.fields, "feature_content")
@@ -70,7 +83,16 @@ export default {
                     })
                 }
             }
-            // console.log("this.agentPosition",this.infoAgent);
+        },
+        agentInfo() {
+            return {
+                agentHeading: this.agentHeading,
+                agentName: this.agentName,
+                agentImage: this.agentImage,
+                agentPosition: this.agentPosition,
+                agentPhone: this.agentPhone,
+                agentMessage: this.agentMessage
+            }
         }
     }
 }
