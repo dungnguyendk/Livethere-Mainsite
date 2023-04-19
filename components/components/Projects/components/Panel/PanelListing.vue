@@ -14,6 +14,7 @@
                 </v-expansion-panel-header>
                 <v-expansion-panel-content>
                     <div v-html="details ? details.description : 'No content found'" class="text-custom"></div>
+                    <!-- <div v-html="replaceWithBr()" class="text-custom">{{ description }}</div> -->
                 </v-expansion-panel-content>
             </v-expansion-panel>
             <v-expansion-panel class="expansion-property expansion-panel-custom">
@@ -189,6 +190,7 @@ export default {
     }
 }
 .text-custom {
+    white-space: pre-wrap;
     :deep(p) {
         font-weight: 400;
         font-size: 1.6rem;
