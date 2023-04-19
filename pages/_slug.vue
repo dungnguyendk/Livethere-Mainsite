@@ -3,7 +3,6 @@
         <LayoutContent v-if="pageDetails && pageDetails.isPublished" />
     </div>
 </template>
-
 <script>
 import { mapState } from "vuex"
 import qs from "qs"
@@ -24,7 +23,8 @@ export default {
         })
     },
     head() {
-        const pageTitle = this.pageDetails && this.pageDetails.defaultName ? this.pageDetails.defaultName : '';
+        const pageTitle =
+            this.pageDetails && this.pageDetails.defaultName ? this.pageDetails.defaultName : ""
         return {
             title: `${pageTitle} | ${appSettings.siteName}`
         }

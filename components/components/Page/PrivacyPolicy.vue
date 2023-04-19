@@ -10,6 +10,7 @@
 <script>
 import { PRIVACY_POLICY } from "~/ultilities/contants/dummy-data"
 import PolicyTermsBanner from "~/components/components/Page/components/Banner/PolicyTermsBanner.vue"
+
 export default {
     name: "PrivacyPolicy",
     components: { PolicyTermsBanner },
@@ -18,11 +19,8 @@ export default {
             dummyData: PRIVACY_POLICY.data,
             title: "privacy policy"
         }
-    },
-    methods: {}
+    }
 }
 </script>
 
-<style lang="scss" scoped>
-
-</style>
+<style lang="scss" scoped></style>

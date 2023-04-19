@@ -7,7 +7,8 @@ export const state = () => ({
     pageDetails: null,
     sections: [],
     site: null,
-    homepage: null
+    homepage: null,
+    mainSiteDetails: null
 })
 
 export const mutations = {
@@ -23,6 +24,9 @@ export const mutations = {
     },
     setHomepage(state, payload) {
         state.homepage = payload
+    },
+    setMainSiteDetails(state, payload) {
+        state.mainSiteDetails = payload
     }
 }
 
@@ -59,7 +63,7 @@ export const actions = {
     },
     async getCurrentSite({ commit }, payload) {
         try {
-            const response = await this.$axios.$get(
+            const response = await this.$apiCmsPublic.$get(
                 `${httpEndpoint.sites.getSiteById}?SiteId=${payload}`
             )
             if (response) {
@@ -76,7 +80,9 @@ export const actions = {
 
     async getHomepageDetails({ commit }, payload) {
         try {
-            const response = await this.$axios.$get(`${httpEndpoint.pages.getById}?${payload}`)
+            const response = await this.$apiCmsPublic.$get(
+                `${httpEndpoint.pages.getById}?${payload}`
+            )
             if (response) {
                 const { sectionMappings } = response
                 commit("setPageDetails", response)
@@ -114,6 +120,19 @@ export const actions = {
             })
         } catch (e) {
             console.log({ Error: e.message })
+            return null
+        }
+    },
+    async getMainSiteDetails({ dispatch }) {
+        try {
+            const mainSiteParams = qs.stringify({
+                SiteId: 1,
+                LanguageId: 1,
+                Slug: "mainsite"
+            })
+            await dispatch("getPageDetails", mainSiteParams)
+        } catch (e) {
+            //console.log({ Error: e.message })
             return null
         }
     }

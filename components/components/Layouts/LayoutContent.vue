@@ -57,6 +57,10 @@
                 v-if="section.active"
                 :source="getSectionBySlug(section, 'call-to-action')"
             />
+            <MainSiteSinglePageSection
+                v-if="section.active"
+                :source="getSectionBySlug(section, 'mainsite-single-page')"
+            />
         </template>
     </main>
     <main v-else class="page--empty">
@@ -81,10 +85,12 @@ import BannerSection from "~/components/components/Layouts/LayoutTwo/Section/Ban
 import LandingTopBanner from "~/components/components/Section/components/LandingTopBanner.vue"
 import { mapState } from "vuex"
 import LandingCallToActions from "~/components/components/Layouts/SharedLayout/LandingCallToAction.vue"
+import MainSiteSinglePageSection from "~/components/components/Layouts/SharedLayout/MainSiteSinglePageSection.vue"
 
 export default {
     name: "LayoutContent",
     components: {
+        MainSiteSinglePageSection,
         LandingCallToActions,
         LandingTopBanner,
         BannerSection,
