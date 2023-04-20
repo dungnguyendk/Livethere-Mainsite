@@ -11,8 +11,8 @@
                     :to="button.url"
                     class="btn btn--primary section__content-button"
                     :style="{ backgroundColor: buttonBgColor }"
-                    >{{ button.label }}</v-btn
-                >
+                    >{{ button.label }}
+                </v-btn>
             </div>
         </div>
     </section>
@@ -38,7 +38,7 @@ export default {
             return this.source ? this.source.details : []
         },
         heading() {
-            return getStringByFieldName(this.rawJSON, "primary_heading") ?? "Heading text goes here"
+            return getStringByFieldName(this.rawJSON, "heading") ?? "Heading text goes here"
         },
         button() {
             const linkData = JSON.parse(getMetadataByFieldName(this.rawJSON, "button"))
